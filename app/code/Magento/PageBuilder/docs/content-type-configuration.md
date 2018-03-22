@@ -2,11 +2,11 @@
 
 ## Configuration
 
-You can use content type configuration to add new content types, extend existing content types, add groups in the left menu or rearrange content types in the groups.
+Use the content type configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
 
-Below is an example of configuration from `content_type.xml`.
+The following is an example of a content type configuration in `content_type.xml`:
 
-```
+``` xml
 <!-- Definition of main menu, used for grouping content types  -->
 <groups>
     <group name="media" translate="label" sortOrder="10">
@@ -128,48 +128,50 @@ Below is an example of configuration from `content_type.xml`.
     </type>
 </content_types>
 ```
+### Configuration reference
 
-Fields Description
+| Element             | Description                                                                                        |
+| ------------------- | -------------------------------------------------------------------------------------------------- |
+| `type`              | Describes the content type name, translated field, and sort order in the menu group.               |
+| `label`             | Label displayed on the menu and stage.                                                             |
+| `icon`              | Icon displayed on the menu.                                                                        |
+| `component`         | View model responsible for rendering the preview and master format.                                |
+| `preview_component` | Helper component that contains preview specific logic.                                             |
+| `form`              | UI component form used for editing the content type                                                |
+| `group`             | Existing menu group that contains this content type.                                               |
+| `allowed_parents`   | List of parent content types that can accept this type as a child.                                 |
+| `appearances`       | Appearance configuration.                                                                          |
+| `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. |
 
-* `type` - describes the content type name, field to be translated, and sort order within its menu group
-* `label` - label that will be displayed in the menu and on stage for content type
-* `icon` - icon that will be displayed in the menu for the content type
-* `component` - view model for content type, responsible for rendering of the content type in the preview and rendering of master format
-* `preview_component` - helper component that contains preview specific logic
-* `form` - ui component form that will be used for editing content type
-* `group` - group in the menu, should be declared in the configuration
-* `allowed_parents` - other content types that can accept this content type as child, see below
-* `appearances` - configuration of the appearances for component, see below
-* `is_visible` - whether or not component visible in the menu, some components are system components and should not be visible in menu
+### `allowed_parents` configuration reference
 
-Allowed Parents
-
-Allowed parents specifies which content types accepts this content type as children
-
-Allowed parents configuration consists of 
-* `parent` - specify the name of the parent content type as per the the type field
-
-```
+The `allowed_parents` element specifies which content types can accept this type as a child.
+  
+**Example:**
+``` xml
 <allowed_parents>
     <parent name="row"/>
     <parent name="column"/>
 </allowed_parents>
 ``` 
+### `appearances` configuration reference
 
-Appearances
+The `appearances` element specifies how the content type renders in the admin preview and the master format.
+It controls the templates, how data is read from the master format, and how to apply style properties and attributes to the elements.
 
-Appearance specifies how content type will look in admin preview and how it will be rendered to master format. Appearance can control templates, how data will be read from master format, add how style properties and attributes will be applied to the elements.
+| Element              | Description                                                                            |
+| -------------------- | -------------------------------------------------------------------------------------- |
+| `appearance`         | The name of the appearance. Every content type requires one default appearance.        |
+| ` data_mapping `     | Specifies how data is read from, saved to, and converted to and from the master format |
+| ` preview_template ` | Template used to display the element in the preview                                    |
+| ` render_template `  | Template used to render the content type to the master format                          |
+| ` reader `           | Reads data for the content type from the master format                                 |
 
-Appearance configuration consists of
-* `appearance` - specifies the name of the appearance. Every content type should have one default appearance, this is specified by adding default="true" attribute to a node.
-* `data_mapping` - specifies how data is read from the master format, how it will be saved to master format and conversion from and to master format
-* `preview_template` - template that is used to display element in the preview
-* `render_template` - template used to render content type to master format
-* `reader` - used to read data for content type from master format
+The default reader is `Magento_PageBuilder/js/component/format/read/configurable`.
+It reads data based on the configuration specified in `data_mapping`.
 
-The default reader is `Magento_PageBuilder/js/component/format/read/configurable`, it would read data based on configuration specified in `data_mapping`.
-
-```
+**Example:**
+``` xml
 <appearance name="poster" default="true">
     <data_mapping/>
     <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
@@ -178,16 +180,23 @@ The default reader is `Magento_PageBuilder/js/component/format/read/configurable
 </appearance>
 ```
 
-Configuration of `data_mapping`
-* `elements` - container for all the elements for the content type
-* `element` - specifies the name of the element for both render and preview templates to retrieve the data from. Path is used by the reader to determine where to retrieve the data from in the master format.
-* `style_properties` - specifies styles properties for the element in the master format
-* `attributes` - specifies attributes for the element in master format
-* `css` - specifies whether element has classes and in which variable in the data-storage they should be read from
-* `html` - specifies whether element has html content and in which variable in the data-storage they should be read from
-* `tag` - allows to read tag value of the element and map back to master format.
+Every content type needs a default appearance.
+Set the `default` attribute to "true" in an `appearance` node to set the default appearance for a content type.
 
-```
+### `data_mapping` configuration reference
+
+| Element            | Description                                                                                           |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| `elements`         | The container for all the elements of the content type.                                               |
+| `element`          | The name of the element that contains data for the master format and the render and preview template. |
+| `style_properties` | specifies styles properties for the element in the master format                                      |
+| `attributes`       | specifies attributes for the element in master format                                                 |
+| `css`              | specifies whether element has classes and in which variable they should be read                       |
+| `html`             | specifies whether element has html content and in which variable they should be read                  |
+| `tag`              | Allows you to read the tag value of the element and map it back to the master format.                 |
+
+**Example:**
+``` xml
 <elements>
     <element name="main" path=".">
         <style_properties>
@@ -249,26 +258,32 @@ Configuration of `data_mapping`
 </converters>
 ```
 
-Attributes of `property` and `attribute`
-* `var` - name of the variable in data storage, should be unique per content type
-* `name` - name of the property in dom in snake case
-* `converter` - if value need to be converted after it read from dom or before it saved to dom, converter can be used
-* `preview_converter` - sometimes for the preview we have different conversion logic as master format rendering that we want to apply, for this case we can specify preview converter
-* `virtual` - if we don't want to read property, but want it saved, for instance when property is computed based on multiple values
-* `persist` - if we want property to be read, but don't want it to be stored
+### Attributes for `property` and `attribute`
 
-`complex_property` and `complex_attribute` allows to specify custom reader component that will be used to read data for element. 
-`complex_property` and `complex_attribute` can have `converter` and `preview_converter`.
+| Attribute           | Description                                                                                                            |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `var`               | The variable name for value in the data storage. Must be unique for the content type.                                  |
+| `name`              | The name of the property in the DOM. Must be in snake case.                                                            |
+| `converter`         | Converts the value after reading or before saving to the DOM.                                                          |
+| `preview_converter` | Converts the value for the preview. Used for cases where the conversion logic is different between the two views.      |
+| `virtual`           | Used for properties that need to be saved but not viewed. For example, a value that is computed using multiple values. |
+| `persist`           | Used for read-only properties.                                                                                         |
 
-```
+`complex_property` and `complex_attribute` allows you to specify the custom reader component used for reading data for an element.
+
+`complex_property` and `complex_attribute` can contain `converter` and `preview_converter`.
+
+``` xml
 <style_properties>
     <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins" converter="Magento_PageBuilder/js/converter/default/style/margins"/>
 </style_properties>
 ```
 
-`static_property` `and static_attribute` allows to add specified style property or attribute to the element. `static_property` and `static_attribute` don't have `converter` and `preview_converter`.
+`static_property` and `static_attribute` allows you to add specific style properites or attributes to an element.
 
-```
+`static_property` and `static_attribute` do not contain `converter` and `preview_converter` elements.
+
+``` xml
 <element name="desktop_image" path=".//img[1]">
     <style_properties>
         <static_property name="max-width" value="100%"/>
@@ -277,27 +292,30 @@ Attributes of `property` and `attribute`
 </element>
 ```
 
-These style properties and attributes will be applied in preview and persisted in master format.
+These style properties and attributes are applied in the preview and persisted in the master format.
 
-```
+``` html
 <img src="my-image.png" style="max-width: 100%; height: auto;" />
 ```
 
-Html
-`html` allows to read value of the element in a property and map back to master format.
+### Html element
 
-If need to specify a label to use in preview when there is no input provided, `placeholder` attribute can be used.
+The `html` element allows you to read the value of the element in a property and map it back to the master format.
 
-```
+Use the `placeholder` when you need to specify a label for preview and there is no input provided.
+
+``` xml
 <html var="message" placeholder="Edit banner text"/>
 ```
 
-Css
-`css` allows to read class value of the element in the property and map back to master format.
+### Css element
 
-`filter` allows to specify static css classes to ignore, when used specified classes will not be read and appear on the form.
+The `css` element allows you to read the class value of the element in the property and map back to the master format.
 
-```
+`filter` allows you to specify which static CSS classes to ignore.
+These classes are not read and do not appear on the form.
+
+``` xml
 <css var="button_type">
     <filter>
         <class name="pagebuilder-banner-button"/>
@@ -305,20 +323,27 @@ Css
 </css>
 ```
 
-Tag
-`tag` allows to read tag value of the element and map back to master format.
+### Tag element
 
-```
+The `tag` element allows you to read the tag value of the element and map back to the master format.
+
+``` xml
 <tag var="heading_type"/>
 ```
 
 ## Converter Interfaces
 
-There are two types of converter: data converter and element converter.
+Element converter and data converter are the two types of converters.
 
-Element data converter converts data for the property or attribute. `fromDom` method called after data read from master format and `toDom` method called before observables updated in the cycle of rendering preview or master format.
+### Element Converter
 
-```
+The elemement converter converts data for the property or attribute.
+
+The `fromDom()` method is called after data is read from the master format.
+
+The `toDom()` method is called before observables are updated in the cycle rendering preview or master format. 
+
+``` JS
 export interface ElementConverterInterface {
     /**
      * @param {Object} value
@@ -335,9 +360,15 @@ export interface ElementConverterInterface {
 }
 ```
 
-Data converter works on the data for all elements. `fromDom` method is called after data for all elements are read and converted by elements converters. `toDom` is called before data converted by element converters to update observables.
+### Data Converter
 
-```
+The data converter works on the data for all elements.
+
+The `fromDom()` method is called after data is read for all element and converted by element converters.
+
+The `toDom()` method is called before data is converted by element converters to update observables.
+
+``` JS
 export interface DataConverterInterface {
     /**
      * @param {Object} data
@@ -355,9 +386,8 @@ export interface DataConverterInterface {
 }
 ```
 
-Example of configuration for data converter.
-
-```
+**Example:** Data converter configuration
+``` xml
 <data_mapping>
     <converters>
         <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/default/empty-mobile-image">
@@ -370,9 +400,9 @@ Example of configuration for data converter.
 </data_mapping> 
 ```
 
-Some element converters can produce value based on multiple properties in data.
+Some element converters can produce a value based on multiple properties in data.
 
-```
+``` JS
 export default class OverlayBackgroundColor implements ElementConverterInterface {
     /**
      * @param {string} value
