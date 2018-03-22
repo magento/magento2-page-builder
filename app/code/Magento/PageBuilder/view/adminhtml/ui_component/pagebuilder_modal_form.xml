@@ -22,17 +22,18 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <modal name="modal">
+    <modal name="modal" component="Magento_PageBuilder/js/modal/modal">
         <settings>
             <options>
-                <option name="title" xsi:type="string">Edit</option>
+                <option name="title" xsi:type="string" translate="true">Edit</option>
             </options>
         </settings>
-        <insertForm name="insert_form" component="Magento_Ui/js/form/components/insert-form">
+        <insertForm name="insert_form" component="Magento_PageBuilder/js/form/components/insert-form">
             <settings>
-                <ns>pagebuilder_modal_form_insert_form</ns>
-                <externalProvider>${ $.ns }.pagebuilder_modal_form_data_source</externalProvider>
                 <toolbarContainer>${ $.parentName }</toolbarContainer>
+                <renderUrl path="mui/index/render_handle">
+                    <param name="buttons">1</param>
+                </renderUrl>
             </settings>
         </insertForm>
     </modal>

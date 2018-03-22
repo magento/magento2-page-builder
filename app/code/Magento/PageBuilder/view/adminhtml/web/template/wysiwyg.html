@@ -8,15 +8,15 @@
 <div html="content"
      css="$data.additionalClasses"
      visible="visible"
-     data-bind="attr: {'data-namespace': inputName}">
+     attr="'data-namespace': inputName">
 </div>
 
 <div class="pagebuilder-stage-wrapper"
      visible="stageActive"
      css="{'stage-full-screen': isFullScreen}">
-    <!-- ko if: stageActive-->
-        <!-- ko template: getStageTemplate() --><!-- /ko -->
-    <!-- /ko -->
+    <if args="stageActive">
+        <render args="getStageTemplate()"/>
+    </if>
 </div>
 
 <div data-role="spinner"
