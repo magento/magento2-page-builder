@@ -263,6 +263,29 @@ These style properties and attributes will be applied in preview and persisted i
 <img src="my-image.png" style="max-width: 100%; height: auto;" />
 ```
 
+Html
+`html` allows to read value of the element in a property and map back to master format.
+
+If need to specify a label to use in preview when there is no input provided, `placeholder` attribute can be used.
+
+```
+<html var="message" placeholder="Edit banner text"/>
+```
+
+Css
+`css` allows to read class value of the element in the property and map back to master format.
+
+`filter` allows to specify static css classes to ignore, when used specified classes will not be read and appear on the form.
+
+```
+<css var="button_type">
+    <filter>
+        <class name="pagebuilder-banner-button"/>
+    </filter>
+</css>
+```
+
+
 ## Converter Interfaces
 
 There are two types of converter data converter and element converter.
