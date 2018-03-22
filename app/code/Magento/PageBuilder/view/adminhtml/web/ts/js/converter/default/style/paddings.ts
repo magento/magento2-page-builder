@@ -29,12 +29,12 @@ export default class Paddings implements ElementConverterInterface {
      * @returns {Object | string}
      */
     public toDom(name: string, data: object): string | object {
+        const result = {};
         let value = data[name];
         if (value && typeof value === "string") {
             value = JSON.parse(value);
         }
-        const result = {};
-        if (undefined !== value.padding) {
+        if (value && undefined !== value.padding) {
             result.paddingLeft = value.padding.left + "px";
             result.paddingTop = value.padding.top + "px";
             result.paddingRight = value.padding.right + "px";
