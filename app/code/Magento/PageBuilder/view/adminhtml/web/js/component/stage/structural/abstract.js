@@ -116,7 +116,8 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
 
     _proto.getCss = function getCss(element) {
-      var css = {};
+      var result = {};
+      var css = "";
       var data = this.stage.store.get(this.id);
 
       if (element === undefined) {
@@ -131,10 +132,13 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
         }
       }
 
-      css.toString().split(" ").map(function (value, index) {
-        return css[value] = true;
-      });
-      return css;
+      if (css) {
+        css.toString().split(" ").map(function (value, index) {
+          return result[value] = true;
+        });
+      }
+
+      return result;
     };
     /**
      * Get data for style binding, example {"backgroundColor": "#cccccc"}
@@ -184,6 +188,10 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       data = _underscore.extend(data, this.config);
 
       if (element === undefined) {
+        if (!data.appearance) {
+          data.appearance = this.config.fields.appearance.default;
+        }
+
         return this.attributeMapper.toDom(this.attributeFilter.filter(data));
       }
 

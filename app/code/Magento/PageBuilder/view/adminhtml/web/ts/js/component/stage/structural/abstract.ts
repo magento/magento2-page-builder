@@ -156,7 +156,8 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getCss(element: string) {
-        let css: object = {};
+        const result: object = {};
+        let css: string = "";
         const data = this.stage.store.get(this.id);
         if (element === undefined) {
             if ("css_classes" in data && data.css_classes !== "") {
@@ -168,10 +169,12 @@ export default class Structural extends EditableArea implements StructuralInterf
                 css = data[config.css.var];
             }
         }
-        css.toString().split(" ").map(
-            (value: any, index: number) => css[value] = true,
-        );
-        return css;
+        if (css) {
+            css.toString().split(" ").map(
+                (value: any, index: number) => result[value] = true,
+            );
+        }
+        return result;
     }
 
     /**
@@ -215,6 +218,9 @@ export default class Structural extends EditableArea implements StructuralInterf
         let data = this.stage.store.get(this.id);
         data = _.extend(data, this.config);
         if (element === undefined) {
+            if (!data.appearance) {
+                data.appearance = this.config.fields.appearance.default;
+            }
             return this.attributeMapper.toDom(this.attributeFilter.filter(data));
         }
 
