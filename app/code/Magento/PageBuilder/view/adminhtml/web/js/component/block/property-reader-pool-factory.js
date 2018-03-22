@@ -6,12 +6,12 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./property-read
    */
 
   /**
-   * Create a new instance of converter pool
+   * Create a new instance of property reader pool
    */
   function create(contentType) {
     var config = _config.getContentType(contentType);
 
-    var properties = [];
+    var propertyReaders = [];
 
     for (key in config.appearances) {
       var dataMapping = config.appearances[key].data_mapping;
@@ -22,8 +22,8 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./property-read
             for (var i = 0; i < dataMapping.elements[elementName].style.length; i++) {
               var styleProperty = dataMapping.elements[elementName].style[i];
 
-              if (!!styleProperty.complex && properties.indexOf(styleProperty.reader) === -1 && !_propertyReaderPool.get(styleProperty.reader)) {
-                properties.push(styleProperty.reader);
+              if (!!styleProperty.complex && styleProperty.reader && propertyReaders.indexOf(styleProperty.reader) === -1 && !_propertyReaderPool.get(styleProperty.reader)) {
+                propertyReaders.push(styleProperty.reader);
               }
             }
           }
@@ -32,8 +32,8 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./property-read
             for (var _i = 0; _i < dataMapping.elements[elementName].attributes.length; _i++) {
               var attributeProperty = dataMapping.elements[elementName].attributes[_i];
 
-              if (!!attributeProperty.complex && properties.indexOf(attributeProperty.reader) === -1 && !_propertyReaderPool.get(attributeProperty.reader)) {
-                properties.push(attributeProperty.reader);
+              if (!!attributeProperty.complex && attributeProperty.reader && propertyReaders.indexOf(attributeProperty.reader) === -1 && !_propertyReaderPool.get(attributeProperty.reader)) {
+                propertyReaders.push(attributeProperty.reader);
               }
             }
           }
@@ -42,13 +42,13 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./property-read
     }
 
     return new Promise(function (resolve) {
-      (0, _loader)(properties, function () {
-        for (var _len = arguments.length, loadedProperties = new Array(_len), _key = 0; _key < _len; _key++) {
-          loadedProperties[_key] = arguments[_key];
+      (0, _loader)(propertyReaders, function () {
+        for (var _len = arguments.length, loadedPropertyReaders = new Array(_len), _key = 0; _key < _len; _key++) {
+          loadedPropertyReaders[_key] = arguments[_key];
         }
 
-        for (var _i2 = 0; _i2 < properties.length; _i2++) {
-          _propertyReaderPool.register(properties[_i2], new loadedProperties[_i2]());
+        for (var _i2 = 0; _i2 < propertyReaders.length; _i2++) {
+          _propertyReaderPool.register(propertyReaders[_i2], new loadedPropertyReaders[_i2]());
         }
 
         resolve(_propertyReaderPool);

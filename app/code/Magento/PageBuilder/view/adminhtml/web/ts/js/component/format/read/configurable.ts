@@ -48,8 +48,8 @@ export default class Configurable implements ReadInterface {
                             config.elements[elementName].style,
                             currentElement,
                             data,
+                            propertyReaderPool,
                             converterPool,
-                             propertyReaderPool,
                         );
                     }
                     if (config.elements[elementName].attributes !== undefined) {
@@ -57,8 +57,8 @@ export default class Configurable implements ReadInterface {
                             config.elements[elementName].attributes,
                             currentElement,
                             data,
+                            propertyReaderPool,
                             converterPool,
-                             propertyReaderPool,
                         );
                     }
                     if (config.elements[elementName].html !== undefined) {
@@ -77,6 +77,94 @@ export default class Configurable implements ReadInterface {
                 console.error(error);
             });
         });
+    }
+
+    /**
+     * Read attributes for element
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @param {PropertyReaderPool} propertyReaderPool
+     * @param {ConverterPool} converterPool
+     * @returns {object}
+     */
+    private readAttributes(
+        config: any,
+        element: Node,
+        data: object,
+        propertyReaderPool: PropertyReaderPool,
+        converterPool: ConverterPool,
+    ) {
+        const result = {};
+        for (let i = 0; i < config.length; i++) {
+            const attribute = config[i];
+            if (true === !!attribute.virtual) {
+                continue;
+            }
+            let value = !!attribute.complex
+                ? propertyReaderPool.get(attribute.reader).read(element)
+                : element.getAttribute(attribute.name);
+            if (converterPool.get(attribute.converter)) {
+                value = converterPool.get(attribute.converter).fromDom(value);
+            }
+            if (data[attribute.var] === "object") {
+                value = objectExtend(value, data[attribute.var]);
+            }
+            result[attribute.var] = value;
+        }
+        return _.extend(data, result);
+    }
+
+    /**
+     * Read style properties for element
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @param {PropertyReaderPool} propertyReaderPool
+     * @param {ConverterPool} converterPool
+     * @returns {object}
+     */
+    private readStyle(
+        config: any,
+        element,
+        data: object,
+        propertyReaderPool: PropertyReaderPool,
+        converterPool: ConverterPool,
+    ) {
+        const result: object = _.extend({}, data);
+        for (let i = 0; i < config.length; i++) {
+            const property = config[i];
+            if (true === !!property.virtual) {
+                continue;
+            }
+            let value = !!property.complex
+                ? propertyReaderPool.get(property.reader).read(element)
+                : element.style[fromSnakeToCamelCase(property.name)];
+            if (converterPool.get(property.converter)) {
+                value = converterPool.get(property.converter).fromDom(value);
+            }
+            if (typeof result[property.var] === "object") {
+                value = objectExtend(result[property.var], value);
+            }
+            result[property.var] = value;
+        }
+        return result;
+    }
+
+    /**
+     * Read element's tag
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @returns {object}
+     */
+    private readHtmlTag(config: any, e: Node, data: object) {
+        const result = {};
+        result[config.tag.var] = e.nodeName.toLowerCase();
+        return _.extend(data, result);
     }
 
     /**
@@ -105,20 +193,6 @@ export default class Configurable implements ReadInterface {
     }
 
     /**
-     * Read element's tag
-     *
-     * @param {object} config
-     * @param {Node} element
-     * @param {object} data
-     * @returns {object}
-     */
-    private readHtmlTag(config: any, e: Node, data: object) {
-        const result = {};
-        result[config.tag.var] = e.nodeName.toLowerCase();
-        return _.extend(data, result);
-    }
-
-    /**
      * Read element's content
      *
      * @param {object} config
@@ -130,73 +204,6 @@ export default class Configurable implements ReadInterface {
         const result = {};
         result[config.html.var] = element.innerHTML;
         return _.extend(data, result);
-    }
-
-    /**
-     * Read attributes for element
-     *
-     * @param {object} config
-     * @param {Node} element
-     * @param {object} data
-     * @param {ConverterPool} converterPool
-     * @returns {object}
-     */
-    private readAttributes(
-        config: any,
-        element: Node,
-        data: object,
-        converterPool: ConverterPool,
-        propertyReaderPool: PropertyReaderPool,
-    ) {
-        const result = {};
-        for (let i = 0; i < config.length; i++) {
-            const attribute = config[i];
-            let value = element.getAttribute(attribute.name);
-            if (converterPool.get(attribute.converter)) {
-                value = converterPool.get(attribute.converter).fromDom(value);
-            }
-            if (data[attribute.var] === "object") {
-                value = objectExtend(value, data[attribute.var]);
-            }
-            result[attribute.var] = value;
-        }
-        return _.extend(data, result);
-    }
-
-    /**
-     * Read style properties for element
-     *
-     * @param {object} config
-     * @param {Node} element
-     * @param {object} data
-     * @param {ConverterPool} converterPool
-     * @returns {object}
-     */
-    private readStyle(
-        config: any,
-        element,
-        data: object,
-        converterPool: ConverterPool,
-        propertyReaderPool: PropertyReaderPool,
-    ) {
-        const result: object = _.extend({}, data);
-        for (let i = 0; i < config.length; i++) {
-            const property = config[i];
-            if (true === !!property.virtual) {
-                continue;
-            }
-            let value = !!property.complex
-                ? propertyReaderPool.get(property.reader).read(element)
-                : element.style[fromSnakeToCamelCase(property.name)];
-            if (converterPool.get(property.converter)) {
-                value = converterPool.get(property.converter).fromDom(value);
-            }
-            if (typeof result[property.var] === "object") {
-                value = objectExtend(result[property.var], value);
-            }
-            result[property.var] = value;
-        }
-        return result;
     }
 
     /**

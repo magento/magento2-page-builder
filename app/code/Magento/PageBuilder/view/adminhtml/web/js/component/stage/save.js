@@ -33,7 +33,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "../
         _engine.waitForFinishRender().then(function () {
           var filtered = (0, _filterHtml)(element);
           var output = (0, _directives)(filtered.html());
-          console.log(output);
           resolve(output);
           element.remove();
         });

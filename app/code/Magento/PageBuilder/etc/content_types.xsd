@@ -189,6 +189,7 @@
     <xs:complexType name="attributes">
         <xs:sequence>
             <xs:element type="attribute" name="attribute" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="complex_attribute" name="complex_attribute" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element type="static_attribute" name="static_attribute" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
@@ -199,6 +200,13 @@
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:string" name="persist" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="complex_attribute">
+        <xs:attribute type="xs:string" name="var" use="required"/>
+        <xs:attribute type="xs:string" name="reader" use="optional"/>
+        <xs:attribute type="xs:string" name="converter" use="optional"/>
+        <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
+        <xs:attribute type="xs:string" name="virtual" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_attribute">
         <xs:attribute type="xs:string" name="name" use="required"/>

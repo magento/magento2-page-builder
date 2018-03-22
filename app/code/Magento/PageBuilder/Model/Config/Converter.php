@@ -150,7 +150,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 foreach ($stylePropertiesNode->getElementsByTagName('complex_property') as $propertyNode) {
                     $elementData[$elementName]['style'][] = [
                         'var' => $propertyNode->attributes->getNamedItem('var')->nodeValue,
-                        'reader' => $propertyNode->attributes->getNamedItem('reader')->nodeValue,
+                        'reader' => $propertyNode->hasAttribute('reader')
+                            ? $propertyNode->attributes->getNamedItem('reader')->nodeValue
+                            : null,
                         'converter' => $propertyNode->hasAttribute('converter')
                             ? $propertyNode->attributes->getNamedItem('converter')->nodeValue
                             : null,
@@ -196,6 +198,24 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                         'name' => $attributeNode->attributes->getNamedItem('name')->nodeValue,
                         'value' => $attributeNode->attributes->getNamedItem('value')->nodeValue,
                         'static' => true
+                    ];
+                }
+                foreach ($attributesNode->getElementsByTagName('complex_attribute') as $attributeNode) {
+                    $elementData[$elementName]['attributes'][] = [
+                        'var' => $attributeNode->attributes->getNamedItem('var')->nodeValue,
+                        'reader' => $attributeNode->hasAttribute('reader')
+                            ? $attributeNode->attributes->getNamedItem('reader')->nodeValue
+                            : null,
+                        'converter' => $attributeNode->hasAttribute('converter')
+                            ? $attributeNode->attributes->getNamedItem('converter')->nodeValue
+                            : null,
+                        'preview_converter' => $attributeNode->hasAttribute('preview_converter')
+                            ? $attributeNode->attributes->getNamedItem('preview_converter')->nodeValue
+                            : null,
+                        'virtual' => $attributeNode->hasAttribute('virtual')
+                            ? $attributeNode->attributes->getNamedItem('virtual')->nodeValue
+                            : null,
+                        'complex' => true
                     ];
                 }
             }

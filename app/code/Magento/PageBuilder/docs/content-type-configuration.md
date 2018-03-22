@@ -285,6 +285,12 @@ Css
 </css>
 ```
 
+Tag
+`tag` allows to read tag value of the element and map back to master format.
+
+```
+<tag var="heading_type"/>
+```
 
 ## Converter Interfaces
 

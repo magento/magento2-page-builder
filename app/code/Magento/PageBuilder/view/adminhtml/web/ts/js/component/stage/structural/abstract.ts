@@ -301,6 +301,12 @@ export default class Structural extends EditableArea implements StructuralInterf
         if (config.style) {
             for (let i = 0; i < config.style.length; i++) {
                 const styleProperty = config.style[i];
+                if (styleProperty.persist !== undefined
+                    && styleProperty.persist !== null
+                    && styleProperty.persist === "false"
+                ) {
+                    continue;
+                }
                 let value = "";
                 if (!!styleProperty.static) {
                     value = styleProperty.value;

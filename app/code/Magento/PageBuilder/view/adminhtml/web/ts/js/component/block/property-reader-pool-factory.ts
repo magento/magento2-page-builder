@@ -8,12 +8,12 @@ import Config from "../config";
 import PropertyReaderPool from "./property-reader-pool";
 
 /**
- * Create a new instance of converter pool
+ * Create a new instance of property reader pool
  */
 export default function create(contentType: string): Promise<> {
     const config = Config.getContentType(contentType);
 
-    const properties = [];
+    const propertyReaders = [];
 
     for (key in config.appearances) {
         const dataMapping = config.appearances[key].data_mapping;
@@ -23,10 +23,11 @@ export default function create(contentType: string): Promise<> {
                     for (let i = 0; i < dataMapping.elements[elementName].style.length; i++) {
                         const styleProperty = dataMapping.elements[elementName].style[i];
                         if (!!styleProperty.complex
-                            && properties.indexOf(styleProperty.reader) === -1
+                            && styleProperty.reader
+                            && propertyReaders.indexOf(styleProperty.reader) === -1
                             && !PropertyReaderPool.get(styleProperty.reader)
                         ) {
-                            properties.push(styleProperty.reader);
+                            propertyReaders.push(styleProperty.reader);
                         }
                     }
                 }
@@ -35,10 +36,11 @@ export default function create(contentType: string): Promise<> {
                     for (let i = 0; i < dataMapping.elements[elementName].attributes.length; i++) {
                         const attributeProperty = dataMapping.elements[elementName].attributes[i];
                         if (!!attributeProperty.complex
-                            && properties.indexOf(attributeProperty.reader) === -1
+                            && attributeProperty.reader
+                            && propertyReaders.indexOf(attributeProperty.reader) === -1
                             && !PropertyReaderPool.get(attributeProperty.reader)
                         ) {
-                            properties.push(attributeProperty.reader);
+                            propertyReaders.push(attributeProperty.reader);
                         }
                     }
                 }
@@ -47,9 +49,9 @@ export default function create(contentType: string): Promise<> {
     }
 
     return new Promise((resolve: (PropertyReaderPool: object) => void) => {
-        loadModule(properties, (...loadedProperties: any[]) => {
-            for (let i = 0; i < properties.length; i++) {
-                PropertyReaderPool.register(properties[i], new loadedProperties[i]());
+        loadModule(propertyReaders, (...loadedPropertyReaders: any[]) => {
+            for (let i = 0; i < propertyReaders.length; i++) {
+                PropertyReaderPool.register(propertyReaders[i], new loadedPropertyReaders[i]());
             }
             resolve(PropertyReaderPool);
         });

@@ -283,6 +283,11 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       if (config.style) {
         for (var i = 0; i < config.style.length; i++) {
           var styleProperty = config.style[i];
+
+          if (styleProperty.persist !== undefined && styleProperty.persist !== null && styleProperty.persist === "false") {
+            continue;
+          }
+
           var value = "";
 
           if (!!styleProperty.static) {

@@ -36,11 +36,11 @@ define(["../../../component/block/appearance-config", "../../../utils/array", ".
             }
 
             if (config.elements[elementName].style !== undefined) {
-              data = _this.readStyle(config.elements[elementName].style, currentElement, data, converterPool, propertyReaderPool);
+              data = _this.readStyle(config.elements[elementName].style, currentElement, data, propertyReaderPool, converterPool);
             }
 
             if (config.elements[elementName].attributes !== undefined) {
-              data = _this.readAttributes(config.elements[elementName].attributes, currentElement, data, converterPool, propertyReaderPool);
+              data = _this.readAttributes(config.elements[elementName].attributes, currentElement, data, propertyReaderPool, converterPool);
             }
 
             if (config.elements[elementName].html !== undefined) {
@@ -62,6 +62,95 @@ define(["../../../component/block/appearance-config", "../../../utils/array", ".
           console.error(error);
         });
       });
+    };
+    /**
+     * Read attributes for element
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @param {PropertyReaderPool} propertyReaderPool
+     * @param {ConverterPool} converterPool
+     * @returns {object}
+     */
+
+
+    _proto.readAttributes = function readAttributes(config, element, data, propertyReaderPool, converterPool) {
+      var result = {};
+
+      for (var i = 0; i < config.length; i++) {
+        var attribute = config[i];
+
+        if (true === !!attribute.virtual) {
+          continue;
+        }
+
+        var value = !!attribute.complex ? propertyReaderPool.get(attribute.reader).read(element) : element.getAttribute(attribute.name);
+
+        if (converterPool.get(attribute.converter)) {
+          value = converterPool.get(attribute.converter).fromDom(value);
+        }
+
+        if (data[attribute.var] === "object") {
+          value = (0, _array.objectExtend)(value, data[attribute.var]);
+        }
+
+        result[attribute.var] = value;
+      }
+
+      return _.extend(data, result);
+    };
+    /**
+     * Read style properties for element
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @param {PropertyReaderPool} propertyReaderPool
+     * @param {ConverterPool} converterPool
+     * @returns {object}
+     */
+
+
+    _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, converterPool) {
+      var result = _.extend({}, data);
+
+      for (var i = 0; i < config.length; i++) {
+        var property = config[i];
+
+        if (true === !!property.virtual) {
+          continue;
+        }
+
+        var value = !!property.complex ? propertyReaderPool.get(property.reader).read(element) : element.style[(0, _string.fromSnakeToCamelCase)(property.name)];
+
+        if (converterPool.get(property.converter)) {
+          value = converterPool.get(property.converter).fromDom(value);
+        }
+
+        if (_typeof(result[property.var]) === "object") {
+          value = (0, _array.objectExtend)(result[property.var], value);
+        }
+
+        result[property.var] = value;
+      }
+
+      return result;
+    };
+    /**
+     * Read element's tag
+     *
+     * @param {object} config
+     * @param {Node} element
+     * @param {object} data
+     * @returns {object}
+     */
+
+
+    _proto.readHtmlTag = function readHtmlTag(config, e, data) {
+      var result = {};
+      result[config.tag.var] = e.nodeName.toLowerCase();
+      return _.extend(data, result);
     };
     /**
      * Read element's css
@@ -87,21 +176,6 @@ define(["../../../component/block/appearance-config", "../../../utils/array", ".
       return _.extend(data, result);
     };
     /**
-     * Read element's tag
-     *
-     * @param {object} config
-     * @param {Node} element
-     * @param {object} data
-     * @returns {object}
-     */
-
-
-    _proto.readHtmlTag = function readHtmlTag(config, e, data) {
-      var result = {};
-      result[config.tag.var] = e.nodeName.toLowerCase();
-      return _.extend(data, result);
-    };
-    /**
      * Read element's content
      *
      * @param {object} config
@@ -115,73 +189,6 @@ define(["../../../component/block/appearance-config", "../../../utils/array", ".
       var result = {};
       result[config.html.var] = element.innerHTML;
       return _.extend(data, result);
-    };
-    /**
-     * Read attributes for element
-     *
-     * @param {object} config
-     * @param {Node} element
-     * @param {object} data
-     * @param {ConverterPool} converterPool
-     * @returns {object}
-     */
-
-
-    _proto.readAttributes = function readAttributes(config, element, data, converterPool, propertyReaderPool) {
-      var result = {};
-
-      for (var i = 0; i < config.length; i++) {
-        var attribute = config[i];
-        var value = element.getAttribute(attribute.name);
-
-        if (converterPool.get(attribute.converter)) {
-          value = converterPool.get(attribute.converter).fromDom(value);
-        }
-
-        if (data[attribute.var] === "object") {
-          value = (0, _array.objectExtend)(value, data[attribute.var]);
-        }
-
-        result[attribute.var] = value;
-      }
-
-      return _.extend(data, result);
-    };
-    /**
-     * Read style properties for element
-     *
-     * @param {object} config
-     * @param {Node} element
-     * @param {object} data
-     * @param {ConverterPool} converterPool
-     * @returns {object}
-     */
-
-
-    _proto.readStyle = function readStyle(config, element, data, converterPool, propertyReaderPool) {
-      var result = _.extend({}, data);
-
-      for (var i = 0; i < config.length; i++) {
-        var property = config[i];
-
-        if (true === !!property.virtual) {
-          continue;
-        }
-
-        var value = !!property.complex ? propertyReaderPool.get(property.reader).read(element) : element.style[(0, _string.fromSnakeToCamelCase)(property.name)];
-
-        if (converterPool.get(property.converter)) {
-          value = converterPool.get(property.converter).fromDom(value);
-        }
-
-        if (_typeof(result[property.var]) === "object") {
-          value = (0, _array.objectExtend)(result[property.var], value);
-        }
-
-        result[property.var] = value;
-      }
-
-      return result;
     };
     /**
      * Convert data after it's read for all elements

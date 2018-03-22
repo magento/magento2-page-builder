@@ -31,7 +31,6 @@ export default class Save {
             engine.waitForFinishRender().then(() => {
                 const filtered: JQuery = filterHtml(element);
                 const output = decodeAllDataUrlsInString(filtered.html());
-                console.log(output);
                 resolve(output);
                 element.remove();
             });
