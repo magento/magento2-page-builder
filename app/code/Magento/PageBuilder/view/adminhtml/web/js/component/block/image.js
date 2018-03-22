@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../../utils/url", "../config", "./block"], function (_underscore, _url, _config, _block) {
+define(["mage/translate", "uiEvents", "uiLayout", "uiRegistry", "underscore", "../../utils/url", "../config", "./block"], function (_translate, _uiEvents, _uiLayout, _uiRegistry, _underscore, _url, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =
@@ -7,17 +7,102 @@ define(["underscore", "../../utils/url", "../config", "./block"], function (_und
   function (_Block) {
     _inheritsLoose(Image, _Block);
 
-    function Image() {
-      return _Block.apply(this, arguments) || this;
+    /**
+     * Name of the uploader instance
+     */
+
+    /**
+     * Configuration passed to uploader upon instantiation
+     */
+
+    /**
+     * Create image uploader and add listener for when image gets uploaded through this instance
+     * {@inheritDoc}
+     */
+    function Image(parent, stage, config, formData) {
+      var _this;
+
+      _this = _Block.call(this, parent, stage, config, formData) || this;
+      _this.uploaderName = void 0;
+      _this.uploaderConfig = {
+        allowedExtensions: "jpg jpeg gif png",
+        component: "Magento_PageBuilder/js/form/element/image-uploader",
+        componentType: "imageUploader",
+        dataScope: "image",
+        formElement: "imageUploader",
+        initialMediaGalleryOpenSubpath: "wysiwyg",
+        maxFileSize: "4194304",
+        mediaGallery: {
+          initialOpenSubpath: "wysiwyg",
+          openDialogTitle: (0, _translate)("Insert Images..."),
+          openDialogUrl: "/admin/cms/wysiwyg_images/index/",
+          storeId: "1"
+        },
+        template: "Magento_PageBuilder/form/element/stage/preview/uploader/image",
+        uploaderConfig: {
+          url: "/admin/pagebuilder/contenttype/image_upload/"
+        },
+        validation: {
+          "required-entry": true
+        }
+      };
+
+      _this.createUploader();
+
+      _this.listenImageUploaded();
+
+      return _this;
     }
+    /**
+     * Register listener when image gets uploaded from uploader UI component
+     */
+
 
     var _proto = Image.prototype;
 
+    _proto.listenImageUploaded = function listenImageUploaded() {
+      _uiEvents.on("image:uploaded:" + this.id, this.onImageUploaded.bind(this));
+    };
+    /**
+     * Update image data inside data store
+     *
+     * @param {Array} data - list of each files' data
+     */
+
+
+    _proto.onImageUploaded = function onImageUploaded(data) {
+      this.stage.store.updateKey(this.id, data, "image");
+    };
+    /**
+     * Instantiate uploader through layout UI component renderer
+     */
+
+
+    _proto.createUploader = function createUploader() {
+      this.uploaderName = "imageuploader_" + this.id;
+      this.uploaderConfig.name = this.uploaderName;
+      this.uploaderConfig.id = this.id; // set reference to current image value in stage's data store
+
+      this.uploaderConfig.value = this.stage.store.get(this.id).image;
+      (0, _uiLayout)([this.uploaderConfig]);
+    };
+    /**
+     * Get registry callback reference to uploader UI component
+     *
+     * @returns {Function}
+     */
+
+
+    _proto.getUploader = function getUploader() {
+      return _uiRegistry.async(this.uploaderName);
+    };
     /**
      * Get the desktop (main) image attributes for the render
      *
      * @returns {any}
      */
+
+
     _proto.getMainImageAttributes = function getMainImageAttributes() {
       var data = this.getData();
 
