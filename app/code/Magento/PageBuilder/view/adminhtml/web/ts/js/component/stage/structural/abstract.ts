@@ -218,8 +218,10 @@ export default class Structural extends EditableArea implements StructuralInterf
         let data = this.stage.store.get(this.id);
         data = _.extend(data, this.config);
         if (element === undefined) {
-            if (!data.appearance) {
-                data.appearance = this.config.fields.appearance.default;
+            if (undefined === data.appearance || !data.appearance) {
+                data.appearance = undefined !== this.config.fields.appearance
+                    ? this.config.fields.appearance.default
+                    : "default";
             }
             return this.attributeMapper.toDom(this.attributeFilter.filter(data));
         }

@@ -188,8 +188,8 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       data = _underscore.extend(data, this.config);
 
       if (element === undefined) {
-        if (!data.appearance) {
-          data.appearance = this.config.fields.appearance.default;
+        if (undefined === data.appearance || !data.appearance) {
+          data.appearance = undefined !== this.config.fields.appearance ? this.config.fields.appearance.default : "default";
         }
 
         return this.attributeMapper.toDom(this.attributeFilter.filter(data));
