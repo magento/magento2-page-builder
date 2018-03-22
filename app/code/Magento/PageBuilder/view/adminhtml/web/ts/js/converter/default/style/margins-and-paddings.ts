@@ -37,22 +37,24 @@ export default class MarginsAndPaddings implements ElementConverterInterface {
      * @returns {Object | string}
      */
     public toDom(name: string, data: object): string | object {
+        const result = {};
         let value = data[name];
         if (value && typeof value === "string") {
             value = JSON.parse(value);
         }
-        const result = {};
-        if (undefined !== value.margin) {
-            result.marginLeft = value.margin.left + "px";
-            result.marginTop = value.margin.top + "px";
-            result.marginRight = value.margin.right + "px";
-            result.marginBottom = value.margin.bottom + "px";
-        }
-        if (undefined !== value.padding) {
-            result.paddingLeft = value.padding.left + "px";
-            result.paddingTop = value.padding.top + "px";
-            result.paddingRight = value.padding.right + "px";
-            result.paddingBottom = value.padding.bottom + "px";
+        if (value) {
+            if (undefined !== value.margin) {
+                result.marginLeft = value.margin.left + "px";
+                result.marginTop = value.margin.top + "px";
+                result.marginRight = value.margin.right + "px";
+                result.marginBottom = value.margin.bottom + "px";
+            }
+            if (undefined !== value.padding) {
+                result.paddingLeft = value.padding.left + "px";
+                result.paddingTop = value.padding.top + "px";
+                result.paddingRight = value.padding.right + "px";
+                result.paddingBottom = value.padding.bottom + "px";
+            }
         }
         return result;
     }

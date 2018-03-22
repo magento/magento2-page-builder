@@ -29,12 +29,12 @@ export default class Margins implements ElementConverterInterface {
      * @returns {Object | string}
      */
     public toDom(name: string, data: object): string | object {
+        const result = {};
         let value = data[name];
         if (value && typeof value === "string") {
             value = JSON.parse(value);
         }
-        const result = {};
-        if (undefined !== value.margin) {
+        if (value && undefined !== value.margin) {
             result.marginLeft = value.margin.left + "px";
             result.marginTop = value.margin.top + "px";
             result.marginRight = value.margin.right + "px";
