@@ -9,8 +9,8 @@ Below is an example of configuration from `content_type.xml`.
 ```
 <!-- Definition of main menu, used for grouping content types  -->
 <groups>
-    <group name="media" sortOrder="10">
-        <label translate="true">Media</label>
+    <group name="media" translate="label" sortOrder="10">
+        <label>Media</label>
     </group>
 </groups>
 <content_types>
@@ -131,25 +131,41 @@ Below is an example of configuration from `content_type.xml`.
 
 Fields Description
 
+* `type` - describes the content type name, field to be translated, and sort order within its menu group
 * `label` - label that will be displayed in the menu and on stage for content type
 * `icon` - icon that will be displayed in the menu for the content type
 * `component` - view model for content type, responsible for rendering of the content type in the preview and rendering of master format
 * `preview_component` - helper component that contains preview specific logic
 * `form` - ui component form that will be used for editing content type
 * `group` - group in the menu, should be declared in the configuration
-* `allowed_parents` - which elements can except this content type as child
+* `allowed_parents` - other content types that can accept this content type as child, see below
 * `appearances` - configuration of the appearances for component, see below
 * `is_visible` - whether or not component visible in the menu, some components are system components and should not be visible in menu
+
+Allowed Parents
+
+Allowed parents specifies which content types accepts this content type as children
+
+Allowed parents configuration consists of 
+* `parent` - specify the name of the parent content type as per the the type field
+
+```
+<allowed_parents>
+    <parent name="row"/>
+    <parent name="column"/>
+</allowed_parents>
+``` 
 
 Appearances
 
 Appearance specifies how content type will look in admin preview and how it will be rendered to master format. Appearance can control templates, how data will be read from master format, add how style properties and attributes will be applied to the elements.
 
 Appearance configuration consists of
-* data_mapping - specifies how data is read from the master format, how it will be saved to master format and conversion from and to master format
-* preview_template - template that is used to display element in the preview
-* render_template - template used to render content type to master format
-* reader - used to read data for content type from master format
+* `appearance` - Specifies the name of the appearance. Every content type should have one default appearance, this is specified by adding default="true" attribute to a node.
+* `data_mapping` - specifies how data is read from the master format, how it will be saved to master format and conversion from and to master format
+* `preview_template` - template that is used to display element in the preview
+* `render_template` - template used to render content type to master format
+* `reader` - used to read data for content type from master format
 
 ```
 <appearance name="poster" default="true">
@@ -160,13 +176,14 @@ Appearance configuration consists of
 </appearance>
 ```
 
-Every content type should have one default appearance, this is specified by adding default="true" attribute to a node.
-
 Configuration of `data_mapping`
+* `elements` - container for all the elements for the content type. No configs
+* `element` - specifies the name of the element for both render and preview templates to retrieve the data from. Path is used by the reader to determine where to retrieve the data from in the master format.
 * `style_properties` - specifies styles properties for the element in the master format
 * `attributes` - specifies attributes for the element in master format
-* `css` - specifies whether element has classes and in which variable they should be read
-* `html` - specifies whether element has html content and in which variable they should be read
+* `css` - specifies whether element has classes and in which variable in the data-storage they should be read from
+* `html` - specifies whether element has html content and in which variable in the data-storage they should be read from
+* `tag` - allows to read tag value of the element and map back to master format.
 
 ```
 <elements>
@@ -233,12 +250,13 @@ Configuration of `data_mapping`
 Attributes of `property` and `attribute`
 * `var` - name of the variable in data storage, should be unique per content type
 * `name` - name of the property in dom in snake case
-* `converter` - if value need to be convertet after it read from dom or before it saved to dom, converter can be used
+* `converter` - if value need to be converted after it read from dom or before it saved to dom, converter can be used
 * `preview_converter` - sometimes for the preview we have different conversion logic as master format rendering that we want to apply, for this case we can specify preview converter
-* `virtual` - if we don't want to read property, but vant to save, for instance when property is computed based on multiple values
+* `virtual` - if we don't want to read property, but want it saved, for instance when property is computed based on multiple values
 * `persist` - if we want property to be read, but don't want it to be stored
 
-complex_property and complex_attribute allows to specify custom reader component that will be used to read data for element. complex_property and complex_attribute can have converter and preview_converter.
+`complex_property` and `complex_attribute` allows to specify custom reader component that will be used to read data for element. 
+`complex_property` and `complex_attribute` can have `converter` and `preview_converter`.
 
 ```
 <style_properties>
@@ -246,7 +264,7 @@ complex_property and complex_attribute allows to specify custom reader component
 </style_properties>
 ```
 
-static_property and static_attribute allows to add specified style property or attribute to the element. static_property and static_attribute don't have converter and preview_converter.
+`static_property` `and static_attribute` allows to add specified style property or attribute to the element. `static_property` and `static_attribute` don't have `converter` and `preview_converter`.
 
 ```
 <element name="desktop_image" path=".//img[1]">
@@ -294,9 +312,9 @@ Tag
 
 ## Converter Interfaces
 
-There are two types of converter data converter and element converter.
+There are two types of converter: data converter and element converter.
 
-element data converter converts data for the property or attribute. fromDom method called after data read from master format and toDom method called before observables updated in the cycle of rendering preview or master format.
+Element data converter converts data for the property or attribute. `fromDom` method called after data read from master format and `toDom` method called before observables updated in the cycle of rendering preview or master format.
 
 ```
 export interface ElementConverterInterface {
@@ -315,7 +333,7 @@ export interface ElementConverterInterface {
 }
 ```
 
-data converter, works on the data for all elements. fromDom method called after data read for all elements and converted by elements converters. toDom called before data converted by element converters to update observables.
+Data converter works on the data for all elements. `fromDom` method is called after data for all elements are read and converted by elements converters. `toDom` is called before data converted by element converters to update observables.
 
 ```
 export interface DataConverterInterface {
