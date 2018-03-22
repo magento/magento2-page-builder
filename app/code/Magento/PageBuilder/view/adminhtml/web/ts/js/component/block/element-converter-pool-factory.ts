@@ -13,42 +13,40 @@ import ElementConverterPool from "./element-converter-pool";
 export default function create(contentType: string): Promise<> {
     const config = Config.getContentType(contentType);
     const converters = [];
-    for (key in config.appearances) {
-        const dataMapping = config.appearances[key].data_mapping;
+    for (const appearance of config.appearances) {
+        const dataMapping = appearance.data_mapping;
         if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-            for (const elementName in dataMapping.elements) {
+            for (const elementName of dataMapping.elements) {
                 if (dataMapping.elements[elementName].style !== undefined) {
-                    for (let i = 0; i < dataMapping.elements[elementName].style.length; i++) {
-                        const styleProperty = dataMapping.elements[elementName].style[i];
-                        if (!!styleProperty.converter
-                            && converters.indexOf(styleProperty.converter) === -1
-                            && !ElementConverterPool.get(styleProperty.converter)
+                    for (const propertyConfig of dataMapping.elements[elementName].style) {
+                        if (!!propertyConfig.converter
+                            && converters.indexOf(propertyConfig.converter) === -1
+                            && !ElementConverterPool.get(propertyConfig.converter)
                         ) {
-                            converters.push(styleProperty.converter);
+                            converters.push(propertyConfig.converter);
                         }
-                        if (!!styleProperty.preview_converter
-                            && converters.indexOf(styleProperty.preview_converter) === -1
-                            && !ElementConverterPool.get(styleProperty.preview_converter)
+                        if (!!propertyConfig.preview_converter
+                            && converters.indexOf(propertyConfig.preview_converter) === -1
+                            && !ElementConverterPool.get(propertyConfig.preview_converter)
                         ) {
-                            converters.push(styleProperty.preview_converter);
+                            converters.push(propertyConfig.preview_converter);
                         }
                     }
                 }
 
                 if (dataMapping.elements[elementName].attributes !== undefined) {
-                    for (let i = 0; i < dataMapping.elements[elementName].attributes.length; i++) {
-                        const attributeProperty = dataMapping.elements[elementName].attributes[i];
-                        if (!!attributeProperty.converter
-                            && converters.indexOf(attributeProperty.converter) === -1
-                            && !ElementConverterPool.get(attributeProperty.converter)
+                    for (const attributeConfig of dataMapping.elements[elementName].attributes) {
+                        if (!!attributeConfig.converter
+                            && converters.indexOf(attributeConfig.converter) === -1
+                            && !ElementConverterPool.get(attributeConfig.converter)
                         ) {
-                            converters.push(attributeProperty.converter);
+                            converters.push(attributeConfig.converter);
                         }
-                        if (!!attributeProperty.preview_converter
-                            && converters.indexOf(attributeProperty.preview_converter) === -1
-                            && !ElementConverterPool.get(attributeProperty.preview_converter)
+                        if (!!attributeConfig.preview_converter
+                            && converters.indexOf(attributeConfig.preview_converter) === -1
+                            && !ElementConverterPool.get(attributeConfig.preview_converter)
                         ) {
-                            converters.push(attributeProperty.preview_converter);
+                            converters.push(attributeConfig.preview_converter);
                         }
                     }
                 }

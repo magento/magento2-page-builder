@@ -9,8 +9,8 @@ import Stage from "../stage";
 import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
-import converterPoolFactory from "./element-converter-pool-factory";
 import dataConverterPoolFactory from "./data-converter-pool-factory";
+import elementConverterPoolFactory from "./element-converter-pool-factory";
 
 /**
  * Retrieve the block instance from the config object
@@ -40,7 +40,7 @@ export default function createBlock(
     stage = stage || parent.stage;
     formData = formData || {};
     const componentsPromise: Array<Promise<any>> = [
-        converterPoolFactory(config.name),
+        elementConverterPoolFactory(config.name),
         dataConverterPoolFactory(config.name),
     ];
     return new Promise((resolve: (blockComponent: any) => void) => {

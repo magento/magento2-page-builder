@@ -7,8 +7,8 @@ import ko from "knockout";
 import $t from "mage/translate";
 import _ from "underscore";
 import appearanceConfig from "../../../component/block/appearance-config";
-import ElementConverterPool from "../../../component/block/element-converter-pool";
 import DataConverterPool from "../../../component/block/data-converter-pool";
+import ElementConverterPool from "../../../component/block/element-converter-pool";
 import {fromSnakeToCamelCase} from "../../../utils/string";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
@@ -203,8 +203,8 @@ export default class Structural extends EditableArea implements StructuralInterf
         const config = appearanceConfiguration.data_mapping.elements;
         const convertersConfig = appearanceConfiguration.data_mapping.converters;
 
-        for (let i = 0; i < convertersConfig.length; i++) {
-            data = this.dataConverterPool.get(convertersConfig[i].component).toDom(data, convertersConfig[i].config);
+        for (const converterConfig of convertersConfig) {
+            data = this.dataConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
         }
 
         let result = {};
@@ -284,19 +284,21 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     private convertAttributes(config: any, data: DataObject, area: string) {
         const result = {};
-        for (let i = 0; i < config.attributes.length; i++) {
-            const attribute = config.attributes[i];
-            if (attribute.persist !== undefined && attribute.persist !== null && attribute.persist === "false") {
+        for (const attributeConfig of config.attributes) {
+             if (attributeConfig.persist !== undefined
+                 && attributeConfig.persist !== null
+                 && attributeConfig.persist === "false"
+             ) {
                 continue;
             }
-            let value = data[attribute.var];
-            const converter = "preview" === area && attribute.preview_converter
-                ? attribute.preview_converter
-                : attribute.converter;
-            if (this.elementConverterPool.get(converter)) {
-                value = this.elementConverterPool.get(converter).toDom(attribute.var, data);
+             let value = data[attributeConfig.var];
+             const converter = "preview" === area && attributeConfig.preview_converter
+                ? attributeConfig.preview_converter
+                : attributeConfig.converter;
+             if (this.elementConverterPool.get(converter)) {
+                value = this.elementConverterPool.get(converter).toDom(attributeConfig.var, data);
             }
-            result[attribute.name] = value;
+             result[attributeConfig.name] = value;
         }
         return result;
     }
@@ -312,30 +314,29 @@ export default class Structural extends EditableArea implements StructuralInterf
     private convertStyle(config: any, data: any, area: string) {
         const result = {};
         if (config.style) {
-            for (let i = 0; i < config.style.length; i++) {
-                const styleProperty = config.style[i];
-                if (styleProperty.persist !== undefined
-                    && styleProperty.persist !== null
-                    && styleProperty.persist === "false"
+            for (const propertyConfig of config.style) {
+                if (propertyConfig.persist !== undefined
+                    && propertyConfig.persist !== null
+                    && propertyConfig.persist === "false"
                 ) {
                     continue;
                 }
                 let value = "";
-                if (!!styleProperty.static) {
-                    value = styleProperty.value;
+                if (!!propertyConfig.static) {
+                    value = propertyConfig.value;
                 } else {
-                    value = data[styleProperty.var];
-                    const converter = "preview" === area && styleProperty.preview_converter
-                        ? styleProperty.preview_converter
-                        : styleProperty.converter;
+                    value = data[propertyConfig.var];
+                    const converter = "preview" === area && propertyConfig.preview_converter
+                        ? propertyConfig.preview_converter
+                        : propertyConfig.converter;
                     if (this.elementConverterPool.get(converter)) {
-                        value = this.elementConverterPool.get(converter).toDom(styleProperty.var, data);
+                        value = this.elementConverterPool.get(converter).toDom(propertyConfig.var, data);
                     }
                 }
                 if (typeof value === "object") {
                     _.extend(result, value);
                 } else {
-                    result[fromSnakeToCamelCase(styleProperty.name)] = value;
+                    result[fromSnakeToCamelCase(propertyConfig.name)] = value;
                 }
             }
         }
@@ -359,12 +360,12 @@ export default class Structural extends EditableArea implements StructuralInterf
 
         const config = appearanceConfiguration.data_mapping.elements;
 
-        for (const elementName in config) {
+        for (const elementName of Object.keys(config)) {
             if (this.data[elementName] === undefined) {
                 this.data[elementName] = {
                     attributes: ko.observable({}),
-                    css: ko.observable({}),
                     style: ko.observable({}),
+                    css: ko.observable({}),
                     html: ko.observable({}),
                 };
             }

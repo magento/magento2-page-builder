@@ -16,10 +16,10 @@ export default class Margins implements ElementConverterInterface {
         const result = {};
         if (undefined !== value.margin) {
             result.margin = {
-                bottom: value.margin.bottom.replace("px", ""),
+                top: value.margin.top.replace("px", ""),
                 left: value.margin.left.replace("px", ""),
                 right: value.margin.right.replace("px", ""),
-                top: value.margin.top.replace("px", ""),
+                bottom: value.margin.bottom.replace("px", ""),
             };
         }
         return result;

@@ -15,10 +15,10 @@ export default class Margins implements PropertyReaderInterface {
     public read(element: HTMLElement): string | object {
         return {
             margin: {
-                bottom: element.style.marginBottom,
                 left: element.style.marginLeft,
-                right: element.style.marginRight,
                 top: element.style.marginTop,
+                right: element.style.marginRight,
+                bottom: element.style.marginBottom,
             },
         };
     }

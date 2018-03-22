@@ -12,35 +12,31 @@ import PropertyReaderPool from "./property-reader-pool";
  */
 export default function create(contentType: string): Promise<> {
     const config = Config.getContentType(contentType);
-
     const propertyReaders = [];
-
-    for (key in config.appearances) {
-        const dataMapping = config.appearances[key].data_mapping;
+    for (const appearance of config.appearances) {
+        const dataMapping = appearance.data_mapping;
         if (dataMapping !== undefined && dataMapping.elements !== undefined) {
-            for (const elementName in dataMapping.elements) {
-                if (dataMapping.elements[elementName].style !== undefined) {
-                    for (let i = 0; i < dataMapping.elements[elementName].style.length; i++) {
-                        const styleProperty = dataMapping.elements[elementName].style[i];
-                        if (!!styleProperty.complex
-                            && styleProperty.reader
-                            && propertyReaders.indexOf(styleProperty.reader) === -1
-                            && !PropertyReaderPool.get(styleProperty.reader)
+            for (const element of dataMapping.elements) {
+                if (element.style !== undefined) {
+                    for (const propertyConfig of element.style) {
+                        if (!!propertyConfig.complex
+                            && propertyConfig.reader
+                            && propertyReaders.indexOf(propertyConfig.reader) === -1
+                            && !PropertyReaderPool.get(propertyConfig.reader)
                         ) {
-                            propertyReaders.push(styleProperty.reader);
+                            propertyReaders.push(propertyConfig.reader);
                         }
                     }
                 }
 
-                if (dataMapping.elements[elementName].attributes !== undefined) {
-                    for (let i = 0; i < dataMapping.elements[elementName].attributes.length; i++) {
-                        const attributeProperty = dataMapping.elements[elementName].attributes[i];
-                        if (!!attributeProperty.complex
-                            && attributeProperty.reader
-                            && propertyReaders.indexOf(attributeProperty.reader) === -1
-                            && !PropertyReaderPool.get(attributeProperty.reader)
+                if (element.attributes !== undefined) {
+                    for (const attributeConfig of element.attributes) {
+                        if (!!attributeConfig.complex
+                            && attributeConfig.reader
+                            && propertyReaders.indexOf(attributeConfig.reader) === -1
+                            && !PropertyReaderPool.get(attributeConfig.reader)
                         ) {
-                            propertyReaders.push(attributeProperty.reader);
+                            propertyReaders.push(attributeConfig.reader);
                         }
                     }
                 }

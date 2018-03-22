@@ -11,9 +11,9 @@ import getPreviewInstance from "../stage/previews";
 import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import { Block as BlockInterface } from "./block.d";
-import PreviewBlock from "./preview/block";
-import ElementConverterPool from "./element-converter-pool";
 import DataConverterPool from "./data-converter-pool";
+import ElementConverterPool from "./element-converter-pool";
+import PreviewBlock from "./preview/block";
 
 interface FieldDefaults {
     [key: string]: any;
@@ -39,7 +39,7 @@ export default class Block extends Structural implements BlockInterface {
         config: ConfigContentBlock,
         formData: any,
         elementConverterPool: ElementConverterPool,
-        dataConverterPool: DataConverterPool
+        dataConverterPool: DataConverterPool,
     ) {
         super(parent, stage, config, elementConverterPool, dataConverterPool);
 
