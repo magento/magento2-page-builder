@@ -6,6 +6,11 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CloseButton" type="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\Close">
+        <arguments>
+            <argument name="targetName" xsi:type="string">ns = pagebuilder_modal_form, index = modal</argument>
+        </arguments>
+    </virtualType>
     <type name="Magento\Cms\Model\Wysiwyg\CompositeConfigProvider">
         <arguments>
             <argument name="variablePluginConfigProvider" xsi:type="array">

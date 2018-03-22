@@ -10,21 +10,6 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 class ResetButton implements ButtonProviderInterface
 {
     /**
-     * @var string
-     */
-    private $targetName;
-
-    /**
-     * Constructor
-     *
-     * @param $targetName
-     */
-    public function __construct(string $targetName)
-    {
-        $this->targetName = $targetName;
-    }
-
-    /**
      * Retrieve button data
      *
      * @return array
@@ -36,19 +21,7 @@ class ResetButton implements ButtonProviderInterface
             'class' => 'reset',
             'on_click' => '',
             'data_attribute' => [
-                'mage-init' => [
-                    'buttonAdapter' => [
-                        'actions' => [
-                            [
-                                'targetName' => $this->targetName,
-                                'actionName' => 'reset',
-                                'params' => [
-                                    false,
-                                ]
-                            ]
-                        ]
-                    ]
-                ],
+                'mage-init' => ['button' => ['event' => 'reset']],
                 'form-role' => 'reset',
             ],
             'sort_order' => 30

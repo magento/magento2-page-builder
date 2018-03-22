@@ -10,21 +10,6 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 class SaveButton implements ButtonProviderInterface
 {
     /**
-     * @var string
-     */
-    private $targetName;
-
-    /**
-     * Constructor
-     *
-     * @param $targetName
-     */
-    public function __construct(string $targetName)
-    {
-        $this->targetName = $targetName;
-    }
-
-    /**
      * Retrieve button data
      *
      * @return array
@@ -34,24 +19,11 @@ class SaveButton implements ButtonProviderInterface
         return [
             'label' => __('Save'),
             'class' => 'save primary',
-            'on_click' => '',
             'data_attribute' => [
-                'mage-init' => [
-                    'buttonAdapter' => [
-                        'actions' => [
-                            [
-                                'targetName' => $this->targetName,
-                                'actionName' => 'save',
-                                'params' => [
-                                    false,
-                                ]
-                            ]
-                        ]
-                    ]
-                ],
+                'mage-init' => ['button' => ['event' => 'save']],
                 'form-role' => 'save',
             ],
-            'sort_order' => 90,
+            'sort_order' => 30,
         ];
     }
 }
