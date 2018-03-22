@@ -20,8 +20,10 @@ define(["./block"], function (_block) {
     _proto.getLinkAttributes = function getLinkAttributes() {
       var data = this.getData();
       return {
-        href: data.button_link,
-        target: data.open_in_new_tab === "1" ? "_blank" : ""
+        //add here logic to
+        href: data.button_link[data.button_link.type],
+        data_attribute_link_type: data.button_link.type,
+        target: data.button_link.setting == true ? "_blank" : ""
       };
     };
 

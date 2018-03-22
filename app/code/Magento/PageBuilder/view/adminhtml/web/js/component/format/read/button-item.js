@@ -23,7 +23,10 @@ define(["./default"], function (_default) {
       var button = element.getElementsByTagName("a")[0];
       var advancedData = this.defaultReader.read(button);
       var response = {
-        button_link: button.getAttribute("href"),
+        button_link: {
+          button.getAttribute("href"),
+
+          },
         button_text: button.innerText,
         button_type: button.classList[0],
         open_in_new_tab: button.target === "_blank" ? "1" : "0"
