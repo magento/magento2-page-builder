@@ -57,13 +57,15 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                                 $appearanceData['render_template'] = $renderTemplateNode->nodeValue;
                             }
                             $readerNode = $appearanceNode->getElementsByTagName('reader')->item(0);
-                            if ($readerNode) {
+                            if ($readerNode && $readerNode->nodeValue) {
                                 $appearanceData['readers'] = [$readerNode->nodeValue];
                             } else {
                                 $readersNode = $appearanceNode->getElementsByTagName('readers')->item(0);
                                 $readers = [];
-                                foreach ($readersNode->getElementsByTagName('reader') as $readerNode) {
-                                    $readers[] = $readerNode->attributes->getNamedItem('component')->nodeValue;
+                                if($readersNode) {
+                                    foreach ($readersNode->getElementsByTagName('reader') as $readerNode) {
+                                        $readers[] = $readerNode->attributes->getNamedItem('component')->nodeValue;
+                                    }
                                 }
                                 $appearanceData['readers'] = $readers;
                             }
@@ -75,7 +77,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             }
                             $appearanceData['default'] = $appearanceNode->hasAttribute('default')
                                 ? $appearanceNode->attributes->getNamedItem('default')->nodeValue
-                                : false;
+                                : 'false';
                             $output['types'][$name][$childNode->nodeName][$appearanceName] = $appearanceData;
                         }
                     } elseif ('allowed_parents' === $childNode->nodeName){
@@ -144,6 +146,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                             : null,
                         'virtual' => $propertyNode->hasAttribute('virtual')
                             ? $propertyNode->attributes->getNamedItem('virtual')->nodeValue
+                            : null,
+                        'persist' => $propertyNode->hasAttribute('persist')
+                            ? $propertyNode->attributes->getNamedItem('persist')->nodeValue
                             : null,
                     ];
                 }
@@ -231,6 +236,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             if ($cssNode) {
                 $elementData[$elementName]['css']['var']
                     = $cssNode->attributes->getNamedItem('var')->nodeValue;
+                $elementData[$elementName]['css']['converter'] = $cssNode->hasAttribute('converter')
+                    ? $cssNode->attributes->getNamedItem('converter')->nodeValue
+                    : null;
                 $filterClasses = [];
                 $filterNode = $cssNode->getElementsByTagName('filter')->item(0);
                 if ($filterNode) {
@@ -244,6 +252,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             if ($tagNode) {
                 $elementData[$elementName]['tag']['var']
                     = $tagNode->attributes->getNamedItem('var')->nodeValue;
+                $elementData[$elementName]['tag']['converter'] = $tagNode->hasAttribute('converter')
+                    ? $tagNode->attributes->getNamedItem('converter')->nodeValue
+                    : null;
             }
         }
 
