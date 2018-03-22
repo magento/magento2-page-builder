@@ -16,13 +16,13 @@ define(["./block"], function (_block) {
     var _proto = Slide.prototype;
 
     /**
+     * Extract data values our of observable functions
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
      *
-     * @returns styles
+     * @param {StyleAttributeMapperResult} styles
+     * @returns {StyleAttributeMapperResult}
      */
     _proto.afterStyleMapped = function afterStyleMapped(styles) {
-      // Extract data values our of observable functions
-      // The style attribute mapper converts images to directives, override it to include the correct URL
       if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {
         styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
       }
