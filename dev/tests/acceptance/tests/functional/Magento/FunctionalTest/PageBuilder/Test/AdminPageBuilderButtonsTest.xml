@@ -29,7 +29,7 @@
         <after>
             <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnEditPage"/>
             <waitForPageLoad stepKey="waitForPageLoad"/>
-            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAll}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
+            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
             <waitForPageLoad stepKey="waitForGridReload"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
@@ -44,13 +44,13 @@
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsPageSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <waitForPageLoad stepKey="waitForCmsPageToSave1"/>
         <see userInput="You saved the page." stepKey="assertPageSaved1"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab1" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderRowContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{CmsPageSection.cmsPageSaveButton}}" stepKey="onMouseOverRowContentBlockStage"/>
+        <moveMouseOver selector="{{CmsNewPagePageActionsSection.savePage}}" stepKey="onMouseOverRowContentBlockStage"/>
         <dontSeeElement selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="dontSeeAddButton"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage1"/>
         <seeElement selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="seeAddButton1"/>
@@ -58,19 +58,19 @@
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage1"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.emptyButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeEmptyButtonOnStorefront"/>
         <!-- Edit button -->
-        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid"/>
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPagesPageActionsSection"/>
         <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
-        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible1" />
-        <conditionalClick selector="{{CmsPageGrid.clearAllButton}}" dependentSelector="{{CmsPageGrid.activeFilter}}" stepKey="clickClearFilterIfPresent" visible="true"/>
-        <waitForElementNotVisible selector="{{CmsPageGrid.spinner}}" stepKey="waitForSpinnerNotVisible2" />
-        <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn" />
+        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible1" />
+        <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilter}}" stepKey="clickClearFilterIfPresent" visible="true"/>
+        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible2" />
+        <click selector="{{CmsPagesPageActionsSection.filterButton}}" stepKey="clickFiltersBtn" />
         <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="buttons{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey" />
         <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn" />
         <waitForPageLoad stepKey="waitForSearchResults" />
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
-        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
-        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
+        <waitForElementVisible selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
+        <click selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
+        <click selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
         <waitForPageLoad stepKey="waitForEditCmsPage" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab2" />
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -109,16 +109,17 @@
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
         <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seePrimaryButtonOnStorefront"/>
         <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypeSecondaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeSecondaryButtonOnStorefront"/>
-        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPageGrid2"/>
+        <!-- Check fields and edit advanced section back to default -->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPagesPageActionsSection2"/>
         <waitForPageLoad stepKey="waitForCmsPagesGridLoad2"/>
-        <click selector="{{CmsPagesPageActionsSection.FilterBtn}}" stepKey="clickFiltersBtn2" />
+        <click selector="{{CmsPagesPageActionsSection.filterButton}}" stepKey="clickFiltersBtn2" />
         <fillField selector="{{CmsPagesPageActionsSection.URLKey}}" userInput="buttons{{PageBuilderPageTitle.pageName}}" stepKey="fillOutURLKey2" />
         <click selector="{{CmsPagesPageActionsSection.ApplyFiltersBtn}}" stepKey="clickApplyBtn2" />
         <waitForPageLoad stepKey="waitForSearchResults2" />
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="waitForFirstItemButton2" />
-        <click selector="{{CmsPageGrid.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem2"/>
-        <waitForElementVisible selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="waitForFirstItemEditButton2" />
-        <click selector="{{CmsPageGrid.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem2"/>
+        <waitForElementVisible selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="waitForFirstItemButton2" />
+        <click selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem2"/>
+        <waitForElementVisible selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="waitForFirstItemEditButton2" />
+        <click selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem2"/>
         <waitForPageLoad stepKey="waitForEditCmsPage2" />
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab4" />
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -310,6 +311,7 @@
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>

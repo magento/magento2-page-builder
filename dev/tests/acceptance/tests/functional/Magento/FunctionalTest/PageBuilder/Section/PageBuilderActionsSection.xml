@@ -49,7 +49,7 @@
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
         <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
         <element name="editForm" type="text" selector='//div[contains(@class, "pagebuilder_modal_form_pagebuilder_modal_form_modal")]'/>
-        <element name="editFormCancel" type="button" selector="button.action-.scalable.close[data-ui-id='pagebuilder-column-form-page-actions-close'][title='Close'][type='button'][data-form-role='close']"/>
+        <element name="editFormCancel" type="button" selector="button.action-.scalable.close[title='Close'][type='button'][data-form-role='close']"/>
         <element name="editFormTitle" type="text" selector=".modal-title[data-role='title']"/>
         <element name="editFormClose" type="button" selector=".modal-header .page-main-actions [data-form-role='close']" timeout="30"/>
         <element name="editFormReset" type="button" selector=".modal-header .page-main-actions [data-form-role='reset']" timeout="30"/>
@@ -60,28 +60,6 @@
         <element name="panelFieldControlSwitch" type="input" selector="//*[@name='{{arg1}}']/parent::*/label" parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
         <element name="identifyPageBuilder" type="text" selector="//div[@class='pagebuilder-panel-groups-child']//span[text()='Row']"/>
-    </section>
-    <section name="CmsPageSection">
-        <element name="spinner" type="input" selector='//div[@data-component="cms_page_form.cms_page_form"]' />
-        <element name="cmsPageSaveButton" type="button" selector=".action-.scalable.save.primary" timeout="30"/>
-        <element name="cmsPageSaveAndContinueEditButton" type="button" selector="#save_and_continue" timeout="30"/>
-        <element name="cmsPageTitle" type="text" selector=".page-header .page-title"/>
-        <element name="pageTitle" type="input" selector="//*[@name='title']"/>
-        <element name="showHideEditor" type="button" selector="//*[@id='togglecms_page_form_content']"/>
-        <element name="content" type="input" selector="//textarea[@name='content']"/>
-    </section>
-    <section name="CmsPageGrid">
-        <element name="addNewPageButton" type="button" selector="#add"/>
-        <element name="spinner" type="input" selector='//div[@data-component="cms_page_listing.cms_page_listing.cms_page_columns"]'/>
-        <element name="cmsPageSearchInput" type="input" selector="//*[@id='fulltext']"/>
-        <element name="searchButton" type="button" selector="//*[@id='fulltext']/parent::*/button"/>
-        <element name="firstItemSelectButton" type="button" selector=".data-grid .action-select-wrap button.action-select"/>
-        <element name="firstItemEditButton" type="button" selector=".data-grid .action-select-wrap .action-menu-item[data-action~='item-edit']"/>
-        <element name="clearAllButton" type="button" selector="(//div[@class = 'admin__data-grid-outer-wrap']/descendant::button[@data-action = 'grid-filter-reset'])[1]"/>
-        <element name="activeFilter" type="button" selector="(//div[contains(@class, 'admin__data-grid-filters-current') and contains(@class, '_show')])[1]"/>
-    </section>
-    <section name="CmsMessagesSection">
-        <element name="savePageSuccessMessage" type="text" selector=".message-success"/>
     </section>
     <section name="AdvancedForm">
         <element name="sectionName" type="button" selector="//div[@data-index='advanced']"/>

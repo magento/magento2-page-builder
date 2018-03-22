@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "uiRegistry", "./edit/persistence-client"], function (_translate, _uiRegistry, _persistenceClient) {
+define(["uiEvents"], function (_uiEvents) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -14,12 +14,16 @@ define(["mage/translate", "uiRegistry", "./edit/persistence-client"], function (
      * @param {DataStore} store
      */
     function Edit(instance, store) {
-      this.modal = _uiRegistry.get("pagebuilder_modal_form.pagebuilder_modal_form.modal");
-      this.insertForm = _uiRegistry.get("pagebuilder_modal_form.pagebuilder_modal_form.modal.insert_form");
+      var _this = this;
+
       this.instance = void 0;
       this.store = void 0;
       this.instance = instance;
       this.store = store;
+
+      _uiEvents.on('form:save:' + this.instance.id, function (data) {
+        _this.store.update(_this.instance.id, data);
+      });
     }
     /**
      * Open the modal
@@ -29,92 +33,12 @@ define(["mage/translate", "uiRegistry", "./edit/persistence-client"], function (
     var _proto = Edit.prototype;
 
     _proto.open = function open() {
-      this.destroyInserted();
-      this.setTitle();
-      this.render();
-      this.modal.openModal();
-    };
-    /**
-     * Retrieve the content types form component text from the registry
-     *
-     * @returns {string}
-     */
-
-
-    _proto.getFormComponent = function getFormComponent() {
-      return _uiRegistry.get("component_" + this.instance.config.form);
-    };
-    /**
-     * Render the form
-     */
-
-
-    _proto.render = function render() {
-      // Pass the UI component to the render function
-      this.insertForm.onRender(this.getFormComponent());
-      this.setDataProviderClient();
-    };
-    /**
-     * Set the title on the modal
-     */
-
-
-    _proto.setTitle = function setTitle() {
-      this.modal.setTitle((0, _translate)("Edit " + this.instance.config.label));
-    };
-    /**
-     * Set the data provider client to be the current instance
-     */
-
-
-    _proto.setDataProviderClient = function setDataProviderClient() {
-      var _this = this;
-
-      var formName = this.instance.config.form; // Destroy the last data provider so a new instance is created
-
-      if (_uiRegistry.get("_pagebuilder_last_provider")) {
-        _uiRegistry.remove(_uiRegistry.get("_pagebuilder_last_provider"));
-      } // Set the current edited instances data into the registry
-
-
-      _uiRegistry.set("_pagebuilder_edit_data", this.store.get(this.instance.id)); // Retrieve the component
-
-
-      _uiRegistry.get(formName + "." + formName, function (component) {
-        var provider = _uiRegistry.get(component.provider);
-
-        _uiRegistry.set("_pagebuilder_last_provider", component.provider); // Set the data provider client to our persistence client
-
-
-        provider.client = new _persistenceClient(_this.modal, _this.store, _this.instance.id);
+      _uiEvents.trigger('form:render', {
+        namespace: this.instance.config.form,
+        title: this.instance.config.label,
+        data: this.store.get(this.instance.id),
+        id: this.instance.id
       });
-    };
-    /**
-     * Retrieve the form component
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getFormComponentInstance = function getFormComponentInstance() {
-      var formName = this.instance.config.form;
-      return _uiRegistry.get(formName + "." + formName);
-    };
-    /**
-     * Destroy the inserted component
-     */
-
-
-    _proto.destroyInserted = function destroyInserted() {
-      var existingComponent = this.getFormComponentInstance();
-
-      if (existingComponent) {
-        existingComponent.destroy();
-      } // Reset the insert form component
-
-
-      this.insertForm.destroyInserted();
-      this.insertForm.removeActions();
     };
 
     return Edit;
