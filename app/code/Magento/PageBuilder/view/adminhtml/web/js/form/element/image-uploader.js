@@ -17,7 +17,19 @@ define([
 
     return Uploader.extend({
         defaults: {
-            dropzoneSelector: null
+            classes: {
+                dragging: 'dragging',
+                draggingInside: 'dragging-inside',
+                draggingOutside: 'dragging-outside'
+            },
+            translations: {
+                allowedFileTypes: 'Allowed file types',
+                dropHere: 'Drop here',
+                maximumFileSize: 'Maximum file size',
+                selectFromGallery: 'Select from Gallery',
+                upload: 'Upload',
+                uploadNewImage: 'Upload New Image'
+            }
         },
 
         /**
@@ -28,8 +40,6 @@ define([
             var $document = $(document);
 
             this._super();
-
-            this.dropzoneSelector = this.dropZone;
 
             // bind dropzone highlighting using event delegation only once
             if (!initializedOnce) {
@@ -47,9 +57,9 @@ define([
          * Remove draggable classes from dropzones
          * {@inheritDoc}
          */
-        onBeforeFileUpload: function (e, data) {
+        onBeforeFileUpload: function () {
             this.removeDraggableClassesFromDropzones();
-            this._super(e, data);
+            this._super();
         },
 
         /**
@@ -58,15 +68,19 @@ define([
          * @param {jQuery.event} e
          */
         highlightDropzone: function (e) {
-            var $dropzone = $(e.target).closest(this.dropzoneSelector),
-                $dropzones = $(this.dropzoneSelector),
+            var $dropzone = $(e.target).closest(this.dropZone),
+                $otherDropzones = $(this.dropZone).not($dropzone),
                 isInsideDropzone = !!$dropzone.length;
 
             if (isInsideDropzone) {
-                $dropzone.removeClass('dragging-outside').addClass('dragging dragging-inside');
+                $dropzone
+                    .removeClass(this.draggingOutsideClass)
+                    .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
             }
 
-            $dropzones.not($dropzone).removeClass('dragging-inside').addClass('dragging dragging-outside');
+            $otherDropzones
+                .removeClass(this.draggingInsideClass)
+                .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
         },
 
         /**
@@ -89,9 +103,14 @@ define([
          * Remove draggable CSS classes from dropzone elements
          */
         removeDraggableClassesFromDropzones: function () {
-            var $dropzones = $(this.dropzoneSelector);
+            var $dropzones = $(this.dropZone);
 
-            $dropzones.removeClass('dragging dragging-inside dragging-outside');
+            $dropzones
+                .removeClass([
+                    this.classes.dragging,
+                    this.classes.draggingInside,
+                    this.classes.draggingOutside
+                ].join(' '));
         },
 
         /**
@@ -99,7 +118,7 @@ define([
          * {@inheritDoc}
          */
         addFile: function (file) {
-            this._super(file);
+            this._super();
 
             events.trigger('image:uploaded:' + this.id, [file]);
 
