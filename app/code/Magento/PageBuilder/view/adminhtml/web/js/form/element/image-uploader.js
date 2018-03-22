@@ -74,12 +74,12 @@ define([
 
             if (isInsideDropzone) {
                 $dropzone
-                    .removeClass(this.draggingOutsideClass)
+                    .removeClass(this.classes.draggingOutside)
                     .addClass([this.classes.dragging, this.classes.draggingInside].join(' '));
             }
 
             $otherDropzones
-                .removeClass(this.draggingInsideClass)
+                .removeClass(this.classes.draggingInside)
                 .addClass([this.classes.dragging, this.classes.draggingOutside].join(' '));
         },
 
