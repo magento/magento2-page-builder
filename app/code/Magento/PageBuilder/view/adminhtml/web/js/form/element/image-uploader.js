@@ -9,8 +9,9 @@ define([
     'underscore',
     'uiRegistry',
     'Magento_Ui/js/form/element/image-uploader',
-    'uiEvents'
-], function ($, _, uiRegistry, Uploader, events) {
+    'uiEvents',
+    'mage/translate'
+], function ($, _, uiRegistry, Uploader, events, $t) {
     'use strict';
 
     var initializedOnce = false;
@@ -23,12 +24,12 @@ define([
                 draggingOutside: 'dragging-outside'
             },
             translations: {
-                allowedFileTypes: 'Allowed file types',
-                dropHere: 'Drop here',
-                maximumFileSize: 'Maximum file size',
-                selectFromGallery: 'Select from Gallery',
-                upload: 'Upload',
-                uploadNewImage: 'Upload New Image'
+                allowedFileTypes: $t('Allowed file types'),
+                dropHere: $t('Drop here'),
+                maximumFileSize: $t('Maximum file size'),
+                selectFromGallery: $t('Select from Gallery'),
+                upload: $t('Upload'),
+                uploadNewImage: $t('Upload New Image')
             }
         },
 
