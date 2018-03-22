@@ -14,8 +14,9 @@ export default class ButtonItem extends Block {
     public getLinkAttributes(): {} {
         const data = this.getData();
         return {
-            href: data.button_link,
-            target: data.open_in_new_tab === "1" ? "_blank" : "",
+            data_attribute_link_type: data.button_link.type,
+            href: data.button_link[data.button_link.type],
+            target: data.button_link.setting === true ? "_blank" : "",
         };
     }
 }
