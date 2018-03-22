@@ -161,11 +161,13 @@ Appearances
 Appearance specifies how content type will look in admin preview and how it will be rendered to master format. Appearance can control templates, how data will be read from master format, add how style properties and attributes will be applied to the elements.
 
 Appearance configuration consists of
-* `appearance` - Specifies the name of the appearance. Every content type should have one default appearance, this is specified by adding default="true" attribute to a node.
+* `appearance` - specifies the name of the appearance. Every content type should have one default appearance, this is specified by adding default="true" attribute to a node.
 * `data_mapping` - specifies how data is read from the master format, how it will be saved to master format and conversion from and to master format
 * `preview_template` - template that is used to display element in the preview
 * `render_template` - template used to render content type to master format
 * `reader` - used to read data for content type from master format
+
+The default reader is `Magento_PageBuilder/js/component/format/read/configurable`, it would read data based on configuration specified in `data_mapping`.
 
 ```
 <appearance name="poster" default="true">
@@ -177,7 +179,7 @@ Appearance configuration consists of
 ```
 
 Configuration of `data_mapping`
-* `elements` - container for all the elements for the content type. No configs
+* `elements` - container for all the elements for the content type
 * `element` - specifies the name of the element for both render and preview templates to retrieve the data from. Path is used by the reader to determine where to retrieve the data from in the master format.
 * `style_properties` - specifies styles properties for the element in the master format
 * `attributes` - specifies attributes for the element in master format
