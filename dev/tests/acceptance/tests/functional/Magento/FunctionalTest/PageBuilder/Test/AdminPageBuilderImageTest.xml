@@ -8,6 +8,109 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="AddImageIntoPageBuilderStage">
+        <annotations>
+            <features value="PageBuilder base functionality MAGETWO-83921"/>
+            <stories value="Image MAGETWO-83926"/>
+            <title value="AddImageIntoPageBuilderStage"/>
+            <description value="A user should be able to add an image into PageBuilder stage."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84259"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+        </before>
+        <after>
+            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+                <argument name="contentBlockIndex" value="PageBuilderImageIndex1"/>
+            </actionGroup>
+            <waitForPageLoad stepKey="waitForPageLoad1"/>
+            <click selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+            <waitForPageLoad stepKey="waitForPageLoad2" />
+            <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteUploadedImageFromStorage">
+                <argument name="Image" value="PageBuilderImageOnStage" />
+            </actionGroup>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForPageBuilder" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <seeElement selector="{{ImageOnStage.UploadImageBtn}}" stepKey="seeUploadImageBtn1" />
+        <seeElement selector="{{ImageOnStage.SelectFromGalleryBtn}}" stepKey="seeSelectFromGallerytn1" />
+
+        <!--Attach image A to PageBuilder stage-->
+        <attachFile userInput="{{PageBuilderImageOnStage.value}}" selector="//div[@class='pagebuilder-image-uploader-container']//input[@name='image']" stepKey="attachImageFileOnStage"/>
+        <waitForElementVisible selector=".preview-image" stepKey="waitForImagePreview"/>
+        <seeElement selector="//img[@class='preview-image' and contains(@src,'magentoStage')]" stepKey="eqwe" />
+
+        <!--Hover uploaded image to check Upload New Image button and Select From Gallery button -->
+        <moveMouseOver selector="{{ImageOnStage.ImageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" x="10" y="0" stepKey="onMouseOverUploadedImage"/>
+        <seeElement selector="{{ImageOnStage.UploadImageBtn}}" stepKey="seeUploadImageBtn2" />
+        <seeElement selector="{{ImageOnStage.SelectFromGalleryBtn}}" stepKey="seeSelectFromGallerytn2" />
+
+        <!--Duplicate Image Content Block -->
+        <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderImageIndex1"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+
+        <!--Verify image A display on preview of slide-out-->
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImageOnStage.value)}}" stepKey="seeImageNameOnPreview"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeMainImageSource"/>
+
+        <!--Verify image A stored in the root folder of Magento Media Gal{lery-->
+        <click selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderImageOnStage.value)}}" stepKey="wait" />
+        <seeElement  selector="{{MediaGallerySection.image(PageBuilderImageOnStage.value)}}" stepKey="waitForUploadedImage" />
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideout"/>
+
+        <!--Upload image B to replace image A-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderLocalImagePropertyJpg"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
+
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <seeElement selector="{{ImageOnStage.ImageContentBlockByIndex(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="sadafafsfd"/>
+        <seeElement selector="{{ImageOnStage.ImageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="sadafafeddssfd"/>
+
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeImage1Source"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeImage2Source"/>
+    </test>
     <test name="AddImageContentBlockToCMSPage">
         <annotations>
             <features value="PageBuilder base functionality MAGETWO-83921"/>
@@ -38,15 +141,30 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <seeElement selector="{{ImageOnStage.UploadImageBtn}}" stepKey="seeUploadImageBtn" />
+        <seeElement selector="{{ImageOnStage.SelectFromGalleryBtn}}" stepKey="seeSelectFromGallerytn" />
+
+        <!--Attach image A to PageBuilder stage-->
+        <attachFile userInput="{{PageBuilderImageOnStage.value}}" selector="//div[@class='pagebuilder-image-uploader-container']//input[@name='image']" stepKey="attachImageFileOnStage"/>
+        <waitForElementVisible selector=".preview-image" stepKey="waitForImagePreview"/>
+
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
+
+        <!--Verify image A display on preview of slide-out-->
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImageOnStage.value)}}" stepKey="seeImageNameOnPreview"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeMainImageSource"/>
+
         <dontSeeElement selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
         <grabValueFrom selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
         <assertEquals expected="full-width" expectedType="string" actual="defaultAppearanceValue" actualType="variable" message="pass" stepKey="assertDefaultAppearanceValue"/>
         <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
         <seeElement selector="{{UploadImageSection.PlaceholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
+
+
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
@@ -215,7 +333,6 @@
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
