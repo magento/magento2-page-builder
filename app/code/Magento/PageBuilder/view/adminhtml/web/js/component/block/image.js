@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "uiEvents", "uiLayout", "uiRegistry", "underscore", "../../utils/url", "../config", "./block"], function (_translate, _uiEvents, _uiLayout, _uiRegistry, _underscore, _url, _config, _block) {
+define(["uiEvents", "uiLayout", "uiRegistry", "underscore", "../../utils/url", "../config", "./block", "../uploader"], function (_uiEvents, _uiLayout, _uiRegistry, _underscore, _url, _config, _block, _uploader) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =
@@ -24,28 +24,7 @@ define(["mage/translate", "uiEvents", "uiLayout", "uiRegistry", "underscore", ".
 
       _this = _Block.call(this, parent, stage, config, formData) || this;
       _this.uploaderName = void 0;
-      _this.uploaderConfig = {
-        allowedExtensions: "jpg jpeg gif png",
-        component: "Magento_PageBuilder/js/form/element/image-uploader",
-        componentType: "imageUploader",
-        dataScope: "image",
-        formElement: "imageUploader",
-        initialMediaGalleryOpenSubpath: "wysiwyg",
-        maxFileSize: "4194304",
-        mediaGallery: {
-          initialOpenSubpath: "wysiwyg",
-          openDialogTitle: (0, _translate)("Insert Images..."),
-          openDialogUrl: "/admin/cms/wysiwyg_images/index/",
-          storeId: "1"
-        },
-        template: "Magento_PageBuilder/form/element/stage/preview/uploader/image",
-        uploaderConfig: {
-          url: "/admin/pagebuilder/contenttype/image_upload/"
-        },
-        validation: {
-          "required-entry": true
-        }
-      };
+      _this.uploaderConfig = _uploader.config;
 
       _this.createUploader();
 
