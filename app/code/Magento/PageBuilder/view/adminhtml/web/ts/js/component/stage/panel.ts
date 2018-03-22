@@ -7,6 +7,7 @@ import ko from "knockout";
 import "ko-draggable";
 import "ko-sortable";
 import uiComponent from "uiComponent";
+import $t from 'mage/translate';
 import _ from "underscore";
 import Config, {ConfigContentBlock} from "../config";
 import EventBus from "../event-bus";
@@ -24,7 +25,11 @@ export default class Panel extends uiComponent implements PanelInterface {
         isVisible: false,
         originalScrollTop: false,
         searchResults: [],
-        searchValue: "",
+        searchPlaceholder: $t('Find items'),
+        searchNoResult: $t('Nothing found'),
+        fullScreenTitle: $t('Full Screen'),
+        searchTitle: $t('Clear Search'),
+        searchValue: '',
         searching: false,
         stage: false,
     };
