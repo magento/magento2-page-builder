@@ -9,7 +9,8 @@ import Stage from "../stage";
 import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import Block from "./block";
-import converterPoolFactory from "./converter-pool-factory";
+import converterPoolFactory from "./element-converter-pool-factory";
+import dataConverterPoolFactory from "./data-converter-pool-factory";
 
 /**
  * Retrieve the block instance from the config object
@@ -38,10 +39,15 @@ export default function createBlock(
 ): Promise<BlockInterface> {
     stage = stage || parent.stage;
     formData = formData || {};
+    const componentsPromise: Array<Promise<any>> = [
+        converterPoolFactory(config.name),
+        dataConverterPoolFactory(config.name),
+    ];
     return new Promise((resolve: (blockComponent: any) => void) => {
-        converterPoolFactory(config.name).then((converterPool) => {
+        Promise.all(componentsPromise).then((loadedConverters) => {
+            const [elementConverterPool, dataConverterPool] = loadedConverters;
             loadModule([getBlockComponentPath(config)], (blockComponent: any) => {
-                resolve(new blockComponent(parent, stage, config, formData, converterPool));
+                resolve(new blockComponent(parent, stage, config, formData, elementConverterPool, dataConverterPool));
             });
         }).catch((error) => {
             console.error(error);

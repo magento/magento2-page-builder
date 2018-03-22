@@ -12,6 +12,8 @@ define([], function () {
     var _proto = Paddings.prototype;
 
     /**
+     * Read paddings from element
+     *
      * @param {HTMLElement} element
      * @returns {string | Object}
      */

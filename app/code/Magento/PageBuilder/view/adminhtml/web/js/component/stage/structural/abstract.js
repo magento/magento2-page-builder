@@ -19,9 +19,10 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
      * @param parent
      * @param stage
      * @param config
-     * @param converterPool
+     * @param elementConverterPool
+     * @param dataConverterPool
      */
-    function Structural(parent, stage, config, converterPool) {
+    function Structural(parent, stage, config, elementConverterPool, dataConverterPool) {
       var _this;
 
       _this = _EditableArea.call(this, stage) || this;
@@ -38,13 +39,15 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       _this.attributeMapper = new _attributeMapper();
       _this.styleAttributeFilter = new _styleAttributeFilter();
       _this.styleAttributeMapper = new _styleAttributeMapper();
-      _this.converterPool = void 0;
+      _this.elementConverterPool = void 0;
+      _this.dataConverterPool = void 0;
 
       _this.setChildren(_this.children);
 
       _this.parent = parent;
       _this.config = config;
-      _this.converterPool = converterPool; // Create a new instance of edit for our editing needs
+      _this.elementConverterPool = elementConverterPool;
+      _this.dataConverterPool = dataConverterPool; // Create a new instance of edit for our editing needs
 
       _this.edit = new _edit(_this, _this.stage.store);
 
@@ -165,7 +168,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       var convertersConfig = appearanceConfiguration.data_mapping.converters;
 
       for (var i = 0; i < convertersConfig.length; i++) {
-        data = this.converterPool.get(convertersConfig[i].component).toDom(data, convertersConfig[i].config);
+        data = this.dataConverterPool.get(convertersConfig[i].component).toDom(data, convertersConfig[i].config);
       }
 
       var result = {};
@@ -266,8 +269,8 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
         var value = data[attribute.var];
         var converter = "preview" === area && attribute.preview_converter ? attribute.preview_converter : attribute.converter;
 
-        if (this.converterPool.get(converter)) {
-          value = this.converterPool.get(converter).toDom(attribute.var, data);
+        if (this.elementConverterPool.get(converter)) {
+          value = this.elementConverterPool.get(converter).toDom(attribute.var, data);
         }
 
         result[attribute.name] = value;
@@ -304,8 +307,8 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
             value = data[styleProperty.var];
             var converter = "preview" === area && styleProperty.preview_converter ? styleProperty.preview_converter : styleProperty.converter;
 
-            if (this.converterPool.get(converter)) {
-              value = this.converterPool.get(converter).toDom(styleProperty.var, data);
+            if (this.elementConverterPool.get(converter)) {
+              value = this.elementConverterPool.get(converter).toDom(styleProperty.var, data);
             }
           }
 

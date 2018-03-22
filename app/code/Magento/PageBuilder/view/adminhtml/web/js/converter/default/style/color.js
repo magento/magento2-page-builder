@@ -12,8 +12,10 @@ define([], function () {
     var _proto = Color.prototype;
 
     /**
-     * @param {string} value
-     * @returns {Object | string}
+     * Convert value to internal format
+     *
+     * @param value string
+     * @returns {string | Object}
      */
     _proto.fromDom = function fromDom(value) {
       if (value === "default" || value === "initial" || value === "") {
@@ -30,9 +32,11 @@ define([], function () {
       return value;
     };
     /**
-     * @param {string} name
-     * @param {Object} data
-     * @returns {Object | string}
+     * Convert value to knockout format
+     *
+     * @param name string
+     * @param data Object
+     * @returns {string | Object}
      */
 
 

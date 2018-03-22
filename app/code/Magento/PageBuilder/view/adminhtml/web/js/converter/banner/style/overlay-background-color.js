@@ -12,16 +12,20 @@ define(["../../../utils/color-converter", "../../../utils/number-converter"], fu
     var _proto = OverlayBackgroundColor.prototype;
 
     /**
-     * @param {string} value
-     * @returns {Object | string}
+     * Convert value to internal format
+     *
+     * @param value string
+     * @returns {string | Object}
      */
     _proto.fromDom = function fromDom(value) {
       return value;
     };
     /**
-     * @param {string} name
-     * @param {Object} data
-     * @returns {Object | string}
+     * Convert value to knockout format
+     *
+     * @param name string
+     * @param data Object
+     * @returns {string | Object}
      */
 
 

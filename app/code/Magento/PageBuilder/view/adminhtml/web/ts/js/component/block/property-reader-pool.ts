@@ -3,14 +3,16 @@
  * See COPYING.txt for license details.
  */
 
+import PropertyReaderInterface from "../../property/property-reader-interface";
+
 class PropertyReaderPool {
     private propertyReaders: object = {};
 
-    public get(name: string) {
+    public get(name: string): PropertyReaderInterface {
         return this.propertyReaders[name] !== undefined ? this.propertyReaders[name] : false;
     }
 
-    public register(name: string, property: object) {
+    public register(name: string, property: PropertyReaderInterface) {
         this.propertyReaders[name] = property;
     }
 }

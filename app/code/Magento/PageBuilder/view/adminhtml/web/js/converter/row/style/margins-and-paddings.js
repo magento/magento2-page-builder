@@ -19,9 +19,11 @@ define([], function () {
       return value;
     };
     /**
-     * @param {string} name
-     * @param {Object} data
-     * @returns {Object | string}
+     * Convert value to knockout format
+     *
+     * @param name string
+     * @param data Object
+     * @returns {string | Object}
      */
 
 

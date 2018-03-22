@@ -7,6 +7,8 @@ import DataConverterInterface from "../data-converter-interface";
 
 export default class EmptyMobileImage implements DataConverterInterface {
     /**
+     * Process data after it's read and converted by element converters
+     *
      * @param {Object} data
      * @param {Object} config
      * @returns {Object}
@@ -24,6 +26,8 @@ export default class EmptyMobileImage implements DataConverterInterface {
     }
 
     /**
+     * Process data before it's converted by element converters
+     *
      * @param {Object} data
      * @param {Object} config
      * @returns {Object}

@@ -12,16 +12,20 @@ define(["../../../utils/color-converter"], function (_colorConverter) {
     var _proto = OverlayColor.prototype;
 
     /**
-     * @param {string} value
-     * @returns {Object | string}
+     * Convert value to internal format
+     *
+     * @param value string
+     * @returns {string | Object}
      */
     _proto.fromDom = function fromDom(value) {
       return value === "transparent" ? "" : (0, _colorConverter.toHex)(value);
     };
     /**
-     * @param {string} name
-     * @param {Object} data
-     * @returns {Object | string}
+     * Convert value to knockout format
+     *
+     * @param name string
+     * @param data Object
+     * @returns {string | Object}
      */
 
 

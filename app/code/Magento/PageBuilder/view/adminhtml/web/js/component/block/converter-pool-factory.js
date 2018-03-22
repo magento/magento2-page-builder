@@ -47,16 +47,6 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./converter-poo
           }
         }
       }
-
-      if (dataMapping !== undefined && dataMapping.converters !== undefined) {
-        for (var _i2 = 0; _i2 < dataMapping.converters.length; _i2++) {
-          var converter = dataMapping.converters[_i2];
-
-          if (!!converter.component && !_converterPool.get(converter.component)) {
-            converters.push(converter.component);
-          }
-        }
-      }
     }
 
     return new Promise(function (resolve) {
@@ -65,8 +55,8 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./converter-poo
           loadedConverters[_key] = arguments[_key];
         }
 
-        for (var _i3 = 0; _i3 < converters.length; _i3++) {
-          _converterPool.register(converters[_i3], new loadedConverters[_i3]());
+        for (var _i2 = 0; _i2 < converters.length; _i2++) {
+          _converterPool.register(converters[_i2], new loadedConverters[_i2]());
         }
 
         resolve(_converterPool);

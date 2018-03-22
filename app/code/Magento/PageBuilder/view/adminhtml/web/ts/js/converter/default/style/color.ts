@@ -7,8 +7,10 @@ import ElementConverterInterface from "../../element-converter-interface";
 
 export default class Color implements ElementConverterInterface {
     /**
-     * @param {string} value
-     * @returns {Object | string}
+     * Convert value to internal format
+     *
+     * @param value string
+     * @returns {string | Object}
      */
     public fromDom(value: string): string | object {
         if (value === "default" || value === "initial" || value === "") {
@@ -27,9 +29,11 @@ export default class Color implements ElementConverterInterface {
     }
 
     /**
-     * @param {string} name
-     * @param {Object} data
-     * @returns {Object | string}
+     * Convert value to knockout format
+     *
+     * @param name string
+     * @param data Object
+     * @returns {string | Object}
      */
     public toDom(name: string, data: object): string {
         return data[name];

@@ -19,10 +19,10 @@ define(["underscore", "../../component/block/appearance-config", "../stage/previ
      * @param {ConfigContentBlock} config
      * @param formData
      */
-    function Block(parent, stage, config, formData, converterPool) {
+    function Block(parent, stage, config, formData, elementConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _Structural.call(this, parent, stage, config, converterPool) || this;
+      _this = _Structural.call(this, parent, stage, config, elementConverterPool, dataConverterPool) || this;
       _this.title = void 0;
       _this.editOnInsert = true;
       _this.preview = void 0;

@@ -15,9 +15,11 @@ export default class MarginsAndPaddings implements ElementConverterInterface {
     }
 
     /**
-     * @param {string} name
-     * @param {Object} data
-     * @returns {Object | string}
+     * Convert value to knockout format
+     *
+     * @param name string
+     * @param data Object
+     * @returns {string | Object}
      */
     public toDom(name: string, data: object): string | object {
         let value = data[name];

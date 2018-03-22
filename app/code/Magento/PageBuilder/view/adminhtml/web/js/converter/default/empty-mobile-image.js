@@ -12,6 +12,8 @@ define([], function () {
     var _proto = EmptyMobileImage.prototype;
 
     /**
+     * Process data after it's read and converted by element converters
+     *
      * @param {Object} data
      * @param {Object} config
      * @returns {Object}
@@ -27,6 +29,8 @@ define([], function () {
       return data;
     };
     /**
+     * Process data before it's converted by element converters
+     *
      * @param {Object} data
      * @param {Object} config
      * @returns {Object}

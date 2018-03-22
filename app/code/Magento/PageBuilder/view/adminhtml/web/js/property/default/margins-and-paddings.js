@@ -14,6 +14,8 @@ define(["./margins", "./paddings"], function (_margins, _paddings) {
       this.paddings = new _paddings();
     }
     /**
+     * Read margins and paddings from element
+     *
      * @param {HTMLElement} element
      * @returns {string | Object}
      */

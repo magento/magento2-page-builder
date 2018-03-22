@@ -12,6 +12,8 @@ import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import { Block as BlockInterface } from "./block.d";
 import PreviewBlock from "./preview/block";
+import ElementConverterPool from "./element-converter-pool";
+import DataConverterPool from "./data-converter-pool";
 
 interface FieldDefaults {
     [key: string]: any;
@@ -31,8 +33,15 @@ export default class Block extends Structural implements BlockInterface {
      * @param {ConfigContentBlock} config
      * @param formData
      */
-    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any, converterPool) {
-        super(parent, stage, config, converterPool);
+    constructor(
+        parent: EditableArea,
+        stage: Stage,
+        config: ConfigContentBlock,
+        formData: any,
+        elementConverterPool: ElementConverterPool,
+        dataConverterPool: DataConverterPool
+    ) {
+        super(parent, stage, config, elementConverterPool, dataConverterPool);
 
         this.preview = getPreviewInstance(this, config);
 

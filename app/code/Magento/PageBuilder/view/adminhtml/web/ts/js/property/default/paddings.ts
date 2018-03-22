@@ -7,6 +7,8 @@ import PropertyReaderInterface from "../property-reader-interface";
 
 export default class Paddings implements PropertyReaderInterface {
     /**
+     * Read paddings from element
+     *
      * @param {HTMLElement} element
      * @returns {string | Object}
      */

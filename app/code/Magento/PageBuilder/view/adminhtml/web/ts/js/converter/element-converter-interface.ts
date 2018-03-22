@@ -8,16 +8,16 @@ export interface ElementConverterInterface {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | object}
+     * @returns {string | Object}
      */
     fromDom(value: string): string | object;
 
     /**
-     * Convert value to dom format
+     * Convert value to knockout format
      *
      * @param name string
-     * @param data object
-     * @returns {string | object}
+     * @param data Object
+     * @returns {string | Object}
      */
     toDom(name: string, data: object): string | object;
 }

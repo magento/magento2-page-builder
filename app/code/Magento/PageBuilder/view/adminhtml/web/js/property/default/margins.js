@@ -12,6 +12,8 @@ define([], function () {
     var _proto = Margins.prototype;
 
     /**
+     * Read margins from element
+     *
      * @param {HTMLElement} element
      * @returns {string | Object}
      */
