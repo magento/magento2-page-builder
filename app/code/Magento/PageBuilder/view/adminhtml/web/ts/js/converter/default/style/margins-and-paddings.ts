@@ -42,13 +42,13 @@ export default class MarginsAndPaddings implements ElementConverterInterface {
             value = JSON.parse(value);
         }
         const result = {};
-        if (undefined !== value && undefined !== value.margin) {
+        if (undefined !== value.margin) {
             result.marginLeft = value.margin.left + "px";
             result.marginTop = value.margin.top + "px";
             result.marginRight = value.margin.right + "px";
             result.marginBottom = value.margin.bottom + "px";
         }
-        if (undefined !== value && undefined !== value.padding) {
+        if (undefined !== value.padding) {
             result.paddingLeft = value.padding.left + "px";
             result.paddingTop = value.padding.top + "px";
             result.paddingRight = value.padding.right + "px";

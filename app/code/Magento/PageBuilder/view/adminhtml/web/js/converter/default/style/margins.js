@@ -39,13 +39,13 @@ define([], function () {
     _proto.toDom = function toDom(name, data) {
       var value = data[name];
 
-      if (typeof value === "string") {
+      if (value && typeof value === "string") {
         value = JSON.parse(value);
       }
 
       var result = {};
 
-      if (undefined !== value && undefined !== value.margin) {
+      if (undefined !== value.margin) {
         result.marginLeft = value.margin.left + "px";
         result.marginTop = value.margin.top + "px";
         result.marginRight = value.margin.right + "px";

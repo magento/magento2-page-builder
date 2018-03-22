@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container pagebuilder-row children-min-height" data-bind="style: data.main.style, css: {'empty-row': children().length == 0}, event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type type-container pagebuilder-row children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'empty-row': children().length == 0}), event: {mouseover: preview.onMouseOver, mouseout: preview.onMouseOut}, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <!-- ko template: previewChildTemplate --><!-- /ko -->
     <div class="pagebuilder-display-label" data-bind="text: function () { return preview.displayLabel().toUpperCase(); }()"></div>
