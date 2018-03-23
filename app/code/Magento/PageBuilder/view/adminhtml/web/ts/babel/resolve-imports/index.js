@@ -30,7 +30,7 @@ module.exports = function () {
                         path.dirname(state.file.opts.filenameRelative),
                         importExpression
                     ).replace(
-                        path.resolve(),
+                        process.cwd(),
                         state.opts.prefix.replace(/\/+$/, '')
                     );
                 }
