@@ -70,10 +70,11 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("keyup", onKeyUp);
       (0, _jquery.default)(element).parent().css("cursor", "text");
-
-      if (element.innerText === "") {
-        (0, _jquery.default)(element).addClass("placeholder-text");
-      }
+      setTimeout(function () {
+        if (element.innerText === "") {
+          (0, _jquery.default)(element).addClass("placeholder-text");
+        }
+      }, 10);
     },
 
     /**
