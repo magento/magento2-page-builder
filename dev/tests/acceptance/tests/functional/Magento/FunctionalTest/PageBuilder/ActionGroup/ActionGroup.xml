@@ -478,4 +478,32 @@
         <click selector="{{AdminBannerGridSection.title(Banner.Name)}}" stepKey="clickSelectCreatedDynamicBlock" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
+    <actionGroup name="expandPageBuilderPanelGroup">
+        <arguments>
+            <argument name="group" defaultValue="PageBuilderPanelGroupGeneral"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroup(group.name)}}" stepKey="waitForGroupVisible"/>
+        <conditionalClick selector="{{PageBuilderActionsSection.panelGroup(group.name)}}" dependentSelector="{{PageBuilderActionsSection.panelGroupActive(group.name)}}" visible="false" stepKey="expandGroup"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroupActive(group.name)}}" stepKey="waitForGroupExpanded"/>
+    </actionGroup>
+    <actionGroup name="navigateToStoreFront">
+        <arguments>
+            <argument name="prefix" defaultValue="" type="string"/>
+        </arguments>
+        <amOnPage url="{{prefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+    <actionGroup name="validateOnHoverOptionMenu">
+        <arguments>
+            <argument name="contentBlock" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlock.role)}}" stepKey="onMouseOverStage"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlock.role)}}" stepKey="waitForOptionsMenu" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockMove(contentBlock.role)}}" stepKey="seeOptionsMove"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlock.role)}}" stepKey="seeOptionsEdit"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlock.role, '1')}}" stepKey="seeOptionsDuplicate"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockRemove(contentBlock.role)}}" stepKey="seeOptionsRemove"/>
+        <see selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlock.role)}}" userInput="{{contentBlock.name}}" stepKey="seeOptionMenuTitle"/>
+    </actionGroup>
 </actionGroups>

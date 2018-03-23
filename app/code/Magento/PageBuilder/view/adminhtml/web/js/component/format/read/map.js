@@ -19,13 +19,14 @@ define([], function () {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
-      var pattern = /maps\/embed\/v1\/place\?q=(-?[0-9.]*),*\s*(-?[0-9.]*)&zoom=*\s*([0-9]+)&key=([a-zA-Z0-9]+)/;
       var result = {
         display: "inline-block"
       };
 
-      if (element.getAttribute("src") && pattern.test(element.getAttribute("src"))) {
-        result.position = pattern.exec(element.getAttribute("src")).slice(1).join(",");
+      if (element.getAttribute("data-markers")) {
+        var markers = JSON.parse(element.getAttribute("data-markers"))[0];
+        var zoom = element.getAttribute("data-zoom");
+        result.position = markers.lat + "," + markers.lng + "," + zoom;
       }
 
       return Promise.resolve(result);

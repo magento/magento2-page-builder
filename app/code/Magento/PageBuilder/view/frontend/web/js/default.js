@@ -5,7 +5,13 @@
 
 /*global requirejs */
 
-requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
+requirejs([
+    'jquery',
+    'highlight',
+    'Magento_PageBuilder/js/utils/map',
+    'slick',
+    'bg-parallax'
+    ], function ($, hljs, GoogleMap) {
     'use strict';
 
     $(document).ready(function () {
@@ -30,7 +36,16 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
                     fade: $(element).data('fade') === 1,
                     infinite: $(element).data('is-infinite') === 1,
                     arrows: $(element).data('show-arrows') === 1,
-                    dots: $(element).data('show-dots') === 1
+                    dots: $(element).data('show-dots') === 1,
+                    variableWidth: true,
+                });
+
+                /**
+                 * Set slide width to the be width of the slider for both initializing and resize
+                 */
+                $(element).find(".pagebuilder-slide").css('width', Math.ceil($(element).outerWidth()));
+                $(window).on('resize', function () {
+                    $(element).find(".pagebuilder-slide").css('width', Math.ceil($(element).outerWidth()));
                 });
             }
         });
@@ -76,4 +91,22 @@ requirejs(['jquery', 'highlight', 'slick', 'bg-parallax'], function ($, hljs) {
     $(window).load(function () {
         window.bgParallax('.pagebuilder-parallax');
     });
+
+    /* Google Maps */
+    $('div[data-role="map"]').each(function (index, element) {
+        var markers = [],
+            centerCoord = '',
+            mapOptions = {},
+            zoom;
+
+        if (element.hasAttribute('data-markers')) {
+            markers = JSON.parse(element.getAttribute('data-markers').replace(/'/g, '"'));
+            centerCoord = markers[0];
+            zoom = element.getAttribute('data-zoom');
+            mapOptions.zoom = parseInt(zoom, 10);
+            new GoogleMap(element, markers, centerCoord, mapOptions);
+        }
+    });
+
+    /* End Google Maps */
 });

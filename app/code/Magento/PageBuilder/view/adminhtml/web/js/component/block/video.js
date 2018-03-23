@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "./block"], function (_underscore, _block) {
+define(["./block"], function (_block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Video =
@@ -20,9 +20,11 @@ define(["underscore", "./block"], function (_underscore, _block) {
      */
     _proto.getVideoAttributes = function getVideoAttributes() {
       var data = this.getData();
-      return _underscore.extend(this.getAttributes(), {
-        src: this.getVideoUrl(data.src)
-      });
+      return {
+        height: data.height || null,
+        src: this.getVideoUrl(data.video_source),
+        width: data.width || null
+      };
     };
     /**
      * Change video src to correct format

@@ -29,27 +29,38 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <!-- Verify Default Map in Stage -->
-        <actionGroup ref="validateEmptyMapStage" stepKey="validateEmptyMapStage"/>
+        <actionGroup ref="validateDefaultMapStage" stepKey="validateMapStage"/>
+        <actionGroup ref="validateMapButtons" stepKey="validateMapButtons"/>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPinStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Verify Default Map in Stage After Page Save -->
-        <actionGroup ref="validateEmptyMapStage" stepKey="validateEmptyMapStage2"/>
-        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="validateDefaultMapStage" stepKey="validateMapStage2"/>
+        <actionGroup ref="validateMapButtons" stepKey="validateMapButtons2"/>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPinStage2"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="map"/>
+        </actionGroup>
         <!-- Verify Default Map in Storefront -->
-        <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
+        <actionGroup ref="validateDefaultMapStoreFront" stepKey="validateDefaultMapStoreFront"/>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPinStoreFront">
+            <argument name="property" value="MapOnFrontend"/>
+        </actionGroup>
     </test>
     <test name="MapEditPanelGeneralSectionDefaultState">
         <annotations>
@@ -72,13 +83,16 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
@@ -89,8 +103,11 @@
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validatePositionAttributeNotRequired">
             <argument name="property" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="validateEmptyMapConfigurationPanel" stepKey="validateEmptyMapConfigurationPanel"/>
-        <seeElement selector="{{MapOnConfigurationPanel.mapHelperText}}" stepKey="seeMapHelperText"/>
+        <actionGroup ref="validateMapConfigurationPanel" stepKey="validateMapConfigurationPanel"/>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin">
+            <argument name="property" value="MapOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="validateMapHelperText" stepKey="validateMapHelperText"/>
         <!-- Width -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeWidthAttribute">
             <argument name="property" value="PageBuilderMapWidthDefaultProperty"/>
@@ -125,13 +142,11 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Position -->
-        <seeElement selector="{{MapOnConfigurationPanel.map}}" stepKey="seeMap2"/>
-        <seeElement selector="{{MapOnConfigurationPanel.mapFullScreen}}" stepKey="seeFullScreenButton2"/>
-        <seeElement selector="{{MapOnConfigurationPanel.mapPegman}}" stepKey="seePegmanButton2"/>
-        <seeElement selector="{{MapOnConfigurationPanel.mapSatelliteView}}" stepKey="seeSatelliteViewButton2"/>
-        <seeElement selector="{{MapOnConfigurationPanel.mapStreetView}}" stepKey="seeStreetViewButton2"/>
-        <seeElement selector="{{MapOnConfigurationPanel.mapZoomIn}}" stepKey="seeZoomInButton2"/>
-        <seeElement selector="{{MapOnConfigurationPanel.mapZoomOut}}" stepKey="seeZoomOutButton2"/>
+        <actionGroup ref="validateMapConfigurationPanel" stepKey="validateMapConfigurationPanel2"/>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin2">
+            <argument name="property" value="MapOnConfigurationPanel"/>
+        </actionGroup>
+        <actionGroup ref="validateMapHelperText" stepKey="validateMapHelperText2"/>
         <!-- Width -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeWidthAttributeValue2">
             <argument name="property" value="PageBuilderMapWidthDefaultProperty"/>
@@ -162,13 +177,16 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
@@ -253,25 +271,23 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderMapContentBlock.role)}}" stepKey="waitForMapInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderMapContentBlock.role)}}" stepKey="onMouseOverMapStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderMapContentBlock.role)}}" stepKey="waitForOptionsMenu" />
-        <see selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderMapContentBlock.role)}}" userInput="{{PageBuilderMapContentBlock.name}}" stepKey="seeMapOptionMenuTitle"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockMove(PageBuilderMapContentBlock.role)}}" stepKey="seeMapOptionsMove"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockEdit(PageBuilderMapContentBlock.role)}}" stepKey="seeMapOptionsEdit"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockDuplicate(PageBuilderMapContentBlock.role, '1')}}" stepKey="seeMapOptionsDuplicate"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockRemove(PageBuilderMapContentBlock.role)}}" stepKey="seeMapOptionsRemove"/>
+        <actionGroup ref="validateOnHoverOptionMenu" stepKey="validateOnHoverOptionMenu">
+            <argument name="contentBlock" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
     </test>
     <test name="MapAddPinToMap">
         <annotations>
@@ -284,7 +300,6 @@
             <testCaseId value="MAGETWO-88929"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -295,47 +310,48 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Add Pin To Map -->
         <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
-            <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
+            <argument name="property" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
         <!-- Edit Panel: Verify Pin Position -->
-        <seeElement selector="{{MapOnConfigurationPanel.mapPinPosition(PageBuilderMapPinDefaultProperty.leftPosition, PageBuilderMapPinDefaultProperty.topPosition, PageBuilderMapPinDefaultProperty.zIndex, PageBuilderMapPinDefaultProperty.leftPosition2)}}" stepKey="verifyMapPinPosition"/>
+        <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisible"/>
+        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPositionEditPanel"/>
+        <assertRegExp expected="{{PageBuilderMapPositionDefaultProperty.position}}" actual="mapPositionEditPanel" actualType="variable" message="actual=$mapPositionEditPanel" stepKey="assertPinPosition"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Stage: Verify Map Has Pin & Tooltip -->
-        <waitForElementVisible selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="waitForStageHasMapWithPin"/>
-        <actionGroup ref="validateMapToolTipStage" stepKey="validateMapToolTipStage">
-            <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
-        </actionGroup>
+        <!-- Stage: Verify Map Has Pin -->
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Verify Map Has Pin After Save -->
-        <seeElement selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="verifyStageHasMapWithPin2"/>
-        <actionGroup ref="validateMapToolTipStage" stepKey="validateMapToolTipStage2">
-            <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
-        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPin2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Edit Panel: Verify Pin Position After Save -->
-        <seeElement selector="{{MapOnConfigurationPanel.mapPinPosition(PageBuilderMapPinDefaultProperty.leftPosition, PageBuilderMapPinDefaultProperty.topPosition, PageBuilderMapPinDefaultProperty.zIndex, PageBuilderMapPinDefaultProperty.leftPosition2)}}" stepKey="verifyMapPinPosition2"/>
-        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisible2"/>
+        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPositionEditPanel2"/>
+        <assertRegExp expected="{{PageBuilderMapPositionDefaultProperty.position}}" actual="mapPositionEditPanel" actualType="variable" message="actual=$mapPositionEditPanel" stepKey="assertPinPosition2"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="map"/>
+        </actionGroup>
         <!-- Storefront: Verify Pin Position -->
-        <waitForElementVisible selector="{{MapOnFrontend.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="waitForMapPinOnFrontend"/>
-        <actionGroup ref="validateMapToolTipStoreFront" stepKey="validateMapToolTipStoreFront">
-            <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPin3">
+            <argument name="property" value="MapOnFrontend"/>
         </actionGroup>
     </test>
     <test name="MapCannotAddPinToMapOnStageOrStoreFront">
@@ -359,35 +375,43 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <!-- Try To Add Pin From Stage -->
-        <waitForElementVisible selector="{{MapOnStage.map}}" stepKey="waitForMapVisible" />
-        <click selector="{{MapOnStage.map}}" stepKey="doubleClickMap"/>
-        <seeElement selector="{{MapOnStage.emptyMap(PageBuilderMapPositionDefaultProperty.lat, PageBuilderMapPositionDefaultProperty.lng)}}" stepKey="seeEmptyMapStage"/>
-        <dontSeeElementInDOM selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="dontSeeMapPinStage"/>
+        <waitForElementVisible selector="{{MapOnStage.map('1')}}" stepKey="waitForMapVisible" />
+        <click selector="{{MapOnStage.map('1')}}" stepKey="clickMap"/>
+        <!-- Check Stage -->
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPinStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisibleEditPanel" />
-        <!-- Verify No Pin In Configuration Panel -->
-        <dontSeeElementInDOM selector="{{MapOnConfigurationPanel.mapPin}}" stepKey="dontSeeMapPinEditPanel"/>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisibleEditPanel"/>
+        <!-- Check Edit Panel -->
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPinEditPanel">
+            <argument name="property" value="MapOnConfigurationPanel"/>
+        </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <waitForElement selector="{{MapOnFrontend.emptyMap}}" stepKey="waitForMapStoreFront" />
-        <!-- Verify No Pin In Store Front -->
-        <dontSeeElementInDOM selector="{{MapOnFrontend.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="dontSeeMapPinStoreFront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="map"/>
+        </actionGroup>
+        <actionGroup ref="validateDefaultMapStoreFront" stepKey="validateDefaultMapStoreFront"/>
+        <!-- Check Storefront -->
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPinStoreFront">
+            <argument name="property" value="MapOnFrontend"/>
+        </actionGroup>
     </test>
     <test name="MapMoveMapPinByClick">
         <annotations>
@@ -400,7 +424,6 @@
             <testCaseId value="MAGETWO-88930"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -411,42 +434,39 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Add Pin To Map -->
         <actionGroup ref="addMapPin" stepKey="addMapPin">
-            <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
+            <argument name="property" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
         <!-- Edit Panel: Get Initial Pin Location -->
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisibleEditPanel"/>
         <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisibleEditPanel"/>
         <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPositionEditPanel"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
-        <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStage"/>
-        <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStage"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage"/>
-        <switchToIFrame selector="" stepKey="exitIFrameStage"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation('1')}}" userInput="style" stepKey="grabPinLocationStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Storefront: Get Initial Pin Location -->
         <openNewTab stepKey="openNewTab"/>
-        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStoreFront"/>
-        <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStoreFront"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapPinLocation}}" stepKey="waitForPinLocationStoreFront"/>
-        <grabAttributeFrom selector="{{MapOnFrontend.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStoreFront"/>
-        <switchToIFrame selector="" stepKey="exitIFrameStoreFront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="map"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MapOnFrontend.mapPinLocation('1')}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnFrontend.mapPinLocation('1')}}" userInput="style" stepKey="grabPinLocationStoreFront"/>
         <!-- Switch Back To Backend -->
         <switchToNextTab stepKey="switchToNextTab"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -454,11 +474,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Move Map Pin -->
-        <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionInputVisible"/>
-        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="getMapPosition"/>
         <actionGroup ref="moveMapPinByClick" stepKey="moveMapPinByClick"/>
-        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="getMapPosition2"/>
-        <assertNotEquals expected="getMapPosition" expectedType="variable" actual="getMapPosition2" actualType="variable" message="actual=$getMapPosition2 expected=$getMapPosition" stepKey="assertMapPinMoved"/>
         <!-- Edit Panel: Verify Pin Location Moved -->
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisibleEditPanel2"/>
         <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisibleEditPanel2"/>
@@ -466,21 +482,14 @@
         <assertNotEquals expected="mapPositionEditPanel" expectedType="variable" actual="mapPositionEditPanel2" actualType="variable" message="actual=$mapPositionEditPanel2, expected=$mapPositionEditPanel2" stepKey="assertPinLocationChangedEditPanel"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Stage: Verify Pin Location Moved -->
-        <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStage2"/>
-        <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStage2"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage2"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage2"/>
-        <switchToIFrame selector="" stepKey="exitIFrameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation('1')}}" stepKey="waitForPinLocationStage2"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation('1')}}" userInput="style" stepKey="grabPinLocationStage2"/>
         <assertNotEquals expected="grabPinLocationStage" expectedType="variable" actual="grabPinLocationStage2" actualType="variable" message="actual=$grabPinLocationStage2, expected=$grabPinLocationStage2" stepKey="assertPinLocationChangedStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Stage: Verify Map Pin Still Moved After Save -->
-        <scrollTo selector="{{CmsNewPagePageContentSection.header}}" stepKey="scrollToMap"/>
-        <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStage3"/>
-        <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStage3"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage3"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage3"/>
-        <switchToIFrame selector="" stepKey="exitIFrameStage3"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation('1')}}" stepKey="waitForPinLocationStage3"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation('1')}}" userInput="style" stepKey="grabPinLocationStage3"/>
         <assertNotEquals expected="grabPinLocationStage" expectedType="variable" actual="grabPinLocationStage3" actualType="variable" message="actual=$grabPinLocationStage3, expected=$grabPinLocationStage" stepKey="assertPinLocationChangedStage2"/>
         <assertEquals expected="grabPinLocationStage2" expectedType="variable" actual="grabPinLocationStage3" actualType="variable" message="actual=$grabPinLocationStage3, expected=$grabPinLocationStage2" stepKey="assertPinLocationChangedStage3"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -494,13 +503,11 @@
         <assertStringStartsWith expected="mapPositionEditPanel2" expectedType="variable" actual="mapPositionEditPanel3" actualType="variable" message="actual=$mapPositionEditPanel3, expected=$mapPositionEditPanel2" stepKey="assertPinLocationChangedEditPanel3"/>
         <!-- Storefront: Verify Pin Location Moved On Storefront -->
         <switchToNextTab stepKey="switchToNextTab2"/>
-        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad2"/>
-        <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStoreFront2"/>
-        <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStoreFront2"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapPinLocation}}" stepKey="waitForPinLocationStoreFront2"/>
-        <grabAttributeFrom selector="{{MapOnFrontend.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
-        <switchToIFrame selector="" stepKey="exitIFrameStoreFront2"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
+            <argument name="prefix" value="map"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MapOnFrontend.mapPinLocation('1')}}" stepKey="waitForPinLocationStoreFront2"/>
+        <grabAttributeFrom selector="{{MapOnFrontend.mapPinLocation('1')}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
         <assertNotEquals expected="grabPinLocationStoreFront" expectedType="variable" actual="grabPinLocationStoreFront2" actualType="variable" message="actual=$grabPinLocationStoreFront2, expected=$grabPinLocationStoreFront" stepKey="assertPinLocationChangedStoreFront"/>
         <assertEquals expected="grabPinLocationStage2" expectedType="variable" actual="grabPinLocationStoreFront2" actualType="variable" message="actual=$grabPinLocationStoreFront2, expected=$mapPositionEditPanel2" stepKey="assertPinLocationSameOnStageAndStoreFront"/>
     </test>
@@ -516,7 +523,6 @@
             <testCaseId value="MAGETWO-84914"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -527,22 +533,27 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Add Pin To Map -->
         <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
-            <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
+            <argument name="property" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
+        <!-- Verify Map Position -->
         <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisible"/>
-        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPosition1"/>
+        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPositionEditPanel"/>
+        <assertRegExp expected="{{PageBuilderMapPositionDefaultProperty.position}}" actual="mapPositionEditPanel" actualType="variable" message="actual=$mapPositionEditPanel" stepKey="assertPinPosition"/>
         <!-- Fill Remaining Fields -->
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMapWidthProperty">
             <argument name="property" value="PageBuilderMapWidthProperty75"/>
@@ -567,10 +578,13 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="waitForPinOnConfigurationMapVisible"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel">
+            <argument name="property" value="MapOnConfigurationPanel"/>
+        </actionGroup>
+        <!-- Verify Map Position -->
         <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisible2"/>
-        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPosition2"/>
-        <assertStringStartsWith stepKey="assertRegExp" expected="mapPosition1" expectedType="variable" actual="mapPosition2" actualType="variable" message="actual=$mapPosition2 expected=$mapPosition1"/>
+        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPositionEditPanel2"/>
+        <assertRegExp expected="{{PageBuilderMapPositionDefaultProperty.position}}" actual="mapPositionEditPanel" actualType="variable" message="actual=$mapPositionEditPanel" stepKey="assertPinPosition2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMapWidthProperty">
             <argument name="property" value="PageBuilderMapWidthProperty75"/>
         </actionGroup>
@@ -589,24 +603,31 @@
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <!-- Validate Stage -->
-        <waitForElementVisible time="2" selector="{{MapOnStage.map}}" stepKey="waitMap2" />
-        <seeElement selector="{{MapOnStage.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="seeMapWithPin"/>
-        <seeElement selector="{{MapOnStage.mapHeight(PageBuilderMapHeightProperty350.value)}}" stepKey="seeMapHeight"/>
-        <seeElement selector="{{MapOnStage.mapWidth(PageBuilderMapWidthProperty75.value)}}" stepKey="seeMapWidth"/>
-        <seeElement selector="{{MapOnStage.mapAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="seeMapAlignment"/>
-        <seeElement selector="{{MapOnStage.mapMargin(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMapMargin"/>
-        <seeElement selector="{{MapOnStage.mapPadding(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seeMapPadding"/>
+        <actionGroup ref="validateMapOnStage" stepKey="validateMapStage">
+            <argument name="width" value="PageBuilderMapWidthProperty75"/>
+            <argument name="height" value="PageBuilderMapHeightProperty350"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentLeftProperty"/>
+            <argument name="marginAndPadding" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsStage"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage"/>
         <!-- Validate Storefront -->
-        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapWithPin(PageBuilderMapPinDefaultProperty.lat, PageBuilderMapPinDefaultProperty.lng)}}" stepKey="seeMapPinOnFrontend"/>
-        <seeElement selector="{{MapOnFrontend.mapZoom(PageBuilderMapPinDefaultProperty.zoom)}}" stepKey="seeMapZoomOnFrontend"/>
-        <seeElement selector="{{MapOnFrontend.mapWidth(PageBuilderMapWidthProperty75.value)}}" stepKey="seeMapWidthOnFrontend"/>
-        <seeElement selector="{{MapOnFrontend.mapHeight(PageBuilderMapHeightProperty350.value)}}" stepKey="seeMapHeightOnFrontend"/>
-        <seeElement selector="{{MapOnFrontend.mapAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="seeMapAlignmentOnFrontend"/>
-        <seeElement selector="{{MapOnFrontend.mapCssClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="seeMapCssClassOnFrontend"/>
-        <seeElement selector="{{MapOnFrontend.mapMargin(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMapMarginOnFrontend"/>
-        <seeElement selector="{{MapOnFrontend.mapPadding(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seeMapPaddingOnFrontend"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="map"/>
+        </actionGroup>
+        <actionGroup ref="validateMapOnStoreFront" stepKey="validateMapStoreFront">
+            <argument name="width" value="PageBuilderMapWidthProperty75"/>
+            <argument name="height" value="PageBuilderMapHeightProperty350"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentLeftProperty"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="marginAndPadding" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsStoreFront">
+            <argument name="property" value="MapOnFrontend"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStoreFront">
+            <argument name="property" value="MapOnFrontend"/>
+        </actionGroup>
     </test>
     <test name="MapDuplicate">
         <annotations>
@@ -619,7 +640,6 @@
             <testCaseId value="MAGETWO-88896"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -630,26 +650,25 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Fill All Fields -->
         <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
-            <argument name="property" value="PageBuilderMapPinDefaultProperty"/>
+            <argument name="property" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
         <!-- Move Map Pin -->
-        <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionInputVisible"/>
-        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="getMapPosition"/>
         <actionGroup ref="moveMapPinByClick" stepKey="moveMapPinByClick"/>
-        <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="getMapPosition2"/>
-        <assertNotEquals expected="getMapPosition" expectedType="variable" actual="getMapPosition2" actualType="variable" message="actual=$getMapPosition2 expected=$getMapPosition" stepKey="assertMapPinMoved"/>
         <!-- Edit Panel: Get Map Pin Position -->
         <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisibleEditPanel"/>
         <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisibleEditPanel"/>
@@ -672,40 +691,42 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Map Pin Position -->
-        <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[0].setAttribute('id', 'mapIFrame');" stepKey="makeIFrameInteractableStage"/>
-        <switchToIFrame selector="mapIFrame" stepKey="switchToIFrameStage"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage"/>
-        <switchToIFrame selector="" stepKey="exitIFrameStage"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation('1')}}" userInput="style" stepKey="grabPinLocationStage"/>
         <!-- Duplicate and Verify Stage -->
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <seeElement selector="{{MapOnStage.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty350.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="seeDuplicateMapStage"/>
-        <actionGroup ref="validateMapToolTipStage" stepKey="validateMapToolTipStage">
-            <argument name="property" value="PageBuilderMapMovedPinProperty"/>
-            <argument name="contentIndex" value="PageBuilderMapIndex2"/>
+        <actionGroup ref="validateMapOnStage" stepKey="validateDuplicateOnStage">
+            <argument name="width" value="PageBuilderMapWidthProperty75"/>
+            <argument name="height" value="PageBuilderMapHeightProperty350"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentLeftProperty"/>
+            <argument name="marginAndPadding" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsStage">
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage">
+            <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Verify Map Pin Position On Duplicate -->
-        <executeJS function="document.querySelectorAll('{{MapOnStage.mapGetIFrameJS}}')[1].setAttribute('id', 'mapIFrame2');" stepKey="makeIFrameInteractableStage2"/>
-        <switchToIFrame selector="mapIFrame2" stepKey="switchToIFrameStage2"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPinLocation}}" stepKey="waitForPinLocationStage2"/>
-        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStage2"/>
-        <switchToIFrame selector="" stepKey="exitIFrameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.mapPinLocation('2')}}" stepKey="waitForPinLocationStage2"/>
+        <grabAttributeFrom selector="{{MapOnStage.mapPinLocation('2')}}" userInput="style" stepKey="grabPinLocationStage2"/>
         <assertEquals expected="grabPinLocationStage" expectedType="variable" actual="grabPinLocationStage2" actualType="variable" message="actual=$grabPinLocationStage2, expected=$grabPinLocationStage2" stepKey="assertPinLocationStage"/>
-        <!-- Scroll To Duplicate -->
+        <!-- Verify Edit Panel -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
             <argument name="contentBlockIndex" value="PageBuilderMapIndex2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisible"/>
-        <seeElement selector="{{MapOnConfigurationPanel.mapPinPosition(PageBuilderMapPinDefaultProperty.leftPosition, PageBuilderMapPinDefaultProperty.topPosition, PageBuilderMapPinDefaultProperty.zIndex, PageBuilderMapPinDefaultProperty.leftPosition2)}}" stepKey="seeMapPinOnEditPanel"/>
-        <!-- Edit Panel: Verify Map Pin Position On Duplicate -->
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisibleEditPanel2"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel">
+            <argument name="property" value="MapOnConfigurationPanel"/>
+        </actionGroup>
+        <!-- Edit Panel: Verify Map Pin Position -->
         <executeJS function="document.querySelector('{{MapOnConfigurationPanel.mapPositionJS}}').style.display = 'block'" stepKey="setPositionPropertyVisibleEditPanel2"/>
         <grabValueFrom selector="{{MapOnConfigurationPanel.mapPosition}}" stepKey="mapPositionEditPanel2"/>
         <assertEquals expected="mapPositionEditPanel" expectedType="variable" actual="mapPositionEditPanel2" actualType="variable" message="actual=$mapPositionEditPanel2, expected=$mapPositionEditPanel" stepKey="assertPinLocationEditPanel"/>
-        <!-- Verify Edit Panel Values -->
+        <!-- Edit Panel: Verify Values -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMapWidth">
             <argument name="property" value="PageBuilderMapWidthProperty75"/>
         </actionGroup>
@@ -724,20 +745,29 @@
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="map"/>
+        </actionGroup>
         <!-- Verify Storefront -->
-        <waitForElementVisible selector="{{MapOnFrontend.mapAll(PageBuilderMapPinDefaultProperty.zoom, PageBuilderMapWidthProperty75.value, PageBuilderMapHeightProperty350.value, PageBuilderAdvancedAlignmentLeftProperty.value, PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop, '2')}}" stepKey="waitForDuplicateMapStoreFront"/>
-        <actionGroup ref="validateMapToolTipStoreFront" stepKey="validateMapToolTipStoreFront">
-            <argument name="property" value="PageBuilderMapMovedPinProperty"/>
-            <argument name="contentIndex" value="PageBuilderMapIndex2"/>
+        <actionGroup ref="validateMapOnStoreFront" stepKey="validateDuplicateOnStoreFront">
+            <argument name="width" value="PageBuilderMapWidthProperty75"/>
+            <argument name="height" value="PageBuilderMapHeightProperty350"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentLeftProperty"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="marginAndPadding" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsStoreFront">
+            <argument name="property" value="MapOnFrontend"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStoreFront">
+            <argument name="property" value="MapOnFrontend"/>
+            <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Verify Map Pin Position On Duplicate -->
-        <executeJS function="document.querySelectorAll('{{MapOnFrontend.mapGetIFrameJS}}')[1].setAttribute('id', 'mapIFrame2');" stepKey="makeIFrameInteractableStoreFront2"/>
-        <switchToIFrame selector="mapIFrame2" stepKey="switchToIFrameStoreFront2"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapPinLocation}}" stepKey="waitForPinLocationStoreFront2"/>
-        <grabAttributeFrom selector="{{MapOnFrontend.mapPinLocation}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
-        <switchToIFrame selector="" stepKey="exitIFrameStoreFront2"/>
+        <waitForElementVisible selector="{{MapOnFrontend.mapPinLocation('2')}}" stepKey="waitForPinLocationStoreFront2"/>
+        <grabAttributeFrom selector="{{MapOnFrontend.mapPinLocation('2')}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
         <assertEquals expected="grabPinLocationStage2" expectedType="variable" actual="grabPinLocationStoreFront2" actualType="variable" message="actual=$grabPinLocationStoreFront2, expected=$mapPositionEditPanel2" stepKey="assertPinLocationSameOnStageAndStoreFront"/>
     </test>
     <test name="MapDelete">
@@ -762,13 +792,16 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
@@ -780,11 +813,12 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
-        <!-- Verify Not In Stage -->
+        <!-- Verify Map Not In Stage -->
         <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderMapContentBlock.role, '1')}}" stepKey="dontSeeContentBlockInStage"/>
-        <amOnPage url="map{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <!-- Verify Not In Storefront -->
-        <dontSeeElementInDOM selector="{{MapOnFrontend.map}}" stepKey="dontSeeContentBlockInStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="map"/>
+        </actionGroup>
+        <!-- Verify Map Not In Storefront -->
+        <dontSeeElementInDOM selector="{{MapOnFrontend.map('1')}}" stepKey="dontSeeContentBlockInStorefront"/>
     </test>
 </tests>
