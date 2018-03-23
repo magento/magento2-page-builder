@@ -80,12 +80,13 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                                 : 'false';
                             $output['types'][$name][$childNode->nodeName][$appearanceName] = $appearanceData;
                         }
+                        $this->validateAppearanceConfig($output['types'][$name][$childNode->nodeName]);
                     } elseif ('allowed_parents' === $childNode->nodeName){
-                        $parentData = [];
+                        $parents = [];
                         foreach ($childNode->getElementsByTagName('parent') as $parentNode) {
-                            $parentData[] = $parentNode->attributes->getNamedItem('name')->nodeValue;
+                            $parents[] = $parentNode->attributes->getNamedItem('name')->nodeValue;
                         }
-                        $output['types'][$name][$childNode->nodeName] = $parentData;
+                        $output['types'][$name][$childNode->nodeName] = $parents;
                     } else {
                         $output['types'][$name][$childNode->nodeName] = $childNode->nodeValue;
                     }
@@ -285,5 +286,25 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             'elements' => $elementData,
             'converters' => $converters
         ];
+    }
+
+    /**
+     * Validate that configuration appearances has default appearance
+     *
+     * @param $appearanceConfig
+     * @throws \InvalidArgumentException
+     */
+    private function validateAppearanceConfig($appearanceConfig)
+    {
+        $isDefaultAppearancePresent = false;
+        foreach ($appearanceConfig as $config) {
+            if ($config['default']) {
+                $isDefaultAppearancePresent = true;
+                break;
+            }
+        }
+        if (!$isDefaultAppearancePresent) {
+            throw new \InvalidArgumentException("Configuration for content type should have default appearance.");
+        }
     }
 }
