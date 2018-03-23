@@ -11,9 +11,9 @@
     <section name="DividerOnStage">
         <element name="default" type="text" selector="(//div[@class='pagebuilder-divider'])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
     </section>
-    <section name="DividerOnFrontend">
-        <element name="dividerColor" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'border-color: rgb(255, 87, 51)')]"/>
-        <element name="dividerThickness" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'border-width: 10px')]"/>
-        <element name="dividerWidth" type="button" selector="//*[@data-role='divider'][1][contains(@style, 'width: 50%')]"/>
+    <section name="DividerOnStorefront">
+        <element name="dividerColor" type="button" selector="//*[@data-role='divider']//hr[contains(@style, 'border-color: {{arg1}}')]" parameterized="true"/>
+        <element name="dividerThickness" type="button" selector="//*[@data-role='divider']//hr[contains(@style, 'border-width: {{arg1}}px')]" parameterized="true"/>
+        <element name="dividerWidth" type="button" selector="//*[@data-role='divider']//hr[contains(@style, 'width: {{arg1}}')]" parameterized="true"/>
     </section>
 </sections>

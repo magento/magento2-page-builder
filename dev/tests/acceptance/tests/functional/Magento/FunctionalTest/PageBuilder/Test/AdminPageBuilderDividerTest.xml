@@ -53,9 +53,10 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="divider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{DividerOnFrontend.dividerColor}}" stepKey="seeDividerColorStyleApplied"/>
-        <seeElement selector="{{DividerOnFrontend.dividerThickness}}" stepKey="seeDividerThicknessStyleApplied"/>
-        <seeElement selector="{{DividerOnFrontend.dividerWidth}}" stepKey="seeDividerWidthStyleApplied"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeElement selector="{{DividerOnStorefront.dividerColor(PageBuilderDividerLineColorProperty.rgb)}}" stepKey="seeDividerColorStyleApplied"/>
+        <seeElement selector="{{DividerOnStorefront.dividerThickness(PageBuilderDividerLineThicknessProperty.value)}}" stepKey="seeDividerThicknessStyleApplied"/>
+        <seeElement selector="{{DividerOnStorefront.dividerWidth(PageBuilderDividerLineWidthProperty.value)}}" stepKey="seeDividerWidthStyleApplied"/>
     </test>
     <test name="RemoveDividerFromStage">
         <annotations>

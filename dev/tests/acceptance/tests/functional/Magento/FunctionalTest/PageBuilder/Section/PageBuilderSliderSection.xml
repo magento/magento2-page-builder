@@ -16,7 +16,7 @@
         <element name="IsInfinite" type="button" selector="div[data-role='slider'][data-is-infinite='{{arg1}}']" parameterized="true"/>
         <element name="ShowArrows" type="button" selector="div[data-role='slider'][data-show-arrows='{{arg1}}']" parameterized="true"/>
         <element name="ShowDots" type="button" selector="div[data-role='slider'][data-show-dots='{{arg1}}']" parameterized="true"/>
-        <element name="nextSlide" type="button" selector="[data-role='slider'] .slick-next"/>
+        <element name="slideNavigator" type="button" selector="(//div[@data-role='slider']//button)[{{arg1}}]" parameterized="true"/>
         <element name="sliderMinHeight" type="button" selector="div[style*='min-height: {{arg1}}']" parameterized="true"/>
         <element name="sliderAlignment" type="button" selector="div[style*='text-align: {{arg1}}']" parameterized="true"/>
         <element name="sliderBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
@@ -46,13 +46,12 @@
         <element name="sliderMarginPaddings" type="button" selector="div.slider-container[style*='margin: {{arg1}}px; padding: {{arg2}}px;']" parameterized="true"/>
     </section>
     <section name="SlideOnFrontend">
-        <element name="slide1" type="button" selector="[data-slick-index='0'][data-role='slide']"/>
+        <element name="slide" type="button" selector="(//div[@data-role='slide'])[{{arg1}}]" parameterized="true"/>
         <element name="slideTitle1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content h3"/>
         <element name="slideContent1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content div.slider-content"/>
         <element name="slideLinkText1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content a span span"/>
         <element name="slideLinkURL1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content a[href*='{{arg1}}']" parameterized="true"/>
         <element name="slideHasOverlay1" type="text" selector="[data-slick-index='0'][data-role='slide'] .pagebuilder-content.has-overlay-background"/>
-        <element name="slide2" type="button" selector="[data-slick-index='1'][data-role='slide']"/>
         <element name="slideTitle2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content h3"/>
         <element name="slideContent2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content div.slider-content"/>
         <element name="slideLinkText2" type="text" selector="[data-slick-index='1'][data-role='slide'] .pagebuilder-content a span span"/>

@@ -20,4 +20,13 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation"/>
         <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditFormTitle"/>
     </actionGroup>
+    <actionGroup name="switchSlide">
+        <arguments>
+            <argument name="index" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="waitForSliderButton"/>
+        <click selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="clickSliderButton"/>
+        <wait time="999" stepKey="wait"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.slide(index)}}" stepKey="waitForSlide"/>
+    </actionGroup>
 </actionGroups>

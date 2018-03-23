@@ -49,7 +49,8 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="anchor{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElementInDOM selector="//span[@id='{{PageBuilderAnchorIdentifierProperty.value}}']" stepKey="seeAnchorIdentifierSet"/>
+        <waitForPageLoad stepKey="waitForStorefront"/>
+        <seeElementInDOM selector="{{AnchorOnStorefront.anchorIdentifier('1')}}" stepKey="seeAnchorIdentifierSet"/>
     </test>
     <test name="RemoveAnchorFromStage">
         <annotations>
