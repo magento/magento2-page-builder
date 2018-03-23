@@ -24,10 +24,12 @@ define([
             },
             translations: {
                 allowedFileTypes: $t('Allowed file types'),
+                dragImageHere: $t('Drag image here'),
                 dropHere: $t('Drop here'),
                 maximumFileSize: $t('Maximum file size'),
                 selectFromGallery: $t('Select from Gallery'),
-                upload: $t('Upload'),
+                or: $t('or'),
+                uploadImage: $t('Upload Image'),
                 uploadNewImage: $t('Upload New Image')
             }
         },

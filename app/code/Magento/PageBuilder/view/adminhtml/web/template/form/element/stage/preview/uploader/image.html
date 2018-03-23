@@ -33,8 +33,10 @@
         <div class="admin__field-control">
             <div class="file-uploader image-uploader">
                 <div class="file-uploader-area">
+                    <p class="image-upload-instructions" translate="translations.dragImageHere"></p>
                     <input type="file" afterRender="onElementRender" attr="id: uid, name: inputName, multiple: isMultipleFiles" disable="disabled" />
-                    <label class="file-uploader-button action-default" attr="for: uid" disable="disabled" translate="translations.upload" />
+                    <label class="file-uploader-button action-default" attr="for: uid" disable="disabled" translate="translations.uploadImage" />
+                    <span translate="translations.or"></span>
                     <label
                         data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog}"
                         class="file-uploader-button action-default"
