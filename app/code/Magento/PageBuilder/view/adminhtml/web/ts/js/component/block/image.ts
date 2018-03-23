@@ -33,6 +33,11 @@ export default class Image extends Block {
         super(parent, stage, config, formData);
         this.createUploader();
         this.listenImageUploaded();
+
+        // Notify all subscribers when preview image data gets modified
+        this.preview.data.image.subscribe((data) => {
+            events.trigger("image:assigned:" + this.id, data[0]);
+        });
     }
 
     /**

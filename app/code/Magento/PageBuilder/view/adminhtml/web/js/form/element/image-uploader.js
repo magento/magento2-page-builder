@@ -41,6 +41,8 @@ define([
 
             this._super();
 
+            events.on('image:assigned:' + this.id, this.onAssignedFile.bind(this));
+
             // bind dropzone highlighting using event delegation only once
             if (!initializedOnce) {
                 // dropzone highlighting
@@ -123,6 +125,15 @@ define([
             events.trigger('image:uploaded:' + this.id, [file]);
 
             return this;
+        },
+
+        /**
+         * Propagate file changes through all image uploaders sharing the same id
+         *
+         * @param {Object} file
+         */
+        onAssignedFile: function (file) {
+            this.value([file]);
         }
     });
 });

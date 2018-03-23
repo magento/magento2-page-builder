@@ -28,7 +28,12 @@ define(["uiEvents", "uiLayout", "uiRegistry", "underscore", "../../utils/url", "
 
       _this.createUploader();
 
-      _this.listenImageUploaded();
+      _this.listenImageUploaded(); // Notify all subscribers when preview image data gets modified
+
+
+      _this.preview.data.image.subscribe(function (data) {
+        _uiEvents.trigger("image:assigned:" + _this.id, data[0]);
+      });
 
       return _this;
     }
