@@ -174,9 +174,9 @@ define(["mageUtils", "../../../component/block/appearance-config", "../../../uti
      */
 
 
-    _proto.readHtmlTag = function readHtmlTag(config, e, data) {
+    _proto.readHtmlTag = function readHtmlTag(config, element, data) {
       var result = {};
-      result[config.tag.var] = e.nodeName.toLowerCase();
+      result[config.tag.var] = element.nodeName.toLowerCase();
       return _.extend(data, result);
     };
     /**

@@ -163,9 +163,9 @@ export default class Configurable implements ReadInterface {
      * @param {object} data
      * @returns {object}
      */
-    private readHtmlTag(config: any, e: Node, data: object) {
+    private readHtmlTag(config: any, element: Node, data: object) {
         const result = {};
-        result[config.tag.var] = e.nodeName.toLowerCase();
+        result[config.tag.var] = element.nodeName.toLowerCase();
         return _.extend(data, result);
     }
 
