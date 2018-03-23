@@ -401,13 +401,13 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBannerNewTabProperty.section, PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="waitForElementVisible" />
-        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="clickProperty"/>
-        <wait time="1" stepKey="waitForClick1"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <seeElementInDOM selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrlInDom"/>
         <seeElementInDOM selector="{{BannerOnFrontend.openInNewTab}}" stepKey="verifyLinkOpensNewWindow"/>
     </test>
@@ -2804,9 +2804,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBannerNewTabProperty.section, PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="waitForElementVisible" />
-        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="clickProperty"/>
-        <wait time="1" stepKey="waitForClick2"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeSecondaryProperty">
             <argument name="property" value="PageBuilderBannerButtonTypeSecondaryProperty"/>
         </actionGroup>
@@ -3334,9 +3334,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBannerNewTabProperty.section, PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="waitForElementVisible" />
-        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="clickProperty"/>
-        <wait time="1" stepKey="waitForClick3"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeSecondaryProperty">
             <argument name="property" value="PageBuilderBannerButtonTypeSecondaryProperty"/>
         </actionGroup>
@@ -3866,9 +3866,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBannerNewTabProperty.section, PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="waitForElementVisible" />
-        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="clickProperty"/>
-        <wait time="1" stepKey="waitForClick4"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeSecondaryProperty">
             <argument name="property" value="PageBuilderBannerButtonTypeSecondaryProperty"/>
         </actionGroup>
@@ -4382,9 +4382,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBannerNewTabProperty.section, PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="waitForElementVisible" />
-        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderBannerNewTabProperty.fieldName)}}" stepKey="clickProperty"/>
-        <wait time="1" stepKey="waitForClick5"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeSecondaryProperty">
             <argument name="property" value="PageBuilderBannerButtonTypeSecondaryProperty"/>
         </actionGroup>
