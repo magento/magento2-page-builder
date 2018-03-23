@@ -38,7 +38,9 @@ define(["mage/translate", "uiEvents", "uiLayout", "uiRegistry"], function (_tran
       this.config = void 0;
       config.id = this.id = id;
       config.name = this.name = name;
-      this.config = config;
+      this.config = config; // Render uploader
+
+      this.render();
     }
     /**
      * Instantiate uploader through layout UI component renderer

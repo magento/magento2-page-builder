@@ -60,6 +60,9 @@ export default class Uploader {
         config.name = this.name = name;
 
         this.config = config;
+
+        // Render uploader
+        this.render();
     }
 
     /**

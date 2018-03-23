@@ -25,10 +25,7 @@ define(["uiEvents", "underscore", "../../utils/url", "../config", "./block", "..
         value: _this.stage.store.get(_this.id).image
       })); // Register listener when image gets uploaded from uploader UI component
 
-      _this.uploader.onUploaded(_this.onImageUploaded.bind(_this)); // Render uploader
-
-
-      _this.uploader.render(); // Notify all subscribers when preview image data gets modified
+      _this.uploader.onUploaded(_this.onImageUploaded.bind(_this)); // Notify all subscribers when preview image data gets modified
 
 
       _this.preview.data.image.subscribe(function (data) {

@@ -37,9 +37,6 @@ export default class Image extends Block {
         // Register listener when image gets uploaded from uploader UI component
         this.uploader.onUploaded(this.onImageUploaded.bind(this));
 
-        // Render uploader
-        this.uploader.render();
-
         // Notify all subscribers when preview image data gets modified
         this.preview.data.image.subscribe((data) => {
             events.trigger("image:assigned:" + this.id, data[0]);
