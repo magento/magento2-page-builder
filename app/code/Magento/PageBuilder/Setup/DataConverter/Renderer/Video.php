@@ -34,6 +34,9 @@ class Video implements RendererInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function render(array $itemData, array $additionalData = [])
     {
@@ -43,30 +46,42 @@ class Video implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'video',
+            'data-role' => 'video'
+        ];
+
+        $iframeElementAttributes = [
             'class' => $eavData['css_classes'] ?? '',
             'src' => $eavData['video_url']
         ];
 
         $formData = $itemData['formData'] ?? [];
         if (isset($eavData['video_width'])) {
-            $formData['width'] = $this->normalizeSizeDimension($eavData['video_width']);
+            $iframeElementAttributes['width'] = $this->normalizeSizeDimension($eavData['video_width']);
         }
 
-        if (isset($eavData['video_width'])) {
-            $formData['height'] = $this->normalizeSizeDimension($eavData['video_height']);
+        if (isset($eavData['video_height'])) {
+            $iframeElementAttributes['height'] = $this->normalizeSizeDimension($eavData['video_height']);
+        }
+
+        if (isset($formData['align']) && $formData['align'] !== '') {
+            $rootElementAttributes['style'] = 'text-align: ' . $formData['align'] . ';';
+            unset($formData['align']);
         }
 
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
-            $rootElementAttributes['style'] = $style;
+            $iframeElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '></iframe>';
+        $rootElementHtml .= '><iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen';
+        foreach ($iframeElementAttributes as $attributeName => $attributeValue) {
+            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
+        }
+        $rootElementHtml .= '></iframe></div>';
 
         return $rootElementHtml;
     }
