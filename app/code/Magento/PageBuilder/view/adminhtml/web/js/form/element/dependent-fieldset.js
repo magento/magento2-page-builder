@@ -9,6 +9,11 @@ define([
     'use strict';
 
     return Fieldset.extend({
+        /**
+         * Hide fieldset
+         *
+         * @param {Array} options
+         */
         appearancesHidden: function (options) {
             this.visible(options.length > 1);
         }
