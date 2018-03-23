@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import PreviewBlock from "./block";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
+import PreviewBlock from "./block";
 
 export default class Slide extends PreviewBlock {
 
@@ -15,7 +15,7 @@ export default class Slide extends PreviewBlock {
      * @param {StyleAttributeMapperResult} styles
      * @returns {StyleAttributeMapperResult}
      */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) : StyleAttributeMapperResult {
+    protected afterStyleMapped(styles: StyleAttributeMapperResult): StyleAttributeMapperResult {
         if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
             styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
         }

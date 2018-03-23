@@ -9,6 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and @style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; height: {{arg7}}; position: relative; overflow: hidden;']" parameterized="true"/>
         <element name="map" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
         <element name="mapWithPin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
         <element name="mapPinLocation" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>

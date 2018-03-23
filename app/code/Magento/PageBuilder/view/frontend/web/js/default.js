@@ -36,16 +36,7 @@ requirejs([
                     fade: $(element).data('fade') === 1,
                     infinite: $(element).data('is-infinite') === 1,
                     arrows: $(element).data('show-arrows') === 1,
-                    dots: $(element).data('show-dots') === 1,
-                    variableWidth: true,
-                });
-
-                /**
-                 * Set slide width to the be width of the slider for both initializing and resize
-                 */
-                $(element).find(".pagebuilder-slide").css('width', Math.ceil($(element).outerWidth()));
-                $(window).on('resize', function () {
-                    $(element).find(".pagebuilder-slide").css('width', Math.ceil($(element).outerWidth()));
+                    dots: $(element).data('show-dots') === 1
                 });
             }
         });

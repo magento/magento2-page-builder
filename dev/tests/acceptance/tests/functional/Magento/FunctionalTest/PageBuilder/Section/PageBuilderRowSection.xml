@@ -17,7 +17,14 @@
         <element name="repeatInput" type="button" selector="[name='background-repeat']"/>
     </section>
     <section name="RowAdminPreview">
+        <element name="default" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; background-size: {{arg6}}; background-repeat: {{arg7}}; background-attachment: {{arg8}};']" parameterized="true"/>
         <element name="empty" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type')]//div[contains(@class, 'pagebuilder-empty-container')])"/>
+        <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]'/>
+        <element name="row2" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]'/>
+        <element name="row3" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[3]'/>
+        <element name="allRows" type="text" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")]'/>
+        <element name="rowOptionsMenu" type="button" selector='(//div[1][contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]'/>
+        <element name="removeRow" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
         <element name="displayLabel" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type')]//div[contains(@class, 'pagebuilder-display-label')])"/>
         <element name="rowStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, '{{arg1}}')])[1]" parameterized="true"/>
         <element name="backgroundColor" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-color: rgb(204, 204, 204)')])[1]"/>
@@ -26,14 +33,6 @@
         <element name="backgroundSize" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-size: cover')])[1]"/>
         <element name="backgroundRepeat" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-repeat: repeat')])[1]"/>
         <element name="backgroundAttachment" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'background-attachment: fixed')])[1]"/>
-
-        <!-- Advanced Section -->
-        <element name="textAlign" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'text-align: center')])[1]"/>
-        <element name="border" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'border-width: 10px') and contains(@style, 'border-style: dotted') and contains(@style, 'border-color: rgb(255, 255, 255)')])[1]"/>
-        <element name="borderRadius" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'border-radius: 12px')])[1]"/>
-        <element name="margin" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'margin: 5px')])[1]"/>
-        <element name="padding" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'padding: 5px')])[1]"/>
-        <element name="class" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@class, 'first-class second-class third-class')])[1]"/>
     </section>
     <section name="RowOnFrontend">
         <element name="backgroundColor" type="button" selector="[data-role='row'][style*='background-color: rgb(204, 204, 204)']"/>
@@ -43,16 +42,14 @@
         <element name="backgroundRepeat" type="button" selector="[data-role='row'][style*='background-repeat: repeat']"/>
         <element name="backgroundAttachment" type="button" selector="[data-role='row'][style*='background-attachment: fixed']"/>
         <element name="parallaxClass" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax']"/>
-        <element name="parallaxSpeed" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax'][@data-parallax-speed='{{arg1}}']" parameterized="true"/>
-
-        <!-- Advanced Section -->
-        <element name="textAlign" type="button" selector="[data-role='row'][style*='text-align: center;']"/>
-        <element name="border" type="button" selector="//div[@data-role = 'row' and contains(@style, 'border-width: 10px') and contains(@style, 'border-style: dotted') and contains(@style, 'border-color: rgb(255, 255, 255)')]"/>
-        <element name="borderRadius" type="button" selector="[data-role='row'][style*='border-radius: 12px;']"/>
-        <element name="marginDefault" type="button" selector="[data-role='row'][style*='margin: 0px 0px 10px;']"/>
-        <element name="margin" type="button" selector="[data-role='row'][style*='margin: 5px;']"/>
-        <element name="paddingDefault" type="button" selector="[data-role='row'][style*='padding: 10px;']"/>
-        <element name="padding" type="button" selector="[data-role='row'][style*='padding: 5px;']"/>
-        <element name="class" type="button" selector="[data-role='row'].first-class.second-class.third-class"/>
+        <element name="parallaxSpeed" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax'][@data-speed='{{arg1}}']" parameterized="true"/>
+    </section>
+    <section name="PageBuilderRowSection">
+        <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]'/>
+        <element name="row2" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]'/>
+        <element name="row3" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[3]'/>
+        <element name="allRows" type="text" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")]'/>
+        <element name="rowOptionsMenu" type="button" selector='(//div[1][contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]'/>
+        <element name="removeRow" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
     </section>
 </sections>

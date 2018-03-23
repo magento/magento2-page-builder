@@ -47,7 +47,7 @@ class Map implements RendererInterface
             'class' => $eavData['css_classes'] ?? '',
         ];
 
-        if(isset($eavData['map'])) {
+        if (isset($eavData['map'])) {
             $mapParts = explode(',', $eavData['map'] ?? ',,');
             $mapParts = count($mapParts) === 3 ? $mapParts : ['', '', ''];
             $rootElementAttributes['data-markers'] = '[{&quot;lat&quot;:'

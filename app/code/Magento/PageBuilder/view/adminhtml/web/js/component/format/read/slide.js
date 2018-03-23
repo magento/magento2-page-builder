@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["./default"], function (_default) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,7 +7,9 @@ define([], function () {
   var Slide =
   /*#__PURE__*/
   function () {
-    function Slide() {}
+    function Slide() {
+      this.defaultReader = new _default();
+    }
 
     var _proto = Slide.prototype;
 
@@ -18,14 +20,17 @@ define([], function () {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
-      var target = element.firstChild;
       var response = {
         content: element.querySelector("h3").nextSibling.innerHTML,
         link_text: element.querySelector("a") !== null ? element.querySelector("a").firstChild.firstChild.innerText : "",
         link_url: element.querySelector("a") !== null ? element.querySelector("a").getAttribute("href") : "",
         title: element.querySelector("h3").innerText
       };
-      return Promise.resolve(response);
+      var slideAttributeElement = element.querySelector("div");
+      var slideAttributesPromise = this.defaultReader.read(slideAttributeElement);
+      return slideAttributesPromise.then(function (slideAttributes) {
+        return Promise.resolve(Object.assign(slideAttributes, response));
+      });
     };
 
     return Slide;
