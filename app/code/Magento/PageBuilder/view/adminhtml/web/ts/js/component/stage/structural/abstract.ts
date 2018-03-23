@@ -203,7 +203,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         const appearanceConfiguration = appearanceConfig(this.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;
 
-        data = this.convertData(data, appearanceConfiguration.data_mapping.converters)
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
 
         let result = {};
         if (config[element].style.length) {
