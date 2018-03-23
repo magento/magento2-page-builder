@@ -68,6 +68,8 @@ return [
                                         'preview_converter' => null
                                     ]
                                 ],
+                                'tag' => [],
+                                'html' => [],
                                 'css' => [
                                     'var' => 'css_classes',
                                     'converter' => null,
@@ -146,7 +148,7 @@ return [
                                     ],
                                     4 => [
                                         'var' => 'original_complex',
-                                        'reader' => null,
+                                        'reader' => 'Path/to/reader',
                                         'converter' => null,
                                         'preview_converter' => null,
                                         'virtual' => null,
@@ -170,7 +172,7 @@ return [
                                     ],
                                     7 => [
                                         'var' => 'new_complex',
-                                        'reader' => null,
+                                        'reader' => 'Path/to/reader',
                                         'converter' => null,
                                         'preview_converter' => null,
                                         'virtual' => null,
@@ -242,7 +244,7 @@ return [
                                     ],
                                     7 => [
                                         'var' => 'original_complex',
-                                        'reader' => null,
+                                        'reader' => 'Path/to/reader',
                                         'converter' => null,
                                         'preview_converter' => null,
                                         'virtual' => null,
@@ -266,7 +268,7 @@ return [
                                     ],
                                     10 => [
                                         'var' => 'new_complex',
-                                        'reader' => null,
+                                        'reader' => 'Path/to/reader',
                                         'converter' => null,
                                         'preview_converter' => null,
                                         'virtual' => null,
@@ -312,6 +314,8 @@ return [
                                         'preview_converter' => null
                                     ]
                                 ],
+                                'tag' => [],
+                                'html' => [],
                                 'css' => [
                                     'var' => 'css_classes',
                                     'converter' => null,
@@ -340,6 +344,8 @@ return [
                                         'preview_converter' => null
                                     ]
                                 ],
+                                'tag' => [],
+                                'html' => [],
                                 'css' => [
                                     'var' => 'css_classes',
                                     'converter' => null,
@@ -413,6 +419,8 @@ return [
                                         'preview_converter' => null,
                                     ]
                                 ],
+                                'tag' => [],
+                                'html' => [],
                                 'css' => [
                                     'var' => 'css_classes',
                                     'converter' => null,
@@ -476,6 +484,8 @@ return [
                                         'preview_converter' => null,
                                     ]
                                 ],
+                                'tag' => [],
+                                'html' => [],
                                 'css' => [
                                     'var' => 'css_classes',
                                     'converter' => null,
@@ -485,7 +495,7 @@ return [
                         ],
                         'converters' => []
                     ],
-                    'default' => 'false'
+                    'default' => null
                 ]
             ]
         ],
@@ -544,6 +554,8 @@ return [
                                         'preview_converter' => null,
                                     ]
                                 ],
+                                'tag' => [],
+                                'html' => [],
                                 'css' => [
                                     'var' => 'css_classes',
                                     'converter' => null,
