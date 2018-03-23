@@ -36,16 +36,6 @@ define(["./block"], function (_block) {
     _proto.onFocusOut = function onFocusOut() {
       this.parent.parent.preview.isLiveEditing(null);
     };
-    /**
-     * After child render record element
-     *
-     * @param {Element} element
-     */
-
-
-    _proto.onAfterRender = function onAfterRender(element) {
-      this.element = element;
-    };
 
     return Button;
   }(_block);

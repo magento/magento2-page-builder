@@ -75,6 +75,9 @@ ko.bindingHandlers.liveEdit = {
      * @param value "{key:'button_text','data-placeholder':$t('Edit Button Text')}"
      * @param name "liveEdit"
      * @param addBindingCallback
+     *
+     * Use data-placeholder for elements that
+     * don't support the placeholder attribute
      */
     preprocess(value, name, addBindingCallback) {
         const attrValue = "{" + value.split(",")[1];

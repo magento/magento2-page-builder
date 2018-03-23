@@ -24,13 +24,4 @@ export default class Button extends PreviewBlock {
     private onFocusOut(): void {
         this.parent.parent.preview.isLiveEditing(null);
     }
-
-    /**
-     * After child render record element
-     *
-     * @param {Element} element
-     */
-    private onAfterRender(element: Element): void {
-        this.element = element;
-    }
 }
