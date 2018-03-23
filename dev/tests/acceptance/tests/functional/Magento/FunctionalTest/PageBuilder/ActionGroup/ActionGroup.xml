@@ -96,8 +96,7 @@
             <argument name="containerBlockType" defaultValue=""/>
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
         </arguments>
-        <!--todo: move selector to CmsNewPagePageContentSection.xml-->
-        <scrollTo selector="//div[@class='fieldset-wrapper-title']//span[.='Content']" stepKey="scroll"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerBlockType.role, containerTargetIndex)}}" stepKey="dropContentBlockIntoStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, containerTargetIndex)}}" stepKey="waitForContentBlockInStage" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, containerTargetIndex)}}" stepKey="seeContentBlockInStage"/>
