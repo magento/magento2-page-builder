@@ -18,21 +18,28 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
          * @param string $filename
          */
             function ($filename) {
-                $xmlFile = file_get_contents($filename);
-                $extendsLocations = [];
+                $dom = new \DOMDocument();
+                $dom->loadXML(file_get_contents($filename));
+                $errors = libxml_get_errors();
+                libxml_clear_errors();
+                $this->assertEmpty($errors, print_r($errors, true));
 
-                preg_match('/extends="pagebuilder_base_form"/s', $xmlFile, $extendsLocations);
+                $this->assertNotEmpty(
+                    $dom->getElementsByTagName('form')->item(0),
+                    'The XML file ' . $filename . ' is not a form'
+                );
+
                 $this->assertEquals(
-                    1,
-                    count($extendsLocations),
-                    'The XML file at ' . $filename . ' does not extend "pagebuilder_base_form"'
+                    'pagebuilder_base_form',
+                    $dom->getElementsByTagName('form')->item(0)->getAttribute('extends'),
+                    'The XML file ' . $filename . ' does not extend "pagebuilder_base_form"'
                 );
             },
             $this->getXmlFiles()
         );
     }
 
-    public function getXmlFiles()
+    private function getXmlFiles()
     {
         $data = [];
         $ignoreFiles = [
