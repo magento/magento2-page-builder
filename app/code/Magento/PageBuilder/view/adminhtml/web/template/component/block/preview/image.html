@@ -12,8 +12,8 @@
     </div>
 
     <div class="preview-image-container">
-        <!-- ko if: preview.data.image() && typeof preview.data.image()[0] !== 'undefined' -->
-            <img data-bind="attr: {src: preview.data.image()[0].url}, style: { maxWidth: '100%', height: 'auto' }" />
+        <!-- ko if: getPreviewImageUrl() -->
+            <img data-bind="attr: {src: getPreviewImageUrl()}" />
         <!-- /ko -->
     </div>
 

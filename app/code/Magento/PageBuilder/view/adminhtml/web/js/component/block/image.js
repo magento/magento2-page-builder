@@ -135,6 +135,16 @@ define(["uiEvents", "uiLayout", "uiRegistry", "underscore", "../../utils/url", "
       };
     };
     /**
+     * Get the image value held in preview block
+     *
+     * @returns {String|null}
+     */
+
+
+    _proto.getPreviewImageUrl = function getPreviewImageUrl() {
+      return this.preview.data.image() && this.preview.data.image()[0] !== undefined ? this.preview.data.image()[0].url : null;
+    };
+    /**
      * Retrieve the image URL with directive
      *
      * @param {{}} image

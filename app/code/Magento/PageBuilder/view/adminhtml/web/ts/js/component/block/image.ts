@@ -123,6 +123,17 @@ export default class Image extends Block {
     }
 
     /**
+     * Get the image value held in preview block
+     *
+     * @returns {String|null}
+     */
+    public getPreviewImageUrl() {
+        return this.preview.data.image() && this.preview.data.image()[0] !== undefined
+            ? this.preview.data.image()[0].url
+            : null;
+    }
+
+    /**
      * Retrieve the image URL with directive
      *
      * @param {{}} image
