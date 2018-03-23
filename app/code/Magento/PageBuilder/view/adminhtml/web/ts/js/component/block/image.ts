@@ -4,8 +4,6 @@
  */
 
 import events from "uiEvents";
-import layout from "uiLayout";
-import registry from "uiRegistry";
 import _ from "underscore";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 import Config, {ConfigContentBlock} from "../config";
@@ -16,14 +14,9 @@ import Uploader from "../uploader";
 
 export default class Image extends Block {
     /**
-     * Name of the uploader instance
+     * Uploader instance
      */
-    private uploaderName: string;
-
-    /**
-     * Configuration passed to uploader upon instantiation
-     */
-    private uploaderConfig: object = Uploader.config;
+    private uploader: Uploader;
 
     /**
      * Create image uploader and add listener for when image gets uploaded through this instance
@@ -31,8 +24,21 @@ export default class Image extends Block {
      */
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
         super(parent, stage, config, formData);
-        this.createUploader();
-        this.listenImageUploaded();
+
+        // Create uploader
+        this.uploader = new Uploader(
+            this.id,
+            "imageuploader_" + this.id,
+            Object.assign({}, Uploader.config, {
+                value: this.stage.store.get(this.id).image
+            })
+        );
+
+        // Register listener when image gets uploaded from uploader UI component
+        this.uploader.onUploaded(this.onImageUploaded.bind(this));
+
+        // Render uploader
+        this.uploader.render();
 
         // Notify all subscribers when preview image data gets modified
         this.preview.data.image.subscribe((data) => {
@@ -41,46 +47,12 @@ export default class Image extends Block {
     }
 
     /**
-     * Register listener when image gets uploaded from uploader UI component
-     */
-    private listenImageUploaded() {
-        events.on("image:uploaded:" + this.id, this.onImageUploaded.bind(this));
-    }
-
-    /**
-     * Update image data inside data store
-     *
-     * @param {Array} data - list of each files' data
-     */
-    private onImageUploaded(data: object[]) {
-        this.stage.store.updateKey(
-            this.id,
-            data,
-            "image",
-        );
-    }
-
-    /**
-     * Instantiate uploader through layout UI component renderer
-     */
-    private createUploader() {
-        this.uploaderName = "imageuploader_" + this.id;
-        this.uploaderConfig.name = this.uploaderName;
-        this.uploaderConfig.id = this.id;
-
-        // set reference to current image value in stage's data store
-        this.uploaderConfig.value = this.stage.store.get(this.id).image;
-
-        layout([this.uploaderConfig]);
-    }
-
-    /**
      * Get registry callback reference to uploader UI component
      *
-     * @returns {Function}
+     * @returns {Uploader}
      */
     public getUploader() {
-        return registry.async(this.uploaderName);
+        return this.uploader;
     }
 
     /**
@@ -153,4 +125,16 @@ export default class Image extends Block {
         return directive;
     }
 
+    /**
+     * Update image data inside data store
+     *
+     * @param {Array} data - list of each files' data
+     */
+    private onImageUploaded(data: object[]) {
+        this.stage.store.updateKey(
+            this.id,
+            data,
+            "image",
+        );
+    }
 }

@@ -4,10 +4,13 @@
  */
 
 import $t from "mage/translate";
+import events from "uiEvents";
+import layout from "uiLayout";
+import registry from "uiRegistry";
 
 export default class Uploader {
     /**
-     * Configuration passed to uploader upon instantiation
+     * Hardcoded configuration for uploader instances; to be removed in MAGETWO-89470
      */
     public static config: object = {
         allowedExtensions: "jpg jpeg gif png",
@@ -31,4 +34,56 @@ export default class Uploader {
             "required-entry": true,
         },
     };
+
+    /**
+     * Id of uploader instance
+     */
+    private id: string;
+
+    /**
+     * Name of uploader instance
+     */
+    private name: string;
+
+    /**
+     * Config data of uploader instance
+     */
+    private config: object;
+
+    /**
+     * @param {String} id
+     * @param {String} name - Name to use for lookup reference in registry
+     * @param {Object} config
+     */
+    constructor(id: string, name: string, config: object = Uploader.config) {
+        config.id = this.id = id;
+        config.name = this.name = name;
+
+        this.config = config;
+    }
+
+    /**
+     * Instantiate uploader through layout UI component renderer
+     */
+    public render() {
+        layout([this.config]);
+    }
+
+    /**
+     * Get registry callback reference to uploader UI component
+     *
+     * @returns {Function}
+     */
+    public getUiComponent() {
+        return registry.async(this.name);
+    }
+
+    /**
+     * Register callback when file is uploaded through this instance
+     *
+     * @param {Function} callback - callback function containing array of file objects as argument
+     */
+    public onUploaded(callback: (files: object[]) => any) {
+        events.on("image:uploaded:" + this.id, callback);
+    }
 }
