@@ -17,6 +17,9 @@ export default class BackgroundImage implements ElementConverterInterface {
      * @returns {string | Object}
      */
     public fromDom(value: string): string | object {
+        if (!value) {
+            return "";
+        }
         return decodeUrl(value);
     }
 

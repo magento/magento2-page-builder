@@ -18,6 +18,10 @@ define(["../../../component/config", "../../../utils/directives", "../../../util
      * @returns {string | Object}
      */
     _proto.fromDom = function fromDom(value) {
+      if (!value) {
+        return "";
+      }
+
       return (0, _image.decodeUrl)(value);
     };
     /**
