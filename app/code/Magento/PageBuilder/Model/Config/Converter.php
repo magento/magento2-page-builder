@@ -62,11 +62,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Convert appearances data
      *
-     * @param $childNode
+     * @param \DOMElement $childNode
      * @return array
      * @throws \InvalidArgumentException
      */
-    private function convertAppearancesData($childNode): array
+    private function convertAppearancesData(\DOMElement $childNode): array
     {
         $appearancesData = [];
         foreach ($childNode->getElementsByTagName('appearance') as $appearanceNode) {
@@ -80,10 +80,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Convert appearance data
      *
-     * @param $appearanceNode
+     * @param \DOMElement $appearanceNode
      * @return array
      */
-    private function convertAppearanceData($appearanceNode): array
+    private function convertAppearanceData(\DOMElement $appearanceNode): array
     {
         $appearanceData = [];
         foreach ($appearanceNode->getElementsByTagName('data') as $dataNode) {
@@ -122,10 +122,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Validate that configuration appearances has default appearance
      *
-     * @param $appearanceConfig
+     * @param array $appearanceConfig
      * @throws \InvalidArgumentException
      */
-    private function validateAppearanceConfig($appearanceConfig)
+    private function validateAppearanceConfig(array $appearanceConfig)
     {
         $isDefaultAppearancePresent = false;
         foreach ($appearanceConfig as $config) {
@@ -142,10 +142,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Convert data mapping
      *
-     * @param $childNode
+     * @param \DOMElement $childNode
      * @return array
      */
-    private function convertDataMapping($childNode): array
+    private function convertDataMapping(\DOMElement $childNode): array
     {
         $elementData = [];
         foreach ($childNode->getElementsByTagName('element') as $elementNode) {
@@ -172,10 +172,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Convert properties
      *
-     * @param $elementNode
+     * @param \DOMElement $elementNode
      * @return array
      */
-    private function convertProperties($elementNode): array
+    private function convertProperties(\DOMElement $elementNode): array
     {
         $propertiesData = [];
         $propertiesNode = $elementNode->getElementsByTagName('style_properties')->item(0);
@@ -214,10 +214,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Convert attributes
      *
-     * @param $elementNode
+     * @param \DOMElement $elementNode
      * @return array
      */
-    private function convertAttributes($elementNode): array
+    private function convertAttributes(\DOMElement $elementNode): array
     {
         $attributesData = [];
         $attributesNode = $elementNode->getElementsByTagName('attributes')->item(0);
@@ -256,10 +256,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Convert html
      *
-     * @param $elementNode
+     * @param \DOMElement $elementNode
      * @return array
      */
-    private function convertHtml($elementNode): array
+    private function convertHtml(\DOMElement $elementNode): array
     {
         $htmlData = [];
         $htmlNode = $elementNode->getElementsByTagName('html')->item(0);
@@ -273,10 +273,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Convert css
      *
-     * @param $elementNode
+     * @param \DOMElement $elementNode
      * @return array
      */
-    private function convertCss($elementNode): array
+    private function convertCss(\DOMElement $elementNode): array
     {
         $cssData = [];
         $cssNode = $elementNode->getElementsByTagName('css')->item(0);
@@ -298,10 +298,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Convert tag
      *
-     * @param $elementNode
+     * @param \DOMElement $elementNode
      * @return array
      */
-    private function convertTag($elementNode): array
+    private function convertTag(\DOMElement $elementNode): array
     {
         $tagData = [];
         $tagNode = $elementNode->getElementsByTagName('tag')->item(0);
@@ -313,10 +313,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * @param $childNode
+     * @param \DOMElement $childNode
      * @return array
      */
-    private function convertConvertersData($childNode): array
+    private function convertConvertersData(\DOMElement $childNode): array
     {
         $convertersNode = $childNode->getElementsByTagName('converters')->item(0);
         $converters = [];
@@ -373,10 +373,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     /**
      * Check if node is configuration node
      *
-     * @param $node
+     * @param \DOMNode $node
      * @return bool
      */
-    private function isConfigNode($node): bool
+    private function isConfigNode(\DOMNode $node): bool
     {
         return $node->nodeType === XML_ELEMENT_NODE
             || ($node->nodeType === XML_CDATA_SECTION_NODE
@@ -391,7 +391,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      * @param $attributeName
      * @return string|null
      */
-    private function getAttributeValue($attributeNode, $attributeName)
+    private function getAttributeValue(\DOMElement $attributeNode, $attributeName)
     {
         return $attributeNode->hasAttribute($attributeName)
             ? $attributeNode->attributes->getNamedItem($attributeName)->nodeValue
