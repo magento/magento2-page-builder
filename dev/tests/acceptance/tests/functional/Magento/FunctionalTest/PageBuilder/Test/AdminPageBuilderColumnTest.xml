@@ -198,15 +198,13 @@
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <wait time="2" stepKey="waitBefore"/>
-        <seeElementInDOM selector="{{PageBuilderColumnSection.displayLabel('3/6')}}" stepKey="findBeforeLabel"/>
+        <waitForElement selector="{{PageBuilderColumnSection.displayLabel('3/6')}}" stepKey="findBeforeLabel"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <wait time="2" stepKey="waitAfter"/>
-        <seeElementInDOM selector="{{PageBuilderColumnSection.displayLabel('1/6')}}" stepKey="findAfterLabel"/>
+        <waitForElement selector="{{PageBuilderColumnSection.displayLabel('1/6')}}" stepKey="findAfterLabel"/>
     </test>
     <test name="ColumnCanInteractEditPanel">
         <annotations>
@@ -272,7 +270,6 @@
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
-        <wait time="1" stepKey="wait3"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceAlignmentProperty">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
         </actionGroup>
@@ -294,13 +291,10 @@
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBackgroundRepeatYes">
             <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
         </actionGroup>
-
-        <wait time="1" stepKey="waitForClick10"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <wait time="1" stepKey="wait6"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeFirstColumnAlignmentBottom"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeFirstColumnMinHeight"/>
@@ -333,7 +327,9 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
@@ -358,15 +354,12 @@
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBackgroundRepeatYes">
             <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
         </actionGroup>
-        <wait time="1" stepKey="waitForClick10"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
-        <wait time="1" stepKey="wait5"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
-        <wait time="1" stepKey="wait6"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
@@ -375,10 +368,10 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
-        <wait time="1" stepKey="wait7"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
-        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColor}}" stepKey="seeColumn1BackgroundColorApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column1BackgroundSize}}" stepKey="seeColumn1BackgroundSizeApplied"/>
@@ -426,7 +419,9 @@
             <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
@@ -447,7 +442,6 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
-        <wait time="1" stepKey="wait1"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
@@ -458,7 +452,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
-        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.alignmentBottom)}}" stepKey="seeColumn1AlignmentApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.minHeight)}}" stepKey="seeColumn1HeightApplied"/>
@@ -495,7 +490,9 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
@@ -514,39 +511,18 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundSizePropertyCover">
             <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
         </actionGroup>
-        <wait time="1" stepKey="wait3"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
-        <click selector="{{PageBuilderColumnSection.backgroundRepeatSwitch}}" stepKey="clickBackgroundProperty"/>
-        <wait time="1" stepKey="waitForClick1"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundProperty">
+            <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage2"/>
-        <waitForPageLoad stepKey="waitForCmsPagesGridLoad"/>
-        <waitForElementVisible time="5" selector="{{CmsPagesPageActionsSection.searchInput}}" stepKey="waitForSearchField" />
-        <waitForElementVisible time="5" selector="{{CmsPagesPageActionsSection.searchButton}}" stepKey="waitForButton" />
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible1" />
-        <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilter}}" stepKey="clickClearFilterIfPresent" visible="true"/>
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible2" />
-        <fillField selector="{{CmsPagesPageActionsSection.searchInput}}" userInput='"{{PageBuilderFirstColumnInStage.pageName}}"' stepKey="enterPageNameInSearch"/>
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible3" />
-        <click selector="{{CmsPagesPageActionsSection.searchButton}}" stepKey="clickSearchButton"/>
-        <waitForElement time="10" selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
-        <waitForPageLoad stepKey="waitForSpinner" />
-        <waitForElementVisible time="10" selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="waitForFirstItemButton2" />
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible4" />
-        <click selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
-        <waitForPageLoad stepKey="waitForSpinner2" />
-        <waitForElementVisible time="10" selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible5" />
-        <click selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
-        <waitForElementNotVisible time="10" selector="{{CmsNewPagePageActionsSection.spinner}}" stepKey="waitForCmsPageSpinner" />
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
@@ -599,15 +575,12 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
-        <wait time="1" stepKey="wait3"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
-        <wait time="3" stepKey="wait4"/>
-        <seeElementInDOM selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="backgroundImagePreview"/>
     </test>
     <test name="ValidateBackgroundImageUrl">
         <annotations>
@@ -631,12 +604,13 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
-        <wait time="1" stepKey="wait1"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
@@ -644,12 +618,9 @@
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <wait time="1" stepKey="waitForDataStoreUpdate"/>
-        <click selector="{{CmsNewPagePageActionsSection.expandSplitButton}}" stepKey="clickExpandSaveButton"/>
-        <click selector="{{CmsNewPagePageActionsSection.savePage}}" stepKey="clickSaveCmsPage"/>
-        <wait time="1" stepKey="wait3"/>
-        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <wait time="5" stepKey="wait5"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <seeElementInDOM selector="{{ColumnsOnFrontend.backgroundImageSource(PageBuilderBackgroundImageProperty.path,PageBuilderBackgroundImageProperty.fileType)}}" stepKey="seeBackgroundImageInDom"/>
         <dontSeeInPageSource userInput=".png%22" stepKey="dontSeeEscapedQuoteInPageSource"/>
     </test>
@@ -671,10 +642,6 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <amOnPage url="{{CmsPagesPage.url}}" stepKey="amOnEditPage"/>
-            <waitForPageLoad stepKey="waitForPageLoad"/>
-            <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
-            <waitForPageLoad stepKey="waitForGridReload"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
@@ -691,7 +658,9 @@
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
@@ -718,7 +687,6 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty2">
             <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
         </actionGroup>
-        <wait time="1" stepKey="wait1"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
@@ -732,8 +700,9 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderFirstColumnInStage.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <openNewTab stepKey="openNewTab"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront1"/>
         <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied"/>
@@ -743,32 +712,8 @@
         <seeElement selector="{{ColumnsOnFrontend.column3Height200}}" stepKey="seeColumn3MinHeightApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column3Appearance}}"  stepKey="seeColumn3AppearanceApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column3BackgroundColorGrey}}"  stepKey="seeColumn3BackgroundColorApplied"/>
-        <amOnPage url="/admin/cms/page" stepKey="goToPagesList"/>
-        <waitForElementVisible time="5" selector="{{CmsPagesPageActionsSection.searchInput}}" stepKey="waitForSearchField" />
-        <waitForElementVisible time="5" selector="{{CmsPagesPageActionsSection.searchButton}}" stepKey="waitForButton" />
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible1" />
-        <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilter}}" stepKey="clickClearFilterIfPresent" visible="true"/>
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible2" />
-        <fillField selector="{{CmsPagesPageActionsSection.searchInput}}" userInput='"{{PageBuilderFirstColumnInStage.pageName}}"' stepKey="enterPageNameInSearch"/>
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible3" />
-        <click selector="{{CmsPagesPageActionsSection.searchButton}}" stepKey="clickSearchButton"/>
-        <waitForElement time="10" selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="waitForFirstItemButton" />
-        <waitForPageLoad stepKey="waitForSpinner" />
-        <waitForElementVisible time="10" selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="waitForFirstItemButtonVisible" />
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible4" />
-        <click selector="{{CmsPagesPageActionsSection.firstItemSelectButton}}" stepKey="clickSelectButtonOnFirstItem"/>
-        <waitForPageLoad stepKey="waitForSpinner2" />
-        <waitForElementVisible time="10" selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="waitForFirstItemEditButton" />
-        <waitForElementNotVisible selector="{{CmsPagesPageActionsSection.spinner}}" stepKey="waitForSpinnerNotVisible5" />
-        <click selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
-        <waitForElementNotVisible time="10" selector="{{CmsNewPagePageActionsSection.spinner}}" stepKey="waitForCmsPageSpinner" />
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader2" />
-        <waitForElementNotVisible time="10" selector="{{CmsNewPagePageActionsSection.spinner}}" stepKey="waitForCmsPageSpinner2" />
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent2"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow2" />
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn1">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
@@ -784,7 +729,9 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsWithoutModifying"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
-        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront2"/>
         <seeElement selector="{{ColumnsOnFrontend.column1Height}}" stepKey="seeColumn1MinHeightApplied2"/>
         <seeElement selector="{{ColumnsOnFrontend.column1Appearance}}"  stepKey="seeColumn1AppearanceApplied2"/>
         <seeElement selector="{{ColumnsOnFrontend.column1BackgroundColorPeacock}}"  stepKey="seeColumn1BackgroundColorApplied2"/>
@@ -919,6 +866,9 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
@@ -939,10 +889,8 @@
             <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <fillField selector="{{CmsNewPagePageActionsSection.pageTitle}}" userInput="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="enterPageTitle"/>
-        <wait time="1" stepKey="wait1"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
-        <amOnPage url="{{PageBuilderFirstColumnInStage.pageName}}" stepKey="amOnPageBuilderPage1"/>
+        <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ColumnsOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
     </test>
