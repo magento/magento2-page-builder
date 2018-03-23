@@ -43,14 +43,20 @@ class SliderItem implements RendererInterface
         if (!isset($itemData['entityId'])) {
             throw new \InvalidArgumentException('entityId is missing.');
         }
-        $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
-
-        $cssClasses = $eavData['css_classes'] ?? '';
-        $cssClasses .= isset($eavData['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
 
         $rootElementAttributes = [
             'data-role' => 'slide',
-            'class' => $cssClasses
+            'class' => 'pagebuilder-slide'
+        ];
+
+        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
+
+        $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
+
+        $cssClasses = $eavData['css_classes'] ?? '';
+
+        $innerDivElement1Attributes = [
+            'class' => $cssClasses,
         ];
 
         $formData = $itemData['formData'] ?? [];
@@ -58,14 +64,7 @@ class SliderItem implements RendererInterface
 
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
-            $rootElementAttributes['style'] = $style;
-        }
-
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
-
-        $innerDivElement1Attributes = [];
-        if (isset($formData['align']) && $formData['align']) {
-            $innerDivElement1Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
+            $innerDivElement1Attributes['style'] = $style;
         }
 
         $rootElementHtml .= '><div'
