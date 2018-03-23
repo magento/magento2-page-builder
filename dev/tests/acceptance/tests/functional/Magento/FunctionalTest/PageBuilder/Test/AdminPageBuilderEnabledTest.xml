@@ -93,9 +93,14 @@
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="waitForExitFullScreen" />
         <click selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
         <amOnPage url="/{{SimpleSubCategory.name_lwr}}.html" stepKey="goToCategoryFrontPage"/>
         <waitForPageLoad stepKey="waitForPageLoad3" />
         <see userInput="Hello Category from PageBuilder" stepKey="seePageBuilderContent" />
