@@ -256,7 +256,7 @@ return [
                                         'virtual' => 'false',
                                         'complex' => true
                                     ],
-                                   9 => [
+                                    9 => [
                                         'var' => 'complex_style_attributes_add',
                                         'reader' => 'Path/to/custom/reader',
                                         'converter' => 'Path/to/custom/converter',
@@ -264,7 +264,7 @@ return [
                                         'virtual' => 'true',
                                         'complex' => true
                                     ],
-                                   10 => [
+                                    10 => [
                                         'var' => 'new_complex',
                                         'reader' => null,
                                         'converter' => null,
