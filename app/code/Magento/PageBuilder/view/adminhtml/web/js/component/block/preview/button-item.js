@@ -21,22 +21,36 @@ define(["./block"], function (_block) {
 
     /**
      * After child render record element
-     *
-     * @param {Element} element
-     */
-    _proto.onAfterRender = function onAfterRender(element) {
-      this.element = element;
-    };
-    /**
-     * After child render record element
      * returns {object}
      */
-
-
     _proto.childrenStyle = function childrenStyle() {
       return {
         display: "inline-block"
       };
+    };
+    /**
+     * Focus in of the element
+     */
+
+
+    _proto.onFocusIn = function onFocusIn() {};
+    /**
+     * Focus out of the element
+     */
+
+
+    _proto.onFocusOut = function onFocusOut() {
+      this.parent.preview.isLiveEditing(false);
+    };
+    /**
+     * After child render record element
+     *
+     * @param {Element} element
+     */
+
+
+    _proto.onAfterRender = function onAfterRender(element) {
+      this.element = element;
     };
 
     return Button;
