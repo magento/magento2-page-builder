@@ -20,6 +20,8 @@ define(["./default"], function (_default) {
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
+      var _buttonObject;
+
       var button = element.getElementsByTagName("a")[0];
       var advancedData = this.defaultReader.read(button);
       var buttonObject = (_buttonObject = {}, _buttonObject[button.getAttribute("data_attribute_link_type")] = button.getAttribute("href"), _buttonObject.setting = button.target === "_blank" ? true : false, _buttonObject.type = button.getAttribute("data_attribute_link_type"), _buttonObject);
