@@ -336,4 +336,50 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveButtonEditPanelSettings"/>
     </test>
+    <test name="ButtonsCanBeEditedInline">
+        <annotations>
+            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <title value="Ability to edit button inline on the stage"/>
+            <description value="A user should be able to edit a button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89563"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Verify on stage and admin panel -->
+        <seeElementInDOM selector="{{ButtonsBackendSection.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
+        <pressKey selector="{{ButtonsBackendSection.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage4">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemTextProperty">
+            <argument name="property" value="PageBuilderButtonItemTextProperty2"/>
+        </actionGroup>
+        <!-- Verify in storefront -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <seeElement selector="{{ButtonsFrontendSection.buttonItemText(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty2.value)}}" stepKey="seeButtonTextOnStorefront"/>
+    </test>
 </tests>
