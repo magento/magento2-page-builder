@@ -29,18 +29,12 @@ define(["./block"], function (_block) {
       };
     };
     /**
-     * Focus in of the element
-     */
-
-
-    _proto.onFocusIn = function onFocusIn() {};
-    /**
      * Focus out of the element
      */
 
 
     _proto.onFocusOut = function onFocusOut() {
-      this.parent.preview.isLiveEditing(false);
+      this.parent.parent.preview.isLiveEditing(null);
     };
     /**
      * After child render record element

@@ -36,7 +36,7 @@ define(["../block/factory", "../config", "../event-bus", "./block"], function (_
       createBlockPromise.then(function (button) {
         _this2.addChild(button);
 
-        _this2.preview.isLiveEditing(true);
+        _this2.preview.isLiveEditing(_this2.children().indexOf(button));
 
         return button;
       }).catch(function (error) {

@@ -19,16 +19,10 @@ export default class Button extends PreviewBlock {
     }
 
     /**
-     * Focus in of the element
-     */
-    private onFocusIn(): void {
-    }
-
-    /**
      * Focus out of the element
      */
     private onFocusOut(): void {
-        this.parent.preview.isLiveEditing(false);
+        this.parent.parent.preview.isLiveEditing(null);
     }
 
     /**
