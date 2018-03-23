@@ -66,13 +66,6 @@ export default class Uploader {
     }
 
     /**
-     * Instantiate uploader through layout UI component renderer
-     */
-    public render() {
-        layout([this.config]);
-    }
-
-    /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Function}
@@ -88,5 +81,12 @@ export default class Uploader {
      */
     public onUploaded(callback: (files: object[]) => any) {
         events.on("image:uploaded:" + this.id, callback);
+    }
+
+    /**
+     * Instantiate uploader through layout UI component renderer
+     */
+    private render() {
+        layout([this.config]);
     }
 }
