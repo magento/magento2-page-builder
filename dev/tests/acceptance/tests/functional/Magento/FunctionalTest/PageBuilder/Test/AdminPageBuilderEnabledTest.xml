@@ -93,11 +93,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
-        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen" />
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
         <waitForPageLoad stepKey="waitForPageLoad2" />
@@ -137,7 +134,7 @@
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello CMS Page from PageBuilder" stepKey="addTextToEditor"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Page from PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveCMSWithPageBuilderContent" />
         <!--Enable WYSIWYG-->
@@ -178,7 +175,7 @@
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello CMS Block from PageBuilder" stepKey="addTextToEditor"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Block from PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
         <see userInput="You saved the block." stepKey="seeSuccessMessage"/>

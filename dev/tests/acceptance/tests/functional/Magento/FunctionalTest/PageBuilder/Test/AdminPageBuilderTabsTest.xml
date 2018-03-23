@@ -41,13 +41,12 @@
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-        <waitForElementVisible selector="{{PageBuilderTabsEditPanel.addNewTabButton}}" stepKey="waitForAddTabButton"/>
-        <click selector="{{PageBuilderTabsEditPanel.addNewTabButton}}" stepKey="clickAddTabButton1"/>
-        <fillField selector="{{PageBuilderTabsEditPanel.tabTitle('0')}}" userInput="Tab 1" stepKey="fillTabRow1TitleField"/>
-        <fillField selector="{{PageBuilderTabsEditPanel.tabContent('0')}}" userInput="Tab 1 Content" stepKey="fillTabRow1ContentField"/>
-        <click selector="{{PageBuilderTabsEditPanel.addNewTabButton}}" stepKey="clickAddTabButton2"/>
-        <fillField selector="{{PageBuilderTabsEditPanel.tabTitle('1')}}" userInput="Tab 2" stepKey="fillTabRow2TitleField"/>
-        <fillField selector="{{PageBuilderTabsEditPanel.tabContent('1')}}" userInput="Tab 2 Content" stepKey="fillTabRow2ContentField"/>
+        <actionGroup ref="addTab" stepKey="addTab1"/>
+        <actionGroup ref="addTab" stepKey="addTab2">
+            <argument name="index" value="1"/>
+            <argument name="title" value="Tab 2"/>
+            <argument name="content" value="Tab 2 Content"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="reopenEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
@@ -104,15 +103,16 @@
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
-    <test name="TabsHasAdvancedFormSection">
+    <test name="TabsValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Tabs MAGETWO-83942"/>
-            <title value="Tabs has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for tabs"/>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Tabs - Validate Advanced Configuration Default Values"/>
+            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Tabs."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84275"/>
+            <testCaseId value="MAGETWO-89441"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -123,8 +123,7 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
@@ -133,17 +132,37 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        <actionGroup ref="addTab" stepKey="addTab"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingProperty40"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Style On Stage -->
+        <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
+        <waitForElementVisible selector="{{TabsOnStage.default('1', PageBuilderAdvancedBorderWidthPropertyDefault.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingProperty40.value)}}" stepKey="waitForStyle"/>
+        <!-- Validate Tab (Not Tabs) Style On Stage -->
+        <waitForElementVisible selector="{{TabOnStage.default('1')}}" stepKey="waitForStyle2"/>
     </test>
 </tests>
