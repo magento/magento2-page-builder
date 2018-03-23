@@ -42,29 +42,26 @@ class Map implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
-        $srcParts = explode(',', $eavData['map'] ?? ',,');
-        $srcParts = count($srcParts) === 3 ? $srcParts : ['', '', ''];
-
         $rootElementAttributes = [
             'data-role' => 'map',
             'class' => $eavData['css_classes'] ?? '',
-            'src' => 'https://www.google.com/maps/embed/v1/place?q='
-                . $srcParts[0]
-                . ','
-                . $srcParts[1]
-                . '&zoom='
-                . $srcParts[2]
-                . '&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
         ];
+
+        if(isset($eavData['map'])) {
+            $mapParts = explode(',', $eavData['map'] ?? ',,');
+            $mapParts = count($mapParts) === 3 ? $mapParts : ['', '', ''];
+            $rootElementAttributes['data-markers'] = '[{&quot;lat&quot;:'
+                . $mapParts[0]
+                . ',&quot;lng&quot;:'
+                . $mapParts[1]
+                . '}]';
+            $rootElementAttributes['data-zoom'] = $mapParts[2];
+        }
 
         if (isset($itemData['formData'])) {
             $formData = $itemData['formData'];
-            if (isset($eavData['map_width'])) {
-                $formData['width'] = $eavData['map_width'];
-            }
-            if (isset($eavData['map_height'])) {
-                $formData['height'] = $eavData['map_height'];
-            }
+            $formData['width'] = $eavData['map_width'] ?? '100%';
+            $formData['height'] = $eavData['map_height'] ?? '300px';
 
             $style = $this->styleExtractor->extractStyle($formData);
             if ($style) {
@@ -72,11 +69,11 @@ class Map implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<iframe';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= ' frameborder="0" />';
+        $rootElementHtml .= '></div>';
 
         return $rootElementHtml;
     }
