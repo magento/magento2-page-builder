@@ -11,14 +11,18 @@
             <!-- ko if: getAttributes('desktop_image').src -->
                 <img data-bind="attr: getAttributes('desktop_image'), style: getStyle('desktop_image'), css: getCss('desktop_image')" class="pagebuilder-mobile-hidden" />
             <!-- /ko -->
-            <img data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image'), css: getCss('mobile_image')" class="pagebuilder-mobile-only" />
+            <!-- ko if: getAttributes('mobile_image').src -->
+                <img data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image'), css: getCss('mobile_image')" class="pagebuilder-mobile-only" />
+            <!-- /ko -->
         </a>
     <!-- /ko -->
     <!-- ko ifnot: getAttributes('link').href -->
         <!-- ko if: getAttributes('desktop_image').src -->
             <img data-bind="attr: getAttributes('desktop_image'), style: getStyle('desktop_image'), css: getCss('desktop_image')" class="pagebuilder-mobile-hidden" />
         <!-- /ko -->
-        <img data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image'), css: getCss('mobile_image')" class="pagebuilder-mobile-only" />
+        <!-- ko if: getAttributes('mobile_image').src -->
+            <img data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image'), css: getCss('mobile_image')" class="pagebuilder-mobile-only" />
+        <!-- /ko -->
     <!-- /ko -->
     <!-- ko if: getHtml('caption') -->
         <figcaption data-bind="attr: getAttributes('caption'), style: getStyle('caption'), css: getCss('caption'), text: getHtml('caption')"></figcaption>
