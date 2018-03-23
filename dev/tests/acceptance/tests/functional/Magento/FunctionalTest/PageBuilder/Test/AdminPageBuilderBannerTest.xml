@@ -255,7 +255,7 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForBannerPreviewInStage" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
