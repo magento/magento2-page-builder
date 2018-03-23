@@ -47,7 +47,7 @@ export default class Configurable implements ReadInterface {
                     if (currentElement === null || currentElement === undefined) {
                         continue;
                     }
-                    if (elementConfig.style !== undefined) {
+                    if (elementConfig.style.length) {
                         data = this.readStyle(
                             elementConfig.style,
                             currentElement,
@@ -56,7 +56,7 @@ export default class Configurable implements ReadInterface {
                             elementConverterPool,
                         );
                     }
-                    if (elementConfig.attributes !== undefined) {
+                    if (elementConfig.attributes.length) {
                         data = this.readAttributes(
                             elementConfig.attributes,
                             currentElement,
@@ -65,13 +65,13 @@ export default class Configurable implements ReadInterface {
                             elementConverterPool,
                         );
                     }
-                    if (elementConfig.html !== undefined) {
+                    if (undefined !== elementConfig.html.var) {
                         data = this.readHtml(elementConfig, currentElement, data);
                     }
-                    if (elementConfig.tag !== undefined) {
+                    if (undefined !== elementConfig.tag.var) {
                         data = this.readHtmlTag(elementConfig, currentElement, data);
                     }
-                    if (elementConfig.css !== undefined) {
+                    if (undefined !== elementConfig.css.var) {
                         data = this.readCss(elementConfig, currentElement, data);
                     }
                 }

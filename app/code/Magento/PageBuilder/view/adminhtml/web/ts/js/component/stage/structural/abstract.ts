@@ -206,7 +206,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         data = this.convertData(data, appearanceConfiguration.data_mapping.converters)
 
         let result = {};
-        if (config[element] !== undefined) {
+        if (config[element].style.length) {
             result = this.convertStyle(config[element], data, "master");
         }
         return result;
@@ -235,7 +235,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
 
         let result = {};
-        if (config[element].attributes !== undefined) {
+        if (config[element].attributes.length) {
             result = this.convertAttributes(config[element], data, "master");
         }
 
@@ -252,7 +252,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         const data = this.stage.store.get(this.id);
         const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
         let result = "";
-        if (config.html !== undefined) {
+        if (undefined !== config.html.var) {
             result = data[config.html.var];
         }
         return result;

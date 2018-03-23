@@ -40,23 +40,23 @@ define(["mageUtils", "../../../component/block/appearance-config", "../../../uti
               continue;
             }
 
-            if (elementConfig.style !== undefined) {
+            if (elementConfig.style.length) {
               data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, elementConverterPool);
             }
 
-            if (elementConfig.attributes !== undefined) {
+            if (elementConfig.attributes.length) {
               data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, elementConverterPool);
             }
 
-            if (elementConfig.html !== undefined) {
+            if (undefined !== elementConfig.html.var) {
               data = _this.readHtml(elementConfig, currentElement, data);
             }
 
-            if (elementConfig.tag !== undefined) {
+            if (undefined !== elementConfig.tag.var) {
               data = _this.readHtmlTag(elementConfig, currentElement, data);
             }
 
-            if (elementConfig.css !== undefined) {
+            if (undefined !== elementConfig.css.var) {
               data = _this.readCss(elementConfig, currentElement, data);
             }
           }

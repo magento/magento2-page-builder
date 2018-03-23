@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Config;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
@@ -12,253 +15,309 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      *
      * @param \DOMDocument $source
      * @return array
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @throws \InvalidArgumentException
      */
-    public function convert($source)
+    public function convert($source): array
     {
-        $output = [
-            'groups' => [],
-            'types' => []
+        return [
+            'types' => $this->convertTypes($source),
+            'groups' => $this->convertGroups($source)
         ];
+    }
 
+    /**
+     * Convert types
+     *
+     * @param \DOMDocument $source
+     * @return array
+     */
+    private function convertTypes(\DOMDocument $source): array
+    {
+        $typesData = [];
         /** @var \DOMNodeList $contentTypes */
         $contentTypes = $source->getElementsByTagName('type');
         /** @var \DOMNode $contentType */
         foreach ($contentTypes as $contentType) {
             $name = $contentType->attributes->getNamedItem('name')->nodeValue;
-            if (!$name) {
-                throw new \InvalidArgumentException('Name is missing from content_types/type node');
-            }
             /** @var \DOMElement $childNode */
             foreach ($contentType->childNodes as $childNode) {
-                if ($childNode->nodeType == XML_ELEMENT_NODE ||
-                    ($childNode->nodeType == XML_CDATA_SECTION_NODE ||
-                        $childNode->nodeType == XML_TEXT_NODE && trim(
-                            $childNode->nodeValue
-                        ) != '')
-                ) {
-
+                if ($this->isConfigNode($childNode)) {
                     if ('appearances' === $childNode->nodeName) {
-                        foreach ($childNode->getElementsByTagName('appearance') as $appearanceNode) {
-                            $appearanceName = $appearanceNode->attributes->getNamedItem('name')->nodeValue;
-                            $appearanceData = [];
-                            foreach ($appearanceNode->getElementsByTagName('data') as $dataNode) {
-                                $dataName = $dataNode->attributes->getNamedItem('name')->nodeValue;
-                                $appearanceData[$dataName] = $dataNode->nodeValue;
-                            }
-                            $previewTemplateNode = $appearanceNode->getElementsByTagName('preview_template')->item(0);
-                            if ($previewTemplateNode) {
-                                $appearanceData['preview_template'] = $previewTemplateNode->nodeValue;
-                            }
-                            $renderTemplateNode = $appearanceNode->getElementsByTagName('render_template')->item(0);
-                            if ($renderTemplateNode) {
-                                $appearanceData['render_template'] = $renderTemplateNode->nodeValue;
-                            }
-                            $readerNode = $appearanceNode->getElementsByTagName('reader')->item(0);
-                            if ($readerNode && $readerNode->nodeValue) {
-                                $appearanceData['readers'] = [$readerNode->nodeValue];
-                            } else {
-                                $readersNode = $appearanceNode->getElementsByTagName('readers')->item(0);
-                                $readers = [];
-                                if($readersNode) {
-                                    foreach ($readersNode->getElementsByTagName('reader') as $readerNode) {
-                                        $readers[] = $readerNode->attributes->getNamedItem('component')->nodeValue;
-                                    }
-                                }
-                                $appearanceData['readers'] = $readers;
-                            }
-                            $dataMappingNode = $appearanceNode->getElementsByTagName('data_mapping')->item(0);
-                            if ($dataMappingNode) {
-                                $appearanceData['data_mapping'] = $this->convertDataMappingConfiguration(
-                                    $dataMappingNode
-                                );
-                            }
-                            $appearanceData['default'] = $appearanceNode->hasAttribute('default')
-                                ? $appearanceNode->attributes->getNamedItem('default')->nodeValue
-                                : 'false';
-                            $output['types'][$name][$childNode->nodeName][$appearanceName] = $appearanceData;
-                        }
-                        $this->validateAppearanceConfig($output['types'][$name][$childNode->nodeName]);
-                    } elseif ('allowed_parents' === $childNode->nodeName){
+                        $typesData[$name][$childNode->nodeName] = $this->convertAppearancesData($childNode);
+                    } elseif ('allowed_parents' === $childNode->nodeName) {
                         $parents = [];
                         foreach ($childNode->getElementsByTagName('parent') as $parentNode) {
                             $parents[] = $parentNode->attributes->getNamedItem('name')->nodeValue;
                         }
-                        $output['types'][$name][$childNode->nodeName] = $parents;
+                        $typesData[$name][$childNode->nodeName] = $parents;
                     } else {
-                        $output['types'][$name][$childNode->nodeName] = $childNode->nodeValue;
+                        $typesData[$name][$childNode->nodeName] = $childNode->nodeValue;
                     }
                 }
             }
         }
+        return $typesData;
+    }
 
-        /** @var \DOMNodeList $contentTypes */
-        $groups = $source->getElementsByTagName('groups');
-        /** @var \DOMNode $contentType */
-        foreach ($groups->item(0)->childNodes as $group) {
-            if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
-                $name = $group->attributes->getNamedItem('name')->nodeValue;
-                if (!$name) {
-                    throw new \InvalidArgumentException('Name is missing from groups/group node');
+    /**
+     * Convert appearances data
+     *
+     * @param $childNode
+     * @return array
+     * @throws \InvalidArgumentException
+     */
+    private function convertAppearancesData($childNode): array
+    {
+        $appearancesData = [];
+        foreach ($childNode->getElementsByTagName('appearance') as $appearanceNode) {
+            $appearanceName = $appearanceNode->attributes->getNamedItem('name')->nodeValue;
+            $appearancesData[$appearanceName] = $this->convertAppearanceData($appearanceNode);
+        }
+        $this->validateAppearanceConfig($appearancesData);
+        return $appearancesData;
+    }
+
+    /**
+     * Convert appearance data
+     *
+     * @param $appearanceNode
+     * @return array
+     */
+    private function convertAppearanceData($appearanceNode): array
+    {
+        $appearanceData = [];
+        foreach ($appearanceNode->getElementsByTagName('data') as $dataNode) {
+            $dataName = $dataNode->attributes->getNamedItem('name')->nodeValue;
+            $appearanceData[$dataName] = $dataNode->nodeValue;
+        }
+        $previewTemplateNode = $appearanceNode->getElementsByTagName('preview_template')->item(0);
+        if ($previewTemplateNode) {
+            $appearanceData['preview_template'] = $previewTemplateNode->nodeValue;
+        }
+        $renderTemplateNode = $appearanceNode->getElementsByTagName('render_template')->item(0);
+        if ($renderTemplateNode) {
+            $appearanceData['render_template'] = $renderTemplateNode->nodeValue;
+        }
+        $readerNode = $appearanceNode->getElementsByTagName('reader')->item(0);
+        if ($readerNode && $readerNode->nodeValue) {
+            $appearanceData['readers'] = [$readerNode->nodeValue];
+        } else {
+            $readersNode = $appearanceNode->getElementsByTagName('readers')->item(0);
+            $readers = [];
+            if ($readersNode) {
+                foreach ($readersNode->getElementsByTagName('reader') as $readerNode) {
+                    $readers[] = $this->getAttributeValue($readerNode, 'component');
                 }
-                /** @var \DOMElement $childNode */
-                foreach ($group->childNodes as $childNode) {
-                    if ($childNode->nodeType == XML_ELEMENT_NODE ||
-                        ($childNode->nodeType == XML_CDATA_SECTION_NODE ||
-                            $childNode->nodeType == XML_TEXT_NODE && trim(
-                                $childNode->nodeValue
-                            ) != '')
-                    ) {
-                        $output['groups'][$name][$childNode->nodeName] = $childNode->nodeValue;
-                    }
-                }
-                $output['groups'][$name]['sortOrder'] =
-                    $group->attributes->getNamedItem('sortOrder')->nodeValue;
+            }
+            $appearanceData['readers'] = $readers;
+        }
+        $dataMappingNode = $appearanceNode->getElementsByTagName('data_mapping')->item(0);
+        if ($dataMappingNode) {
+            $appearanceData['data_mapping'] = $this->convertDataMapping($dataMappingNode);
+        }
+        $appearanceData['default'] = $this->getAttributeValue($appearanceNode, 'default');
+        return $appearanceData;
+    }
+
+    /**
+     * Validate that configuration appearances has default appearance
+     *
+     * @param $appearanceConfig
+     * @throws \InvalidArgumentException
+     */
+    private function validateAppearanceConfig($appearanceConfig)
+    {
+        $isDefaultAppearancePresent = false;
+        foreach ($appearanceConfig as $config) {
+            if ($config['default']) {
+                $isDefaultAppearancePresent = true;
+                break;
             }
         }
+        if (!$isDefaultAppearancePresent) {
+            throw new \InvalidArgumentException('Configuration for content type should have default appearance.');
+        }
+    }
 
-        return $output;
+    /**
+     * Convert data mapping
+     *
+     * @param $childNode
+     * @return array
+     */
+    private function convertDataMapping($childNode): array
+    {
+        $elementData = [];
+        foreach ($childNode->getElementsByTagName('element') as $elementNode) {
+            $elementName = $elementNode->attributes->getNamedItem('name')->nodeValue;
+            $elementPath = $elementNode->attributes->getNamedItem('path')->nodeValue;
+            $elementData[$elementName] = [
+                'path' => $elementPath,
+                'style' => $this->convertProperties($elementNode),
+                'attributes' => $this->convertAttributes($elementNode),
+                'html' => $this->convertHtml($elementNode),
+                'css' => $this->convertCss($elementNode),
+                'tag' => $this->convertTag($elementNode)
+            ];
+        }
+
+        $converters = $this->convertConvertersData($childNode);
+
+        return [
+            'elements' => $elementData,
+            'converters' => $converters
+        ];
+    }
+
+    /**
+     * Convert properties
+     *
+     * @param $elementNode
+     * @return array
+     */
+    private function convertProperties($elementNode): array
+    {
+        $propertiesData = [];
+        $propertiesNode = $elementNode->getElementsByTagName('style_properties')->item(0);
+        if ($propertiesNode) {
+            foreach ($propertiesNode->getElementsByTagName('property') as $propertyNode) {
+                $propertiesData[] = [
+                    'var' => $this->getAttributeValue($propertyNode, 'var'),
+                    'name' => $this->getAttributeValue($propertyNode, 'name'),
+                    'converter' => $this->getAttributeValue($propertyNode, 'converter'),
+                    'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
+                    'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
+                    'persist' => $this->getAttributeValue($propertyNode, 'persist'),
+                ];
+            }
+            foreach ($propertiesNode->getElementsByTagName('complex_property') as $propertyNode) {
+                $propertiesData[] = [
+                    'var' => $this->getAttributeValue($propertyNode, 'var'),
+                    'reader' => $this->getAttributeValue($propertyNode, 'reader'),
+                    'converter' => $this->getAttributeValue($propertyNode, 'converter'),
+                    'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
+                    'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
+                    'complex' => true
+                ];
+            }
+            foreach ($propertiesNode->getElementsByTagName('static_property') as $propertyNode) {
+                $propertiesData[] = [
+                    'name' => $this->getAttributeValue($propertyNode, 'name'),
+                    'value' => $this->getAttributeValue($propertyNode, 'value'),
+                    'static' => true
+                ];
+            }
+        }
+        return $propertiesData;
+    }
+
+    /**
+     * Convert attributes
+     *
+     * @param $elementNode
+     * @return array
+     */
+    private function convertAttributes($elementNode): array
+    {
+        $attributesData = [];
+        $attributesNode = $elementNode->getElementsByTagName('attributes')->item(0);
+        if ($attributesNode) {
+            foreach ($attributesNode->getElementsByTagName('attribute') as $attributeNode) {
+                $attributesData[] = [
+                    'var' => $this->getAttributeValue($attributeNode, 'var'),
+                    'name' => $this->getAttributeValue($attributeNode, 'name'),
+                    'converter' => $this->getAttributeValue($attributeNode, 'converter'),
+                    'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
+                    'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
+                    'persist' => $this->getAttributeValue($attributeNode, 'persist'),
+                ];
+            }
+            foreach ($attributesNode->getElementsByTagName('static_attribute') as $attributeNode) {
+                $attributesData[] = [
+                    'name' => $this->getAttributeValue($attributeNode, 'name'),
+                    'value' => $this->getAttributeValue($attributeNode, 'value'),
+                    'static' => true
+                ];
+            }
+            foreach ($attributesNode->getElementsByTagName('complex_attribute') as $attributeNode) {
+                $attributesData[] = [
+                    'var' => $this->getAttributeValue($attributeNode, 'var'),
+                    'reader' => $this->getAttributeValue($attributeNode, 'reader'),
+                    'converter' => $this->getAttributeValue($attributeNode, 'converter'),
+                    'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
+                    'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
+                    'complex' => true
+                ];
+            }
+        }
+        return $attributesData;
+    }
+
+    /**
+     * Convert html
+     *
+     * @param $elementNode
+     * @return array
+     */
+    private function convertHtml($elementNode): array
+    {
+        $htmlData = [];
+        $htmlNode = $elementNode->getElementsByTagName('html')->item(0);
+        if ($htmlNode) {
+            $htmlData['var']= $this->getAttributeValue($htmlNode, 'var');
+            $htmlData['placeholder'] = $this->getAttributeValue($htmlNode, 'placeholder');
+        }
+        return $htmlData;
+    }
+
+    /**
+     * Convert css
+     *
+     * @param $elementNode
+     * @return array
+     */
+    private function convertCss($elementNode): array
+    {
+        $cssData = [];
+        $cssNode = $elementNode->getElementsByTagName('css')->item(0);
+        if ($cssNode) {
+            $cssData['var'] = $this->getAttributeValue($cssNode, 'var');
+            $cssData['converter'] = $this->getAttributeValue($cssNode, 'converter');
+            $filterClasses = [];
+            $filterNode = $cssNode->getElementsByTagName('filter')->item(0);
+            if ($filterNode) {
+                foreach ($filterNode->getElementsByTagName('class') as $classNode) {
+                    $filterClasses[] = $this->getAttributeValue($classNode, 'name');
+                }
+            }
+            $cssData['filter'] = $filterClasses;
+        }
+        return $cssData;
+    }
+
+    /**
+     * Convert tag
+     *
+     * @param $elementNode
+     * @return array
+     */
+    private function convertTag($elementNode): array
+    {
+        $tagData = [];
+        $tagNode = $elementNode->getElementsByTagName('tag')->item(0);
+        if ($tagNode) {
+            $tagData['var'] = $this->getAttributeValue($tagNode, 'var');
+            $tagData['converter'] = $this->getAttributeValue($tagNode, 'converter');
+        }
+        return $tagData;
     }
 
     /**
      * @param $childNode
      * @return array
      */
-    private function convertDataMappingConfiguration($childNode): array
+    private function convertConvertersData($childNode): array
     {
-        $elementData = [];
-        foreach ($childNode->getElementsByTagName('element') as $elementNode) {
-            $elementName = $elementNode->attributes->getNamedItem('name')->nodeValue;
-            $elementPath = $elementNode->attributes->getNamedItem('path')->nodeValue;
-            $elementData[$elementName]['path'] = $elementPath;
-            $stylePropertiesNode = $elementNode->getElementsByTagName('style_properties')->item(0);
-            if ($stylePropertiesNode) {
-                foreach ($stylePropertiesNode->getElementsByTagName('property') as $propertyNode) {
-                    $elementData[$elementName]['style'][] = [
-                        'var' => $propertyNode->attributes->getNamedItem('var')->nodeValue,
-                        'name' => $propertyNode->attributes->getNamedItem('name')->nodeValue,
-                        'converter' => $propertyNode->hasAttribute('converter')
-                            ? $propertyNode->attributes->getNamedItem('converter')->nodeValue
-                            : null,
-                        'preview_converter' => $propertyNode->hasAttribute('preview_converter')
-                            ? $propertyNode->attributes->getNamedItem('preview_converter')->nodeValue
-                            : null,
-                        'virtual' => $propertyNode->hasAttribute('virtual')
-                            ? $propertyNode->attributes->getNamedItem('virtual')->nodeValue
-                            : null,
-                        'persist' => $propertyNode->hasAttribute('persist')
-                            ? $propertyNode->attributes->getNamedItem('persist')->nodeValue
-                            : null,
-                    ];
-                }
-                foreach ($stylePropertiesNode->getElementsByTagName('complex_property') as $propertyNode) {
-                    $elementData[$elementName]['style'][] = [
-                        'var' => $propertyNode->attributes->getNamedItem('var')->nodeValue,
-                        'reader' => $propertyNode->hasAttribute('reader')
-                            ? $propertyNode->attributes->getNamedItem('reader')->nodeValue
-                            : null,
-                        'converter' => $propertyNode->hasAttribute('converter')
-                            ? $propertyNode->attributes->getNamedItem('converter')->nodeValue
-                            : null,
-                        'preview_converter' => $propertyNode->hasAttribute('preview_converter')
-                            ? $propertyNode->attributes->getNamedItem('preview_converter')->nodeValue
-                            : null,
-                        'virtual' => $propertyNode->hasAttribute('virtual')
-                            ? $propertyNode->attributes->getNamedItem('virtual')->nodeValue
-                            : null,
-                        'complex' => true
-                    ];
-                }
-                foreach ($stylePropertiesNode->getElementsByTagName('static_property') as $propertyNode) {
-                    $elementData[$elementName]['style'][] = [
-                        'name' => $propertyNode->attributes->getNamedItem('name')->nodeValue,
-                        'value' => $propertyNode->attributes->getNamedItem('value')->nodeValue,
-                        'static' => true
-                    ];
-                }
-            }
-            $attributesNode = $elementNode->getElementsByTagName('attributes')->item(0);
-            if ($attributesNode) {
-                foreach ($attributesNode->getElementsByTagName('attribute') as $attributeNode) {
-                    $elementData[$elementName]['attributes'][] = [
-                        'var' => $attributeNode->attributes->getNamedItem('var')->nodeValue,
-                        'name' => $attributeNode->attributes->getNamedItem('name')->nodeValue,
-                        'virtual' => $attributeNode->hasAttribute('virtual')
-                            ? $attributeNode->attributes->getNamedItem('virtual')->nodeValue
-                            : null,
-                        'converter' => $attributeNode->hasAttribute('converter')
-                            ? $attributeNode->attributes->getNamedItem('converter')->nodeValue
-                            : null,
-                        'persist' => $attributeNode->hasAttribute('persist')
-                            ? $attributeNode->attributes->getNamedItem('persist')->nodeValue
-                            : null,
-                        'preview_converter' => $attributeNode->hasAttribute('preview_converter')
-                            ? $attributeNode->attributes->getNamedItem('preview_converter')->nodeValue
-                            : null,
-                    ];
-                }
-                foreach ($attributesNode->getElementsByTagName('static_attribute') as $attributeNode) {
-                    $elementData[$elementName]['attributes'][] = [
-                        'name' => $attributeNode->attributes->getNamedItem('name')->nodeValue,
-                        'value' => $attributeNode->attributes->getNamedItem('value')->nodeValue,
-                        'static' => true
-                    ];
-                }
-                foreach ($attributesNode->getElementsByTagName('complex_attribute') as $attributeNode) {
-                    $elementData[$elementName]['attributes'][] = [
-                        'var' => $attributeNode->attributes->getNamedItem('var')->nodeValue,
-                        'reader' => $attributeNode->hasAttribute('reader')
-                            ? $attributeNode->attributes->getNamedItem('reader')->nodeValue
-                            : null,
-                        'converter' => $attributeNode->hasAttribute('converter')
-                            ? $attributeNode->attributes->getNamedItem('converter')->nodeValue
-                            : null,
-                        'preview_converter' => $attributeNode->hasAttribute('preview_converter')
-                            ? $attributeNode->attributes->getNamedItem('preview_converter')->nodeValue
-                            : null,
-                        'virtual' => $attributeNode->hasAttribute('virtual')
-                            ? $attributeNode->attributes->getNamedItem('virtual')->nodeValue
-                            : null,
-                        'complex' => true
-                    ];
-                }
-            }
-            $htmlNode = $elementNode->getElementsByTagName('html')->item(0);
-            if ($htmlNode) {
-                $elementData[$elementName]['html']['var']
-                    = $htmlNode->attributes->getNamedItem('var')->nodeValue;
-                $elementData[$elementName]['html']['placeholder'] = $htmlNode->hasAttribute('placeholder')
-                    ? $htmlNode->attributes->getNamedItem('placeholder')->nodeValue
-                    : null;
-            }
-            $cssNode = $elementNode->getElementsByTagName('css')->item(0);
-            if ($cssNode) {
-                $elementData[$elementName]['css']['var']
-                    = $cssNode->attributes->getNamedItem('var')->nodeValue;
-                $elementData[$elementName]['css']['converter'] = $cssNode->hasAttribute('converter')
-                    ? $cssNode->attributes->getNamedItem('converter')->nodeValue
-                    : null;
-                $filterClasses = [];
-                $filterNode = $cssNode->getElementsByTagName('filter')->item(0);
-                if ($filterNode) {
-                    foreach ($filterNode->getElementsByTagName('class') as $classNode) {
-                        $filterClasses[] = $classNode->attributes->getNamedItem('name')->nodeValue;
-                    }
-                }
-                $elementData[$elementName]['css']['filter'] = $filterClasses;
-            }
-            $tagNode = $elementNode->getElementsByTagName('tag')->item(0);
-            if ($tagNode) {
-                $elementData[$elementName]['tag']['var']
-                    = $tagNode->attributes->getNamedItem('var')->nodeValue;
-                $elementData[$elementName]['tag']['converter'] = $tagNode->hasAttribute('converter')
-                    ? $tagNode->attributes->getNamedItem('converter')->nodeValue
-                    : null;
-            }
-        }
-
         $convertersNode = $childNode->getElementsByTagName('converters')->item(0);
         $converters = [];
         if ($convertersNode) {
@@ -281,30 +340,61 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 ];
             }
         }
-
-        return [
-            'elements' => $elementData,
-            'converters' => $converters
-        ];
+        return $converters;
     }
 
     /**
-     * Validate that configuration appearances has default appearance
+     * Convert data for groups
      *
-     * @param $appearanceConfig
-     * @throws \InvalidArgumentException
+     * @param \DOMDocument $source
+     * @return array
      */
-    private function validateAppearanceConfig($appearanceConfig)
+    private function convertGroups(\DOMDocument $source): array
     {
-        $isDefaultAppearancePresent = false;
-        foreach ($appearanceConfig as $config) {
-            if ($config['default']) {
-                $isDefaultAppearancePresent = true;
-                break;
+        $groupsData = [];
+        /** @var \DOMNode $source */
+        $groups = $source->getElementsByTagName('groups');
+        /** @var \DOMNode $group */
+        foreach ($groups->item(0)->childNodes as $group) {
+            if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
+                $name = $group->attributes->getNamedItem('name')->nodeValue;
+                /** @var \DOMElement $childNode */
+                foreach ($group->childNodes as $childNode) {
+                    if ($this->isConfigNode($childNode)) {
+                        $groupsData[$name][$childNode->nodeName] = $childNode->nodeValue;
+                    }
+                }
+                $groupsData[$name]['sortOrder'] = $group->attributes->getNamedItem('sortOrder')->nodeValue;
             }
         }
-        if (!$isDefaultAppearancePresent) {
-            throw new \InvalidArgumentException("Configuration for content type should have default appearance.");
-        }
+        return $groupsData;
+    }
+
+    /**
+     * Check if node is configuration node
+     *
+     * @param $node
+     * @return bool
+     */
+    private function isConfigNode($node): bool
+    {
+        return $node->nodeType === XML_ELEMENT_NODE
+            || ($node->nodeType === XML_CDATA_SECTION_NODE
+                || $node->nodeType === XML_TEXT_NODE
+                && trim($node->nodeValue) !== '');
+    }
+
+    /**
+     * Get attribute value
+     *
+     * @param $attributeNode
+     * @param $attributeName
+     * @return string|null
+     */
+    private function getAttributeValue($attributeNode, $attributeName)
+    {
+        return $attributeNode->hasAttribute($attributeName)
+            ? $attributeNode->attributes->getNamedItem($attributeName)->nodeValue
+            : null;
     }
 }

@@ -168,7 +168,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
       var result = {};
 
-      if (config[element] !== undefined) {
+      if (config[element].style.length) {
         result = this.convertStyle(config[element], data, "master");
       }
 
@@ -198,7 +198,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
       var result = {};
 
-      if (config[element].attributes !== undefined) {
+      if (config[element].attributes.length) {
         result = this.convertAttributes(config[element], data, "master");
       }
 
@@ -217,7 +217,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
       var result = "";
 
-      if (config.html !== undefined) {
+      if (undefined !== config.html.var) {
         result = data[config.html.var];
       }
 
