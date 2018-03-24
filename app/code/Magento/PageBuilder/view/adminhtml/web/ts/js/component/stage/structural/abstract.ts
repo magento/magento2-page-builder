@@ -189,17 +189,16 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getStyle(element: string) {
+        let data = _.extend({}, this.stage.store.get(this.id));
         if (element === undefined) {
-            const styleAttributes = this.getData();
-            if (typeof styleAttributes.appearance !== "undefined" &&
-                typeof styleAttributes.appearances !== "undefined" &&
-                typeof styleAttributes.appearances[styleAttributes.appearance] !== "undefined") {
-                _.extend(styleAttributes, styleAttributes.appearances[styleAttributes.appearance]);
+            if (typeof data.appearance !== "undefined" &&
+                typeof data.appearances !== "undefined" &&
+                typeof data.appearances[data.appearance] !== "undefined") {
+                _.extend(data, data.appearances[data.appearance]);
             }
-            return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
+            return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(data));
         }
 
-        let data = _.extend({}, this.stage.store.get(this.id));
         const appearanceConfiguration = appearanceConfig(this.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;
 
@@ -218,8 +217,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getAttributes(element: string) {
-        let data = this.stage.store.get(this.id);
-        data = _.extend(data, this.config);
+        let data = _.extend({}, this.stage.store.get(this.id), this.config);
         if (element === undefined) {
             if (undefined === data.appearance || !data.appearance) {
                 data.appearance = undefined !== this.config.fields.appearance
@@ -265,7 +263,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getData(element: string) {
-        let data = this.stage.store.get(this.id);
+        let data = _.extend({}, this.stage.store.get(this.id));
 
         if (undefined === element) {
             return data;
@@ -438,7 +436,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     private bindUpdatePreviewObservablesOnChange(): void {
         this.stage.store.subscribe(
             (data: DataObject) => {
-                this.updatePreviewObservables(this.stage.store.get(this.id));
+                this.updatePreviewObservables(_.extend({}, this.stage.store.get(this.id)));
             },
             this.id,
         );

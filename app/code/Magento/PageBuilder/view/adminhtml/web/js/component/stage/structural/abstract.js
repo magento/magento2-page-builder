@@ -151,17 +151,15 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
 
     _proto.getStyle = function getStyle(element) {
-      if (element === undefined) {
-        var styleAttributes = this.getData();
+      var data = _underscore.extend({}, this.stage.store.get(this.id));
 
-        if (typeof styleAttributes.appearance !== "undefined" && typeof styleAttributes.appearances !== "undefined" && typeof styleAttributes.appearances[styleAttributes.appearance] !== "undefined") {
-          _underscore.extend(styleAttributes, styleAttributes.appearances[styleAttributes.appearance]);
+      if (element === undefined) {
+        if (typeof data.appearance !== "undefined" && typeof data.appearances !== "undefined" && typeof data.appearances[data.appearance] !== "undefined") {
+          _underscore.extend(data, data.appearances[data.appearance]);
         }
 
-        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
+        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(data));
       }
-
-      var data = _underscore.extend({}, this.stage.store.get(this.id));
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, data.appearance);
       var config = appearanceConfiguration.data_mapping.elements;
@@ -182,8 +180,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
 
     _proto.getAttributes = function getAttributes(element) {
-      var data = this.stage.store.get(this.id);
-      data = _underscore.extend(data, this.config);
+      var data = _underscore.extend({}, this.stage.store.get(this.id), this.config);
 
       if (element === undefined) {
         if (undefined === data.appearance || !data.appearance) {
@@ -232,7 +229,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
 
     _proto.getData = function getData(element) {
-      var data = this.stage.store.get(this.id);
+      var data = _underscore.extend({}, this.stage.store.get(this.id));
 
       if (undefined === element) {
         return data;
@@ -462,7 +459,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       var _this4 = this;
 
       this.stage.store.subscribe(function (data) {
-        _this4.updatePreviewObservables(_this4.stage.store.get(_this4.id));
+        _this4.updatePreviewObservables(_underscore.extend({}, _this4.stage.store.get(_this4.id)));
       }, this.id);
     };
 
