@@ -151,7 +151,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
 
     _proto.getStyle = function getStyle(element) {
-      var data = _underscore.extend({}, this.stage.store.get(this.id));
+      var data = _underscore.extend({}, this.stage.store.get(this.id), this.config);
 
       if (element === undefined) {
         if (typeof data.appearance !== "undefined" && typeof data.appearances !== "undefined" && typeof data.appearances[data.appearance] !== "undefined") {

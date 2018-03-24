@@ -189,7 +189,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getStyle(element: string) {
-        let data = _.extend({}, this.stage.store.get(this.id));
+        let data = _.extend({}, this.stage.store.get(this.id), this.config);
         if (element === undefined) {
             if (typeof data.appearance !== "undefined" &&
                 typeof data.appearances !== "undefined" &&

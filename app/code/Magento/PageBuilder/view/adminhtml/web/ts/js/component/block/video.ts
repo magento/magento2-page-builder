@@ -14,14 +14,11 @@ export default class Video extends Block {
      */
     public getVideoAttributes() {
         const data = this.getData();
-        return _.extend(
-            this.getAttributes(),
-            {
-                height: data.height || null,
-                src: this.getVideoUrl(data.video_source),
-                width: data.width || null,
-            }
-        );
+        return {
+            height: data.height || null,
+            src: this.getVideoUrl(data.video_source),
+            width: data.width || null,
+        };
     }
 
     /**
