@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import cmsConfig from "advanced-cms-init-config";
 import $ from "jquery";
 import _ from "underscore";
 
@@ -15,7 +14,7 @@ export default class Config {
      * @param config
      */
     public static setInitConfig(config: object): void {
-        Config.config = config;
+        Config.initConfig = config;
     }
 
     /**
@@ -55,6 +54,15 @@ export default class Config {
      */
     public static getConfig(): object {
         return Config.config;
+    }
+
+    /**
+     * Set config
+     *
+     * @param config
+     */
+    public static setConfig(config: object): void {
+        Config.config = config;
     }
 
     /**
@@ -238,7 +246,7 @@ export default class Config {
         return Config.getColumnDef("breakpoint", breakpoint);
     }
 
-    private static initConfig: any = cmsConfig;
+    private static initConfig: any;
     private static config: any = {
         dataRoleAttributeName: "data-role",
     };

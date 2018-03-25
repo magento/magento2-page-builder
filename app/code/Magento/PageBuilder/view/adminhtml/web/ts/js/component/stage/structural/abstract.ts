@@ -5,6 +5,7 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
+import confirmationDialog from "Magento_Ui/js/modal/confirm";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
@@ -24,7 +25,6 @@ import {TitleOption} from "./options/title";
 
 export default class Structural extends EditableArea implements StructuralInterface {
     public config: ConfigContentBlock;
-    public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public edit: Edit;
     public title: string;
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
@@ -47,7 +47,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         config: ConfigContentBlock,
     ) {
         super(stage);
-        this.setChildren(this.children);
+        this.setChildren();
         this.parent = parent;
         this.config = config;
 
@@ -123,7 +123,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * Handle block removal
      */
     public onOptionRemove(): void {
-        this.stage.parent.confirmationDialog({
+        confirmationDialog({
             actions: {
                 confirm: () => {
                     // Call the parent to remove the child element
@@ -134,8 +134,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                     });
                 },
             },
-            content: $t("Are you sure you want to remove this item? " +
-                "The data within this item is not recoverable once removed."),
+            content: $t("Are you sure you want to remove this item? The data within this item is not recoverable once removed."), // tslint:disable-line:max-line-length
             title: $t("Confirm Item Removal"),
         });
     }

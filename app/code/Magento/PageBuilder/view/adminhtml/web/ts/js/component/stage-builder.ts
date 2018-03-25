@@ -4,7 +4,9 @@
  */
 
 import $t from "mage/translate";
+import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
+import {removeQuotesInMediaDirectives} from "../utils/directives";
 import Block from "./block/block";
 import createBlock from "./block/factory";
 import Config, {ConfigContentBlock} from "./config";
@@ -12,8 +14,6 @@ import EventBus from "./event-bus";
 import validateFormat from "./format/format-validator";
 import AttributeReaderComposite from "./format/read/composite";
 import Stage from "./stage";
-import Panel from "./stage/panel";
-import Structural from "./stage/structural/abstract";
 import EditableArea from "./stage/structural/editable-area";
 import {EditableAreaInterface} from "./stage/structural/editable-area.d";
 
@@ -39,7 +39,7 @@ function buildFromContent(stage: Stage, value: string) {
  * @param {stage} stage
  * @returns {Promise<void>}
  */
-function buildElementIntoStage(element: Element, parent: EditableArea, stage: Stage) {
+function buildElementIntoStage(element: Element, parent: EditableArea, stage: Stage): Promise<any> {
     if (element instanceof HTMLElement
         && element.getAttribute(Config.getValueAsString("dataRoleAttributeName"))
     ) {
@@ -170,40 +170,22 @@ function buildEmpty(stage: Stage, initialValue: string) {
 /**
  * Build a stage with the provided parent, content observable and initial value
  *
- * @param parent
- * @param panel
- * @param {KnockoutObservableArray<Structural>} stageContent
+ * @param {StageInterface} stage
  * @param {string} content
- * @param {function} afterCreateCallback
- * @returns {Stage}
+ * @returns {Promise}
  */
 export default function build(
-    parent: any,
-    panel: Panel,
-    stageContent: KnockoutObservableArray<Structural>,
+    stage: Stage,
     content: string,
-    afterCreateCallback: (stage: Stage) => void,
 ) {
-    // Create a new instance of the stage
-    const stage: Stage = new Stage(
-        parent,
-        stageContent,
-    );
-
-    if (typeof afterCreateCallback !== "undefined") {
-        afterCreateCallback(stage);
-    }
-
     let currentBuild;
 
-    // Bind the panel to the stage
-    panel.bindStage(stage);
-
+    content = removeQuotesInMediaDirectives(content);
     // Determine if we're building from existing page builder content
     if (validateFormat(content)) {
         currentBuild = buildFromContent(stage, content)
             .catch(() => {
-                stageContent([]);
+                stage.children([]);
                 currentBuild = buildEmpty(stage, content);
             });
     } else {
@@ -211,14 +193,12 @@ export default function build(
     }
 
     // Once the build process is finished the stage is ready
-    currentBuild.then(stage.ready.bind(stage))
-        .catch((error: Error) => {
-            parent.alertDialog({
-                content: $t("An error has occurred while initiating the content area."),
-                title: $t("Advanced CMS Error"),
-            });
-            EventBus.trigger("stage:error", error);
-            console.error( error );
+    return currentBuild.catch((error: Error) => {
+        alertDialog({
+            content: $t("An error has occurred while initiating the content area."),
+            title: $t("Advanced CMS Error"),
         });
-    return stage;
+        EventBus.trigger("stage:error", error);
+        console.error( error );
+    });
 }

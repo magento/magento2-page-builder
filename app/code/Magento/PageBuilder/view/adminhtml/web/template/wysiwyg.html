@@ -5,24 +5,17 @@
  */
 -->
 
-<div html="content"
-     css="$data.additionalClasses"
-     visible="visible"
-     attr="'data-namespace': inputName">
-</div>
-
-<div class="pagebuilder-stage-wrapper"
-     visible="stageActive"
-     css="{'stage-full-screen': isFullScreen}">
-    <if args="stageActive">
-        <render args="getStageTemplate()"/>
+<div visible="visible">
+    <button if="wysiwygConfigData()['pagebuilder_button']"
+            type="button"
+            class="pagebuilder-edit-button action-default scalable action"
+            ko-disabled="disabled"
+            click="toggleFullScreen.bind($data)">
+        <span translate="pageBuilderEditButtonText" />
+    </button>
+    <if args="visiblePageBuilder">
+        <with args="pageBuilder">
+            <render />
+        </with>
     </if>
-</div>
-
-<div data-role="spinner"
-     class="admin__data-grid-loading-mask"
-     visible="loading">
-    <div class="spinner">
-        <span repeat="8"/>
-    </div>
 </div>

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _underscore, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/confirm", "underscore", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _confirm, _underscore, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -23,7 +23,6 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
 
       _this = _EditableArea.call(this, stage) || this;
       _this.config = void 0;
-      _this.children = _knockout.observableArray([]);
       _this.edit = void 0;
       _this.title = void 0;
       _this.wrapperStyle = _knockout.observable({
@@ -35,7 +34,7 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
       _this.styleAttributeFilter = new _styleAttributeFilter();
       _this.styleAttributeMapper = new _styleAttributeMapper();
 
-      _this.setChildren(_this.children);
+      _this.setChildren();
 
       _this.parent = parent;
       _this.config = config; // Create a new instance of edit for our editing needs
@@ -84,7 +83,7 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
     _proto.onOptionRemove = function onOptionRemove() {
       var _this2 = this;
 
-      this.stage.parent.confirmationDialog({
+      (0, _confirm)({
         actions: {
           confirm: function confirm() {
             // Call the parent to remove the child element
@@ -95,7 +94,8 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
             });
           }
         },
-        content: (0, _translate)("Are you sure you want to remove this item? " + "The data within this item is not recoverable once removed."),
+        content: (0, _translate)("Are you sure you want to remove this item? The data within this item is not recoverable once removed."),
+        // tslint:disable-line:max-line-length
         title: (0, _translate)("Confirm Item Removal")
       });
     };

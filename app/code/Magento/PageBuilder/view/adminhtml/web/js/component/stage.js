@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "underscore", "./data-store", "./event-bus", "./stage/event-handling-delegate", "./stage/save", "./stage/structural/editable-area"], function (_jquery, _translate, _underscore, _dataStore, _eventBus, _eventHandlingDelegate, _save, _editableArea) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "./data-store", "./event-bus", "./stage-builder", "./stage/event-handling-delegate", "./stage/save", "./stage/structural/editable-area"], function (_knockout, _translate, _alert, _underscore, _dataStore, _eventBus, _stageBuilder, _eventHandlingDelegate, _save, _editableArea) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Stage =
@@ -11,126 +11,92 @@ define(["jquery", "mage/translate", "underscore", "./data-store", "./event-bus",
      * Constructor
      *
      * @param parent
-     * @param {KnockoutObservableArray<Structural>} stageContent
      */
-    function Stage(parent, stageContent) {
+    function Stage(parent) {
       var _this;
 
       _this = _EditableArea.call(this) || this;
-      _this.active = true;
+      _this.template = "Magento_PageBuilder/component/stage.html";
       _this.config = {
         name: "stage"
       };
       _this.loading = void 0;
-      _this.originalScrollTop = void 0;
       _this.parent = void 0;
-      _this.showBorders = void 0;
+      _this.showBorders = _knockout.observable(false);
+      _this.interacting = _knockout.observable(false);
+      _this.userSelect = _knockout.observable(true);
+      _this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
       _this.stage = void 0;
       _this.store = void 0;
-      _this.userSelect = void 0;
       _this.save = new _save();
       _this.saveRenderTree = _underscore.debounce(function () {
         _this.save.renderTree(_this.children).then(function (renderedOutput) {
-          return _this.parent.value(renderedOutput);
+          return _eventBus.trigger("stage:renderTree:" + _this.id, {
+            value: renderedOutput
+          });
         });
       }, 500);
-
-      _this.setChildren(stageContent);
-
-      _this.stage = _this;
       _this.parent = parent;
-      _this.showBorders = parent.showBorders;
-      _this.userSelect = parent.userSelect;
+      _this.id = parent.stageId;
       _this.loading = parent.loading;
-      _this.originalScrollTop = 0; // Create our state and store objects
+      _this.stage = _this;
 
-      _this.store = new _dataStore(); // Any store state changes trigger a stage update event
+      _this.setChildren(); // Create our state and store objects
 
-      _this.store.subscribe(function () {
-        return _eventBus.trigger("stage:updated", {
-          stage: _this
-        });
-      }); // Handle events for this stage instance
 
+      _this.store = new _dataStore(); // Handle events for this stage instance
 
       (0, _eventHandlingDelegate.handleEvents)(_this);
-      /**
-       * Watch for stage update events & manipulations to the store, debouce for 50ms as multiple stage changes
-       * can occur concurrently.
-       */
+
+      _this.initListeners();
+
+      (0, _stageBuilder)(_this, parent.initialValue).then(_this.ready.bind(_this));
+      return _this;
+    }
+
+    var _proto = Stage.prototype;
+
+    _proto.initListeners = function initListeners() {
+      var _this2 = this;
+
+      // Any store state changes trigger a stage update event
+      this.store.subscribe(function () {
+        return _eventBus.trigger("stage:updated", {
+          stage: _this2
+        });
+      }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
+      // can occur concurrently.
 
       _eventBus.on("stage:updated", function (event, params) {
-        if (params.stage.id === _this.id) {
-          _this.saveRenderTree.call(_this);
+        if (params.stage.id === _this2.id) {
+          _this2.saveRenderTree.call(_this2);
         }
       });
 
       _eventBus.on("interaction:start", function () {
-        return _this.interacting(true);
+        return _this2.interacting(true);
       });
 
       _eventBus.on("interaction:stop", function () {
-        return _this.interacting(false);
+        return _this2.interacting(false);
       });
+    };
 
-      return _this;
-    }
+    _proto.getTemplate = function getTemplate() {
+      return this.template;
+    };
     /**
      * The stage has been initiated fully and is ready
      */
 
 
-    var _proto = Stage.prototype;
-
     _proto.ready = function ready() {
-      _eventBus.trigger("stage:ready", {
+      _eventBus.trigger("stage:ready:" + this.id, {
         stage: this
       });
 
       this.children.valueHasMutated();
       this.loading(false);
-    };
-    /**
-     * Set the dragging flat on the parent
-     *
-     * @param {boolean} flag
-     */
-
-
-    _proto.interacting = function interacting(flag) {
-      this.parent.interacting(flag);
-    };
-    /**
-     * Tells the stage wrapper to expand to fullscreen
-     */
-
-
-    _proto.goFullScreen = function goFullScreen() {
-      var isFullScreen = this.parent.isFullScreen();
-
-      if (!isFullScreen) {
-        this.originalScrollTop = (0, _jquery)(window).scrollTop();
-
-        _underscore.defer(function () {
-          (0, _jquery)(window).scrollTop(0);
-        });
-      }
-
-      this.stage.parent.isFullScreen(!isFullScreen);
-
-      if (isFullScreen) {
-        (0, _jquery)(window).scrollTop(this.originalScrollTop);
-      }
-    };
-    /**
-     * Determines if pagebuilder is in fullscreen mode
-     *
-     * @returns {boolean}
-     */
-
-
-    _proto.isFullScreen = function isFullScreen() {
-      return this.parent.isFullScreen();
     };
     /**
      * Remove a child from the observable array
@@ -141,7 +107,7 @@ define(["jquery", "mage/translate", "underscore", "./data-store", "./event-bus",
 
     _proto.removeChild = function removeChild(child) {
       if (this.children().length === 1) {
-        this.parent.alertDialog({
+        (0, _alert)({
           content: (0, _translate)("You are not able to remove the final row from the content."),
           title: (0, _translate)("Unable to Remove")
         });

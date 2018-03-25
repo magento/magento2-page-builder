@@ -34,32 +34,15 @@ class Editor extends \Magento\Framework\Data\Form\Element\Editor
     }
 
     /**
-     * Return HTML button to toggling WYSIWYG
-     *
-     * @param bool $visible
-     * @return string
+     * {@inheritdoc}
      */
-    protected function _getToggleButtonHtml($visible = true)
+    public function getElementHtml()
     {
-        $buttonHtml = '';
-        if ($this->getConfig()->getData('pagebuilder_button') === true && $this->isPageBuilderUsed()) {
-            $buttonHtml .= $this->_getButtonHtml(
-                [
-                    'title' => $this->translate('Edit with Page Builder'),
-                    'class' => 'magento-pagebuilder init-magento-pagebuilder action-default scalable action',
-                    'id' => 'magento-pagebuilder' . $this->getHtmlId()
-                ]
-            );
-            $buttonHtml .= $this->_getButtonHtml(
-                [
-                    'title' => $this->translate('Disable Advanced CMS'),
-                    'class' => 'magento-pagebuilder disable-magento-pagebuilder',
-                    'style' => 'display: none;',
-                    'id' => 'disable-magento-pagebuilder' . $this->getHtmlId()
-                ]
-            );
+        if ($this->isPageBuilderUsed()) {
+            return '';
         }
-        return $buttonHtml . parent::_getToggleButtonHtml($visible);
+
+        return parent::getElementHtml();
     }
 
     /**

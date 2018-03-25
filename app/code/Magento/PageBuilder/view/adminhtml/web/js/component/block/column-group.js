@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./block", "./column-group/factory", "./column-group/resizing", "./preview/column-group/registry", "./preview/column-group/resizing"], function (_translate, _underscore, _array, _eventBus, _block, _factory, _resizing, _registry, _resizing2) {
+define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "../../utils/array", "../event-bus", "./block", "./column-group/factory", "./column-group/resizing", "./preview/column-group/registry", "./preview/column-group/resizing"], function (_translate, _alert, _underscore, _array, _eventBus, _block, _factory, _resizing, _registry, _resizing2) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -95,7 +95,7 @@ define(["mage/translate", "underscore", "../../utils/array", "../event-bus", "./
 
 
       if (!duplicate) {
-        this.stage.parent.alertDialog({
+        (0, _alert)({
           content: (0, _translate)("There is no free space within the column group to perform this action."),
           title: (0, _translate)("Unable to duplicate column")
         });
