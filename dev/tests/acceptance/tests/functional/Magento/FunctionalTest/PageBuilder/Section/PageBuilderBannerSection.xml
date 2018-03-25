@@ -58,7 +58,7 @@
         <element name="bannerClass" type="button" selector="div[data-role='banner'][class='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="BannerOnBackend">
-        <element name="default" type="button" selector="(//div[@class='pagebuilder-banner-wrapper'])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; min-height: {{arg5}}px; background-size: {{arg6}}; background-repeat: {{arg7}}; background-attachment: {{arg8}}; background-image: {{arg9}};']//div[@class='pagebuilder-poster-overlay'][contains(@style,'padding: {{arg10}}px;')]" parameterized="true"/>
+        <element name="default" type="button" selector="(//div[@class='pagebuilder-banner-wrapper'])[{{arg1}}][contains(@style, 'border-style: {{arg2}};') and contains(@style, 'border-radius: {{arg3}}px;') and contains(@style, 'margin: {{arg4}}px;') and contains(@style, 'background-size: {{arg6}};') and contains(@style, 'background-repeat: {{arg7}};') and contains(@style, 'background-attachment: {{arg8}};')]//div[@class='pagebuilder-poster-overlay'][contains(@style,'padding: {{arg10}}px;')]" parameterized="true"/>
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
         <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
         <element name="buttonText" type="text" selector="//button//span[text()='{{arg1}}']" parameterized="true"/>
