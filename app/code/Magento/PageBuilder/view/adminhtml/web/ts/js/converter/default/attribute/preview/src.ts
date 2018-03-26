@@ -21,13 +21,13 @@ export default class Src implements ElementConverterInterface {
      *
      * @param name string
      * @param data Object
-     * @returns {string | object}
+     * @returns {string}
      */
-    public toDom(name: string, data: object): string | object {
+    public toDom(name: string, data: object): string {
         const value = data[name];
         if (value && typeof value[0] === "object") {
             return value[0].url;
         }
-        return null;
+        return "";
     }
 }

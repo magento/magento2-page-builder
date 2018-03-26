@@ -15,7 +15,7 @@ define(["../../../component/config", "../../../utils/image", "../../../utils/url
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
       if (!value) {
@@ -29,7 +29,7 @@ define(["../../../component/config", "../../../utils/image", "../../../utils/url
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string}
      */
 
 
@@ -37,7 +37,7 @@ define(["../../../component/config", "../../../utils/image", "../../../utils/url
       var value = data[name];
 
       if (value[0] === undefined || value[0].url === undefined) {
-        return null;
+        return "";
       }
 
       var imageUrl = value[0].url;

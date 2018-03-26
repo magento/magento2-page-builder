@@ -17,7 +17,7 @@ define([], function () {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
       return value;
@@ -27,7 +27,7 @@ define([], function () {
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string}
      */
 
 
@@ -38,7 +38,7 @@ define([], function () {
         return value[0].url;
       }
 
-      return null;
+      return "";
     };
 
     return Src;
