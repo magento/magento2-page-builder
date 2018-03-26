@@ -10,7 +10,7 @@ export default class Color implements ElementConverterInterface {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public fromDom(value: string): string | object {
         if (value === "default" || value === "initial" || value === "") {
@@ -33,7 +33,7 @@ export default class Color implements ElementConverterInterface {
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public toDom(name: string, data: object): string {
         return data[name];

@@ -13,7 +13,7 @@ export default class OverlayColorTransparency implements ElementConverterInterfa
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public fromDom(value: string): string | object {
         return value;
@@ -24,7 +24,7 @@ export default class OverlayColorTransparency implements ElementConverterInterfa
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public toDom(name: string, data: object): string | object {
         let overlayColor: string = "transparent";

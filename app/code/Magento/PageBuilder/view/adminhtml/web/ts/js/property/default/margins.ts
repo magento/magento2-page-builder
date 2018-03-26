@@ -10,7 +10,7 @@ export default class Margins implements PropertyReaderInterface {
      * Read margins from element
      *
      * @param {HTMLElement} element
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public read(element: HTMLElement): string | object {
         return {

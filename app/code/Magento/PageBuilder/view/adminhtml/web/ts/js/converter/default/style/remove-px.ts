@@ -10,7 +10,7 @@ export default class RemovePx implements ElementConverterInterface {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public fromDom(value: string): object | string {
         return value.replace("px", "");
@@ -21,7 +21,7 @@ export default class RemovePx implements ElementConverterInterface {
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public toDom(name: string, data: object): object | string {
         return data[name] + "px";

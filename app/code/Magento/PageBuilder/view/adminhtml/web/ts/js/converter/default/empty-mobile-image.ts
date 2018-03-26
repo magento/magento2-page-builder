@@ -9,9 +9,9 @@ export default class EmptyMobileImage implements DataConverterInterface {
     /**
      * Process data after it's read and converted by element converters
      *
-     * @param {Object} data
-     * @param {Object} config
-     * @returns {Object}
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
      */
     public fromDom(data: object, config: object): object {
         const desktopImage = data[config.desktop_image_variable];
@@ -28,9 +28,9 @@ export default class EmptyMobileImage implements DataConverterInterface {
     /**
      * Process data before it's converted by element converters
      *
-     * @param {Object} data
-     * @param {Object} config
-     * @returns {Object}
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
      */
     public toDom(data: object, config: object): object {
         if (data[config.mobile_image_variable] === undefined

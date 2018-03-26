@@ -20,7 +20,7 @@ export default class MarginsAndPaddings implements PropertyReaderInterface {
      * Read margins and paddings from element
      *
      * @param {HTMLElement} element
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public read(element: HTMLElement): string | object {
         return Object.assign(

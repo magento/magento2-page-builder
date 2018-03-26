@@ -7,18 +7,18 @@ export interface DataConverterInterface {
     /**
      * Process data after it's read and converted by element converters
      *
-     * @param {Object} data
-     * @param {Object} config
-     * @returns {Object}
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
      */
     fromDom(data: object, config: object): object;
 
     /**
      * Process data before it's converted by element converters
      *
-     * @param {Object} data
-     * @param {Object} config
-     * @returns {Object}
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
      */
     toDom(data: object, config: object): object;
 }

@@ -8,7 +8,7 @@ export interface ElementConverterInterface {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     fromDom(value: string): string | object;
 
@@ -17,7 +17,7 @@ export interface ElementConverterInterface {
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     toDom(name: string, data: object): string | object;
 }

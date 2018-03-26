@@ -10,7 +10,7 @@ export default class ButtonVisibility implements ElementConverterInterface {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public fromDom(value: string): string | object {
         return value;
@@ -21,7 +21,7 @@ export default class ButtonVisibility implements ElementConverterInterface {
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public toDom(name: string, data: object): string | object {
         return data.show_button === "always" ? "visible" : "hidden";

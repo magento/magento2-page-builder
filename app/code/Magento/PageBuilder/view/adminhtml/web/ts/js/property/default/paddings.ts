@@ -10,7 +10,7 @@ export default class Paddings implements PropertyReaderInterface {
      * Read paddings from element
      *
      * @param {HTMLElement} element
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public read(element: HTMLElement): string | object {
         return {

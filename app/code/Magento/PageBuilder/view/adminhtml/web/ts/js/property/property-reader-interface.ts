@@ -8,7 +8,7 @@ export interface PropertyReaderInterface {
      * Read element data
      *
      * @param {HTMLElement} element
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     read(element: HTMLElement): string | object;
 }

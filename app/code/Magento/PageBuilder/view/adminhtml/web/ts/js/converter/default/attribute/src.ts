@@ -14,7 +14,7 @@ export default class Src implements ElementConverterInterface {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public fromDom(value: string): string | object {
         if (!value) {
@@ -28,7 +28,7 @@ export default class Src implements ElementConverterInterface {
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public toDom(name: string, data: object): string | object {
         const value = data[name];

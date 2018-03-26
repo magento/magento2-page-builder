@@ -10,7 +10,7 @@ export default class Target implements ElementConverterInterface {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public fromDom(value: string): string | object {
         return value === "_blank" ? "1" : "0";
@@ -21,7 +21,7 @@ export default class Target implements ElementConverterInterface {
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     public toDom(name: string, data: object): string | object {
         return data[name] === "1" ? "_blank" : null;
