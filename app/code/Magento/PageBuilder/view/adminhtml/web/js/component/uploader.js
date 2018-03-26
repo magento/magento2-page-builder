@@ -43,21 +43,13 @@ define(["mage/translate", "uiEvents", "uiLayout", "uiRegistry"], function (_tran
       this.render();
     }
     /**
-     * Instantiate uploader through layout UI component renderer
-     */
-
-
-    var _proto = Uploader.prototype;
-
-    _proto.render = function render() {
-      (0, _uiLayout)([this.config]);
-    };
-    /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Function}
      */
 
+
+    var _proto = Uploader.prototype;
 
     _proto.getUiComponent = function getUiComponent() {
       return _uiRegistry.async(this.name);
@@ -71,6 +63,14 @@ define(["mage/translate", "uiEvents", "uiLayout", "uiRegistry"], function (_tran
 
     _proto.onUploaded = function onUploaded(callback) {
       _uiEvents.on("image:uploaded:" + this.id, callback);
+    };
+    /**
+     * Instantiate uploader through layout UI component renderer
+     */
+
+
+    _proto.render = function render() {
+      (0, _uiLayout)([this.config]);
     };
 
     return Uploader;
