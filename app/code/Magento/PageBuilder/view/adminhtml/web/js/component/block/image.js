@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents", "underscore", "../../utils/url", "../config", "./block", "../uploader"], function (_uiEvents, _underscore, _url, _config, _block, _uploader) {
+define(["uiEvents", "underscore", "../../utils/url", "../config", "../uploader", "./block"], function (_uiEvents, _underscore, _url, _config, _uploader, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =

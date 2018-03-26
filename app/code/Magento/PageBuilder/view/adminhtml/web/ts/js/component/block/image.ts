@@ -9,8 +9,8 @@ import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 import Config, {ConfigContentBlock} from "../config";
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
-import Block from "./block";
 import Uploader from "../uploader";
+import Block from "./block";
 
 export default class Image extends Block {
     /**
@@ -30,8 +30,8 @@ export default class Image extends Block {
             this.id,
             "imageuploader_" + this.id,
             Object.assign({}, Uploader.config, {
-                value: this.stage.store.get(this.id).image
-            })
+                value: this.stage.store.get(this.id).image,
+            }),
         );
 
         // Register listener when image gets uploaded from uploader UI component
