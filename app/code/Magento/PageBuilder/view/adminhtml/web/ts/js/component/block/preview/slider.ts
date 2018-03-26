@@ -7,7 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick";
 import _ from "underscore";
-import "../../../bindings/focus";
+import "../../../binding/focus";
 import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import {BlockRemovedParams} from "../../stage/event-handling-delegate";
