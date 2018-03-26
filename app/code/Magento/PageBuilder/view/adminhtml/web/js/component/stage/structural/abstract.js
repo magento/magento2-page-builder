@@ -433,11 +433,25 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
         if (config[elementName].css !== undefined && config[elementName].css.var in data) {
           (function () {
             var css = data[config[elementName].css.var];
-            css.toString().split(" ").map(function (value, index) {
-              return css[value] = true;
-            });
+            var newClasses = {};
 
-            _this3.data[elementName].css(css);
+            if (css.length > 0) {
+              css.toString().split(" ").map(function (value, index) {
+                return newClasses[value] = true;
+              });
+            }
+
+            var _arr2 = Object.keys(_this3.data[elementName].css());
+
+            for (var _i5 = 0; _i5 < _arr2.length; _i5++) {
+              var className = _arr2[_i5];
+
+              if (!(className in newClasses)) {
+                newClasses[className] = false;
+              }
+            }
+
+            _this3.data[elementName].css(newClasses);
           })();
         }
 
