@@ -7,16 +7,14 @@ import $ from "jquery";
 import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick";
 import _ from "underscore";
-import "../../../utils/focus-binding";
+import "../../../bindings/focus";
 import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
+import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 import Block from "../block";
+import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
 import PreviewBlock from "./block";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
-import {BlockDuplicateEventParams, BlockMountEventParams} from "../../stage/structural/editable-area";
-import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
-import Slide from "../slide";
-import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 
 export default class Slider extends PreviewBlock {
     public focusedSlide: KnockoutObservable<number> = ko.observable();

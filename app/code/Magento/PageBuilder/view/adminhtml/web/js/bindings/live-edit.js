@@ -83,6 +83,9 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
      * @param value "{key:'button_text','data-placeholder':$t('Edit Button Text')}"
      * @param name "liveEdit"
      * @param addBindingCallback
+     *
+     * Use data-placeholder for elements that
+     * don't support the placeholder attribute
      */
     preprocess: function preprocess(value, name, addBindingCallback) {
       var attrValue = "{" + value.split(",")[1];
