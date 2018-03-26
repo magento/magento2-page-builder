@@ -211,7 +211,7 @@ define(["mageUtils", "../../../component/block/appearance-config", "../../../uti
         }
       }
 
-      result[config.css.var] = css;
+      result[config.css.var] = css.replace(/\s{2,}/g, ' ').trim();
       return _.extend(data, result);
     };
     /**

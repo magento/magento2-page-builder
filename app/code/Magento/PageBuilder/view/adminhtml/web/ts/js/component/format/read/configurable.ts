@@ -190,7 +190,7 @@ export default class Configurable implements ReadInterface {
                 css = css.replace(filterClass, "");
             }
         }
-        result[config.css.var] = css;
+        result[config.css.var] = css.replace(/\s{2,}/g, ' ').trim();
         return _.extend(data, result);
     }
 
