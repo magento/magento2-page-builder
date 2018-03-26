@@ -34,9 +34,6 @@ class Video implements RendererInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function render(array $itemData, array $additionalData = [])
     {
@@ -49,29 +46,13 @@ class Video implements RendererInterface
             'data-role' => 'video'
         ];
 
-        $iframeElementAttributes = [
-            'class' => $eavData['css_classes'] ?? '',
-            'src' => $eavData['video_url']
-        ];
-
         $formData = $itemData['formData'] ?? [];
-        if (isset($eavData['video_width'])) {
-            $iframeElementAttributes['width'] = $this->normalizeSizeDimension($eavData['video_width']);
-        }
-
-        if (isset($eavData['video_height'])) {
-            $iframeElementAttributes['height'] = $this->normalizeSizeDimension($eavData['video_height']);
-        }
-
         if (isset($formData['align']) && $formData['align'] !== '') {
             $rootElementAttributes['style'] = 'text-align: ' . $formData['align'] . ';';
             unset($formData['align']);
         }
 
-        $style = $this->styleExtractor->extractStyle($formData);
-        if ($style) {
-            $iframeElementAttributes['style'] = $style;
-        }
+        $iframeElementAttributes = $this->getIframeAttributes($eavData, $formData);
 
         $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
@@ -84,6 +65,36 @@ class Video implements RendererInterface
         $rootElementHtml .= '></iframe></div>';
 
         return $rootElementHtml;
+    }
+
+    /**
+     * Get attributes, style, and classes for the iframe
+     *
+     * @param array $eavData
+     * @param array $formData
+     * @return array
+     */
+    private function getIframeAttributes($eavData, $formData)
+    {
+        $iframeElementAttributes = [
+            'class' => $eavData['css_classes'] ?? '',
+            'src' => $eavData['video_url']
+        ];
+
+        if (isset($eavData['video_width'])) {
+            $iframeElementAttributes['width'] = $this->normalizeSizeDimension($eavData['video_width']);
+        }
+
+        if (isset($eavData['video_height'])) {
+            $iframeElementAttributes['height'] = $this->normalizeSizeDimension($eavData['video_height']);
+        }
+
+        $style = $this->styleExtractor->extractStyle($formData);
+        if ($style) {
+            $iframeElementAttributes['style'] = $style;
+        }
+
+        return $iframeElementAttributes;
     }
 
     /**
