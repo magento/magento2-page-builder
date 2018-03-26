@@ -143,6 +143,18 @@ The following is an example of a content type configuration in `content_type.xml
 | `appearances`       | Appearance configuration.                                                                                                 |
 | `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true. |
 
+
+### `form` configuration reference
+
+The `form` element specifies the name of the UiComponent form used to configure content types. All forms should extend the `pagebuilder_base_form`, which contains boilerplate form configuration and the global Advanced Configuration section.
+```xml
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form">
+    <!-- Form Configuration for Content Type -->
+</form>
+```
+
+Any modifications you might want to make to content type configuration forms use standard UiComponent functionality. Please see [UiComponent Documentation](http://devdocs.magento.com/guides/v2.3/ui_comp_guide/bk-ui_comps.html) for additional information.
+
 ### `allowed_parents` configuration reference
 
 The `allowed_parents` element specifies which content types can accept this type as a child.
