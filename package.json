@@ -4,7 +4,9 @@
   "description": "PageBuilder module",
   "scripts": {
     "gulp": "gulp",
-    "gulpDebug": "node $NODE_DEBUG_OPTION ./node_modules/.bin/gulp"
+    "gulpDebug": "node $NODE_DEBUG_OPTION ./node_modules/.bin/gulp",
+    "test:static": "tslint --project tsconfig.json",
+    "test:static:log": "npm run test:static -- -o ./static-error-log.xml -t junit"
   },
   "devDependencies": {
     "@types/jquery": "^3.2.10",
