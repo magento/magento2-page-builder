@@ -6,8 +6,8 @@
 import ko from "knockout";
 import "ko-draggable";
 import "ko-sortable";
+import $t from "mage/translate";
 import uiComponent from "uiComponent";
-import $t from 'mage/translate';
 import _ from "underscore";
 import Config, {ConfigContentBlock} from "../config";
 import EventBus from "../event-bus";
@@ -20,16 +20,16 @@ import { load as loadPreviews } from "./previews";
 export default class Panel extends uiComponent implements PanelInterface {
     public componentTemplate: string = "Magento_PageBuilder/component/stage/panel.html";
     public defaults: object = {
+        fullScreenTitle: $t("Full Screen"),
         groups: [],
         isCollapsed: false,
         isVisible: false,
         originalScrollTop: false,
+        searchNoResult: $t("Nothing found"),
+        searchPlaceholder: $t("Find items"),
         searchResults: [],
-        searchPlaceholder: $t('Find items'),
-        searchNoResult: $t('Nothing found'),
-        fullScreenTitle: $t('Full Screen'),
-        searchTitle: $t('Clear Search'),
-        searchValue: '',
+        searchTitle: $t("Clear Search"),
+        searchValue: "",
         searching: false,
         stage: false,
     };
