@@ -1532,6 +1532,7 @@
         <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -1583,11 +1584,10 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForPreviewInStage" />
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSlideContentBlock.role)}}" stepKey="waitForPreviewInStage" />
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <!-- step fails due to MAGETWO-89346 -->
-        <!--<seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>-->
+        <seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
@@ -1630,6 +1630,7 @@
         <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
@@ -1680,7 +1681,7 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSlideContentBlock.role)}}" stepKey="waitForSliderPreviewInStage" />
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <!-- step fails due to MAGETWO-89346 -->
@@ -1727,6 +1728,8 @@
         <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
+
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
@@ -1777,11 +1780,10 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForVideoPreviewInStager" />
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSlideContentBlock.role)}}" stepKey="waitForSliderPreviewInStage" />
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <!-- step fails due to MAGETWO-89346 -->
-        <!--<seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>-->
+        <seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
