@@ -44,10 +44,10 @@
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
         <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInCurrentTab(ExternalLink.url)}}" stepKey="seeExternalLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
-        <grabFromCurrentUrl stepKey="grabfromcurl1"/>
+        <grabFromCurrentUrl stepKey="grabFromCurrentUrl1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
             <expectedResult type="string">{{ExternalLink.url}}</expectedResult>
-            <actualResult type="variable">grabfromcurl1</actualResult>
+            <actualResult type="variable">grabFromCurrentUrl1</actualResult>
         </assertEquals>
         <waitForPageLoad stepKey="waitForPageLoad2" />
 
@@ -69,10 +69,10 @@
         <!--<seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInNewTab(ExternalLink.url)}}" stepKey="seeExternalLinkOnStoreFront2" />-->
         <click selector=".pagebuilder-button-primary" stepKey="clickButton2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <grabFromCurrentUrl stepKey="grabfromcurl2"/>
+        <grabFromCurrentUrl stepKey="grabFromCurrentUrl2"/>
         <assertEquals stepKey="assertEquals2" message="pass">
             <expectedResult type="string">{{ExternalLink.url}}</expectedResult>
-            <actualResult type="variable">grabfromcurl2</actualResult>
+            <actualResult type="variable">grabFromCurrentUrl2</actualResult>
         </assertEquals>
     </test>
 </tests>
