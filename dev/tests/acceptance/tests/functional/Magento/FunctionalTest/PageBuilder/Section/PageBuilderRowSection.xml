@@ -17,7 +17,7 @@
         <element name="repeatInput" type="button" selector="[name='background-repeat']"/>
     </section>
     <section name="RowAdminPreview">
-        <element name="default" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; background-size: {{arg6}}; background-repeat: {{arg7}}; background-attachment: {{arg8}};']" parameterized="true"/>
+        <element name="default" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-row') and contains(@style, 'border-style: {{arg1}};') and contains(@style, 'border-radius: {{arg2}}px;') and contains(@style, 'margin: {{arg3}}px;') and contains(@style, 'padding: {{arg4}}px;') and contains(@style, 'background-size: {{arg5}};') and contains(@style, 'background-repeat: {{arg6}};') and contains(@style, 'background-attachment: {{arg7}};')])[{{arg8}}]" parameterized="true"/>
         <element name="empty" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type')]//div[contains(@class, 'pagebuilder-empty-container')])"/>
         <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]'/>
         <element name="row2" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[2]'/>
@@ -42,7 +42,7 @@
         <element name="backgroundRepeat" type="button" selector="[data-role='row'][style*='background-repeat: repeat']"/>
         <element name="backgroundAttachment" type="button" selector="[data-role='row'][style*='background-attachment: fixed']"/>
         <element name="parallaxClass" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax']"/>
-        <element name="parallaxSpeed" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax'][@data-speed='{{arg1}}']" parameterized="true"/>
+        <element name="parallaxSpeed" type="button" selector="//div[@data-role='row'][@class='pagebuilder-parallax'][@data-parallax-speed='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="PageBuilderRowSection">
         <element name="row" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]'/>
