@@ -143,30 +143,15 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <seeElement selector="{{ImageOnStage.UploadImageBtn}}" stepKey="seeUploadImageBtn" />
-        <seeElement selector="{{ImageOnStage.SelectFromGalleryBtn}}" stepKey="seeSelectFromGallerytn" />
-
-        <!--Attach image A to PageBuilder stage-->
-        <attachFile userInput="{{PageBuilderImageOnStage.value}}" selector="//div[@class='pagebuilder-image-uploader-container']//input[@name='image']" stepKey="attachImageFileOnStage"/>
-        <waitForElementVisible selector=".preview-image" stepKey="waitForImagePreview"/>
-
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
-
-        <!--Verify image A display on preview of slide-out-->
-        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImageOnStage.value)}}" stepKey="seeImageNameOnPreview"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeMainImageSource"/>
-
         <dontSeeElement selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
         <grabValueFrom selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
         <assertEquals expected="full-width" expectedType="string" actual="defaultAppearanceValue" actualType="variable" message="pass" stepKey="assertDefaultAppearanceValue"/>
         <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
         <seeElement selector="{{UploadImageSection.PlaceholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
-
-
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
