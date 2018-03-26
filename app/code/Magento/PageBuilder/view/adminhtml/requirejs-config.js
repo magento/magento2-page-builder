@@ -11,7 +11,6 @@ var config = {
         'pagebuilder/html2canvas': 'Magento_PageBuilder/js/resource/html2canvas',
         'pagebuilder/highlight': 'Magento_PageBuilder/js/resource/highlight/highlight.pack',
         'hyperscript': 'Magento_PageBuilder/js/resource/hyperscript/hyperscript',
-        'slick': 'Magento_PageBuilder/js/resource/slick/slick',
         'xyperscript': 'Magento_PageBuilder/js/resource/xyperscript/xyperscript',
 
         /* Include our Knockout Sortable wrapper */
