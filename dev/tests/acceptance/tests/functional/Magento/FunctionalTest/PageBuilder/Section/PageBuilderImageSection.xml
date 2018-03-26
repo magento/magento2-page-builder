@@ -21,7 +21,7 @@
         <element name="backgroundImageSource" type="text" selector="//div[contains(@style,'{{var1}}')]" parameterized="true"/>
     </section>
     <section name="ImageOnBackend">
-        <element name="imagePreview" type="text" selector="//div[contains(@class, 'pagebuilder-image')][1]//div//span[text()='Empty Image']"/>
+        <element name="imagePreview" type="text" selector="//div[contains(concat(' ',normalize-space(@class),' '),'pagebuilder-image')][1]"/>
     </section>
     <section name="UploadImageSection">
         <element name="PlaceholderContent" type="button" selector="//span[text()='{{var1}}']//parent::label//following-sibling::div//p[text()='Browse to find or drag image here']" parameterized="true"/>
