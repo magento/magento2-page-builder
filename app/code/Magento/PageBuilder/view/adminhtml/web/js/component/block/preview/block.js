@@ -100,7 +100,7 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
         optionsMenu = optionsMenu.first();
       }
 
-      optionsMenu.addClass("pagebuilder-options-visible");
+      optionsMenu.parent().addClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     };
     /**
@@ -125,7 +125,7 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
             optionsMenu = optionsMenu.first();
           }
 
-          optionsMenu.removeClass("pagebuilder-options-visible");
+          optionsMenu.parent().removeClass("pagebuilder-options-visible");
           (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
         }
       }, 100); // 100 ms delay to allow for users hovering over other elements
