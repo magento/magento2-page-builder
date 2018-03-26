@@ -6,7 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
-import "../../../bindings/live-edit";
+import "../../../binding/live-edit";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
 import EventBus from "../../event-bus";
