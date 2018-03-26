@@ -10,9 +10,12 @@
        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="BannerCanAddBanner">
         <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="User can add and edit banner"/>
             <description value="A user should be able to add and edit banner"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89573"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -46,6 +49,8 @@
     </test>
     <test name="BannerEmptyBannerPreviewValidation">
         <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Validate empty banner on preview"/>
             <description value="Validate contents and layout of empty banner on preview page."/>
             <severity value="CRITICAL"/>
@@ -181,6 +186,7 @@
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89574"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -357,6 +363,7 @@
             <title value="Banner can open in new tab in frontend"/>
             <description value="A user should be able to click on banner and open in new tab for frontend"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89575"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -444,7 +451,7 @@
             <title value="Banner does not navigate on click"/>
             <description value="A user should be to click on the banner in preview and not have it navigate to another page."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-86838"/>
+            <testCaseId value="MAGETWO-89583"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -490,14 +497,16 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <dontSeeElement selector="{{BannerOnBackend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="dontSeeLinkUrl"/>
     </test>
-    <test name="BannerHasAdvancedFormSection">
+    <test name="BannerValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Banner MAGETWO-83928"/>
-            <title value="Banner has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for banner"/>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Banner - Validate Advanced Configuration Default Values"/>
+            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Banner."/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89435"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -508,8 +517,7 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
@@ -518,53 +526,44 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderProperty"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderColorProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingProperty40"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-        <!-- check defaults -->
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultAdvancedBorderPropert">
-            <argument name="property" value="PageBuilderAdvancedBorderProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="seeDefaultAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingDefaultProperty"/>
-        </actionGroup>
-        <!-- check disabled -->
-        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeAdvancedBorderColorPropertIsDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeAdvancedBorderSizePropertyIsDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeDefaultProperty"/>
-        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Style On Stage -->
+        <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
+        <waitForElementVisible selector="{{BannerOnBackend.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderBannerMinimumHeightDefaultProperty.value, PageBuilderBannerBackgroundSizeDefaultProperty.value, PageBuilderBannerBackgroundRepeatDefaultProperty.stageValue, PageBuilderBannerBackgroundAttachmentDefaultProperty.value, PageBuilderBannerBackgroundImagePropertyDefault.value, PageBuilderPaddingProperty40.value)}}" stepKey="waitForStyle"/>
     </test>
     <test name="BannerHasNoRequired">
         <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Banner has  no required fields in edit form"/>
             <description value="Check there is no required fields in banner edit form"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89576"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -589,9 +588,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <dontSeeElement selector="{{BannerOnBackend.requiredField}}" stepKey="checkNoRequiredField"/>
     </test>
     <test name="BannerCheckInvalidInputs">
@@ -601,6 +597,7 @@
             <title value="Banner errors if invalid input is saved in the edit form"/>
             <description value="Banner errors if invalid input is saved in the edit form"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89577"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -668,6 +665,7 @@
             <title value="Banner has the correct fields and default values in edit form"/>
             <description value="A user should see the correct fields and default values when edit button is clicked for banner"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89572"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -799,6 +797,7 @@
             <title value="Banner has 'Edit Button Text' button styled correctly (Luna) in admin and frontend (Base)"/>
             <description value="A user should be able to see 'Edit Button Text' button styled correctly for banner"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89578"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -915,7 +914,7 @@
             <title value="Check value of a collage left banner"/>
             <description value="Check value of a collage left banner"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89584"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -965,13 +964,13 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
@@ -1028,7 +1027,7 @@
             <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
@@ -1085,13 +1084,13 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedClassProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingTopOnForm">
             <argument name="property" value="PageBuilderBannerDefaultPaddingTopProperty"/>
@@ -1118,15 +1117,15 @@
             <argument name="property" value="PageBuilderBannerDefaultMarginRightProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <!-- Validate settings on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageLeft}}" stepKey="verifyCollageLeftInFrontend"/>
-        <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleInFrontend"/>
-        <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="verifyClassInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="verifyClassInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
@@ -1159,7 +1158,7 @@
             <title value="Check value of a collage centered banner"/>
             <description value="Check value of a collage centered banner"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89585"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -1209,13 +1208,13 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
@@ -1272,7 +1271,7 @@
             <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
@@ -1326,13 +1325,13 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedClassProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
             <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
@@ -1362,15 +1361,15 @@
             <argument name="property" value="PageBuilderBannerDefaultMarginRightProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <!-- Validate settings on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageCentered}}" stepKey="verifyCollageCenteredInFrontend"/>
-        <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleInFrontend"/>
-        <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="verifyClassInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="verifyClassInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
@@ -1403,7 +1402,7 @@
             <title value="Check value of a collage right banner"/>
             <description value="Check value of a collage right banner"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89586"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -1453,13 +1452,13 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedClassProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
@@ -1516,7 +1515,7 @@
             <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
@@ -1573,13 +1572,13 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedClassProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePaddingLeftOnForm">
             <argument name="property" value="PageBuilderBannerDefaultPaddingLeftProperty"/>
@@ -1609,15 +1608,15 @@
             <argument name="property" value="PageBuilderBannerDefaultMarginRightProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <!-- Validate settings on frontend -->
         <amOnPage url="banner{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
-        <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleInFrontend"/>
-        <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="verifyClassInFrontend"/>
+        <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="verifyClassInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
@@ -1650,7 +1649,7 @@
             <title value="Check value of a collage left mobile banner without mobile image"/>
             <description value="Check value of a collage left mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89587"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -1734,7 +1733,7 @@
             <title value="Check value of a collage centered mobile banner without mobile image"/>
             <description value="Check value of a collage centered mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89588"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -1818,7 +1817,7 @@
             <title value="Check value of a collage right mobile banner without mobile image"/>
             <description value="Check value of a collage right mobile banner without mobile image"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89589"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -1902,7 +1901,7 @@
             <title value="Check value of a collage left mobile banner with mobile image"/>
             <description value="Check value of a collage left mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89590"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -1989,7 +1988,7 @@
             <title value="Check value of a collage centered mobile banner with mobile image"/>
             <description value="Check value of a collage centered mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89591"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -2076,7 +2075,7 @@
             <title value="Check value of a collage right mobile banner with mobile image"/>
             <description value="Check value of a collage right mobile banner with mobile image"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89592"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -2163,6 +2162,7 @@
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89579"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -2221,7 +2221,7 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
@@ -2230,7 +2230,7 @@
             <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
@@ -2244,7 +2244,7 @@
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
+        <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{BannerOnBackend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnBackend.collageMargin}}" stepKey="verifyCollageMarginInAdmin"/>
@@ -2257,6 +2257,7 @@
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89580"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -2315,7 +2316,7 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
@@ -2324,7 +2325,7 @@
             <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
@@ -2338,7 +2339,7 @@
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
+        <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{BannerOnBackend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnBackend.collageMargin}}" stepKey="verifyCollageMarginInAdmin"/>
@@ -2351,6 +2352,7 @@
             <title value="Banner is previewable in admin"/>
             <description value="A user should be able to preview content in admin for banner"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89581"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -2409,7 +2411,7 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
@@ -2418,7 +2420,7 @@
             <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
@@ -2432,7 +2434,7 @@
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
-        <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
+        <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{BannerOnBackend.collageMinHeight(PageBuilderBannerMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
         <seeElement selector="{{BannerOnBackend.collageMargin}}" stepKey="verifyCollageMarginInAdmin"/>
@@ -2445,7 +2447,7 @@
             <title value="Check collage left button on hover state works"/>
             <description value="Check collage left button on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89593"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -2553,7 +2555,7 @@
             <title value="Check collage left overlay on hover state works"/>
             <description value="Check collage left overlay on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89594"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -2649,7 +2651,7 @@
             <title value="Check collage left overlay never show state works"/>
             <description value="Check collage left overlay never show state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89595"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -2729,6 +2731,8 @@
     </test>
     <test name="BannerCollageLeftButtonNeverShow">
         <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Check collage left button never show state works"/>
             <description value="Check collage left button never show state works"/>
             <severity value="CRITICAL"/>
@@ -2853,7 +2857,7 @@
             <title value="Check collage left button on hover state works"/>
             <description value="Check collage left button on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89596"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -2968,7 +2972,7 @@
             <title value="Check collage right button on hover state works"/>
             <description value="Check collage right button on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89597"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -3076,7 +3080,7 @@
             <title value="Check collage right overlay on hover state works"/>
             <description value="Check collage right overlay on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89598"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -3172,7 +3176,7 @@
             <title value="Check collage right overlay never show state works"/>
             <description value="Check collage right overlay never show state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89599"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -3378,7 +3382,7 @@
             <title value="Check collage right button on hover state works"/>
             <description value="Check collage right button on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89600"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -3488,10 +3492,12 @@
     </test>
     <test name="BannerCollageCenteredButtonOnHover">
         <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Check collage centered button on hover state works"/>
             <description value="Check collage centered button on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89601"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -3605,7 +3611,7 @@
             <title value="Check collage centered overlay on hover state works"/>
             <description value="Check collage centered overlay on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89602"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -3701,7 +3707,7 @@
             <title value="Check collage centered overlay never show state works"/>
             <description value="Check collage centered overlay never show state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89603"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -3781,6 +3787,8 @@
     </test>
     <test name="BannerCollageCenteredButtonNeverShow">
         <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Check collage centered button never show state works"/>
             <description value="Check collage centered button never show state works"/>
             <severity value="CRITICAL"/>
@@ -3905,7 +3913,7 @@
             <title value="Check collage centered button on hover state works"/>
             <description value="Check collage centered button on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89604"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -4020,7 +4028,7 @@
             <title value="Check poster button on hover state works"/>
             <description value="Check poster button on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89605"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -4125,7 +4133,7 @@
             <title value="Check poster overlay on hover state works"/>
             <description value="Check poster overlay on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89606"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -4218,7 +4226,7 @@
             <title value="Check poster overlay never show state works"/>
             <description value="Check poster overlay never show state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89607"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -4295,6 +4303,8 @@
     </test>
     <test name="BannerPosterButtonNeverShow">
         <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Banner"/>
             <title value="Check poster button never show state works"/>
             <description value="Check poster button never show state works"/>
             <severity value="CRITICAL"/>
@@ -4416,7 +4426,7 @@
             <title value="Check poster button on hover state works"/>
             <description value="Check poster button on hover state works"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-83553"/>
+            <testCaseId value="MAGETWO-89608"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
@@ -4528,6 +4538,7 @@
             <title value="Add an image content block into banner"/>
             <description value="A user should be able to add an image into a banner."/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89582"/>
             <group value="pagebuilder"/>
         </annotations>
         <before>
