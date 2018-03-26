@@ -16,11 +16,11 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
     /**
      * Init the live edit binding on an element
      *
-     * @param element
-     * @param valueAccessor
-     * @param allBindings
-     * @param viewModel
-     * @param bindingContext
+     * @param {any} element
+     * @param {any} valueAccessor
+     * @param {any} allBindings
+     * @param {any} viewModel
+     * @param {any} bindingContext
      */
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var contentTypeInstance = bindingContext.$data;
@@ -32,6 +32,10 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
         tempDiv.innerHTML = html;
         return tempDiv.innerText;
       };
+      /**
+       * Blur event on element
+       */
+
 
       var onBlur = function onBlur() {
         if (value.key in data) {
@@ -39,12 +43,22 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
           contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
         }
       };
+      /**
+       * Click event on element
+       */
+
 
       var onClick = function onClick() {
         if (element.innerText !== "") {
           document.execCommand("selectAll", false, null);
         }
       };
+      /**
+       * Key down event on element
+       *
+       * @param {any} event
+       */
+
 
       var onKeyDown = function onKeyDown(event) {
         // command or control
@@ -55,6 +69,10 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
           }
         }
       };
+      /**
+       * Key up event on element
+       */
+
 
       var onKeyUp = function onKeyUp() {
         if (element.innerText === "") {
@@ -80,12 +98,12 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
     /**
      * Preprocess live edit binding on an element
      *
+     * Use data-placeholder for elements that
+     * don't support the placeholder attribute
+     *
      * @param value "{key:'button_text','data-placeholder':$t('Edit Button Text')}"
      * @param name "liveEdit"
      * @param addBindingCallback
-     *
-     * Use data-placeholder for elements that
-     * don't support the placeholder attribute
      */
     preprocess: function preprocess(value, name, addBindingCallback) {
       var attrValue = "{" + value.split(",")[1];

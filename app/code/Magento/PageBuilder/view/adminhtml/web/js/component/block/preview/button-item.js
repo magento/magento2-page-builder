@@ -8,13 +8,7 @@ define(["./block"], function (_block) {
     _inheritsLoose(Button, _PreviewBlock);
 
     function Button() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.element = void 0, _temp) || _this;
+      return _PreviewBlock.apply(this, arguments) || this;
     }
 
     var _proto = Button.prototype;

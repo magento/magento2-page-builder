@@ -6,7 +6,6 @@
 import PreviewBlock from "./block";
 
 export default class Button extends PreviewBlock {
-    private element: Element;
 
     /**
      * After child render record element

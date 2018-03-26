@@ -12,11 +12,11 @@ ko.bindingHandlers.liveEdit = {
     /**
      * Init the live edit binding on an element
      *
-     * @param element
-     * @param valueAccessor
-     * @param allBindings
-     * @param viewModel
-     * @param bindingContext
+     * @param {any} element
+     * @param {any} valueAccessor
+     * @param {any} allBindings
+     * @param {any} viewModel
+     * @param {any} bindingContext
      */
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const contentTypeInstance = bindingContext.$data;
@@ -28,17 +28,31 @@ ko.bindingHandlers.liveEdit = {
             tempDiv.innerHTML = html;
             return tempDiv.innerText;
         };
+
+        /**
+         * Blur event on element
+         */
         const onBlur = () => {
             if (value.key in data) {
                 data[value.key] = stripHtml(element.innerText);
                 contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
             }
         };
+
+        /**
+         * Click event on element
+         */
         const onClick = () => {
             if (element.innerText !== "") {
                 document.execCommand("selectAll", false, null);
             }
         };
+
+        /**
+         * Key down event on element
+         *
+         * @param {any} event
+         */
         const onKeyDown = (event: any) => {
             // command or control
             if (event.metaKey || event.ctrlKey) {
@@ -48,6 +62,10 @@ ko.bindingHandlers.liveEdit = {
                 }
             }
         };
+
+        /**
+         * Key up event on element
+         */
         const onKeyUp = () => {
             if (element.innerText === "") {
                 $(element).addClass("placeholder-text");
@@ -72,18 +90,17 @@ ko.bindingHandlers.liveEdit = {
     /**
      * Preprocess live edit binding on an element
      *
+     * Use data-placeholder for elements that
+     * don't support the placeholder attribute
+     *
      * @param value "{key:'button_text','data-placeholder':$t('Edit Button Text')}"
      * @param name "liveEdit"
      * @param addBindingCallback
-     *
-     * Use data-placeholder for elements that
-     * don't support the placeholder attribute
      */
     preprocess(value, name, addBindingCallback) {
         const attrValue = "{" + value.split(",")[1];
         let textValue = value.split(",")[0].split("'")[1];
         textValue = "preview.data." + textValue + "()";
-
         addBindingCallback("attr", attrValue);
         addBindingCallback("text", textValue);
         return value;
