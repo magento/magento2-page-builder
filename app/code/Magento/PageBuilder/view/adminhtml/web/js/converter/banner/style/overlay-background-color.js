@@ -15,7 +15,7 @@ define(["../../../utils/color-converter", "../../../utils/number-converter"], fu
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
       return value;
@@ -25,7 +25,7 @@ define(["../../../utils/color-converter", "../../../utils/number-converter"], fu
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
 
 

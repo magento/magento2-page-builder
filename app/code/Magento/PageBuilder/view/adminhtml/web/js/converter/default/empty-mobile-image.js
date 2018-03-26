@@ -14,9 +14,9 @@ define([], function () {
     /**
      * Process data after it's read and converted by element converters
      *
-     * @param {Object} data
-     * @param {Object} config
-     * @returns {Object}
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
      */
     _proto.fromDom = function fromDom(data, config) {
       var desktopImage = data[config.desktop_image_variable];
@@ -31,9 +31,9 @@ define([], function () {
     /**
      * Process data before it's converted by element converters
      *
-     * @param {Object} data
-     * @param {Object} config
-     * @returns {Object}
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
      */
 
 

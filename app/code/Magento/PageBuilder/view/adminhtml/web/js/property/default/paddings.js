@@ -15,7 +15,7 @@ define([], function () {
      * Read paddings from element
      *
      * @param {HTMLElement} element
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     _proto.read = function read(element) {
       return {

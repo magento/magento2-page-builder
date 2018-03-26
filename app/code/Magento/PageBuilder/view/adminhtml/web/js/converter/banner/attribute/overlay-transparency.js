@@ -15,7 +15,7 @@ define(["../../../utils/extract-alpha-from-rgba"], function (_extractAlphaFromRg
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
       return value === "transparent" ? "0" : (0, _extractAlphaFromRgba)(value);
@@ -25,7 +25,7 @@ define(["../../../utils/extract-alpha-from-rgba"], function (_extractAlphaFromRg
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
 
 

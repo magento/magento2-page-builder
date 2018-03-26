@@ -23,7 +23,7 @@ define([], function () {
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
 
 

@@ -15,7 +15,7 @@ define(["../../../utils/color-converter"], function (_colorConverter) {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
       return value === "transparent" ? "" : (0, _colorConverter.toHex)(value);
@@ -25,7 +25,7 @@ define(["../../../utils/color-converter"], function (_colorConverter) {
      *
      * @param name string
      * @param data Object
-     * @returns {string | Object}
+     * @returns {string | object}
      */
 
 
