@@ -35,18 +35,18 @@
         <waitForElementVisible selector="{{PageBuilderURLSection.URLSelect}}" stepKey="dsf"/>
         <seeElement selector="{{PageBuilderURLSection.URLSelect}}" stepKey="seeURLSelect"/>
         <seeOptionIsSelected selector="{{PageBuilderURLSection.URLSelect}}" userInput="URL" stepKey="seeURLSelectedByDefault" />
-        <fillField selector="{{PageBuilderURLSection.URLInput}}" userInput="{{ExternalLinkOnBackend.url}}" stepKey="inputURLLink"/>
+        <fillField selector="{{PageBuilderURLSection.URLInput}}" userInput="{{ExternalLink.url}}" stepKey="inputURLLink"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
 
         <!--Go to storefront to verify External Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInCurrentTab(ExternalLinkOnBackend.url)}}" stepKey="seeExternalLinkOnBackendOnStoreFront" />
+        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInCurrentTab(ExternalLink.url)}}" stepKey="seeExternalLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <grabFromCurrentUrl stepKey="grabfromcurl1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
-            <expectedResult type="string">{{ExternalLinkOnBackend.url}}</expectedResult>
+            <expectedResult type="string">{{ExternalLink.url}}</expectedResult>
             <actualResult type="variable">grabfromcurl1</actualResult>
         </assertEquals>
         <waitForPageLoad stepKey="waitForPageLoad2" />
@@ -66,12 +66,12 @@
         <!--Go to storefront to verify External Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
-        <!--<seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInNewTab(ExternalLinkOnBackend.url)}}" stepKey="seeExternalLinkOnBackendOnStoreFront2" />-->
+        <!--<seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInNewTab(ExternalLink.url)}}" stepKey="seeExternalLinkOnStoreFront2" />-->
         <click selector=".pagebuilder-button-primary" stepKey="clickButton2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <grabFromCurrentUrl stepKey="grabfromcurl2"/>
         <assertEquals stepKey="assertEquals2" message="pass">
-            <expectedResult type="string">{{ExternalLinkOnBackend.url}}</expectedResult>
+            <expectedResult type="string">{{ExternalLink.url}}</expectedResult>
             <actualResult type="variable">grabfromcurl2</actualResult>
         </assertEquals>
     </test>
