@@ -1500,7 +1500,7 @@
         <annotations>
             <features value="PageBuilder Slider MAGETWO-83835"/>
             <stories value="Slide Configuration MAGETWO-75774"/>
-            <title value="Collage right content is previewable in admin"/>
+            <title value="Slide is previewable in admin"/>
             <description value="A user should be able to preview content in admin for Slide"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -1583,6 +1583,7 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
+        <scrollTo selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSliderContentBlock.role)}}" stepKey="scrollToPreview"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForPreviewInStage" />
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -1598,7 +1599,7 @@
         <annotations>
             <features value="PageBuilder Slider MAGETWO-83835"/>
             <stories value="Slide Configuration MAGETWO-75774"/>
-            <title value="Collage centered content is previewable in admin"/>
+            <title value="Slide is previewable in admin"/>
             <description value="A user should be able to preview content in admin for Slide"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -1695,7 +1696,7 @@
         <annotations>
             <features value="PageBuilder Slider MAGETWO-83835"/>
             <stories value="Slide Configuration MAGETWO-75774"/>
-            <title value="Collage Left content is previewable in admin"/>
+            <title value="Slide is previewable in admin"/>
             <description value="A user should be able to preview content in admin for Slide"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
