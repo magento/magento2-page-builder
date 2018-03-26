@@ -346,14 +346,14 @@ The `toDom()` method is called before observables are updated in the cycle rende
 ``` JS
 export interface ElementConverterInterface {
     /**
-     * @param {Object} value
-     * @returns {string | Object}
+     * @param {object} value
+     * @returns {string | object}
      */
     fromDom(value: string): string | Object;
 
     /**
-     * @param {Object} name
-     * @param {Object} data
+     * @param {object} name
+     * @param {object} data
      * @returns {string | Object}
      */
     toDom(name: string, data: object): string | object;
@@ -371,16 +371,16 @@ The `toDom()` method is called before data is converted by element converters to
 ``` JS
 export interface DataConverterInterface {
     /**
-     * @param {Object} data
-     * @param {Object} config
-     * @returns {Object}
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
      */
     fromDom(data: object, config: object): object;
 
     /**
-     * @param {Object} data
-     * @param {Object} config
-     * @returns {Object}
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
      */
     toDom(data: object, config: object): object;
 }
@@ -406,7 +406,7 @@ Some element converters can produce a value based on multiple properties in data
 export default class OverlayBackgroundColor implements ElementConverterInterface {
     /**
      * @param {string} value
-     * @returns {Object | string}
+     * @returns {object | string}
      */
     public fromDom(value: string): string | object {
         return value;
@@ -414,8 +414,8 @@ export default class OverlayBackgroundColor implements ElementConverterInterface
 
     /**
      * @param {string} name
-     * @param {Object} data
-     * @returns {Object | string}
+     * @param {object} data
+     * @returns {object | string}
      */
     public toDom(name: string, data: object): string | object {
         let overlayColor: string = "transparent";
