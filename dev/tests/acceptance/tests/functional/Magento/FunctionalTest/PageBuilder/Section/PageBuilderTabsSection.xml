@@ -12,4 +12,10 @@
         <element name="tabTitle" type="input" selector="//*[@name='tabs[{{arg1}}][title]']" parameterized="true"/>
         <element name="tabContent" type="input" selector="//*[@name='tabs[{{arg1}}][content]']" parameterized="true"/>
     </section>
+    <section name="TabsOnStage">
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')])[{{arg1}}][@style='border-width: {{arg2}}px; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
+    </section>
+    <section name="TabOnStage">
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')]//div[@role='tabpanel'])[{{arg1}}][not(contains(@style,'border:'))]" parameterized="true"/>
+    </section>
 </sections>

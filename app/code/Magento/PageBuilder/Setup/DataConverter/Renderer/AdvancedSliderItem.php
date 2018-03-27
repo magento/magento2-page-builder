@@ -43,29 +43,33 @@ class AdvancedSliderItem implements RendererInterface
         if (!isset($itemData['entityId'])) {
             throw new \InvalidArgumentException('entityId is missing.');
         }
-        $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
-
-        $cssClasses = $eavData['css_classes'] ?? '';
-        $cssClasses .= isset($eavData['css_classes']) ? ' pagebuilder-slider' : 'pagebuilder-slider';
 
         $rootElementAttributes = [
             'data-role' => 'slide',
+            'class' => 'pagebuilder-slide'
+        ];
+
+        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
+
+        $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
+
+        $cssClasses = $eavData['css_classes'] ?? '';
+
+        $innerDivElement1Attributes = [
             'class' => $cssClasses
         ];
 
         $formData = $itemData['formData'] ?? [];
-        $formData['background_image'] = isset($eavData['background_image']) ? $eavData['background_image'] : '';
+        $formData['background_image'] = '';
+        if (isset($eavData['background_image'])) {
+            $formData['background_image'] = $eavData['background_image'];
+        } elseif (isset($eavData['image'])) {
+            $formData['background_image'] = $eavData['image'];
+        }
 
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
-            $rootElementAttributes['style'] = $style;
-        }
-
-        $rootElementHtml = '<div' . $this->printAttributes($rootElementAttributes);
-
-        $innerDivElement1Attributes = [];
-        if (isset($formData['align']) && $formData['align']) {
-            $innerDivElement1Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
+            $innerDivElement1Attributes['style'] = $style;
         }
 
         $rootElementHtml .= '><div'
@@ -77,7 +81,7 @@ class AdvancedSliderItem implements RendererInterface
             $innerDivElement2Attributes['style'] = 'text-align: ' . $formData['align'] . ';';
         }
         $innerDivElement2AttributeCssClasses = '';
-        if ($eavData['has_overlay']) {
+        if (isset($eavData['has_overlay']) && $eavData['has_overlay']) {
             $innerDivElement2AttributeCssClasses = 'has-background-overlay ';
         }
         $innerDivElement2AttributeCssClasses .= 'pagebuilder-content';
@@ -85,17 +89,20 @@ class AdvancedSliderItem implements RendererInterface
 
         $rootElementHtml .= $this->printAttributes($innerDivElement2Attributes)
             . '><h3>'
-            . ($eavData['title'] ?? '')
+            . ($eavData['title'] ?? $eavData['title_tag'] ?? '')
             . '</h3><div class="slider-content">'
             . ($eavData['textarea'] ?? '')
             . '</div>';
-        if (isset($eavData['link_text'])) {
+
+        // Advanced slider item only requires link text, slider item requires both
+        if (isset($eavData['link_text']) || (isset($eavData['link_url']) && isset($eavData['title_tag']))) {
             $rootElementHtml .= '<a class="button" href="'
                 . ($eavData['link_url'] ?? '')
                 . '"><span><span>'
-                . $eavData['link_text']
+                . ($eavData['link_text'] ?? $eavData['title_tag'] ?? '')
                 . '</span></span></a>';
         }
+
         $rootElementHtml .= '</div></div></div>';
 
         return $rootElementHtml;

@@ -16,4 +16,9 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit Column" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
+    <actionGroup name="dragPageBuilderColumnIntoStage">
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dropColumnIntoStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.column}}" stepKey="waitForColumn" />
+        <seeElement selector="{{PageBuilderColumnSection.column}}" stepKey="seeElementColumn"/>
+    </actionGroup>
 </actionGroups>
