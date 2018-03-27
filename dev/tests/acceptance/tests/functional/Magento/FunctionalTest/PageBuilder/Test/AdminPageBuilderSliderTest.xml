@@ -252,6 +252,57 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
+    <test name="CanDeleteSlide">
+        <annotations>
+            <features value="PageBuilder Slider MAGETWO-83767"/>
+            <stories value="Delete Slide from Slider MAGETWO-87095"/>
+            <title value="Cannot delete last slide from slider"/>
+            <description value="A user should be able delete slides when there are multiple of them."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <before>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
+        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForElementVisible stepKey="waitForNewSlide" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeNewSlide"/>
+        <actionGroup ref="removeSlideIsDisabled" stepKey="seeRemoveOptionDisabled"/>
+        <actionGroup ref="addSlide" stepKey="add0Slide"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation0" />
+        <waitForElementVisible stepKey="waitForSlide0" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeSlide0"/>
+        <actionGroup ref="removeSlide" stepKey="removeSlide0"/>
+        <actionGroup ref="addSlide" stepKey="addSlide1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation1" />
+        <waitForElementVisible stepKey="waitForSlide1" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="removeSlide" stepKey="removeSlide1"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.modal}}" time="10" stepKey="waitForModal"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmSlideRemoval"/>
+    </test>
     <test name="CanAddImageToSlide">
         <annotations>
             <features value="PageBuilder Row MAGETWO-83767"/>
