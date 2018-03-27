@@ -102,6 +102,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89052"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-remove"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -120,8 +121,9 @@
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Add an additional row to attempt removal of a row -->
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+        <actionGroup ref="dragContentBlockToStageByIndex" stepKey="dragRowIntoStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentBlockNumber" value="PageBuilderSecondRowInStage"/>
         </actionGroup>
 
         <!-- Attempt to remove both content types validating the confirmation window is never displayed -->
@@ -145,6 +147,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89053"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-remove"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -163,14 +166,16 @@
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Add an additional row so we're able to delete the first one -->
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+        <actionGroup ref="dragContentBlockToStageByIndex" stepKey="dragRowIntoStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentBlockNumber" value="PageBuilderSecondRowInStage"/>
         </actionGroup>
 
         <!-- As the row now contains a header it should prompt on removal -->
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeRow">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
+        <pauseExecution stepKey="pause"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
@@ -190,6 +195,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89054"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-remove"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -243,6 +249,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89055"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-remove"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -307,6 +314,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89056"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-remove"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -382,6 +390,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-86799"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-remove"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -421,7 +430,7 @@
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeFirstHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
         <waitForElementVisible selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
@@ -466,7 +475,7 @@
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeThirdHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible2"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible2"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal2"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk2" />
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval2"/>

@@ -42,13 +42,14 @@
         <element name="contentBlockInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentBlockContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
         <element name="contentBlockPreviewInStage" type="button" selector="div.pagebuilder-{{arg1}}.pagebuilder-content-type.pagebuilder-entity-preview" parameterized="true"/>
-        <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type-active div.pagebuilder-options ul.pagebuilder-options-links' parameterized="true"/>
+        <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options.pagebuilder-options-visible' parameterized="true"/>
         <element name="contentBlockOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
         <element name="contentBlockMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="move-structural"]' parameterized="true"/>
-        <element name="contentBlockEdit" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>
+        <element name="contentBlockEdit" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.edit-block"  parameterized="true"/>
         <element name="contentBlockEditByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]' parameterized="true"/>
-        <element name="contentBlockDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*[@class="duplicate-structural"]' parameterized="true"/>
-        <element name="contentBlockRemove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]' parameterized="true"/>
+        <element name="contentBlockDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Duplicate"]' parameterized="true"/>
+        <element name="contentBlockRemove" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.remove-structural" parameterized="true"/>
+        <element name="contentBlockRemoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[@class="pagebuilder-options"]/descendant::*a[@class="remove-structural"]' parameterized="true"/>
         <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
         <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
         <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
@@ -58,7 +59,7 @@
         <element name="editFormClose" type="button" selector=".modal-header .page-main-actions [data-form-role='close']" timeout="30"/>
         <element name="editFormReset" type="button" selector=".modal-header .page-main-actions [data-form-role='reset']" timeout="30"/>
         <element name="editFormSave" type="button" selector=".modal-header .page-main-actions [data-form-role='save']" timeout="30"/>
-        <element name="panelFieldLabel" type="text" selector=".pagebuilder_modal_form_pagebuilder_modal_form_modal [data-index='{{arg1}}'] [data-index='{{arg2}}'] label.admin__field-label" parameterized="true" />
+        <element name="panelFieldLabel" type="text" selector="[data-index='{{arg1}}'] div.admin__field[data-index='{{arg2}}'] label.admin__field-label span" parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelFieldControl" type="input" selector=".pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form [data-index='{{arg1}}'] .admin__field-control [name='{{arg2}}']" parameterized="true"/>
         <element name="panelFieldControlSwitch" type="input" selector="//*[@name='{{arg1}}']/parent::*/label" parameterized="true"/>

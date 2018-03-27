@@ -44,7 +44,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <comment userInput="Select Collage Left appearance on Edit Slide" stepKey="selectCollageLeft"/>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterCollageLeftAppearance">
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageLeftAppearance">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
@@ -123,9 +123,10 @@
         <!--Edit First Slide -->
         <comment userInput="First Slide opens when add Slider to stage" stepKey="editFirstSlide"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditSlide" />
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditSlide"/>
         <comment userInput="Select Collage Left appearance on Edit Slide" stepKey="selectCollageCenter"/>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterCollageCenterAppearance">
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageCenterAppearance">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
@@ -206,7 +207,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <comment userInput="Select Collage Right appearance on Edit Slide" stepKey="selectCollageRight"/>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterCollageRightAppearance">
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageRightAppearance">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">

@@ -79,7 +79,17 @@
             <argument name="contentBlockType" defaultValue=""/>
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
+    </actionGroup>
+    <actionGroup name="dragContentBlockToStageByIndex">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockNumber" defaultValue="1"/>
+        </arguments>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber.index)}}" stepKey="waitForContentBlockInStage" />
     </actionGroup>
     <actionGroup name="dragContentBlockToStageAndExpectEditPanel">
         <arguments>
@@ -168,9 +178,9 @@
         <click selector="{{PageBuilderActionsSection.contentBlockRemove(contentBlockType.role)}}" stepKey="clickRemoveContentBlock"/>
     </actionGroup>
     <actionGroup name="confirmRemovalModal">
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal" />
         <seeElement selector="{{PageBuilderActionsSection.modal}}" stepKey="seeRemovalModal"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalOk" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalOk" />
         <wait time="1" stepKey="waitForModalEventBinding" />
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
@@ -330,6 +340,7 @@
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
         <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="selectPropertyField"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="attachFileSlideOutPropertyGeneral">
