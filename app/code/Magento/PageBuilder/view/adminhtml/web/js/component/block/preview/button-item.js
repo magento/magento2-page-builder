@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "./block"], function (_translate, _block) {
+define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"], function (_translate, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Button =

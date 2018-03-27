@@ -20,8 +20,6 @@
             <group value="pagebuilder-slider"/>
         </annotations>
         <before>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
@@ -68,12 +66,10 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
         <!--Open Slider settings -->
         <comment userInput="Open Slider settings" stepKey="EditSlider"/>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="dragRowIntoStage">
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openSliderEditPanel">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
             <argument name="contentBlockIndex" value="PageBuilderSliderIndex1"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterAutoplayYes">
             <argument name="property" value="PageBuilderSliderAutoplayOnProperty"/>
@@ -229,8 +225,6 @@
             <group value="pagebuilder-slider"/>
         </annotations>
         <before>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
