@@ -8,8 +8,8 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="HtmlOnBackend">
-        <element name="default" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div[@class='pagebuilder-html'])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
-        <element name="content" type="button" selector="//div[contains(@class,'pagebuilder-html')]//div[@class='pagebuilder-html']"/>
+        <element name="default" type="text" selector="(//div[contains(@class,'pagebuilder-html')]//div)[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
+        <element name="content" type="button" selector="//div[contains(@class,'pagebuilder-html')]//div"/>
     </section>
     <section name="HtmlOnBackendArbitraryHtml">
         <element name="content" type="button" selector="//div[@class='pagebuilder-html'][1]/div[@class='my-div']"/>
@@ -21,7 +21,7 @@
         <element name="content" type="button" selector="//div[@data-role='html'][1]/img[not(contains(@src, '{{media'))]"/>
     </section>
     <section name="HtmlOnBackendMediaDirective">
-        <element name="content" type="button" selector="//div[@class='pagebuilder-html'][1]/ims[contains(@src, '{{media')]"/>
+        <element name="content" type="button" selector="//div[@class='pagebuilder-html'][1]/img[contains(@src, '{{media')]"/>
     </section>
     <section name="HtmlOnBackendNonexistentDataRole">
         <element name="content" type="button" selector="//div[@class='pagebuilder-html'][1]/div[@data-role='row']/div[@data-role='non-existent-content-type']"/>
