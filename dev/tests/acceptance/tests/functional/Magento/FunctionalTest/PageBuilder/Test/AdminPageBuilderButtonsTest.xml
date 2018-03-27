@@ -207,8 +207,9 @@
         <waitForElementVisible selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="waitForButtonToShow2"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.alignmentDefaultStyle}}" stepKey="dontSeeAlignmentSet"/>
         <dontSeeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="dontSeeBorderSet"/>
-        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage4">
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderButtonIndex1"/>
         </actionGroup>
         <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm3"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection3"/>
@@ -275,8 +276,9 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderButtonIndex1"/>
         </actionGroup>
         <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
@@ -319,8 +321,9 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderButtonIndex1"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTextProperty">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
@@ -368,8 +371,9 @@
         <!-- Verify on stage and admin panel -->
         <seeElementInDOM selector="{{ButtonsBackendSection.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
         <pressKey selector="{{ButtonsBackendSection.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
-        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage4">
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderButtonIndex1"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemTextProperty">
             <argument name="property" value="PageBuilderButtonItemTextProperty2"/>
