@@ -267,8 +267,6 @@
             <group value="pagebuilder-slider"/>
         </annotations>
         <before>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
@@ -287,12 +285,18 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="waitForNewSlide" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
         <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeNewSlide"/>
-        <actionGroup ref="removeSlideIsDisabled" stepKey="seeRemoveOptionDisabled"/>
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
+        <click selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="clickNavigationDot"/>
+        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{SliderInAdmin.slideOptionsRemove}}" stepKey="clickRemoveContentBlock"/>
+        <seeElement selector="{{SliderInAdmin.slideOptionsRemoveDisabled}}" stepKey="seeContentBlockRemoveOptionDisabled"/>
         <actionGroup ref="addSlide" stepKey="add0Slide"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation0" />
         <waitForElementVisible stepKey="waitForSlide0" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
         <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeSlide0"/>
         <actionGroup ref="removeSlide" stepKey="removeSlide0"/>
+        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides"/>
         <actionGroup ref="addSlide" stepKey="addSlide1"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation1" />
         <waitForElementVisible stepKey="waitForSlide1" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
@@ -306,6 +310,7 @@
         <actionGroup ref="removeSlide" stepKey="removeSlide1"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.modal}}" time="10" stepKey="waitForModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmSlideRemoval"/>
+        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides0"/>
     </test>
     <test name="CanManageSlides">
         <annotations>
