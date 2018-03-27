@@ -48,17 +48,19 @@ export default class Slider extends Block {
             this,
             this.stage,
         ).then((slide) => {
-            const mountFn = (event: Event, params: BlockMountEventParams) => {
-                if (params.id === slide.id) {
-                    (this.preview as SliderPreview).navigateToSlide(this.children().length - 1);
-                    _.delay(() => {
-                        slide.edit.open();
-                    }, 500);
-                    EventBus.off("slide:block:mount", mountFn);
-                }
-            };
-            EventBus.on("slide:block:mount", mountFn);
-            this.addChild(slide, this.children().length);
+            _.delay(() => {
+                const mountFn = (event: Event, params: BlockMountEventParams) => {
+                    if (params.id === slide.id) {
+                        (this.preview as SliderPreview).navigateToSlide(this.children().length - 1);
+                        _.delay(() => {
+                            slide.edit.open();
+                        }, 500);
+                        EventBus.off("slide:block:mount", mountFn);
+                    }
+                };
+                EventBus.on("slide:block:mount", mountFn);
+                this.addChild(slide, this.children().length);
+            });
         });
     }
 

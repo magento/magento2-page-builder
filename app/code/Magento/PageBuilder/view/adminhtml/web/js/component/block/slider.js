@@ -33,21 +33,23 @@ define(["mage/translate", "underscore", "../block/factory", "../config", "../eve
       var _this = this;
 
       (0, _factory)(_config.getInitConfig("content_types").slide, this, this.stage).then(function (slide) {
-        var mountFn = function mountFn(event, params) {
-          if (params.id === slide.id) {
-            _this.preview.navigateToSlide(_this.children().length - 1);
+        _underscore.delay(function () {
+          var mountFn = function mountFn(event, params) {
+            if (params.id === slide.id) {
+              _this.preview.navigateToSlide(_this.children().length - 1);
 
-            _underscore.delay(function () {
-              slide.edit.open();
-            }, 500);
+              _underscore.delay(function () {
+                slide.edit.open();
+              }, 500);
 
-            _eventBus.off("slide:block:mount", mountFn);
-          }
-        };
+              _eventBus.off("slide:block:mount", mountFn);
+            }
+          };
 
-        _eventBus.on("slide:block:mount", mountFn);
+          _eventBus.on("slide:block:mount", mountFn);
 
-        _this.addChild(slide, _this.children().length);
+          _this.addChild(slide, _this.children().length);
+        });
       });
     };
     /**

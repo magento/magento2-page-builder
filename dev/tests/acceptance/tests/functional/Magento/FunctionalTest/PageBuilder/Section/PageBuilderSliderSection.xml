@@ -25,11 +25,15 @@
         <element name="sliderMarginPaddings" type="button" selector="div.pagebuilder-slider[style*='margin: {{arg1}}px; padding: {{arg2}}px;']" parameterized="true"/>
     </section>
     <section name="SliderInAdmin">
-        <element name="slideOptions" type="button" selector="div.pagebuilder-slide div.pagebuilder-options ul.pagebuilder-options-links"/>
-        <element name="slideOptionsEdit" type="button" selector="div.pagebuilder-slide div.pagebuilder-options ul.pagebuilder-options-links a.edit-block[href='#'][title='Edit']"/>
+        <element name="slideOptions" type="button" selector="div.slider-navigation div.pagebuilder-options ul.pagebuilder-options-links"/>
+        <element name="slideOptionsEdit" type="button" selector="div.slider-navigation div.pagebuilder-options ul.pagebuilder-options-links a.edit-block[href='#'][title='Edit']"/>
+        <element name="slideOptionsRemove" type="button" selector="//div[contains(@class, 'navigation-dot active')]//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'remove-structural')]"/>
+        <element name="slideOptionsRemoveDisabled" type="button" selector="//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'disabled')]"/>
+        <element name="sliderOptions" type="button" selector="//div[contains(@class, 'pagebuilder-slider')]//ul[contains(@class, 'pagebuilder-options-links')]"/>
         <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
-        <element name="addNewSlide" type="button" selector="button.add-slide"/>
+        <element name="addNewSlide" type="button" selector="a.add-slider"/>
         <element name="slideNavigationDot" type="button" selector="(//div[contains(@class, 'navigation-dot')])[{{arg1}}]" parameterized="true"/>
+        <element name="activeSlideNavigationDot" type="button" selector="//div[contains(@class, 'navigation-dot active')]"/>
         <element name="slideNavigationDotTitleTooltip" type="button" selector="(//span[contains(@class, 'tooltip-content')])"/>
         <element name="slideNavigationHandle" type="button" selector="(//span[contains(@class, 'navigation-handle')])"/>
         <element name="nextSlide" type="button" selector="div.slider-container .slick-next"/>
