@@ -307,6 +307,46 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.modal}}" time="10" stepKey="waitForModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmSlideRemoval"/>
     </test>
+    <test name="CanManageSlides">
+        <annotations>
+            <features value="PageBuilder Slider MAGETWO-83767"/>
+            <stories value=""/>
+            <title value="Can add slides and see tooltip"/>
+            <description value="A user should be able to manage slides"/>
+            <severity value="CRITICAL"/>
+        </annotations>
+        <before>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
+        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForElementVisible stepKey="waitForNewSlide" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeNewSlide"/>
+        <actionGroup ref="addSlide" stepKey="addSlide"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation1" />
+        <waitForElementVisible stepKey="waitForSlide1" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitleText">
+            <argument name="property" value="PageBuilderSlideItemTitle1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
+        <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" x="0" y="0" stepKey="mouseOverActiveSlide"/>
+        <waitForElementVisible  selector="{{SliderInAdmin.activeSlideTooltip}}" time="0.5" stepKey="waitForTooltip"/>
+    </test>
     <test name="CanAddImageToSlide">
         <annotations>
             <features value="PageBuilder Row MAGETWO-83767"/>
