@@ -8,31 +8,16 @@
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image type-nested" data-bind="event: {mouseover: preview.onMouseOver, mouseout: preview.onMouseOut}, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <figure data-bind="style: data.main.style, attr: data.main.attributes, css: data.main.css">
-        <!-- ko ifnot: data.desktop_image.attributes().src -->
-        <div class="pagebuilder-image-empty-preview">
-            <span data-bind="text: $t('Empty Image');"></span>
+        <div data-bind="scope: getUploader().getUiComponent()">
+            <!-- ko template: getTemplate() --><!-- /ko -->
         </div>
-        <!-- /ko -->
-        <!-- ko if: data.desktop_image.attributes().src -->
-        <img data-bind="attr: data.desktop_image.attributes, style: data.desktop_image.style, css: data.desktop_image.css" />
-        <!-- /ko -->
+        <div class="preview-image-container">
+            <!-- ko if: data.desktop_image.attributes().src -->
+                <img class="preview-image" data-bind="attr: data.desktop_image.attributes, style: data.desktop_image.style, css: data.desktop_image.css" />
+            <!-- /ko -->
+        </div>
         <!-- ko if: data.caption.html() -->
-        <figcaption data-bind="attr: data.caption.attributes, style: data.caption.style, css: data.caption.css, html: data.caption.html"></figcaption>
+            <figcaption data-bind="attr: data.caption.attributes, style: data.caption.style, css: data.caption.css, html: data.caption.html"></figcaption>
         <!-- /ko -->
     </figure>
-
-    <!-- ko template: getOptions().template --><!-- /ko -->
-    <div data-bind="scope: getUploader().getUiComponent()">
-        <!-- ko template: getTemplate() --><!-- /ko -->
-    </div>
-
-    <div class="preview-image-container">
-        <!-- ko if: getPreviewImageUrl() -->
-            <img class="preview-image" data-bind="attr: {src: getPreviewImageUrl()}" />
-        <!-- /ko -->
-    </div>
-
-    <!-- ko if: preview.data.image_caption -->
-        <figcaption data-bind="text: preview.data.image_caption"></figcaption>
-    <!-- /ko -->
 </div>

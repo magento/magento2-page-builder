@@ -4,13 +4,13 @@
  */
 
 import events from "uiEvents";
-import _ from "underscore";
-import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
-import Config, {ConfigContentBlock} from "../config";
+import {ConfigContentBlock} from "../config";
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
 import Uploader from "../uploader";
 import Block from "./block";
+import DataConverterPool from "./data-converter-pool";
+import ElementConverterPool from "./element-converter-pool";
 
 export default class Image extends Block {
     /**
@@ -22,8 +22,15 @@ export default class Image extends Block {
      * Create image uploader and add listener for when image gets uploaded through this instance
      * {@inheritDoc}
      */
-    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
-        super(parent, stage, config, formData);
+    constructor(
+        parent: EditableArea,
+        stage: Stage,
+        config: ConfigContentBlock,
+        formData: any,
+        elementConverterPool: ElementConverterPool,
+        dataConverterPool: DataConverterPool,
+    ) {
+        super(parent, stage, config, formData, elementConverterPool, dataConverterPool);
 
         // Create uploader
         this.uploader = new Uploader(
@@ -50,76 +57,6 @@ export default class Image extends Block {
      */
     public getUploader() {
         return this.uploader;
-    }
-
-    /**
-     * Get the desktop (main) image attributes for the render
-     *
-     * @returns {any}
-     */
-    public getMainImageAttributes() {
-        const data = this.getData();
-        if (data.image === "" || data.image === undefined) {
-            return {};
-        } else if (_.isEmpty(data.image[0])) {
-            return;
-        }
-        return {src: this.getImageUrl(data.image), alt: data.alt, title: data.title_tag };
-    }
-
-    /**
-     * Get the mobile image attributes for the render
-     *
-     * @returns {any}
-     */
-    public getMobileImageAttributes() {
-        const data = this.getData();
-        if (data.mobile_image === "" || data.mobile_image === undefined) {
-            return {};
-        } else if (_.isEmpty(data.mobile_image[0])) {
-            return;
-        }
-        return {src: this.getImageUrl(data.mobile_image), alt: data.alt, title: data.title_tag };
-    }
-
-    /**
-     * Retrieve the image attributes
-     *
-     * @returns {any}
-     */
-    public getImageLinkAttributes() {
-        const data = this.getData();
-        return {
-            href: data.link_url || "",
-            target: data.link_target || "_self",
-            title: data.title_tag,
-        };
-    }
-
-    /**
-     * Get the image value held in preview block
-     *
-     * @returns {String|null}
-     */
-    public getPreviewImageUrl() {
-        return this.preview.data.image() && this.preview.data.image()[0] !== undefined
-            ? this.preview.data.image()[0].url
-            : null;
-    }
-
-    /**
-     * Retrieve the image URL with directive
-     *
-     * @param {{}} image
-     * @returns {string}
-     */
-    private getImageUrl(image: any[]) {
-        const imageUrl = image[0].url;
-        const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getInitConfig("media_url"), imageUrl);
-
-        const mediaPath = imageUrl.split(mediaUrl);
-        const directive = "{{media url=" + mediaPath[1] + "}}";
-        return directive;
     }
 
     /**
