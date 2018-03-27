@@ -17,6 +17,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82841"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -30,8 +31,7 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
-        <wait time="1" stepKey="wait"/>
-        <seeElement selector="{{PageBuilderRowSection.row}}" stepKey="seeElementRow"/>
+        <waitForElementVisible selector="{{PageBuilderRowSection.row}}" stepKey="seeElementRow"/>
     </test>
     <test name="CanAddAdditionalRow">
         <annotations>
@@ -42,6 +42,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82857"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -68,6 +69,7 @@
             <description value="A user should be able to remove a row from the stage"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -99,6 +101,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82859"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -121,9 +124,8 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeOneRow"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage('row')}}" stepKey="onMouseOverContentBlockStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('row')}}" stepKey="waitForOptionsVisible" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('row')}}" stepKey="waitForOptionsVisible" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockDeleteDisabled}}" stepKey="seeDisabledRemoveBlockButton" />
-        <wait time="1" stepKey="wait2"/>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeOneRow1"/>
     </test>
     <test name="RowPlaceholderAndDisplayLabelInAdminPreview">
@@ -135,6 +137,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88296"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -163,6 +166,8 @@
             <description value="A user should see the row height adjust when content is added to the row"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88297"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
             <group value="skip"/>
         </annotations>
         <before>
@@ -192,6 +197,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88325"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -244,6 +250,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84275"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -281,6 +288,8 @@
             <title value="Add background tab"/>
             <description value="See that the background tab in row form works"/>
             <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
             <!-- Skipped; see MAGETWO-88218 -->
             <group value="skip"/>
         </annotations>
@@ -353,6 +362,7 @@
             <description value="A user should be able to apply parallax to a background image"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -453,6 +463,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84661"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -591,6 +602,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value=""/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -680,6 +692,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-85692"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -763,6 +776,7 @@
             <description value="A user should be able to add an image into slideout of row."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

@@ -158,7 +158,8 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="waitForPageBuilder" selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" time="10"/>
+        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editSlideOpensOnAddingSlider"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
         <!-- Verify default and available values on Appearance section of Add Slide form -->
         <comment userInput="Appearance defaults to Poster" stepKey="AC0" />
@@ -216,7 +217,8 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideBackgroundColorDefault.section, PageBuilderSlideBackgroundColorDefault.fieldName)}}" time="10"/>
+        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editSlideOpensOnAddingSlider"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
         <!-- Verify default and available values on background section of Add Slide form -->
         <comment userInput="Background Color: input defaults to empty" stepKey="AC0" />
@@ -287,6 +289,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editSlideOpensOnAddingSlider"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
         <!-- Verify default and available values on content section of Add Slide form -->
         <comment userInput="Slide Content: WYSIWYG defaults to empty" stepKey="AC0" />
@@ -368,7 +371,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editSlideOpensOnAddingSlider"/>        <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Text Alignment -->
         <comment userInput="Text Alignment: dropdown defaults to Default and available values Default, Left, Center, Right" stepKey="AC0" />
