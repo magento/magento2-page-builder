@@ -1,5 +1,7 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _underscore, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
+define(["knockout", "mage/translate", "underscore", "../../../component/block/appearance-config", "../../../utils/string", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _underscore, _appearanceConfig, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -17,8 +19,10 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
      * @param parent
      * @param stage
      * @param config
+     * @param elementConverterPool
+     * @param dataConverterPool
      */
-    function Structural(parent, stage, config) {
+    function Structural(parent, stage, config, elementConverterPool, dataConverterPool) {
       var _this;
 
       _this = _EditableArea.call(this, stage) || this;
@@ -26,6 +30,7 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
       _this.children = _knockout.observableArray([]);
       _this.edit = void 0;
       _this.title = void 0;
+      _this.data = {};
       _this.wrapperStyle = _knockout.observable({
         width: "100%"
       });
@@ -34,13 +39,20 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
       _this.attributeMapper = new _attributeMapper();
       _this.styleAttributeFilter = new _styleAttributeFilter();
       _this.styleAttributeMapper = new _styleAttributeMapper();
+      _this.elementConverterPool = void 0;
+      _this.dataConverterPool = void 0;
 
       _this.setChildren(_this.children);
 
       _this.parent = parent;
-      _this.config = config; // Create a new instance of edit for our editing needs
+      _this.config = config;
+      _this.elementConverterPool = elementConverterPool;
+      _this.dataConverterPool = dataConverterPool; // Create a new instance of edit for our editing needs
 
       _this.edit = new _edit(_this, _this.stage.store);
+
+      _this.bindUpdatePreviewObservablesOnChange();
+
       return _this;
     }
     /**
@@ -110,69 +122,139 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
       }
     };
     /**
-     * Get css classes for an block
-     * Example {"class-name": true}
+     * Get data for css binding, example {"class-name": true}
      *
      * @returns {DataObject}
      */
 
 
-    _proto.getCss = function getCss() {
-      var cssClasses = {};
+    _proto.getCss = function getCss(element) {
+      var result = {};
+      var css = "";
+      var data = this.stage.store.get(this.id);
 
-      if ("css_classes" in this.getData() && this.getData().css_classes !== "") {
-        this.getData().css_classes.toString().split(" ").map(function (value, index) {
-          return cssClasses[value] = true;
+      if (element === undefined) {
+        if ("css_classes" in data && data.css_classes !== "") {
+          css = data.css_classes;
+        }
+      } else {
+        var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
+
+        if (config.css && config.css.var !== undefined && config.css.var in data) {
+          css = data[config.css.var];
+        }
+      }
+
+      if (css) {
+        css.toString().split(" ").map(function (value, index) {
+          return result[value] = true;
         });
       }
 
-      return cssClasses;
+      return result;
     };
     /**
-     * Get stype properties for an block
-     * Example {"backgroundColor": "#cccccc"}
+     * Get data for style binding, example {"backgroundColor": "#cccccc"}
      *
      * @returns {DataObject}
      */
 
 
-    _proto.getStyle = function getStyle() {
-      var styleAttributes = this.getData();
+    _proto.getStyle = function getStyle(element) {
+      var data = _underscore.extend({}, this.stage.store.get(this.id), this.config);
 
-      if (typeof styleAttributes.appearance !== "undefined" && typeof styleAttributes.appearances !== "undefined" && typeof styleAttributes.appearances[styleAttributes.appearance] !== "undefined") {
-        _underscore.extend(styleAttributes, styleAttributes.appearances[styleAttributes.appearance]);
+      if (element === undefined) {
+        if (typeof data.appearance !== "undefined" && typeof data.appearances !== "undefined" && typeof data.appearances[data.appearance] !== "undefined") {
+          _underscore.extend(data, data.appearances[data.appearance]);
+        }
+
+        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(data));
       }
 
-      return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
+      var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, data.appearance);
+      var config = appearanceConfiguration.data_mapping.elements;
+      data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+      var result = {};
+
+      if (config[element].style.length) {
+        result = this.convertStyle(config[element], data, "master");
+      }
+
+      return result;
     };
     /**
-     * Get attributes for an block
-     * Example {"data-role": "element"}
+     * Get data for attr binding, example {"data-role": "element"}
      *
      * @returns {DataObject}
      */
 
 
-    _proto.getAttributes = function getAttributes(extra) {
-      if (extra === void 0) {
-        extra = {};
+    _proto.getAttributes = function getAttributes(element) {
+      var data = _underscore.extend({}, this.stage.store.get(this.id), this.config);
+
+      if (element === undefined) {
+        if (undefined === data.appearance || !data.appearance) {
+          data.appearance = undefined !== this.config.fields.appearance ? this.config.fields.appearance.default : "default";
+        }
+
+        return this.attributeMapper.toDom(this.attributeFilter.filter(data));
       }
 
-      var data = this.getData();
+      var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, data.appearance);
+      var config = appearanceConfiguration.data_mapping.elements;
+      data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+      var result = {};
 
-      _underscore.extend(data, this.config);
+      if (config[element].attributes.length) {
+        result = this.convertAttributes(config[element], data, "master");
+      }
 
-      return _underscore.extend(this.attributeMapper.toDom(this.attributeFilter.filter(data)), extra);
+      return result;
+    };
+    /**
+     * Get data for html binding
+     *
+     * @param {string} element
+     * @returns {object}
+     */
+
+
+    _proto.getHtml = function getHtml(element) {
+      var data = this.stage.store.get(this.id);
+      var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
+      var result = "";
+
+      if (undefined !== config.html.var) {
+        result = data[config.html.var];
+      }
+
+      return result;
     };
     /**
      * Get block data
      *
+     * @param {string} element
      * @returns {DataObject}
      */
 
 
-    _proto.getData = function getData() {
-      return this.stage.store.get(this.id);
+    _proto.getData = function getData(element) {
+      var data = _underscore.extend({}, this.stage.store.get(this.id));
+
+      if (undefined === element) {
+        return data;
+      }
+
+      var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, data.appearance);
+      var config = appearanceConfiguration.data_mapping.elements;
+      data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+      var result = {};
+
+      if (undefined !== config[element].tag.var) {
+        result[config[element].tag.var] = data[config[element].tag.var];
+      }
+
+      return result;
     };
     /**
      * Does the current instance have any children or values different from the default for it's type?
@@ -213,6 +295,226 @@ define(["knockout", "mage/translate", "underscore", "../../event-bus", "../../fo
 
     _proto.getOptions = function getOptions() {
       return new _options.Options(this, this.retrieveOptions());
+    };
+    /**
+     * Convert attributes
+     *
+     * @param {object} config
+     * @param {DataObject} data
+     * @param {string} area
+     * @returns {object}
+     */
+
+
+    _proto.convertAttributes = function convertAttributes(config, data, area) {
+      var result = {};
+
+      for (var _iterator = config.attributes, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+        var _ref;
+
+        if (_isArray) {
+          if (_i >= _iterator.length) break;
+          _ref = _iterator[_i++];
+        } else {
+          _i = _iterator.next();
+          if (_i.done) break;
+          _ref = _i.value;
+        }
+
+        var _attributeConfig = _ref;
+
+        if (undefined !== _attributeConfig.persist && null !== _attributeConfig.persist && false === !!_attributeConfig.persist) {
+          continue;
+        }
+
+        var value = data[_attributeConfig.var];
+        var converter = "preview" === area && _attributeConfig.preview_converter ? _attributeConfig.preview_converter : _attributeConfig.converter;
+
+        if (this.elementConverterPool.get(converter)) {
+          value = this.elementConverterPool.get(converter).toDom(_attributeConfig.var, data);
+        }
+
+        result[_attributeConfig.name] = value;
+      }
+
+      return result;
+    };
+    /**
+     * Convert style properties
+     *
+     * @param {object}config
+     * @param {object}data
+     * @param {string} area
+     * @returns {object}
+     */
+
+
+    _proto.convertStyle = function convertStyle(config, data, area) {
+      var result = {};
+
+      if (config.style) {
+        for (var _iterator2 = config.style, _isArray2 = Array.isArray(_iterator2), _i2 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
+          var _ref2;
+
+          if (_isArray2) {
+            if (_i2 >= _iterator2.length) break;
+            _ref2 = _iterator2[_i2++];
+          } else {
+            _i2 = _iterator2.next();
+            if (_i2.done) break;
+            _ref2 = _i2.value;
+          }
+
+          var _propertyConfig = _ref2;
+
+          if (undefined !== _propertyConfig.persist && null !== _propertyConfig.persist && false === !!_propertyConfig.persist) {
+            continue;
+          }
+
+          var value = "";
+
+          if (!!_propertyConfig.static) {
+            value = _propertyConfig.value;
+          } else {
+            value = data[_propertyConfig.var];
+            var converter = "preview" === area && _propertyConfig.preview_converter ? _propertyConfig.preview_converter : _propertyConfig.converter;
+
+            if (this.elementConverterPool.get(converter)) {
+              value = this.elementConverterPool.get(converter).toDom(_propertyConfig.var, data);
+            }
+          }
+
+          if (_typeof(value) === "object") {
+            _underscore.extend(result, value);
+          } else {
+            result[(0, _string.fromSnakeToCamelCase)(_propertyConfig.name)] = value;
+          }
+        }
+      }
+
+      return result;
+    };
+    /**
+     * Process data for elements before its converted to knockout format
+     *
+     * @param {Object} data
+     * @param {Object} convertersConfig
+     * @returns {Object}
+     */
+
+
+    _proto.convertData = function convertData(data, convertersConfig) {
+      for (var _iterator3 = convertersConfig, _isArray3 = Array.isArray(_iterator3), _i3 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
+        var _ref3;
+
+        if (_isArray3) {
+          if (_i3 >= _iterator3.length) break;
+          _ref3 = _iterator3[_i3++];
+        } else {
+          _i3 = _iterator3.next();
+          if (_i3.done) break;
+          _ref3 = _i3.value;
+        }
+
+        var _converterConfig = _ref3;
+        data = this.dataConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
+      }
+
+      return data;
+    };
+    /**
+     * Update preview observables after data changed in data store
+     *
+     * @param {object} data
+     */
+
+
+    _proto.updatePreviewObservables = function updatePreviewObservables(data) {
+      var _this3 = this;
+
+      var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
+      var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, appearance);
+
+      if (undefined === appearanceConfiguration || undefined === appearanceConfiguration.data_mapping || undefined === appearanceConfiguration.data_mapping.elements) {
+        return;
+      }
+
+      var config = appearanceConfiguration.data_mapping.elements;
+
+      var _arr = Object.keys(config);
+
+      for (var _i4 = 0; _i4 < _arr.length; _i4++) {
+        var elementName = _arr[_i4];
+
+        if (this.data[elementName] === undefined) {
+          this.data[elementName] = {
+            attributes: _knockout.observable({}),
+            style: _knockout.observable({}),
+            css: _knockout.observable({}),
+            html: _knockout.observable({})
+          };
+        }
+
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+
+        if (config[elementName].style !== undefined) {
+          this.data[elementName].style(this.convertStyle(config[elementName], data, "preview"));
+        }
+
+        if (config[elementName].attributes !== undefined) {
+          this.data[elementName].attributes(this.convertAttributes(config[elementName], data, "preview"));
+        }
+
+        if (config[elementName].html !== undefined) {
+          var html = data[config[elementName].html.var] ? data[config[elementName].html.var] : config[elementName].html.placeholder;
+          this.data[elementName].html(html);
+        }
+
+        if (config[elementName].css !== undefined && config[elementName].css.var in data) {
+          (function () {
+            var css = data[config[elementName].css.var];
+            var newClasses = {};
+
+            if (css.length > 0) {
+              css.toString().split(" ").map(function (value, index) {
+                return newClasses[value] = true;
+              });
+            }
+
+            var _arr2 = Object.keys(_this3.data[elementName].css());
+
+            for (var _i5 = 0; _i5 < _arr2.length; _i5++) {
+              var className = _arr2[_i5];
+
+              if (!(className in newClasses)) {
+                newClasses[className] = false;
+              }
+            }
+
+            _this3.data[elementName].css(newClasses);
+          })();
+        }
+
+        if (config[elementName].tag !== undefined) {
+          if (this.data[elementName][config[elementName].tag.var] === undefined) {
+            this.data[elementName][config[elementName].tag.var] = _knockout.observable("");
+          }
+
+          this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
+        }
+      }
+    };
+    /**
+     * Attach event to updating data in data store to update observables
+     */
+
+
+    _proto.bindUpdatePreviewObservablesOnChange = function bindUpdatePreviewObservablesOnChange() {
+      var _this4 = this;
+
+      this.stage.store.subscribe(function (data) {
+        _this4.updatePreviewObservables(_underscore.extend({}, _this4.stage.store.get(_this4.id)));
+      }, this.id);
     };
 
     _createClass(Structural, [{

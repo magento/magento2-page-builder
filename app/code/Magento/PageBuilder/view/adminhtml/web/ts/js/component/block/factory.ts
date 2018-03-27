@@ -9,6 +9,8 @@ import EventBus from "../event-bus";
 import Stage from "../stage";
 import EditableArea, {BlockMountEventParams} from "../stage/structural/editable-area";
 import Block from "./block";
+import dataConverterPoolFactory from "./data-converter-pool-factory";
+import elementConverterPoolFactory from "./element-converter-pool-factory";
 
 /**
  * Retrieve the block instance from the config object
@@ -69,9 +71,18 @@ export default function createBlock(
 ): Promise<Block> {
     stage = stage || parent.stage;
     formData = formData || {};
+    const componentsPromise: Array<Promise<any>> = [
+        elementConverterPoolFactory(config.name),
+        dataConverterPoolFactory(config.name),
+    ];
     return new Promise((resolve: (blockComponent: any) => void) => {
-        loadModule([getBlockComponentPath(config)], (blockComponent: typeof Block) => {
-            resolve(new blockComponent(parent, stage, config, formData));
+        Promise.all(componentsPromise).then((loadedConverters) => {
+            const [elementConverterPool, dataConverterPool] = loadedConverters;
+            loadModule([getBlockComponentPath(config)], (blockComponent: typeof Block) => {
+                resolve(new blockComponent(parent, stage, config, formData, elementConverterPool, dataConverterPool));
+            });
+        }).catch((error) => {
+            console.error(error);
         });
     }).then((block: Block) => {
         EventBus.trigger("block:create", {id: block.id, block});

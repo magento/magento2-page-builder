@@ -6,9 +6,11 @@
 import {toHex} from "../../../utils/color-converter";
 import extractAlphaFromRgba from "../../../utils/extract-alpha-from-rgba";
 import {decodeUrl} from "../../../utils/image";
-import ReadInterface from "../read-interface";
+import {ReadInterface} from "../read-interface";
+import Default from "./default";
 
 export default class Slide implements ReadInterface {
+    private defaultReader: Default = new Default();
 
     /**
      * Read heading type and title from the element
@@ -60,7 +62,13 @@ export default class Slide implements ReadInterface {
             show_overlay: element.getAttribute("data-show-overlay"),
             text_align: element.querySelector(".pagebuilder-slide-wrapper").style.textAlign,
         };
-        return Promise.resolve(response);
+
+        const slideAttributeElement = element.querySelector("div");
+        const slideAttributesPromise = this.defaultReader.read(slideAttributeElement);
+
+        return slideAttributesPromise.then((slideAttributes) => {
+            return Promise.resolve(Object.assign(slideAttributes,response));
+        });
     }
 
     /**

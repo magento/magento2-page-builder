@@ -7,9 +7,10 @@ import ko from "knockout";
 import $t from "mage/translate";
 import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
-import PreviewBlock from "./block";
 import {ConfigContentBlock} from "../../config";
+import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
+import PreviewBlock from "./block";
 
 export default class Slide extends PreviewBlock {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
@@ -157,11 +158,13 @@ export default class Slide extends PreviewBlock {
     }
 
     /**
+     * Extract data values our of observable functions
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
      *
-     * @returns styles
+     * @param {StyleAttributeMapperResult} styles
+     * @returns {StyleAttributeMapperResult}
      */
-    protected afterStyleMapped(styles: {}) {
+    protected afterStyleMapped(styles: StyleAttributeMapperResult): StyleAttributeMapperResult {
         // Extract data values our of observable functions
         // The style attribute mapper converts images to directives, override it to include the correct URL
         if (this.data.background_image && typeof this.data.background_image()[0] === "object") {

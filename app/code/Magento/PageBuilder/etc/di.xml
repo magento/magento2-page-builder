@@ -49,7 +49,7 @@
                 <item name="button_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\ButtonItem</item>
                 <item name="video" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Video</item>
                 <item name="slider" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSlider</item>
-                <item name="slider_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\SliderItem</item>
+                <item name="slider_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AdvancedSliderItem</item>
                 <item name="accordion" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Accordion</item>
                 <item name="accordion_item" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\AccordionItem</item>
                 <item name="map" xsi:type="object">Magento\PageBuilder\Setup\DataConverter\Renderer\Map</item>
@@ -218,6 +218,8 @@
                 <item name="link_url" xsi:type="string">link_url</item>
                 <item name="textarea" xsi:type="string">textarea</item>
                 <item name="background_image" xsi:type="string">background_image</item>
+                <item name="image" xsi:type="string">image</item>
+                <item name="title_tag" xsi:type="string">title_tag</item>
             </argument>
         </arguments>
     </virtualType>
@@ -242,22 +244,6 @@
     <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\Slider">
         <arguments>
             <argument name="eavAttributeLoader" xsi:type="object">SliderEavAttributeLoader</argument>
-        </arguments>
-    </type>
-    <virtualType name="SliderItemEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader">
-        <arguments>
-            <argument name="additionalEavAttributes" xsi:type="array">
-                <item name="title" xsi:type="string">title</item>
-                <item name="link_text" xsi:type="string">link_text</item>
-                <item name="link_url" xsi:type="string">link_url</item>
-                <item name="image" xsi:type="string">image</item>
-                <item name="title_tag" xsi:type="string">title_tag</item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <type name="Magento\PageBuilder\Setup\DataConverter\Renderer\SliderItem">
-        <arguments>
-            <argument name="eavAttributeLoader" xsi:type="object">SliderItemEavAttributeLoader</argument>
         </arguments>
     </type>
     <virtualType name="AccordionEavAttributeLoader" type="Magento\PageBuilder\Setup\DataConverter\ConfigurableEavAttributeLoader" />

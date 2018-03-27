@@ -17,6 +17,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84273"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-button"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -31,8 +32,7 @@
             <conditionalClick selector="{{CmsPagesPageActionsSection.clearAllButton}}" dependentSelector="{{CmsPagesPageActionsSection.activeFilters}}" stepKey="clickToResetFilter" visible="true"/>
             <waitForPageLoad stepKey="waitForGridReload"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add button -->
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
@@ -76,35 +76,11 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1LinkField">
             <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderPropertyDotted">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage2"/>
@@ -129,20 +105,9 @@
         <waitForElementVisible selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="waitForButtonToShow"/>
         <click selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="clickButton"/>
         <seeElement selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButton"/>
-        <seeElementInDOM selector="{{ButtonsBackendSection.alignmentStyle(PageBuilderAdvancedAlignmentProperty.value)}}" stepKey="seeAlignmentSet"/>
-        <seeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="seeBorderSet"/>
-        <seeElementInDOM selector="{{ButtonsBackendSection.borderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusSet"/>
-        <seeElementInDOM selector="{{ButtonsBackendSection.marginStyle(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMarginSet"/>
-        <seeElementInDOM selector="{{ButtonsBackendSection.paddingStyle(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seePaddingSet"/>
         <seeElement selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypeSecondaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButton2"/>
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage2"/>
         <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seePrimaryButtonOnStorefront"/>
-        <seeElementInDOM selector="{{ButtonsFrontendSection.alignmentStyle(PageBuilderAdvancedAlignmentProperty.value)}}" stepKey="seeAlignmentSetOnStorefront"/>
-        <seeElementInDOM selector="{{ButtonsFrontendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="seeBorderSetOnStorefront"/>
-        <seeElementInDOM selector="{{ButtonsFrontendSection.borderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="seeBorderRadiusSetOnStorefront"/>
-        <seeElementInDOM selector="{{ButtonsFrontendSection.marginStyle(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop)}}" stepKey="seeMarginSetOnStorefront"/>
-        <seeElementInDOM selector="{{ButtonsFrontendSection.paddingStyle(PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="seePaddingSetOnStorefront"/>
-        <seeElementInDOM selector="{{ButtonsFrontendSection.class(PageBuilderAdvancedCssClassesProperty.value)}}" stepKey="seeAdvancedCssClasses"/>
         <seeElement selector="{{ButtonsFrontendSection.buttonItemElement(PageBuilderButtonItemTypeSecondaryProperty.value, PageBuilderButtonItemLinkProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeSecondaryButtonOnStorefront"/>
         <!-- Check fields and edit advanced section back to default -->
         <amOnPage url="{{CmsPagesPage.url}}" stepKey="onCmsPagesPageActionsSection2"/>
@@ -160,63 +125,16 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm2"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection2"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemTextProperty">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemLinkProperty">
             <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAdvancedBorderPropertyDotted">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderColorProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderSizeProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderSizeProperty10"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentPropertyDefault">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderPropertyDefault">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
-        <waitForPageLoad stepKey="waitForCmsPageToSave3"/>
-        <see userInput="You saved the page." stepKey="assertPageSaved3"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab5" />
         <waitForElementVisible selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="waitForButtonToShow2"/>
-        <seeElementInDOM selector="{{ButtonsBackendSection.alignmentDefaultStyle}}" stepKey="dontSeeAlignmentSet"/>
-        <dontSeeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="dontSeeBorderSet"/>
-        <actionGroup ref="openPageBuilderEditPanelSmall" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm3"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection3"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection3"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAdvancedAlignmentPropertyDefault">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAdvancedBorderPropertyDefault">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
-        </actionGroup>
     </test>
     <test name="RemoveButtonFromStage">
         <annotations>
@@ -227,6 +145,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-button"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -237,16 +156,13 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForEditFormToShow"/>
-        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeEditForm"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeButtonFromStage">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
@@ -255,15 +171,16 @@
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
-    <test name="ButtonsHasAdvancedFormSection">
+    <test name="ButtonValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Buttons MAGETWO-83922"/>
-            <title value="Buttons has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for buttons"/>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Button - Validate Advanced Configuration Default Values"/>
+            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Button."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84275"/>
+            <testCaseId value="MAGETWO-89419"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-button"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -274,25 +191,111 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderWidthPropertyDefault.section, PageBuilderAdvancedBorderWidthPropertyDefault.fieldName)}}" stepKey="getBorderWidth"/>
+        <assertEmpty actual="getBorderWidth" actualType="variable" message="Text field has text: $getBorderWidth" stepKey="assertBorderWidth"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderRadiusDefaultProperty.section, PageBuilderAdvancedBorderRadiusDefaultProperty.fieldName)}}" stepKey="getBorderRadius"/>
+        <assertEmpty actual="getBorderRadius" actualType="variable" message="Text field has text: $getBorderRadius" stepKey="assertBorderRadius"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <!-- Margin -->
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getMarginTop"/>
+        <assertEmpty actual="getMarginTop" actualType="variable" message="Text field has text: $getMarginTop" stepKey="assertMarginTop"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginRight}}" stepKey="getMarginRight"/>
+        <assertEmpty actual="getMarginRight" actualType="variable" message="Text field has text: $getMarginRight" stepKey="assertMarginRight"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="getMarginLeft"/>
+        <assertEmpty actual="getMarginLeft" actualType="variable" message="Text field has text: $getMarginLeft" stepKey="assertMarginLeft"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="getMarginBottom"/>
+        <assertEmpty actual="getMarginBottom" actualType="variable" message="Text field has text: $getMarginBottom" stepKey="assertMarginBottom"/>
+        <!-- Padding -->
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="getPaddingTop"/>
+        <assertEmpty actual="getPaddingTop" actualType="variable" message="Text field has text: $getPaddingTop" stepKey="assertPaddingTop"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="getPaddingRight"/>
+        <assertEmpty actual="getPaddingRight" actualType="variable" message="Text field has text: $getPaddingRight" stepKey="assertPaddingRight"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="getPaddingLeft"/>
+        <assertEmpty actual="getPaddingLeft" actualType="variable" message="Text field has text: $getPaddingLeft" stepKey="assertPaddingLeft"/>
+        <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getPaddingBottom"/>
+        <assertEmpty actual="getPaddingBottom" actualType="variable" message="Text field has text: $getPaddingBottom" stepKey="assertPaddingBottom"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Style On Stage -->
+        <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
+        <waitForElementVisible selector="{{ButtonBackendSection.default('1')}}" stepKey="waitForStyle"/>
+    </test>
+    <test name="ButtonsValidateAdvancedConfigurationDefaultValues">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Buttons - Validate Advanced Configuration Default Values"/>
+            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Buttons."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89418"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyButtons"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
+        <!-- Validate Style On Stage -->
+        <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
+        <waitForElementVisible selector="{{ButtonsBackendSection.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyButtons.value)}}" stepKey="waitForStyle"/>
     </test>
     <test name="ButtonsHaveFields">
         <annotations>
@@ -303,6 +306,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87235"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-button"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -313,8 +317,7 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>

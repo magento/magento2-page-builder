@@ -4,12 +4,15 @@
  */
 
 import _ from "underscore";
+import appearanceConfig from "../../component/block/appearance-config";
 import {ConfigContentBlock, ConfigFieldConfig} from "../config";
 import Stage from "../stage";
 import getPreviewInstance from "../stage/previews";
 import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
 import { Block as BlockInterface } from "./block.d";
+import DataConverterPool from "./data-converter-pool";
+import ElementConverterPool from "./element-converter-pool";
 import PreviewBlock from "./preview/block";
 
 interface FieldDefaults {
@@ -30,8 +33,15 @@ export default class Block extends Structural implements BlockInterface {
      * @param {ConfigContentBlock} config
      * @param formData
      */
-    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
-        super(parent, stage, config);
+    constructor(
+        parent: EditableArea,
+        stage: Stage,
+        config: ConfigContentBlock,
+        formData: any,
+        elementConverterPool: ElementConverterPool,
+        dataConverterPool: DataConverterPool,
+    ) {
+        super(parent, stage, config, elementConverterPool, dataConverterPool);
 
         this.preview = getPreviewInstance(this, config);
 
@@ -54,19 +64,12 @@ export default class Block extends Structural implements BlockInterface {
      * @returns {string}
      */
     get previewTemplate(): string {
-        if (typeof this.preview.data.appearance !== "undefined") {
-            const appearance = this.preview.data.appearance();
-            if (typeof this.config.appearances !== "undefined" &&
-                typeof this.config.appearances[appearance] !== "undefined" &&
-                typeof this.config.appearances[appearance].preview_template !== "undefined") {
-                return this.config.appearances[appearance].preview_template;
-            }
+        const appearance = this.preview.data.appearance ? this.preview.data.appearance() : undefined;
+        let template = appearanceConfig(this.config.name, appearance).preview_template;
+        if (undefined === template) {
+            template = "Magento_PageBuilder/component/block/preview/abstract.html";
         }
-
-        if (this.config.preview_template) {
-            return this.config.preview_template;
-        }
-        return "Magento_PageBuilder/component/block/preview/abstract.html";
+        return template;
     }
 
     /**
@@ -75,18 +78,10 @@ export default class Block extends Structural implements BlockInterface {
      * @returns {string}
      */
     get renderTemplate(): string {
-        if (typeof this.getData().appearance !== "undefined") {
-            const appearance = this.getData().appearance as string;
-            if (typeof this.config.appearances !== "undefined" &&
-                typeof this.config.appearances[appearance] !== "undefined" &&
-                typeof this.config.appearances[appearance].render_template !== "undefined") {
-                return this.config.appearances[appearance].render_template;
-            }
+        let template = appearanceConfig(this.config.name, this.getData().appearance).render_template;
+        if (undefined === template) {
+            template = "Magento_PageBuilder/component/block/render/abstract.html";
         }
-
-        if (this.config.render_template) {
-            return this.config.render_template;
-        }
-        return "Magento_PageBuilder/component/block/render/abstract.html";
+        return template;
     }
 }

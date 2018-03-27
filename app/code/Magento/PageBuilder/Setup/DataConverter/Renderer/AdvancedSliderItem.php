@@ -51,7 +51,12 @@ class AdvancedSliderItem implements RendererInterface
         ];
 
         $formData = $itemData['formData'] ?? [];
-        $formData['background_image'] = isset($eavData['background_image']) ? $eavData['background_image'] : '';
+        $formData['background_image'] = '';
+        if (isset($eavData['background_image'])) {
+            $formData['background_image'] = $eavData['background_image'];
+        } elseif (isset($eavData['image'])) {
+            $formData['background_image'] = $eavData['image'];
+        }
 
         $margin = $this->styleExtractor->extractStyle($formData, ['margin']);
         if ($margin) {

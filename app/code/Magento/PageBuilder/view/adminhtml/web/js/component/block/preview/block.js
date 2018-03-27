@@ -1,10 +1,14 @@
 /*eslint-disable */
 define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "./sortable/binding"], function (_jquery, _knockout, _underscore, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _binding) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+    function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  var PreviewBlock =
+    var PreviewBlock =
   /*#__PURE__*/
   function () {
     /**
@@ -54,20 +58,15 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
       });
     }
     /**
-     * Retrieve the template for the preview block
-     *
-     * @returns {string}
-     */
-
-
-    var _proto = PreviewBlock.prototype;
-
-    /**
      * Update the data value of a part of our internal Knockout data store
      *
      * @param {string} key
      * @param value
      */
+
+
+    var _proto = PreviewBlock.prototype;
+
     _proto.updateDataValue = function updateDataValue(key, value) {
       if (typeof this.data[key] !== "undefined" && _knockout.isObservable(this.data[key])) {
         this.data[key](value);
@@ -184,17 +183,6 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
     _proto.afterStyleMapped = function afterStyleMapped(styles) {
       return styles;
     };
-
-    _createClass(PreviewBlock, [{
-      key: "template",
-      get: function get() {
-        if (this.config.preview_template) {
-          return this.config.preview_template;
-        }
-
-        return "";
-      }
-    }]);
 
     return PreviewBlock;
   }();
