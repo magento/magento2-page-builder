@@ -5,7 +5,7 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import "Magento_PageBuilder/js/resource/slick/slick";
+import "Magento_PageBuilder/js/resource/slick/slick.min";
 import _ from "underscore";
 import "../../../binding/focus";
 import {ConfigContentBlock} from "../../config";

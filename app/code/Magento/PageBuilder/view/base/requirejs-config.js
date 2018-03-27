@@ -5,7 +5,7 @@
 
 var config = {
     paths: {
-        'slick': 'Magento_PageBuilder/js/resource/slick/slick'
+        'slick': 'Magento_PageBuilder/js/resource/slick/slick.min'
     },
     shim: {
         'slick': {
