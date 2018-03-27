@@ -437,4 +437,217 @@
         <!--Verify image on Storefront-->
         <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
+    <test name="SliderPosterButtonsCanBeEditedInline">
+        <annotations>
+            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <title value="Ability to edit a poster slider button inline on the stage"/>
+            <description value="A user should be able to edit a poster slider button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89565"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add slider button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify on stage and admin panel -->
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
+        </actionGroup>
+        <!--Verify in storefront -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
+    </test>
+    <test name="SliderCollageLeftButtonsCanBeEditedInline">
+        <annotations>
+            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <title value="Ability to edit a collage left slider button inline on the stage"/>
+            <description value="A user should be able to edit a collage left slider button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89565"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add slider button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageLeftAppearance">
+            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify on stage and admin panel -->
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
+        </actionGroup>
+        <!--Verify in storefront -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
+    </test>
+    <test name="SliderCollageCenterButtonsCanBeEditedInline">
+        <annotations>
+            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <title value="Ability to edit a collage center slider button inline on the stage"/>
+            <description value="A user should be able to edit a collage center slider button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89565"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add slider button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageCenterAppearance">
+            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify on stage and admin panel -->
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
+        </actionGroup>
+        <!--Verify in storefront -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
+    </test>
+    <test name="SliderCollageRightButtonsCanBeEditedInline">
+        <annotations>
+            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <title value="Ability to edit a collage right slider button inline on the stage"/>
+            <description value="A user should be able to edit a collage right slider button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89565"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add slider button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageRightAppearance">
+            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify on stage and admin panel -->
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
+        </actionGroup>
+        <!--Verify in storefront -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
+    </test>
 </tests>
