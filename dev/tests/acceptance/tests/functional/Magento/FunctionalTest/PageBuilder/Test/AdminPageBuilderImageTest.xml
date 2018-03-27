@@ -17,6 +17,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89375"/>
             <group value="pagebuilder"/>
+            <group value="AddImageIntoPageBuilderStage"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -30,7 +31,7 @@
             </actionGroup>
             <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
                 <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-                <argument name="contentBlockIndex" value="PageBuilderImageIndex1"/>
+                <argument name="contentBlockIndex" value="1"/>
             </actionGroup>
             <waitForPageLoad stepKey="waitForPageLoad1"/>
             <click selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
@@ -78,7 +79,7 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-            <argument name="contentBlockIndex" value="PageBuilderImageIndex1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
 
