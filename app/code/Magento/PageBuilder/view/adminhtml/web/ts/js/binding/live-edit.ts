@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 
 // Custom Knockout binding for live editing text inputs
 ko.bindingHandlers.liveEdit = {
@@ -33,8 +34,8 @@ ko.bindingHandlers.liveEdit = {
          * Blur event on element
          */
         const onBlur = () => {
-            if (value.key in data) {
-                data[value.key] = stripHtml(element.innerText);
+            if (value.field in data) {
+                data[value.field] = stripHtml(element.innerText);
                 contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
             }
         };
@@ -93,16 +94,21 @@ ko.bindingHandlers.liveEdit = {
      * Use data-placeholder for elements that
      * don't support the placeholder attribute
      *
-     * @param value "{key:'button_text','data-placeholder':$t('Edit Button Text')}"
-     * @param name "liveEdit"
-     * @param addBindingCallback
+     * @param {string} value '{"field":"button_text","placeholder_text":"Edit Button Text"}'
+     * @param {string} name "liveEdit"
+     * @param {any} addBindingCallback
      */
     preprocess(value, name, addBindingCallback) {
-        const attrValue = "{" + value.split(",")[1];
-        let textValue = value.split(",")[0].split("'")[1];
-        textValue = "preview.data." + textValue + "()";
-        addBindingCallback("attr", attrValue);
-        addBindingCallback("text", textValue);
+        const parsed = JSON.parse(value);
+        if ("field" in parsed) {
+            const textValue = "preview.data." + parsed.field + "()";
+            addBindingCallback("text", textValue);
+        }
+        if ("placeholder_text" in parsed) {
+            const placeholderText = $t(parsed.placeholder_text);
+            const attrValue = "{'data-placeholder':'" + placeholderText + "'}";
+            addBindingCallback("attr", attrValue);
+        }
         return value;
     },
 };

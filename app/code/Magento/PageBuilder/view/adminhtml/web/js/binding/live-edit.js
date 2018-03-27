@@ -1,9 +1,10 @@
 /*eslint-disable */
-define(["jquery", "knockout"], function (_jquery, _knockout) {
+define(["jquery", "knockout", "mage/translate"], function (_jquery, _knockout, _translate) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
+  _translate = _interopRequireDefault(_translate);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38,8 +39,8 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
 
 
       var onBlur = function onBlur() {
-        if (value.key in data) {
-          data[value.key] = stripHtml(element.innerText);
+        if (value.field in data) {
+          data[value.field] = stripHtml(element.innerText);
           contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
         }
       };
@@ -101,16 +102,24 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
      * Use data-placeholder for elements that
      * don't support the placeholder attribute
      *
-     * @param value "{key:'button_text','data-placeholder':$t('Edit Button Text')}"
-     * @param name "liveEdit"
-     * @param addBindingCallback
+     * @param {string} value '{"field":"button_text","placeholder_text":"Edit Button Text"}'
+     * @param {string} name "liveEdit"
+     * @param {any} addBindingCallback
      */
     preprocess: function preprocess(value, name, addBindingCallback) {
-      var attrValue = "{" + value.split(",")[1];
-      var textValue = value.split(",")[0].split("'")[1];
-      textValue = "preview.data." + textValue + "()";
-      addBindingCallback("attr", attrValue);
-      addBindingCallback("text", textValue);
+      var parsed = JSON.parse(value);
+
+      if ("field" in parsed) {
+        var textValue = "preview.data." + parsed.field + "()";
+        addBindingCallback("text", textValue);
+      }
+
+      if ("placeholder_text" in parsed) {
+        var placeholderText = (0, _translate.default)(parsed.placeholder_text);
+        var attrValue = "{'data-placeholder':'" + placeholderText + "'}";
+        addBindingCallback("attr", attrValue);
+      }
+
       return value;
     }
   };
