@@ -11,29 +11,32 @@ import registry from "uiRegistry";
 export default class Uploader {
     /**
      * Hardcoded configuration for uploader instances; to be removed in MAGETWO-89470
+     * @returns {Object}
      */
-    public static config: object = {
-        allowedExtensions: "jpg jpeg gif png",
-        component: "Magento_PageBuilder/js/form/element/image-uploader",
-        componentType: "imageUploader",
-        dataScope: "image",
-        formElement: "imageUploader",
-        initialMediaGalleryOpenSubpath: "wysiwyg",
-        maxFileSize: "4194304",
-        mediaGallery: {
-            initialOpenSubpath: "wysiwyg",
-            openDialogTitle: $t("Insert Images..."),
-            openDialogUrl: "/admin/cms/wysiwyg_images/index/",
-            storeId: "1",
-        },
-        template: "Magento_PageBuilder/form/element/stage/preview/uploader/image",
-        uploaderConfig: {
-            url: "/admin/pagebuilder/contenttype/image_upload/",
-        },
-        validation: {
-            "required-entry": true,
-        },
-    };
+    public static getDefaultConfig() {
+        return {
+            allowedExtensions: "jpg jpeg gif png",
+            component: "Magento_PageBuilder/js/form/element/image-uploader",
+            componentType: "imageUploader",
+            dataScope: "image",
+            formElement: "imageUploader",
+            initialMediaGalleryOpenSubpath: "wysiwyg",
+            maxFileSize: "4194304",
+            mediaGallery: {
+                initialOpenSubpath: "wysiwyg",
+                openDialogTitle: $t("Insert Images..."),
+                openDialogUrl: "/admin/cms/wysiwyg_images/index/",
+                storeId: "1",
+            },
+            template: "Magento_PageBuilder/form/element/stage/preview/uploader/image",
+            uploaderConfig: {
+                url: "/admin/pagebuilder/contenttype/image_upload/",
+            },
+            validation: {
+                "required-entry": true,
+            },
+        };
+    }
 
     /**
      * Id of uploader instance
@@ -55,7 +58,7 @@ export default class Uploader {
      * @param {String} name - Name to use for lookup reference in registry
      * @param {Object} config
      */
-    constructor(id: string, name: string, config: object = Uploader.config) {
+    constructor(id: string, name: string, config: object = Uploader.getDefaultConfig()) {
         config.id = this.id = id;
         config.name = this.name = name;
 

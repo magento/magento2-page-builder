@@ -9,19 +9,36 @@ define(["mage/translate", "uiEvents", "uiLayout", "uiRegistry"], function (_tran
   function () {
     /**
      * Hardcoded configuration for uploader instances; to be removed in MAGETWO-89470
+     * @returns {Object}
      */
-
+    Uploader.getDefaultConfig = function getDefaultConfig() {
+      return {
+        allowedExtensions: "jpg jpeg gif png",
+        component: "Magento_PageBuilder/js/form/element/image-uploader",
+        componentType: "imageUploader",
+        dataScope: "image",
+        formElement: "imageUploader",
+        initialMediaGalleryOpenSubpath: "wysiwyg",
+        maxFileSize: "4194304",
+        mediaGallery: {
+          initialOpenSubpath: "wysiwyg",
+          openDialogTitle: (0, _translate)("Insert Images..."),
+          openDialogUrl: "/admin/cms/wysiwyg_images/index/",
+          storeId: "1"
+        },
+        template: "Magento_PageBuilder/form/element/stage/preview/uploader/image",
+        uploaderConfig: {
+          url: "/admin/pagebuilder/contenttype/image_upload/"
+        },
+        validation: {
+          "required-entry": true
+        }
+      };
+    };
     /**
      * Id of uploader instance
      */
 
-    /**
-     * Name of uploader instance
-     */
-
-    /**
-     * Config data of uploader instance
-     */
 
     /**
      * @param {String} id
@@ -30,7 +47,7 @@ define(["mage/translate", "uiEvents", "uiLayout", "uiRegistry"], function (_tran
      */
     function Uploader(id, name, config) {
       if (config === void 0) {
-        config = Uploader.config;
+        config = Uploader.getDefaultConfig();
       }
 
       this.id = void 0;
@@ -76,28 +93,6 @@ define(["mage/translate", "uiEvents", "uiLayout", "uiRegistry"], function (_tran
     return Uploader;
   }();
 
-  Uploader.config = {
-    allowedExtensions: "jpg jpeg gif png",
-    component: "Magento_PageBuilder/js/form/element/image-uploader",
-    componentType: "imageUploader",
-    dataScope: "image",
-    formElement: "imageUploader",
-    initialMediaGalleryOpenSubpath: "wysiwyg",
-    maxFileSize: "4194304",
-    mediaGallery: {
-      initialOpenSubpath: "wysiwyg",
-      openDialogTitle: (0, _translate)("Insert Images..."),
-      openDialogUrl: "/admin/cms/wysiwyg_images/index/",
-      storeId: "1"
-    },
-    template: "Magento_PageBuilder/form/element/stage/preview/uploader/image",
-    uploaderConfig: {
-      url: "/admin/pagebuilder/contenttype/image_upload/"
-    },
-    validation: {
-      "required-entry": true
-    }
-  };
   return Uploader;
 });
 //# sourceMappingURL=uploader.js.map
