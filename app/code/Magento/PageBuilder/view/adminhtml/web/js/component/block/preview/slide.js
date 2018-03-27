@@ -175,9 +175,11 @@ define(["knockout", "mage/translate", "../../../utils/color-converter", "../../.
       }
     };
     /**
+     * Extract data values our of observable functions
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
      *
-     * @returns styles
+     * @param {StyleAttributeMapperResult} styles
+     * @returns {StyleAttributeMapperResult}
      */
 
 

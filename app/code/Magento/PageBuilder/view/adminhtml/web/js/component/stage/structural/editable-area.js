@@ -58,7 +58,7 @@ define(["mage/translate", "mageUtils", "underscore", "../../../utils/array", "..
 
       var store = this.stage.store;
       var instance = child.constructor;
-      var duplicate = new instance(child.parent, child.stage, child.config, child.getData());
+      var duplicate = new instance(child.parent, child.stage, child.config, child.getData(), child.elementConverterPool, child.dataConverterPool);
       var index = child.parent.children.indexOf(child) + 1 || null; // Copy the data from the data store
 
       store.update(duplicate.id, Object.assign({}, store.get(child.id))); // Duplicate the instances children into the new duplicate
