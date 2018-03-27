@@ -11,8 +11,8 @@
     <section name="VideoInAdmin">
         <element name="default" type="text" selector="(//iframe[@src='{{arg1}}'])[{{arg2}}][@style='border: {{arg3}}; border-radius: {{arg4}}px; margin: {{arg5}}px; padding: {{arg6}}px;']" parameterized="true"/>
         <element name="videoSource" type="button" selector="//iframe[@src='{{arg1}}']" parameterized="true"/>
-        <element name="videoHeight" type="button" selector="//iframe[@height='{{arg1}}']" parameterized="true"/>
-        <element name="videoWidth" type="button" selector="//iframe[@width='{{arg1}}']" parameterized="true"/>
+        <element name="videoHeight" type="button" selector="//iframe[contains(@style,'height: {{arg1}}')]" parameterized="true"/>
+        <element name="videoWidth" type="button" selector="//iframe[contains(@style,'width: {{arg1}}')]" parameterized="true"/>
     </section>
     <section name="VideoOnFrontend">
         <element name="videoSource" type="button" selector="//div[@data-role='video']//iframe[@src='{{arg1}}']" parameterized="true"/>
