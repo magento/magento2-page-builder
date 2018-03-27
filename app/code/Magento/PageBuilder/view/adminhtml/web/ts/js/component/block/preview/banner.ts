@@ -12,6 +12,20 @@ import PreviewBlock from "./block";
 export default class Banner extends PreviewBlock {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
     private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
+    private buttonText: KnockoutObservable<string>;
+    private buttonPlaceholder: string = $t("Edit Button Text");
+
+    /**
+     * Banner constructor
+     *
+     * @param {Block} parent
+     * @param {object} config
+     */
+    constructor(parent: Block, config: ConfigContentBlock) {
+        super(parent, config);
+        this.buttonText = this.data.button_text;
+        this.buttonText.subscribe(this.onButtonTextChange.bind(this));
+    }
 
     /**
      * Get the banner wrapper attributes for the preview
@@ -158,5 +172,17 @@ export default class Banner extends PreviewBlock {
             styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
         }
         return styles;
+    }
+
+    /**
+     * Update store on banner button text listener
+     *
+     * @param {string} value
+     */
+    private onButtonTextChange(value: string) {
+        const data = this.parent.stage.store.get(this.parent.id);
+
+        data.button_text = value;
+        this.parent.stage.store.update(this.parent.id, data);
     }
 }

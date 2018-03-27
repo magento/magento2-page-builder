@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/block/preview/block"], function (_knockout, _translate, _colorConverter, _numberConverter, _block) {
+define(["knockout", "mage/translate", "../../../utils/color-converter", "../../../utils/number-converter", "./block"], function (_knockout, _translate, _colorConverter, _numberConverter, _block) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -9,23 +9,35 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
   function (_PreviewBlock) {
     _inheritsLoose(Banner, _PreviewBlock);
 
-    function Banner() {
-      var _temp, _this;
+    /**
+     * Banner constructor
+     *
+     * @param {Block} parent
+     * @param {object} config
+     */
+    function Banner(parent, config) {
+      var _this;
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this.showOverlayHover = _knockout.observable(false);
+      _this.showButtonHover = _knockout.observable(false);
+      _this.buttonText = void 0;
+      _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
+      _this.buttonText = _this.data.button_text;
 
-      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.showOverlayHover = _knockout.observable(false), _this.showButtonHover = _knockout.observable(false), _temp) || _this;
+      _this.buttonText.subscribe(_this.onButtonTextChange.bind(_this));
+
+      return _this;
     }
-
-    var _proto = Banner.prototype;
-
     /**
      * Get the banner wrapper attributes for the preview
      *
      * @returns {any}
      */
+
+
+    var _proto = Banner.prototype;
+
     _proto.getBackgroundStyles = function getBackgroundStyles() {
       var backgroundImage = "none";
 
@@ -179,6 +191,18 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
       }
 
       return styles;
+    };
+    /**
+     * Update store on banner button text listener
+     *
+     * @param {string} value
+     */
+
+
+    _proto.onButtonTextChange = function onButtonTextChange(value) {
+      var data = this.parent.stage.store.get(this.parent.id);
+      data.button_text = value;
+      this.parent.stage.store.update(this.parent.id, data);
     };
 
     return Banner;
