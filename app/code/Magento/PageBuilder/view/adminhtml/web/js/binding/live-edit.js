@@ -68,6 +68,11 @@ define(["jquery", "knockout", "mage/translate"], function (_jquery, _knockout, _
           if (event.which === 66 || event.which === 73 || event.which === 85) {
             event.preventDefault();
           }
+        } // enter
+
+
+        if (event.which === 13) {
+          event.preventDefault();
         }
       };
       /**

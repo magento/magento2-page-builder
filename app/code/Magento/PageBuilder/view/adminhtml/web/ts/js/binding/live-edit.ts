@@ -62,6 +62,10 @@ ko.bindingHandlers.liveEdit = {
                     event.preventDefault();
                 }
             }
+            // enter
+            if (event.which === 13) {
+                event.preventDefault();
+            }
         };
 
         /**
