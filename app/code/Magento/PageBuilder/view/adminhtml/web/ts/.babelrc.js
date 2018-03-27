@@ -17,6 +17,7 @@ module.exports = {
         ['es6-to-magento-amd', {magentoClasses: ['uiComponent', 'uiElement', 'uiClass']}]
     ],
     plugins: [
+        ['./babel/resolve-imports', {prefix: 'Magento_PageBuilder/'}],
         'transform-typescript'
     ],
     ignore: [

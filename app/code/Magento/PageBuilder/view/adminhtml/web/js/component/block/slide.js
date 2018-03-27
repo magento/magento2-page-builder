@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "./block", "../stage/structural/options/option"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block, _option) {
+define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slide =

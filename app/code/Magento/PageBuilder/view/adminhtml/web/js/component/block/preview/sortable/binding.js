@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "../../../../utils/array", "../../../event-bus"], function (_jquery, _knockout, _array, _eventBus) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus"], function (_jquery, _knockout, _array, _eventBus) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);

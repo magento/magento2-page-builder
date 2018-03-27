@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "../../../binding/focus", "../../event-bus", "./block"], function (_jquery, _knockout, _slick, _underscore, _focus, _eventBus, _block) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _slick, _underscore, _focus, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =

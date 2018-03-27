@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "mage/translate", "underscore", "./data-store", "./event-bus", "./stage/event-handling-delegate", "./stage/save", "./stage/structural/editable-area"], function (_jquery, _translate, _underscore, _dataStore, _eventBus, _eventHandlingDelegate, _save, _editableArea) {
+define(["jquery", "mage/translate", "underscore", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/event-handling-delegate", "Magento_PageBuilder/js/component/stage/save", "Magento_PageBuilder/js/component/stage/structural/editable-area"], function (_jquery, _translate, _underscore, _dataStore, _eventBus, _eventHandlingDelegate, _save, _editableArea) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Stage =

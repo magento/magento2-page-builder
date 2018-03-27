@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../../utils/array"], function (_array) {
+define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

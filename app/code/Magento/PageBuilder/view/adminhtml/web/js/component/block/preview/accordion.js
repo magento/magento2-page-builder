@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "./block"], function (_jquery, _knockout, _underscore, _block) {
+define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Accordion =

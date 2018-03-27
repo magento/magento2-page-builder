@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "mage/translate", "underscore", "../config", "../event-bus", "./panel/group", "./panel/group/block", "./previews"], function (_knockout, _koDraggable, _koSortable, _uiComponent, _translate, _underscore, _config, _eventBus, _group, _block, _previews) {
+define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiComponent", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/stage/previews"], function (_knockout, _koDraggable, _koSortable, _translate, _uiComponent, _underscore, _config, _eventBus, _group, _block, _previews) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,16 +7,16 @@ define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "mage/translat
   var Panel = _uiComponent.extend({
     componentTemplate: "Magento_PageBuilder/component/stage/panel.html",
     defaults: {
+      fullScreenTitle: (0, _translate)("Full Screen"),
       groups: [],
       isCollapsed: false,
       isVisible: false,
       originalScrollTop: false,
+      searchNoResult: (0, _translate)("Nothing found"),
+      searchPlaceholder: (0, _translate)("Find items"),
       searchResults: [],
-      searchPlaceholder: (0, _translate)('Find items'),
-      searchNoResult: (0, _translate)('Nothing found'),
-      fullScreenTitle: (0, _translate)('Full Screen'),
-      searchTitle: (0, _translate)('Clear Search'),
-      searchValue: '',
+      searchTitle: (0, _translate)("Clear Search"),
+      searchValue: "",
       searching: false,
       stage: false
     },

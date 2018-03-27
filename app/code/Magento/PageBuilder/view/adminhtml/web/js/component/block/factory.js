@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "../event-bus"], function (_loader, _eventBus) {
+define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/event-bus"], function (_loader, _eventBus) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

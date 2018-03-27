@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../../utils/url", "../config", "./block"], function (_underscore, _url, _config, _block) {
+define(["underscore", "Magento_PageBuilder/js/utils/url", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/block"], function (_underscore, _url, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Driver =

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../utils/image"], function (_image) {
+define(["Magento_PageBuilder/js/utils/image"], function (_image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
