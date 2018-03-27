@@ -32,45 +32,53 @@
         </actionGroup>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(PageBuilderButtonsContentBlock.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
-        <waitForElementVisible selector="{{PageBuilderURLSection.URLSelect}}" stepKey="dsf"/>
-        <seeElement selector="{{PageBuilderURLSection.URLSelect}}" stepKey="seeURLSelect"/>
-        <seeOptionIsSelected selector="{{PageBuilderURLSection.URLSelect}}" userInput="URL" stepKey="seeURLSelectedByDefault" />
-        <fillField selector="{{PageBuilderURLSection.URLInput}}" userInput="{{ExternalLink.url}}" stepKey="inputURLLink"/>
+        <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="dsf"/>
+        <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="seeButtonLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" userInput="URL" stepKey="seeButtonLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelDropdownField" stepKey="fillButton1LinkField">
+            <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
+            <argument name="selection" value="ExternalLink"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
 
         <!--Go to storefront to verify External Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInCurrentTab(ExternalLink.url)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInCurrentTab(PageBuilderButtonItemLinkProperty.value)}}" stepKey="seeExternalLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <grabFromCurrentUrl stepKey="grabFromCurrentUrl1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
-            <expectedResult type="string">{{ExternalLink.url}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderButtonItemSecureLinkProperty._value}}</expectedResult>
             <actualResult type="variable">grabFromCurrentUrl1</actualResult>
         </assertEquals>
         <waitForPageLoad stepKey="waitForPageLoad2" />
 
-        <!--Go to admin to edit External Link-->
+        <!--Go to admin to edit Secure External Link-->
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
         <waitForElementVisible selector="//div[@class='element-children buttons-container ui-sortable']//a[@title='Edit']" stepKey="waitForSettingBtn" />
         <click selector="//div[@class='element-children buttons-container ui-sortable']//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <actionGroup ref="fillSlideOutPanelDropdownField" stepKey="fillButton1SecureLinkField">
+            <argument name="property" value="PageBuilderButtonItemSecureLinkProperty"/>
+            <argument name="selection" value="ExternalLink"/>
+        </actionGroup>
         <waitForElementVisible selector=".admin__control-checkbox" stepKey="waitForCheckboxVisible" />
         <click selector="//label[text()='Open in new tab']" stepKey="clickOpenNewTabCheckBox" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
 
-        <!--Go to storefront to verify External Link-->
+        <!--Go to storefront to verify Secure External Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInNewTab(PageBuilderButtonItemSecureLinkProperty.value)}}" stepKey="seeExternalSecureLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton2"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <grabFromCurrentUrl stepKey="grabFromCurrentUrl2"/>
         <assertEquals stepKey="assertEquals2" message="pass">
-            <expectedResult type="string">{{ExternalLink.url}}</expectedResult>
+            <expectedResult type="string">{{PageBuilderButtonItemSecureLinkProperty._value}}</expectedResult>
             <actualResult type="variable">grabFromCurrentUrl2</actualResult>
         </assertEquals>
     </test>
