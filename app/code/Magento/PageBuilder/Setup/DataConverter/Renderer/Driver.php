@@ -91,7 +91,7 @@ class Driver implements RendererInterface
                 . 'min-height: 300px; background-size: auto; background-repeat: no-repeat; '
                 . 'background-attachment: scroll;'
                 . $textAlign,
-            'class' => 'pagebuilder-banner-wrapper pagebuilder-banner-image pagebuilder-mobile-hidden'
+            'class' => 'pagebuilder-banner-wrapper pagebuilder-mobile-hidden'
         ];
 
         $mobileImageAttributes = [
@@ -106,7 +106,7 @@ class Driver implements RendererInterface
 
         $mobileImageElementHtml = '<div'
             . $this->printAttributes($mobileImageAttributes)
-            . ' class="pagebuilder-banner-wrapper pagebuilder-banner-mobile pagebuilder-mobile-only">';
+            . ' class="pagebuilder-banner-wrapper pagebuilder-mobile-only">';
 
         $imageElementHtml = '<div' . $this->printAttributes($imageAttributes) . '>';
 

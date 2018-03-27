@@ -16,12 +16,12 @@
         <element name="linkUrl" type="button" selector="[href*='{{arg1}}']" parameterized="true"/>
         <element name="openInNewTab" type="button" selector="//a[contains(@target, '_blank')]"/>
         <element name="banner" type="button" selector="div[data-role='banner']" />
-        <element name="poster" type="button" selector="div[data-role='banner'] .pagebuilder-banner-image"/>
-        <element name="posterBackgroundColor" type="button" selector="div[data-role='banner'] .pagebuilder-banner-image[style*='background-color: rgb(255, 255, 255);']"/>
-        <element name="posterBackgroundPosition" type="button" selector="div[data-role='banner'] .pagebuilder-banner-image[style*='background-position: center center;']"/>
-        <element name="posterBackgroundSize" type="button" selector="div[data-role='banner'] .pagebuilder-banner-image[style*='background-size: cover;']"/>
-        <element name="posterBackgroundRepeat" type="button" selector="div[data-role='banner'] .pagebuilder-banner-image[style*='background-repeat: repeat;']"/>
-        <element name="posterBackgroundAttachment" type="button" selector="div[data-role='banner'] .pagebuilder-banner-image[style*='background-attachment: scroll;']"/>
+        <element name="poster" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden"/>
+        <element name="posterBackgroundColor" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='background-color: rgb(255, 255, 255);']"/>
+        <element name="posterBackgroundPosition" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='background-position: center center;']"/>
+        <element name="posterBackgroundSize" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='background-size: cover;']"/>
+        <element name="posterBackgroundRepeat" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='background-repeat: repeat;']"/>
+        <element name="posterBackgroundAttachment" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-hidden[style*='background-attachment: scroll;']"/>
         <element name="posterMobileBackgroundColor" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='background-color: rgb(255, 255, 255);']"/>
         <element name="posterMobileBackgroundPosition" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='background-position: center center;']"/>
         <element name="posterMobileBackgroundSize" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='background-size: cover;']"/>
@@ -53,11 +53,12 @@
         <element name="collageMinHeightMobile" type="button" selector="div[data-role='banner'] .pagebuilder-mobile-only[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
         <element name="collageOverlay" type="button" selector=".pagebuilder-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
-        <element name="bannerBorderStyle" type="button" selector="div[data-role='banner'][style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="bannerBorderStyle" type="button" selector="//div[@data-role='banner'][contains(@style, 'border-width: {{arg1}}px') and contains(@style, 'border-style: {{arg2}}') and contains(@style, 'border-color: {{arg3}}')]" parameterized="true"/>
         <element name="bannerBorderRadiusStyle" type="button" selector="div[data-role='banner'][style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="bannerClass" type="button" selector="div[data-role='banner'][class='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="BannerOnBackend">
+        <element name="default" type="button" selector="(//div[@class='pagebuilder-banner-wrapper'])[{{arg1}}][contains(@style, 'border-style: {{arg2}};') and contains(@style, 'border-radius: {{arg3}}px;') and contains(@style, 'margin: {{arg4}}px;') and contains(@style, 'background-size: {{arg6}};') and contains(@style, 'background-repeat: {{arg7}};') and contains(@style, 'background-attachment: {{arg8}};')]//div[@class='pagebuilder-poster-overlay'][contains(@style,'padding: {{arg10}}px;')]" parameterized="true"/>
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
         <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
         <element name="buttonText" type="text" selector="//button//span[text()='{{arg1}}']" parameterized="true"/>
@@ -95,7 +96,7 @@
         <element name="collageAlignment" type="button" selector="div[style*='text-align: center'][style*='magento']"/>
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="contentSectionName" type="button" selector="/div[@data-index='content']"/>
-        <element name="bannerBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="bannerBorderStyle" type="button" selector="//div[contains(@style, 'border-width: {{arg1}}px') and contains(@style, 'border-style: {{arg2}}') and contains(@style, 'border-color: {{arg3}}')]" parameterized="true"/>
         <element name="bannerBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="editFormBackgroundImagePreview" type="button" selector="//input[@name='background_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
         <element name="editFormBackgroundMobileImagePreview" type="button" selector="//input[@name='mobile_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>

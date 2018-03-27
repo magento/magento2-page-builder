@@ -5,14 +5,14 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" data-bind="event: {mouseover: preview.onMouseOver, mouseout: preview.onMouseOut}, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
-    <div data-bind="style: Object.assign(preview.previewStyle(), {paddingLeft: 'calc(50% + ' + preview.data.margins_and_padding().padding.left + 'px)'}), event: { mouseover: preview.onMouseOverWrapper, mouseout: preview.onMouseOutWrapper }">
-        <div class="pagebuilder-collage-overlay" data-bind="style: preview.getOverlayColorStyle()">
-            <div data-bind="css: {'pagebuilder-empty-banner': preview.isContentEmpty()}, html: preview.getContentHtml()"></div>
-            <!-- ko if: preview.data.show_button() !== 'never_show' -->
-                <button type="button" class="pagebuilder-banner-button" data-bind="css: preview.data.button_type(), attr: {'data-link-url': preview.data.link_url()}, style: preview.getButtonStyles()">
-                    <span data-bind="html: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), css: { 'placeholder-text': !preview.data.button_text() }"></span>
+    <div data-bind="attr: data.main.attributes, style: Object.assign({}, data.main.style(), data.overlay.style(), data.desktop_image.style(), {paddingLeft: 'calc(50% + ' + data.desktop_image.style().paddingLeft + ')'}), css: data.main.css, event: {mouseover: preview.onMouseOverWrapper, mouseout: preview.onMouseOutWrapper}">
+        <div class="pagebuilder-collage-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style, css: data.overlay.css">
+            <div data-bind="attr: data.content.attributes, style: data.content.style, css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': data.content.html}), html: data.content.html"></div>
+            <!-- ko if: data.main.attributes()["data-show-button"] !== 'never_show' -->
+                <button type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css">
+                    <span data-bind="css: {'placeholder-text': !data.button.html()}, html: data.button.html"></span>
                 </button>
             <!-- /ko -->
         </div>

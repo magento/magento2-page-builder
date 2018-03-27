@@ -5,34 +5,25 @@
  */
 -->
 
-<div data-bind="attr: getAttributes(), style: getBannerContainerStyle(), css: getCss()">
-    <a data-bind="attr: getLinkAttribute()">
-        <div data-bind="style: Object.assign(getBannerStyles('image'), {
-                paddingTop: getData().margins_and_padding.padding.top + 'px',
-                paddingBottom: getData().margins_and_padding.padding.bottom + 'px',
-                paddingLeft: 'calc(25% + ' + getData().margins_and_padding.padding.left + 'px)',
-                paddingRight: 'calc(25% + ' + getData().margins_and_padding.padding.right + 'px)'})"
-             class="pagebuilder-mobile-hidden pagebuilder-banner-wrapper">
-            <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
+<div data-bind="attr: getAttributes('main'), style: getStyle('main'), css: getCss('main')">
+    <a data-bind="attr: getAttributes('link'), style: getStyle('link'), css: getCss('link')">
+        <div data-bind="css: getCss('desktop_image'), attr: getAttributes('desktop_image'), style: Object.assign(getStyle('desktop_image'), {paddingLeft: 'calc(25% + ' + getStyle('desktop_image').paddingLeft + ')', paddingRight: 'calc(25% + ' + getStyle('desktop_image').paddingRight + ')'})"
+            class="pagebuilder-banner-wrapper pagebuilder-mobile-hidden">
+            <div class="pagebuilder-overlay " data-bind="attr: getAttributes('overlay'), style: getStyle('overlay'), css: getCss('overlay')">
                 <div class="pagebuilder-collage-content">
-                    <div data-bind="html: getContentHtml()"></div>
-                    <!-- ko if: getData().show_button !== 'never_show' -->
-                        <button type="button" class="pagebuilder-banner-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
+                    <div data-bind="attr: getAttributes('content'), style: getStyle('content'), css: getCss('content'), html: getHtml('content')"></div>
+                    <!-- ko if: getAttributes('main')["data-show-button"] !== 'never_show' -->
+                        <button type="button" class="pagebuilder-banner-button" data-bind="attr: getAttributes('button'), style: getStyle('button'), css: getCss('button'), html: getHtml('button')"></button>
                     <!-- /ko -->
                 </div>
             </div>
         </div>
-        <div data-bind="style: Object.assign(getBannerStyles('mobileImage'), {
-            paddingTop: getStyle().paddingTop,
-            paddingBottom: getStyle().paddingBottom,
-            paddingLeft: getStyle().paddingLeft,
-            paddingRight: getStyle().paddingRight})"
-             class="pagebuilder-mobile-only pagebuilder-banner-wrapper">
-            <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
+        <div class="pagebuilder-banner-wrapper pagebuilder-mobile-only" data-bind="style: getStyle('mobile_image'), attr: getAttributes('mobile_image'), css: getCss('mobile_image')">
+            <div class="pagebuilder-overlay " data-bind="attr: getAttributes('overlay'), style: getStyle('overlay'), css: getCss('overlay')">
                 <div class="pagebuilder-collage-content">
-                    <div data-bind="html: getContentHtml()"></div>
-                    <!-- ko if: getData().show_button !== 'never_show' -->
-                        <button type="button" class="pagebuilder-banner-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
+                    <div data-bind="attr: getAttributes('content'), style: getStyle('content'), css: getCss('content'), html: getHtml('content')"></div>
+                    <!-- ko if: getAttributes('main')["data-show-button"] !== 'never_show' -->
+                        <button type="button" class="pagebuilder-banner-button" data-bind="attr: getAttributes('button'), style: getStyle('button'), css: getCss('button'), html: getHtml('button')"></button>
                     <!-- /ko -->
                 </div>
             </div>

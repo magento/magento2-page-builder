@@ -7,6 +7,10 @@ import ko from "knockout";
 import $t from "mage/translate";
 import confirmationDialog from "Magento_Ui/js/modal/confirm";
 import _ from "underscore";
+import appearanceConfig from "../../../component/block/appearance-config";
+import DataConverterPool from "../../../component/block/data-converter-pool";
+import ElementConverterPool from "../../../component/block/element-converter-pool";
+import {fromSnakeToCamelCase} from "../../../utils/string";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
 import EventBus from "../../event-bus";
@@ -27,12 +31,15 @@ export default class Structural extends EditableArea implements StructuralInterf
     public config: ConfigContentBlock;
     public edit: Edit;
     public title: string;
+    public data = {};
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
     public element: JQuery<HTMLElement>;
     private attributeFilter: AttributeFilter = new AttributeFilter();
     private attributeMapper: AttributeMapper =  new AttributeMapper();
     private styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
+    private elementConverterPool: ElementConverterPool;
+    private dataConverterPool: DataConverterPool;
 
     /**
      * Abstract structural constructor
@@ -40,19 +47,27 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @param parent
      * @param stage
      * @param config
+     * @param elementConverterPool
+     * @param dataConverterPool
      */
     constructor(
         parent: EditableArea,
         stage: Stage,
         config: ConfigContentBlock,
+        elementConverterPool: ElementConverterPool,
+        dataConverterPool: DataConverterPool,
     ) {
         super(stage);
         this.setChildren();
         this.parent = parent;
         this.config = config;
+        this.elementConverterPool = elementConverterPool;
+        this.dataConverterPool = dataConverterPool;
 
         // Create a new instance of edit for our editing needs
         this.edit = new Edit(this, this.stage.store);
+
+        this.bindUpdatePreviewObservablesOnChange();
     }
 
     /**
@@ -140,59 +155,128 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
-     * Get css classes for an block
-     * Example {"class-name": true}
+     * Get data for css binding, example {"class-name": true}
      *
      * @returns {DataObject}
      */
-    public getCss() {
-        const cssClasses: any = {};
-        if ("css_classes" in this.getData() && this.getData().css_classes !== "") {
-            this.getData().css_classes.toString().split(" ").map(
-                (value: any, index: number) => cssClasses[value] = true,
+    public getCss(element: string) {
+        const result: object = {};
+        let css: string = "";
+        const data = this.stage.store.get(this.id);
+        if (element === undefined) {
+            if ("css_classes" in data && data.css_classes !== "") {
+                css = data.css_classes;
+            }
+        } else {
+            const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
+            if (config.css && config.css.var !== undefined && config.css.var in data) {
+                css = data[config.css.var];
+            }
+        }
+        if (css) {
+            css.toString().split(" ").map(
+                (value: any, index: number) => result[value] = true,
             );
         }
-        return cssClasses;
+        return result;
     }
 
     /**
-     * Get stype properties for an block
-     * Example {"backgroundColor": "#cccccc"}
+     * Get data for style binding, example {"backgroundColor": "#cccccc"}
      *
      * @returns {DataObject}
      */
-    public getStyle() {
-        const styleAttributes = this.getData();
-        if (typeof styleAttributes.appearance !== "undefined" &&
-            typeof styleAttributes.appearances !== "undefined" &&
-            typeof styleAttributes.appearances[styleAttributes.appearance] !== "undefined") {
-            _.extend(styleAttributes, styleAttributes.appearances[styleAttributes.appearance]);
+    public getStyle(element: string) {
+        let data = _.extend({}, this.stage.store.get(this.id), this.config);
+        if (element === undefined) {
+            if (typeof data.appearance !== "undefined" &&
+                typeof data.appearances !== "undefined" &&
+                typeof data.appearances[data.appearance] !== "undefined") {
+                _.extend(data, data.appearances[data.appearance]);
+            }
+            return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(data));
         }
-        return this.styleAttributeMapper.toDom(this.styleAttributeFilter.filter(styleAttributes));
+
+        const appearanceConfiguration = appearanceConfig(this.config.name, data.appearance);
+        const config = appearanceConfiguration.data_mapping.elements;
+
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+
+        let result = {};
+        if (config[element].style.length) {
+            result = this.convertStyle(config[element], data, "master");
+        }
+        return result;
     }
 
     /**
-     * Get attributes for an block
-     * Example {"data-role": "element"}
+     * Get data for attr binding, example {"data-role": "element"}
      *
      * @returns {DataObject}
      */
-    public getAttributes(extra = {}) {
-        const data: DataObject = this.getData();
-        _.extend(data, this.config);
-        return _.extend(
-            this.attributeMapper.toDom(this.attributeFilter.filter(data)),
-            extra,
-        );
+    public getAttributes(element: string) {
+        let data = _.extend({}, this.stage.store.get(this.id), this.config);
+        if (element === undefined) {
+            if (undefined === data.appearance || !data.appearance) {
+                data.appearance = undefined !== this.config.fields.appearance
+                    ? this.config.fields.appearance.default
+                    : "default";
+            }
+            return this.attributeMapper.toDom(this.attributeFilter.filter(data));
+        }
+
+        const appearanceConfiguration = appearanceConfig(this.config.name, data.appearance);
+        const config = appearanceConfiguration.data_mapping.elements;
+
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+
+        let result = {};
+        if (config[element].attributes.length) {
+            result = this.convertAttributes(config[element], data, "master");
+        }
+
+        return result;
+    }
+
+    /**
+     * Get data for html binding
+     *
+     * @param {string} element
+     * @returns {object}
+     */
+    public getHtml(element: string) {
+        const data = this.stage.store.get(this.id);
+        const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
+        let result = "";
+        if (undefined !== config.html.var) {
+            result = data[config.html.var];
+        }
+        return result;
     }
 
     /**
      * Get block data
      *
+     * @param {string} element
      * @returns {DataObject}
      */
-    public getData() {
-        return this.stage.store.get(this.id);
+    public getData(element: string) {
+        let data = _.extend({}, this.stage.store.get(this.id));
+
+        if (undefined === element) {
+            return data;
+        }
+
+        const appearanceConfiguration = appearanceConfig(this.config.name, data.appearance);
+        const config = appearanceConfiguration.data_mapping.elements;
+
+        data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+
+        const result = {};
+        if (undefined !== config[element].tag.var) {
+            result[config[element].tag.var] = data[config[element].tag.var];
+        }
+        return result;
     }
 
     /**
@@ -202,5 +286,166 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     private getOptions(): Options {
         return new Options(this, this.retrieveOptions());
+    }
+
+    /**
+     * Convert attributes
+     *
+     * @param {object} config
+     * @param {DataObject} data
+     * @param {string} area
+     * @returns {object}
+     */
+    private convertAttributes(config: any, data: DataObject, area: string) {
+        const result = {};
+        for (const attributeConfig of config.attributes) {
+             if (undefined !== attributeConfig.persist
+                 && null !== attributeConfig.persist
+                 && false === !!attributeConfig.persist
+             ) {
+                continue;
+            }
+             let value = data[attributeConfig.var];
+             const converter = "preview" === area && attributeConfig.preview_converter
+                ? attributeConfig.preview_converter
+                : attributeConfig.converter;
+             if (this.elementConverterPool.get(converter)) {
+                value = this.elementConverterPool.get(converter).toDom(attributeConfig.var, data);
+            }
+             result[attributeConfig.name] = value;
+        }
+        return result;
+    }
+
+    /**
+     * Convert style properties
+     *
+     * @param {object}config
+     * @param {object}data
+     * @param {string} area
+     * @returns {object}
+     */
+    private convertStyle(config: any, data: any, area: string) {
+        const result = {};
+        if (config.style) {
+            for (const propertyConfig of config.style) {
+                if (undefined !== propertyConfig.persist
+                    && null !== propertyConfig.persist
+                    && false === !!propertyConfig.persist
+                ) {
+                    continue;
+                }
+                let value = "";
+                if (!!propertyConfig.static) {
+                    value = propertyConfig.value;
+                } else {
+                    value = data[propertyConfig.var];
+                    const converter = "preview" === area && propertyConfig.preview_converter
+                        ? propertyConfig.preview_converter
+                        : propertyConfig.converter;
+                    if (this.elementConverterPool.get(converter)) {
+                        value = this.elementConverterPool.get(converter).toDom(propertyConfig.var, data);
+                    }
+                }
+                if (typeof value === "object") {
+                    _.extend(result, value);
+                } else {
+                    result[fromSnakeToCamelCase(propertyConfig.name)] = value;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Process data for elements before its converted to knockout format
+     *
+     * @param {Object} data
+     * @param {Object} convertersConfig
+     * @returns {Object}
+     */
+    private convertData(data: object, convertersConfig: object) {
+        for (const converterConfig of convertersConfig) {
+            data = this.dataConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
+        }
+        return data;
+    }
+
+    /**
+     * Update preview observables after data changed in data store
+     *
+     * @param {object} data
+     */
+    private updatePreviewObservables(data: object) {
+        const appearance = data && data.appearance !== undefined ? data.appearance : undefined;
+        const appearanceConfiguration = appearanceConfig(this.config.name, appearance);
+        if (undefined === appearanceConfiguration
+            || undefined === appearanceConfiguration.data_mapping
+            || undefined === appearanceConfiguration.data_mapping.elements
+        ) {
+            return;
+        }
+
+        const config = appearanceConfiguration.data_mapping.elements;
+
+        for (const elementName of Object.keys(config)) {
+            if (this.data[elementName] === undefined) {
+                this.data[elementName] = {
+                    attributes: ko.observable({}),
+                    style: ko.observable({}),
+                    css: ko.observable({}),
+                    html: ko.observable({}),
+                };
+            }
+
+            data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+
+            if (config[elementName].style !== undefined) {
+               this.data[elementName].style(this.convertStyle(config[elementName], data, "preview"));
+            }
+            if (config[elementName].attributes !== undefined) {
+                this.data[elementName].attributes(this.convertAttributes(config[elementName], data, "preview"));
+            }
+            if (config[elementName].html !== undefined) {
+                const html = data[config[elementName].html.var]
+                    ? data[config[elementName].html.var]
+                    : config[elementName].html.placeholder;
+                this.data[elementName].html(html);
+            }
+            if (config[elementName].css !== undefined && config[elementName].css.var in data) {
+                const css = data[config[elementName].css.var];
+                const newClasses = {};
+
+                if (css.length > 0) {
+                    css.toString().split(" ").map(
+                        (value: any, index: number) => newClasses[value] = true,
+                    );
+                }
+                for (const className of Object.keys(this.data[elementName].css())) {
+                    if (!(className in newClasses)) {
+                        newClasses[className] = false;
+                    }
+                }
+                this.data[elementName].css(newClasses);
+            }
+            if (config[elementName].tag !== undefined) {
+                if (this.data[elementName][config[elementName].tag.var] === undefined) {
+                    this.data[elementName][config[elementName].tag.var] = ko.observable("");
+                }
+                this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
+            }
+        }
+    }
+
+    /**
+     * Attach event to updating data in data store to update observables
+     */
+    private bindUpdatePreviewObservablesOnChange(): void {
+        this.stage.store.subscribe(
+            (data: DataObject) => {
+                this.updatePreviewObservables(_.extend({}, this.stage.store.get(this.id)));
+            },
+            this.id,
+        );
     }
 }
