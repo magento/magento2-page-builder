@@ -771,7 +771,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -798,12 +798,12 @@
         </actionGroup>
         <!-- Check for border radius -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
         <seeInField userInput="0" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusDefaultValue"/>
         <!-- Check for class field -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
         <!-- Check for margins & paddings -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
@@ -818,7 +818,7 @@
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderWidthPropertyIsNotDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <!-- Validate the default values in the fields -->
         <seeElement selector="{{AdvancedForm.advancedBorderWidthDefault}}" stepKey="assertBorderWidthDefaultValue"/>
@@ -834,10 +834,10 @@
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
@@ -852,13 +852,13 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <seeOptionIsSelected userInput="{{PageBuilderAdvancedAlignmentProperty.value}}" selector="{{AdvancedForm.advancedAlignment}}" stepKey="assertAlignmentSavedInColumn"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <seeOptionIsSelected userInput="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}" selector="{{AdvancedForm.advancedAlignment}}" stepKey="assertAlignmentSavedInColumn"/>
         <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderWidthProperty10.value}}" selector="{{AdvancedForm.advancedBorderWidth}}" stepKey="assertBorderSizeSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderRadiusProperty12.value}}" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusSavedInColumn"/>
-        <seeInField userInput="{{PageBuilderAdvancedCssClassesProperty.value}}" selector="{{AdvancedForm.advancedCssClasses}}" stepKey="assertCSSClassesSavedInColumn"/>
+        <seeInField userInput="{{PageBuilderAdvancedCssClassesPropertyThreeClasses.value}}" selector="{{AdvancedForm.advancedCssClasses}}" stepKey="assertCSSClassesSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginTop}}" selector="{{AdvancedForm.advancedMarginTop}}" stepKey="assertMarginTopSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginRight}}" selector="{{AdvancedForm.advancedMarginRight}}" stepKey="assertMarginRightSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft}}" selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="assertMarginLefSavedInColumn"/>
