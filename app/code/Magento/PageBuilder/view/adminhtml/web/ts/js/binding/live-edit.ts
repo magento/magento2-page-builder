@@ -20,9 +20,7 @@ ko.bindingHandlers.liveEdit = {
      * @param {any} bindingContext
      */
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        const contentTypeInstance = bindingContext.$data;
-        const data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
-        const value = valueAccessor();
+        const {value, placeholder} = valueAccessor();
 
         const stripHtml = (html: string) => {
             const tempDiv = document.createElement("div");
@@ -34,10 +32,7 @@ ko.bindingHandlers.liveEdit = {
          * Blur event on element
          */
         const onBlur = () => {
-            if (value.field in data) {
-                data[value.field] = stripHtml(element.innerText);
-                contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
-            }
+            value(stripHtml(element.innerText));
         };
 
         /**
@@ -78,6 +73,8 @@ ko.bindingHandlers.liveEdit = {
                 $(element).removeClass("placeholder-text");
             }
         };
+        element.setAttribute("data-placeholder", placeholder);
+        element.innerText = value();
         element.contentEditable = true;
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
@@ -89,30 +86,6 @@ ko.bindingHandlers.liveEdit = {
             if (element.innerText === "") {
                 $(element).addClass("placeholder-text");
             }
-        }, 10);
-    },
-
-    /**
-     * Preprocess live edit binding on an element
-     *
-     * Use data-placeholder for elements that
-     * don't support the placeholder attribute
-     *
-     * @param {string} value '{"field":"button_text","placeholder_text":"Edit Button Text"}'
-     * @param {string} name "liveEdit"
-     * @param {any} addBindingCallback
-     */
-    preprocess(value, name, addBindingCallback) {
-        const parsed = JSON.parse(value);
-        if ("field" in parsed) {
-            const textValue = "preview.data." + parsed.field + "()";
-            addBindingCallback("text", textValue);
-        }
-        if ("placeholder_text" in parsed) {
-            const placeholderText = $t(parsed.placeholder_text);
-            const attrValue = "{'data-placeholder':'" + placeholderText + "'}";
-            addBindingCallback("attr", attrValue);
-        }
-        return value;
+        }, 0);
     },
 };

@@ -1,10 +1,9 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate"], function (_jquery, _knockout, _translate) {
+define(["jquery", "knockout"], function (_jquery, _knockout) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
-  _translate = _interopRequireDefault(_translate);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -24,9 +23,9 @@ define(["jquery", "knockout", "mage/translate"], function (_jquery, _knockout, _
      * @param {any} bindingContext
      */
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-      var contentTypeInstance = bindingContext.$data;
-      var data = contentTypeInstance.stage.store.get(contentTypeInstance.id);
-      var value = valueAccessor();
+      var _valueAccessor = valueAccessor(),
+          value = _valueAccessor.value,
+          placeholder = _valueAccessor.placeholder;
 
       var stripHtml = function stripHtml(html) {
         var tempDiv = document.createElement("div");
@@ -39,10 +38,7 @@ define(["jquery", "knockout", "mage/translate"], function (_jquery, _knockout, _
 
 
       var onBlur = function onBlur() {
-        if (value.field in data) {
-          data[value.field] = stripHtml(element.innerText);
-          contentTypeInstance.stage.store.update(contentTypeInstance.id, data);
-        }
+        value(stripHtml(element.innerText));
       };
       /**
        * Click event on element
@@ -88,6 +84,8 @@ define(["jquery", "knockout", "mage/translate"], function (_jquery, _knockout, _
         }
       };
 
+      element.setAttribute("data-placeholder", placeholder);
+      element.innerText = value();
       element.contentEditable = true;
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
@@ -98,34 +96,7 @@ define(["jquery", "knockout", "mage/translate"], function (_jquery, _knockout, _
         if (element.innerText === "") {
           (0, _jquery.default)(element).addClass("placeholder-text");
         }
-      }, 10);
-    },
-
-    /**
-     * Preprocess live edit binding on an element
-     *
-     * Use data-placeholder for elements that
-     * don't support the placeholder attribute
-     *
-     * @param {string} value '{"field":"button_text","placeholder_text":"Edit Button Text"}'
-     * @param {string} name "liveEdit"
-     * @param {any} addBindingCallback
-     */
-    preprocess: function preprocess(value, name, addBindingCallback) {
-      var parsed = JSON.parse(value);
-
-      if ("field" in parsed) {
-        var textValue = "preview.data." + parsed.field + "()";
-        addBindingCallback("text", textValue);
-      }
-
-      if ("placeholder_text" in parsed) {
-        var placeholderText = (0, _translate.default)(parsed.placeholder_text);
-        var attrValue = "{'data-placeholder':'" + placeholderText + "'}";
-        addBindingCallback("attr", attrValue);
-      }
-
-      return value;
+      }, 0);
     }
   };
 });
