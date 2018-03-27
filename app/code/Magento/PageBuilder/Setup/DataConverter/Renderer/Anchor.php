@@ -55,11 +55,11 @@ class Anchor implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<span';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '></span>';
+        $rootElementHtml .= '></div>';
 
         return $rootElementHtml;
     }

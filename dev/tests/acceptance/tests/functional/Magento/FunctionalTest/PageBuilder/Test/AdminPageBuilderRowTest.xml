@@ -188,99 +188,6 @@
         </actionGroup>
         <!-- Assert row height has changed when content added - Depends on MQE-818 -->
     </test>
-    <test name="RowHasMarginAndPaddingDefaultSettings">
-        <annotations>
-            <features value="PageBuilder Row MAGETWO-83767"/>
-            <stories value="Empty Row Preview on Stage MAGETWO-75136"/>
-            <title value="Row has margin and padding default settings"/>
-            <description value="A user should see the default styles for row margin and padding"/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-88325"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-row"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <!-- Assert default values for margin and padding on stage -->
-        <seeElement selector="{{RowAdminPreview.rowStyle(PageBuilderRowStyles.margin)}}" stepKey="seeRowMargin"/>
-        <seeElement selector="{{RowAdminPreview.rowStyle(PageBuilderRowStyles.padding)}}" stepKey="seeRowPadding"/>
-        <!-- Assert default values for margins and padding in row form -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <waitForElementVisible time="2" selector="{{AdvancedForm.sectionName}}" stepKey="waitForSavedAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeSavedAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickSavedAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
-        <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.marginTop}}" selector="{{AdvancedForm.advancedMarginTop}}" stepKey="assertMarginTopDefaultSettingInRow"/>
-        <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.marginRight}}" selector="{{AdvancedForm.advancedMarginRight}}" stepKey="assertMarginRightDefaultSettingInRow"/>
-        <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.marginLeft}}" selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="assertMarginLefDefaultSettingInRow"/>
-        <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.marginBottom}}" selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="assertMarginBottomDefaultSettingInRow"/>
-        <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.paddingTop}}" selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="assertPaddingTopDefaultSettingInRow"/>
-        <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.paddingRight}}" selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="assertPaddingRightDefaultSettingInRow"/>
-        <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.paddingLeft}}" selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="assertPaddingLefDefaultSettingInRow"/>
-        <seeInField userInput="{{PageBuilderRowAdvancedMarginsAndPaddingProperty.paddingBottom}}" selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="assertPaddingBottomDefaultSettingInRow"/>
-        <!-- Assert row settings in storefront -->
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="row{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{RowOnFrontend.marginDefault}}" stepKey="seeRowMarginStyle"/>
-        <seeElement selector="{{RowOnFrontend.paddingDefault}}" stepKey="seeRowPaddingStyle"/>
-    </test>
-    <test name="RowHasAdvancedFormSection">
-        <annotations>
-            <features value="PageBuilder Row MAGETWO-83767"/>
-            <stories value="PageBuilder Row Configuration MAGETWO-66349"/>
-            <title value="Row has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for rows"/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84275"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-row"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-        </after>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-    </test>
     <test name="RowHasBackgroundFormSection">
         <annotations>
             <features value="PageBuilder Row MAGETWO-83767"/>
@@ -329,8 +236,6 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAttachmentProperty">
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
@@ -406,8 +311,6 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterParallaxSpeedProperty">
             <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
         </actionGroup>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
@@ -416,14 +319,14 @@
         <seeElementInDOM selector="{{RowOnFrontend.parallaxClass}}" stepKey="seeParallaxBackgroundSet"/>
         <seeElementInDOM selector="{{RowOnFrontend.parallaxSpeed(PageBuilderParallaxSpeedProperty.value)}}" stepKey="seeParallaxSpeedSet"/>
     </test>
-    <test name="RowHasAdvancedFormSectionRequiredFields">
+    <test name="RowValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="PageBuilder Row MAGETWO-83767"/>
-            <stories value="PageBuilder Row Configuration MAGETWO-66349"/>
-            <title value="Add advanced tab"/>
-            <description value="See all the required fields in row content type advanced section"/>
+            <features value="PageBuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Row - Validate Advanced Configuration Default Values"/>
+            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Row."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84661"/>
+            <testCaseId value="MAGETWO-89361"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
         </annotations>
@@ -436,124 +339,40 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible"/>
-
-        <!-- Check for alignment -->
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <!-- Check for border -->
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderProperty.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertDefaultBorderValue"/>
-        <!-- Check for border colour -->
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderColorProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeAdvancedBorderColorPropertyIsDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <!-- Check for border width -->
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderWidthProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyRowDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeAdvancedBorderWidthPropertyIsDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty"/>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <!-- Check for border radius -->
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty"/>
-        </actionGroup>
-        <seeInField userInput="0" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusDefaultValue"/>
-        <!-- Check for class field -->
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
-        <!-- Check for margins & paddings -->
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-
-        <!-- Check border fields become enabled when changing border -->
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderColorPropertyIsNotDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderWidthPropertyIsNotDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty"/>
-        </actionGroup>
-        <!-- Validate the default values in the fields -->
-        <seeInField userInput="{{PageBuilderAdvancedBorderWidthProperty.value}}" selector="{{AdvancedForm.advancedBorderWidth}}" stepKey="assertBorderWidthDefaultValue"/>
-
-        <!-- Add test data into form -->
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-
-        <!-- Save form data -->
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings4"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage4"/>
-
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <waitForElementVisible time="2" selector="{{AdvancedForm.sectionName}}" stepKey="waitForSavedAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeSavedAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickSavedAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible1"/>
-        <seeOptionIsSelected userInput="{{PageBuilderAdvancedAlignmentProperty.value}}" selector="{{AdvancedForm.advancedAlignment}}" stepKey="assertAlignmentSavedInRow"/>
-        <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedBorderSizeProperty10.value}}" selector="{{AdvancedForm.advancedBorderSize}}" stepKey="assertBorderSizeSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedBorderRadiusProperty12.value}}" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedCssClassesProperty.value}}" selector="{{AdvancedForm.advancedCssClasses}}" stepKey="assertCSSClassesSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginTop}}" selector="{{AdvancedForm.advancedMarginTop}}" stepKey="assertMarginTopSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginRight}}" selector="{{AdvancedForm.advancedMarginRight}}" stepKey="assertMarginRightSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft}}" selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="assertMarginLefSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginBottom}}" selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="assertMarginBottomSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop}}" selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="assertPaddingTopSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingRight}}" selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="assertPaddingRightSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft}}" selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="assertPaddingLefSavedInRow"/>
-        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingBottom}}" selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="assertPaddingBottomSavedInRow"/>
-        <amOnPage url="row{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{RowOnFrontend.textAlign}}" stepKey="seeRowTextAlignStyle"/>
-        <seeElement selector="{{RowOnFrontend.border}}" stepKey="seeRowBorderStyle"/>
-        <seeElement selector="{{RowOnFrontend.borderRadius}}" stepKey="seeRowBorderRadiusStyle"/>
-        <seeElement selector="{{RowOnFrontend.margin}}" stepKey="seeRowMarginStyle"/>
-        <seeElement selector="{{RowOnFrontend.padding}}" stepKey="seeRowPaddingStyle"/>
-        <seeElement selector="{{RowOnFrontend.class}}" stepKey="seeRowClass"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Style On Stage -->
+        <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
+        <waitForElementVisible selector="{{RowAdminPreview.default(PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyRowDefault.value, PageBuilderPaddingProperty10.value, PageBuilderBackgroundSizePropertyDefault.value, PageBuilderBackgroundRepeatPropertyDefault.stageValue, PageBuilderBackgroundAttachmentPropertyDefault.value, '1')}}" stepKey="waitForStyle"/>
     </test>
     <test name="RowAdminPreviewUpdates">
         <annotations>
@@ -573,6 +392,10 @@
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
@@ -600,34 +423,6 @@
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
 
-        <!-- Open the advanced section -->
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-
-        <!-- Add advanced data to the row -->
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
-        </actionGroup>
-
         <!-- Save form data -->
         <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings"/>
 
@@ -638,12 +433,6 @@
         <seeElementInDOM selector="{{RowAdminPreview.backgroundSize}}" stepKey="seeBackgroundSizeAdminPreview"/>
         <seeElementInDOM selector="{{RowAdminPreview.backgroundRepeat}}" stepKey="seeBackgroundRepeatAdminPreview"/>
         <seeElementInDOM selector="{{RowAdminPreview.backgroundAttachment}}" stepKey="seeBackgroundAttachmentAdminPreview"/>
-        <!-- Advanced -->
-        <seeElementInDOM selector="{{RowAdminPreview.textAlign}}" stepKey="seeTextAlignAdminPreview"/>
-        <seeElementInDOM selector="{{RowAdminPreview.border}}" stepKey="seeBorderAdminPreview"/>
-        <seeElementInDOM selector="{{RowAdminPreview.borderRadius}}" stepKey="seeBorderRadiusAdminPreview"/>
-        <seeElementInDOM selector="{{RowAdminPreview.margin}}" stepKey="seeMarginAdminPreview"/>
-        <seeElementInDOM selector="{{RowAdminPreview.padding}}" stepKey="seePaddingAdminPreview"/>
     </test>
     <test name="CanAddUnlimitedRows">
         <annotations>
@@ -760,7 +549,7 @@
             <argument name="CmsPage" value="$$createPreReqCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
@@ -820,7 +609,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
-        <fillField selector="{{TextOnBackend.textArea}}" userInput="Text from Row" stepKey="addTextToEditor"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Text from Row" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <click selector="{{BlockNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveBlock" />
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
