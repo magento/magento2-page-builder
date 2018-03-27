@@ -21,7 +21,7 @@ define(["uiEvents", "../uploader", "./block"], function (_uiEvents, _uploader, _
       _this = _Block.call(this, parent, stage, config, formData, elementConverterPool, dataConverterPool) || this; // Create uploader
 
       _this.uploader = void 0;
-      _this.uploader = new _uploader(_this.id, "imageuploader_" + _this.id, Object.assign({}, _uploader.config, {
+      _this.uploader = new _uploader(_this.id, "imageuploader_" + _this.id, Object.assign({}, _uploader.getDefaultConfig(), {
         value: _this.stage.store.get(_this.id).image
       })); // Register listener when image gets uploaded from uploader UI component
 

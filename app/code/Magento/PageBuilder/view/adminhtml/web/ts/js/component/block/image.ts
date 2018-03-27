@@ -36,7 +36,7 @@ export default class Image extends Block {
         this.uploader = new Uploader(
             this.id,
             "imageuploader_" + this.id,
-            Object.assign({}, Uploader.config, {
+            Object.assign({}, Uploader.getDefaultConfig(), {
                 value: this.stage.store.get(this.id).image,
             }),
         );
