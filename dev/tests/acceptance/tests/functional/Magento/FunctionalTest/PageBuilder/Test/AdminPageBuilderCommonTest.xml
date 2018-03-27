@@ -150,6 +150,8 @@
             <group value="pagebuilder-remove"/>
         </annotations>
         <before>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
@@ -158,8 +160,7 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Add a single header into the first row -->
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderIntoStage">
@@ -170,12 +171,12 @@
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
             <argument name="contentBlockNumber" value="PageBuilderSecondRowInStage"/>
         </actionGroup>
-
-        <!-- As the row now contains a header it should prompt on removal -->
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeRow">
+        <!-- Remove second row now containing heading -->
+        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeSecondRow">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentBlockNumber" value="PageBuilderSecondRowInStage"/>
         </actionGroup>
-        <pauseExecution stepKey="pause"/>
+        <!-- As the row now contains a header it should prompt on removal -->
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
@@ -286,18 +287,22 @@
         </actionGroup>
 
         <!-- Remove the first heading, expect a prompt -->
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeFirstHeader">
+        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeFirstHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentBlockNumber" value="PageBuilderHeadingIndex1"/>
         </actionGroup>
+        
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
         <click selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
 
         <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeSecondHeader">
+        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeSecondHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentBlockNumber" value="PageBuilderHeadingIndex2"/>
         </actionGroup>
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
         <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
