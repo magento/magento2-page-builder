@@ -74,18 +74,6 @@ export default class PreviewBlock {
     }
 
     /**
-     * Retrieve the template for the preview block
-     *
-     * @returns {string}
-     */
-    get template(): string {
-        if (this.config.preview_template) {
-            return this.config.preview_template;
-        }
-        return "";
-    }
-
-    /**
      * Update the data value of a part of our internal Knockout data store
      *
      * @param {string} key
