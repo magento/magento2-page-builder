@@ -7,13 +7,15 @@ import ko from "knockout";
 import $t from "mage/translate";
 import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
-import PreviewBlock from "./block";
 import {ConfigContentBlock} from "../../config";
 import Block from "../block";
+import PreviewBlock from "./block";
 
 export default class Slide extends PreviewBlock {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
     private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
+    private buttonText: KnockoutObservable<string>;
+    private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
      * @param {Block} parent
@@ -27,6 +29,8 @@ export default class Slide extends PreviewBlock {
             const index = children.indexOf(this.parent);
             this.displayLabel($t("Slide") + (index + 1));
         });
+        this.buttonText = this.data.button_text;
+        this.buttonText.subscribe(this.onButtonTextChange.bind(this));
     }
     /**
      * Get the slide wrapper attributes for the preview
@@ -174,5 +178,17 @@ export default class Slide extends PreviewBlock {
             styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
         }
         return styles;
+    }
+
+    /**
+     * Update store on slide button text listener
+     *
+     * @param {string} value
+     */
+    private onButtonTextChange(value: string) {
+        const data = this.parent.stage.store.get(this.parent.id);
+
+        data.button_text = value;
+        this.parent.stage.store.update(this.parent.id, data);
     }
 }
