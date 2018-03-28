@@ -382,19 +382,19 @@
         <!-- Border -->
         <comment userInput="Border: dropdown defaults to None" stepKey="AC1"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderAttribute">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBorderAttributeNotRequired">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderAttributeNotDisabled">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBorderAttributeValue">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
         <comment userInput="Border: available values None, Default, Dotted, Dashed, Solid, Double, Groove, Ridge, Inset, Outset" stepKey="AC2"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="innerText" stepKey="grabBorderOptions"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderPropertyNone.section, PageBuilderAdvancedBorderPropertyNone.fieldName)}}" userInput="innerText" stepKey="grabBorderOptions"/>
         <assertEquals expected="{{PageBuilderAdvancedBorderDefaultSlideProperty.optionsList}}" expectedType="array" actual="grabBorderOptions" actualType="variable" message="Verify Border dropdown options" stepKey="assertBorderOptions2"/>
         <!-- Border Color -->
         <comment userInput="Border Color: input defaults to empty." stepKey="AC3"/>
