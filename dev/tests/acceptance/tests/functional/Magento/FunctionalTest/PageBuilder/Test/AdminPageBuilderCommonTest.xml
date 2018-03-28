@@ -300,9 +300,8 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
 
         <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
-        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeSecondHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeSecondHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockNumber" value="PageBuilderHeadingIndex1"/>
         </actionGroup>
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
         <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
