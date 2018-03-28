@@ -32,7 +32,7 @@ export default class Slider extends Block {
                 "<i class='icon-pagebuilder-add'></i>",
                 $t("Add"),
                 this.addSlide,
-                ["add-slider"],
+                ["add-child"],
                 10,
             ),
         );

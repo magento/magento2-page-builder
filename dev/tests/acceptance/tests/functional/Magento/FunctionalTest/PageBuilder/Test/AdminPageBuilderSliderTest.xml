@@ -127,9 +127,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!--Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
-        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSlider2"/>
-        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot0"/>
-        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement2"/>
+        <actionGroup ref="addSlide" stepKey="addSlide"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditSlide2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle2">
@@ -150,6 +148,7 @@
             <argument name="property" value="PageBuilderSlideItemButtonText2"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!--Verify slider and slide settings on stage after page save-->
@@ -159,10 +158,8 @@
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot1"/>
         <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle1"/>
-        <seeElement selector="{{SliderInAdmin.slideNavigationHandle}}" stepKey="seeSlideNavigationHandle1"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="moveMouseOverSlideNavigationDot2"/>
         <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2"/>
-        <seeElement selector="{{SliderInAdmin.slideNavigationHandle}}" stepKey="seeSlideNavigationHandle2"/>
         <seeElement selector="{{SliderInAdmin.ShowArrows}}" stepKey="verifyArrowsYesOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeight500OnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderAlignment(PageBuilderAdvancedAlignmentLeftProperty.value)}}" stepKey="verifyAlignmentLeftOnAdmin"/>
@@ -225,6 +222,8 @@
             <group value="pagebuilder-slider"/>
         </annotations>
         <before>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
@@ -243,8 +242,17 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="waitForNewSlide" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
         <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeNewSlide"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
+        <moveMouseOver selector="{{SliderInAdmin.slideWrapper}}" stepKey="onMouseOverSliderStage"/>
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <actionGroup ref="openPageBuilderOptionsByIndex" stepKey="openSliderOptions">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentBlockNumber" value="PageBuilderSliderIndex1"/>
+        </actionGroup>
+        <!--<moveMouseOver selector="{{SliderInAdmin.slideWrapper}}" stepKey="onMouseOverContentBlockStage"/>-->
+        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeEmptyContentBlockFromStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentBlockNumber" value="PageBuilderSliderIndex1"/>
         </actionGroup>
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>

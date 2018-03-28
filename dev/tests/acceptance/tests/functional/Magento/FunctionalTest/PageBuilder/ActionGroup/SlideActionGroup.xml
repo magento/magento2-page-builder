@@ -11,7 +11,7 @@
     <actionGroup name="openSlideOptions">
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
         <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.firstSlideNavigationDot}}"/>
-        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
+        <seeElement selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="seeSlideOptionsEdit"/>
         <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentBlock"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
@@ -31,6 +31,7 @@
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <waitForElementVisible time="5" selector="{{SliderInAdmin.sliderOptions}}" stepKey="seeContentBlockOptionsMenu"/>
-        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickAddNewSlideChild"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
+        <click selector="{{SliderInAdmin.sliderOptionsAdd}}" stepKey="clickAddNewSlideChild"/>
     </actionGroup>
 </actionGroups>
