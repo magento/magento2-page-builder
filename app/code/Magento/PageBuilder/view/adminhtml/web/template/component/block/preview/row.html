@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container pagebuilder-row children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'empty-row': children().length == 0, 'jarallax': preview.data.enable_parallax() == 1}), event: {mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false, afterRender: function (element) { preview.initParallax.call(preview, element); }">
+<div class="pagebuilder-content-type type-container pagebuilder-row children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'empty-row': children().length == 0, 'jarallax': preview.data.enable_parallax() == 1}), event: {mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false, afterRender: function (element) { setTimeout(function () { preview.initParallax.call(preview, element); }, 0) }">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <!-- ko template: previewChildTemplate --><!-- /ko -->
     <div class="pagebuilder-display-label" data-bind="text: function () { return preview.displayLabel().toUpperCase(); }()"></div>

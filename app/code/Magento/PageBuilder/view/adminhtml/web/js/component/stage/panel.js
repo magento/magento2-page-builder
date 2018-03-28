@@ -7,14 +7,14 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiComponen
   var Panel = _uiComponent.extend({
     componentTemplate: "Magento_PageBuilder/component/stage/panel.html",
     defaults: {
-      fullScreenTitle: (0, _translate)("Full Screen"),
       groups: [],
       isCollapsed: false,
       isVisible: false,
       originalScrollTop: false,
-      searchNoResult: (0, _translate)("Nothing found"),
-      searchPlaceholder: (0, _translate)("Find items"),
       searchResults: [],
+      searchPlaceholder: (0, _translate)("Find items"),
+      searchNoResult: (0, _translate)("Nothing found"),
+      fullScreenTitle: (0, _translate)("Full Screen"),
       searchTitle: (0, _translate)("Clear Search"),
       searchValue: "",
       searching: false,
