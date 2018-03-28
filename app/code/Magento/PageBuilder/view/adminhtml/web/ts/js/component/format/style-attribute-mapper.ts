@@ -161,15 +161,15 @@ export default class StyleAttributeMapper {
                 if (key === "background-color" || key === "border-color") {
                     if (value === "default" || value === "initial" || value === "") {
                         value = "";
-                    } else {
-                        value = this.convertRgbToHex(value);
+                    // } else {
+                    //     value = this.convertRgbToHex(value);
                     }
                 }
                 if (key === "color") {
                     if (value === "") {
                         value = "default";
-                    } else {
-                        value = this.convertRgbToHex(value);
+                    // } else {
+                    //     value = this.convertRgbToHex(value);
                     }
                 }
 

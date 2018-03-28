@@ -44,10 +44,24 @@
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="background_color" sortOrder="10" formElement="input">
+        <field name="background_color" sortOrder="10" formElement="colorPicker">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">rgb(31,43,53)</item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Background Color</label>
+                <componentType>colorPicker</componentType>
             </settings>
+            <formElements>
+                <colorPicker>
+                    <settings>
+                        <colorPickerMode>full</colorPickerMode>
+                        <colorFormat>rgb</colorFormat>
+                    </settings>
+                </colorPicker>
+            </formElements>
         </field>
         <field name="background_image" sortOrder="20" formElement="imageUploader">
             <settings>
