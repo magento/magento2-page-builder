@@ -8,7 +8,7 @@ import Block from "./block";
 
 export default class Newsletter extends Block {
     public editOnInsert: boolean = false;
-    
+
     protected afterDataRendered() {
         const attributes = this.data.main.attributes();
         if (attributes["data-title"] === "") {

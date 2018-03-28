@@ -814,7 +814,6 @@
         <type name="map" translate="label" sortOrder="20">
             <label>Map</label>
             <icon>icon-pagebuilder-map</icon>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/map</preview_component>
             <component>Magento_PageBuilder/js/component/block/map</component>
             <form>pagebuilder_map_form</form>
             <group>interactive</group>
@@ -824,12 +823,30 @@
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                    <property var="width" name="width"/>
+                                    <property var="height" name="height"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                    <attribute var="position" name="data-position"/>
+                                </attributes>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/map.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/map.html</render_template>
-                    <readers>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                        <reader name="map" component="Magento_PageBuilder/js/component/format/read/map"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

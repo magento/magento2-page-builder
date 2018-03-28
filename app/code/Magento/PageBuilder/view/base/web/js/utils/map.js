@@ -50,7 +50,6 @@ define([
         this.onUpdate = function (newMarkers, latLng, zoom) {
             this.map.setZoom(parseInt(zoom, 10));
             this.map.setCenter(latLng);
-
             this.setMarkers(newMarkers);
         };
 

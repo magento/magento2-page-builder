@@ -9,18 +9,18 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
-        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and @style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; height: {{arg7}}; position: relative; overflow: hidden;']" parameterized="true"/>
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and @style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; height: {{arg7}}; position: relative; overflow: hidden;']" parameterized="true"/>
         <element name="map" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
         <element name="mapWithPin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
         <element name="mapPinLocation" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
         <!-- Configuration Elements-->
-        <element name="mapWidth" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'width: {{arg2}};')]" parameterized="true"/>
-        <element name="mapHeight" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'height: {{arg2}};')]" parameterized="true"/>
-        <element name="mapAlignment" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="mapNoAlignment" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and not(contains(@style, 'text-align:'))]" parameterized="true"/>
+        <element name="mapWidth" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'width: {{arg2}};')]" parameterized="true"/>
+        <element name="mapHeight" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}};')]" parameterized="true"/>
+        <element name="mapAlignment" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="mapNoAlignment" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and not(contains(@style, 'text-align:'))]" parameterized="true"/>
         <element name="mapCssClass" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="mapMargin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="mapPadding" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="mapMargin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="mapPadding" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <!-- Map Buttons -->
         <element name="mapFullScreen" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Toggle fullscreen view']" parameterized="true"/>
         <element name="mapPegman" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))]" parameterized="true"/>
