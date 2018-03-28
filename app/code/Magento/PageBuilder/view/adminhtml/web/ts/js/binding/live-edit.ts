@@ -6,6 +6,8 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import keyCodes from "Magento_Ui/js/lib/key-codes";
+import _ from "underscore";
 
 // Custom Knockout binding for live editing text inputs
 ko.bindingHandlers.liveEdit = {
@@ -47,18 +49,21 @@ ko.bindingHandlers.liveEdit = {
         /**
          * Key down event on element
          *
+         * Prevent styling such as bold, italic, and underline using keyboard commands
+         * Prevent multi-line entries
+         *
          * @param {any} event
          */
         const onKeyDown = (event: any) => {
+            const key = keyCodes[event.keyCode];
+
             // command or control
             if (event.metaKey || event.ctrlKey) {
-                // b, i, or u
-                if (event.which === 66 || event.which === 73 || event.which === 85) {
+                if (key === "bKey" || key === "iKey" || key === "uKey") {
                     event.preventDefault();
                 }
             }
-            // enter
-            if (event.which === 13) {
+            if (key === "enterKey") {
                 event.preventDefault();
             }
         };

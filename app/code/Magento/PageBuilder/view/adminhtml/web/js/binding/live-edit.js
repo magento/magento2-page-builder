@@ -1,9 +1,10 @@
 /*eslint-disable */
-define(["jquery", "knockout"], function (_jquery, _knockout) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _keyCodes) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
+  _keyCodes = _interopRequireDefault(_keyCodes);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53,21 +54,23 @@ define(["jquery", "knockout"], function (_jquery, _knockout) {
       /**
        * Key down event on element
        *
+       * Prevent styling such as bold, italic, and underline using keyboard commands
+       * Prevent multi-line entries
+       *
        * @param {any} event
        */
 
 
       var onKeyDown = function onKeyDown(event) {
-        // command or control
+        var key = _keyCodes.default[event.keyCode]; // command or control
+
         if (event.metaKey || event.ctrlKey) {
-          // b, i, or u
-          if (event.which === 66 || event.which === 73 || event.which === 85) {
+          if (key === "bKey" || key === "iKey" || key === "uKey") {
             event.preventDefault();
           }
-        } // enter
+        }
 
-
-        if (event.which === 13) {
+        if (key === "enterKey") {
           event.preventDefault();
         }
       };
