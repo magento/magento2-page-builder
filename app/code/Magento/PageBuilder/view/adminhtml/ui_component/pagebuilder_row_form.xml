@@ -47,18 +47,21 @@
         <field name="background_color" sortOrder="10" formElement="colorPicker">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">rgb(31,43,53)</item>
+                    <item name="default" xsi:type="string">No Color</item>
                 </item>
             </argument>
             <settings>
                 <label translate="true">Background Color</label>
                 <componentType>colorPicker</componentType>
+                <validation>
+                    <rule name="validate-color" xsi:type="boolean">true</rule>
+                </validation>
             </settings>
             <formElements>
                 <colorPicker>
                     <settings>
                         <colorPickerMode>full</colorPickerMode>
-                        <colorFormat>rgb</colorFormat>
+                        <colorFormat>hex</colorFormat>
                     </settings>
                 </colorPicker>
             </formElements>
