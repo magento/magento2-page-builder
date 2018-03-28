@@ -379,6 +379,9 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
@@ -483,7 +486,9 @@
         <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingBottom}}" selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="assertPaddingBottomSavedInRow"/>
         <amOnPage url="row{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{RowOnFrontend.textAlign}}" stepKey="seeRowTextAlignStyle"/>
-        <seeElement selector="{{RowOnFrontend.border}}" stepKey="seeRowBorderStyle"/>
+        <seeElement selector="{{RowOnFrontend.borderWidth}}" stepKey="seeRowBorderWidth"/>
+        <seeElement selector="{{RowOnFrontend.borderStyle}}" stepKey="seeRowBorderStyle"/>
+        <seeElement selector="{{RowOnFrontend.borderColor}}" stepKey="seeRowBorderColor"/>
         <seeElement selector="{{RowOnFrontend.borderRadius}}" stepKey="seeRowBorderRadiusStyle"/>
         <seeElement selector="{{RowOnFrontend.margin}}" stepKey="seeRowMarginStyle"/>
         <seeElement selector="{{RowOnFrontend.padding}}" stepKey="seeRowPaddingStyle"/>
