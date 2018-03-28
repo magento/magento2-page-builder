@@ -21,7 +21,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _Block.prototype.retrieveOptions.call(this);
 
-      options.push(new _option.Option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add"), this.addSlide, ["add-slider"], 10));
+      options.push(new _option.Option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add"), this.addSlide, ["add-child"], 10));
       return options;
     };
     /**
