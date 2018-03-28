@@ -5,9 +5,7 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import $t from "mage/translate";
 import keyCodes from "Magento_Ui/js/lib/key-codes";
-import _ from "underscore";
 
 // Custom Knockout binding for live editing text inputs
 ko.bindingHandlers.liveEdit = {
