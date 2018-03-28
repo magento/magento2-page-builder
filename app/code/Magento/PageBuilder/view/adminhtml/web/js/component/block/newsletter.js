@@ -8,13 +8,19 @@ define(["../config", "./block"], function (_config, _block) {
     _inheritsLoose(Newsletter, _Block);
 
     function Newsletter() {
-      return _Block.apply(this, arguments) || this;
+      var _temp, _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.editOnInsert = false, _temp) || _this;
     }
 
     var _proto = Newsletter.prototype;
 
     _proto.afterDataRendered = function afterDataRendered() {
-      var _this = this;
+      var _this2 = this;
 
       var attributes = this.data.main.attributes();
 
@@ -32,7 +38,7 @@ define(["../config", "./block"], function (_config, _block) {
         title: attributes["data-title"]
       };
       jQuery.post(url, requestData, function (response) {
-        _this.data.main.html(response.content !== undefined ? response.content.trim() : "");
+        _this2.data.main.html(response.content !== undefined ? response.content.trim() : "");
       });
     };
 
