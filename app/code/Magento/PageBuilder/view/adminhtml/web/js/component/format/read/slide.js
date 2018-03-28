@@ -68,6 +68,7 @@ define(["../../../utils/color-converter", "../../../utils/extract-alpha-from-rgb
       var slideAttributeElement = element.querySelector("div");
       var slideAttributesPromise = this.defaultReader.read(slideAttributeElement);
       return slideAttributesPromise.then(function (slideAttributes) {
+        delete slideAttributes.css_classes;
         return Promise.resolve(Object.assign(slideAttributes, response));
       });
     };

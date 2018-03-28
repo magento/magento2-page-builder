@@ -67,7 +67,8 @@ export default class Slide implements ReadInterface {
         const slideAttributesPromise = this.defaultReader.read(slideAttributeElement);
 
         return slideAttributesPromise.then((slideAttributes) => {
-            return Promise.resolve(Object.assign(slideAttributes,response));
+            delete slideAttributes.css_classes;
+            return Promise.resolve(Object.assign(slideAttributes, response));
         });
     }
 
