@@ -14,10 +14,10 @@ ko.bindingHandlers.liveEdit = {
      * Init the live edit binding on an element
      *
      * @param {any} element
-     * @param {any} valueAccessor
-     * @param {any} allBindings
+     * @param {() => any} valueAccessor
+     * @param {KnockoutAllBindingsAccessor} allBindings
      * @param {any} viewModel
-     * @param {any} bindingContext
+     * @param {KnockoutBindingContext} bindingContext
      */
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {value, placeholder} = valueAccessor();

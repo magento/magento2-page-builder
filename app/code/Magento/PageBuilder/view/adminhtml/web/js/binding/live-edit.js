@@ -18,10 +18,10 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
      * Init the live edit binding on an element
      *
      * @param {any} element
-     * @param {any} valueAccessor
-     * @param {any} allBindings
+     * @param {() => any} valueAccessor
+     * @param {KnockoutAllBindingsAccessor} allBindings
      * @param {any} viewModel
-     * @param {any} bindingContext
+     * @param {KnockoutBindingContext} bindingContext
      */
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var _valueAccessor = valueAccessor(),
