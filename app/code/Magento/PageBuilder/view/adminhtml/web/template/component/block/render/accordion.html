@@ -5,7 +5,7 @@
  */
 -->
 
-<div data-bind="attr: getAttributes({'data-mage-init': getMageInit()}), style: getStyle(), css: getCss(), foreach: getData().items" class="pagebuilder-accordion">
+<div data-bind="attr: Object.assign(getAttributes(), {'data-mage-init': getMageInit()}), style: getStyle(), css: getCss(), foreach: getData().items" class="pagebuilder-accordion">
     <div data-collapsible="true" data-bind="attr: {'data-open-on-load': open_on_load}" class="accordion-collapsible">
         <div data-role="trigger">
             <span data-bind="text: title"></span>

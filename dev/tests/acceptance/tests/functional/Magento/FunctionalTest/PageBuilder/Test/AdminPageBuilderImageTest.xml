@@ -8,6 +8,112 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="AddImageIntoPageBuilderStage">
+        <annotations>
+            <features value="[CMS] Drag &amp; Drop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="[UI component] MediaGalleryImage: from the stage MAGETWO-71618"/>
+            <title value="AddImageIntoPageBuilderStage"/>
+            <description value="upload and select images to/from Magento Media Gallery from the Bluefoot Stage."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89375"/>
+            <group value="pagebuilder"/>
+            <group value="AddImageIntoPageBuilderStage"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+        </before>
+        <after>
+            <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+                <argument name="CMSPage" value="$$createCMSPage$$"/>
+            </actionGroup>
+            <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+                <argument name="contentBlockIndex" value="1"/>
+            </actionGroup>
+            <waitForPageLoad stepKey="waitForPageLoad1"/>
+            <click selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+            <waitForPageLoad stepKey="waitForPageLoad2" />
+            <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
+                <argument name="FolderName" value="wysiwyg"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteUploadedImageFromStorage">
+                <argument name="Image" value="PageBuilderImageOnStage" />
+            </actionGroup>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForPageBuilder" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <seeElement selector="{{ImageOnStage.UploadImageBtn}}" stepKey="seeUploadImageBtn1" />
+        <seeElement selector="{{ImageOnStage.SelectFromGalleryBtn}}" stepKey="seeSelectFromGallerytn1" />
+
+        <!--Attach image A to PageBuilder stage-->
+        <attachFile userInput="{{PageBuilderImageOnStage.value}}" selector="{{ImageOnStage.AttachImageBtn}}" stepKey="attachImageFileOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.ImagePreview}}" stepKey="waitForImagePreview"/>
+        <waitForElementVisible selector="{{ImageOnStage.ImageSourceOnStage('magentoStage')}}" stepKey="waitForImageSource"/>
+        <seeElement selector="{{ImageOnStage.ImageSourceOnStage('magentoStage')}}" stepKey="seeImageSourceOnStage" />
+
+        <!--Hover uploaded image to check Upload New Image button and Select From Gallery button -->
+        <moveMouseOver selector="{{ImageOnStage.ImageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" x="10" y="0" stepKey="onMouseOverUploadedImage"/>
+        <waitForElementVisible selector="{{ImageOnStage.UploadNewImageBtn}}" stepKey="waitForUploadNewImageBtn" />
+
+        <seeElement selector="{{ImageOnStage.UploadNewImageBtn}}" stepKey="seeUploadImageBtn2" />
+        <seeElement selector="{{ImageOnStage.SelectFromGalleryImageBtn}}" stepKey="seeSelectFromGallerytn2" />
+
+        <!--Duplicate Image Content Block -->
+        <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+
+        <!--Verify image A display on preview of slide-out-->
+        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImageOnStage.value)}}" stepKey="seeImageNameOnPreview"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeMainImageSource"/>
+
+        <!--Verify image A stored in the root folder of Magento Media Gal{lery-->
+        <click selector="{{UploadImageSection.SelectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
+            <argument name="FolderName" value="wysiwyg"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderImageOnStage.value)}}" stepKey="wait" />
+        <seeElement  selector="{{MediaGallerySection.image(PageBuilderImageOnStage.value)}}" stepKey="waitForUploadedImage" />
+        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideout"/>
+
+        <!--Upload image B to replace image A-->
+        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
+            <argument name="property" value="PageBuilderLocalImagePropertyJpg"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
+
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+
+        <seeElement selector="{{ImageOnStage.ImageContentBlockByIndex(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeLocalImagePropertyOnStage"/>
+        <seeElement selector="{{ImageOnStage.ImageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageOnStage"/>
+
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeImage1Source"/>
+        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeImage2Source"/>
+    </test>
     <test name="AddImageContentBlockToCMSPage">
         <annotations>
             <features value="PageBuilder base functionality MAGETWO-83921"/>
@@ -17,6 +123,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84259"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -105,12 +212,8 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">
             <argument name="property" value="PageBuilderImageTitleTagProperty"/>
         </actionGroup>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <grabValueFrom selector="input[name='{{PageBuilderAdvancedCssClassesProperty.fieldName}}']" stepKey="cssPropertiesValue"/>
-        <assertEmpty actual="cssPropertiesValue" actualType="variable" message="pass" stepKey="assertCssPropertiesIsEmpty"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="image{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ImageOnFrontend.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource4"/>
@@ -138,6 +241,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -160,15 +264,16 @@
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderImageContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
-    <test name="ImageHasAdvancedFormSection">
+    <test name="ImageValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Image MAGETWO-83926"/>
-            <title value="Image has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for Image"/>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Image - Validate Advanced Configuration Default Values"/>
+            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Image."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84275"/>
+            <testCaseId value="MAGETWO-89432"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -179,8 +284,7 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
@@ -189,18 +293,35 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Style On Stage -->
+        <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
+        <waitForElementVisible selector="{{ImageOnBackend.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyDefault.value)}}" stepKey="waitForStyle"/>
     </test>
     <test name="CanAddEmptyImagePreview">
         <annotations>
@@ -211,6 +332,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87266"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-image"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

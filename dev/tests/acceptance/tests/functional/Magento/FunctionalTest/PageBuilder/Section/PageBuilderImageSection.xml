@@ -21,7 +21,8 @@
         <element name="backgroundImageSource" type="text" selector="//div[contains(@style,'{{var1}}')]" parameterized="true"/>
     </section>
     <section name="ImageOnBackend">
-        <element name="imagePreview" type="text" selector="//div[contains(@class, 'pagebuilder-image')][1]//div//span[text()='Empty Image']"/>
+        <element name="default" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])/figure[{{arg1}}][contains(@style, 'border-style: {{arg2}};') and contains(@style, 'border-radius: {{arg3}}px;') and contains(@style, 'margin: {{arg4}}px;') and contains(@style, 'padding: {{arg5}}px;')]" parameterized="true"/>
+        <element name="imagePreview" type="text" selector="//div[contains(concat(' ',normalize-space(@class),' '),'pagebuilder-image')][1]"/>
     </section>
     <section name="UploadImageSection">
         <element name="PlaceholderContent" type="button" selector="//span[text()='{{var1}}']//parent::label//following-sibling::div//p[text()='Browse to find or drag image here']" parameterized="true"/>
@@ -33,5 +34,15 @@
         <element name="imageLocalSource" type="text" selector="//img[@src='{{var1}}/{{var2}}']" parameterized="true"/>
         <element name="imageSource" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
         <element name="trashBinIcon" type="button" selector=".action-remove"/>
+    </section>
+    <section name="ImageOnStage">
+        <element name="AttachImageBtn" type="button" selector="//div[@class='pagebuilder-image-uploader-container']//input[@name='image']" />
+        <element name="ImagePreview" type="button" selector="//div[contains(concat(' ',normalize-space(@class),' '),'preview-image')]" />
+        <element name="ImageSourceOnStage" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true" />
+        <element name="UploadImageBtn" type="button" selector="//div[@class='pagebuilder-image-uploader-container']//label[text()='Upload Image']" />
+        <element name="UploadNewImageBtn" type="button" selector="//label[text()='Upload New Image']" />
+        <element name="SelectFromGalleryBtn" type="button" selector="//div[@class='pagebuilder-image-uploader-container']//label[text()='Select from Gallery']"/>
+        <element name="SelectFromGalleryImageBtn" type="button" selector="//li[contains(concat(' ',normalize-space(@class),' '),'pagebuilder-options-link')]//label[text()='Upload New Image']"/>
+        <element name="ImageContentBlockByIndex" type="button" selector="//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-image')][1]//img[contains(@src,'{{var1}}')]" parameterized="true"/>
     </section>
 </sections>

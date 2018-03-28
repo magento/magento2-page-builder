@@ -11,49 +11,14 @@
     <actionGroup name="openPageBuilderEditColumnPanel">
         <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage}}" x="10" y="0" stepKey="onMouseOverColumn"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="waitForOptions" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{PageBuilderColumnSection.editColumn}}" stepKey="clickEditColumn"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <wait time="0.5" stepKey="waitForAnimation" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit Column" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
-    <actionGroup name="openPageBuilderEditColumnPanel2">
-        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage2}}" x="10" y="0" stepKey="onMouseOverColumn"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="waitForOptions" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="seeContentBlockOptionsMenu"/>
-        <click selector="{{PageBuilderColumnSection.editColumn}}" stepKey="clickEditColumn"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <wait time="0.5" stepKey="waitForAnimation" />
-        <see userInput="Edit Column" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
-    </actionGroup>
-    <actionGroup name="openPageBuilderEditColumnPanel3">
-        <moveMouseOver selector="{{PageBuilderColumnSection.columnInStage3}}" x="10" y="0" stepKey="onMouseOverColumn"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="waitForOptions" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('column')}}" stepKey="seeContentBlockOptionsMenu"/>
-        <click selector="{{PageBuilderColumnSection.editColumn}}" stepKey="clickEditColumn"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <wait time="0.5" stepKey="waitForAnimation" />
-        <see userInput="Edit Column" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
-    </actionGroup>
-    <actionGroup name="saveColumnSettings">
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.columnSaveButton}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{PageBuilderColumnSection.columnSaveButton}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton" />
-    </actionGroup>
-    <actionGroup name="removePageBuilderColumn">
-        <moveMouseOver selector="{{PageBuilderColumnSection.column}}" stepKey="onMouseOverRow"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnOptionsMenu}}" stepKey="seeColumnOptionsMenu"/>
-        <click selector="{{PageBuilderColumnSection.removeColumn}}" stepKey="clickRemoveColumn"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal" />
-        <seeElement selector="{{PageBuilderActionsSection.modal}}" stepKey="seeRemovalModal"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalOk" />
-        <wait time="1" stepKey="waitForModalEventBinding" />
-        <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
-        <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
+    <actionGroup name="dragPageBuilderColumnIntoStage">
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dropColumnIntoStage"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.column}}" stepKey="waitForColumn" />
+        <seeElement selector="{{PageBuilderColumnSection.column}}" stepKey="seeElementColumn"/>
     </actionGroup>
 </actionGroups>

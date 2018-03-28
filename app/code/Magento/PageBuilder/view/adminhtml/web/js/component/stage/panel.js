@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "mage/translate", "underscore", "../config", "../event-bus", "./panel/group", "./panel/group/block", "./previews"], function (_knockout, _koDraggable, _koSortable, _uiComponent, _translate, _underscore, _config, _eventBus, _group, _block, _previews) {
+define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiComponent", "underscore", "../config", "../event-bus", "./panel/group", "./panel/group/block", "./previews"], function (_knockout, _koDraggable, _koSortable, _translate, _uiComponent, _underscore, _config, _eventBus, _group, _block, _previews) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -12,11 +12,11 @@ define(["knockout", "ko-draggable", "ko-sortable", "uiComponent", "mage/translat
       isVisible: false,
       originalScrollTop: false,
       searchResults: [],
-      searchPlaceholder: (0, _translate)('Find items'),
-      searchNoResult: (0, _translate)('Nothing found'),
-      fullScreenTitle: (0, _translate)('Full Screen'),
-      searchTitle: (0, _translate)('Clear Search'),
-      searchValue: '',
+      searchPlaceholder: (0, _translate)("Find items"),
+      searchNoResult: (0, _translate)("Nothing found"),
+      fullScreenTitle: (0, _translate)("Full Screen"),
+      searchTitle: (0, _translate)("Clear Search"),
+      searchValue: "",
       searching: false,
       stage: false
     },
