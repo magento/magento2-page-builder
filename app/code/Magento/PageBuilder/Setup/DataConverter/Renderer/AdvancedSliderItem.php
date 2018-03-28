@@ -86,9 +86,11 @@ class AdvancedSliderItem implements RendererInterface
         }
 
         $buttonElementHtml = '';
-        if (isset($eavData['link_text'])) {
+        // Advanced slider item only requires link text, slider item requires both
+        if (isset($eavData['link_text']) || (isset($eavData['link_url']) && isset($eavData['title_tag']))) {
             $buttonElementHtml =  '<button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" ';
-            $buttonElementHtml .= 'style="opacity: 1; visibility: visible;">' . $eavData['link_text'];
+            $buttonElementHtml .= 'style="opacity: 1; visibility: visible;">';
+            $buttonElementHtml .= ($eavData['link_text'] ??  $eavData['title_tag'] ?? '');
             $buttonElementHtml .= '</button>';
         }
 
@@ -102,7 +104,7 @@ class AdvancedSliderItem implements RendererInterface
             . $this->printAttributes($overlayDivElementAttributes)
             . '><div class="pagebuilder-poster-content">'
             . '<h3>'
-            . ($eavData['title'] ?? '')
+            . ($eavData['title'] ?? $eavData['title_tag'] ?? '')
             . '</h3>'
             . '<div>' . ($eavData['textarea'] ?? '') . '</div>'
             . $buttonElementHtml
@@ -117,7 +119,7 @@ class AdvancedSliderItem implements RendererInterface
             . $this->printAttributes($overlayDivElementAttributes)
             . '><div class="pagebuilder-poster-content">'
             . '<h3>'
-            . ($eavData['title'] ?? '')
+            . ($eavData['title'] ?? $eavData['title_tag'] ?? '')
             . '</h3>'
             . '<div>' . ($eavData['textarea'] ?? '') . '</div>'
             . $buttonElementHtml
