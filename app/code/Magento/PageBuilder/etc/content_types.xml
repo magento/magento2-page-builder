@@ -959,9 +959,9 @@
         <type name="products-list" translate="label" sortOrder="20">
             <label>Product List</label>
             <icon>icon-pagebuilder-products</icon>
+            <component>Magento_PageBuilder/js/component/block/product-list</component>
             <form>pagebuilder_products_list_form</form>
             <group>magento</group>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/product-list</preview_component>
             <backend_block>Magento\PageBuilder\Block\ContentType\ProductList</backend_block>
             <backend_template>Magento_PageBuilder::pagebuilder/blocks/core/product_list.phtml</backend_template>
             <allowed_parents>
@@ -970,11 +970,30 @@
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                    <attribute var="category_id" name="data-category-id"/>
+                                    <attribute var="product_count" name="data-product-count"/>
+                                </attributes>
+                                <html var="html" placeholder="Product List"/>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/productlist.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/productlist.html</render_template>
-                    <readers>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
