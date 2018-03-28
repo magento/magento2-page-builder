@@ -1560,12 +1560,12 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForPreviewInStage" />
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <!-- step fails due to MAGETWO-89346 -->
-        <!--<seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>-->
+        <seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
@@ -1653,15 +1653,16 @@
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSlideContentBlock.role)}}" stepKey="waitForSliderPreviewInStage" />
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <!-- step fails due to MAGETWO-89346 -->
-        <!--<seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>-->
+        <seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
@@ -1749,15 +1750,16 @@
         <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSlideContentBlock.role)}}" stepKey="waitForSliderPreviewInStage" />
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <!-- step fails due to MAGETWO-89346 -->
-        <!--<seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>-->
+        <seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
