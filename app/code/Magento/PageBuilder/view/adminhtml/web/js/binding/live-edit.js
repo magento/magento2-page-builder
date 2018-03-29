@@ -107,10 +107,11 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("keyup", onKeyUp);
       (0, _jquery.default)(element).parent().css("cursor", "text");
-
-      if (element.innerText.length === 0) {
-        (0, _jquery.default)(element).addClass("placeholder-text");
-      }
+      setTimeout(function () {
+        if (element.innerText.length === 0) {
+          (0, _jquery.default)(element).addClass("placeholder-text");
+        }
+      }, 0);
     },
 
     /**

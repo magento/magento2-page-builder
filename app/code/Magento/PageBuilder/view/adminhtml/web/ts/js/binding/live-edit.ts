@@ -96,9 +96,11 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("keyup", onKeyUp);
 
         $(element).parent().css("cursor", "text");
-        if (element.innerText.length === 0) {
-            $(element).addClass("placeholder-text");
-        }
+        setTimeout(() => {
+            if (element.innerText.length === 0) {
+                $(element).addClass("placeholder-text");
+            }
+        }, 0);
     },
 
     /**
