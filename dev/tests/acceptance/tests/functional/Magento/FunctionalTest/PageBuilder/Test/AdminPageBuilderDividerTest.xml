@@ -12,8 +12,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="MAGETWO-83931"/>
-            <title value="Divider - Add and view on Storefront"/>
-            <description value="A user should be able to add a divider into a row."/>
+            <title value="Divider - Update General Values"/>
+            <description value="Validate that updating every attribute in the General form for Divider will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84268"/>
             <group value="pagebuilder"/>
@@ -70,7 +70,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateColor">
@@ -94,14 +93,14 @@
             <argument name="width" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
     </test>
-    <test name="RemoveDividerFromStage">
+    <test name="DividerDelete">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Divider MAGETWO-83931"/>
-            <title value="Remove divider content block from stage"/>
-            <description value="A user should be able to remove divider block from a row."/>
+            <features value="PageBuilder"/>
+            <stories value="MAGETWO-83931"/>
+            <title value="Divider - Delete Divider"/>
+            <description value="A user should be able to delete a Divider content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84919"/>
+            <testCaseId value="MAGETWO-89785"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
         </annotations>
@@ -188,7 +187,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateColor2">
@@ -271,7 +269,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateNoAlignment" stepKey="validateStage">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage">
             <argument name="page" value="DividerOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -284,7 +282,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateNoAlignment" stepKey="validateStage2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage2">
             <argument name="page" value="DividerOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -326,7 +324,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateNoAlignment" stepKey="validateStorefront">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -397,7 +395,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateAllAdvanced" stepKey="validateAllAdvancedStage">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
             <argument name="page" value="DividerOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -444,7 +442,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateAllAdvanced" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="DividerOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -491,7 +489,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateAllAdvanced" stepKey="validateAllAdvancedStorefront">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="DividerOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
