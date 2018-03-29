@@ -43,6 +43,10 @@ export default class PreviewBlock {
 
         this.setupDataFields();
 
+        if (this.data.button_text) {
+            this.data.button_text.subscribe(this.onButtonTextChange.bind(this));
+        }
+
         // Calculate the preview style utilising the style attribute mapper & appearance system
         this.previewStyle = ko.computed(() => {
             const data = _.mapObject(this.data, (value) => {
@@ -85,6 +89,18 @@ export default class PreviewBlock {
             return this.config.preview_template;
         }
         return "";
+    }
+
+    /**
+     * Update store on button text listener
+     *
+     * @param {string} value
+     */
+    public onButtonTextChange(value: string) {
+        const data = this.parent.stage.store.get(this.parent.id);
+
+        data.button_text = value;
+        this.parent.stage.store.update(this.parent.id, data);
     }
 
     /**

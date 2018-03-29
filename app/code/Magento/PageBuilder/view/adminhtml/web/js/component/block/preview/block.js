@@ -27,7 +27,12 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live
       this.parent = parent;
       this.config = config || {};
       this.displayLabel = _knockout.observable(this.config.label);
-      this.setupDataFields(); // Calculate the preview style utilising the style attribute mapper & appearance system
+      this.setupDataFields();
+
+      if (this.data.button_text) {
+        this.data.button_text.subscribe(this.onButtonTextChange.bind(this));
+      } // Calculate the preview style utilising the style attribute mapper & appearance system
+
 
       this.previewStyle = _knockout.computed(function () {
         var data = _underscore.mapObject(_this.data, function (value) {
@@ -63,11 +68,23 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live
     var _proto = PreviewBlock.prototype;
 
     /**
+     * Update store on button text listener
+     *
+     * @param {string} value
+     */
+    _proto.onButtonTextChange = function onButtonTextChange(value) {
+      var data = this.parent.stage.store.get(this.parent.id);
+      data.button_text = value;
+      this.parent.stage.store.update(this.parent.id, data);
+    };
+    /**
      * Update the data value of a part of our internal Knockout data store
      *
      * @param {string} key
      * @param value
      */
+
+
     _proto.updateDataValue = function updateDataValue(key, value) {
       if (typeof this.data[key] !== "undefined" && _knockout.isObservable(this.data[key])) {
         this.data[key](value);

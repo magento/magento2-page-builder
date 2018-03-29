@@ -31,9 +31,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
         _this.displayLabel((0, _translate)("Slide") + (index + 1));
       });
-
-      _this.data.button_text.subscribe(_this.onButtonTextChange.bind(_this));
-
       return _this;
     }
     /**
@@ -199,18 +196,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
       }
 
       return styles;
-    };
-    /**
-     * Update store on slide button text listener
-     *
-     * @param {string} value
-     */
-
-
-    _proto.onButtonTextChange = function onButtonTextChange(value) {
-      var data = this.parent.stage.store.get(this.parent.id);
-      data.button_text = value;
-      this.parent.stage.store.update(this.parent.id, data);
     };
 
     return Slide;

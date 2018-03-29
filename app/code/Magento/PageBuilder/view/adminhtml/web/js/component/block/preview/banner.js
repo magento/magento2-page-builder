@@ -22,9 +22,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
       _this.showOverlayHover = _knockout.observable(false);
       _this.showButtonHover = _knockout.observable(false);
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
-
-      _this.data.button_text.subscribe(_this.onButtonTextChange.bind(_this));
-
       return _this;
     }
     /**
@@ -189,18 +186,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
       }
 
       return styles;
-    };
-    /**
-     * Update store on banner button text listener
-     *
-     * @param {string} value
-     */
-
-
-    _proto.onButtonTextChange = function onButtonTextChange(value) {
-      var data = this.parent.stage.store.get(this.parent.id);
-      data.button_text = value;
-      this.parent.stage.store.update(this.parent.id, data);
     };
 
     return Banner;
