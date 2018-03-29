@@ -169,10 +169,9 @@
             <argument name="contentBlockType" defaultValue=""/>
         </arguments>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
-        <wait time="1" stepKey="waitForMouseOverAnimation" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="5" stepKey="onMouseOverContentBlockStage"/>
+        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, '1')}}" stepKey="waitForOptions" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{PageBuilderActionsSection.contentBlockRemove(contentBlockType.role)}}" stepKey="clickRemoveContentBlock"/>
     </actionGroup>
     <actionGroup name="removeContentBlockFromStageByIndex">
