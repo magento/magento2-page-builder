@@ -82,4 +82,73 @@
             <actualResult type="variable">grabFromCurrentUrl2</actualResult>
         </assertEquals>
     </test>
+    <test name="AdminPageBuilderCategoryButtonLinkTest">
+        <annotations>
+            <features value="[CMS] Bluefoot Image MAGETWO-83833"/>
+            <stories value="[UI Component] URL Input: Category Link MAGETWO-88961"/>
+            <title value="Admin are able to add Category link into PageBuilder content"/>
+            <description value="Admin are able to add Category link link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89771"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCategory" stepKey="createCategoryA"/>
+            <createData entity="SubCategoryWithParent" stepKey="createSubCategory">
+                <requiredEntity createDataKey="createCategoryA"/>
+            </createData>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCategoryA" stepKey="deletePreReqCatalog" />
+            <deleteData createDataKey="createSubCategory" stepKey="deletePreReqSubCategory" />
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(PageBuilderButtonsContentBlock.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderButtonItemLinkProperty.section, PageBuilderButtonItemLinkProperty.fieldName)}}" userInput="{{CategoryLink.value}}" stepKey="selectOption" />
+
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="expandButtonLinkDropdownInput" />
+        <see userInput="Default category" stepKey="seeLevel1Category"/>
+        <see userInput="$$createCategoryA.name$$" stepKey="seeLevel2Category"/>
+        <dontSee userInput="$$createSubCategory.name$$" stepKey="dontSeeLevel3Category"/>
+
+        <!--Type 2 first letters into Search box-->  <!--See autocompletes, displays Category title and ID associated with-->
+        <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="su" stepKey="fill2FirstLetters"/>
+        <see userInput="$$SubCategoryWithParent.name$$" stepKey="seeSubCategoryOnSearchResult"/>
+        <click userInput="$$SubCategoryWithParent.name$$" stepKey="clickSubCategoryOnSearchResult"/>
+        <dontSee selector="{{PageBuilderButtonLinkSection.ButtonLinkSearchResult}}" stepKey="dropdownCollapses" />
+        <seeInField selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" userInput="{{SubCategoryWithParent.name}}" stepKey="seeSubCategoryInField" />
+        <seeInField selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" userInput="X" stepKey="seeXButtonInField" />
+
+
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify Category Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInCurrentTab(PageBuilderButtonItemLinkProperty.value)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <grabFromCurrentUrl stepKey="grabFromCurrentUrl1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">{{PageBuilderButtonItemSecureLinkProperty._value}}</expectedResult>
+            <actualResult type="variable">grabFromCurrentUrl1</actualResult>
+        </assertEquals>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+
+
+    </test>
 </tests>
