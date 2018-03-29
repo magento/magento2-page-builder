@@ -17,7 +17,6 @@ import { Block as GroupBlock } from "./panel/group/block";
 import { load as loadPreviews } from "./previews";
 
 export default class Panel implements PanelInterface {
-    public template: string = "Magento_PageBuilder/component/stage/panel.html";
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
     public isCollapsed: KnockoutObservable<boolean> = ko.observable(false);
@@ -30,10 +29,11 @@ export default class Panel implements PanelInterface {
     public searchTitle: string = $t("Clear Search");
     public parent: PageBuilder;
     public id: string;
+    private template: string = "Magento_PageBuilder/component/stage/panel.html";
 
     constructor(parent: PageBuilder) {
         this.parent = parent;
-        this.id = this.parent.panelId;
+        this.id = this.parent.id;
         this.initListeners();
         loadPreviews();
     }
@@ -42,7 +42,7 @@ export default class Panel implements PanelInterface {
      * Init listeners
      */
     public initListeners(): void {
-        EventBus.on("stage:ready:" + this.parent.stageId, () => {
+        EventBus.on("stage:ready:" + this.id, () => {
             this.populateContentBlocks();
             this.isVisible(true);
         });

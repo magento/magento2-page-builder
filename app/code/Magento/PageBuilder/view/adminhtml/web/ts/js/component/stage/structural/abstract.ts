@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
-import confirmationDialog from "Magento_Ui/js/modal/confirm";
+import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
 import _ from "underscore";
 import appearanceConfig from "../../../component/block/appearance-config";
 import DataConverterPool from "../../../component/block/data-converter-pool";
@@ -152,8 +152,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                         removeBlock();
                     },
                 },
-                content: $t("Are you sure you want to remove this item? " +
-                    "The data within this item is not recoverable once removed."),
+                content: $t("Are you sure you want to remove this item? The data within this item is not recoverable once removed."), // tslint:disable-line:max-line-length
                 dismissKey: "pagebuilder_modal_dismissed",
                 dismissible: true,
                 title: $t("Confirm Item Removal"),

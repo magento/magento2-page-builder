@@ -60,17 +60,16 @@ define([
 
         /** Init listeners of stage. */
         initPageBuilderListeners: function () {
-            var stageId = this.pageBuilder.stageId,
-                pageBuilderId = this.pageBuilder.id;
+            var id = this.pageBuilder.id;
 
-            EventBus.on('stage:ready:' + stageId, function () {
+            EventBus.on('stage:ready:' + id, function () {
                 this.isComponentInitialized = true;
                 this.loading(false);
             }.bind(this));
-            EventBus.on('stage:renderTree:' + stageId, function (e, data) {
+            EventBus.on('stage:renderTree:' + id, function (e, data) {
                 this.value(data.value);
             }.bind(this));
-            EventBus.on('pagebuilder:fullScreen:' + pageBuilderId, function (e, data) {
+            EventBus.on('pagebuilder:fullScreen:' + id, function (e, data) {
                 if (!data.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(false);
                 } else if (data.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {

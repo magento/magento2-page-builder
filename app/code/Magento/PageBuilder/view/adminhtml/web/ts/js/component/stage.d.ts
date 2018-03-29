@@ -8,7 +8,6 @@ import DataStore from "./data-store";
 import PageBuilder from "./page-builder";
 
 export interface StageInterface extends EditableAreaInterface {
-    template: string;
     parent: PageBuilder;
     showBorders: KnockoutObservable<boolean>;
     userSelect: KnockoutObservable<boolean>;

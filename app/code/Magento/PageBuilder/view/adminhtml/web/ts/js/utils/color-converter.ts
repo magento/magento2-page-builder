@@ -13,7 +13,7 @@
 export function fromHex(hexValue: string, alphaValue: string) {
     const shorthandHexRegEx = /^#([a-f\d])([a-f\d])([a-f\d])$/i;
     hexValue = hexValue.replace(shorthandHexRegEx, (m, r, g, b) => {
-        return '#' + r + r + g + g + b + b;
+        return "#" + r + r + g + g + b + b;
     });
     const colors = /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hexValue);
     const red = parseInt(colors[1], 16);

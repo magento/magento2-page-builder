@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/confirm", "underscore", "../../../component/block/appearance-config", "../../../utils/string", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _confirm, _underscore, _appearanceConfig, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "../../../component/block/appearance-config", "../../../utils/string", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _dismissibleConfirm, _underscore, _appearanceConfig, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -104,14 +104,15 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/confirm", "underscore
       };
 
       if (this.isConfigured()) {
-        this.stage.parent.confirmationDialog({
+        (0, _dismissibleConfirm)({
           actions: {
             confirm: function confirm() {
               // Call the parent to remove the child element
               removeBlock();
             }
           },
-          content: (0, _translate)("Are you sure you want to remove this item? " + "The data within this item is not recoverable once removed."),
+          content: (0, _translate)("Are you sure you want to remove this item? The data within this item is not recoverable once removed."),
+          // tslint:disable-line:max-line-length
           dismissKey: "pagebuilder_modal_dismissed",
           dismissible: true,
           title: (0, _translate)("Confirm Item Removal")

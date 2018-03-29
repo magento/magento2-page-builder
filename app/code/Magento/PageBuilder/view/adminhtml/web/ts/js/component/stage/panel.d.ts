@@ -4,7 +4,6 @@
  */
 
 export interface PanelInterface {
-    template: string;
     searchValue: KnockoutObservable<string>;
     searching: KnockoutObservable<boolean>;
     searchResults: KnockoutObservableArray<any>;

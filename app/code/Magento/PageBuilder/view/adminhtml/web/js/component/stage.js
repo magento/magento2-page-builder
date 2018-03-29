@@ -16,7 +16,6 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       var _this;
 
       _this = _EditableArea.call(this) || this;
-      _this.template = "Magento_PageBuilder/component/stage.html";
       _this.config = {
         name: "stage"
       };
@@ -28,6 +27,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       _this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
       _this.stage = void 0;
       _this.store = void 0;
+      _this.template = "Magento_PageBuilder/component/stage.html";
       _this.save = new _save();
       _this.saveRenderTree = _underscore.debounce(function () {
         _this.save.renderTree(_this.children).then(function (renderedOutput) {
@@ -37,7 +37,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
         });
       }, 500);
       _this.parent = parent;
-      _this.id = parent.stageId;
+      _this.id = parent.id;
       _this.loading = parent.loading;
       _this.stage = _this;
 
@@ -53,6 +53,10 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       (0, _stageBuilder)(_this, parent.initialValue).then(_this.ready.bind(_this));
       return _this;
     }
+    /**
+     * Init listeners.
+     */
+
 
     var _proto = Stage.prototype;
 
@@ -81,6 +85,12 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
         return _this2.interacting(false);
       });
     };
+    /**
+     * Get template.
+     *
+     * @returns {string}
+     */
+
 
     _proto.getTemplate = function getTemplate() {
       return this.template;

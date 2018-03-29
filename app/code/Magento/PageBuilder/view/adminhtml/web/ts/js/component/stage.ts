@@ -16,7 +16,6 @@ import Save from "./stage/save";
 import EditableArea from "./stage/structural/editable-area";
 
 export default class Stage extends EditableArea implements StageInterface {
-    public template: string = "Magento_PageBuilder/component/stage.html";
     public config: {} = {
         name: "stage",
     };
@@ -28,6 +27,7 @@ export default class Stage extends EditableArea implements StageInterface {
     public stageLoadingMessage: string = $t("Please hold! we're just retrieving your content...");
     public stage: Stage;
     public store: DataStore;
+    private template: string = "Magento_PageBuilder/component/stage.html";
     private save: Save = new Save();
     private saveRenderTree = _.debounce(() => {
         this.save.renderTree(this.children)
@@ -44,7 +44,7 @@ export default class Stage extends EditableArea implements StageInterface {
     constructor(parent: any) {
         super();
         this.parent = parent;
-        this.id = parent.stageId;
+        this.id = parent.id;
         this.loading = parent.loading;
         this.stage = this;
         this.setChildren();
@@ -59,6 +59,9 @@ export default class Stage extends EditableArea implements StageInterface {
         buildStage(this, parent.initialValue).then(this.ready.bind(this));
     }
 
+    /**
+     * Init listeners.
+     */
     public initListeners() {
         // Any store state changes trigger a stage update event
         this.store.subscribe(() => EventBus.trigger("stage:updated", {stage: this}));
@@ -74,6 +77,11 @@ export default class Stage extends EditableArea implements StageInterface {
         EventBus.on("interaction:stop", () => this.interacting(false));
     }
 
+    /**
+     * Get template.
+     *
+     * @returns {string}
+     */
     public getTemplate() {
         return this.template;
     }

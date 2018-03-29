@@ -19,8 +19,6 @@ export default class PageBuilder implements PageBuilderInterface {
     public config: object;
     public initialValue: string;
     public id: string = utils.uniqueid();
-    public stageId: string = utils.uniqueid();
-    public panelId: string = utils.uniqueid();
     public originalScrollTop: number = 0;
     public isFullScreen: KnockoutObservable<boolean> = ko.observable(false);
     public loading: KnockoutObservable<boolean> = ko.observable(true);
@@ -35,6 +33,9 @@ export default class PageBuilder implements PageBuilderInterface {
         this.initListeners();
     }
 
+    /**
+     * Init listeners.
+     */
     public initListeners() {
         EventBus.on(`pagebuilder:toggleFullScreen:${ this.id }`, () => this.toggleFullScreen());
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
@@ -47,6 +48,9 @@ export default class PageBuilder implements PageBuilderInterface {
         this.isFullScreen(!this.isFullScreen());
     }
 
+    /**
+     * Change window scroll base on full screen mode.
+     */
     public onFullScreenChange(): void {
         if (this.isFullScreen()) {
             this.originalScrollTop = window.scrollY;
@@ -64,6 +68,11 @@ export default class PageBuilder implements PageBuilderInterface {
         });
     }
 
+    /**
+     * Get template.
+     *
+     * @returns {string}
+     */
     public getTemplate() {
         return this.template;
     }

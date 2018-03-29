@@ -14,8 +14,6 @@ define(["knockout", "mageUtils", "underscore", "./config", "./event-bus", "./sta
       this.config = void 0;
       this.initialValue = void 0;
       this.id = _mageUtils.uniqueid();
-      this.stageId = _mageUtils.uniqueid();
-      this.panelId = _mageUtils.uniqueid();
       this.originalScrollTop = 0;
       this.isFullScreen = _knockout.observable(false);
       this.loading = _knockout.observable(true);
@@ -29,6 +27,10 @@ define(["knockout", "mageUtils", "underscore", "./config", "./event-bus", "./sta
       this.panel = new _panel(this);
       this.initListeners();
     }
+    /**
+     * Init listeners.
+     */
+
 
     var _proto = PageBuilder.prototype;
 
@@ -51,6 +53,10 @@ define(["knockout", "mageUtils", "underscore", "./config", "./event-bus", "./sta
     _proto.toggleFullScreen = function toggleFullScreen() {
       this.isFullScreen(!this.isFullScreen());
     };
+    /**
+     * Change window scroll base on full screen mode.
+     */
+
 
     _proto.onFullScreenChange = function onFullScreenChange() {
       var _this2 = this;
@@ -71,6 +77,12 @@ define(["knockout", "mageUtils", "underscore", "./config", "./event-bus", "./sta
         fullScreen: this.isFullScreen()
       });
     };
+    /**
+     * Get template.
+     *
+     * @returns {string}
+     */
+
 
     _proto.getTemplate = function getTemplate() {
       return this.template;

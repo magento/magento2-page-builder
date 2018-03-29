@@ -8,7 +8,6 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
   /*#__PURE__*/
   function () {
     function Panel(parent) {
-      this.template = "Magento_PageBuilder/component/stage/panel.html";
       this.groups = _knockout.observableArray([]);
       this.searchResults = _knockout.observableArray([]);
       this.isCollapsed = _knockout.observable(false);
@@ -21,8 +20,9 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
       this.searchTitle = (0, _translate)("Clear Search");
       this.parent = void 0;
       this.id = void 0;
+      this.template = "Magento_PageBuilder/component/stage/panel.html";
       this.parent = parent;
-      this.id = this.parent.panelId;
+      this.id = this.parent.id;
       this.initListeners();
       (0, _previews.load)();
     }
@@ -36,7 +36,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _eventBus.on("stage:ready:" + this.parent.stageId, function () {
+      _eventBus.on("stage:ready:" + this.id, function () {
         _this.populateContentBlocks();
 
         _this.isVisible(true);
