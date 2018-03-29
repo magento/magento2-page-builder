@@ -12,9 +12,8 @@
         <annotations>
             <features value="PageBuilder"/>
             <stories value="MAGETWO-83925"/>
-            <title value="Text - Add Text With string, Magento Variable, Magento Widget"/>
-            <title value="Add Text in PageBuilder for new CMS page and view on Storefront"/>
-            <description value="A user should be able to add text content block into a row."/>
+            <title value="Text - Update General Values (string, Magento Variable, Magento Widget)"/>
+            <description value="Validate that updating every attribute in the General form for Text will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84263"/>
             <group value="pagebuilder"/>
@@ -66,12 +65,12 @@
         <waitForElementVisible selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}text{{PageBuilderPageTitle.pageName}}']" stepKey="waitForWidgetStorefront"/>
         <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextContentBlock.value)}}" stepKey="waitForTextStorefront"/>
     </test>
-    <test name="TextRemoveTextFromStage">
+    <test name="TextDelete">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-83925"/>
-            <title value="Text - Remove a text content block from stage"/>
-            <description value="A user should be able to remove text block from a row."/>
+            <title value="Text - Delete Text"/>
+            <description value="A user should be able to delete a Text content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
@@ -158,7 +157,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateNoAlignment" stepKey="validateStage">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -171,7 +170,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateNoAlignment" stepKey="validateStage2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage2">
             <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -213,7 +212,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateNoAlignment" stepKey="validateStorefront">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront">
             <argument name="page" value="TextOnStorefront"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -287,7 +286,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateAllAdvanced" stepKey="validateAllAdvancedStage">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
             <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -334,7 +333,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateAllAdvanced" stepKey="validateAllAdvancedStage2">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
             <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
@@ -381,7 +380,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateAllAdvanced" stepKey="validateAllAdvancedStorefront">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="TextOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
