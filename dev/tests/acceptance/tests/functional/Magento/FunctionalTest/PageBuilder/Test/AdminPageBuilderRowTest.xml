@@ -8,6 +8,74 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="AddBackgroundColorForRow">
+        <annotations>
+            <features value="[Pagebuilder] Bluefoot Column MAGETWO-83768"/>
+            <stories value="[UI Component] Color Picker MAGETWO-71622"/>
+            <title value="Add background color to PageBuilder using Color Picker UI component"/>
+            <description value="Color picker extends input field in the form and allows user conveniently specify color value."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value=""/>
+            <group value="MAGETWO-89768 MAGETWO-89770 "/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{RowOnBackend.backgroundSectionName}}" stepKey="waitForBackgroundForm"/>
+        <!--I see empty color swatch and empty color input field-->
+        <seeElement selector="{{BackgroundColor.colorSwatch}}" stepKey="seeColorSwatch" />
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="No Color" stepKey="seeEmptyField" />
+
+        <!--I input HEX color code into input field-->
+        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="test" stepKey="inputWrongFormatColorCodeIntoInputField"/>
+        <see userInput="Wrong color format." stepKey="seeValidationMsg" />
+        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.yellowHEX}}" stepKey="inputColorCodeIntoInputField"/>
+        <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(0, 0, 0);']" stepKey="seeSwatchInRed" />
+
+        <!--I open Color Picker-->
+        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch1" />
+        <seeElement selector="{{ColorPicker.colorWheel}}" stepKey="seeColorPickerWindow" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColorProperty.yellowHEX}}" stepKey="seeYellowHEXOnInputFieldOfColorPicker" />
+        <click selector="{{ColorPicker.firstColorBox}}" stepKey="clickOnRedColorBox" />
+        <click selector="{{ColorPicker.colorWheel}}" stepKey="clickOnColorWheel" />
+        <click selector="{{ColorPicker.applyBtn}}" stepKey="clickOnApplyBtn" />
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#804042" stepKey="seeColorCode804042InInputField1" />
+        <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(128, 64, 66);']" stepKey="seeSwatchInBrown1" />
+
+        <!--Verify Cancel and Apply button on Color Picker-->
+        <fillField selector="{{ColorPicker.inputField}}" userInput="#0000FF" stepKey="inputBlueHEXcodeIntoInputField1" />
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#0000FF" stepKey="seeBlueColorCodeInInputField1" />
+        <click selector="{{ColorPicker.cancelBtn}}" stepKey="cancelSelection"/>
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#804042" stepKey="seeColorCode804042InInputField2" />
+        <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(128, 64, 66);']" stepKey="seeSwatchInBrown2" />
+        <fillField selector="{{ColorPicker.inputField}}" userInput="#0000FF" stepKey="inputBlueHEXcodeIntoInputField2" />
+        <click selector="{{ColorPicker.applyBtn}}" stepKey="applySelection"/>
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#0000FF" stepKey="seeBlueColorCodeInInputField2" />
+
+        <!--click Out Side color picker to select a color-->
+        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch2" />
+        <fillField selector="{{ColorPicker.inputField}}" userInput="#ff0000" stepKey="inputRedHEXcodeIntoInputField" />
+        <click selector="//span[text()='Background Color']" stepKey="clickOutSideColorPicker"/>
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#ff0000" stepKey="seeRedColorCodeInInputField2" />
+    </test>
     <test name="InitializeWithRow">
         <annotations>
             <features value="PageBuilder Row MAGETWO-83767"/>

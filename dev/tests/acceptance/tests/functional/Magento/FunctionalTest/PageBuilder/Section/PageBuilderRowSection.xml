@@ -69,4 +69,15 @@
         <element name="rowOptionsMenu" type="button" selector='(//div[1][contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]'/>
         <element name="removeRow" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-row")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
     </section>
+    <section name="BackgroundColor">
+        <element name="colorSwatch" type="button" selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]"/>
+        <element name="colorInputField" type="input" selector="//div[@data-index='background_color']//input[@type='text']" />
+    </section>
+    <section name="ColorPicker">
+        <element name="firstColorBox" type="button" selector="//span[@data-color='rgb(252, 0, 9)']" />
+        <element name="colorWheel" type="button" selector="//div[contains(concat(' ',normalize-space(@class),' '),' sp-val ')]" />
+        <element name="applyBtn" type="button" selector="//button[text()='Apply']" />
+        <element name="cancelBtn" type="button" selector="//a[text()='Cancel']" />
+        <element name="inputField" type="input" selector="//div[contains(concat(' ',normalize-space(@class),' '),' sp-input')]" />
+    </section>
 </sections>
