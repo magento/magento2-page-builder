@@ -139,7 +139,7 @@
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab5" />
         <waitForElementVisible selector="{{ButtonsBackendSection.buttonItemElement(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="waitForButtonToShow2"/>
         <seeElementInDOM selector="{{ButtonsBackendSection.alignmentDefaultStyle}}" stepKey="dontSeeAlignmentSet"/>
-        <dontSeeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderSizeProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="dontSeeBorderSet"/>
+        <dontSeeElementInDOM selector="{{ButtonsBackendSection.borderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="dontSeeBorderSet"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
             <argument name="contentBlockIndex" value="PageBuilderButtonIndex1"/>
@@ -148,10 +148,10 @@
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection3"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAdvancedAlignmentPropertyDefault">
-            <argument name="property" value="PageBuilderAdvancedAlignmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAdvancedBorderPropertyDefault">
-            <argument name="property" value="PageBuilderAdvancedBorderDefaultProperty"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
     </test>
     <test name="RemoveButtonFromStage">

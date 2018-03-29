@@ -1,7 +1,5 @@
 /*eslint-disable */
 define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/block/preview/block"], function (_knockout, _translate, _colorConverter, _numberConverter, _block) {
-  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Banner =
@@ -139,12 +137,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
       return buttonStyle;
     };
-
-    var _proto = Banner.prototype;
-
     /**
      * Set state based on overlay mouseover event for the preview
      */
+
+
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
       if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
         this.data.overlay.attributes(Object.assign(this.data.overlay.attributes(), {
