@@ -183,6 +183,7 @@
 
         <!-- Confirm removal of the row -->
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal" />
 
         <!-- Validate the item is removed -->
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeElementRow"/>
@@ -237,6 +238,7 @@
 
         <!-- Confirm removal of the header -->
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal" />
 
         <!-- Validate the item is removed -->
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="dontSeeHeaderInStage"/>
@@ -298,6 +300,7 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
         <click selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal" />
 
         <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeSecondHeader">
@@ -443,6 +446,7 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
         <click selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
+        <wait time="2" stepKey="waitForRemovalModal" />
 
         <!-- Attempt to remove secondary heading, no modal should appear even though it's configured -->
         <comment userInput="Remove second heading, validate modal is not displayed" stepKey="commentRemoveSecondHeading"/>
@@ -491,6 +495,7 @@
         <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal2"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk2" />
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval2"/>
+        <wait time="2" stepKey="waitForRemovalModal1" />
 
         <!-- Validate the items are removed -->
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="dontSeeHeaderInStage2"/>
