@@ -38,30 +38,4 @@ export default class Row extends Block {
         ));
         return newOptions;
     }
-
-    /**
-     * Get stype properties for an block
-     * Example {"backgroundColor": "#cccccc"}
-     *
-     * @returns {DataObject}
-     */
-    public getStyle() {
-        const children: any = this.children();
-        const styleAttributes: any  = {};
-        let isAllColumns: boolean = true;
-
-        if (children.length !== 0) {
-            for (const child of children) {
-                if (child.config.name !== "column") {
-                    isAllColumns = false;
-                }
-            }
-        } else {
-            isAllColumns = false;
-        }
-        if (isAllColumns) {
-            styleAttributes.display = "flex";
-        }
-        return _.extend(super.getStyle(), styleAttributes);
-    }
 }

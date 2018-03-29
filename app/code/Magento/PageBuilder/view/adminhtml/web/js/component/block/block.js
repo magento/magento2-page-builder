@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "Magento_PageBuilder/js/component/stage/previews", "Magento_PageBuilder/js/component/stage/structural/abstract"], function (_underscore, _previews, _abstract) {
+define(["underscore", "Magento_PageBuilder/js/component/../component/block/appearance-config", "../stage/previews", "Magento_PageBuilder/js/component/stage/structural/abstract"], function (_underscore, _appearanceConfig, _previews, _abstract) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -19,10 +19,10 @@ define(["underscore", "Magento_PageBuilder/js/component/stage/previews", "Magent
      * @param {ConfigContentBlock} config
      * @param formData
      */
-    function Block(parent, stage, config, formData) {
+    function Block(parent, stage, config, formData, elementConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _Structural.call(this, parent, stage, config) || this;
+      _this = _Structural.call(this, parent, stage, config, elementConverterPool, dataConverterPool) || this;
       _this.title = void 0;
       _this.editOnInsert = true;
       _this.preview = void 0;
@@ -50,19 +50,14 @@ define(["underscore", "Magento_PageBuilder/js/component/stage/previews", "Magent
     _createClass(Block, [{
       key: "previewTemplate",
       get: function get() {
-        if (typeof this.preview.data.appearance !== "undefined") {
-          var appearance = this.preview.data.appearance();
+        var appearance = this.preview.data.appearance ? this.preview.data.appearance() : undefined;
+        var template = (0, _appearanceConfig)(this.config.name, appearance).preview_template;
 
-          if (typeof this.config.appearances !== "undefined" && typeof this.config.appearances[appearance] !== "undefined" && typeof this.config.appearances[appearance].preview_template !== "undefined") {
-            return this.config.appearances[appearance].preview_template;
-          }
+        if (undefined === template) {
+          template = "Magento_PageBuilder/component/block/preview/abstract.html";
         }
 
-        if (this.config.preview_template) {
-          return this.config.preview_template;
-        }
-
-        return "Magento_PageBuilder/component/block/preview/abstract.html";
+        return template;
       }
       /**
        * Retrieve the render template
@@ -73,19 +68,13 @@ define(["underscore", "Magento_PageBuilder/js/component/stage/previews", "Magent
     }, {
       key: "renderTemplate",
       get: function get() {
-        if (typeof this.getData().appearance !== "undefined") {
-          var appearance = this.getData().appearance;
+        var template = (0, _appearanceConfig)(this.config.name, this.getData().appearance).render_template;
 
-          if (typeof this.config.appearances !== "undefined" && typeof this.config.appearances[appearance] !== "undefined" && typeof this.config.appearances[appearance].render_template !== "undefined") {
-            return this.config.appearances[appearance].render_template;
-          }
+        if (undefined === template) {
+          template = "Magento_PageBuilder/component/block/render/abstract.html";
         }
 
-        if (this.config.render_template) {
-          return this.config.render_template;
-        }
-
-        return "Magento_PageBuilder/component/block/render/abstract.html";
+        return template;
       }
     }]);
 

@@ -139,18 +139,27 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
       return buttonStyle;
     };
+
+    var _proto = Banner.prototype;
+
     /**
      * Set state based on overlay mouseover event for the preview
      */
-
-
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
-      if (this.preview.data.show_overlay() === "on_hover") {
-        this.preview.showOverlayHover(true);
+      if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+        this.data.overlay.attributes(Object.assign(this.data.overlay.attributes(), {
+          "data-background-color-orig": this.data.overlay.style().backgroundColor
+        }));
+        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+          backgroundColor: this.data.overlay.attributes()["data-overlay-color"]
+        }));
       }
 
-      if (this.preview.data.show_button() === "on_hover") {
-        this.preview.showButtonHover(true);
+      if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+        this.data.button.style(Object.assign(this.data.button.style(), {
+          opacity: 1,
+          visibility: "visible"
+        }));
       }
     };
     /**
@@ -159,33 +168,18 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
 
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
-      if (this.preview.data.show_overlay() === "on_hover") {
-        this.preview.showOverlayHover(false);
+      if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+          backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]
+        }));
       }
 
-      if (this.preview.data.show_button() === "on_hover") {
-        this.preview.showButtonHover(false);
+      if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+        this.data.button.style(Object.assign(this.data.button.style(), {
+          opacity: 0,
+          visibility: "hidden"
+        }));
       }
-    };
-    /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
-     */
-
-
-    _proto.afterStyleMapped = function afterStyleMapped(styles) {
-      // Extract data values our of observable functions
-      // The style attribute mapper converts images to directives, override it to include the correct URL
-      if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {
-        styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
-      }
-
-      if (_typeof(this.data.mobile_image) && this.data.mobile_image() !== "" && _typeof(this.data.mobile_image()[0]) === "object") {
-        styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
-      }
-
-      return styles;
     };
 
     return Banner;

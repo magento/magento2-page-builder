@@ -81,7 +81,6 @@ export default class StyleAttributeMapper {
                     result.marginRight = value.margin.right ? value.margin.right + "px" : null;
                     result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : null;
                     result.marginLeft = value.margin.left ? value.margin.left + "px" : null;
-
                     result.paddingTop = value.padding.top ? value.padding.top + "px" : null;
                     result.paddingRight = value.padding.right ? value.padding.right + "px" : null;
                     result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : null;

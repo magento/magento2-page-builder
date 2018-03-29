@@ -9,18 +9,15 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="HeadingOnFrontend">
-        <element name="headingAll" type="button" selector="(//{{arg1}}[@data-role='heading' and .='{{arg2}}' and @class='{{arg3}}' and contains(@style,'text-align: {{arg4}};') and contains(@style,'border: {{arg5}}px {{arg6}} {{arg7}};') and contains(@style,'border-radius: {{arg8}}px;') and contains(@style,'margin: {{arg9}}px;') and contains(@style,'padding: {{arg10}}px;')])[{{arg11}}]" parameterized="true"/>
+        <element name="headingAll" type="button" selector="(//{{arg1}}[@data-role='heading' and .='{{arg2}}' and @class='{{arg3}}' and contains(@style,'text-align: {{arg4}};') and contains(@style,'border-width: {{arg5}}px;') and contains(@style,'border-style: {{arg6}};') and contains(@style,'border-color: {{arg7}};') and contains(@style,'border-radius: {{arg8}}px;') and contains(@style,'margin: {{arg9}}px;') and contains(@style,'padding: {{arg10}}px;')])[{{arg11}}]" parameterized="true"/>
         <element name="headingNoText" type="button" selector="(//{{arg1}}[@data-role='heading' and .=''])[{{arg2}}]" parameterized="true"/>
-        <element name="headingBorder" type="button" selector="(//{{arg1}}[@data-role='heading' and contains(@style,'border: {{arg2}};')])[{{arg3}}]" parameterized="true"/>
-        <element name="headingBorderRadius" type="button" selector="(//{{arg1}}[@data-role='heading' and contains(@style,'border-radius: {{arg2}}px;')])[{{arg3}}]" parameterized="true"/>
         <element name="headingText" type="button" selector="(//{{arg1}}[@data-role='heading' and .='{{arg2}}'])[{{arg3}}]" parameterized="true"/>
         <element name="headingType" type="button" selector="(//{{arg1}}[@data-role='heading'])[{{arg2}}]" parameterized="true"/>
     </section>
     <section name="HeadingOnStage">
-        <element name="headingAll" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}') and .='{{arg2}}' and contains(@style,'text-align: {{arg3}};') and contains(@style,'border: {{arg4}}px {{arg5}} {{arg6}};') and contains(@style,'border-radius: {{arg7}}px;') and contains(@style,'margin: {{arg8}}px;') and contains(@style,'padding: {{arg9}}px;')])[{{arg10}}]" parameterized="true"/>
-        <element name="headingBorder" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}') and contains(@style,'border: {{arg2}};')])[{{arg3}}]" parameterized="true"/>
-        <element name="headingBorderRadius" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}') and contains(@style,'border-radius: {{arg2}}px;')])[{{arg3}}]" parameterized="true"/>
-        <element name="headingText" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}') and .='{{arg2}}'])[{{arg3}}]" parameterized="true"/>
-        <element name="headingType" type="button" selector="(//div[contains(@class,'pagebuilder-heading-{{arg1}}')])[{{arg2}}]" parameterized="true"/>
+        <element name="headingAll" type="button" selector="(//{{arg1}}[.= '{{arg2}}' and contains(@style,'text-align: {{arg3}};') and contains(@style,'border-width: {{arg4}}px;') and contains(@style,'border-style: {{arg5}};') and contains(@style,'border-color: {{arg6}};') and contains(@style,'border-radius: {{arg7}}px;') and contains(@style,'margin: {{arg8}}px;') and contains(@style,'padding: {{arg9}}px;')])[{{arg10}}]" parameterized="true"/>
+        <element name="headingText" type="button" selector="(//{{arg1}}[.= '{{arg2}}'])[{{arg3}}]" parameterized="true"/>
+        <element name="headingType" type="button" selector="(//{{arg1}})[{{arg2}}]" parameterized="true"/>
+        <element name="default" type="button" selector="(//{{arg1}}[{{arg2}}])[contains(@style,'border-style: {{arg3}};') and contains(@style,'border-radius: {{arg4}}px;')]" parameterized="true"/>
     </section>
 </sections>

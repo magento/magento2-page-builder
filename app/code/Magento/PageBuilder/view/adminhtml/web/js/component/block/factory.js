@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/event-bus"], function (_loader, _eventBus) {
+define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/event-bus", "./data-converter-pool-factory", "./element-converter-pool-factory"], function (_loader, _eventBus, _dataConverterPoolFactory, _elementConverterPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -74,9 +74,16 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
 
     stage = stage || parent.stage;
     formData = formData || {};
+    var componentsPromise = [(0, _elementConverterPoolFactory)(config.name), (0, _dataConverterPoolFactory)(config.name)];
     return new Promise(function (resolve) {
-      (0, _loader)([getBlockComponentPath(config)], function (blockComponent) {
-        resolve(new blockComponent(parent, stage, config, formData));
+      Promise.all(componentsPromise).then(function (loadedConverters) {
+        var elementConverterPool = loadedConverters[0],
+            dataConverterPool = loadedConverters[1];
+        (0, _loader)([getBlockComponentPath(config)], function (blockComponent) {
+          resolve(new blockComponent(parent, stage, config, formData, elementConverterPool, dataConverterPool));
+        });
+      }).catch(function (error) {
+        console.error(error);
       });
     }).then(function (block) {
       _eventBus.trigger("block:create", {
