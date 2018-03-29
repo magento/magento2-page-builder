@@ -39,6 +39,7 @@
     <actionGroup name="addPageLinkWidgetToTinyMCE">
         <arguments>
             <argument name="widget" defaultValue=""/>
+            <argument name="page" defaultValue="" type="string"/>
         </arguments>
         <comment userInput="Adding Widget To Tiny MCE" stepKey="commentAddWidgetToTinyMCE"/>
         <waitForElementVisible selector="{{TinyMCESection.InsertWidgetIcon}}" stepKey="waitForInsertWidget1"/>
@@ -51,12 +52,12 @@
         <click selector="{{WidgetSection.SelectPageButton}}" stepKey="clickSelectPage"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSelectPageModal"/>
         <waitForElementVisible selector="{{AdminProductGridFilterSection.generalFilter('chooser_title')}}" stepKey="waitForGrid"/>
-        <fillField selector="{{AdminProductGridFilterSection.generalFilter('chooser_title')}}" userInput="text{{PageBuilderPageTitle.pageName}}" stepKey="enterPageName"/>
+        <fillField selector="{{AdminProductGridFilterSection.generalFilter('chooser_title')}}" userInput="{{page}}" stepKey="enterPageName"/>
         <click selector="{{AdminProductGridFilterSection.applyFilters}}" stepKey="clickSearch"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3"/>
-        <waitForElementVisible selector="//td[contains(@class, 'col-url')][contains(text(), 'text{{PageBuilderPageTitle.pageName}}')]" stepKey="waitForSearchResult"/>
-        <click selector="//td[contains(@class, 'col-url')][contains(text(), 'text{{PageBuilderPageTitle.pageName}}')]" stepKey="clickCmsPageLinkRow"/>
-        <waitForElementNotVisible selector="//td[contains(@class, 'col-url')][contains(text(), 'text{{PageBuilderPageTitle.pageName}}')]" stepKey="waitForPageSelectionModalToClose"/>
+        <waitForElementVisible selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="waitForSearchResult"/>
+        <click selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="clickCmsPageLinkRow"/>
+        <waitForElementNotVisible selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="waitForPageSelectionModalToClose"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear4"/>
         <waitForElementVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidget2"/>
         <click selector="{{WidgetSection.InsertWidget}}" stepKey="clickInsertWidget2"/>
