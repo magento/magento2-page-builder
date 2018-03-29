@@ -15,10 +15,11 @@ export default class Map extends Block {
     public bindEvents() {
         super.bindEvents();
 
-        EventBus.on("map:block:mount", (event: Event, params: {[key: string]: any}) => {
+        // When a map is dropped for the first time open the edit panel
+        EventBus.on("map:block:dropped:create", (event: Event, params: {[key: string]: any}) => {
             if (params.id === this.id) {
                 setTimeout(() => {
-                    params.block.edit.open();
+                    this.edit.open();
                 }, 300);
             }
         });

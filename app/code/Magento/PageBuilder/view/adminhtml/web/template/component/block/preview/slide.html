@@ -5,24 +5,21 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-slide" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
-    <!-- ko ifnot: preview.data.title -->
-    <i class="icon-pagebuilder-slider"></i> <span data-bind="text: $t('Slide');"></span>
-    <!-- /ko -->
-    <!-- ko if: preview.data.title() || preview.data.content() || preview.data.link_text() -->
-    <div data-bind="style: preview.previewStyle()" class="pagebuilder-slide-container">
-        <div data-bind="css: {'overlay-background': preview.data.has_overlay_background() === '1'}, style: {textAlign: preview.data.text_align}" class="pagebuilder-content" >
-            <!-- ko if: preview.data.title-->
-            <h3 data-bind="text: preview.data.title"></h3>
-            <!-- /ko -->
-            <!-- ko if: preview.data.content -->
-            <div class="slider-content" data-bind="html: preview.data.content"></div>
-            <!-- /ko -->
-            <!-- ko if: preview.data.link_text -->
-            <button type="button" data-bind="text: preview.data.link_text"></button>
-            <!-- /ko -->
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-slide" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
+    <!-- ko template: getOptions().template --><!-- /ko -->
+    <div class="pagebuilder-slide-wrapper" data-bind="style: Object.assign(preview.previewStyle(), preview.getBackgroundStyles()), event: { mouseover: preview.onMouseOverWrapper, mouseout: preview.onMouseOutWrapper }">
+        <div class="pagebuilder-poster-overlay" data-bind="style: preview.getOverlayStyles()">
+            <div class="pagebuilder-poster-content">
+                <!-- ko if: preview.data.title -->
+                <h3 data-bind="text: preview.data.title"></h3>
+                <!-- /ko -->
+                <div data-bind="css: {'pagebuilder-empty-slide': preview.isContentEmpty()}, html: preview.getContentHtml()"></div>
+                <!-- ko if: preview.data.show_button() !== 'never_show' -->
+                <button type="button" class="pagebuilder-slide-button" data-bind="css: preview.data.button_type(), attr: {'data-link-url': preview.data.link_url()}, style: preview.getButtonStyles()">
+                    <span data-bind="html: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), css: { 'placeholder-text': !preview.data.button_text() }"></span>
+                </button>
+                <!-- /ko -->
+            </div>
         </div>
     </div>
-    <!-- /ko -->
-    <!-- ko template: getOptions().template --><!-- /ko -->
 </div>

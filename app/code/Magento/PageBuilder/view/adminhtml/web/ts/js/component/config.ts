@@ -260,7 +260,9 @@ export default class Config {
 }
 
 export interface ConfigFieldConfig {
-    default: null | string | number;
+    [key: string]: {
+        default: null | string | number;
+    };
 }
 export interface ConfigContentBlock {
     name: string;
@@ -269,7 +271,7 @@ export interface ConfigContentBlock {
     form: string;
     contentType: string;
     group: string;
-    fields: ConfigFieldConfig[];
+    fields: ConfigFieldConfig;
     preview_template: string;
     render_template: string;
     preview_component: string;

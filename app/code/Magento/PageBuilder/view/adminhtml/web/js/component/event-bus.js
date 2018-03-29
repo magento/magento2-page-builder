@@ -27,7 +27,7 @@ define(["jquery"], function (_jquery) {
      * Add a listener for an event
      *
      * @param {string} eventName
-     * @param {() => void} handler
+     * @param {(event: Event, params: {[p: string]: any}) => void} handler
      * @returns {any}
      */
 
@@ -36,10 +36,10 @@ define(["jquery"], function (_jquery) {
       return this.events.on(eventName, handler);
     };
     /**
-     * Disable an event
+     * Stop listening to an event
      *
      * @param {string} eventName
-     * @param {() => void} handler
+     * @param {(event: Event, params: {[p: string]: any}) => void} handler
      * @returns {any}
      */
 

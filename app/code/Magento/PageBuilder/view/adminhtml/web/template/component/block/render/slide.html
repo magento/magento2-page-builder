@@ -5,16 +5,33 @@
  */
 -->
 
-<div data-bind="attr: getAttributes()" class="pagebuilder-slide">
-    <div data-bind="style: getStyle(), css: getCss()">
-        <div data-bind="css: {'has-overlay-background': getData().has_overlay_background == 1}, style: {textAlign: getStyle().textAlign}" class="pagebuilder-content">
-            <h3 data-bind="text: getData().title"></h3>
-            <div class="slider-content"  data-bind="html: getData().content"></div>
-            <!-- ko if: getData().link_text.length > 0 -->
-            <a class="button" data-bind="attr: {href: getData().link_url}">
-                <span><span data-bind="text: getData().link_text"></span></span>
-            </a>
-            <!-- /ko -->
+<div data-bind="attr: getAttributes(), style: getSlideContainerStyle(), css: getCss()">
+    <a data-bind="attr: getLinkAttribute()">
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-only" data-bind="style: getSlideStyles('mobileImage')">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
+                <div class="pagebuilder-poster-content">
+                    <!-- ko if: getData().title -->
+                    <h3 data-bind="text: getData().title"></h3>
+                    <!-- /ko -->
+                    <div data-bind="html: getContentHtml()"></div>
+                    <!-- ko if: getData().show_button !== 'never_show' -->
+                    <button type="button" class="pagebuilder-slide-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
+                    <!-- /ko -->
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="pagebuilder-slide-wrapper" data-bind="style: getSlideStyles('image'), css: {'pagebuilder-mobile-hidden': getData().mobile_image}">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
+                <div class="pagebuilder-poster-content">
+                    <!-- ko if: getData().title -->
+                    <h3 data-bind="text: getData().title"></h3>
+                    <!-- /ko -->
+                    <div data-bind="html: getContentHtml()"></div>
+                    <!-- ko if: getData().show_button !== 'never_show' -->
+                    <button type="button" class="pagebuilder-slide-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+    </a>
 </div>

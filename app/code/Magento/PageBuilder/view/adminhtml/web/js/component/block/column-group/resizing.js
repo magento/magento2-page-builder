@@ -18,14 +18,24 @@ define(["../preview/column-group/resizing"], function (_resizing) {
 
     if (current === parseFloat(width.toString()) || parseFloat(width.toString()) < (0, _resizing.getSmallestColumnWidth)()) {
       return;
-    }
+    } // Also shrink the closest shrinkable column
 
-    updateColumnWidth(column, width); // Also shrink the closest shrinkable column
+
+    var allowedToShrink = true;
 
     if (difference && shrinkableColumn) {
       var currentShrinkable = (0, _resizing.getColumnWidth)(shrinkableColumn);
-      var shrinkableSize = (0, _resizing.getAcceptedColumnWidth)((currentShrinkable + -difference).toString());
-      updateColumnWidth(shrinkableColumn, shrinkableSize);
+      var shrinkableSize = (0, _resizing.getAcceptedColumnWidth)((currentShrinkable + -difference).toString()); // Ensure the column we're crushing is not becoming the same size, and it's not less than the smallest width
+
+      if (currentShrinkable === parseFloat(shrinkableSize.toString()) || parseFloat(shrinkableSize.toString()) < (0, _resizing.getSmallestColumnWidth)()) {
+        allowedToShrink = false;
+      } else {
+        updateColumnWidth(shrinkableColumn, shrinkableSize);
+      }
+    }
+
+    if (allowedToShrink) {
+      updateColumnWidth(column, width);
     }
   }
   /**
