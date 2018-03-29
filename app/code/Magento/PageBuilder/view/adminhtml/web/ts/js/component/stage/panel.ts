@@ -20,14 +20,14 @@ import { load as loadPreviews } from "./previews";
 export default class Panel extends uiComponent implements PanelInterface {
     public componentTemplate: string = "Magento_PageBuilder/component/stage/panel.html";
     public defaults: object = {
-        fullScreenTitle: $t("Full Screen"),
         groups: [],
         isCollapsed: false,
         isVisible: false,
         originalScrollTop: false,
-        searchNoResult: $t("Nothing found"),
-        searchPlaceholder: $t("Find items"),
         searchResults: [],
+        searchPlaceholder: $t("Find items"),
+        searchNoResult: $t("Nothing found"),
+        fullScreenTitle: $t("Full Screen"),
         searchTitle: $t("Clear Search"),
         searchValue: "",
         searching: false,

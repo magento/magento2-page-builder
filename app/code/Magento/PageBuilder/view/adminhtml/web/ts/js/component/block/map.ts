@@ -18,9 +18,32 @@ export default class Map extends Block {
         // When a map is dropped for the first time open the edit panel
         EventBus.on("map:block:dropped:create", (event: Event, params: {[key: string]: any}) => {
             if (params.id === this.id) {
-                setTimeout(() => { this.edit.open(); }, 300);
+                setTimeout(() => {
+                    this.edit.open();
+                }, 300);
             }
         });
+    }
+
+    /**
+     * Gets the map attributes
+     *
+     * @returns {object}
+     */
+    public getAttributes() {
+        const data = this.getData();
+        const result = super.getAttributes();
+
+        if (data.position) {
+            const positions = data.position.split(",");
+            const marker = {
+                lat: parseFloat(positions[0]),
+                lng: parseFloat(positions[1]),
+            };
+            result["data-markers"] = "[" + JSON.stringify(marker) + "]";
+            result["data-zoom"] = positions[2];
+        }
+        return result;
     }
 
     /**

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "Magento_PageBuilder/js/utils/url", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/block"], function (_underscore, _url, _config, _block) {
+define(["uiEvents", "Magento_PageBuilder/js/component/uploader", "Magento_PageBuilder/js/component/block/block"], function (_uiEvents, _uploader, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =
@@ -7,83 +7,54 @@ define(["underscore", "Magento_PageBuilder/js/utils/url", "Magento_PageBuilder/j
   function (_Block) {
     _inheritsLoose(Image, _Block);
 
-    function Image() {
-      return _Block.apply(this, arguments) || this;
+    /**
+     * Uploader instance
+     */
+
+    /**
+     * Create image uploader and add listener for when image gets uploaded through this instance
+     * {@inheritDoc}
+     */
+    function Image(parent, stage, config, formData, elementConverterPool, dataConverterPool) {
+      var _this;
+
+      _this = _Block.call(this, parent, stage, config, formData, elementConverterPool, dataConverterPool) || this; // Create uploader
+
+      _this.uploader = void 0;
+      _this.uploader = new _uploader(_this.id, "imageuploader_" + _this.id, Object.assign({}, _uploader.getDefaultConfig(), {
+        value: _this.stage.store.get(_this.id).image
+      })); // Register listener when image gets uploaded from uploader UI component
+
+      _this.uploader.onUploaded(_this.onImageUploaded.bind(_this)); // Notify all subscribers when preview image data gets modified
+
+
+      _this.preview.data.image.subscribe(function (data) {
+        _uiEvents.trigger("image:assigned:" + _this.id, data[0]);
+      });
+
+      return _this;
     }
+    /**
+     * Get registry callback reference to uploader UI component
+     *
+     * @returns {Uploader}
+     */
+
 
     var _proto = Image.prototype;
 
-    /**
-     * Get the desktop (main) image attributes for the render
-     *
-     * @returns {any}
-     */
-    _proto.getMainImageAttributes = function getMainImageAttributes() {
-      var data = this.getData();
-
-      if (data.image === "" || data.image === undefined) {
-        return {};
-      } else if (_underscore.isEmpty(data.image[0])) {
-        return;
-      }
-
-      return {
-        src: this.getImageUrl(data.image),
-        alt: data.alt,
-        title: data.title_tag
-      };
+    _proto.getUploader = function getUploader() {
+      return this.uploader;
     };
     /**
-     * Get the mobile image attributes for the render
+     * Update image data inside data store
      *
-     * @returns {any}
+     * @param {Array} data - list of each files' data
      */
 
 
-    _proto.getMobileImageAttributes = function getMobileImageAttributes() {
-      var data = this.getData();
-
-      if (data.mobile_image === "" || data.mobile_image === undefined) {
-        return {};
-      } else if (_underscore.isEmpty(data.mobile_image[0])) {
-        return;
-      }
-
-      return {
-        src: this.getImageUrl(data.mobile_image),
-        alt: data.alt,
-        title: data.title_tag
-      };
-    };
-    /**
-     * Retrieve the image attributes
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getImageLinkAttributes = function getImageLinkAttributes() {
-      var data = this.getData();
-      return {
-        href: data.link_url || "",
-        target: data.link_target || "_self",
-        title: data.title_tag
-      };
-    };
-    /**
-     * Retrieve the image URL with directive
-     *
-     * @param {{}} image
-     * @returns {string}
-     */
-
-
-    _proto.getImageUrl = function getImageUrl(image) {
-      var imageUrl = image[0].url;
-      var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getInitConfig("media_url"), imageUrl);
-      var mediaPath = imageUrl.split(mediaUrl);
-      var directive = "{{media url=" + mediaPath[1] + "}}";
-      return directive;
+    _proto.onImageUploaded = function onImageUploaded(data) {
+      this.stage.store.updateKey(this.id, data, "image");
     };
 
     return Image;
