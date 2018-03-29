@@ -46,12 +46,12 @@ define(["knockout", "../../utils/array", "../block/factory", "../event-bus"], fu
         return (0, _factory)(params.block.config, params.parent, params.parent.stage).then(function (block) {
           params.parent.addChild(block, index);
 
-          _eventBus.trigger("block:mount", {
+          _eventBus.trigger("block:dropped:create", {
             id: block.id,
             block: block
           });
 
-          _eventBus.trigger(params.block.config.name + ":block:mount", {
+          _eventBus.trigger(params.block.config.name + ":block:dropped:create", {
             id: block.id,
             block: block
           });

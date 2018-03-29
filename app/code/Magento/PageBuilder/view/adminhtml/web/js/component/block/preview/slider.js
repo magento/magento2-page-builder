@@ -113,6 +113,8 @@ define(["jquery", "Magento_PageBuilder/js/resource/slick/slick", "underscore", "
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
+      _PreviewBlock.prototype.afterChildrenRender.call(this, element);
+
       this.element = element;
     };
     /**

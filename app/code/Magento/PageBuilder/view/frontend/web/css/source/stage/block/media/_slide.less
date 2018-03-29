@@ -3,50 +3,44 @@
 //  * See COPYING.txt for license details.
 //  */
 
-.pagebuilder-slide {
-    float: left;
-    padding: 0;
-    position: relative;
-    width: 100%;
-    
-    > div {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
+[data-role='slide'] > a {
+    color: inherit;
+    text-decoration: inherit;
+
+    &:hover {
+        color: inherit;
+        text-decoration: inherit;
+    }
+}
+
+.pagebuilder-slide-wrapper {
+    box-sizing: border-box;
+    .pagebuilder-overlay{
         box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        height:inherit;
-        min-height: inherit;
+        -webkit-transition: background-color 500ms ease;
+        -moz-transition: background-color 500ms ease;
+        -o-transition: background-color 500ms ease;
+        transition: background-color 500ms ease;
+        &.pagebuilder-poster-overlay {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
     }
 
-    .pagebuilder-content {
-        color: white;
-        display: inline-block;
-        left: 10rem;
-        padding: 16px 28px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 250px;
+    .pagebuilder-poster-content {
+        text-align: center;
+    }
 
-        h3 {
-            color: white;
-            margin-bottom: 6px;
-            margin-top: 6px;
-        }
+    .pagebuilder-collage-content {
+        padding: 35px 20px;
+    }
 
-        .slider-content {
-            font-size: 14px;
-            line-height: 24px;
-        }
-
-        button {
-            margin-top: 14px;
-        }
-
-        &.has-overlay-background {
-            background-color: rgba(0, 0, 0, .3);
-        }
+    .pagebuilder-slide-button {
+        margin-top: 20px;
+        -webkit-transition: opacity 500ms ease;
+        -moz-transition: opacity 500ms ease;
+        -o-transition: opacity 500ms ease;
+        transition: opacity 500ms ease;
     }
 }

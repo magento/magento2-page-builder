@@ -99,7 +99,7 @@
         <field name="background_position" sortOrder="30" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">top_aligned</item>
+                    <item name="default" xsi:type="string">left top</item>
                 </item>
             </argument>
             <settings>
@@ -130,7 +130,7 @@
         <field name="background_size" sortOrder="40" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">auto</item>
+                    <item name="default" xsi:type="string">cover</item>
                 </item>
             </argument>
             <settings>
@@ -224,9 +224,6 @@
                 <dataType>boolean</dataType>
                 <label translate="true">Enable Parallax Background</label>
                 <dataScope>enable_parallax</dataScope>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
             </settings>
             <formElements>
                 <checkbox>
@@ -243,17 +240,39 @@
         <field name="parallax_speed" sortOrder="20" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">0</item>
+                    <item name="default" xsi:type="string">0.5</item>
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">0</item>
+                    </item>
                 </item>
             </argument>
             <settings>
+                <additionalClasses>
+                    <class name="admin__field-parallax-speed">true</class>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
                 <label translate="true">Parallax Speed</label>
                 <dataScope>parallax_speed</dataScope>
-                <notice translate="true">Store View</notice>
+                <tooltip>
+                    <description translate="true">
+                        <![CDATA[
+                        <p>Parallax Speed controls how the background will behave when page is scrolled.</p>
+                        <p>Negative values will make the background scroll in the reverse direction.</p>
+                        <p>Values from 0 to 1 will cause the scroll to be slower than the scroll speed of the window, values from 1 to 2 will be faster.</p>
+                        <p>0 - Fixes the background to the window (e.g. no scrolling).</p>
+                        <p>1 - Background will scroll at the same speed as the window.</p>
+                        ]]>
+                    </description>
+                </tooltip>
+                <notice translate="true">Enter fractional number from -1.0 to 2.0.</notice>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
                     <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="less-than-equals-to" xsi:type="number">2.0</rule>
+                    <rule name="greater-than-equals-to" xsi:type="number">-1.0</rule>
                 </validation>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = enable_parallax:value</link>
+                </imports>
             </settings>
         </field>
     </fieldset>
@@ -261,7 +280,7 @@
         <field name="margins_and_padding">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">{"margin":{"top":"0","right":"0","bottom":"10","left":"0"},"padding":{"top":"10","right":"10","bottom":"10","left":"10"}}</item>
+                    <item name="default" xsi:type="string">{"margin":{"bottom":"10","left":"0","right":"0","top":"0"},"padding":{"bottom":"10","left":"10","right":"10","top":"10"}}</item>
                 </item>
             </argument>
         </field>

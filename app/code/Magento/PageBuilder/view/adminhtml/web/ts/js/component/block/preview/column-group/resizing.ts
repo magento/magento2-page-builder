@@ -55,7 +55,7 @@ export function getAcceptedColumnWidth(width: string) {
  * @returns {number}
  */
 export function getColumnWidth(column: Column): number {
-    return parseFloat(column.stage.store.get(column.id).width.toString());
+    return getAcceptedColumnWidth(column.stage.store.get(column.id).width.toString());
 }
 
 /**

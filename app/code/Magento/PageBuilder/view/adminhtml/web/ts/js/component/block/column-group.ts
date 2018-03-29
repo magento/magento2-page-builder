@@ -71,6 +71,13 @@ export default class ColumnGroup extends Block {
      * @returns {Structural|Undefined}
      */
     public duplicateChild(child: Column, autoAppend: boolean = true): Structural | void {
+        // Are we duplicating from a parent?
+        if (this.children().length === 0
+            || (this.children().length > 0 && getColumnsWidth(this) < 100)
+        ) {
+            return super.duplicateChild(child, autoAppend);
+        }
+
         let duplicate;
         // Attempt to split the current column into parts
         let splitTimes = Math.round(getColumnWidth(child) / getSmallestColumnWidth());

@@ -3,48 +3,49 @@
 //  * See COPYING.txt for license details.
 //  */
 
-.pagebuilder-content-type.pagebuilder-slide {
-    display: table;
-    float: left;
-    height: inherit;
-    min-height: inherit;
-    width: 100%;
+.pagebuilder-slide {
+    background-color: #fafafa;
 
-    .pagebuilder-slide-container {
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: table-cell;
-        width: 100%;
+    .pagebuilder-options {
+        left: 100%;
+        transform: translate(-100%, 0px);
+    }
 
-        .pagebuilder-content {
-            color: white;
-            display: inline-block;
-            left: 10rem;
-            padding: 16px 28px;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 250px;
+    .pagebuilder-poster-overlay,
+    .pagebuilder-collage-overlay {
+        -webkit-transition: background-color 500ms ease;
+        -moz-transition: background-color 500ms ease;
+        -o-transition: background-color 500ms ease;
+        transition: background-color 500ms ease;
+    }
 
-            h3 {
-                color: white;
-                margin-bottom: 6px;
-                margin-top: 6px;
-            }
+    .pagebuilder-poster-overlay {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
 
-            .slider-content {
-                font-size: 14px;
-                line-height: 24px;
-            }
+    .pagebuilder-collage-overlay {
+        padding: 35px 20px;
+    }
 
-            button {
-                margin-top: 14px;
-            }
+    .pagebuilder-poster-content {
+        text-align: center;
+    }
 
-            &.overlay-background {
-                background: rgba(0, 0, 0, .3);
-            }
-        }
+    .pagebuilder-empty-slide {
+        color: #aaa6a0;
+        font-size: 20px;
+        font-weight: lighter;
+    }
+
+    .pagebuilder-slide-button {
+        cursor: default;
+        margin-top: 20px;
+        opacity: 1;
+        -webkit-transition: all 500ms ease;
+        -moz-transition: all 500ms ease;
+        -o-transition: all 500ms ease;
+        transition: all 500ms ease;
     }
 }

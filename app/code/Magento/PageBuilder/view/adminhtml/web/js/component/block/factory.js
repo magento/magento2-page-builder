@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "./data-converter-pool-factory", "./element-converter-pool-factory"], function (_loader, _dataConverterPoolFactory, _elementConverterPoolFactory) {
+define(["Magento_PageBuilder/js/component/loader", "../event-bus", "./data-converter-pool-factory", "./element-converter-pool-factory"], function (_loader, _eventBus, _dataConverterPoolFactory, _elementConverterPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -15,17 +15,63 @@ define(["Magento_PageBuilder/js/component/loader", "./data-converter-pool-factor
     return config.component || "Magento_PageBuilder/js/component/block/block";
   }
   /**
-   * Create a new instance of a block
+   * A block is ready once all of its children have mounted
    *
-   * @param config
-   * @param parent
-   * @param stage
-   * @param formData
-   * @returns {Promise<BlockInterface>}
+   * @param {Block} block
+   * @param {number} childrenLength
    */
 
 
-  function createBlock(config, parent, stage, formData) {
+  function fireBlockReadyEvent(block, childrenLength) {
+    var fire = function fire() {
+      _eventBus.trigger("block:ready", {
+        id: block.id,
+        block: block
+      });
+
+      _eventBus.trigger(block.config.name + ":block:ready", {
+        id: block.id,
+        block: block
+      });
+    };
+
+    if (childrenLength === 0) {
+      fire();
+    } else {
+      var mountCounter = 0;
+
+      var eventCallback = function eventCallback(event, params) {
+        if (params.block.parent.id === block.id) {
+          mountCounter++;
+
+          if (mountCounter === childrenLength) {
+            fire();
+
+            _eventBus.off("block:mount", eventCallback);
+          }
+        }
+      };
+
+      _eventBus.on("block:mount", eventCallback);
+    }
+  }
+  /**
+   * Create a new instance of a block
+   *
+   * @param {ConfigContentBlock} config
+   * @param {EditableArea} parent
+   * @param {Stage} stage
+   * @param {object} formData
+   * @param {number} childrenLength
+   * @returns {Promise<Block>}
+   */
+
+
+  function createBlock(config, parent, stage, formData, childrenLength) {
+    if (childrenLength === void 0) {
+      childrenLength = 0;
+    }
+
     stage = stage || parent.stage;
     formData = formData || {};
     var componentsPromise = [(0, _elementConverterPoolFactory)(config.name), (0, _dataConverterPoolFactory)(config.name)];
@@ -39,6 +85,19 @@ define(["Magento_PageBuilder/js/component/loader", "./data-converter-pool-factor
       }).catch(function (error) {
         console.error(error);
       });
+    }).then(function (block) {
+      _eventBus.trigger("block:create", {
+        id: block.id,
+        block: block
+      });
+
+      _eventBus.trigger(config.name + ":block:create", {
+        id: block.id,
+        block: block
+      });
+
+      fireBlockReadyEvent(block, childrenLength);
+      return block;
     });
   }
 

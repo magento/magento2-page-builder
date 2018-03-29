@@ -51,8 +51,8 @@ function onBlockDropped(event: Event, params: BlockDroppedParams) {
         if (params.block) {
             return createBlock(params.block.config, params.parent, params.parent.stage).then((block: Block) => {
                 params.parent.addChild(block, index);
-                EventBus.trigger("block:mount", {id: block.id, block});
-                EventBus.trigger(params.block.config.name + ":block:mount", {id: block.id, block});
+                EventBus.trigger("block:dropped:create", {id: block.id, block});
+                EventBus.trigger(params.block.config.name + ":block:dropped:create", {id: block.id, block});
                 return block;
             });
         } else {
@@ -168,4 +168,11 @@ export interface SortParams {
     originalEle: JQuery;
     placeholder: JQuery;
     helper?: any;
+}
+
+export interface BlockMovedEventParams {
+    block: Block;
+    index: number;
+    newParent: Block;
+    originalParent: Block;
 }

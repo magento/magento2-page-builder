@@ -1,0 +1,25 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-slide" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
+    <!-- ko template: getOptions().template --><!-- /ko -->
+    <div data-bind="style: Object.assign(preview.previewStyle(), {
+        paddingLeft: 'calc(25% + ' + preview.data.margins_and_padding().padding.left + 'px)',
+        paddingRight: 'calc(25% + ' + preview.data.margins_and_padding().padding.right + 'px)'}), event: { mouseover: preview.onMouseOverWrapper, mouseout: preview.onMouseOutWrapper }">
+        <div class="pagebuilder-collage-overlay" data-bind="style: preview.getOverlayColorStyle()">
+            <!-- ko if: preview.data.title -->
+            <h3 data-bind="text: preview.data.title"></h3>
+            <!-- /ko -->
+            <div data-bind="css: {'pagebuilder-empty-slide': preview.isContentEmpty()}, html: preview.getContentHtml()"></div>
+            <!-- ko if: preview.data.show_button() !== 'never_show' -->
+                <button type="button" class="pagebuilder-slide-button" data-bind="css: preview.data.button_type(), attr: {'data-link-url': preview.data.link_url()}, style: preview.getButtonStyles()">
+                    <span data-bind="html: preview.data.button_text() !== '' ? preview.data.button_text() : $t('Edit Button Text'), css: { 'placeholder-text': !preview.data.button_text() }"></span>
+                </button>
+            <!-- /ko -->
+        </div>
+    </div>
+</div>

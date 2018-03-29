@@ -79,8 +79,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1LinkField">
+        <actionGroup ref="fillSlideOutPanelDropdownField" stepKey="fillButton1LinkField">
             <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage2"/>
@@ -90,8 +91,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton2TextField">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton2LinkField">
+        <actionGroup ref="fillSlideOutPanelDropdownField" stepKey="fillButton1Link2Field">
             <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButton2TypeSecondaryProperty">
             <argument name="property" value="PageBuilderButtonItemTypeSecondaryProperty"/>
@@ -128,9 +130,8 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemTextProperty">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemLinkProperty">
-            <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
-        </actionGroup>
+        <waitForElement time="2" selector="{{PageBuilderButtonLinkSection.ButtonLinkInput}}" stepKey="waitForElementVisible" />
+        <seeInField selector="{{PageBuilderButtonLinkSection.ButtonLinkInput}}" userInput="{{PageBuilderButtonItemLinkProperty.value}}"  stepKey="seeInFieldProperty"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab5" />
@@ -163,7 +164,7 @@
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeButtonFromStage">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeButtonFromStage">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
@@ -335,9 +336,7 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTypePrimaryProperty">
             <argument name="property" value="PageBuilderButtonItemTypePrimaryProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOpenInNewTabProperty">
-            <argument name="property" value="PageBuilderOpenInNewTabProperty"/>
-        </actionGroup>
+        <seeElement selector="//label[text()='Open in new tab']" stepKey="seeOpenNewTabCheckBox" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveButtonEditPanelSettings"/>
     </test>
 </tests>

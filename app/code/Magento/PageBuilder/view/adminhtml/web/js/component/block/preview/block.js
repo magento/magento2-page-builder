@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "./sortable/binding"], function (_jquery, _knockout, _underscore, _styleAttributeFilter, _styleAttributeMapper, _binding) {
+define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "./sortable/binding"], function (_jquery, _knockout, _underscore, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _binding) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -95,7 +95,7 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
         optionsMenu = optionsMenu.first();
       }
 
-      optionsMenu.addClass("pagebuilder-options-visible");
+      optionsMenu.parent().addClass("pagebuilder-options-visible");
       (0, _jquery)(currentTarget).addClass("pagebuilder-content-type-active");
     };
     /**
@@ -120,11 +120,31 @@ define(["jquery", "knockout", "underscore", "../../format/style-attribute-filter
             optionsMenu = optionsMenu.first();
           }
 
-          optionsMenu.removeClass("pagebuilder-options-visible");
+          optionsMenu.parent().removeClass("pagebuilder-options-visible");
           (0, _jquery)(currentTarget).removeClass("pagebuilder-content-type-active");
         }
       }, 100); // 100 ms delay to allow for users hovering over other elements
 
+    };
+    /**
+     * After children render fire an event
+     *
+     * @param {Element} element
+     */
+
+
+    _proto.afterChildrenRender = function afterChildrenRender(element) {
+      _eventBus.trigger("block:childrenRendered", {
+        id: this.parent.id,
+        block: this.parent,
+        element: element
+      });
+
+      _eventBus.trigger(this.parent.config.name + ":block:childrenRendered", {
+        block: this.parent,
+        element: element,
+        id: this.parent.id
+      });
     };
     /**
      * Setup fields observables within the data class property

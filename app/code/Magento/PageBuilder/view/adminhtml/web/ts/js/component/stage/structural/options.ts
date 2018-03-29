@@ -45,7 +45,7 @@ export class Options {
      */
     public removeOption(code: string) {
         this.options(this.options().filter((option: OptionInterface) => {
-            return (option.code !== "remove");
+            return (option.code !== code);
         }));
         this.sort();
     }

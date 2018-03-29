@@ -28,6 +28,7 @@
             <label>Row</label>
             <icon>icon-pagebuilder-row</icon>
             <component>Magento_PageBuilder/js/component/block/row</component>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/row</preview_component>
             <form>pagebuilder_row_form</form>
             <group>general</group>
             <allowed_parents>
@@ -261,6 +262,7 @@
         <type name="image" translate="label" sortOrder="1">
             <label>Image</label>
             <icon>icon-pagebuilder-image</icon>
+            <component>Magento_PageBuilder/js/component/block/image</component>
             <form>pagebuilder_image_form</form>
             <group>media</group>
             <allowed_parents>
@@ -735,17 +737,41 @@
             <allowed_parents>
                 <parent name="slider"/>
             </allowed_parents>
-            <is_visible>false</is_visible>
             <appearances>
-                <appearance name="default" default="true">
+                <appearance name="collage-left">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/slide/collage-left.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/slide/collage-left.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="collage" component="Magento_PageBuilder/js/component/format/read/appearance/slide/collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="collage-centered">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/slide/collage-centered.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/slide/collage-centered.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="collage" component="Magento_PageBuilder/js/component/format/read/appearance/slide/collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="collage-right">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/slide/collage-right.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/slide/collage-right.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                        <reader name="collage" component="Magento_PageBuilder/js/component/format/read/appearance/slide/collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="poster" default="true">
                     <preview_template>Magento_PageBuilder/component/block/preview/slide.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/slide.html</render_template>
                     <readers>
                         <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                        <reader name="slide" component="Magento_PageBuilder/js/component/format/read/slide"/>
+                        <reader name="poster" component="Magento_PageBuilder/js/component/format/read/slide"/>
                     </readers>
                 </appearance>
             </appearances>
+            <is_visible>false</is_visible>
         </type>
         <type name="slider" translate="label" sortOrder="30">
             <label>Slider</label>

@@ -140,11 +140,12 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Position -->
+        <!-- Wait for an internal element to be displayed to signal that the render of the map is complete -->
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapFullScreen}}" stepKey="waitForMapVisible"/>
         <actionGroup ref="validateMapConfigurationPanel" stepKey="validateMapConfigurationPanel2"/>
         <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin2">
             <argument name="property" value="MapOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="validateMapHelperText" stepKey="validateMapHelperText2"/>
         <!-- Width -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeWidthAttributeValue2">
             <argument name="property" value="PageBuilderMapWidthDefaultProperty"/>

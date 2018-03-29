@@ -67,7 +67,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "../utils/d
     var config = _config.getInitConfig("content_types")[role];
 
     return getElementData(element, config).then(function (data) {
-      return (0, _factory)(config, parent, stage, data);
+      return (0, _factory)(config, parent, stage, data, getElementChildren(element).length);
     });
   }
   /**
