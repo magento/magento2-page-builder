@@ -36,7 +36,7 @@ define(["./default"], function (_default) {
           break;
       }
 
-      var buttonObject = (_buttonObject = {}, _buttonObject[attributeLinkType] = href, _buttonObject.setting = button.target === "_blank" ? true : false, _buttonObject.type = attributeLinkType, _buttonObject.widget = button.getAttribute("widget"), _buttonObject);
+      var buttonObject = (_buttonObject = {}, _buttonObject[attributeLinkType] = href, _buttonObject.setting = button.target === "_blank" ? true : false, _buttonObject.type = attributeLinkType, _buttonObject);
       var response = {
         button_link: buttonObject,
         button_text: button.innerText,

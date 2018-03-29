@@ -34,7 +34,6 @@ export default class ButtonItem implements ReadInterface {
             [attributeLinkType]: href,
             setting: button.target === "_blank" ? true : false,
             type: attributeLinkType,
-            widget: button.getAttribute("widget"),
         };
 
         const response: DataObject = {
