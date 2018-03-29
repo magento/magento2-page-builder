@@ -9,19 +9,17 @@ import Block from "../block";
 import PreviewBlock from "./block";
 
 export default class Button extends PreviewBlock {
-    private buttonText: KnockoutObservable<string>;
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
      * Button constructor
      *
      * @param {Block} parent
-     * @param {object} config
+     * @param {ConfigContentBlock} config
      */
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
-        this.buttonText = this.data.button_text;
-        this.buttonText.subscribe(this.onButtonTextChange.bind(this));
+        this.data.button_text.subscribe(this.onButtonTextChange.bind(this));
     }
 
     /**

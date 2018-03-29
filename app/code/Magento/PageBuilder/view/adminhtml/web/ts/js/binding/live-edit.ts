@@ -22,8 +22,15 @@ ko.bindingHandlers.liveEdit = {
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {value, placeholder} = valueAccessor();
 
+        /**
+         * Strip HTML and return text
+         *
+         * @param {string} html
+         * @returns {string}
+         */
         const stripHtml = (html: string) => {
             const tempDiv = document.createElement("div");
+
             tempDiv.innerHTML = html;
             return tempDiv.innerText;
         };
@@ -64,13 +71,17 @@ ko.bindingHandlers.liveEdit = {
             if (key === "enterKey") {
                 event.preventDefault();
             }
+            // prevent slides from sliding
+            if (key === "pageLeftKey" || key === "pageRightKey") {
+                event.stopPropagation();
+            }
         };
 
         /**
          * Key up event on element
          */
         const onKeyUp = () => {
-            if (element.innerText === "") {
+            if (element.innerText.length === 0) {
                 $(element).addClass("placeholder-text");
             } else {
                 $(element).removeClass("placeholder-text");
@@ -85,10 +96,29 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("keyup", onKeyUp);
 
         $(element).parent().css("cursor", "text");
-        setTimeout( () => {
-            if (element.innerText === "") {
-                $(element).addClass("placeholder-text");
-            }
-        }, 0);
+        if (element.innerText.length === 0) {
+            $(element).addClass("placeholder-text");
+        }
+    },
+
+    /**
+     * Update live edit binding on an element
+     *
+     * @param {any} element
+     * @param {() => any} valueAccessor
+     * @param {KnockoutAllBindingsAccessor} allBindings
+     * @param {any} viewModel
+     * @param {KnockoutBindingContext} bindingContext
+     */
+
+    update(element, valueAccessor, allBindings, viewModel, bindingContext) {
+        const {value} = valueAccessor();
+
+        element.innerText = value();
+        if (element.innerText.length === 0) {
+            $(element).addClass("placeholder-text");
+        } else {
+            $(element).removeClass("placeholder-text");
+        }
     },
 };

@@ -14,10 +14,11 @@ import PreviewBlock from "./block";
 export default class Slide extends PreviewBlock {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
     private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
-    private buttonText: KnockoutObservable<string>;
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
+     * Slide constructor
+     *
      * @param {Block} parent
      * @param {ConfigContentBlock} config
      */
@@ -29,8 +30,7 @@ export default class Slide extends PreviewBlock {
             const index = children.indexOf(this.parent);
             this.displayLabel($t("Slide") + (index + 1));
         });
-        this.buttonText = this.data.button_text;
-        this.buttonText.subscribe(this.onButtonTextChange.bind(this));
+        this.data.button_text.subscribe(this.onButtonTextChange.bind(this));
     }
     /**
      * Get the slide wrapper attributes for the preview

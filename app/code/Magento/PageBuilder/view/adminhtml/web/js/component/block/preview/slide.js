@@ -10,6 +10,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
     _inheritsLoose(Slide, _PreviewBlock);
 
     /**
+     * Slide constructor
+     *
      * @param {Block} parent
      * @param {ConfigContentBlock} config
      */
@@ -19,7 +21,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.showOverlayHover = _knockout.observable(false);
       _this.showButtonHover = _knockout.observable(false);
-      _this.buttonText = void 0;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
       var slider = _this.parent.parent;
 
@@ -30,9 +31,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
         _this.displayLabel((0, _translate)("Slide") + (index + 1));
       });
-      _this.buttonText = _this.data.button_text;
 
-      _this.buttonText.subscribe(_this.onButtonTextChange.bind(_this));
+      _this.data.button_text.subscribe(_this.onButtonTextChange.bind(_this));
 
       return _this;
     }

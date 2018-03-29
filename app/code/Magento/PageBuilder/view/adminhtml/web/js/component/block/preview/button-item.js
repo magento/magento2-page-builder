@@ -11,17 +11,15 @@ define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"
      * Button constructor
      *
      * @param {Block} parent
-     * @param {object} config
+     * @param {ConfigContentBlock} config
      */
     function Button(parent, config) {
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
-      _this.buttonText = void 0;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
-      _this.buttonText = _this.data.button_text;
 
-      _this.buttonText.subscribe(_this.onButtonTextChange.bind(_this));
+      _this.data.button_text.subscribe(_this.onButtonTextChange.bind(_this));
 
       return _this;
     }

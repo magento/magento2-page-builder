@@ -27,6 +27,13 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       var _valueAccessor = valueAccessor(),
           value = _valueAccessor.value,
           placeholder = _valueAccessor.placeholder;
+      /**
+       * Strip HTML and return text
+       *
+       * @param {string} html
+       * @returns {string}
+       */
+
 
       var stripHtml = function stripHtml(html) {
         var tempDiv = document.createElement("div");
@@ -72,6 +79,11 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
         if (key === "enterKey") {
           event.preventDefault();
+        } // prevent slides from sliding
+
+
+        if (key === "pageLeftKey" || key === "pageRightKey") {
+          event.stopPropagation();
         }
       };
       /**
@@ -80,7 +92,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onKeyUp = function onKeyUp() {
-        if (element.innerText === "") {
+        if (element.innerText.length === 0) {
           (0, _jquery.default)(element).addClass("placeholder-text");
         } else {
           (0, _jquery.default)(element).removeClass("placeholder-text");
@@ -95,11 +107,32 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("keyup", onKeyUp);
       (0, _jquery.default)(element).parent().css("cursor", "text");
-      setTimeout(function () {
-        if (element.innerText === "") {
-          (0, _jquery.default)(element).addClass("placeholder-text");
-        }
-      }, 0);
+
+      if (element.innerText.length === 0) {
+        (0, _jquery.default)(element).addClass("placeholder-text");
+      }
+    },
+
+    /**
+     * Update live edit binding on an element
+     *
+     * @param {any} element
+     * @param {() => any} valueAccessor
+     * @param {KnockoutAllBindingsAccessor} allBindings
+     * @param {any} viewModel
+     * @param {KnockoutBindingContext} bindingContext
+     */
+    update: function update(element, valueAccessor, allBindings, viewModel, bindingContext) {
+      var _valueAccessor2 = valueAccessor(),
+          value = _valueAccessor2.value;
+
+      element.innerText = value();
+
+      if (element.innerText.length === 0) {
+        (0, _jquery.default)(element).addClass("placeholder-text");
+      } else {
+        (0, _jquery.default)(element).removeClass("placeholder-text");
+      }
     }
   };
 });
