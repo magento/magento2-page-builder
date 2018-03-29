@@ -24,7 +24,19 @@ define(["./default"], function (_default) {
 
       var button = element.getElementsByTagName("a")[0];
       var advancedData = this.defaultReader.read(button);
-      var buttonObject = (_buttonObject = {}, _buttonObject[button.getAttribute("data_attribute_link_type")] = button.getAttribute("href"), _buttonObject.setting = button.target === "_blank" ? true : false, _buttonObject.type = button.getAttribute("data_attribute_link_type"), _buttonObject);
+      var attributeLinkType = button.getAttribute("data_attribute_link_type");
+      var href = button.getAttribute("href");
+
+      switch (attributeLinkType) {
+        case "category":
+          href = this.convertFromCategoryWidget(href);
+          break;
+
+        default:
+          break;
+      }
+
+      var buttonObject = (_buttonObject = {}, _buttonObject[attributeLinkType] = href, _buttonObject.setting = button.target === "_blank" ? true : false, _buttonObject.type = attributeLinkType, _buttonObject.widget = button.getAttribute("widget"), _buttonObject);
       var response = {
         button_link: buttonObject,
         button_text: button.innerText,
@@ -34,6 +46,21 @@ define(["./default"], function (_default) {
         delete data.css_classes;
         return Object.assign(data, response);
       });
+    };
+    /**
+     * @param {string} href
+     * @returns {string}
+     */
+
+
+    _proto.convertFromCategoryWidget = function convertFromCategoryWidget(href) {
+      var matches = href.match(/id_path=['"]category\/(\d+)/);
+
+      if (!matches) {
+        return href;
+      }
+
+      return matches[1];
     };
 
     return ButtonItem;

@@ -19,10 +19,22 @@ export default class ButtonItem implements ReadInterface {
     public read(element: HTMLElement): Promise<any> {
         const button = element.getElementsByTagName("a")[0];
         const advancedData = this.defaultReader.read(button);
+        const attributeLinkType = button.getAttribute("data_attribute_link_type");
+        let href = button.getAttribute("href");
+
+        switch (attributeLinkType) {
+            case "category":
+                href = this.convertFromCategoryWidget(href);
+                break;
+            default:
+                break;
+        }
+
         const buttonObject: DataObject = {
-            [button.getAttribute("data_attribute_link_type")]: button.getAttribute("href"),
+            [attributeLinkType]: href,
             setting: button.target === "_blank" ? true : false,
-            type: button.getAttribute("data_attribute_link_type"),
+            type: attributeLinkType,
+            widget: button.getAttribute("widget"),
         };
 
         const response: DataObject = {
@@ -34,5 +46,19 @@ export default class ButtonItem implements ReadInterface {
             delete data.css_classes;
             return Object.assign(data, response);
         });
+    }
+
+    /**
+     * @param {string} href
+     * @returns {string}
+     */
+    private convertFromCategoryWidget(href: string): string {
+        const matches = href.match(/id_path=['"]category\/(\d+)/);
+
+        if (!matches) {
+            return href;
+        }
+
+        return matches[1];
     }
 }
