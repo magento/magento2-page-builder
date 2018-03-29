@@ -20,7 +20,7 @@ ko.bindingHandlers.liveEdit = {
      * @param {KnockoutBindingContext} bindingContext
      */
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        const {value, placeholder} = valueAccessor();
+        const {field, placeholder} = valueAccessor();
 
         /**
          * Strip HTML and return text
@@ -39,7 +39,7 @@ ko.bindingHandlers.liveEdit = {
          * Blur event on element
          */
         const onBlur = () => {
-            value(stripHtml(element.innerText));
+            viewModel.preview.updateData(field, stripHtml(element.innerText));
         };
 
         /**
@@ -88,7 +88,7 @@ ko.bindingHandlers.liveEdit = {
             }
         };
         element.setAttribute("data-placeholder", placeholder);
-        element.innerText = value();
+        element.innerText = viewModel.preview.data[field]();
         element.contentEditable = true;
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
@@ -114,9 +114,9 @@ ko.bindingHandlers.liveEdit = {
      */
 
     update(element, valueAccessor, allBindings, viewModel, bindingContext) {
-        const {value} = valueAccessor();
+        const {field} = valueAccessor();
 
-        element.innerText = value();
+        element.innerText = viewModel.preview.data[field]();
         if (element.innerText.length === 0) {
             $(element).addClass("placeholder-text");
         } else {

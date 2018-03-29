@@ -25,7 +25,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
      */
     init: function init(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var _valueAccessor = valueAccessor(),
-          value = _valueAccessor.value,
+          field = _valueAccessor.field,
           placeholder = _valueAccessor.placeholder;
       /**
        * Strip HTML and return text
@@ -46,7 +46,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onBlur = function onBlur() {
-        value(stripHtml(element.innerText));
+        viewModel.preview.updateData(field, stripHtml(element.innerText));
       };
       /**
        * Click event on element
@@ -100,7 +100,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       };
 
       element.setAttribute("data-placeholder", placeholder);
-      element.innerText = value();
+      element.innerText = viewModel.preview.data[field]();
       element.contentEditable = true;
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
@@ -125,9 +125,9 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
      */
     update: function update(element, valueAccessor, allBindings, viewModel, bindingContext) {
       var _valueAccessor2 = valueAccessor(),
-          value = _valueAccessor2.value;
+          field = _valueAccessor2.field;
 
-      element.innerText = value();
+      element.innerText = viewModel.preview.data[field]();
 
       if (element.innerText.length === 0) {
         (0, _jquery.default)(element).addClass("placeholder-text");

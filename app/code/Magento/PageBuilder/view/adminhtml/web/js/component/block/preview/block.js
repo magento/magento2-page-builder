@@ -27,12 +27,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live
       this.parent = parent;
       this.config = config || {};
       this.displayLabel = _knockout.observable(this.config.label);
-      this.setupDataFields();
-
-      if (this.data.button_text) {
-        this.data.button_text.subscribe(this.onButtonTextChange.bind(this));
-      } // Calculate the preview style utilising the style attribute mapper & appearance system
-
+      this.setupDataFields(); // Calculate the preview style utilising the style attribute mapper & appearance system
 
       this.previewStyle = _knockout.computed(function () {
         var data = _underscore.mapObject(_this.data, function (value) {
@@ -68,13 +63,14 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live
     var _proto = PreviewBlock.prototype;
 
     /**
-     * Update store on button text listener
+     * Update data store
      *
+     * @param {string} key
      * @param {string} value
      */
-    _proto.onButtonTextChange = function onButtonTextChange(value) {
+    _proto.updateData = function updateData(key, value) {
       var data = this.parent.stage.store.get(this.parent.id);
-      data.button_text = value;
+      data[key] = value;
       this.parent.stage.store.update(this.parent.id, data);
     };
     /**
