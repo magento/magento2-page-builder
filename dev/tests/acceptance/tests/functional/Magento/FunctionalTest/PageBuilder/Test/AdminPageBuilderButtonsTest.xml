@@ -179,8 +179,6 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeButtonFromStage">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
@@ -280,10 +278,9 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings1"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderButtonIndex1"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
