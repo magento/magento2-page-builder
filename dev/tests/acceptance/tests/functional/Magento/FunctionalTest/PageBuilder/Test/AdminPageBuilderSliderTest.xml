@@ -53,7 +53,7 @@
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 1 Content')" stepKey="addText1ToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation1"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
@@ -128,7 +128,6 @@
         <!--Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
         <actionGroup ref="addSlide" stepKey="addSlide"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditSlide2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle2">
             <argument name="property" value="PageBuilderSlideItemTitle2"/>
@@ -137,7 +136,7 @@
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty2"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 2 Content')" stepKey="addText2ToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation2"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL2">
             <argument name="property" value="PageBuilderSlideItemLinkURL2"/>
         </actionGroup>
@@ -154,11 +153,6 @@
         <comment userInput="View slides on stage after page save" stepKey="viewSliderOnStage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForElementVisible selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForSliderContainer" time="10"/>
-        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
-        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot1"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle1"/>
-        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="moveMouseOverSlideNavigationDot2"/>
-        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2"/>
         <seeElement selector="{{SliderInAdmin.ShowArrows}}" stepKey="verifyArrowsYesOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeight500OnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderAlignment(PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="verifyAlignmentLeftOnAdmin"/>
@@ -247,7 +241,6 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
             <argument name="contentBlockNumber" value="PageBuilderSliderIndex1"/>
         </actionGroup>
-        <!--<moveMouseOver selector="{{SliderInAdmin.slideWrapper}}" stepKey="onMouseOverContentBlockStage"/>-->
         <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeEmptyContentBlockFromStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
             <argument name="contentBlockNumber" value="PageBuilderSliderIndex1"/>
@@ -279,6 +272,8 @@
         </after>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
         <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <comment userInput="Add slider with initial slide" stepKey="addSliderWithSlide"/>
+
         <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
@@ -290,13 +285,22 @@
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{SliderInAdmin.slideOptionsRemove}}" stepKey="clickRemoveContentBlock"/>
+        <comment userInput="Verify cannot remove last slide" stepKey="cantRemoveLastSlide"/>
+
         <seeElement selector="{{SliderInAdmin.slideOptionsRemoveDisabled}}" stepKey="seeContentBlockRemoveOptionDisabled"/>
+        <comment userInput="Add a second slide without custom content" stepKey="addSlideNoContent"/>
+
         <actionGroup ref="addSlide" stepKey="add0Slide"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation0" />
         <waitForElementVisible stepKey="waitForSlide0" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
         <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeSlide0"/>
+        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="2" stepKey="validateNumberOfSlides2"/>
+        <comment userInput="Remove slide without custom content has no confirmation modal" stepKey="removeSlideNoContent"/>
+
         <actionGroup ref="removeSlide" stepKey="removeSlide0"/>
-        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides"/>
+        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides1"/>
+        <comment userInput="Add a slide with custom content" stepKey="addSlideCustomContent"/>
+
         <actionGroup ref="addSlide" stepKey="addSlide1"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation1" />
         <waitForElementVisible stepKey="waitForSlide1" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
@@ -307,6 +311,9 @@
             <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="2" stepKey="validate2SlidesAgain"/>
+        <comment userInput="Remove slide with custom content has confirmation modal" stepKey="removeSlideWithContent"/>
+
         <actionGroup ref="removeSlide" stepKey="removeSlide1"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.modal}}" time="10" stepKey="waitForModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmSlideRemoval"/>
@@ -316,9 +323,13 @@
         <annotations>
             <features value="PageBuilder Slider MAGETWO-83767"/>
             <stories value=""/>
-            <title value="Can add slides and see tooltip"/>
-            <description value="A user should be able to manage slides"/>
+            <title value="Can add slides and see tooltip and slide title when hovering over navigation dots"/>
+            <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-87949"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="banana"/>
         </annotations>
         <before>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
@@ -335,22 +346,70 @@
         </after>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
         <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <comment userInput="User adds Slider into the content, user sees first Slide to be displayed inside the slider" stepKey="AC1"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
+        <seeElement selector="{{SlideOnBackend.emptyslide}}" stepKey="seeFirstSlideOnStage"/>
+
+        <comment userInput="Slide is focused, its option panel is displayed on top of the slider dot." stepKey="AC2"/>
+        <seeElement selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="seeInitialSlideWithActiveNavigationDot"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.slideNavigationDot('1')}}" attribute="class" expectedValue="active" stepKey="assertFirstDotActive"/>
+
+        <comment userInput="User sees Slide 1 default title in the Slide Option Panel." stepKey="AC3"/>
+        <see userInput="Slide1" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
+
+        <comment userInput="User sees Slide configuration opened with a delay." stepKey="AC4"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="waitForNewSlide" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
-        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeNewSlide"/>
-        <actionGroup ref="addSlide" stepKey="addSlide"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation1" />
-        <waitForElementVisible stepKey="waitForSlide1" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitleText">
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditSlide"/>
+        <comment userInput="User updates settings and saves configuration." stepKey="AC5"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitleText1">
             <argument name="property" value="PageBuilderSlideItemTitle1"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
+
+        <comment userInput="Slide is not focused, Option panel is not displayed" stepKey="AC6"/>
+        <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="dontSeeSlideOptionsAfterSaveSlide"/>
+
+        <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
         <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
-        <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" x="0" y="0" stepKey="mouseOverActiveSlide"/>
-        <waitForElementVisible  selector="{{SliderInAdmin.activeSlideTooltip}}" time="0.5" stepKey="waitForTooltip"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
+        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <waitForElementVisible time="5" selector="{{SliderInAdmin.sliderOptions}}" stepKey="seeContentBlockOptionsMenu"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
+
+        <comment userInput="User doesn't see Slide Option panel, both option panels not displayed at once." stepKey="AC8"/>
+        <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanelStillHidden"/>
+
+        <comment userInput="User sees button (+) inside the Slider Option Panel. Tooltip shows Add New Slide" stepKey="AC9"/>
+        <seeElement selector="{{SliderInAdmin.addNewSlide}}" stepKey="seeAddNewSlideChild"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.addNewSlide}}" attribute="title" expectedValue="Add" stepKey="assertAddSlideTitle"/>
+
+        <comment userInput="User clicks (+) icon, sees new slide added to to the right." stepKey="AC10"/>
+        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickAddNewSlideChild"/>
+        <comment userInput="New slide is focused, its option panel is displayed on top of the slider dot" stepKey="AC11"/>
+        <!--<assertElementContainsAttribute selector="{{SliderInAdmin.slideNavigationDot('2')}}" attribute="class" expectedValue="active" stepKey="assertSecondDotActive"/>-->
+
+        <comment userInput="Slide has default title Title N that reflects the order of the slide in the Slider." stepKey="AC12"/>
+        <!--<see userInput="Slide2" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>-->
+
+        <comment userInput="User sees slide configuration opened with a delay." stepKey="AC13"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation2" />
+        <waitForElementVisible stepKey="slide2EditPanelOpensWithDelay" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitleText2">
+            <argument name="property" value="PageBuilderSlideItemTitle2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation3" />
+
+        <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide title" stepKey="AC14"/>
+        <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" x="0" y="0" stepKey="mouseOverActiveSlide2"/>
+        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2InTooltip"/>
+        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle1InTooltip"/>
+
     </test>
     <test name="SliderValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -570,6 +629,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89565"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -621,6 +681,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89565"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -675,6 +736,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89565"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -729,6 +791,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89565"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

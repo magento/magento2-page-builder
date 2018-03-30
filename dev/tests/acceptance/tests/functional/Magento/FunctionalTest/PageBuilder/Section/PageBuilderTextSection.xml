@@ -51,6 +51,11 @@
         <element name="textInstanceAlignmentByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="textInstanceNoAlignmentByIndex" type="text" selector="(//div[@data-role='text'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
     </section>
+    <section name="TextOnBackend">
+        <element name="textInstance" type="button" selector='//div[contains(@class, "pagebuilder-textarea")][1]/div[1]'/>
+        <element name="textArea" type="text" selector='#pagebuilder_text_form_content'/>
+        <element name="triggerValidation" type="button" selector='div.modal-content div.mce-edit-area'/>
+    </section>
     <section name="TextOnSlider">
         <element name="textArea" type="text" selector="#pagebuilder_slide_form_content"/>
     </section>
