@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="SlideWithDefaultMinHeightAdjustsToContentHeight">
+        <annotations>
+            <features value="PageBuilder Slider MAGETWO-83835"/>
+            <stories value="Bluefoot Slide Configuration MAGETWO-75774"/>
+            <title value="Slide shows full content even when larger than slide default minimum height on Admin and Storefront"/>
+            <description value="If content height is larger than min height, verify slide height equals content height"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-88743"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <before>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
+        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderOntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!--Edit First Slide -->
+        <comment userInput="First Slide opens when add Slider to stage" stepKey="EditFirstSlide"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimationOnFirstSlide" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditSlide" />
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
+            <argument name="property" value="PageBuilderSlideItemTitle1"/>
+        </actionGroup>
+        <actionGroup ref="scrollToSlideOutPanelField" stepKey="scrollToLink">
+            <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
+        </actionGroup>
+        <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + '{{PageBuilderSlideMessageLongProperty.value}}')" stepKey="addTextToWYSIWYG"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation1"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <comment userInput="Verify content visible in Admin before page save" stepKey="viewSliderOnStageBeforeSave"/>
+        <!-- Depends on MQE-818 to grab computed height attribute using JS so instead adding long text content-->
+        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation1" />
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
+        <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <comment userInput="Verify content height in Admin after page save" stepKey="viewSliderOnStage"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementVisible selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForSliderContainer" time="10"/>
+        <!-- Verify long slider content is visible in stage after page save -->
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdminAfterSave"/>
+        <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdminAfterSave"/>
+        <grabTextFrom selector="{{SlideOnBackend.slideContent('0')}}" stepKey="grabSlideContent"/>
+        <assertEquals expected="{{PageBuilderSlideMessageLongProperty.value}}" expectedType="string" actual="grabSlideContent" actualType="variable" message="actual=$grabSlideContent" stepKey="assertContentIsVisible"/>
+        <!-- Verify long slider content is visible in storefront -->
+        <comment userInput="View slider and slides on storefront" stepKey="viewSliderOnStorefront"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedOnStorefront"/>
+        <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedOnStorefront"/>
+    </test>
+</tests>
+
