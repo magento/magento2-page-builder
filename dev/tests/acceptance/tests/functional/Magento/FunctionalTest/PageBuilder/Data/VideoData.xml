@@ -8,25 +8,36 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
-    <entity name="PageBuilderVideoUrlProperty" type="pagebuilder_video_property">
+    <!-- URL -->
+    <entity name="PageBuilderVideoUrl_Default" type="pagebuilder_video_url_property">
+        <data key="name">Video Embed URL</data>
+        <data key="section">general</data>
+        <data key="fieldName">video_source</data>
+        <data key="text">Video</data>
+    </entity>
+    <entity name="PageBuilderVideoUrl_YouTube" type="pagebuilder_video_url_property">
         <data key="name">Video Embed URL</data>
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
         <data key="value">https://www.youtube.com/embed/slOtnjsbff0</data>
+        <data key="src">https://www.youtube.com/embed/slOtnjsbff0</data>
     </entity>
-    <entity name="PageBuilderVideoWrongUrlProperty" type="pagebuilder_video_property">
+    <entity name="PageBuilderVideoUrl_NonEmbedded" type="pagebuilder_video_url_property">
         <data key="name">Video Embed URL</data>
         <data key="section">general</data>
         <data key="fieldName">video_source</data>
         <data key="value">https://www.youtube.com/watch?v=slOtnjsbff0</data>
+        <data key="src">https://www.youtube.com/embed/slOtnjsbff0</data>
     </entity>
-    <entity name="PageBuilderVideoWidthProperty" type="pagebuilder_video_property">
+    <!-- Width -->
+    <entity name="PageBuilderVideoWidth_500" type="pagebuilder_video_width_property">
         <data key="name">Width</data>
         <data key="section">general</data>
         <data key="fieldName">width</data>
         <data key="value">500px</data>
     </entity>
-    <entity name="PageBuilderVideoHeightProperty" type="pagebuilder_video_property">
+    <!-- Height -->
+    <entity name="PageBuilderVideoHeight_200" type="pagebuilder_video_height_property">
         <data key="name">Height</data>
         <data key="section">general</data>
         <data key="fieldName">height</data>
