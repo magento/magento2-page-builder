@@ -389,6 +389,9 @@
         <comment userInput="User clicks (+) icon, sees new slide added to to the right." stepKey="AC10"/>
         <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickAddNewSlideChild"/>
 
+        <comment userInput="New slide is focused, its option panel is displayed on top of the slider dot" stepKey="AC11"/>
+        <comment userInput="Slide has default title Title N that reflects the order of the slide in the Slider." stepKey="AC12"/>
+
         <comment userInput="User sees slide configuration opened with a delay." stepKey="AC13"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation2" />
         <waitForElementVisible stepKey="slide2EditPanelOpensWithDelay" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
@@ -403,7 +406,6 @@
         <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2InTooltip"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
         <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle1InTooltip"/>
-
     </test>
     <test name="SliderValidateAdvancedConfigurationDefaultValues">
         <annotations>
