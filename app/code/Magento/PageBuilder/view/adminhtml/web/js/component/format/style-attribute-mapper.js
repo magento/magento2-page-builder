@@ -104,6 +104,8 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
 
 
     _proto.fromDom = function fromDom(data) {
+      var _this2 = this;
+
       var result = {};
       data = _underscore.extend({}, data); // Set the initial state of margins & paddings and allow the reader below to populate it as desired
 
@@ -168,15 +170,15 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
 
         if (key === "background-color" || key === "border-color") {
           if (value === "default" || value === "initial" || value === "") {
-            value = ""; // } else {
-            //     value = this.convertRgbToHex(value);
+            value = "";
           }
         }
 
         if (key === "color") {
           if (value === "") {
-            value = "default"; // } else {
-            //     value = this.convertRgbToHex(value);
+            value = "default";
+          } else {
+            value = _this2.convertRgbToHex(value);
           }
         }
 
