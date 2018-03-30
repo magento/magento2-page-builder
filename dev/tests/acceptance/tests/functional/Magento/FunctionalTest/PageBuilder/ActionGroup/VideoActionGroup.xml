@@ -17,7 +17,7 @@
             <argument name="height" defaultValue=""/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
-        <waitForElementVisible selector="{{page.source(index, url.src)}}" stepKey="waitForUrl"/>
+        <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
         <waitForElementVisible selector="{{page.height(index, height.value)}}" stepKey="waitForHeight"/>
         <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForWidth"/>
     </actionGroup>
@@ -28,7 +28,7 @@
             <argument name="url" defaultValue=""/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
-        <waitForElementVisible selector="{{page.source(index, url.src)}}" stepKey="waitForUrl"/>
+        <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
         <waitForElementVisible selector="{{page.noHeight(index)}}" stepKey="waitForHeight"/>
         <waitForElementVisible selector="{{page.noWidth(index)}}" stepKey="waitForWidth"/>
     </actionGroup>
