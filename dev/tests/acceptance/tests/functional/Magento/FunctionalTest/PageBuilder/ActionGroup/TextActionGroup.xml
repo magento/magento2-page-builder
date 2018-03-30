@@ -15,6 +15,8 @@
         <comment userInput="Adding Text To Tiny MCE" stepKey="commentAddTextToTinyMCE"/>
         <waitForElementVisible selector="{{TextOnConfiguration.textIFrame}}" stepKey="waitForIFrame"/>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + '{{property.value}}')" stepKey="addTextToWYSIWYG"/>
+        <!-- Must click Tiny MCE or form will not recognize that text has been added -->
+        <click selector="{{TextOnConfiguration.textIFrame}}" stepKey="clickIFrame"/>
         <switchToIFrame selector="{{TextOnConfiguration.textIFrameId}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
         <switchToIFrame selector="" stepKey="exitIFrame"/>
