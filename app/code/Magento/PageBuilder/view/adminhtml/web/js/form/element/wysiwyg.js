@@ -26,8 +26,11 @@ define([
 
         /** @inheritdoc */
         initialize: function () {
-            this._super()
-                .initPageBuilder();
+            this._super();
+
+            if (!this.wysiwygConfigData()['pagebuilder_button']) {
+                this.initPageBuilder();
+            }
 
             return this;
         },
@@ -40,7 +43,13 @@ define([
             return this;
         },
 
-        /** Handle a click event requesting that we build PageBuilder. */
+        /** Handle button click. */
+        pageBuilderEditButtonClick: function () {
+            this.initPageBuilder();
+            this.toggleFullScreen();
+        },
+
+        /** Init PageBuilder. */
         initPageBuilder: function () {
             if (!this.isComponentInitialized) {
                 this.loading(true);
