@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/extract-alpha-from-rgba", "Magento_PageBuilder/js/utils/image"], function (_colorConverter, _extractAlphaFromRgba, _image) {
+define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/extract-alpha-from-rgba", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/component/format/read/default"], function (_colorConverter, _extractAlphaFromRgba, _image, _default) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,7 +7,9 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
   var Slide =
   /*#__PURE__*/
   function () {
-    function Slide() {}
+    function Slide() {
+      this.defaultReader = new _default();
+    }
 
     var _proto = Slide.prototype;
 
@@ -63,7 +65,12 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
         show_overlay: element.getAttribute("data-show-overlay"),
         text_align: element.querySelector(".pagebuilder-slide-wrapper").style.textAlign
       };
-      return Promise.resolve(response);
+      var slideAttributeElement = element.querySelector("div");
+      var slideAttributesPromise = this.defaultReader.read(slideAttributeElement);
+      return slideAttributesPromise.then(function (slideAttributes) {
+        delete slideAttributes.css_classes;
+        return Promise.resolve(Object.assign(slideAttributes, response));
+      });
     };
     /**
      * Get overlay color

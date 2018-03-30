@@ -47,26 +47,13 @@ export default class AttributeMapper {
         const result: DataObject = {};
         Object.keys(data).map(
             (key: string) => {
-                let value = data[key];
+                const value = data[key];
                 if (key in this.attributeNameMapping) {
                     key = this.attributeNameMapping[key];
-                }
-                if (key === "position") {
-                    value = value.toString();
-                    const [lat, lng, zoom] = value.split(",");
-
-                    if (value !== "") {
-                        value = "https://www.google.com/maps/embed/v1/place?q="
-                            + lat + "," + lng + "&zoom=" + zoom + "&key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw";
-                    }
                 }
                 result[key.replace("_", "-")] = value;
             },
         );
-        if (result.position) {
-            result.src = result.position;
-            delete result.position;
-        }
         return result;
     }
 

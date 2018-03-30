@@ -48,22 +48,23 @@ class Divider implements RendererInterface
         ];
 
         $formData = $itemData['formData'] ?? [];
-        $formData += [
-            'border_color' => $eavData['color'] ?? '',
-            'border_width' => $eavData['hr_height'] ?? '',
-            'width' => $eavData['hr_width'] ?? ''
-        ];
-
         $style = $this->styleExtractor->extractStyle($formData);
         if ($style) {
             $rootElementAttributes['style'] = $style;
         }
 
-        $rootElementHtml = '<hr';
+        $lineFormData = [
+            'border_color' => $eavData['color'] ?? '',
+            'border_width' => $eavData['hr_height'] ?? '',
+            'width' => $eavData['hr_width'] ?? ''
+        ];
+        $lineStyle = $this->styleExtractor->extractStyle($lineFormData);
+
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '/>';
+        $rootElementHtml .= '><hr' . ($lineStyle ? " style=\"$lineStyle\"" : '') . '/></div>';
 
         return $rootElementHtml;
     }

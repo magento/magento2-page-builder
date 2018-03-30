@@ -23,7 +23,6 @@ export default class Banner extends PreviewBlock {
      */
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
-        this.data.button_text.subscribe(this.onButtonTextChange.bind(this));
     }
 
     /**
@@ -133,11 +132,27 @@ export default class Banner extends PreviewBlock {
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOverWrapper() {
-        if (this.preview.data.show_overlay() === "on_hover") {
-            this.preview.showOverlayHover(true);
+        if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+            this.data.overlay.attributes(
+                Object.assign(
+                    this.data.overlay.attributes(),
+                    {"data-background-color-orig": this.data.overlay.style().backgroundColor},
+                ),
+            );
+            this.data.overlay.style(
+                Object.assign(
+                    this.data.overlay.style(),
+                    {backgroundColor: this.data.overlay.attributes()["data-overlay-color"]},
+                ),
+            );
         }
-        if (this.preview.data.show_button() === "on_hover") {
-            this.preview.showButtonHover(true);
+        if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+            this.data.button.style(
+                Object.assign(
+                    this.data.button.style(),
+                    {opacity: 1, visibility: "visible"},
+                ),
+            );
         }
     }
 
@@ -145,43 +160,21 @@ export default class Banner extends PreviewBlock {
      * Set state based on overlay mouseout event for the preview
      */
     public onMouseOutWrapper() {
-        if (this.preview.data.show_overlay() === "on_hover") {
-            this.preview.showOverlayHover(false);
+        if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+            this.data.overlay.style(
+                Object.assign(
+                    this.data.overlay.style(),
+                    {backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]},
+                ),
+            );
         }
-        if (this.preview.data.show_button() === "on_hover") {
-            this.preview.showButtonHover(false);
+        if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+            this.data.button.style(
+                Object.assign(
+                    this.data.button.style(),
+                    {opacity: 0, visibility: "hidden"},
+                ),
+            );
         }
-    }
-
-    /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
-     */
-    protected afterStyleMapped(styles: {}) {
-        // Extract data values our of observable functions
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
-        }
-        if (typeof this.data.mobile_image
-            && this.data.mobile_image() !== ""
-            && typeof this.data.mobile_image()[0] === "object"
-        ) {
-            styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
-        }
-        return styles;
-    }
-
-    /**
-     * Update store on banner button text listener
-     *
-     * @param {string} value
-     */
-    private onButtonTextChange(value: string) {
-        const data = this.parent.stage.store.get(this.parent.id);
-
-        data.button_text = value;
-        this.parent.stage.store.update(this.parent.id, data);
     }
 }

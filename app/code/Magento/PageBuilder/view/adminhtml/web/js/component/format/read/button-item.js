@@ -20,13 +20,15 @@ define(["Magento_PageBuilder/js/component/format/read/default"], function (_defa
      * @returns {Promise<any>}
      */
     _proto.read = function read(element) {
+      var _buttonObject;
+
       var button = element.getElementsByTagName("a")[0];
       var advancedData = this.defaultReader.read(button);
+      var buttonObject = (_buttonObject = {}, _buttonObject[button.getAttribute("data_attribute_link_type")] = button.getAttribute("href"), _buttonObject.setting = button.target === "_blank" ? true : false, _buttonObject.type = button.getAttribute("data_attribute_link_type"), _buttonObject);
       var response = {
-        button_link: button.getAttribute("href"),
+        button_link: buttonObject,
         button_text: button.innerText,
-        button_type: button.classList[0],
-        open_in_new_tab: button.target === "_blank" ? "1" : "0"
+        button_type: button.classList[0]
       };
       return advancedData.then(function (data) {
         delete data.css_classes;

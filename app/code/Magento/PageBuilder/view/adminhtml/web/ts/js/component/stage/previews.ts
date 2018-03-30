@@ -4,7 +4,6 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import Appearance from "../appearance/appearance";
 import Block from "../block/block";
 import PreviewBlock from "../block/preview/block";
 import Config, {ConfigContentBlocks} from "../config";

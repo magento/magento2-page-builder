@@ -12,6 +12,7 @@ var config = {
         'pagebuilder/highlight': 'Magento_PageBuilder/js/resource/highlight/highlight.pack',
         'hyperscript': 'Magento_PageBuilder/js/resource/hyperscript/hyperscript',
         'xyperscript': 'Magento_PageBuilder/js/resource/xyperscript/xyperscript',
+        'google-map': 'Magento_PageBuilder/js/utils/map',
 
         /* Include our Knockout Sortable wrapper */
         'ko-sortable': 'Magento_PageBuilder/js/resource/sortable/knockout-sortable',

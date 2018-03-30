@@ -17,6 +17,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84923"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-anchor"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -44,11 +45,12 @@
             <argument name="property" value="PageBuilderAnchorIdentifierProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <see userInput="#{{PageBuilderAnchorIdentifierProperty.value}}" selector="{{AnchorInAdmin.anchorIdentifier}}" stepKey="seeAnchorInPreview"/>
+        <see userInput="#{{PageBuilderAnchorIdentifierProperty.value}}" selector="{{AnchorOnStage.anchorIdentifier}}" stepKey="seeAnchorInPreview"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <amOnPage url="anchor{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElementInDOM selector="//span[@id='{{PageBuilderAnchorIdentifierProperty.value}}']" stepKey="seeAnchorIdentifierSet"/>
+        <waitForPageLoad stepKey="waitForStorefront"/>
+        <seeElementInDOM selector="{{AnchorOnStorefront.anchorIdentifier('1')}}" stepKey="seeAnchorIdentifierSet"/>
     </test>
     <test name="RemoveAnchorFromStage">
         <annotations>
@@ -59,6 +61,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-anchor"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -82,15 +85,16 @@
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderAnchorContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
-    <test name="AnchorHasAdvancedFormSection">
+    <test name="AnchorValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Anchor MAGETWO-83932"/>
-            <title value="Anchor has Advanced form section"/>
-            <description value="A user should be able to configure advanced settings for anchor"/>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-83415"/>
+            <title value="Anchor - Validate Advanced Configuration Default Values"/>
+            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Anchor."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84275"/>
+            <testCaseId value="MAGETWO-89464"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-anchor"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -101,8 +105,7 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragAnchorIntoStage">
@@ -111,17 +114,34 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderAnchorContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedAlignmentProperty">
-            <argument name="property" value="PageBuilderAdvancedAlignmentProperty"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Style On Stage -->
+        <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
+        <waitForElementVisible selector="{{AnchorOnStage.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyDefault.value)}}" stepKey="waitForStyle"/>
     </test>
 </tests>

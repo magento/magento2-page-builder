@@ -63,11 +63,24 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live
     var _proto = PreviewBlock.prototype;
 
     /**
+     * Update data store
+     *
+     * @param {string} key
+     * @param {string} value
+     */
+    _proto.updateData = function updateData(key, value) {
+      var data = this.parent.stage.store.get(this.parent.id);
+      data[key] = value;
+      this.parent.stage.store.update(this.parent.id, data);
+    };
+    /**
      * Update the data value of a part of our internal Knockout data store
      *
      * @param {string} key
      * @param value
      */
+
+
     _proto.updateDataValue = function updateDataValue(key, value) {
       if (typeof this.data[key] !== "undefined" && _knockout.isObservable(this.data[key])) {
         this.data[key](value);

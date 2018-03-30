@@ -31,6 +31,30 @@ define(["underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_Pag
       });
     };
     /**
+     * Gets the map attributes
+     *
+     * @returns {object}
+     */
+
+
+    _proto.getAttributes = function getAttributes() {
+      var data = this.getData();
+
+      var result = _Block.prototype.getAttributes.call(this);
+
+      if (data.position) {
+        var positions = data.position.split(",");
+        var marker = {
+          lat: parseFloat(positions[0]),
+          lng: parseFloat(positions[1])
+        };
+        result["data-markers"] = "[" + JSON.stringify(marker) + "]";
+        result["data-zoom"] = positions[2];
+      }
+
+      return result;
+    };
+    /**
      * Gets the map styles
      *
      * @returns {object}

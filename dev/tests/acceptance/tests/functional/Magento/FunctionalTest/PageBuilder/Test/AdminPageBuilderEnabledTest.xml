@@ -66,7 +66,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
         </before>
         <after>
@@ -85,20 +85,20 @@
         <click selector="{{PageBuilderActionsSection.openPageBuilderCatalog}}" stepKey="clickOnPageBuilderBtn" />
         <!--See PageBuilder fullsize-->
         <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waiForPageBuilderVisible" />
-        <seeElement selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
-        <seeElement selector=".stage-full-screen" stepKey="seePageBuilderFullSizeScreen" />
+        <seeElement selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="seePageBuilderFullSizeScreen" />
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
-        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello Category from PageBuilder" stepKey="addTextToEditor"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
         <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen" />
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="waitForExitFullScreen" />
+        <click selector="{{PageBuilderActionsSection.exitFullScreen}}" stepKey="exitPageBuilderFullScreen" />
         <click selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="saveCategory"/>
         <waitForPageLoad stepKey="waitForPageLoad2" />
         <amOnPage url="/{{SimpleSubCategory.name_lwr}}.html" stepKey="goToCategoryFrontPage"/>
@@ -137,7 +137,7 @@
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello CMS Page from PageBuilder" stepKey="addTextToEditor"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Page from PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveCMSWithPageBuilderContent" />
         <!--Enable WYSIWYG-->
@@ -171,6 +171,7 @@
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
+
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
@@ -178,7 +179,7 @@
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-        <fillField selector="{{TextOnBackend.textArea}}" userInput="Hello CMS Block from PageBuilder" stepKey="addTextToEditor"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Hello CMS Block from PageBuilder" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <click selector="{{BlockNewPagePageActionsSection.saveBlock}}" stepKey="clickSaveBlock"/>
         <see userInput="You saved the block." stepKey="seeSuccessMessage"/>

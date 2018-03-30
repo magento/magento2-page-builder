@@ -8,6 +8,7 @@ import $t from "mage/translate";
 import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
 import {ConfigContentBlock} from "../../config";
+import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
 import PreviewBlock from "./block";
 
@@ -30,7 +31,6 @@ export default class Slide extends PreviewBlock {
             const index = children.indexOf(this.parent);
             this.displayLabel($t("Slide") + (index + 1));
         });
-        this.data.button_text.subscribe(this.onButtonTextChange.bind(this));
     }
     /**
      * Get the slide wrapper attributes for the preview
@@ -161,11 +161,13 @@ export default class Slide extends PreviewBlock {
     }
 
     /**
+     * Extract data values our of observable functions
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
      *
-     * @returns styles
+     * @param {StyleAttributeMapperResult} styles
+     * @returns {StyleAttributeMapperResult}
      */
-    protected afterStyleMapped(styles: {}) {
+    protected afterStyleMapped(styles: StyleAttributeMapperResult): StyleAttributeMapperResult {
         // Extract data values our of observable functions
         // The style attribute mapper converts images to directives, override it to include the correct URL
         if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
@@ -178,17 +180,5 @@ export default class Slide extends PreviewBlock {
             styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
         }
         return styles;
-    }
-
-    /**
-     * Update store on slide button text listener
-     *
-     * @param {string} value
-     */
-    private onButtonTextChange(value: string) {
-        const data = this.parent.stage.store.get(this.parent.id);
-
-        data.button_text = value;
-        this.parent.stage.store.update(this.parent.id, data);
     }
 }

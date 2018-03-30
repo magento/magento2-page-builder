@@ -18,30 +18,15 @@ define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"
 
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
-
-      _this.data.button_text.subscribe(_this.onButtonTextChange.bind(_this));
-
       return _this;
     }
-    /**
-     * Update store on button text listener
-     *
-     * @param {string} value
-     */
-
-
-    var _proto = Button.prototype;
-
-    _proto.onButtonTextChange = function onButtonTextChange(value) {
-      var data = this.parent.stage.store.get(this.parent.id);
-      data.button_text = value;
-      this.parent.stage.store.update(this.parent.id, data);
-    };
     /**
      * After child render record element
      * returns {object}
      */
 
+
+    var _proto = Button.prototype;
 
     _proto.childrenStyle = function childrenStyle() {
       return {

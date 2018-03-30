@@ -1,5 +1,7 @@
 /*eslint-disable */
 define(["Magento_PageBuilder/js/component/block/block"], function (_block) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ButtonItem =
@@ -19,10 +21,20 @@ define(["Magento_PageBuilder/js/component/block/block"], function (_block) {
      */
     _proto.getLinkAttributes = function getLinkAttributes() {
       var data = this.getData();
-      return {
-        href: data.button_link,
-        target: data.open_in_new_tab === "1" ? "_blank" : ""
-      };
+
+      if (_typeof(data.button_link) === "object") {
+        return {
+          data_attribute_link_type: data.button_link.type,
+          href: data.button_link[data.button_link.type],
+          target: data.button_link.setting === true ? "_blank" : ""
+        };
+      } else {
+        return {
+          data_attribute_link_type: "",
+          href: "",
+          target: ""
+        };
+      }
     };
 
     return ButtonItem;

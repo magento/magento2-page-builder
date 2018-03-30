@@ -19,19 +19,6 @@ export default class Button extends PreviewBlock {
      */
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
-        this.data.button_text.subscribe(this.onButtonTextChange.bind(this));
-    }
-
-    /**
-     * Update store on button text listener
-     *
-     * @param {string} value
-     */
-    private onButtonTextChange(value: string) {
-        const data = this.parent.stage.store.get(this.parent.id);
-
-        data.button_text = value;
-        this.parent.stage.store.update(this.parent.id, data);
     }
 
     /**

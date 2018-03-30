@@ -88,6 +88,19 @@ export default class PreviewBlock {
     }
 
     /**
+     * Update data store
+     *
+     * @param {string} key
+     * @param {string} value
+     */
+    public updateData(key: string, value: string) {
+        const data = this.parent.stage.store.get(this.parent.id);
+
+        data[key] = value;
+        this.parent.stage.store.update(this.parent.id, data);
+    }
+
+    /**
      * Update the data value of a part of our internal Knockout data store
      *
      * @param {string} key

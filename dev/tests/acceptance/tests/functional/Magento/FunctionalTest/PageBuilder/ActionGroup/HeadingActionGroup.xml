@@ -10,26 +10,20 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="verifyHeadingInStage">
         <arguments>
-            <argument name="headingNumber" defaultValue="1"/>
+            <argument name="headingNumber" defaultValue="1" type="string"/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
             <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
-            <argument name="headingBorder" defaultValue="PageBuilderAdvancedBorderDefaultProperty"/>
         </arguments>
-        <!-- replace the hardcoded '1's with headingNumber argument after https://jira.corp.magento.com/browse/MQE-498 -->
-        <waitForElement selector="{{HeadingOnStage.headingType(headingType.value, '1')}}" stepKey="waitForHeadingStyle"/>
-        <seeElement selector="{{HeadingOnStage.headingText(headingType.value, headingText.value, '1')}}" stepKey="seeStageHeadingText"/>
-        <seeElement selector="{{HeadingOnStage.headingBorder(headingType.value, headingBorder.value, '1')}}" stepKey="seeStageHeadingBorder"/>
+        <waitForElement selector="{{HeadingOnStage.headingType(headingType.value, headingNumber)}}" stepKey="waitForHeadingStyle"/>
+        <seeElement selector="{{HeadingOnStage.headingText(headingType.value, headingText.value, headingNumber)}}" stepKey="seeStageHeadingText"/>
     </actionGroup>
     <actionGroup name="verifyHeadingInStorefront">
         <arguments>
-            <argument name="headingNumber" defaultValue="1"/>
+            <argument name="headingNumber" defaultValue="1" type="string"/>
             <argument name="headingType" defaultValue="PageBuilderHeadingTypeDefaultProperty"/>
             <argument name="headingText" defaultValue="PageBuilderHeadingTextProperty"/>
-            <argument name="headingBorder" defaultValue="PageBuilderAdvancedBorderDefaultProperty"/>
         </arguments>
-        <!-- replace the hardcoded '1's with headingNumber argument after https://jira.corp.magento.com/browse/MQE-498 -->
-        <waitForElementVisible selector="{{HeadingOnFrontend.headingType(headingType.value, '1')}}" stepKey="waitForStorefrontHeadingStyle"/>
-        <seeElement selector="{{HeadingOnFrontend.headingText(headingType.value, headingText.value, '1')}}" stepKey="seeStorefrontHeadingText"/>
-        <seeElement selector="{{HeadingOnFrontend.headingBorder(headingType.value, headingBorder.value, '1')}}" stepKey="seeStorefrontHeadingBorder"/>
+        <waitForElementVisible selector="{{HeadingOnFrontend.headingType(headingType.value, headingNumber)}}" stepKey="waitForStorefrontHeadingStyle"/>
+        <seeElement selector="{{HeadingOnFrontend.headingText(headingType.value, headingText.value, headingNumber)}}" stepKey="seeStorefrontHeadingText"/>
     </actionGroup>
 </actionGroups>

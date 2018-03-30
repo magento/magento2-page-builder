@@ -1,0 +1,60 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-image-uploader-container" data-role="drop-zone" css="_loading: isLoading, 'has-data': hasData()">
+    <div class="pagebuilder-options" data-bind="visible: hasData()">
+        <div class="pagebuilder-options-wrapper">
+            <ul class="pagebuilder-options-links">
+                <li class="pagebuilder-options-link">
+                    <label class="file-uploader-button action-default" attr="for: uid" disable="disabled" translate="translations.uploadNewImage" />
+                </li>
+                <li class="pagebuilder-options-link">
+                    <label
+                        data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog}"
+                        class="file-uploader-button action-default"
+                        attr="id: mediaGalleryUid"
+                        disable="disabled"
+                        data-force_static_path="1"
+                        translate="translations.selectFromGallery"/>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="file-uploader-spinner"></div>
+    <div class="preview-image-container-loading-overlay"></div>
+    <div class="pagebuilder-image-uploader-container-dropzone-overlay">
+        <span class="dropzone-placeholder-text" translate="translations.dropHere"></span>
+    </div>
+    <div class="pagebuilder-image-empty-preview" data-bind="visible: !hasData()">
+        <div class="admin__field-control">
+            <div class="file-uploader image-uploader">
+                <div class="file-uploader-area">
+                    <p class="image-upload-instructions" translate="translations.dragImageHere"></p>
+                    <input type="file" afterRender="onElementRender" attr="id: uid, name: inputName, multiple: isMultipleFiles" disable="disabled" />
+                    <label class="file-uploader-button action-default" attr="for: uid" disable="disabled" translate="translations.uploadImage" />
+                    <span translate="translations.or"></span>
+                    <label
+                        data-bind="event: {change: addFileFromMediaGallery, click: openMediaBrowserDialog}"
+                        class="file-uploader-button action-default"
+                        attr="id: mediaGalleryUid"
+                        disable="disabled"
+                        data-force_static_path="1"
+                        translate="translations.selectFromGallery"/>
+                    <render args="fallbackResetTpl" if="$data.showFallbackReset && $data.isDifferedFromDefault"/>
+                    <p class="image-upload-requirements">
+                        <span if="$data.maxFileSize">
+                            <span translate="translations.maximumFileSize" />: <text args="formatSize($data.maxFileSize)"/>.
+                        </span>
+                        <span if="$data.allowedExtensions">
+                            <span translate="translations.allowedFileTypes" />: <text args="getAllowedFileExtensionsInCommaDelimitedFormat()"/>.
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
