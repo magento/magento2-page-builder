@@ -426,7 +426,7 @@
             <description value="A user should be able to remove banner block from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
-            <group value="pagebuilder"/>
+            <group value="RemoveBannerFromStage"/>
             <group value="pagebuilder-banner"/>
         </annotations>
         <before>
@@ -445,9 +445,11 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
-        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" stepKey="waitForBannerInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverBannerStage"/>
+        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderBannerContentBlock.role)}}" stepKey="waitForOptions" />
+        <click selector="{{PageBuilderActionsSection.contentBlockRemove(PageBuilderBannerContentBlock.role)}}" stepKey="clickRemove"/>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
     <test name="BannerDoesNotNavigate">
