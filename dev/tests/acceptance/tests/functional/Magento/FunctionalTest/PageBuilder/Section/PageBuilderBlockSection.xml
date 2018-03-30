@@ -9,7 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="BlockOnBackend">
-        <element name="default" type="text" selector="(//div[contains(@class,'pagebuilder-block')])[{{arg1}}]//div[contains(@style,'border-style: {{arg2}};') and contains(@style,'border-width: {{arg3}}px;') and contains(@style,'border-radius: {{arg4}}px;') and contains(@style,'margin: {{arg5}}px;') and contains(@style,'padding: {{arg6}}px;')]" parameterized="true"/>
+        <element name="default" type="text" selector="(//div[contains(@class,'pagebuilder-block')]//div[@data-identifier])[{{arg1}}][contains(@style,'border-style: {{arg2}};') and contains(@style,'border-width: {{arg3}}px;') and contains(@style,'border-radius: {{arg4}}px;') and contains(@style,'margin: {{arg5}}px;') and contains(@style,'padding: {{arg6}}px;')]" parameterized="true"/>
         <element name="hr" type="button" selector="//div[contains(@class,'pagebuilder-block')]/div/div/hr"/>
     </section>
     <section name="BlockOnFrontend">
