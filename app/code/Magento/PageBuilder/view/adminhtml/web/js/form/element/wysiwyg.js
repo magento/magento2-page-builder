@@ -7,9 +7,8 @@ define([
     'Magento_Ui/js/form/element/wysiwyg',
     'mage/translate',
     'Magento_PageBuilder/js/component/event-bus',
-    'Magento_PageBuilder/js/component/page-builder',
-    'advanced-cms-init-config'
-], function (Wysiwyg, $t, EventBus, PageBuilder, config) {
+    'Magento_PageBuilder/js/component/page-builder'
+], function (Wysiwyg, $t, EventBus, PageBuilder) {
     'use strict';
 
     /**
@@ -53,7 +52,7 @@ define([
         initPageBuilder: function () {
             if (!this.isComponentInitialized) {
                 this.loading(true);
-                this.pageBuilder = new PageBuilder(config, this.initialValue);
+                this.pageBuilder = new PageBuilder(this.wysiwygConfigData(), this.initialValue);
                 this.initPageBuilderListeners();
             }
 

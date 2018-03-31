@@ -11,9 +11,25 @@ use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\State as PageBuilderState;
+use \Magento\PageBuilder\Model\Stage\Config as Config;
 
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
+    /**
+     * @var CategoryAttributeRepositoryInterface
+     */
+    private $attrRepository;
+
+    /**
+     * @var PageBuilderState
+     */
+    private $pageBuilderState;
+
+    /**
+     * @var Config
+     */
+    private $stageConfig;
+
     /**
      * Wysiwyg constructor.
      *
@@ -22,6 +38,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param ConfigInterface $wysiwygConfig
      * @param CategoryAttributeRepositoryInterface $attrRepository
      * @param PageBuilderState $pageBuilderState
+     * @param Config $stageConfig
      * @param array $components
      * @param array $data
      * @param array $config
@@ -32,15 +49,30 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         ConfigInterface $wysiwygConfig,
         CategoryAttributeRepositoryInterface $attrRepository,
         PageBuilderState $pageBuilderState,
+        Config $stageConfig,
         array $components = [],
         array $data = [],
         array $config = []
     ) {
+        parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
+        $this->attrRepository = $attrRepository;
+        $this->pageBuilderState = $pageBuilderState;
+        $this->stageConfig = $stageConfig;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prepare()
+    {
+        parent::prepare();
+        $config = $this->getData('config');
         $wysiwygConfigData = isset($config['wysiwygConfigData']) ? $config['wysiwygConfigData'] : [];
         // If a dataType is present we're dealing with an attribute
         if (isset($config['dataType'])) {
             try {
-                if ($attribute = $attrRepository->get($data['name'])) {
+                $attribute = $this->attrRepository->get($this->getComponentName());
+                if ($attribute) {
                     $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
                 }
             } catch (NoSuchEntityException $e) {
@@ -50,16 +82,17 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         $isEnablePageBuilder = isset($wysiwygConfigData['is_pagebuilder_enabled'])
             && !$wysiwygConfigData['is_pagebuilder_enabled']
             || false;
-        if (!$pageBuilderState->isPageBuilderInUse($isEnablePageBuilder)) {
+        if (!$this->pageBuilderState->isPageBuilderInUse($isEnablePageBuilder)) {
             // This is not done using definition.xml due to https://github.com/magento/magento2/issues/5647
-            $data['config']['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
+            $config['component'] = 'Magento_PageBuilder/js/form/element/wysiwyg';
 
             // Override the templates to include our KnockoutJS code
-            $data['config']['template'] = 'Magento_PageBuilder/wysiwyg';
-            $data['config']['elementTmpl'] = 'Magento_PageBuilder/wysiwyg';
+            $config['template'] = 'Magento_PageBuilder/wysiwyg';
+            $config['elementTmpl'] = 'Magento_PageBuilder/wysiwyg';
+            $wysiwygConfigData = $this->stageConfig->getConfig();
             $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
             $config['wysiwygConfigData'] = $wysiwygConfigData;
         }
-        parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
+        $this->setData('config', (array)$config);
     }
 }
