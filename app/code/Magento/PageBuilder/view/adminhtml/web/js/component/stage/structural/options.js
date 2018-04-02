@@ -41,7 +41,7 @@ define(["knockout"], function (_knockout) {
 
     _proto.removeOption = function removeOption(code) {
       this.options(this.options().filter(function (option) {
-        return option.code !== "remove";
+        return option.code !== code;
       }));
       this.sort();
     };

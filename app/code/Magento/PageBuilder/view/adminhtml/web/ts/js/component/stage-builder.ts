@@ -56,7 +56,7 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
 
         // Wait for all the promises to finish and add the instances to the stage
         return Promise.all(childPromises).then((childrenPromises) => {
-            return Promise.all(childrenPromises.map((child, index) => {
+            return Promise.all(childrenPromises.map((child: Block, index) => {
                 parent.addChild(child);
                 return buildElementIntoStage(childElements[index], child, stage);
             }));
@@ -83,6 +83,7 @@ function createElementBlock(element: HTMLElement, stage: Stage, parent?: Editabl
             parent,
             stage,
             data,
+            getElementChildren(element).length,
         ),
     );
 }

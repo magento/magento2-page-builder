@@ -87,7 +87,7 @@
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="2" stepKey="seeTwoRows"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeRow">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeRow">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeOneRow"/>
@@ -119,7 +119,7 @@
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="2" stepKey="seeTwoRows"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeRow">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeRow">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeOneRow"/>
@@ -284,9 +284,6 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
@@ -297,12 +294,6 @@
             <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxSpeedProperty">
-            <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeParallaxEnabledPropertyIsRequired">
-            <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsRequired" stepKey="seeParallaxSpeedPropertyIsRequired">
             <argument name="property" value="PageBuilderParallaxSpeedProperty"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
@@ -318,6 +309,53 @@
         <waitForPageLoad stepKey="waitForParallaxLibraryLoad"/>
         <seeElementInDOM selector="{{RowOnFrontend.parallaxClass}}" stepKey="seeParallaxBackgroundSet"/>
         <seeElementInDOM selector="{{RowOnFrontend.parallaxSpeed(PageBuilderParallaxSpeedProperty.value)}}" stepKey="seeParallaxSpeedSet"/>
+    </test>
+    <test name="RowHasParallaxDefaultSettings">
+        <annotations>
+            <features value="PageBuilder Row MAGETWO-83767"/>
+            <stories value="Row parallax background is broken when background position is set MAGETWO-88247"/>
+            <title value="Row has parallax default settings"/>
+            <description value="A user should see the default settings for parallax row"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-88899"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{RowOnBackend.parallaxSectionName}}" stepKey="waitForParallaxForm"/>
+        <seeElement selector="{{RowOnBackend.parallaxSectionName}}" stepKey="seeParallaxFormSection"/>
+        <click selector="{{RowOnBackend.parallaxSectionName}}" stepKey="clickParallaxFormSection"/>
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeEnableParallaxProperty">
+            <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{RowOnBackend.enableParallaxSwitchValue(PageBuilderParallaxEnabledDefaultProperty.value)}}" stepKey="seeEnabledParallaxDefault"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeParallaxSpeedIsDisabled">
+            <argument name="property" value="PageBuilderParallaxSpeedDefaultProperty"/>
+        </actionGroup>
+        <seeInField userInput="{{PageBuilderParallaxSpeedDefaultProperty.value}}" selector="{{RowOnBackend.parallaxSpeed}}" stepKey="assertParallaxSpeedDefaultValue"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
+            <argument name="property" value="PageBuilderParallaxEnabledProperty"/>
+        </actionGroup>
+        <seeElementInDOM selector="{{RowOnBackend.enableParallaxSwitchValue(PageBuilderParallaxEnabledProperty.value)}}" stepKey="seeEnabledParallaxIsToggled"/>
+        <moveMouseOver selector="{{RowOnBackend.parallaxSpeedToolTip}}" stepKey="moveMouseOverParallaxSpeedToolTip"/>
+        <seeElement selector="{{RowOnBackend.parallaxSpeedToolTipContent}}" stepKey="seeParallaxSpeedToolTipContent"/>
+        <see selector="{{RowOnBackend.parallaxSpeedNotice}}" userInput="{{PageBuilderParallaxSpeedDefaultProperty.notice}}" stepKey="seeParallaxSpeedNotice"/>
     </test>
     <test name="RowValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -341,6 +379,9 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
@@ -369,10 +410,89 @@
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <!-- Validate Style On Stage -->
-        <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
-        <waitForElementVisible selector="{{RowAdminPreview.default(PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyRowDefault.value, PageBuilderPaddingProperty10.value, PageBuilderBackgroundSizePropertyDefault.value, PageBuilderBackgroundRepeatPropertyDefault.stageValue, PageBuilderBackgroundAttachmentPropertyDefault.value, '1')}}" stepKey="waitForStyle"/>
+        <!-- Check for border radius -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <seeInField userInput="0" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusDefaultValue"/>
+        <!-- Check for class field -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
+        </actionGroup>
+        <!-- Check for margins & paddings -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+
+        <!-- Check border fields become enabled when changing border -->
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderColorPropertyIsNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeAdvancedBorderWidthPropertyIsNotDisabled">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <!-- Validate the default values in the fields -->
+        <seeElement selector="{{AdvancedForm.advancedBorderWidthDefault}}" stepKey="assertBorderWidthDefaultValue"/>
+
+        <!-- Add test data into form -->
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_ffffff"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+
+        <!-- Save form data -->
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveRowEditPanelSettings4"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage4"/>
+
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="2" selector="{{AdvancedForm.sectionName}}" stepKey="waitForSavedAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeSavedAdvancedFormSection"/>
+        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickSavedAdvancedFormSection"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedFormVisible1"/>
+        <seeOptionIsSelected userInput="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}" selector="{{AdvancedForm.advancedAlignment}}" stepKey="assertAlignmentSavedInRow"/>
+        <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderWidthProperty10.value}}" selector="{{AdvancedForm.advancedBorderSize}}" stepKey="assertBorderSizeSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedBorderRadiusProperty12.value}}" selector="{{AdvancedForm.advancedBorderRadius}}" stepKey="assertBorderRadiusSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedCssClassesPropertyThreeClasses.value}}" selector="{{AdvancedForm.advancedCssClasses}}" stepKey="assertCSSClassesSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginTop}}" selector="{{AdvancedForm.advancedMarginTop}}" stepKey="assertMarginTopSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginRight}}" selector="{{AdvancedForm.advancedMarginRight}}" stepKey="assertMarginRightSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginLeft}}" selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="assertMarginLefSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.marginBottom}}" selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="assertMarginBottomSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop}}" selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="assertPaddingTopSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingRight}}" selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="assertPaddingRightSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingLeft}}" selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="assertPaddingLefSavedInRow"/>
+        <seeInField userInput="{{PageBuilderAdvancedMarginsAndPaddingProperty.paddingBottom}}" selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="assertPaddingBottomSavedInRow"/>
+        <amOnPage url="row{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <seeElement selector="{{RowOnFrontend.textAlign}}" stepKey="seeRowTextAlignStyle"/>
+        <seeElement selector="{{RowOnFrontend.borderWidth}}" stepKey="seeRowBorderWidth"/>
+        <seeElement selector="{{RowOnFrontend.borderStyle}}" stepKey="seeRowBorderStyle"/>
+        <seeElement selector="{{RowOnFrontend.borderColor}}" stepKey="seeRowBorderColor"/>
+        <seeElement selector="{{RowOnFrontend.borderRadius}}" stepKey="seeRowBorderRadiusStyle"/>
+        <seeElement selector="{{RowOnFrontend.margin}}" stepKey="seeRowMarginStyle"/>
+        <seeElement selector="{{RowOnFrontend.padding}}" stepKey="seeRowPaddingStyle"/>
+        <seeElement selector="{{RowOnFrontend.class}}" stepKey="seeRowClass"/>
     </test>
     <test name="RowAdminPreviewUpdates">
         <annotations>

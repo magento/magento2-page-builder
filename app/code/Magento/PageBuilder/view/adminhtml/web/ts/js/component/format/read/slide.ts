@@ -3,17 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import {toHex} from "../../../utils/color-converter";
+import extractAlphaFromRgba from "../../../utils/extract-alpha-from-rgba";
+import {decodeUrl} from "../../../utils/image";
 import {ReadInterface} from "../read-interface";
 import Default from "./default";
-
-interface SlideObject {
-    link_text: string;
-    link_url: string;
-    title: string;
-    content: string;
-    background_image?: string;
-    has_overlay_background?: string;
-}
 
 export default class Slide implements ReadInterface {
     private defaultReader: Default = new Default();
@@ -24,20 +18,75 @@ export default class Slide implements ReadInterface {
      * @param element HTMLElement
      * @returns {Promise<any>}
      */
-    public read(element: HTMLElement): Promise<SlideObject> {
-        const response: SlideObject = {
-            content: element.querySelector("h3").nextSibling.innerHTML,
-            link_text: element.querySelector("a") !== null ?
-                element.querySelector("a").firstChild.firstChild.innerText : "",
-            link_url: element.querySelector("a") !== null ?
-                element.querySelector("a").getAttribute("href") : "",
-            title: element.querySelector("h3").innerText,
+    public read(element: HTMLElement): Promise<object> {
+        let bgMobileImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[0].style.backgroundImage;
+        const linkUrl = element.querySelector("a").getAttribute("href");
+        const target = element.querySelector("a").getAttribute("target");
+        const bgImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[1].style.backgroundImage;
+        const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
+        const paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
+        const marginSrc = element.style;
+        if (bgImage === bgMobileImage) {
+            bgMobileImage = false;
+        }
+        const button = element.querySelector("button");
+        const buttonText = button ? button.textContent : "";
+        const buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
+        const response: any = {
+            background_image: decodeUrl(bgImage),
+            background_size: element.style.backgroundSize,
+            button_text: buttonText,
+            button_type: buttonType,
+            link_url: linkUrl ? linkUrl : "",
+            margins_and_padding: {
+                margin: {
+                    bottom: marginSrc.marginBottom.replace("px", ""),
+                    left: marginSrc.marginLeft.replace("px", ""),
+                    right: marginSrc.marginRight.replace("px", ""),
+                    top: marginSrc.marginTop.replace("px", ""),
+                },
+                padding: {
+                    bottom: paddingSrc.paddingBottom.replace("px", ""),
+                    left: paddingSrc.paddingLeft.replace("px", ""),
+                    right: paddingSrc.paddingRight.replace("px", ""),
+                    top: paddingSrc.paddingTop.replace("px", ""),
+                },
+            },
+            content: element.querySelector(".pagebuilder-poster-content div").innerHTML,
+            min_height: element.querySelector(".pagebuilder-poster-overlay").style.minHeight.split("px")[0],
+            mobile_image: bgMobileImage ? decodeUrl(bgMobileImage) : "",
+            open_in_new_tab: target && target === "_blank" ? "1" : "0",
+            overlay_color: this.getOverlayColor(overlayColor),
+            overlay_transparency: this.getOverlayTransparency(overlayColor),
+            show_button: element.getAttribute("data-show-button"),
+            show_overlay: element.getAttribute("data-show-overlay"),
+            text_align: element.querySelector(".pagebuilder-slide-wrapper").style.textAlign,
         };
+
         const slideAttributeElement = element.querySelector("div");
         const slideAttributesPromise = this.defaultReader.read(slideAttributeElement);
 
         return slideAttributesPromise.then((slideAttributes) => {
+            delete slideAttributes.css_classes;
             return Promise.resolve(Object.assign(slideAttributes, response));
         });
+    }
+
+    /**
+     * Get overlay color
+     *
+     * @returns string
+     */
+    private getOverlayColor(value: string) {
+        return value === "transparent" ? "" : toHex(value);
+    }
+
+    /**
+     * Get overlay transparency
+     *
+     * @returns string
+     */
+    private getOverlayTransparency(value: string) {
+        return value === "transparent" ? "0" : extractAlphaFromRgba(value);
     }
 }

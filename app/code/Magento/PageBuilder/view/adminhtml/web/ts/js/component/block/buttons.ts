@@ -7,16 +7,16 @@ import delayedPromise from "../../utils/delayed-promise";
 import createBlock from "../block/factory";
 import Config from "../config";
 import EventBus from "../event-bus";
+import {BlockMountEventParams} from "../stage/structural/editable-area";
 import Block from "./block";
-import { Block as BlockInterface } from "./block.d";
 
 export default class Buttons extends Block {
 
     public bindEvents() {
         super.bindEvents();
 
-        EventBus.on("buttons:block:mount", (event: Event, params: {[key: string]: any}) => {
-            if (params.id === this.id) {
+        EventBus.on("buttons:block:ready", (event: Event, params: BlockMountEventParams) => {
+            if (params.id === this.id && this.children().length === 0) {
                 this.addButton();
             }
         });
@@ -26,17 +26,17 @@ export default class Buttons extends Block {
      * Add button-item to buttons children array
      */
     public addButton() {
-        const createBlockPromise: Promise<BlockInterface> = createBlock(
+        const createBlockPromise: Promise<Block> = createBlock(
             Config.getInitConfig("content_types")["button-item"],
             this.parent,
             this.stage,
             {},
         );
 
-        createBlockPromise.then((button: BlockInterface) => {
+        createBlockPromise.then((button: Block) => {
             this.addChild(button);
             return button;
-        }).then(delayedPromise(300)).then((button: BlockInterface) => {
+        }).then(delayedPromise(300)).then((button: Block) => {
             button.edit.open();
         }).catch((error: Error) => {
             console.error(error);

@@ -96,20 +96,30 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
     _proto.onOptionRemove = function onOptionRemove() {
       var _this2 = this;
 
-      this.stage.parent.confirmationDialog({
-        actions: {
-          confirm: function confirm() {
-            // Call the parent to remove the child element
-            _eventBus.trigger("block:removed", {
-              block: _this2,
-              index: _this2.parent.children().indexOf(_this2),
-              parent: _this2.parent
-            });
-          }
-        },
-        content: (0, _translate)("Are you sure you want to remove this item? " + "The data within this item is not recoverable once removed."),
-        title: (0, _translate)("Confirm Item Removal")
-      });
+      var removeBlock = function removeBlock() {
+        return _eventBus.trigger("block:removed", {
+          block: _this2,
+          index: _this2.parent.children().indexOf(_this2),
+          parent: _this2.parent
+        });
+      };
+
+      if (this.isConfigured()) {
+        this.stage.parent.confirmationDialog({
+          actions: {
+            confirm: function confirm() {
+              // Call the parent to remove the child element
+              removeBlock();
+            }
+          },
+          content: (0, _translate)("Are you sure you want to remove this item? " + "The data within this item is not recoverable once removed."),
+          dismissKey: "pagebuilder_modal_dismissed",
+          dismissible: true,
+          title: (0, _translate)("Confirm Item Removal")
+        });
+      } else {
+        removeBlock();
+      }
     };
     /**
      * Get data for css binding, example {"class-name": true}
@@ -245,6 +255,36 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       }
 
       return result;
+    };
+    /**
+     * Does the current instance have any children or values different from the default for it's type?
+     *
+     * @returns {boolean}
+     */
+
+
+    _proto.isConfigured = function isConfigured() {
+      if (this.children().length > 0) {
+        return true;
+      }
+
+      var data = this.getData();
+      var hasDataChanges = false;
+
+      _underscore.each(this.config.fields, function (field, key) {
+        var fieldValue = data[key]; // Default values can only ever be strings
+
+        if (_underscore.isObject(fieldValue)) {
+          fieldValue = JSON.stringify(fieldValue);
+        }
+
+        if (field.default !== fieldValue) {
+          hasDataChanges = true;
+          return;
+        }
+      });
+
+      return hasDataChanges;
     };
     /**
      * Get the options instance

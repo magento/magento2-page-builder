@@ -19,12 +19,13 @@ define(["underscore", "../event-bus", "./block"], function (_underscore, _eventB
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      _Block.prototype.bindEvents.call(this);
+      _Block.prototype.bindEvents.call(this); // When a map is dropped for the first time open the edit panel
 
-      _eventBus.on("map:block:mount", function (event, params) {
+
+      _eventBus.on("map:block:dropped:create", function (event, params) {
         if (params.id === _this.id) {
           setTimeout(function () {
-            params.block.edit.open();
+            _this.edit.open();
           }, 300);
         }
       });

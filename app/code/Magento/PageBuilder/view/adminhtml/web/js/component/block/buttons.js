@@ -18,8 +18,8 @@ define(["../../utils/delayed-promise", "../block/factory", "../config", "../even
 
       _Block.prototype.bindEvents.call(this);
 
-      _eventBus.on("buttons:block:mount", function (event, params) {
-        if (params.id === _this.id) {
+      _eventBus.on("buttons:block:ready", function (event, params) {
+        if (params.id === _this.id && _this.children().length === 0) {
           _this.addButton();
         }
       });
