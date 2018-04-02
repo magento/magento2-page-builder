@@ -215,8 +215,6 @@
             <group value="pagebuilder-slider"/>
         </annotations>
         <before>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
@@ -331,8 +329,6 @@
             <group value="pagebuilder-slider"/>
         </annotations>
         <before>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
@@ -352,9 +348,8 @@
         <seeElement selector="{{SlideOnBackend.emptyslide}}" stepKey="seeFirstSlideOnStage"/>
 
         <comment userInput="Slide is focused, its option panel is displayed on top of the slider dot." stepKey="AC2"/>
-        <seeElement selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="seeInitialSlideWithActiveNavigationDot"/>
-        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideNavigationDot('1')}}" attribute="class" expectedValue="active" stepKey="assertFirstDotActive"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel"/>
 
         <comment userInput="User sees Slide 1 default title in the Slide Option Panel." stepKey="AC3"/>
         <see userInput="Slide1" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
@@ -373,6 +368,7 @@
         <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="dontSeeSlideOptionsAfterSaveSlide"/>
 
         <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.content}}" stepKey="scrollToContent"/>
         <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
@@ -388,9 +384,14 @@
 
         <comment userInput="User clicks (+) icon, sees new slide added to to the right." stepKey="AC10"/>
         <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickAddNewSlideChild"/>
+        <waitForElementVisible selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="assertSecondDotAdded"/>
 
         <comment userInput="New slide is focused, its option panel is displayed on top of the slider dot" stepKey="AC11"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.slideNavigationDot('2')}}" attribute="class" expectedValue="active" stepKey="assertSecondDotActive"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel2"/>
+
         <comment userInput="Slide has default title Title N that reflects the order of the slide in the Slider." stepKey="AC12"/>
+        <see userInput="Slide2" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
 
         <comment userInput="User sees slide configuration opened with a delay." stepKey="AC13"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation2" />
