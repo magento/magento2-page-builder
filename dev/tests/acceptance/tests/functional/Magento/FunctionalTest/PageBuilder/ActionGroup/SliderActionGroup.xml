@@ -26,6 +26,19 @@
         <wait time="0.5" stepKey="waitForAnimation" />
         <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
+    <actionGroup name="openSlideOptionsByIndex">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
+        <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.slideNavigationDot(index)}}"/>
+        <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="seeSlideOptionsEdit"/>
+        <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <wait time="0.5" stepKey="waitForAnimation" />
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+    </actionGroup>
     <actionGroup name="removeSlide">
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
         <click selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="clickActiveSlideNavigationDot"/>
