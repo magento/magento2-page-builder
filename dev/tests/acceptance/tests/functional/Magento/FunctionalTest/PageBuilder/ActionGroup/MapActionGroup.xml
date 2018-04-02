@@ -9,115 +9,68 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="addMapPin">
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisible"/>
-        <click selector="{{MapOnConfigurationPanel.map}}" stepKey="clickMap"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapWithPin}}" stepKey="waitForPinVisible"/>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.base}}" stepKey="waitForMapVisible"/>
+        <click selector="{{MapOnConfigurationPanel.base}}" stepKey="clickMap"/>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.pin}}" stepKey="waitForPinVisible"/>
     </actionGroup>
     <actionGroup name="moveMapPinByClick">
         <arguments>
             <argument name="x" defaultValue="1" type="string"/>
             <argument name="y" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisible"/>
-        <clickWithLeftButton selector="{{MapOnConfigurationPanel.map}}" x="1" y="1" stepKey="clickMapToMovePin"/>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.base}}" stepKey="waitForMapVisible"/>
+        <clickWithLeftButton selector="{{MapOnConfigurationPanel.base}}" x="1" y="1" stepKey="clickMapToMovePin"/>
         <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
     <actionGroup name="verifyMapHasPin">
         <arguments>
-            <argument name="property" defaultValue="MapOnStage"/>
+            <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{property.mapWithPin(index)}}" stepKey="waitForMapWithPin"/>
+        <waitForElementVisible selector="{{page.pin(index)}}" stepKey="waitForMapWithPin"/>
     </actionGroup>
     <actionGroup name="dontSeeMapPin">
         <arguments>
-            <argument name="property" defaultValue="MapOnStage"/>
+            <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <dontSeeElementInDOM selector="{{property.mapWithPin(index)}}" stepKey="dontSeeMapPin"/>
-    </actionGroup>
-    <actionGroup name="validateMapConfigurationPanel">
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.map}}" stepKey="waitForMapVisible"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapFullScreen}}" stepKey="waitForFullScreenButton"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapPegman}}" stepKey="waitForPegmanButton"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapSatelliteView}}" stepKey="waitForSatelliteViewButton"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapStreetView}}" stepKey="waitForStreetViewButton"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapZoomIn}}" stepKey="waitForZoomInButton"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapZoomOut}}" stepKey="waitForZoomOutButton"/>
-    </actionGroup>
-    <actionGroup name="validateMapOnStage">
-        <arguments>
-            <argument name="width" defaultValue="PageBuilderMapWidthDefaultProperty"/>
-            <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
-            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentDefaultProperty"/>
-            <argument name="marginAndPadding" defaultValue="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{MapOnStage.map(index)}}" stepKey="seeMap"/>
-        <waitForElementVisible selector="{{MapOnStage.mapWidth(index, width.value)}}" stepKey="waitForMapWidth"/>
-        <waitForElementVisible selector="{{MapOnStage.mapHeight(index, height.value)}}" stepKey="waitForMapHeight"/>
-        <waitForElementVisible selector="{{MapOnStage.mapAlignment(index, alignment.value)}}" stepKey="waitForMapAlignment"/>
-        <waitForElementVisible selector="{{MapOnStage.mapMargin(index, marginAndPadding.marginTop)}}" stepKey="waitForMapMargin"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPadding(index, marginAndPadding.paddingTop)}}" stepKey="waitForMapPadding"/>
-    </actionGroup>
-    <actionGroup name="validateMapOnStoreFront">
-        <arguments>
-            <argument name="width" defaultValue="PageBuilderMapWidthDefaultProperty"/>
-            <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
-            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentDefaultProperty"/>
-            <argument name="cssClasses" defaultValue=""/>
-            <argument name="marginAndPadding" defaultValue="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{MapOnFrontend.map(index)}}" stepKey="seeMap"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapWidth(index, width.value)}}" stepKey="waitForMapWidth"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapHeight(index, height.value)}}" stepKey="waitForMapHeight"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapAlignment(index, alignment.value)}}" stepKey="waitForMapAlignment"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapCssClass(index, cssClasses.value)}}" stepKey="waitForMapCssClass"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapMargin(index, marginAndPadding.marginTop)}}" stepKey="waitForMapMargin"/>
-        <waitForElementVisible selector="{{MapOnFrontend.mapPadding(index, marginAndPadding.paddingTop)}}" stepKey="waitForMapPadding"/>
-    </actionGroup>
-    <actionGroup name="validateDefaultMapStage">
-        <arguments>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{MapOnStage.map(index)}}" stepKey="seeMap"/>
-        <waitForElementVisible selector="{{MapOnStage.mapWidth(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="waitForMapWidth"/>
-        <waitForElementVisible selector="{{MapOnStage.mapHeight(index, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="waitForMapHeight"/>
-        <waitForElementVisible selector="{{MapOnStage.mapNoAlignment(index)}}" stepKey="waitForMapNoAlignment"/>
-        <waitForElementVisible selector="{{MapOnStage.mapMargin(index, PageBuilderAdvancedMarginsAndPaddingPropertyDefault.marginTop)}}" stepKey="waitForMapMargin"/>
-        <waitForElementVisible selector="{{MapOnStage.mapPadding(index, PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop)}}" stepKey="waitForMapPadding"/>
-    </actionGroup>
-    <actionGroup name="validateDefaultMapStoreFront">
-        <arguments>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElement selector="{{MapOnFrontend.emptyMap(index)}}" stepKey="seeInDOMEmptyMapOnFrontend"/>
-        <dontSeeElement selector="{{MapOnFrontend.emptyMap(index)}}" stepKey="dontSeeEmptyMapOnFrontend"/>
-        <seeElementInDOM selector="{{MapOnFrontend.mapHeight(index, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="seeInDOMEmptyMapHeightOnFrontend"/>
-        <dontSeeElement selector="{{MapOnFrontend.mapHeight(index, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="dontSeeEmptyMapHeightOnFrontend"/>
-        <seeElementInDOM selector="{{MapOnFrontend.mapWidth(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="seeInDOMEmptyMapWidthOnFrontend"/>
-        <dontSeeElement selector="{{MapOnFrontend.mapWidth(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="dontSeeEmptyMapWidthOnFrontend"/>
-        <seeElementInDOM selector="{{MapOnFrontend.mapMargin(index, PageBuilderAdvancedMarginsAndPaddingPropertyDefault.marginTop)}}" stepKey="seeInDOMMapMarginOnFrontend"/>
-        <dontSeeElement selector="{{MapOnFrontend.mapMargin(index, PageBuilderAdvancedMarginsAndPaddingPropertyDefault.marginTop)}}" stepKey="dontSeeMapMarginOnFrontend"/>
-        <seeElementInDOM selector="{{MapOnFrontend.mapPadding(index, PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop)}}" stepKey="seeInDOMMapPaddingOnFrontend"/>
-        <dontSeeElement selector="{{MapOnFrontend.mapPadding(index, PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop)}}" stepKey="dontSeeMapPaddingOnFrontend"/>
-        <seeElementInDOM selector="{{MapOnFrontend.mapNoAlignment(index)}}" stepKey="seeInDOMNoAlignment"/>
-        <dontSeeElement selector="{{MapOnFrontend.mapNoAlignment(index)}}" stepKey="dontSeeMapNoAlignment"/>
+        <dontSeeElementInDOM selector="{{page.pin(index)}}" stepKey="dontSeeMapPin"/>
     </actionGroup>
     <actionGroup name="validateMapButtons">
         <arguments>
+            <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="property" defaultValue="MapOnStage"/>
         </arguments>
-        <waitForElementVisible selector="{{property.mapFullScreen(index)}}" stepKey="waitForFullScreenButton"/>
-        <waitForElementVisible selector="{{property.mapPegman(index)}}" stepKey="waitForMapPegman"/>
-        <waitForElementVisible selector="{{property.mapSatelliteView(index)}}" stepKey="waitForMapSatelliteView"/>
-        <waitForElementVisible selector="{{property.mapStreetView(index)}}" stepKey="waitForMapStreetView"/>
-        <waitForElementVisible selector="{{property.mapZoomIn(index)}}" stepKey="waitForMapZoomIn"/>
-        <waitForElementVisible selector="{{property.mapZoomOut(index)}}" stepKey="waitForMapZoomOut"/>
+        <waitForElementVisible selector="{{page.fullScreen(index)}}" stepKey="waitForFullScreenButton"/>
+        <waitForElementVisible selector="{{page.pegman(index)}}" stepKey="waitForMapPegman"/>
+        <waitForElementVisible selector="{{page.satelliteView(index)}}" stepKey="waitForMapSatelliteView"/>
+        <waitForElementVisible selector="{{page.streetView(index)}}" stepKey="waitForMapStreetView"/>
+        <waitForElementVisible selector="{{page.zoomIn(index)}}" stepKey="waitForMapZoomIn"/>
+        <waitForElementVisible selector="{{page.zoomOut(index)}}" stepKey="waitForMapZoomOut"/>
     </actionGroup>
     <actionGroup name="validateMapHelperText">
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.mapHelperText}}" stepKey="seeMapHelperText"/>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.helperText}}" stepKey="seeMapHelperText"/>
+    </actionGroup>
+    <actionGroup name="validateMap">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="width" defaultValue="PageBuilderMapWidthDefaultProperty"/>
+            <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
+        <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForMapWidth"/>
+        <waitForElementVisible selector="{{page.height(index, height.value)}}" stepKey="waitForMapHeight"/>
+    </actionGroup>
+    <actionGroup name="validateEmptyMapStoreFront">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="seeInDOMEmptyMapOnFrontend"/>
+        <dontSeeElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="dontSeeEmptyMapOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnStorefront.height(index, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="seeInDOMEmptyMapHeightOnFrontend"/>
+        <dontSeeElement selector="{{MapOnStorefront.height(index, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="dontSeeEmptyMapHeightOnFrontend"/>
+        <seeElementInDOM selector="{{MapOnStorefront.width(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="seeInDOMEmptyMapWidthOnFrontend"/>
+        <dontSeeElement selector="{{MapOnStorefront.width(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="dontSeeEmptyMapWidthOnFrontend"/>
     </actionGroup>
 </actionGroups>
