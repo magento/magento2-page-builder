@@ -91,7 +91,9 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             $config['elementTmpl'] = 'Magento_PageBuilder/wysiwyg';
             $wysiwygConfigData = $this->stageConfig->getConfig();
             $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
-            $config['wysiwygConfigData'] = $wysiwygConfigData;
+            $config['wysiwygConfigData'] = isset($config['wysiwygConfigData']) ?
+                array_replace_recursive($config['wysiwygConfigData'], $wysiwygConfigData) :
+                $wysiwygConfigData;
         }
         $this->setData('config', (array)$config);
     }
