@@ -1,0 +1,48 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
+    <content_types>
+        <type name="row" translate="label" sortOrder="1">
+            <label>Row</label>
+            <icon>icon-pagebuilder-row</icon>
+            <component>Magento_PageBuilder/js/component/block/row</component>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/row</preview_component>
+            <form>pagebuilder_row_form</form>
+            <group>general</group>
+            <allowed_parents>
+                <parent name="stage"/>
+            </allowed_parents>
+            <appearances>
+                <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
+                                    <property var="background_position" name="background_position"/>
+                                    <property var="background_size" name="background_size"/>
+                                    <property var="background_repeat" name="background_repeat"/>
+                                    <property var="background_attachment" name="background_attachment"/>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/converter/row/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                    <attribute var="enable_parallax" name="data-enable-parallax"/>
+                                    <attribute var="parallax_speed" name="data-parallax-speed"/>
+                                </attributes>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
+                    <preview_template>Magento_PageBuilder/component/block/preview/row.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/row.html</render_template>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                </appearance>
+            </appearances>
+        </type>
+    </content_types>
+</config>
