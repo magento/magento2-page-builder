@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../event-bus", "./block", "Magento_PageBuilder/js/utils/map"], function (_eventBus, _block, _map) {
+define(["Magento_PageBuilder/js/utils/map", "../event-bus", "./block"], function (_map, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Map =
@@ -54,7 +54,7 @@ define(["../event-bus", "./block", "Magento_PageBuilder/js/utils/map"], function
 
 
     _proto.generateMap = function generateMap(element) {
-      var position = this.data.main.attributes()['data-position'];
+      var position = this.data.main.attributes()["data-position"];
       var markers = [];
       var centerCoord = {
         lat: 30.2672,
@@ -83,7 +83,7 @@ define(["../event-bus", "./block", "Magento_PageBuilder/js/utils/map"], function
 
 
     _proto.updateMap = function updateMap() {
-      if (this.data.main.attributes()['data-position']) {
+      if (this.data.main.attributes()["data-position"]) {
         var pos = this.getPosition();
         this.map.onUpdate(pos.markers, pos.latLng, pos.zoom);
       }
@@ -96,7 +96,7 @@ define(["../event-bus", "./block", "Magento_PageBuilder/js/utils/map"], function
 
 
     _proto.getPosition = function getPosition() {
-      var positions = this.data.main.attributes()['data-position'].split(",");
+      var positions = this.data.main.attributes()["data-position"].split(",");
       return {
         latLng: {
           lat: parseFloat(positions[0]),
