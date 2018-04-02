@@ -8,15 +8,16 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddNewsletterContentBlockToCMSPage">
+    <test name="NewsletterAddToCMSPage">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Newsletter MAGETWO-83937"/>
-            <title value="Add Newsletter in PageBuilder for new CMS page and view on Storefront"/>
-            <description value="The user should be able to add newsletter content types and they should be visible on frontend"/>
+            <features value="PageBuilder"/>
+            <stories value="MAGETWO-83937"/>
+            <title value="Newsletter - Update General Values"/>
+            <description value="Validate that updating every attribute in the General form for Newsletter will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84269"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-newsletter"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -27,14 +28,14 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="waitForElementVisible" />
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
         </actionGroup>
@@ -55,10 +56,7 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
-        <waitForElementNotVisible time="10" selector="{{CmsNewPagePageActionsSection.spinner}}" stepKey="waitForCmsPageSpinner" />
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="15" selector="{{NewsletterOnFrontend.form}}" stepKey="waitForNewsletterFormElementVisible" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
         </actionGroup>
@@ -74,22 +72,25 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeTitleProperty">
             <argument name="property" value="PageBuilderNewsletterTypeTitleProperty"/>
         </actionGroup>
-        <amOnPage url="newsletter{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="newsletter"/>
+        </actionGroup>
         <seeElement selector="{{NewsletterOnFrontend.form}}" stepKey="seeNewsletterForm"/>
         <seeElement selector="{{NewsletterOnFrontend.title('Newsletter title')}}" stepKey="seeNewsletterTitle"/>
         <seeElement selector="{{NewsletterOnFrontend.placeholder('Newsletter placeholder')}}" stepKey="seeNewsletterPlaceholder"/>
         <seeElement selector="{{NewsletterOnFrontend.label('Newsletter label')}}" stepKey="seeNewsletterLabel"/>
         <seeElement selector="{{NewsletterOnFrontend.button('Newsletter button text')}}" stepKey="seeNewsletterButtonText"/>
     </test>
-    <test name="RemoveNewsletterFromStage">
+    <test name="NewsletterDelete">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Newsletter MAGETWO-83937"/>
-            <title value="Remove newsletter content block from stage"/>
-            <description value="A user should be able to remove newsletter block from a row."/>
+            <features value="PageBuilder"/>
+            <stories value="MAGETWO-83937"/>
+            <title value="Anchor - Delete Anchor"/>
+            <description value="A user should be able to delete an Anchor content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84919"/>
+            <testCaseId value="MAGETWO-89883"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-newsletter"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -100,11 +101,11 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="news" stepKey="fillSearch"/>
-        <see userInput="Newsletter" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
         </actionGroup>
@@ -135,15 +136,14 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragNewsletterIntoStage">
             <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNewsletterTitle">
-            <argument name="property" value="PageBuilderNewsletterTypeTitleProperty"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
@@ -170,9 +170,9 @@
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Style On Stage -->
         <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
-        <waitForElementVisible selector="{{NewsletterOnStage.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyDefault.value)}}" stepKey="waitForStyle"/>
+        <waitForElementVisible selector="{{NewsletterOnStage.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderWidthPropertyDefault.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyDefault.value)}}" stepKey="waitForStyle"/>
     </test>
 </tests>

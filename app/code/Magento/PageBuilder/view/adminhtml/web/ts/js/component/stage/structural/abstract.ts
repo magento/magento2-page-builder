@@ -470,6 +470,8 @@ export default class Structural extends EditableArea implements StructuralInterf
                 }
                 this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
             }
+
+            this.afterDataRendered();
         }
     }
 
@@ -483,5 +485,11 @@ export default class Structural extends EditableArea implements StructuralInterf
             },
             this.id,
         );
+    }
+
+    /**
+     * Callback function for after preview observables are updated
+     */
+    protected afterDataRendered() {
     }
 }

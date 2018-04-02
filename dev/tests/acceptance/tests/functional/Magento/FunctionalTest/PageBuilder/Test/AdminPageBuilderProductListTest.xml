@@ -8,69 +8,71 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddProductListContentBlockToCMSPage">
+    <test name="ProductListAddToCMSPage">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Product List MAGETWO-83938"/>
-            <title value="Add Product List in PageBuilder for new CMS page and view on Storefront"/>
-            <description value="A user should be able to add a product list content block into a row."/>
+            <features value="PageBuilder"/>
+            <stories value="MAGETWO-83938"/>
+            <title value="Product List - Update General Values"/>
+            <description value="Validate that updating every attribute in the General form for Product List will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84924"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productList"/>
-            <group value="skip"/>
+            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductListSubCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
+                <argument name="category" value="$$createPreReqCategory$$"/>
+                <argument name="simpleProduct" value="_defaultProduct"/>
+            </actionGroup>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
-            <argument name="category" value="$$createPreReqCategory$$"/>
-            <argument name="simpleProduct" value="_defaultProduct"/>
-        </actionGroup>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragProductIntoStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
-        <fillField selector="{{ProductListEditForm.categoryId}}" userInput="$$createPreReqCategory.id$$" stepKey="fillCategoryField"/>
+        <actionGroup ref="fillProductListPanelFieldGeneral" stepKey="enterProductListId">
+            <argument name="property" value="PageBuilderProductListProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
-        <waitForElementNotVisible time="10" selector="{{CmsNewPagePageActionsSection.spinner}}" stepKey="waitForCmsPageSpinner" />
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="5" selector="{{ProductListEditForm.categoryId}}" stepKey="waitForCategoryInputFieldVisible"/>
+        <waitForElementVisible selector="{{ProductListEditForm.categoryId}}" stepKey="waitForCategoryInputFieldVisible"/>
         <seeInField selector="{{ProductListEditForm.categoryId}}" userInput="$$createPreReqCategory.id$$" stepKey="validateCategoryInputFieldValue"/>
-        <amOnPage url="product-list{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForCmsPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="product-list"/>
+        </actionGroup>
         <seeElement selector="{{ProductOnFrontend.productDisplay}}" stepKey="productApplied"/>
         <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnFrontend.productDisplay}}" stepKey="assertProductListShowsFrontend"/>
     </test>
-    <test name="RemoveProductListFromStage">
+    <test name="ProductListDelete">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Product List MAGETWO-83938"/>
-            <title value="Remove product list content block from stage"/>
-            <description value="A user should be able to remove product list block from a row."/>
+            <features value="PageBuilder"/>
+            <stories value="MAGETWO-83938"/>
+            <title value="Product List - Delete Product List"/>
+            <description value="A user should be able to delete an Product List content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84919"/>
+            <testCaseId value="MAGETWO-89887"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productList"/>
         </annotations>
@@ -78,17 +80,16 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <createData entity="PageBuilderProductListSubCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="product list" stepKey="fillSearch"/>
-        <see userInput="Product List" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
@@ -112,11 +113,6 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <createData entity="PageBuilderProductListSubCategory" stepKey="createPreReqCategory"/>
-            <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
-                <argument name="category" value="$$createPreReqCategory$$"/>
-                <argument name="simpleProduct" value="_defaultProduct"/>
-            </actionGroup>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -124,15 +120,14 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <click selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragProductListIntoStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="fillProductListPanelFieldGeneral" stepKey="enterProductListId">
-            <argument name="property" value="PageBuilderProductListProperty"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
@@ -159,9 +154,9 @@
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Style On Stage -->
         <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
-        <waitForElementVisible selector="{{ProductListOnStage.default(PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyDefault.value, '1')}}" stepKey="waitForStyle"/>
+        <waitForElementVisible selector="{{ProductListOnStage.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderWidthPropertyDefault.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyDefault.value)}}" stepKey="waitForStyle"/>
     </test>
 </tests>

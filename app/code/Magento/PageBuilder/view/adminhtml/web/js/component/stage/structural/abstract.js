@@ -502,6 +502,8 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
           this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
         }
+
+        this.afterDataRendered();
       }
     };
     /**
@@ -516,6 +518,12 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
         _this4.updatePreviewObservables(_underscore.extend({}, _this4.stage.store.get(_this4.id)));
       }, this.id);
     };
+    /**
+     * Callback function for after preview observables are updated
+     */
+
+
+    _proto.afterDataRendered = function afterDataRendered() {};
 
     _createClass(Structural, [{
       key: "template",
