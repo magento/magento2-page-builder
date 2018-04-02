@@ -48,7 +48,7 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waitForPageBuilderDisplay1" />
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="waitForContentBlockInStage" />
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
-        <see userInput="{{simpleCmsPage.content}}" selector="{{HtmlOnBackend.content}}" stepKey="assertHtmlContent"/>
+        <see userInput="{{simpleCmsPage.content}}" selector="{{HtmlOnStage.base('1')}}" stepKey="assertHtmlContent"/>
     </test>
     <test name="ReadHtml">
         <annotations>

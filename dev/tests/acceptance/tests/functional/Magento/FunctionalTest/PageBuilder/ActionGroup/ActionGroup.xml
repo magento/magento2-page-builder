@@ -100,12 +100,13 @@
     <actionGroup name="dragContentBlockToContainer">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
-            <argument name="containerBlockType" defaultValue=""/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType" defaultValue=""/>
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
         </arguments>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerBlockType.role, containerTargetIndex)}}" stepKey="dropContentBlockIntoStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, containerTargetIndex)}}" stepKey="waitForContentBlockInStage" />
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>
@@ -153,14 +154,14 @@
     <actionGroup name="duplicateContentBlock">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
-            <argument name="contentBlockNumber" defaultValue="1"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+            <argument name="expectedIndex" defaultValue="2" type="string"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '1')}}" stepKey="waitForContentBlockInStageVisible"/>
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '1')}}" stepKey="onMouseOverContentBlockStage"/>
-        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, '1')}}" stepKey="waitForOptionsMenu"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlockType.role, '1')}}" stepKey="clickDuplicateContentBlock"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" stepKey="waitForDuplicateContentBlock"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, targetIndex)}}" stepKey="waitForContentBlockInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, targetIndex)}}" stepKey="onMouseOverContentBlockStage"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlockType.role, targetIndex)}}" stepKey="clickDuplicateContentBlock"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, expectedIndex)}}" stepKey="waitForDuplicateContentBlock"/>
     </actionGroup>
 
     <!-- Remove a content type which is in it's default state -->
@@ -438,12 +439,11 @@
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton" />
     </actionGroup>
     <actionGroup name="saveAndContinueEditCmsPage">
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask1"/>
         <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForSaveAndContinueVisibility"/>
         <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="clickSaveAndContinueEditCmsPage"/>
         <waitForPageLoad stepKey="waitForCmsPageLoad"/>
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="waitForCmsPageSaveButton" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
     </actionGroup>
     <actionGroup name="saveCmsPage">
         <waitForElementVisible selector="{{CmsNewPagePageActionsSection.expandSplitButton}}" stepKey="waitForSplitButton"/>
