@@ -1,0 +1,47 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div data-bind="attr: getAttributes(), style: getSlideContainerStyle(), css: getCss()">
+    <a data-bind="attr: getLinkAttribute()">
+        <div data-bind="style: Object.assign(getSlideStyles('image'), {
+                paddingTop: getData().margins_and_padding.padding.top + 'px',
+                paddingBottom: getData().margins_and_padding.padding.bottom + 'px',
+                paddingLeft: 'calc(25% + ' + getData().margins_and_padding.padding.left + 'px)',
+                paddingRight: 'calc(25% + ' + getData().margins_and_padding.padding.right + 'px)'})"
+             class="pagebuilder-mobile-hidden pagebuilder-slide-wrapper">
+            <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
+                <div class="pagebuilder-collage-content">
+                    <!-- ko if: getData().title -->
+                    <h3 data-bind="text: getData().title"></h3>
+                    <!-- /ko -->
+                    <div data-bind="html: getContentHtml()"></div>
+                    <!-- ko if: getData().show_button !== 'never_show' -->
+                    <button type="button" class="pagebuilder-slide-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+        <div data-bind="style: Object.assign(getSlideStyles('mobileImage'), {
+            paddingTop: getStyle().paddingTop,
+            paddingBottom: getStyle().paddingBottom,
+            paddingLeft: getStyle().paddingLeft,
+            paddingRight: getStyle().paddingRight})"
+             class="pagebuilder-mobile-only pagebuilder-slide-wrapper">
+            <div class="pagebuilder-overlay " data-bind="attr: getOverlayAttributes(), style: getOverlayColorStyle()">
+                <div class="pagebuilder-collage-content">
+                    <!-- ko if: getData().title -->
+                    <h3 data-bind="text: getData().title"></h3>
+                    <!-- /ko -->
+                    <div data-bind="html: getContentHtml()"></div>
+                    <!-- ko if: getData().show_button !== 'never_show' -->
+                    <button type="button" class="pagebuilder-slide-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

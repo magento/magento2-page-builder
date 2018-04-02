@@ -8,6 +8,7 @@ import ko from "knockout";
 import _, {Dictionary} from "underscore";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
+import EventBus from "../../event-bus";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
@@ -110,7 +111,7 @@ export default class PreviewBlock {
             optionsMenu = optionsMenu.first();
         }
 
-        optionsMenu.addClass("pagebuilder-options-visible");
+        optionsMenu.parent().addClass("pagebuilder-options-visible");
         $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
@@ -131,10 +132,27 @@ export default class PreviewBlock {
                     optionsMenu = optionsMenu.first();
                 }
 
-                optionsMenu.removeClass("pagebuilder-options-visible");
+                optionsMenu.parent().removeClass("pagebuilder-options-visible");
                 $(currentTarget).removeClass("pagebuilder-content-type-active");
             }
         }, 100); // 100 ms delay to allow for users hovering over other elements
+    }
+
+    /**
+     * After children render fire an event
+     *
+     * @param {Element} element
+     */
+    public afterChildrenRender(element: Element): void {
+        EventBus.trigger("block:childrenRendered", {id: this.parent.id, block: this.parent, element});
+        EventBus.trigger(
+            this.parent.config.name + ":block:childrenRendered",
+            {
+                block: this.parent,
+                element,
+                id: this.parent.id,
+            },
+        );
     }
 
     /**
@@ -168,4 +186,10 @@ export default class PreviewBlock {
     protected afterStyleMapped(styles: StyleAttributeMapperResult) {
         return styles;
     }
+}
+
+export interface BlockChildrenRenderedEventParams {
+    block: Block;
+    element: Element;
+    id: string;
 }

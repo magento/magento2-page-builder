@@ -7,6 +7,16 @@
 -->
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
+    <entity name="PageBuilderFirstRowInStage" type="pagebuilder_row">
+        <data key="index">1</data>
+        <data key="pageName" unique="suffix">testcmspage</data>
+    </entity>
+    <entity name="PageBuilderSecondRowInStage" type="pagebuilder_row">
+        <data key="index">2</data>
+    </entity>
+    <entity name="PageBuilderThirdRowInStage" type="pagebuilder_row">
+        <data key="index">3</data>
+    </entity>
     <!-- Background Color -->
     <entity name="PageBuilderBackgroundColorProperty" type="pagebuilder_row_background_color_property">
         <data key="name">Background Color</data>
@@ -55,11 +65,23 @@
         <data key="fieldName">enable_parallax</data>
         <data key="value">1</data>
     </entity>
-    <!-- Parallax Speed -->
+    <entity name="PageBuilderParallaxEnabledDefaultProperty" type="pagebuilder_parallax_enabled_default_property">
+        <data key="name">Enable Parallax Background</data>
+        <data key="section">parallax_background</data>
+        <data key="fieldName">enable_parallax</data>
+        <data key="value">0</data>
+    </entity>
     <entity name="PageBuilderParallaxSpeedProperty" type="pagebuilder_row_parallax_speed_property">
         <data key="name">Parallax Speed</data>
         <data key="section">parallax_background</data>
         <data key="fieldName">parallax_speed</data>
-        <data key="value">10</data>
+        <data key="value">2.0</data>
+    </entity>
+    <entity name="PageBuilderParallaxSpeedDefaultProperty" type="pagebuilder_parallax_speed_default_property">
+        <data key="name">Parallax Speed</data>
+        <data key="section">parallax_background</data>
+        <data key="fieldName">parallax_speed</data>
+        <data key="value">0.5</data>
+        <data key="notice">Enter fractional number from -1.0 to 2.0.</data>
     </entity>
 </entities>

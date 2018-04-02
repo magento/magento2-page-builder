@@ -8,10 +8,13 @@
 <div class="pagebuilder-content-type pagebuilder-slider type-nested children-min-height" data-bind="afterRender: function () { preview.onAfterRender.call(preview); }, event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <div class="slider-container" data-bind="style: preview.previewStyle">
+        <div class="pagebuilder-empty slider-empty" data-bind="css: {visible: children().length == 0}">
+            <span data-bind="text: $t('Click \'Add Slide\'')"/>
+        </div>
         <!-- ko template: previewChildTemplate --><!-- /ko -->
     </div>
-    <div class="pagebuilder-empty pagebuilder-empty-slider" data-bind="css: {visible: children().length == 0}, text: $t('Click \'Add Slide\'')">
-    </div>
+</div>
+<div class="pagebuilder-content-type pagebuilder-slider">
     <div class="slider-controls">
         <!-- ko if: children().length > 0 -->
         <div class="slider-navigation" data-bind="previewSortable: {handle: '.navigation-handle', containment: 'parent'}, foreach: getChildren()">

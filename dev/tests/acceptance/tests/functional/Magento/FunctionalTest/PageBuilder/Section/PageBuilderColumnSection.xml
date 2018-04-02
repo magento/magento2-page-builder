@@ -25,14 +25,14 @@
         <element name="columnInStage2Children" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[2]/div[contains(@class, "column-container")]/div'/>
         <element name="columnInStage2DropArea" type="text" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[2]/div[contains(@class, "column-container")]'/>
         <element name="columnInStage3" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[3]'/>
-        <element name="columnOptionsMenu" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][1]/div[@class="pagebuilder-options"]'/>
-        <element name="columnOptionsMenu2" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][2]/div[@class="pagebuilder-options"]'/>
-        <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
-        <element name="editColumn2" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[2]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
-        <element name="editColumn3" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[3]/div[@class="pagebuilder-options"]/descendant::*[@class="edit-block"]'/>
-        <element name="dragColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[@class="pagebuilder-options"]/descendant::*[@class="move-structural"]'/>
-        <element name="removeColumn" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[1]/descendant::div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][1]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
-        <element name="removeColumn2" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[1]/descendant::div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][2]/div[@class="pagebuilder-options"]/descendant::*[@class="remove-structural"]'/>
+        <element name="columnOptionsMenu" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][1]/div[contains(@class, "pagebuilder-options")]'/>
+        <element name="columnOptionsMenu2" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][2]/div[contains(@class, "pagebuilder-options")]'/>
+        <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-block"]'/>
+        <element name="editColumn2" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[2]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-block"]'/>
+        <element name="editColumn3" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[3]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-block"]'/>
+        <element name="dragColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]'/>
+        <element name="removeColumn" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[1]/descendant::div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="remove-structural"]'/>
+        <element name="removeColumn2" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[1]/descendant::div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][2]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="remove-structural"]'/>
         <element name="panelFieldLabel" type="text" selector='//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/label | //div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label"]/span[text()="{{arg4}}"]' parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="backgroundRepeatSwitch" type="input" selector="//*[@name='background_repeat']/parent::*/label"/>
@@ -71,7 +71,7 @@
         <element name="column2Height" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'min-height: 500px;')]"/>
         <element name="column2Height300" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'min-height: 300px;')]"/>
         <element name="column2HeightFull" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'align-self: stretch;')]"/>
-        <element name="column2BackgroundSize" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-size: auto;')]"/>
+        <element name="column2BackgroundSize" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-size: cover;')]"/>
         <element name="column2BackgroundRepeatNotApplied" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-repeat: no-repeat;')]"/>
         <element name="column2BackgroundAttachment" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'background-attachment: scroll;')]"/>
         <element name="column2BackgroundWidth" type="button" selector="(//div[@data-role='column'])[2][contains(@style, 'width: 50%;')]"/>
@@ -85,7 +85,7 @@
         <element name="column3BackgroundColorGrey" type="button" selector="(//div[@data-role='column'])[3][contains(@style, 'background-color: rgb(60, 60, 60);')]"/>
         <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}'][style*='.{{arg2}}']" parameterized="true"/>
         <element name="columnDisplay" type="button" selector="[data-role='column']:first-child"/>
-        <element name="columnTextAlign" type="button" selector="[data-role='column']:first-child[style*='text-align: center;']"/>
+        <element name="columnTextAlign" type="button" selector="[data-role='column']:first-child[style*='text-align: left;']"/>
         <element name="columnBorder" type="button" selector="[data-role='column']:first-child[style*='border: 10px dotted rgb(255, 255, 255);']"/>
         <element name="columnBorderRadius" type="button" selector="[data-role='column']:first-child[style*='border-radius: 12px;']"/>
         <element name="columnMargin" type="button" selector="[data-role='column']:first-child[style*='margin: 5px;']"/>

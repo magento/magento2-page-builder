@@ -8,6 +8,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import Config from "../config";
 import EventBus from "../event-bus";
+import {BlockMountEventParams} from "../stage/structural/editable-area";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
 import Block from "./block";
@@ -24,7 +25,7 @@ export default class Column extends Block {
         super.bindEvents();
 
         if (Config.getContentType("column-group")) {
-            EventBus.on("column:block:mount", (event: Event, params: {[key: string]: any}) => {
+            EventBus.on("column:block:mount", (event: Event, params: BlockMountEventParams) => {
                 if (params.id === this.id) {
                     this.createColumnGroup();
                 }

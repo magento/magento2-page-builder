@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import delayedPromise from "../../utils/delayed-promise";
 import createBlock from "../block/factory";
 import Config from "../config";
 import EventBus from "../event-bus";
@@ -20,9 +21,9 @@ export default class Slider extends Block {
 
         createBlock(
             Config.getInitConfig("content_types").slide,
-            this.parent,
+            this,
             this.stage,
-        ).then((slide) => {
+        ).then(delayedPromise(300)).then((slide) => {
             this.addChild(slide, this.children().length);
             slide.edit.open();
         });
@@ -33,7 +34,12 @@ export default class Slider extends Block {
      */
     protected bindEvents() {
         super.bindEvents();
-
+        // Block being mounted onto container
+        EventBus.on("slider:block:ready", (event: Event, params: {[key: string]: any}) => {
+            if (params.id === this.id && this.children().length === 0) {
+                this.addSlide();
+            }
+        });
         // Block being removed from container
         EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {
