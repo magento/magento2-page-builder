@@ -247,6 +247,14 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       return result;
     };
     /**
+     * Callback function for after preview observables are updated
+     */
+
+
+    _proto.afterDataRendered = function afterDataRendered() {
+      return;
+    };
+    /**
      * Get the options instance
      *
      * @returns {Options}
@@ -478,12 +486,6 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
         _this4.updatePreviewObservables(_underscore.extend({}, _this4.stage.store.get(_this4.id)));
       }, this.id);
     };
-    /**
-     * Callback function for after preview observables are updated
-     */
-
-
-    _proto.afterDataRendered = function afterDataRendered() {};
 
     _createClass(Structural, [{
       key: "template",
