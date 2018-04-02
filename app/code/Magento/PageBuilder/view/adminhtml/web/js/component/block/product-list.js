@@ -18,7 +18,7 @@ define(["../config", "./block"], function (_config, _block) {
 
       var attributes = this.data.main.attributes();
 
-      if (attributes['data-category-id'] === "") {
+      if (attributes["data-category-id"] === "") {
         return;
       }
 
@@ -27,9 +27,9 @@ define(["../config", "./block"], function (_config, _block) {
       var requestData = {
         is_preview: true,
         role: this.config.name,
-        category_id: attributes['data-category-id'],
-        hide_out_of_stock: attributes['data-hide-out-of-stock'],
-        product_count: attributes['data-product-count']
+        category_id: attributes["data-category-id"],
+        hide_out_of_stock: attributes["data-hide-out-of-stock"],
+        product_count: attributes["data-product-count"]
       };
       jQuery.post(url, requestData, function (response) {
         _this.data.main.html(response.content !== undefined ? response.content.trim() : "");

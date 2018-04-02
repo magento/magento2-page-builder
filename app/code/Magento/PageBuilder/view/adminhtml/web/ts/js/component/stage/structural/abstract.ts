@@ -290,6 +290,13 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
+     * Callback function for after preview observables are updated
+     */
+    protected afterDataRendered() {
+        return;
+    }
+
+    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
@@ -485,11 +492,5 @@ export default class Structural extends EditableArea implements StructuralInterf
             },
             this.id,
         );
-    }
-
-    /**
-     * Callback function for after preview observables are updated
-     */
-    protected afterDataRendered() {
     }
 }

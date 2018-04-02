@@ -17,7 +17,7 @@ export default class ContentBlock extends Block {
         const url = Config.getInitConfig("preview_url");
         const requestData = {
             identifier: attributes["data-identifier"],
-            role: this.config.name
+            role: this.config.name,
         };
 
         jQuery.post(url, requestData, (response) => {

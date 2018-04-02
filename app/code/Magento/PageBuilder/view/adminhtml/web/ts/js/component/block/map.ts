@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import GoogleMap from "Magento_PageBuilder/js/utils/map";
 import EventBus from "../event-bus";
 import Block from "./block";
-import GoogleMap from "Magento_PageBuilder/js/utils/map";
 
 export default class Map extends Block {
 
@@ -45,7 +45,7 @@ export default class Map extends Block {
      * @returns {void}
      */
     private generateMap(element: Element) {
-        const position = this.data.main.attributes()['data-position'];
+        const position = this.data.main.attributes()["data-position"];
         let markers: any = [];
         let centerCoord = {
             lat: 30.2672,
@@ -71,7 +71,7 @@ export default class Map extends Block {
      * @returns {void}
      */
     private updateMap() {
-        if (this.data.main.attributes()['data-position']) {
+        if (this.data.main.attributes()["data-position"]) {
             const pos = this.getPosition();
             this.map.onUpdate(pos.markers, pos.latLng, pos.zoom);
         }
@@ -83,7 +83,7 @@ export default class Map extends Block {
      * @returns {Object}
      */
     private getPosition() {
-        const positions = this.data.main.attributes()['data-position'].split(",");
+        const positions = this.data.main.attributes()["data-position"].split(",");
         return {
             latLng: {
                 lat: parseFloat(positions[0]),

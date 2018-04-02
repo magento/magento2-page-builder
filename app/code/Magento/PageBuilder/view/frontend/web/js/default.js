@@ -121,8 +121,8 @@ requirejs([
         if (element.hasAttribute('data-position')) {
             data = element.getAttribute('data-position').split(',');
             markers.push({
-               lat: data[0],
-               lng: data[1]
+                lat: data[0],
+                lng: data[1]
             });
             centerCoord = markers[0];
             zoom = data[2];
