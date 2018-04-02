@@ -18,7 +18,7 @@ define(["../config", "./block"], function (_config, _block) {
 
       var attributes = this.data.main.attributes();
 
-      if (attributes['data-sku'] === "") {
+      if (attributes["data-sku"] === "") {
         return;
       }
 
@@ -27,8 +27,8 @@ define(["../config", "./block"], function (_config, _block) {
       var requestData = {
         is_preview: true,
         role: this.config.name,
-        sku: attributes['data-sku'],
-        view_mode: attributes['data-view-mode']
+        sku: attributes["data-sku"],
+        view_mode: attributes["data-view-mode"]
       };
       jQuery.post(url, requestData, function (response) {
         _this.data.main.html(response.content !== undefined ? response.content.trim() : "");
