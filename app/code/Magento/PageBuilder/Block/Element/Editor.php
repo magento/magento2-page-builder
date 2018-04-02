@@ -8,32 +8,6 @@ namespace Magento\PageBuilder\Block\Element;
 class Editor extends \Magento\Framework\Data\Form\Element\Editor
 {
     /**
-     * @var \Magento\PageBuilder\Model\State
-     */
-    private $pageBuilderState;
-
-    /**
-     * Editor constructor.
-     * @param \Magento\Framework\Data\Form\Element\Factory $factoryElement
-     * @param \Magento\Framework\Data\Form\Element\CollectionFactory $factoryCollection
-     * @param \Magento\Framework\Escaper $escaper
-     * @param \Magento\PageBuilder\Model\State $pageBuilderState
-     * @param array $data
-     * @param \Magento\Framework\Serialize\Serializer\Json|null $serializer
-     */
-    public function __construct(
-        \Magento\Framework\Data\Form\Element\Factory $factoryElement,
-        \Magento\Framework\Data\Form\Element\CollectionFactory $factoryCollection,
-        \Magento\Framework\Escaper $escaper,
-        \Magento\PageBuilder\Model\State $pageBuilderState,
-        $data = [],
-        \Magento\Framework\Serialize\Serializer\Json $serializer = null
-    ) {
-        $this->pageBuilderState = $pageBuilderState;
-        parent::__construct($factoryElement, $factoryCollection, $escaper, $data);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getElementHtml()
