@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../config", "./block"], function (_config, _block) {
+define(["../config", "../event-bus", "./block"], function (_config, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ContentBlock =
@@ -19,23 +19,30 @@ define(["../config", "./block"], function (_config, _block) {
 
     var _proto = ContentBlock.prototype;
 
-    _proto.afterDataRendered = function afterDataRendered() {
+    /**
+     * Bind events for the current instance
+     */
+    _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      var attributes = this.data.main.attributes();
+      _Block.prototype.bindEvents.call(this);
 
-      if (attributes["data-identifier"] === "") {
-        return;
-      }
+      _eventBus.on("previewObservables:updated", function (event, params) {
+        var attributes = _this2.data.main.attributes();
 
-      var url = _config.getInitConfig("preview_url");
+        if (attributes["data-identifier"] === "") {
+          return;
+        }
 
-      var requestData = {
-        identifier: attributes["data-identifier"],
-        role: this.config.name
-      };
-      jQuery.post(url, requestData, function (response) {
-        _this2.data.main.html(response.content !== undefined ? response.content.trim() : "");
+        var url = _config.getInitConfig("preview_url");
+
+        var requestData = {
+          identifier: attributes["data-identifier"],
+          role: _this2.config.name
+        };
+        jQuery.post(url, requestData, function (response) {
+          _this2.data.main.html(response.content !== undefined ? response.content.trim() : "");
+        });
       });
     };
 

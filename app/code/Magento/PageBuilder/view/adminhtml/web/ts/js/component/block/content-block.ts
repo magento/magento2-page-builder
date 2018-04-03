@@ -4,24 +4,32 @@
  */
 
 import Config from "../config";
+import EventBus from "../event-bus";
 import Block from "./block";
 
 export default class ContentBlock extends Block {
     public editOnInsert: boolean = false;
 
-    protected afterDataRendered() {
-        const attributes = this.data.main.attributes();
-        if (attributes["data-identifier"] === "") {
-            return;
-        }
-        const url = Config.getInitConfig("preview_url");
-        const requestData = {
-            identifier: attributes["data-identifier"],
-            role: this.config.name,
-        };
+    /**
+     * Bind events for the current instance
+     */
+    protected bindEvents() {
+        super.bindEvents();
 
-        jQuery.post(url, requestData, (response) => {
-            this.data.main.html(response.content !== undefined ? response.content.trim() : "");
+        EventBus.on("previewObservables:updated", (event, params) => {
+            const attributes = this.data.main.attributes();
+            if (attributes["data-identifier"] === "") {
+                return;
+            }
+            const url = Config.getInitConfig("preview_url");
+            const requestData = {
+                identifier: attributes["data-identifier"],
+                role: this.config.name,
+            };
+
+            jQuery.post(url, requestData, (response) => {
+                this.data.main.html(response.content !== undefined ? response.content.trim() : "");
+            });
         });
     }
 }
