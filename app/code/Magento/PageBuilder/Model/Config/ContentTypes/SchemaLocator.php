@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Model\Config;
+namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
 {

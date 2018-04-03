@@ -5,7 +5,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Model\Config;
+namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 use Magento\Framework\Component\DirSearch;
 use Magento\Framework\Component\ComponentRegistrar;
@@ -41,7 +41,7 @@ class FileResolver implements \Magento\Framework\Config\FileResolverInterface
     {
         $paths = $this->componentDirSearch->collectFiles(
             ComponentRegistrar::MODULE,
-            'etc/' . $scope. '/{' . $filename . ',*/' . $filename . '}'
+            'etc/' . $scope . '/' . $filename
         );
 
         return $this->iteratorFactory->create($paths);

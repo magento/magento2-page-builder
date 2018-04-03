@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config;
+namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
@@ -20,8 +20,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     public function convert($source): array
     {
         return [
-            'types' => $this->convertTypes($source),
-            'groups' => $this->convertGroups($source)
+            'types' => $this->convertTypes($source)
         ];
     }
 
@@ -55,7 +54,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     }
                 }
             }
+            $typesData[$name]['sortOrder'] = $this->getAttributeValue($contentType, 'sortOrder');
         }
+        uasort($typesData, [$this, 'sortData']);
+
         return $typesData;
     }
 
@@ -344,33 +346,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
-     * Convert data for groups
-     *
-     * @param \DOMDocument $source
-     * @return array
-     */
-    private function convertGroups(\DOMDocument $source): array
-    {
-        $groupsData = [];
-        /** @var \DOMNode $source */
-        $groups = $source->getElementsByTagName('groups');
-        /** @var \DOMNode $group */
-        foreach ($groups->item(0)->childNodes as $group) {
-            if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
-                $name = $group->attributes->getNamedItem('name')->nodeValue;
-                /** @var \DOMElement $childNode */
-                foreach ($group->childNodes as $childNode) {
-                    if ($this->isConfigNode($childNode)) {
-                        $groupsData[$name][$childNode->nodeName] = $childNode->nodeValue;
-                    }
-                }
-                $groupsData[$name]['sortOrder'] = $group->attributes->getNamedItem('sortOrder')->nodeValue;
-            }
-        }
-        return $groupsData;
-    }
-
-    /**
      * Check if node is configuration node
      *
      * @param \DOMNode $node
@@ -396,5 +371,19 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         return $attributeNode->hasAttribute($attributeName)
             ? $attributeNode->attributes->getNamedItem($attributeName)->nodeValue
             : null;
+    }
+
+    /**
+     * sort callback
+     *
+     * @param array $firstElement
+     * @param array $secondElement
+     * @return int
+     */
+    private function sortData($firstElement, $secondElement)
+    {
+        $aOrder = (int)$firstElement['sortOrder'];
+        $bOrder = (int)$secondElement['sortOrder'];
+        return $aOrder < $bOrder ? -1 : ($aOrder > $bOrder ? 1 : 0);
     }
 }
