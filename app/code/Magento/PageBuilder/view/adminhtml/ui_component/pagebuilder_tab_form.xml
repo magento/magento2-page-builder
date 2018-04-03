@@ -67,7 +67,36 @@
             </formElements>
         </field>
     </fieldset>
-    <fieldset name="background" sortOrder="20">
+    <fieldset name="general" sortOrder="20">
+        <settings>
+            <label translate="true">General</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+        <field name="title" sortOrder="20" formElement="input">
+            <settings>
+                <label translate="true">Tab Title</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="min_height" sortOrder="30" formElement="input">
+            <settings>
+                <label translate="true">Minimum Height</label>
+                <additionalClasses>
+                    <class name="admin__field-x-small">true</class>
+                </additionalClasses>
+                <addAfter>px</addAfter>
+                <dataType>text</dataType>
+                <dataScope>min_height</dataScope>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="background" sortOrder="30">
         <settings>
             <label translate="true">Background</label>
             <collapsible>true</collapsible>
