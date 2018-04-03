@@ -52,6 +52,7 @@ define(["underscore", "./block"], function (_underscore, _block) {
       }
     };
     /**
+     * Convert plain href string to category widget string
      *
      * @param {string} href
      * @returns {string}
@@ -73,6 +74,7 @@ define(["underscore", "./block"], function (_underscore, _block) {
       return "{{widget " + attributesString + " }}";
     };
     /**
+     * Convert plain href string to product widget string
      *
      * @param {string} href
      * @returns {string}

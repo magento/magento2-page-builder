@@ -44,6 +44,7 @@ export default class ButtonItem extends Block {
     }
 
     /**
+     * Convert plain href string to category widget string
      *
      * @param {string} href
      * @returns {string}
@@ -62,6 +63,7 @@ export default class ButtonItem extends Block {
     }
 
     /**
+     * Convert plain href string to product widget string
      *
      * @param {string} href
      * @returns {string}

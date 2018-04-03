@@ -50,6 +50,8 @@ export default class ButtonItem implements ReadInterface {
     }
 
     /**
+     * Convert category widget string to plain href string
+     *
      * @param {string} href
      * @returns {string}
      */
@@ -64,6 +66,8 @@ export default class ButtonItem implements ReadInterface {
     }
 
     /**
+     * Convert product widget string to plain href string
+     *
      * @param {string} href
      * @returns {string}
      */

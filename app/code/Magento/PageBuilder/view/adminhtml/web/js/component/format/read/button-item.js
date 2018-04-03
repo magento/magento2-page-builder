@@ -51,6 +51,8 @@ define(["./default"], function (_default) {
       });
     };
     /**
+     * Convert category widget string to plain href string
+     *
      * @param {string} href
      * @returns {string}
      */
@@ -66,6 +68,8 @@ define(["./default"], function (_default) {
       return matches[1];
     };
     /**
+     * Convert product widget string to plain href string
+     *
      * @param {string} href
      * @returns {string}
      */
