@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "./stage/event-handling-delegate", "Magento_PageBuilder/js/component/stage/save", "Magento_PageBuilder/js/component/stage/structural/editable-area"], function (_knockout, _translate, _alert, _underscore, _dataStore, _eventBus, _stageBuilder, _eventHandlingDelegate, _save, _editableArea) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/event-handling-delegate", "Magento_PageBuilder/js/component/stage/save", "Magento_PageBuilder/js/component/stage/structural/editable-area"], function (_knockout, _translate, _alert, _underscore, _dataStore, _eventBus, _stageBuilder, _eventHandlingDelegate, _save, _editableArea) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Stage =
