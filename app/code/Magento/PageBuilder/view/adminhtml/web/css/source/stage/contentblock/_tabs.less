@@ -1,0 +1,47 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+.pagebuilder-content-type.pagebuilder-tabs .tabs-container {
+    .tabs-navigation {
+        display: block;
+        font-size: 0;
+
+        li {
+            display: inline-block;
+
+            a {
+                background: #f6f6f6;
+                font-size: @field-label__font-size;
+                color: @field-label__color;
+                display: block;
+                font-weight: @font-weight__semibold;
+                line-height: @field-label__line-height;
+                vertical-align: middle;
+                white-space: normal;
+                border: 1px solid rgba(153, 153, 153, .3);
+                border-right: 0;
+                border-bottom: 0;
+                padding: 1.4rem 2rem;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+            &:last-child a {
+                border-right: 1px solid rgba(153, 153, 153, .3);
+            }
+
+            &.ui-state-active a {
+                background: #fff;
+            }
+        }
+    }
+
+    .tabs-content {
+        .pagebuilder-content-type-wrapper.ui-tabs-panel {
+            padding: 0;
+        }
+    }
+}

@@ -5,9 +5,18 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container dashboard-store-stats children-min-height" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type type-container pagebuilder-tabs children-min-height" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
-    <div class="tabs-container">
-        <!-- ko template: previewChildTemplate --><!-- /ko -->
+    <div class="tabs-container" data-bind="afterRender: function (element) { preview.onContainerRender.call(preview, element); }">
+        <ul role="tablist" class="tabs-navigation" data-bind="foreach: getChildren()">
+            <li role="tab" class="tab">
+                <a href="#no-tab" title="Tab 1" data-bind="attr: { href: '#' + id }">
+                    <span>Tab</span>
+                </a>
+            </li>
+        </ul>
+        <div class="tabs-content children-min-height">
+            <!-- ko template: previewChildTemplate --><!-- /ko -->
+        </div>
     </div>
 </div>

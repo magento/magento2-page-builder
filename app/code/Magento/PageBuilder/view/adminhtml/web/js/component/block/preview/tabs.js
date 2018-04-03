@@ -1,65 +1,65 @@
 /*eslint-disable */
-define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _tabs, _underscore, _block) {
+define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _tabs, _underscore, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(Tabs, _Block);
+  function (_PreviewBlock) {
+    _inheritsLoose(Tabs, _PreviewBlock);
 
-    function Tabs() {
-      var _temp, _this;
+    /**
+     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
+     *
+     * @type {(() => any) & _.Cancelable}
+     */
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
+    /**
+     * @param {Block} parent
+     * @param {ConfigContentBlock} config
+     */
+    function Tabs(parent, config) {
+      var _this;
 
-      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.element = void 0, _this.renderCounter = 0, _temp) || _this;
+      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this.element = void 0;
+      _this.renderCounter = 0;
+      _this.buildTabs = _underscore.debounce(function () {
+        if (_this.element && _this.element.children.length > 0) {
+          try {
+            (0, _jquery)(_this.element).tabs("destroy");
+          } catch (e) {// We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
+          }
+
+          (0, _jquery)(_this.element).tabs();
+        }
+      }, 10);
+
+      _eventBus.on("tabs:block:ready", function (event, params) {
+        if (params.id === _this.parent.id && _this.element) {
+          _this.buildTabs();
+        }
+      });
+
+      _eventBus.on("tab:block:create", function (event, params) {
+        if (_this.element && params.block.parent.id === _this.parent.id) {
+          _this.buildTabs();
+        }
+      });
+
+      return _this;
     }
-
-    var _proto = Tabs.prototype;
-
     /**
      * On render init the tabs widget
      *
      * @param {Element} element
      */
+
+
+    var _proto = Tabs.prototype;
+
     _proto.onContainerRender = function onContainerRender(element) {
       this.element = element;
-    };
-    /**
-     * Callback after a tab has been rendered, wait until all tabs have been rendered to init the widget
-     */
-
-
-    _proto.onTabRender = function onTabRender() {
-      var _this2 = this;
-
-      ++this.renderCounter;
-
-      if (this.data.tabs().length === this.renderCounter) {
-        _underscore.delay(function () {
-          return (0, _jquery)(_this2.element).tabs();
-        }, 50);
-
-        this.renderCounter = 0;
-      }
-    };
-    /**
-     * Setup fields observables within the data class property
-     */
-
-
-    _proto.setupDataFields = function setupDataFields() {
-      var _this3 = this;
-
-      _Block.prototype.setupDataFields.call(this);
-
-      this.updateDataValue("tabs", []);
-      this.data.tabs.subscribe(function (data) {
-        _this3.renderCounter = 0;
-        (0, _jquery)(_this3.element).tabs("destroy");
-      });
+      this.buildTabs();
     };
 
     return Tabs;

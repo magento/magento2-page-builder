@@ -6,11 +6,50 @@
 import $ from "jquery";
 import "tabs";
 import _ from "underscore";
-import Block from "./block";
+import {ConfigContentBlock} from "../../config";
+import EventBus from "../../event-bus";
+import Block from "../block";
+import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
+import PreviewBlock from "./block";
 
-export default class Tabs extends Block {
+export default class Tabs extends PreviewBlock {
     private element: Element;
     private renderCounter: number = 0;
+
+    /**
+     * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
+     *
+     * @type {(() => any) & _.Cancelable}
+     */
+    private buildTabs = _.debounce(() => {
+        if (this.element && this.element.children.length > 0) {
+            try {
+                $(this.element).tabs("destroy");
+            } catch (e) {
+                // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
+            }
+            $(this.element).tabs();
+        }
+    }, 10);
+
+    /**
+     * @param {Block} parent
+     * @param {ConfigContentBlock} config
+     */
+    constructor(parent: Block, config: ConfigContentBlock) {
+        super(parent, config);
+
+        EventBus.on("tabs:block:ready", (event: Event, params: BlockReadyEventParams) => {
+            if (params.id === this.parent.id && this.element) {
+                this.buildTabs();
+            }
+        });
+        EventBus.on("tab:block:create", (event: Event, params: BlockCreateEventParams) => {
+            if (this.element && params.block.parent.id === this.parent.id) {
+                this.buildTabs();
+            }
+        });
+    }
 
     /**
      * On render init the tabs widget
@@ -19,29 +58,6 @@ export default class Tabs extends Block {
      */
     public onContainerRender(element: Element) {
         this.element = element;
-    }
-
-    /**
-     * Callback after a tab has been rendered, wait until all tabs have been rendered to init the widget
-     */
-    public onTabRender() {
-        ++this.renderCounter;
-        if (this.data.tabs().length === this.renderCounter) {
-            _.delay(() => $(this.element).tabs(), 50);
-            this.renderCounter = 0;
-        }
-    }
-
-    /**
-     * Setup fields observables within the data class property
-     */
-    protected setupDataFields() {
-        super.setupDataFields();
-
-        this.updateDataValue("tabs", []);
-        this.data.tabs.subscribe((data) => {
-            this.renderCounter = 0;
-            $(this.element).tabs("destroy");
-        });
+        this.buildTabs();
     }
 }
