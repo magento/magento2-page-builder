@@ -36,30 +36,82 @@
             <label translate="true">Appearance</label>
             <collapsible>true</collapsible>
             <opened>true</opened>
-            <imports>
-                <link name="appearancesHidden">${$.name}.appearance:options</link>
-            </imports>
         </settings>
-        <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
+        <field name="default_active" formElement="select" sortOrder="20" component="Magento_PageBuilder/js/form/element/dependent-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">default</item>
+                    <item name="default" xsi:type="string">Tab Name</item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Appearance</label>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
+                <label translate="true">Default Active Tab</label>
             </settings>
             <formElements>
                 <select>
                     <settings>
                         <options>
                             <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">default</item>
-                                <item name="label" xsi:type="string" translate="true">Default</item>
+                                <item name="value" xsi:type="string">tab_1</item>
+                                <item name="label" xsi:type="string" translate="true">Tab 1</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">tab_2</item>
+                                <item name="label" xsi:type="string" translate="true">Tab 2</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">tab_3</item>
+                                <item name="label" xsi:type="string" translate="true">Tab 3</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="min_height" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="number">300</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Minimum Height</label>
+                <additionalClasses>
+                    <class name="admin__field-x-small">true</class>
+                </additionalClasses>
+                <addAfter>px</addAfter>
+                <dataType>text</dataType>
+                <dataScope>min_height</dataScope>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="navigation_alignment" formElement="select" sortOrder="40" component="Magento_PageBuilder/js/form/element/dependent-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">Tab Name</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Tab Navigation Alignment</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="left" xsi:type="array">
+                                <item name="value" xsi:type="string">left</item>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
+                            </option>
+                            <option name="center" xsi:type="array">
+                                <item name="value" xsi:type="string">center</item>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
+                            </option>
+                            <option name="right" xsi:type="array">
+                                <item name="value" xsi:type="string">right</item>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
                             </option>
                         </options>
                     </settings>
