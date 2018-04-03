@@ -14,7 +14,6 @@ var config = {
         'slick': 'Magento_PageBuilder/js/resource/slick/slick',
         'xyperscript': 'Magento_PageBuilder/js/resource/xyperscript/xyperscript',
         'google-map': 'Magento_PageBuilder/js/utils/map',
-        'tinycolor': 'jquery/spectrum/tinycolor',
 
         /* Include our Knockout Sortable wrapper */
         'ko-sortable': 'Magento_PageBuilder/js/resource/sortable/knockout-sortable',

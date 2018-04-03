@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery/spectrum/tinycolor"], function (_tinycolor) {
+define(["tinycolor"], function (_tinycolor) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

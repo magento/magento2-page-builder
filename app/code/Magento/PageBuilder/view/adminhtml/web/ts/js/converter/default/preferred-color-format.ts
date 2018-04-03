@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import tinycolor from "jquery/spectrum/tinycolor";
+import tinycolor from "tinycolor";
 import DataConverterInterface from "../data-converter-interface";
 
 export default class PreferredColorFormat implements DataConverterInterface {
