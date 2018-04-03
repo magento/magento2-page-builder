@@ -2,7 +2,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 import $t from "mage/translate";
+import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
 import {moveArrayItem} from "../../utils/array";
 import {ConfigContentBlock} from "../config";
@@ -113,7 +115,7 @@ export default class ColumnGroup extends Block {
 
         // If we aren't able to duplicate inform the user why
         if (!duplicate) {
-            this.stage.parent.alertDialog({
+            alertDialog({
                 content: $t("There is no free space within the column group to perform this action."),
                 title: $t("Unable to duplicate column"),
             });

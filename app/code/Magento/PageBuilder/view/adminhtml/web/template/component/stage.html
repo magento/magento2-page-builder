@@ -4,28 +4,19 @@
  * See COPYING.txt for license details.
  */
 -->
-
-<div class="admin__field pagebuilder-header">
-    <button translate="templateManagerTitle"></button>
-    <i click="stage.goFullScreen.bind(stage)" css="'icon-pagebuilder-fullscreen': !isFullScreen(), 'icon-pagebuilder-fullscreen-exit': isFullScreen()"></i>
-</div>
-<br/>
-<with args="panel">
-    <render/>
-</with>
 <div class="pagebuilder-stage"
-     attr="id: stageId, 'data-role': stageActive() ? 'pagebuilder-stage' : ''"
-     css="'pagebuilder-show-borders': showBorders, 'pagebuilder-no-user-select': !userSelect(), 'panel-collapsed': panel.isCollapsed, 'interacting': interacting">
+     attr="id: id, 'data-role': 'pagebuilder-stage'"
+     css="'pagebuilder-show-borders': showBorders, 'pagebuilder-no-user-select': !userSelect(), 'panel-collapsed': parent.panel.isCollapsed, 'interacting': interacting">
     <div class="pagebuilder-stage-loading" visible="loading" >
         <div class="pagebuilder-emblem"></div>
         <p translate="stageLoadingMessage"></p>
         <span class="spinner">
-            <span repeat="8" attr="'data-repeat-index': $index"/>
-        </span>
+                <span repeat="8" attr="'data-repeat-index': $index"/>
+            </span>
     </div>
     <div class="pagebuilder-canvas"
          css="active: !loading()"
-         each="stageContent"
+         each="children"
          data-bind="sortable: { sortableClass: 'stage-container', handle: '.move-structural', items: '.pagebuilder-row-wrapper', connectWith: '.pagebuilder-canvas' }">
         <div class="pagebuilder-row-wrapper" attr="id: id" ko-style="wrapperStyle" template="previewTemplate"></div>
     </div>

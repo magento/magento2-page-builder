@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "mageUtils", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus"], function (_translate, _mageUtils, _underscore, _array, _eventBus) {
+define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus"], function (_knockout, _translate, _mageUtils, _underscore, _array, _eventBus) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -14,7 +14,7 @@ define(["mage/translate", "mageUtils", "underscore", "Magento_PageBuilder/js/uti
      */
     function EditableArea(stage) {
       this.id = _mageUtils.uniqueid();
-      this.children = void 0;
+      this.children = _knockout.observableArray([]);
       this.stage = void 0;
       this.title = (0, _translate)("Editable");
       this.parent = void 0;
@@ -176,17 +176,14 @@ define(["mage/translate", "mageUtils", "underscore", "Magento_PageBuilder/js/uti
     };
     /**
      * Set the children observable array into the class
-     *
-     * @param children
      */
 
 
-    _proto.setChildren = function setChildren(children) {
+    _proto.setChildren = function setChildren() {
       var _this = this;
 
-      this.children = children; // Attach a subscription to the children of every editable area to fire the stageUpdated event
-
-      children.subscribe(function () {
+      // Attach a subscription to the children of every editable area to fire the stageUpdated event
+      this.children.subscribe(function () {
         return _eventBus.trigger("stage:updated", {
           stage: _this.stage
         });
