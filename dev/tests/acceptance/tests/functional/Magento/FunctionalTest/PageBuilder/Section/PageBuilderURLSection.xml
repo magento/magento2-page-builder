@@ -9,14 +9,21 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="PageBuilderButtonLinkSection">
-        <element name="ButtonLinkSelect" type="select" selector="select[name='button_link']"/>
+        <element name="ButtonLinkSelect" type="select" selector="//select[@name='button_link']"/>
         <element name="ButtonLinkInput" type="input" selector="//select[@name='button_link']/following-sibling::div/input"/>
         <element name="ButtonLinkDropdown" type="select" selector=".action-select.admin__action-multiselect"/>
         <element name="ButtonLinkSearch" type="input" selector=".admin__action-multiselect-search"/>
-        <element name="ButtonLinkSearchResult" type="select" selector=".action-menu._active"/>
+        <element name="SearchResultBox" type="select" selector=".action-menu._active"/>
+        <element name="ButtonLinkItemSelected" type="text" selector="//span[text()='{{var1}}']/parent::label/parent::div[contains(@class,'_selected')]" parameterized="true"/>
+        <element name="SearchResult" type="text" selector="//span[text()='{{var1}}']" parameterized="true"/>
+        <element name="DropdownInput" type="input" selector=".admin__action-multiselect-text"/>
+        <element name="RemoveBtn" type="button" selector="button[data-action='remove-selected-item']"/>
     </section>
     <section name="PageBuilderURLOnStoreFrontSection">
         <element name="ExternalURLInCurrentTab" type="text" selector="//a[@href='{{var1}}' and @target='']" parameterized="true"/>
         <element name="ExternalURLInNewTab" type="text" selector="//a[@href='{{var1}}' and @target='_blank']" parameterized="true"/>
+    </section>
+    <section name="PageBuilderCategoryOnStoreFrontSection">
+        <element name="CategoryLink" type="text" selector="//a[@class='pagebuilder-button-primary' and contains(@href,'{{var1}}')]" parameterized="true"/>
     </section>
 </sections>
