@@ -15,10 +15,9 @@ export default class PreferredColorFormat implements DataConverterInterface {
      * @returns {object}
      */
     public fromDom(data: object, config: object): object {
-        if (data.background_color_format === null) {
-            data.background_color_format = "hex";
+        if (data.background_color != "") {
+            data.background_color = tinycolor(data.background_color).toString(data.background_color_format);
         }
-        data.background_color = tinycolor(data.background_color).toString(data.background_color_format);
         return data;
     }
 

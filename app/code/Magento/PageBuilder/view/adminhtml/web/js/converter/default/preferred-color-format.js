@@ -19,11 +19,10 @@ define(["tinycolor"], function (_tinycolor) {
      * @returns {object}
      */
     _proto.fromDom = function fromDom(data, config) {
-      if (data.background_color_format === null) {
-        data.background_color_format = "hex";
+      if (data.background_color != "") {
+        data.background_color = (0, _tinycolor)(data.background_color).toString(data.background_color_format);
       }
 
-      data.background_color = (0, _tinycolor)(data.background_color).toString(data.background_color_format);
       return data;
     };
     /**
