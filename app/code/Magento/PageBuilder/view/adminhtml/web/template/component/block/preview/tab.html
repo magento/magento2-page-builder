@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container pagebuilder-tab children-min-height" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
+<div class="pagebuilder-content-type type-container pagebuilder-tab" data-bind="css: {'empty-container': children().length == 0}, event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <!-- ko template: previewChildTemplate --><!-- /ko -->
     <div class="pagebuilder-empty-container empty-placeholder" data-bind="css: {visible: children().length == 0}, text: $t('Drag content blocks or columns here')"></div>

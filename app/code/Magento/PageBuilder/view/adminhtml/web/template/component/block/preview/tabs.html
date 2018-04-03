@@ -5,13 +5,13 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container pagebuilder-tabs children-min-height" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-tabs children-min-height" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <div class="tabs-container" data-bind="afterRender: function (element) { preview.onContainerRender.call(preview, element); }">
         <ul role="tablist" class="tabs-navigation" data-bind="foreach: getChildren()">
             <li role="tab" class="tab">
                 <a href="#no-tab" title="Tab 1" data-bind="attr: { href: '#' + id }">
-                    <span>Tab</span>
+                    <span data-bind="text: 'Tab ' + ($index() + 1)">Tab</span>
                 </a>
             </li>
         </ul>

@@ -7,23 +7,27 @@
     .tabs-navigation {
         display: block;
         font-size: 0;
+        margin: -2px -2px 2px -2px;
+        position: relative;
+        z-index: 10;
 
         li {
             display: inline-block;
+            position: relative;
 
             a {
                 background: #f6f6f6;
-                font-size: @field-label__font-size;
+                border: 1px solid rgba(153, 153, 153, .3);
+                border-bottom: 0;
+                border-right: 0;
                 color: @field-label__color;
                 display: block;
+                font-size: @field-label__font-size;
                 font-weight: @font-weight__semibold;
                 line-height: @field-label__line-height;
+                padding: 1.4rem 2rem;
                 vertical-align: middle;
                 white-space: normal;
-                border: 1px solid rgba(153, 153, 153, .3);
-                border-right: 0;
-                border-bottom: 0;
-                padding: 1.4rem 2rem;
 
                 &:hover {
                     text-decoration: none;
@@ -33,15 +37,44 @@
                 border-right: 1px solid rgba(153, 153, 153, .3);
             }
 
-            &.ui-state-active a {
-                background: #fff;
+            &.ui-state-active  {
+                a {
+                    background: #fff;
+                }
+
+                &:after {
+                    background: #fff;
+                    bottom: -1px;
+                    content: '';
+                    height: 2px;
+                    left: 1px;
+                    position: absolute;
+                    right: 1px;
+                }
             }
         }
     }
 
     .tabs-content {
+        margin: -1px;
+        position: relative;
+        z-index: 9;
+
         .pagebuilder-content-type-wrapper.ui-tabs-panel {
             padding: 0;
         }
+    }
+}
+
+.pagebuilder-content-type.pagebuilder-tab {
+    min-height: inherit;
+
+    &.empty-container {
+        min-height: 300px;
+    }
+
+    > .element-children {
+        min-height: inherit;
+        padding: 0;
     }
 }
