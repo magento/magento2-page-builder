@@ -28,24 +28,26 @@ define(["../config", "../event-bus", "./block"], function (_config, _eventBus, _
       _Block.prototype.bindEvents.call(this);
 
       _eventBus.on("previewObservables:updated", function (event, params) {
-        var attributes = _this2.data.main.attributes();
+        if (params.preview.id === _this2.id) {
+          var attributes = _this2.data.main.attributes();
 
-        if (attributes["data-title"] === "") {
-          return;
+          if (attributes["data-title"] === "") {
+            return;
+          }
+
+          var url = _config.getInitConfig("preview_url");
+
+          var requestData = {
+            button_text: attributes["data-button-text"],
+            label_text: attributes["data-label-text"],
+            placeholder: attributes["data-placeholder"],
+            role: _this2.config.name,
+            title: attributes["data-title"]
+          };
+          jQuery.post(url, requestData, function (response) {
+            _this2.data.main.html(response.content !== undefined ? response.content.trim() : "");
+          });
         }
-
-        var url = _config.getInitConfig("preview_url");
-
-        var requestData = {
-          button_text: attributes["data-button-text"],
-          label_text: attributes["data-label-text"],
-          placeholder: attributes["data-placeholder"],
-          role: _this2.config.name,
-          title: attributes["data-title"]
-        };
-        jQuery.post(url, requestData, function (response) {
-          _this2.data.main.html(response.content !== undefined ? response.content.trim() : "");
-        });
       });
     };
 
