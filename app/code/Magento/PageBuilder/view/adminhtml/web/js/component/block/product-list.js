@@ -22,24 +22,26 @@ define(["../config", "../event-bus", "./block"], function (_config, _eventBus, _
       _Block.prototype.bindEvents.call(this);
 
       _eventBus.on("previewObservables:updated", function (event, params) {
-        var attributes = _this.data.main.attributes();
+        if (params.preview.id === _this.id) {
+          var attributes = _this.data.main.attributes();
 
-        if (attributes["data-category-id"] === "") {
-          return;
+          if (attributes["data-category-id"] === "") {
+            return;
+          }
+
+          var url = _config.getInitConfig("preview_url");
+
+          var requestData = {
+            is_preview: true,
+            role: _this.config.name,
+            category_id: attributes["data-category-id"],
+            hide_out_of_stock: attributes["data-hide-out-of-stock"],
+            product_count: attributes["data-product-count"]
+          };
+          jQuery.post(url, requestData, function (response) {
+            _this.data.main.html(response.content !== undefined ? response.content.trim() : "");
+          });
         }
-
-        var url = _config.getInitConfig("preview_url");
-
-        var requestData = {
-          is_preview: true,
-          role: _this.config.name,
-          category_id: attributes["data-category-id"],
-          hide_out_of_stock: attributes["data-hide-out-of-stock"],
-          product_count: attributes["data-product-count"]
-        };
-        jQuery.post(url, requestData, function (response) {
-          _this.data.main.html(response.content !== undefined ? response.content.trim() : "");
-        });
       });
     };
 
