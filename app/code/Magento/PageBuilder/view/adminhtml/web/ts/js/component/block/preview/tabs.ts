@@ -61,3 +61,13 @@ export default class Tabs extends PreviewBlock {
         this.buildTabs();
     }
 }
+
+// Resolve issue with jQuery UI tabs blocking events on content editable areas
+const originalTabKeyDown = $.ui.tabs.prototype._tabKeydown;
+$.ui.tabs.prototype._tabKeydown = function(event: Event) {
+    // If the target is content editable don't handle any events
+    if ($(event.target).attr("contenteditable")) {
+        return;
+    }
+    originalTabKeyDown.call(this, event);
+};

@@ -63,7 +63,19 @@ define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/event-
     };
 
     return Tabs;
-  }(_block);
+  }(_block); // Resolve issue with jQuery UI tabs blocking events on content editable areas
+
+
+  var originalTabKeyDown = _jquery.ui.tabs.prototype._tabKeydown;
+
+  _jquery.ui.tabs.prototype._tabKeydown = function (event) {
+    // If the target is content editable don't handle any events
+    if ((0, _jquery)(event.target).attr("contenteditable")) {
+      return;
+    }
+
+    originalTabKeyDown.call(this, event);
+  };
 
   return Tabs;
 });
