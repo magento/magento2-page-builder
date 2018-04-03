@@ -307,6 +307,15 @@
         <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
     </actionGroup>
+    <actionGroup name="fillSlideOutPanelFieldAlternate">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+            <argument name="input" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement"/>
+        <fillField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{input}}" stepKey="fillPropertyField"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldGeneral">
         <arguments>
             <argument name="property" defaultValue=""/>
