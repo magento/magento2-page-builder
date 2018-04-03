@@ -30,6 +30,10 @@ define(["underscore", "./block"], function (_underscore, _block) {
             href = this.convertToCategoryWidget(href);
             break;
 
+          case "product":
+            href = this.convertToProductWidget(href);
+            break;
+
           case "default":
             break;
         }
@@ -60,6 +64,27 @@ define(["underscore", "./block"], function (_underscore, _block) {
         id_path: "category/" + href,
         template: "category/widget/link/link_href.phtml",
         type_name: "Catalog Category Link"
+      };
+
+      var attributesString = _underscore.map(attributes, function (val, key) {
+        return key + "='" + val + "'";
+      }).join(" ");
+
+      return "{{widget " + attributesString + " }}";
+    };
+    /**
+     *
+     * @param {string} href
+     * @returns {string}
+     */
+
+
+    _proto.convertToProductWidget = function convertToProductWidget(href) {
+      var attributes = {
+        type: "Magento\\Catalog\\Block\\Product\\Widget\\Link",
+        id_path: "product/" + href,
+        template: "category/widget/link/link_href.phtml",
+        type_name: "Catalog Product Link"
       };
 
       var attributesString = _underscore.map(attributes, function (val, key) {

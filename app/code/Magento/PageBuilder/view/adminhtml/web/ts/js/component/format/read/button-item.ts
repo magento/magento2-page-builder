@@ -24,8 +24,10 @@ export default class ButtonItem implements ReadInterface {
 
         switch (attributeLinkType) {
             case "category":
-                href = this.convertFromCategoryWidget(href);
+                href = this.readFromCategoryWidget(href);
                 break;
+            case "product":
+                href = this.readFromProductWidget(href);
             default:
                 break;
         }
@@ -51,7 +53,7 @@ export default class ButtonItem implements ReadInterface {
      * @param {string} href
      * @returns {string}
      */
-    private convertFromCategoryWidget(href: string): string {
+    private readFromCategoryWidget(href: string): string {
         const matches = href.match(/id_path=['"]category\/(\d+)/);
 
         if (!matches) {
@@ -60,4 +62,19 @@ export default class ButtonItem implements ReadInterface {
 
         return matches[1];
     }
+
+    /**
+     * @param {string} href
+     * @returns {string}
+     */
+    private readFromProductWidget(href: string): string {
+        const matches = href.match(/id_path=['"]product\/(\d+)/);
+
+        if (!matches) {
+            return href;
+        }
+
+        return matches[1];
+    }
+
 }

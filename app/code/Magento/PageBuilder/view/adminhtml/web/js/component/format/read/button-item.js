@@ -29,8 +29,11 @@ define(["./default"], function (_default) {
 
       switch (attributeLinkType) {
         case "category":
-          href = this.convertFromCategoryWidget(href);
+          href = this.readFromCategoryWidget(href);
           break;
+
+        case "product":
+          href = this.readFromProductWidget(href);
 
         default:
           break;
@@ -53,8 +56,23 @@ define(["./default"], function (_default) {
      */
 
 
-    _proto.convertFromCategoryWidget = function convertFromCategoryWidget(href) {
+    _proto.readFromCategoryWidget = function readFromCategoryWidget(href) {
       var matches = href.match(/id_path=['"]category\/(\d+)/);
+
+      if (!matches) {
+        return href;
+      }
+
+      return matches[1];
+    };
+    /**
+     * @param {string} href
+     * @returns {string}
+     */
+
+
+    _proto.readFromProductWidget = function readFromProductWidget(href) {
+      var matches = href.match(/id_path=['"]product\/(\d+)/);
 
       if (!matches) {
         return href;
