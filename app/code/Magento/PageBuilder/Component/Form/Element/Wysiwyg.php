@@ -11,6 +11,7 @@ use Magento\Ui\Component\Wysiwyg\ConfigInterface;
 use Magento\Catalog\Api\CategoryAttributeRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\State as PageBuilderState;
+use \Magento\PageBuilder\Model\Stage\Config as Config;
 
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
@@ -22,6 +23,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
      * @param ConfigInterface $wysiwygConfig
      * @param CategoryAttributeRepositoryInterface $attrRepository
      * @param PageBuilderState $pageBuilderState
+     * @param Config $stageConfig
      * @param array $components
      * @param array $data
      * @param array $config
@@ -32,6 +34,7 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         ConfigInterface $wysiwygConfig,
         CategoryAttributeRepositoryInterface $attrRepository,
         PageBuilderState $pageBuilderState,
+        Config $stageConfig,
         array $components = [],
         array $data = [],
         array $config = []
@@ -40,7 +43,8 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
         // If a dataType is present we're dealing with an attribute
         if (isset($config['dataType'])) {
             try {
-                if ($attribute = $attrRepository->get($data['name'])) {
+                $attribute = $attrRepository->get($data['name']);
+                if ($attribute) {
                     $config['wysiwyg'] = (bool)$attribute->getIsWysiwygEnabled();
                 }
             } catch (NoSuchEntityException $e) {
@@ -57,9 +61,15 @@ class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
             // Override the templates to include our KnockoutJS code
             $data['config']['template'] = 'Magento_PageBuilder/wysiwyg';
             $data['config']['elementTmpl'] = 'Magento_PageBuilder/wysiwyg';
+            $wysiwygConfigData = $stageConfig->getConfig();
+            $data['config']['wysiwygConfigData'] = isset($config['wysiwygConfigData']) ?
+                array_replace_recursive($config['wysiwygConfigData'], $wysiwygConfigData) :
+                $wysiwygConfigData;
             $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
             $config['wysiwygConfigData'] = $wysiwygConfigData;
+            $wysiwygConfigData['activeEditorPath'] = 'Magento_PageBuilder/pageBuilderAdapter';
         }
+
         parent::__construct($context, $formFactory, $wysiwygConfig, $components, $data, $config);
     }
 }

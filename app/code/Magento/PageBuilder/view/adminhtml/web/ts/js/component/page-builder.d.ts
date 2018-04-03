@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-declare module 'advanced-cms-init-config' {
-    let initConfig: any;
-    export = initConfig;
+export interface PageBuilderInterface {
+
 }

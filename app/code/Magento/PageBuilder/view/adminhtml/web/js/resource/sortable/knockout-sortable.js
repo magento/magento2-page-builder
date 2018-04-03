@@ -279,7 +279,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
                     event.stopPropagation();
                     // Emit the blockDropped event upon the target
                     // Detect if the target is the parent UI component, if so swap the target to the stage
-                    target = typeof target.uid !== "undefined" ? target.stage : target;
+                    target = typeof target.addChild === "undefined" ? target.stage : target;
                     EventBus.trigger("block:dropped", {
                         parent: target,
                         block: block,

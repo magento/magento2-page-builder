@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
-import mageUtils from "mageUtils";
+import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
 import _ from "underscore";
 import appearanceConfig from "../../../component/block/appearance-config";
 import DataConverterPool from "../../../component/block/data-converter-pool";
@@ -29,7 +29,6 @@ import {TitleOption} from "./options/title";
 
 export default class Structural extends EditableArea implements StructuralInterface {
     public config: ConfigContentBlock;
-    public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public edit: Edit;
     public title: string;
     public data = {};
@@ -59,7 +58,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         dataConverterPool: DataConverterPool,
     ) {
         super(stage);
-        this.setChildren(this.children);
+        this.setChildren();
         this.parent = parent;
         this.config = config;
         this.elementConverterPool = elementConverterPool;
@@ -146,15 +145,14 @@ export default class Structural extends EditableArea implements StructuralInterf
         });
 
         if (this.isConfigured()) {
-            this.stage.parent.confirmationDialog({
+            confirmationDialog({
                 actions: {
                     confirm: () => {
                         // Call the parent to remove the child element
                         removeBlock();
                     },
                 },
-                content: $t("Are you sure you want to remove this item? " +
-                    "The data within this item is not recoverable once removed."),
+                content: $t("Are you sure you want to remove this item? The data within this item is not recoverable once removed."), // tslint:disable-line:max-line-length
                 dismissKey: "pagebuilder_modal_dismissed",
                 dismissible: true,
                 title: $t("Confirm Item Removal"),
