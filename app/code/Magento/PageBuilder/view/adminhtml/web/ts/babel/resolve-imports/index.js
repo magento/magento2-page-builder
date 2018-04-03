@@ -13,8 +13,8 @@ module.exports = function () {
             /**
              * Convert ../../utils/util import into Magento_Module/js/utils/util
              *
-             * @param {string} importPath
-             * @param {string} state
+             * @param {String} importPath
+             * @param {String} state
              * @constructor
              */
             ImportDeclaration: function (importPath, state) {

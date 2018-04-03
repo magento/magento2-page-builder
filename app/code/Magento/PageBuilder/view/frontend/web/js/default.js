@@ -109,7 +109,6 @@ requirejs([
         showButtonOnHover($('div[data-role="slide"][data-show-button="on_hover"] > a'), '.pagebuilder-slide-button');
     });
 
-
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {
         var markers = [],
