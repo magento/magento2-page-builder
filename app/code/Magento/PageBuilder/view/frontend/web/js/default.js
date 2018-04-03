@@ -10,7 +10,7 @@ requirejs([
     'highlight',
     'Magento_PageBuilder/js/utils/map',
     'slick',
-    'jarallax',
+    'jarallax'
 ], function ($, hljs, GoogleMap) {
     'use strict';
 
