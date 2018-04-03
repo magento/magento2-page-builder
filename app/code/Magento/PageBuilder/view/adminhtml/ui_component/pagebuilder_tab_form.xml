@@ -67,23 +67,153 @@
             </formElements>
         </field>
     </fieldset>
-    <fieldset name="general" sortOrder="20">
+    <fieldset name="background" sortOrder="20">
         <settings>
-            <label/>
+            <label translate="true">Background</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
         </settings>
-    </fieldset>
-    <fieldset name="advanced">
-        <field name="border">
+        <field name="background_color" sortOrder="10" formElement="input">
+            <settings>
+                <label translate="true">Background Color</label>
+            </settings>
+        </field>
+        <field name="background_image" sortOrder="20" formElement="imageUploader">
+            <settings>
+                <label translate="true">Background Image</label>
+                <componentType>imageUploader</componentType>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="string" name="url">pagebuilder/contenttype/image_upload</param>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_PageBuilder/form/element/uploader/preview/image.html</previewTmpl>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <field name="background_position" sortOrder="30" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">_default</item>
+                    <item name="default" xsi:type="string">left top</item>
                 </item>
             </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Background Position</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">left top</item>
+                                <item name="label" xsi:type="string" translate="true">Top Aligned</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">center center</item>
+                                <item name="label" xsi:type="string" translate="true">Centered</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">left bottom</item>
+                                <item name="label" xsi:type="string" translate="true">Bottom Aligned</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
         </field>
+        <field name="background_size" sortOrder="40" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">cover</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Background Size</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">auto</item>
+                                <item name="label" xsi:type="string" translate="true">Auto</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">cover</item>
+                                <item name="label" xsi:type="string" translate="true">Cover</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">contain</item>
+                                <item name="label" xsi:type="string" translate="true">Contain</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="background_repeat" sortOrder="50" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">no-repeat</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Background Repeat</label>
+                <dataScope>background_repeat</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">no-repeat</map>
+                            <map name="true" xsi:type="string">repeat</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="background_attachment" sortOrder="60" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">scroll</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Background Attachment</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">scroll</item>
+                                <item name="label" xsi:type="string" translate="true">Scroll</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">fixed</item>
+                                <item name="label" xsi:type="string" translate="true">Fixed</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="advanced">
         <field name="margins_and_padding">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">{"margin":{"top":"0","right":"0","bottom":"0","left":"0"},"padding":{"top":"40","right":"40","bottom":"40","left":"40"}}</item>
+                    <item name="default" xsi:type="string">{"margin":{"bottom":"10","left":"0","right":"0","top":"0"},"padding":{"bottom":"10","left":"10","right":"10","top":"10"}}</item>
                 </item>
             </argument>
         </field>
