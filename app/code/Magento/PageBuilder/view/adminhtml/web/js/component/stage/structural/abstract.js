@@ -470,9 +470,11 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
 
           this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
         }
-
-        this.afterDataRendered();
       }
+
+      _eventBus.trigger("previewObservable:updated", {
+        preview: this
+      });
     };
     /**
      * Attach event to updating data in data store to update observables

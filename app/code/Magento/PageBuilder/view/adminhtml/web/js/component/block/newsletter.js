@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../config", "./block"], function (_config, _block) {
+define(["../config", "../event-bus", "./block"], function (_config, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Newsletter =
@@ -19,26 +19,33 @@ define(["../config", "./block"], function (_config, _block) {
 
     var _proto = Newsletter.prototype;
 
-    _proto.afterDataRendered = function afterDataRendered() {
+    /**
+     * Bind events for the current instance
+     */
+    _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      var attributes = this.data.main.attributes();
+      _Block.prototype.bindEvents.call(this);
 
-      if (attributes["data-title"] === "") {
-        return;
-      }
+      _eventBus.on("previewObservable:updated", function (event, params) {
+        var attributes = _this2.data.main.attributes();
 
-      var url = _config.getInitConfig("preview_url");
+        if (attributes["data-title"] === "") {
+          return;
+        }
 
-      var requestData = {
-        button_text: attributes["data-button-text"],
-        label_text: attributes["data-label-text"],
-        placeholder: attributes["data-placeholder"],
-        role: this.config.name,
-        title: attributes["data-title"]
-      };
-      jQuery.post(url, requestData, function (response) {
-        _this2.data.main.html(response.content !== undefined ? response.content.trim() : "");
+        var url = _config.getInitConfig("preview_url");
+
+        var requestData = {
+          button_text: attributes["data-button-text"],
+          label_text: attributes["data-label-text"],
+          placeholder: attributes["data-placeholder"],
+          role: _this2.config.name,
+          title: attributes["data-title"]
+        };
+        jQuery.post(url, requestData, function (response) {
+          _this2.data.main.html(response.content !== undefined ? response.content.trim() : "");
+        });
       });
     };
 
