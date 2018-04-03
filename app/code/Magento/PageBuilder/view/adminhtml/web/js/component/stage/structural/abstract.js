@@ -464,7 +464,7 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
         }
       }
 
-      _eventBus.trigger("previewObservable:updated", {
+      _eventBus.trigger("previewObservables:updated", {
         preview: this
       });
     };

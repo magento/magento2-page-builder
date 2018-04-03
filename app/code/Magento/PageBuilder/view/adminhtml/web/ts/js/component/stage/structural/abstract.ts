@@ -438,7 +438,7 @@ export default class Structural extends EditableArea implements StructuralInterf
             }
 
         }
-        EventBus.trigger("previewObservable:updated", {preview: this});
+        EventBus.trigger("previewObservables:updated", {preview: this});
     }
 
     /**

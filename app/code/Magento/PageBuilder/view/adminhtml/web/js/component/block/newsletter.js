@@ -27,7 +27,7 @@ define(["../config", "../event-bus", "./block"], function (_config, _eventBus, _
 
       _Block.prototype.bindEvents.call(this);
 
-      _eventBus.on("previewObservable:updated", function (event, params) {
+      _eventBus.on("previewObservables:updated", function (event, params) {
         var attributes = _this2.data.main.attributes();
 
         if (attributes["data-title"] === "") {

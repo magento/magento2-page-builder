@@ -16,7 +16,7 @@ export default class Newsletter extends Block {
     protected bindEvents() {
         super.bindEvents();
 
-        EventBus.on("previewObservable:updated", (event, params) => {
+        EventBus.on("previewObservables:updated", (event, params) => {
             const attributes = this.data.main.attributes();
             if (attributes["data-title"] === "") {
                 return;
