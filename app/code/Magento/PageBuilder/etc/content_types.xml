@@ -77,6 +77,7 @@
             <preview_component>Magento_PageBuilder/js/component/block/preview/column-group</preview_component>
             <allowed_parents>
                 <parent name="row"/>
+                <parent name="tab"/>
             </allowed_parents>
             <is_visible>false</is_visible>
             <appearances>
@@ -144,6 +145,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -165,6 +167,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -226,6 +229,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -248,6 +252,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -269,6 +274,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="full-width" default="true">
@@ -345,6 +351,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="collage-left">
@@ -716,6 +723,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -784,6 +792,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -798,6 +807,7 @@
         <type name="tabs" translate="label" sortOrder="1">
             <label>Tabs</label>
             <icon>icon-pagebuilder-tabs</icon>
+            <component>Magento_PageBuilder/js/component/block/tabs</component>
             <preview_component>Magento_PageBuilder/js/component/block/preview/tabs</preview_component>
             <form>pagebuilder_tabs_form</form>
             <group>interactive</group>
@@ -807,6 +817,17 @@
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                </style_properties>
+                                <attributes>
+                                </attributes>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/tabs.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/tabs.html</render_template>
                     <readers>
@@ -815,6 +836,36 @@
                     </readers>
                 </appearance>
             </appearances>
+        </type>
+        <type name="tab" translate="label" sortOrder="30">
+            <label>Tab</label>
+            <icon>icon-pagebuilder-tabs</icon>
+            <form>pagebuilder_tab_form</form>
+            <group>interactive</group>
+            <allowed_parents>
+                <parent name="tabs"/>
+            </allowed_parents>
+            <appearances>
+                <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                </style_properties>
+                                <attributes>
+                                </attributes>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
+                    <preview_template>Magento_PageBuilder/component/block/preview/tab.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/tab.html</render_template>
+                    <readers>
+                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
+                    </readers>
+                </appearance>
+            </appearances>
+            <is_visible>false</is_visible>
         </type>
         <type name="accordion" translate="label" sortOrder="10">
             <label>Accordion</label>
@@ -826,6 +877,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -848,6 +900,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -872,6 +925,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -895,6 +949,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -917,6 +972,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -939,6 +995,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -959,6 +1016,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
@@ -978,6 +1036,7 @@
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
+                <parent name="tab"/>
             </allowed_parents>
             <preview_component>Magento_PageBuilder/js/component/block/preview/html</preview_component>
             <appearances>
