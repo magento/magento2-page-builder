@@ -282,13 +282,6 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
-     * Callback function for after preview observables are updated
-     */
-    protected afterDataRendered() {
-        return;
-    }
-
-    /**
      * Get the options instance
      *
      * @returns {Options}

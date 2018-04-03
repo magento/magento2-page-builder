@@ -247,14 +247,6 @@ define(["knockout", "mage/translate", "underscore", "../../../component/block/ap
       return result;
     };
     /**
-     * Callback function for after preview observables are updated
-     */
-
-
-    _proto.afterDataRendered = function afterDataRendered() {
-      return;
-    };
-    /**
      * Get the options instance
      *
      * @returns {Options}
