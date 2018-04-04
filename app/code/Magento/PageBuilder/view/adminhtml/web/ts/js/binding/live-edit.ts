@@ -34,6 +34,7 @@ ko.bindingHandlers.liveEdit = {
      */
     init(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field, placeholder} = valueAccessor();
+        let focusedValue = element.innerHTML;
 
         /**
          * Strip HTML and return text
@@ -49,10 +50,19 @@ ko.bindingHandlers.liveEdit = {
         };
 
         /**
+         * Record the value on focus, only conduct an update when data changes
+         */
+        const onFocus = () => {
+            focusedValue = stripHtml(element.innerHTML);
+        };
+
+        /**
          * Blur event on element
          */
         const onBlur = () => {
-            viewModel.preview.updateData(field, stripHtml(element.innerHTML));
+            if (focusedValue !== stripHtml(element.innerHTML)) {
+                viewModel.preview.updateData(field, stripHtml(element.innerHTML));
+            }
         };
 
         /**
@@ -99,6 +109,7 @@ ko.bindingHandlers.liveEdit = {
         element.setAttribute("data-placeholder", placeholder);
         element.innerText = viewModel.preview.data[field]();
         element.contentEditable = true;
+        element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
         element.addEventListener("keydown", onKeyDown);

@@ -41,6 +41,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       var _valueAccessor = valueAccessor(),
           field = _valueAccessor.field,
           placeholder = _valueAccessor.placeholder;
+
+      var focusedValue = element.innerHTML;
       /**
        * Strip HTML and return text
        *
@@ -48,11 +50,18 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
        * @returns {string}
        */
 
-
       var stripHtml = function stripHtml(html) {
         var tempDiv = document.createElement("div");
         tempDiv.innerHTML = html;
         return tempDiv.innerText;
+      };
+      /**
+       * Record the value on focus, only conduct an update when data changes
+       */
+
+
+      var onFocus = function onFocus() {
+        focusedValue = stripHtml(element.innerHTML);
       };
       /**
        * Blur event on element
@@ -60,7 +69,9 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onBlur = function onBlur() {
-        viewModel.preview.updateData(field, stripHtml(element.innerHTML));
+        if (focusedValue !== stripHtml(element.innerHTML)) {
+          viewModel.preview.updateData(field, stripHtml(element.innerHTML));
+        }
       };
       /**
        * Click event on element
@@ -112,6 +123,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       element.setAttribute("data-placeholder", placeholder);
       element.innerText = viewModel.preview.data[field]();
       element.contentEditable = true;
+      element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
       element.addEventListener("keydown", onKeyDown);
