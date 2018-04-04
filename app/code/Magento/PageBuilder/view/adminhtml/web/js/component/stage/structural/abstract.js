@@ -503,6 +503,10 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
           this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
         }
       }
+
+      _eventBus.trigger("previewObservables:updated", {
+        preview: this
+      });
     };
     /**
      * Attach event to updating data in data store to update observables

@@ -11,7 +11,6 @@
     <test name="MapDefaultState">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Default Map State"/>
             <description value="Tests default state of a map content block in the stage and storefront"/>
@@ -29,10 +28,9 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
@@ -64,7 +62,6 @@
     <test name="MapEditPanelGeneralSectionDefaultState">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - General Section Default State"/>
             <description value="Tests the following for each attribute under General Section: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
@@ -82,10 +79,9 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
@@ -211,12 +207,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Style On Stage -->
         <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
-        <waitForElementVisible selector="{{MapOnStage.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyDefault.value, PageBuilderMapWidthDefaultProperty.value, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="waitForStyle"/>
+        <waitForElementVisible selector="{{MapOnStage.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderWidthPropertyDefault.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyDefault.value)}}" stepKey="waitForStyle"/>
     </test>
     <test name="MapVerifyOnHoverOptionMenu">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Verify On Hover Option Menu"/>
             <description value="Test verifies that on hover option menu for Map content block contains all buttons"/>
@@ -234,10 +229,9 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
@@ -254,7 +248,6 @@
     <test name="MapAddPinToMap">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Add Pin To Map"/>
             <description value="A user should be able to add a pin to a map and see the pin on Edit Panel, Stage, and Storefront."/>
@@ -272,10 +265,9 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
@@ -318,7 +310,6 @@
     <test name="MapCannotAddPinToMapOnStageOrStoreFront">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Cannot Add Pin To Map In Stage Or Store Front"/>
             <description value="A user should not be able to add a pin to a map from the Stage nor the store front."/>
@@ -336,10 +327,9 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
@@ -376,7 +366,6 @@
     <test name="MapMoveMapPinByClick">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Move Map Pin By Clicking On Map"/>
             <description value="A user should be able to move a map pin by clicking on the map on the Edit Panel"/>
@@ -394,10 +383,9 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
@@ -473,8 +461,6 @@
     <test name="MapAddAllAttributes">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
-            <stories value="MAGETWO-83935"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Add Map With All Attributes"/>
             <description value="A user should be able to add a map with all attribute fields filled."/>
@@ -492,10 +478,9 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
@@ -590,7 +575,6 @@
     <test name="MapDuplicate">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Duplicate Map"/>
             <description value="A user should be able to duplicate a map content block. Verify on Stage amd Storefront."/>
@@ -608,10 +592,9 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
@@ -730,8 +713,6 @@
     <test name="MapDelete">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
-            <stories value="MAGETWO-83935"/>
             <stories value="MAGETWO-87083"/>
             <title value="Map - Delete Map"/>
             <description value="A user should be able to delete a map content block. Verify on Stage amd Storefront."/>
@@ -749,8 +730,7 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
