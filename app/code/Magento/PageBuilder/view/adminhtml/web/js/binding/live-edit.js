@@ -12,7 +12,21 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  // Custom Knockout binding for live editing text inputs
+
+  /**
+   * Add or remove the placeholder-text class from the element based on it's content
+   *
+   * @param {Element} element
+   */
+  function handlePlaceholderClass(element) {
+    if (element.innerHTML.length === 0) {
+      (0, _jquery.default)(element).addClass("placeholder-text");
+    } else {
+      (0, _jquery.default)(element).removeClass("placeholder-text");
+    }
+  } // Custom Knockout binding for live editing text inputs
+
+
   _knockout.default.bindingHandlers.liveEdit = {
     /**
      * Init the live edit binding on an element
@@ -46,7 +60,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onBlur = function onBlur() {
-        viewModel.preview.updateData(field, stripHtml(element.innerText));
+        viewModel.preview.updateData(field, stripHtml(element.innerHTML));
       };
       /**
        * Click event on element
@@ -54,7 +68,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onClick = function onClick() {
-        if (element.innerText !== "") {
+        if (element.innerHTML !== "") {
           document.execCommand("selectAll", false, null);
         }
       };
@@ -92,11 +106,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onKeyUp = function onKeyUp() {
-        if (element.innerText.length === 0) {
-          (0, _jquery.default)(element).addClass("placeholder-text");
-        } else {
-          (0, _jquery.default)(element).removeClass("placeholder-text");
-        }
+        handlePlaceholderClass(element);
       };
 
       element.setAttribute("data-placeholder", placeholder);
@@ -107,11 +117,12 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       element.addEventListener("keydown", onKeyDown);
       element.addEventListener("keyup", onKeyUp);
       (0, _jquery.default)(element).parent().css("cursor", "text");
-      setTimeout(function () {
-        if (element.innerText.length === 0) {
-          (0, _jquery.default)(element).addClass("placeholder-text");
-        }
-      }, 0);
+      handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
+
+      viewModel.preview.data[field].subscribe(function (value) {
+        element.innerText = viewModel.preview.data[field]();
+        handlePlaceholderClass(element);
+      });
     },
 
     /**
@@ -128,12 +139,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
           field = _valueAccessor2.field;
 
       element.innerText = viewModel.preview.data[field]();
-
-      if (element.innerText.length === 0) {
-        (0, _jquery.default)(element).addClass("placeholder-text");
-      } else {
-        (0, _jquery.default)(element).removeClass("placeholder-text");
-      }
+      handlePlaceholderClass(element);
     }
   };
 });

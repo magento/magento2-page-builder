@@ -7,6 +7,19 @@ import $ from "jquery";
 import ko from "knockout";
 import keyCodes from "Magento_Ui/js/lib/key-codes";
 
+/**
+ * Add or remove the placeholder-text class from the element based on it's content
+ *
+ * @param {Element} element
+ */
+function handlePlaceholderClass(element: Element) {
+    if (element.innerHTML.length === 0) {
+        $(element).addClass("placeholder-text");
+    } else {
+        $(element).removeClass("placeholder-text");
+    }
+}
+
 // Custom Knockout binding for live editing text inputs
 ko.bindingHandlers.liveEdit = {
 
@@ -39,14 +52,14 @@ ko.bindingHandlers.liveEdit = {
          * Blur event on element
          */
         const onBlur = () => {
-            viewModel.preview.updateData(field, stripHtml(element.innerText));
+            viewModel.preview.updateData(field, stripHtml(element.innerHTML));
         };
 
         /**
          * Click event on element
          */
         const onClick = () => {
-            if (element.innerText !== "") {
+            if (element.innerHTML !== "") {
                 document.execCommand("selectAll", false, null);
             }
         };
@@ -81,11 +94,7 @@ ko.bindingHandlers.liveEdit = {
          * Key up event on element
          */
         const onKeyUp = () => {
-            if (element.innerText.length === 0) {
-                $(element).addClass("placeholder-text");
-            } else {
-                $(element).removeClass("placeholder-text");
-            }
+            handlePlaceholderClass(element);
         };
         element.setAttribute("data-placeholder", placeholder);
         element.innerText = viewModel.preview.data[field]();
@@ -96,11 +105,13 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("keyup", onKeyUp);
 
         $(element).parent().css("cursor", "text");
-        setTimeout(() => {
-            if (element.innerText.length === 0) {
-                $(element).addClass("placeholder-text");
-            }
-        }, 0);
+        handlePlaceholderClass(element);
+
+        // Create a subscription onto the original data to update the internal value
+        viewModel.preview.data[field].subscribe((value: string) => {
+            element.innerText = viewModel.preview.data[field]();
+            handlePlaceholderClass(element);
+        });
     },
 
     /**
@@ -112,15 +123,10 @@ ko.bindingHandlers.liveEdit = {
      * @param {any} viewModel
      * @param {KnockoutBindingContext} bindingContext
      */
-
     update(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field} = valueAccessor();
 
         element.innerText = viewModel.preview.data[field]();
-        if (element.innerText.length === 0) {
-            $(element).addClass("placeholder-text");
-        } else {
-            $(element).removeClass("placeholder-text");
-        }
+        handlePlaceholderClass(element);
     },
 };
