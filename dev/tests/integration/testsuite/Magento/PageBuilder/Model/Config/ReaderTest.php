@@ -11,38 +11,71 @@ use Magento\TestFramework\Helper\Bootstrap;
 class ReaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Magento\PageBuilder\Model\Config\Reader
+     * @var \Magento\PageBuilder\Model\Config\CompositeReader
      */
     private $model;
 
     /**
      * @var \Magento\Framework\Config\FileResolverInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    private $fileResolverMock;
+    private $groupsFileResolverMock;
+
+    /**
+     * @var \Magento\PageBuilder\Model\Config\ContentTypes\FileResolver|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $contentTypesFileResolverMock;
 
     public function setUp()
     {
-        $this->fileResolverMock = $this->getMockForAbstractClass(
+        $objectManager = Bootstrap::getObjectManager();
+
+        $this->groupsFileResolverMock = $this->createMock(
             \Magento\Framework\Config\FileResolverInterface::class
         );
-        $objectManager = Bootstrap::getObjectManager();
+        $this->contentTypesFileResolverMock = $this->createMock(
+            \Magento\PageBuilder\Model\Config\ContentTypes\FileResolver::class
+        );
+
+        $groupsReader = $objectManager->create(
+            \Magento\PageBuilder\Model\Config\Groups\Reader::class,
+            ['fileResolver' => $this->groupsFileResolverMock]
+        );
+        $contentTypesReader = $objectManager->create(
+            \Magento\PageBuilder\Model\Config\ContentTypes\Reader::class,
+            ['fileResolver' => $this->contentTypesFileResolverMock]
+        );
+
         $this->model = $objectManager->create(
-            \Magento\PageBuilder\Model\Config\Reader::class,
-            ['fileResolver' => $this->fileResolverMock]
+            \Magento\PageBuilder\Model\Config\CompositeReader::class,
+            ['readers' => [$groupsReader, $contentTypesReader]]
         );
     }
 
     public function testMerge()
     {
-        $fileList = [
-            file_get_contents(__DIR__ . '/../../_files/content_type/test_content_type1.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/test_content_type2.xml'),
+        $groupsFileList = [
+            file_get_contents(__DIR__ . '/../../_files/content_type/groups1.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/groups2.xml'),
         ];
-        $this->fileResolverMock->expects($this->any())
+        $contentTypesFileList = [
+            file_get_contents(__DIR__ . '/../../_files/content_type/type1_content_type1.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/type1_content_type2.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/type2_content_type1.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/type2_content_type2.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/type3_content_type.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/type4_content_type.xml'),
+        ];
+
+        $this->groupsFileResolverMock->expects($this->any())
             ->method('get')
-            ->with('content_types.xml', 'global')
-            ->willReturn($fileList);
+            ->with('groups.xml', 'global')
+            ->willReturn($groupsFileList);
+        $this->contentTypesFileResolverMock->expects($this->any())
+            ->method('get')
+            ->with('*.xml', 'content_types')
+            ->willReturn($contentTypesFileList);
+
         $expected = include __DIR__ . '/../../_files/content_type/expected_merged_array.php';
-        $this->assertEquals($expected, $this->model->read('global'));
+        $this->assertEquals($expected, $this->model->read());
     }
 }

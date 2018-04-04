@@ -1,0 +1,42 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
+    <content_types>
+        <type name="type4" translate="label">
+            <label>Type 4</label>
+            <icon>pagebuilder-type4-icon</icon>
+            <component>Path/to/component</component>
+            <preview_component>Path/to/preview/component</preview_component>
+            <form>pagebuilder_type4_form</form>
+            <group>group1</group>
+            <allowed_parents>
+                <parent name="stage"/>
+            </allowed_parents>
+            <appearances>
+                <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="style_converter" name="converter" converter="Path/to/converter"/>
+                                    <property var="style_no_converter" name="no_converter"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                </attributes>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
+                    <preview_template>Path/to/preview/template</preview_template>
+                    <render_template>Path/to/render/template</render_template>
+                    <reader>Path/to/reader</reader>
+                </appearance>
+            </appearances>
+        </type>
+    </content_types>
+</config>
