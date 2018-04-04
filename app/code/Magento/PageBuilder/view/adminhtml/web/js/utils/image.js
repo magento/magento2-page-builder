@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../component/config"], function (_config) {
+define(["Magento_PageBuilder/js/component/config"], function (_config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

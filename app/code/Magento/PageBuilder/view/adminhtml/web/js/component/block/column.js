@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "../stage/structural/options/option", "./block", "./column-group", "./factory"], function (_jquery, _knockout, _translate, _config, _eventBus, _option, _block, _columnGroup, _factory) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/block/column-group", "Magento_PageBuilder/js/component/block/factory"], function (_jquery, _knockout, _translate, _config, _eventBus, _option, _block, _columnGroup, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Column =
@@ -64,7 +64,7 @@ define(["jquery", "knockout", "mage/translate", "../config", "../event-bus", "..
       var newOptions = options.filter(function (option) {
         return option.code !== "move";
       });
-      newOptions.unshift(new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-column"], 10));
+      newOptions.unshift(new _option.Option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-column"], 10));
       return newOptions;
     };
     /**

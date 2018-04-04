@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./resizing"], function (_resizing) {
+define(["Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_resizing) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

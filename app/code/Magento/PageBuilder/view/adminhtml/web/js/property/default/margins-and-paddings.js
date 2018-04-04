@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./margins", "./paddings"], function (_margins, _paddings) {
+define(["Magento_PageBuilder/js/property/default/margins", "Magento_PageBuilder/js/property/default/paddings"], function (_margins, _paddings) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

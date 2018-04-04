@@ -106,28 +106,35 @@
     }
 }
 
-.pagebuilder-content-type {
+.pagebuilder-system-border {
     border: 1px solid transparent;
     box-sizing: border-box;
     outline: 1px solid rgba(153, 153, 153, 0);
     position: relative;
-    -webkit-transition: outline 200ms ease 200ms, z-index 200ms step-end;
-    -moz-transition: outline 200ms ease 200ms, z-index 200ms step-end;
-    -o-transition: outline 200ms ease 200ms, z-index 200ms step-end;
-    transition: outline 200ms ease 200ms, z-index 200ms step-end;
+    -webkit-transition: outline 200ms ease 200ms;
+    -moz-transition: outline 200ms ease 200ms;
+    -o-transition: outline 200ms ease 200ms;
+    transition: outline 200ms ease 200ms;
     z-index: 10;
+}
+.pagebuilder-system-border-hover {
+    outline: 1px solid rgb(153, 153, 153);
+    -webkit-transition: outline 200ms ease 200ms;
+    -moz-transition: outline 200ms ease 200ms;
+    -o-transition: outline 200ms ease 200ms;
+    transition: outline 200ms ease 200ms;
+    z-index: 25;
+
+    &.type-container {
+        outline: 1px solid rgb(153, 153, 153);
+    }
+}
+
+.pagebuilder-content-type {
+    .pagebuilder-system-border;
 
     &.pagebuilder-content-type-active:hover:not(.no-system-border) {
-        outline: 1px solid rgb(153, 153, 153);
-        -webkit-transition: outline 200ms ease 200ms, z-index 200ms step-start;
-        -moz-transition: outline 200ms ease 200ms, z-index 200ms step-start;
-        -o-transition: outline 200ms ease 200ms, z-index 200ms step-start;
-        transition: outline 200ms ease 200ms, z-index 200ms step-start;
-        z-index: 25;
-
-        &.type-container {
-            outline: 1px solid rgb(153, 153, 153);
-        }
+        .pagebuilder-system-border-hover;
     }
 
     &.type-container {
@@ -324,17 +331,13 @@
 }
 
 // Don't display the hover state when the stage is being interacted with
-.pagebuilder-stage.interacting {
-    .pagebuilder-content-type {
-        &-active:hover {
-            outline: 1px solid rgba(153, 153, 153, 0);
-            z-index: 10;
+.pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-content-type-active:hover {
+        outline: 1px solid rgba(153, 153, 153, 0);
+        z-index: 10;
 
-            &.type-container {
-                outline: 1px solid rgba(153, 153, 153, .3);
-            }
+        &.type-container {
+            outline: 1px solid rgba(153, 153, 153, .3);
         }
-    }
 }
 
 @import '_row.less';

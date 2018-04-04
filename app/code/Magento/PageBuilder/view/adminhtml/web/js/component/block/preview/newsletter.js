@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "../../config", "./block"], function (_knockout, _config, _block) {
+define(["knockout", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/preview/block"], function (_knockout, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Newsletter =

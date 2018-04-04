@@ -4,17 +4,24 @@
  */
 
 import $ from "jquery";
-import "Magento_PageBuilder/js/resource/slick/slick";
+import ko from "knockout";
+import "Magento_PageBuilder/js/resource/slick/slick.min";
 import _ from "underscore";
+import "../../../binding/focus";
 import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
+import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 import Block from "../block";
+import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
 import PreviewBlock from "./block";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Slider extends PreviewBlock {
+    public focusedSlide: KnockoutObservable<number> = ko.observable();
+    public activeSlide: KnockoutObservable<number> = ko.observable(0);
     private element: Element;
     private childSubscribe: KnockoutSubscription;
+    private blockHeightReset: boolean;
 
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
@@ -45,20 +52,26 @@ export default class Slider extends PreviewBlock {
             $(this.element).slick(
                 Object.assign(
                     {
-                        initialSlide: this.data.activeSlide() || 0,
+                        initialSlide: this.activeSlide() || 0,
                     },
                     this.buildSlickConfig(),
                 ),
             );
 
             // Update our KO pointer to the active slide on change
-            $(this.element).on("beforeChange", (
-                event: Event,
-                slick: {},
-                currentSlide: any,
-                nextSlide: any,
-            ) => {
-                this.setActiveSlide(nextSlide);
+            $(this.element).on(
+                "beforeChange",
+                (event: Event, slick: {}, currentSlide: any, nextSlide: any) => {
+                    this.setActiveSlide(nextSlide);
+                },
+            ).on("afterChange", () => {
+                if (!this.blockHeightReset) {
+                    $(this.element).css({
+                        height: "",
+                        overflow: "",
+                    });
+                    this.blockHeightReset = null;
+                }
             });
         }
     }, 10);
@@ -70,6 +83,14 @@ export default class Slider extends PreviewBlock {
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
 
+        // We only start forcing the containers height once the slider is ready
+        let sliderReady: boolean = false;
+        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
+            if (params.id === this.parent.id) {
+                sliderReady = true;
+            }
+        });
+
         this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
         this.parent.stage.store.subscribe(this.buildSlick);
 
@@ -79,6 +100,26 @@ export default class Slider extends PreviewBlock {
                 $(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(params.newPosition);
             }
+        });
+        // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
+        EventBus.on("slide:block:removed", (event: Event, params: BlockRemovedParams) => {
+            if (params.block.parent.id === this.parent.id) {
+                this.forceContainerHeight();
+                const data = this.parent.children().slice(0);
+                this.parent.children([]);
+                this.parent.children(data);
+            }
+        });
+        // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
+        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParams) => {
+            if (this.element && sliderReady && params.block.parent.id === this.parent.id) {
+                this.forceContainerHeight();
+            }
+        });
+
+        // Set the stage to interacting when a slide is focused
+        this.focusedSlide.subscribe((value: number) => {
+            this.parent.stage.interacting(value !== null);
         });
     }
 
@@ -95,7 +136,20 @@ export default class Slider extends PreviewBlock {
      * @param slideIndex
      */
     public setActiveSlide(slideIndex: number): void {
-        this.data.activeSlide(slideIndex);
+        this.activeSlide(slideIndex);
+    }
+
+    /**
+     * Set the focused slide
+     *
+     * @param {number} slideIndex
+     * @param {boolean} force
+     */
+    public setFocusedSlide(slideIndex: number, force: boolean = false): void {
+        if (force) {
+            this.focusedSlide(null);
+        }
+        this.focusedSlide(slideIndex);
     }
 
     /**
@@ -103,10 +157,12 @@ export default class Slider extends PreviewBlock {
      *
      * @param {number} slideIndex
      * @param {boolean} dontAnimate
+     * @param {boolean} force
      */
-    public navigateToSlide(slideIndex: number, dontAnimate: boolean = false): void {
+    public navigateToSlide(slideIndex: number, dontAnimate: boolean = false, force: boolean = false): void {
         $(this.element).slick("slickGoTo", slideIndex, dontAnimate);
         this.setActiveSlide(slideIndex);
+        this.setFocusedSlide(slideIndex, force);
     }
 
     /**
@@ -120,11 +176,38 @@ export default class Slider extends PreviewBlock {
     }
 
     /**
-     * Setup fields observables within the data class property
+     * On sort start force the container height, also focus to that slide
+     *
+     * @param {Event} event
+     * @param {JQueryUI.SortableUIParams} params
      */
-    protected setupDataFields() {
-        super.setupDataFields();
-        this.updateDataValue("activeSlide", 0);
+    public onSortStart(event: Event, params: JQueryUI.SortableUIParams): void {
+        this.forceContainerHeight();
+        if (this.activeSlide() !== params.item.index() || this.focusedSlide() !== params.item.index()) {
+            this.navigateToSlide(params.item.index(), false, true);
+            // As we've completed a navigation request we need to ensure we don't remove the forced height
+            this.blockHeightReset = true;
+        }
+    }
+
+    /**
+     * On sort stop ensure the focused slide and the active slide are in sync, as the focus can be lost in this
+     * operation
+     */
+    public onSortStop(): void {
+        if (this.activeSlide() !== this.focusedSlide()) {
+            this.setFocusedSlide(this.activeSlide(), true);
+        }
+    }
+
+    /**
+     * To ensure smooth animations we need to lock the container height
+     */
+    private forceContainerHeight(): void {
+        $(this.element).css({
+            height: $(this.element).outerHeight(),
+            overflow: "hidden",
+        });
     }
 
     /**

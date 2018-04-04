@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "../../utils/color-converter", "../../utils/directives", "../../utils/number-converter", "./block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block) {
+define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _block, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slide =
@@ -249,6 +249,33 @@ define(["mage/translate", "underscore", "../../utils/color-converter", "../../ut
         paddingTop: "",
         textAlign: ""
       });
+    };
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _Block.prototype.retrieveOptions.call(this);
+
+      var newOptions = options.filter(function (option) {
+        return option.code !== "remove";
+      });
+      var removeClasses = ["remove-structural"];
+      var removeFn = this.onOptionRemove;
+
+      if (this.parent.children().length <= 1) {
+        removeFn = function removeFn() {
+          return;
+        };
+
+        removeClasses.push("disabled");
+      }
+
+      newOptions.push(new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
+      return newOptions;
     };
 
     return Slide;

@@ -1,9 +1,9 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "./sortable/binding"], function (_jquery, _knockout, _underscore, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _binding) {
-  /**
-   * Copyright © Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
-   */
+define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/block/preview/sortable/binding"], function (_jquery, _knockout, _underscore, _liveEdit, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _binding) {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
   var PreviewBlock =
   /*#__PURE__*/
   function () {
@@ -54,14 +54,32 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
       });
     }
     /**
+     * Retrieve the template for the preview block
+     *
+     * @returns {string}
+     */
+
+
+    var _proto = PreviewBlock.prototype;
+
+    /**
+     * Update data store
+     *
+     * @param {string} key
+     * @param {string} value
+     */
+    _proto.updateData = function updateData(key, value) {
+      var data = this.parent.stage.store.get(this.parent.id);
+      data[key] = value;
+      this.parent.stage.store.update(this.parent.id, data);
+    };
+    /**
      * Update the data value of a part of our internal Knockout data store
      *
      * @param {string} key
      * @param value
      */
 
-
-    var _proto = PreviewBlock.prototype;
 
     _proto.updateDataValue = function updateDataValue(key, value) {
       if (typeof this.data[key] !== "undefined" && _knockout.isObservable(this.data[key])) {
@@ -179,6 +197,17 @@ define(["jquery", "knockout", "underscore", "../../event-bus", "../../format/sty
     _proto.afterStyleMapped = function afterStyleMapped(styles) {
       return styles;
     };
+
+    _createClass(PreviewBlock, [{
+      key: "template",
+      get: function get() {
+        if (this.config.preview_template) {
+          return this.config.preview_template;
+        }
+
+        return "";
+      }
+    }]);
 
     return PreviewBlock;
   }();

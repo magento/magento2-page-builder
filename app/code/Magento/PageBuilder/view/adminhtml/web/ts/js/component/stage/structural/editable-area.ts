@@ -90,9 +90,17 @@ export default class EditableArea implements EditableAreaInterface {
             });
         }
 
+        // As a new block is being created, we need to fire that event as well
+        EventBus.trigger("block:create", {id: duplicate.id, block: duplicate});
+        EventBus.trigger(child.config.name + ":block:create", {id: duplicate.id, block: duplicate});
+
+        EventBus.trigger("block:duplicate", {original: child, duplicate, index});
+        EventBus.trigger(child.config.name + ":block:duplicate", {original: child, duplicate, index});
+
         if (autoAppend) {
             this.addChild(duplicate, index);
         }
+
         return duplicate;
     }
 
@@ -175,4 +183,10 @@ export default class EditableArea implements EditableAreaInterface {
 export interface BlockMountEventParams {
     id: string;
     block: Block;
+}
+
+export interface BlockDuplicateEventParams {
+    original: Block;
+    duplicate: Block;
+    index: number;
 }
