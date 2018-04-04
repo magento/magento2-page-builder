@@ -5,17 +5,15 @@
 
 import { EditableAreaInterface } from "stage/structural/editable-area.d";
 import DataStore from "./data-store";
+import PageBuilder from "./page-builder";
 
 export interface StageInterface extends EditableAreaInterface {
-    parent: any;
-    active: boolean;
+    parent: PageBuilder;
     showBorders: KnockoutObservable<boolean>;
     userSelect: KnockoutObservable<boolean>;
     loading: KnockoutObservable<boolean>;
-    originalScrollTop: number;
     store: DataStore;
 
     ready(): void;
-    goFullScreen(): void;
-    isFullScreen(): boolean;
+    getTemplate(): string;
 }

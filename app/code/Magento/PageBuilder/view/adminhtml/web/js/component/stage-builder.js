@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "./block/factory", "./config", "./event-bus", "./format/format-validator", "./format/read/composite", "./stage"], function (_translate, _, _factory, _config, _eventBus, _formatValidator, _composite, _stage) {
+define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "../utils/directives", "./block/factory", "./config", "./event-bus", "./format/format-validator", "./format/read/composite"], function (_translate, _alert, _, _directives, _factory, _config, _eventBus, _formatValidator, _composite) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -154,30 +154,19 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./event-
   /**
    * Build a stage with the provided parent, content observable and initial value
    *
-   * @param parent
-   * @param panel
-   * @param {KnockoutObservableArray<Structural>} stageContent
+   * @param {StageInterface} stage
    * @param {string} content
-   * @param {function} afterCreateCallback
-   * @returns {Stage}
+   * @returns {Promise}
    */
 
 
-  function build(parent, panel, stageContent, content, afterCreateCallback) {
-    // Create a new instance of the stage
-    var stage = new _stage(parent, stageContent);
-
-    if (typeof afterCreateCallback !== "undefined") {
-      afterCreateCallback(stage);
-    }
-
-    var currentBuild; // Bind the panel to the stage
-
-    panel.bindStage(stage); // Determine if we're building from existing page builder content
+  function build(stage, content) {
+    var currentBuild;
+    content = (0, _directives.removeQuotesInMediaDirectives)(content); // Determine if we're building from existing page builder content
 
     if ((0, _formatValidator)(content)) {
       currentBuild = buildFromContent(stage, content).catch(function () {
-        stageContent([]);
+        stage.children([]);
         currentBuild = buildEmpty(stage, content);
       });
     } else {
@@ -185,8 +174,8 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./event-
     } // Once the build process is finished the stage is ready
 
 
-    currentBuild.then(stage.ready.bind(stage)).catch(function (error) {
-      parent.alertDialog({
+    return currentBuild.catch(function (error) {
+      (0, _alert)({
         content: (0, _translate)("An error has occurred while initiating the content area."),
         title: (0, _translate)("Advanced CMS Error")
       });
@@ -195,7 +184,6 @@ define(["mage/translate", "underscore", "./block/factory", "./config", "./event-
 
       console.error(error);
     });
-    return stage;
   }
 
   return build;
