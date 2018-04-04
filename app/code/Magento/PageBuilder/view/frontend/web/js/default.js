@@ -9,6 +9,7 @@ requirejs([
     'jquery',
     'highlight',
     'Magento_PageBuilder/js/utils/map',
+    'jquery/ui',
     'slick',
     'jarallax',
 ], function ($, hljs, GoogleMap) {
@@ -107,6 +108,10 @@ requirejs([
 
         showOverlayOnHover($('div[data-role="slide"][data-show-overlay="on_hover"] > a'));
         showButtonOnHover($('div[data-role="slide"][data-show-button="on_hover"] > a'), '.pagebuilder-slide-button');
+
+        $('div[data-role="tabs"]').each(function (index, element) {
+            $(element).tabs();
+        });
     });
 
 

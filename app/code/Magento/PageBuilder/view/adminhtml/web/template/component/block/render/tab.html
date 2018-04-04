@@ -5,6 +5,6 @@
  */
 -->
 
-<div data-bind="attr: getAttributes('main'), style: getStyle('main'), css: getCss('main')">
+<div data-bind="attr: Object.assign(getAttributes('main'), { id: id }), style: getStyle('main'), css: getCss('main')">
     <!-- ko template: renderChildTemplate --><!-- /ko -->
 </div>
