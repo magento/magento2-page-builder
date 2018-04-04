@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _tabs, _underscore, _eventBus, _block) {
+define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _tabs, _underscore, _colorConverter, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
@@ -131,6 +131,75 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
       }
 
       this.setFocusedTab(index);
+    };
+    /**
+     * Get the Tab header style attributes for the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getTabHeaderStyles = function getTabHeaderStyles(index) {
+      var borderRadius = this.data.border_radius();
+      var borderColor = this.data.border_color() === "" ? this.data.border_color() : (0, _colorConverter.fromHex)(this.data.border_color(), "1");
+      var border = this.data.border() + " " + borderColor + " " + this.data.border_width() + "px";
+      var marginBottom = this.data.border_width() === "1" ? "-2px" : "-" + Math.round(this.data.border_width() * (4 / 3)) + "px";
+      var styles = {
+        border: border,
+        marginBottom: marginBottom,
+        borderRadius: borderRadius + "px " + borderRadius + "px 0px 0px",
+        borderBottomColor: "",
+        borderBottomStyle: "solid",
+        borderBottomWidth: "2px",
+        marginLeft: "0px",
+        zIndex: -index
+      };
+
+      if (index !== 0) {
+        styles.marginLeft = "-" + this.data.border_width() + "px";
+      }
+
+      if (index === this.activeTab()) {
+        styles.borderBottomColor = this.data.border() !== "_default" ? "rgba(255,255,255,1)" : "transparent";
+        styles.borderBottomWidth = Math.abs(parseInt(marginBottom, 10)) + 1 + "px";
+      } else {
+        styles.borderBottomColor = "transparent";
+      }
+
+      return styles;
+    };
+    /**
+     * Get the Tabs border style attributes to wrap tabs in the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getTabsBorderWrapper = function getTabsBorderWrapper() {
+      var borderRadius = this.data.border_radius();
+      var borderColor = this.data.border_color() === "" ? this.data.border_color() : (0, _colorConverter.fromHex)(this.data.border_color(), "1");
+      return {
+        zIndex: -100,
+        border: this.data.border() + " " + borderColor + " " + this.data.border_width() + "px",
+        borderRadius: "0px " + borderRadius + "px " + borderRadius + "px " + borderRadius + "px"
+      };
+    };
+    /**
+     * Get the Tabs border style attributes to wrap tabs in the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getTabHeaderLinkBorder = function getTabHeaderLinkBorder() {
+      if (this.data.border() !== "_default") {
+        return {
+          borderColor: "transparent",
+          borderRadius: "3px"
+        };
+      }
+
+      return null;
     };
 
     return Tabs;

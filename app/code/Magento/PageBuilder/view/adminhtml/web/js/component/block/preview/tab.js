@@ -44,24 +44,7 @@ define(["tabs", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBui
         backgroundImage: backgroundImage,
         backgroundColor: backgroundColor,
         backgroundSize: this.data.background_size(),
-        overflow: "hidden",
         border: this.data.border()
-      };
-    };
-    /**
-     * Get the Tab header style attributes for the preview
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getTabHeaderStyles = function getTabHeaderStyles() {
-      var tabStyles = this.getTabStyles();
-      return {
-        backgroundColor: tabStyles.backgroundColor,
-        borderTop: tabStyles.border,
-        borderRight: tabStyles.border,
-        borderLeft: tabStyles.border
       };
     };
 

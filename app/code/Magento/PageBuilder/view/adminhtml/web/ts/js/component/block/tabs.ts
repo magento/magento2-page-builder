@@ -44,6 +44,7 @@ export default class Tabs extends Block {
      * Add a slide into the slider
      */
     public addTab() {
+        (this.preview as TabsPreview).setActiveTab(this.children().length - 1);
         createBlock(
             Config.getInitConfig("content_types").tab,
             this,

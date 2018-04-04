@@ -39,22 +39,7 @@ export default class Tab extends PreviewBlock {
             backgroundImage,
             backgroundColor,
             backgroundSize: this.data.background_size(),
-            overflow: "hidden",
             border: this.data.border(),
-        };
-    }
-    /**
-     * Get the Tab header style attributes for the preview
-     *
-     * @returns {any}
-     */
-    public getTabHeaderStyles() {
-        const tabStyles = this.getTabStyles();
-        return {
-            backgroundColor: tabStyles.backgroundColor,
-            borderTop: tabStyles.border,
-            borderRight: tabStyles.border,
-            borderLeft: tabStyles.border,
         };
     }
 }
