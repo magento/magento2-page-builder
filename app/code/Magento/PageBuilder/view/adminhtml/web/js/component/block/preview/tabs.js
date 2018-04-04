@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _tabs, _underscore, _eventBus, _block) {
+define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _tabs, _underscore, _colorConverter, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
@@ -131,6 +131,56 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
       }
 
       this.setFocusedTab(index);
+    };
+    /**
+     * Get the Tab header style attributes for the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getTabHeaderStyles = function getTabHeaderStyles(index) {
+      var borderRadius = this.data.border_radius();
+      var borderColor = this.data.border_color() === "" ? this.data.border_color() : (0, _colorConverter.fromHex)(this.data.border_color(), "1");
+      var border = this.data.border() + " " + borderColor + " " + this.data.border_width() + "px";
+      var styles = {
+        borderTop: border,
+        borderLeft: border,
+        borderRight: border,
+        borderRadius: borderRadius + "px " + borderRadius + "px 0px 0px",
+        borderBottom: "",
+        marginBottom: "-" + Math.round(this.data.border_width() * (4 / 3)) + "px",
+        marginLeft: "0px",
+        zIndex: -index
+      };
+
+      if (index !== 0) {
+        styles.marginLeft = "-" + this.data.border_width() + "px";
+      }
+
+      if (index === this.activeTab()) {
+        styles.borderBottom = "solid rbga(255,255,255,1) " + this.data.border_width() + "px";
+      } else {
+        styles.borderBottom = this.data.border() !== "_default" ? "solid " + borderColor + " " + this.data.border_width() + "px" : "";
+      }
+
+      return styles;
+    };
+    /**
+     * Get the Tabs border style attributes to wrap tabs in the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getTabsBorderWrapper = function getTabsBorderWrapper() {
+      var borderRadius = this.data.border_radius();
+      var borderColor = this.data.border_color() === "" ? this.data.border_color() : (0, _colorConverter.fromHex)(this.data.border_color(), "1");
+      return {
+        zIndex: -100,
+        border: this.data.border() + " " + borderColor + " " + this.data.border_width() + "px",
+        borderRadius: "0px " + borderRadius + "px " + borderRadius + "px " + borderRadius + "px"
+      };
     };
 
     return Tabs;

@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import "tabs";
 import _ from "underscore";
+import {fromHex} from "../../../utils/color-converter";
 import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import Block from "../block";
@@ -119,6 +120,57 @@ export default class Tabs extends PreviewBlock {
         }
         this.setFocusedTab(index);
     }
+
+    /**
+     * Get the Tab header style attributes for the preview
+     *
+     * @returns {any}
+     */
+    public getTabHeaderStyles(index: number) {
+        const borderRadius = this.data.border_radius();
+        const borderColor = this.data.border_color() === "" ?
+            this.data.border_color() :
+            fromHex(this.data.border_color(), "1");
+        const border = `${this.data.border()} ${borderColor} ${this.data.border_width()}px`;
+        const styles = {
+            borderTop: border,
+            borderLeft: border,
+            borderRight: border,
+            borderRadius: `${borderRadius}px ${borderRadius}px 0px 0px`,
+            borderBottom: "",
+            marginBottom: `-${Math.round(this.data.border_width() * (4 / 3))}px`,
+            marginLeft: "0px",
+            zIndex: -index,
+        };
+        if (index !== 0) {
+            styles.marginLeft = `-${this.data.border_width()}px`;
+        }
+        if (index === this.activeTab()) {
+            styles.borderBottom = `solid rbga(255,255,255,1) ${this.data.border_width()}px`;
+        } else {
+            styles.borderBottom = this.data.border() !== "_default" ?
+                `solid ${borderColor} ${this.data.border_width()}px` : "";
+        }
+        return styles;
+    }
+
+    /**
+     * Get the Tabs border style attributes to wrap tabs in the preview
+     *
+     * @returns {any}
+     */
+    public getTabsBorderWrapper() {
+        const borderRadius = this.data.border_radius();
+        const borderColor = this.data.border_color() === "" ?
+            this.data.border_color() :
+            fromHex(this.data.border_color(), "1");
+        return {
+            zIndex: -100,
+            border: `${this.data.border()} ${borderColor} ${this.data.border_width()}px`,
+            borderRadius: `0px ${borderRadius}px ${borderRadius}px ${borderRadius}px`,
+        };
+    }
+
 }
 
 // Resolve issue with jQuery UI tabs blocking events on content editable areas
