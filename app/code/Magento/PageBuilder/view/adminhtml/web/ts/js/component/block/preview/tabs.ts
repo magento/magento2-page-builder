@@ -132,13 +132,15 @@ export default class Tabs extends PreviewBlock {
             this.data.border_color() :
             fromHex(this.data.border_color(), "1");
         const border = `${this.data.border()} ${borderColor} ${this.data.border_width()}px`;
+        const marginBottom = this.data.border_width() === "1" ?
+            "-2px" : `-${Math.round(this.data.border_width() * (4 / 3))}px`;
         const styles = {
-            borderTop: border,
-            borderLeft: border,
-            borderRight: border,
+            border,
+            marginBottom,
             borderRadius: `${borderRadius}px ${borderRadius}px 0px 0px`,
-            borderBottom: "",
-            marginBottom: `-${Math.round(this.data.border_width() * (4 / 3))}px`,
+            borderBottomColor: "",
+            borderBottomStyle: "solid",
+            borderBottomWidth: "2px",
             marginLeft: "0px",
             zIndex: -index,
         };
@@ -146,10 +148,11 @@ export default class Tabs extends PreviewBlock {
             styles.marginLeft = `-${this.data.border_width()}px`;
         }
         if (index === this.activeTab()) {
-            styles.borderBottom = `solid rbga(255,255,255,1) ${this.data.border_width()}px`;
+            styles.borderBottomColor = this.data.border() !== "_default" ?
+            `rgba(255,255,255,1)` : "transparent";
+            styles.borderBottomWidth = `${Math.abs(parseInt(marginBottom, 10)) + 1}px`;
         } else {
-            styles.borderBottom = this.data.border() !== "_default" ?
-                `solid ${borderColor} ${this.data.border_width()}px` : "";
+            styles.borderBottomColor = "transparent";
         }
         return styles;
     }
@@ -171,6 +174,20 @@ export default class Tabs extends PreviewBlock {
         };
     }
 
+    /**
+     * Get the Tabs border style attributes to wrap tabs in the preview
+     *
+     * @returns {any}
+     */
+    public getTabHeaderLinkBorder() {
+        if (this.data.border() !== "_default") {
+            return {
+                borderColor: "transparent",
+                borderRadius: "3px",
+            };
+        }
+        return null;
+    }
 }
 
 // Resolve issue with jQuery UI tabs blocking events on content editable areas

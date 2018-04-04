@@ -32,6 +32,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
     _proto.addTab = function addTab() {
       var _this = this;
 
+      this.preview.setActiveTab(this.children().length - 1);
       (0, _factory)(_config.getInitConfig("content_types").tab, this, this.stage).then(function (tab) {
         _underscore.defer(function () {
           var mountFn = function mountFn(event, params) {

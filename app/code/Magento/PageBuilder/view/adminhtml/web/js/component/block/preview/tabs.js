@@ -143,13 +143,14 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/util
       var borderRadius = this.data.border_radius();
       var borderColor = this.data.border_color() === "" ? this.data.border_color() : (0, _colorConverter.fromHex)(this.data.border_color(), "1");
       var border = this.data.border() + " " + borderColor + " " + this.data.border_width() + "px";
+      var marginBottom = this.data.border_width() === "1" ? "-2px" : "-" + Math.round(this.data.border_width() * (4 / 3)) + "px";
       var styles = {
-        borderTop: border,
-        borderLeft: border,
-        borderRight: border,
+        border: border,
+        marginBottom: marginBottom,
         borderRadius: borderRadius + "px " + borderRadius + "px 0px 0px",
-        borderBottom: "",
-        marginBottom: "-" + Math.round(this.data.border_width() * (4 / 3)) + "px",
+        borderBottomColor: "",
+        borderBottomStyle: "solid",
+        borderBottomWidth: "2px",
         marginLeft: "0px",
         zIndex: -index
       };
@@ -159,9 +160,10 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/util
       }
 
       if (index === this.activeTab()) {
-        styles.borderBottom = "solid rbga(255,255,255,1) " + this.data.border_width() + "px";
+        styles.borderBottomColor = this.data.border() !== "_default" ? "rgba(255,255,255,1)" : "transparent";
+        styles.borderBottomWidth = Math.abs(parseInt(marginBottom, 10)) + 1 + "px";
       } else {
-        styles.borderBottom = this.data.border() !== "_default" ? "solid " + borderColor + " " + this.data.border_width() + "px" : "";
+        styles.borderBottomColor = "transparent";
       }
 
       return styles;
@@ -181,6 +183,23 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/util
         border: this.data.border() + " " + borderColor + " " + this.data.border_width() + "px",
         borderRadius: "0px " + borderRadius + "px " + borderRadius + "px " + borderRadius + "px"
       };
+    };
+    /**
+     * Get the Tabs border style attributes to wrap tabs in the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getTabHeaderLinkBorder = function getTabHeaderLinkBorder() {
+      if (this.data.border() !== "_default") {
+        return {
+          borderColor: "transparent",
+          borderRadius: "3px"
+        };
+      }
+
+      return null;
     };
 
     return Tabs;
