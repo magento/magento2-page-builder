@@ -116,6 +116,22 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
       this.element = element;
       this.buildTabs();
     };
+    /**
+     * Handle clicking on a tab
+     *
+     * @param {number} index
+     * @param {Event} event
+     */
+
+
+    _proto.onTabClick = function onTabClick(index, event) {
+      // The options menu is within the tab, so don't change the focus if we click an item within
+      if ((0, _jquery)(event.target).parents(".pagebuilder-options").length > 0) {
+        return;
+      }
+
+      this.setFocusedTab(index);
+    };
 
     return Tabs;
   }(_block); // Resolve issue with jQuery UI tabs blocking events on content editable areas

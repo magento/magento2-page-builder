@@ -105,6 +105,20 @@ export default class Tabs extends PreviewBlock {
         this.element = element;
         this.buildTabs();
     }
+
+    /**
+     * Handle clicking on a tab
+     *
+     * @param {number} index
+     * @param {Event} event
+     */
+    public onTabClick(index: number, event: Event) {
+        // The options menu is within the tab, so don't change the focus if we click an item within
+        if ($(event.target).parents(".pagebuilder-options").length > 0) {
+            return;
+        }
+        this.setFocusedTab(index);
+    }
 }
 
 // Resolve issue with jQuery UI tabs blocking events on content editable areas
