@@ -15,8 +15,8 @@ import PreviewBlock from "./block";
 
 export default class Tabs extends PreviewBlock {
     public focusedTab: KnockoutObservable<number> = ko.observable();
+    public activeTab: KnockoutObservable<number> = ko.observable();
     private element: Element;
-    private renderCounter: number = 0;
 
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
@@ -30,7 +30,9 @@ export default class Tabs extends PreviewBlock {
             } catch (e) {
                 // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
             }
-            $(this.element).tabs();
+            $(this.element).tabs({
+                active: this.activeTab() || 1,
+            });
         }
     }, 10);
 
@@ -51,6 +53,47 @@ export default class Tabs extends PreviewBlock {
                 this.buildTabs();
             }
         });
+        EventBus.on("tab:block:removed", (event: Event, params: BlockCreateEventParams) => {
+            if (this.element && params.block.parent.id === this.parent.id) {
+                this.buildTabs();
+            }
+        });
+        this.activeTab.subscribe((index: number) => {
+            $(this.element).tabs("option", "active", index);
+        });
+        // Set the stage to interacting when a tab is focused
+        this.focusedTab.subscribe((value: number) => {
+            this.parent.stage.interacting(value !== null);
+        });
+    }
+
+    /**
+     * Set the active tab, we maintain a reference to it in an observable for when we rebuild the tab instance
+     *
+     * @param {number} index
+     */
+    public setActiveTab(index: number) {
+        this.activeTab(index);
+    }
+
+    /**
+     * Set the focused tab
+     *
+     * @param {number} index
+     * @param {boolean} force
+     */
+    public setFocusedTab(index: number, force: boolean = false) {
+        this.setActiveTab(index);
+        if (force) {
+            this.focusedTab(null);
+        }
+        this.focusedTab(index);
+
+        if (this.element) {
+            _.defer(() => {
+                document.execCommand("selectAll", false, null);
+            });
+        }
     }
 
     /**

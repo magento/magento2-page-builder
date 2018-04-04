@@ -34,6 +34,16 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
 
       (0, _factory)(_config.getInitConfig("content_types").tab, this, this.stage).then(function (tab) {
         _underscore.defer(function () {
+          var mountFn = function mountFn(event, params) {
+            if (params.id === tab.id) {
+              _this.preview.setFocusedTab(_this.children().length - 1);
+
+              _eventBus.off("tab:block:mount", mountFn);
+            }
+          };
+
+          _eventBus.on("tab:block:mount", mountFn);
+
           _this.addChild(tab, _this.children().length);
         });
       });
@@ -52,6 +62,35 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       _eventBus.on("tabs:block:ready", function (event, params) {
         if (params.id === _this2.id && _this2.children().length === 0) {
           _this2.addTab();
+        }
+      }); // Block being removed from container
+
+
+      _eventBus.on("tab:block:removed", function (event, params) {
+        if (params.parent.id === _this2.id) {
+          // Mark the previous slide as active
+          var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
+
+          _this2.preview.setFocusedTab(newIndex);
+        }
+      }); // Capture when a block is duplicated within the container
+
+
+      var duplicatedTab;
+      var duplicatedTabIndex;
+
+      _eventBus.on("tab:block:duplicate", function (event, params) {
+        if (params.duplicate.parent.id === _this2.id) {
+          duplicatedTab = params.duplicate;
+          duplicatedTabIndex = params.index;
+        }
+      });
+
+      _eventBus.on("tab:block:mount", function (event, params) {
+        if (duplicatedTab && params.id === duplicatedTab.id) {
+          _this2.preview.setFocusedTab(duplicatedTabIndex, true);
+
+          duplicatedTab = duplicatedTabIndex = null;
         }
       });
     };

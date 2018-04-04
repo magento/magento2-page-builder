@@ -9,10 +9,10 @@
     <!-- ko template: getOptions().template --><!-- /ko -->
     <div class="tabs-container focus-options" data-bind="afterRender: function (element) { preview.onContainerRender.call(preview, element); }">
         <ul role="tablist" class="tabs-navigation" data-bind="foreach: getChildren()">
-            <li role="tab" class="tab-header-li" data-bind="css: {focused: $parent.preview.focusedTab() === $index()}, click: function () { $parent.preview.focusedTab($index()); }">
+            <li role="tab" class="tab-header-li" data-bind="css: {focused: $parent.preview.focusedTab() === $index()}, click: function () { $parent.preview.setFocusedTab.call($parent.preview, $index()); }">
                 <a href="#no-tab" class="tab-header" title="Tab 1" data-bind="attr: { href: '#' + id }">
                     <!-- ko template: getOptions().template --><!-- /ko -->
-                    <span class="tab-title" data-bind="liveEdit: { field: 'title', placeholder: $t('...') }, hasFocusNoScroll: $parent.preview.focusedTab() === $index(), event: { focusin: function () { $parent.preview.focusedTab($index()) }, focusout: function () { $parent.preview.focusedTab(null) } }"></span>
+                    <span class="tab-title" data-tab-title="true" data-bind="liveEdit: { field: 'title', placeholder: $t('...') }, hasFocusNoScroll: $parent.preview.focusedTab() === $index(), event: { focusin: function () { $parent.preview.focusedTab($index()) }, focusout: function () { $parent.preview.focusedTab(null) } }"></span>
                 </a>
             </li>
         </ul>
