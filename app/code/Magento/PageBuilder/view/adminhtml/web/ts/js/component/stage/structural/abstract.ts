@@ -94,7 +94,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 $t("Edit"),
                 this.onOptionEdit,
                 ["edit-block"],
-                30
+                30,
             ),
             new Option(
                 this,
@@ -112,7 +112,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 $t("Remove"),
                 this.onOptionRemove,
                 ["remove-structural"],
-                50
+                50,
             ),
         ];
     }
@@ -316,6 +316,15 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+    public getOptions(): Options {
+        return new Options(this, this.retrieveOptions());
+    }
+
+    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
@@ -351,15 +360,6 @@ export default class Structural extends EditableArea implements StructuralInterf
             return;
         });
         return hasDataChanges;
-    }
-
-    /**
-     * Get the options instance
-     *
-     * @returns {Options}
-     */
-    public getOptions(): Options {
-        return new Options(this, this.retrieveOptions());
     }
 
     /**

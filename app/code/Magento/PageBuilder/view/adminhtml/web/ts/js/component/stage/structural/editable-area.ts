@@ -186,7 +186,7 @@ export interface BlockMountEventParams {
 }
 
 export interface BlockDuplicateEventParams {
-    original: Block,
-    duplicate: Block,
+    original: Block;
+    duplicate: Block;
     index: number;
 }
