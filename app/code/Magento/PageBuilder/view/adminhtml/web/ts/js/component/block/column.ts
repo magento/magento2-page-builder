@@ -58,7 +58,15 @@ export default class Column extends Block {
             return (option.code !== "move");
         });
         newOptions.unshift(
-            new Option(this, "move", "<i></i>", $t("Move"), null, ["move-column"], 10),
+            new Option(
+                this,
+                "move",
+                "<i class='icon-admin-pagebuilder-handle'></i>",
+                $t("Move"),
+                null,
+                ["move-column"],
+                10,
+            ),
         );
         return newOptions;
     }

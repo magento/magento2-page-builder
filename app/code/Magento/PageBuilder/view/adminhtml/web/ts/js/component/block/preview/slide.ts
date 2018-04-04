@@ -15,8 +15,11 @@ import PreviewBlock from "./block";
 export default class Slide extends PreviewBlock {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
     private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
+    private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
+     * Slide constructor
+     *
      * @param {Block} parent
      * @param {ConfigContentBlock} config
      */
