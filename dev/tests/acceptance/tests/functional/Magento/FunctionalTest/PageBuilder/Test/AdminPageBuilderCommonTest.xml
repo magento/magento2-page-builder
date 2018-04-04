@@ -123,7 +123,7 @@
         <!-- Add an additional row to attempt removal of a row -->
         <actionGroup ref="dragContentBlockToStageByIndex" stepKey="dragRowIntoStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="contentBlockNumber" value="PageBuilderSecondRowInStage"/>
+            <argument name="contentBlockNumber" value="2"/>
         </actionGroup>
 
         <!-- Attempt to remove both content types validating the confirmation window is never displayed -->
@@ -169,12 +169,12 @@
         <!-- Add an additional row so we're able to delete the first one -->
         <actionGroup ref="dragContentBlockToStageByIndex" stepKey="dragRowIntoStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="contentBlockNumber" value="PageBuilderSecondRowInStage"/>
+            <argument name="contentBlockNumber" value="2"/>
         </actionGroup>
         <!-- Remove second row now containing heading -->
         <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeSecondRow">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="contentBlockNumber" value="PageBuilderSecondRowInStage"/>
+            <argument name="contentBlockNumber" value="2"/>
         </actionGroup>
         <!-- As the row now contains a header it should prompt on removal -->
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
@@ -186,7 +186,7 @@
         <wait time="2" stepKey="waitForRemovalModal" />
 
         <!-- Validate the item is removed -->
-        <seeNumberOfElements selector="{{PageBuilderRowSection.allRows}}" userInput="1" stepKey="seeElementRow"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeElementRow"/>
     </test>
     <test name="ConfirmationOnConfiguredContentBlockRemoval">
         <annotations>
@@ -291,7 +291,7 @@
         <!-- Remove the first heading, expect a prompt -->
         <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeFirstHeader">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockNumber" value="PageBuilderHeadingIndex1"/>
+            <argument name="contentBlockNumber" value="1"/>
         </actionGroup>
         
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
