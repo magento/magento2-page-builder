@@ -288,6 +288,15 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+    public getOptions(): Options {
+        return new Options(this, this.retrieveOptions());
+    }
+
+    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
@@ -311,15 +320,6 @@ export default class Structural extends EditableArea implements StructuralInterf
             }
         });
         return hasDataChanges;
-    }
-
-    /**
-     * Get the options instance
-     *
-     * @returns {Options}
-     */
-    public getOptions(): Options {
-        return new Options(this, this.retrieveOptions());
     }
 
     /**

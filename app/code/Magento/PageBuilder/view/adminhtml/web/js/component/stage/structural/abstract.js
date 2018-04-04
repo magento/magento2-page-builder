@@ -257,6 +257,16 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       return result;
     };
     /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+
+
+    _proto.getOptions = function getOptions() {
+      return new _options.Options(this, this.retrieveOptions());
+    };
+    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
@@ -285,16 +295,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       });
 
       return hasDataChanges;
-    };
-    /**
-     * Get the options instance
-     *
-     * @returns {Options}
-     */
-
-
-    _proto.getOptions = function getOptions() {
-      return new _options.Options(this, this.retrieveOptions());
     };
     /**
      * Convert attributes
