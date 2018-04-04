@@ -45,7 +45,7 @@ export default class Tab extends Block {
             this.parent.stage.store.updateKey(
                 this.id,
                 $t("Tab") + " " + (this.parent.children.indexOf(this) + 1),
-                "title",
+                "name",
             );
         }
     }

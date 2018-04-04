@@ -12,7 +12,7 @@
             <li role="tab" class="tab-header-li" data-bind="css: {focused: $parent.preview.focusedTab() === $index()}, click: function (context, event) { $parent.preview.onTabClick($index(), event); }">
                 <a href="#no-tab" class="tab-header focus-options" title="Tab 1" data-bind="attr: { href: '#' + id }">
                     <!-- ko template: getOptions().template --><!-- /ko -->
-                    <span class="tab-title" data-tab-title="true" data-bind="liveEdit: { field: 'title', placeholder: $t('...') }, hasFocusNoScroll: $parent.preview.focusedTab() === $index(), event: { focusin: function () { $parent.preview.focusedTab($index()) }, focusout: function () { window.getSelection().removeAllRanges(); $parent.preview.focusedTab(null) } }"></span>
+                    <span class="tab-title" data-tab-title="true" data-bind="liveEdit: { field: 'name', placeholder: $t('...') }, hasFocusNoScroll: $parent.preview.focusedTab() === $index(), event: { focusin: function () { $parent.preview.focusedTab($index()) }, focusout: function () { window.getSelection().removeAllRanges(); $parent.preview.focusedTab(null) } }"></span>
                 </a>
             </li>
         </ul>

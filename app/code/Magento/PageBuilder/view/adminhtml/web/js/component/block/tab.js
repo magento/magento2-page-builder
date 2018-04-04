@@ -51,7 +51,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/event-bus", "Magento
       var data = this.parent.stage.store.get(this.id);
 
       if (!data.title) {
-        this.parent.stage.store.updateKey(this.id, (0, _translate)("Tab") + " " + (this.parent.children.indexOf(this) + 1), "title");
+        this.parent.stage.store.updateKey(this.id, (0, _translate)("Tab") + " " + (this.parent.children.indexOf(this) + 1), "name");
       }
     };
 
