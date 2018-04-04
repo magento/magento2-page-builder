@@ -74,35 +74,13 @@
             <opened>true</opened>
         </settings>
         <field name="default_active" formElement="select" sortOrder="20">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">Tab Name</item>
-                </item>
-            </argument>
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Default Active Tab</label>
+                <imports>
+                    <link name="setOptions">${ $.provider }:data._default_active_options</link>
+                </imports>
             </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">tab_1</item>
-                                <item name="label" xsi:type="string" translate="true">Tab 1</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">tab_2</item>
-                                <item name="label" xsi:type="string" translate="true">Tab 2</item>
-                            </option>
-                            <option name="2" xsi:type="array">
-                                <item name="value" xsi:type="string">tab_3</item>
-                                <item name="label" xsi:type="string" translate="true">Tab 3</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
         </field>
         <field name="min_height" sortOrder="30" formElement="input">
             <argument name="data" xsi:type="array">

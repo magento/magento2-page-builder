@@ -97,6 +97,32 @@ export default class Tabs extends Block {
                 (this.preview as TabsPreview).setFocusedTab(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;
             }
+            if (this.id === params.block.parent.id) {
+                this.updateTabNamesInDataStore();
+                this.parent.stage.store.subscribe(() => {
+                    this.updateTabNamesInDataStore();
+                }, params.block.id);
+            }
         });
+    }
+
+    /**
+     * Update data store with active options
+     */
+    private updateTabNamesInDataStore() {
+        const activeOptions = [];
+        this.children().forEach((tab: Tab, index: number) => {
+            const tabData = tab.stage.store.get(tab.id);
+            activeOptions.push({
+                value: index,
+                label: tabData.name,
+                labeltitle: tabData.name,
+            });
+        });
+        this.parent.stage.store.updateKey(
+            this.id,
+            activeOptions,
+            "_default_active_options",
+        );
     }
 }

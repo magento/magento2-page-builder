@@ -92,7 +92,32 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
 
           duplicatedTab = duplicatedTabIndex = null;
         }
+
+        if (_this2.id === params.block.parent.id) {
+          _this2.updateTabNamesInDataStore();
+
+          _this2.parent.stage.store.subscribe(function () {
+            _this2.updateTabNamesInDataStore();
+          }, params.block.id);
+        }
       });
+    };
+    /**
+     * Update data store with active options
+     */
+
+
+    _proto.updateTabNamesInDataStore = function updateTabNamesInDataStore() {
+      var activeOptions = [];
+      this.children().forEach(function (tab, index) {
+        var tabData = tab.stage.store.get(tab.id);
+        activeOptions.push({
+          value: index,
+          label: tabData.name,
+          labeltitle: tabData.name
+        });
+      });
+      this.parent.stage.store.updateKey(this.id, activeOptions, "_default_active_options");
     };
 
     return Tabs;
