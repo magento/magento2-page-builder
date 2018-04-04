@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _tabs, _underscore, _eventBus, _block) {
+define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _tabs, _underscore, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
@@ -21,6 +21,7 @@ define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/event-
       var _this;
 
       _this = _PreviewBlock.call(this, parent, config) || this;
+      _this.focusedTab = _knockout.observable();
       _this.element = void 0;
       _this.renderCounter = 0;
       _this.buildTabs = _underscore.debounce(function () {

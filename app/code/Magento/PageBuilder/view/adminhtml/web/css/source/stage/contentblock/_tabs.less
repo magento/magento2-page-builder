@@ -11,11 +11,10 @@
         position: relative;
         z-index: 10;
 
-        li {
+        li.tab-header-li {
             display: inline-block;
-            position: relative;
 
-            a {
+            a.tab-header {
                 background: #f6f6f6;
                 border: 1px solid rgba(153, 153, 153, .3);
                 border-right: 0;
@@ -28,8 +27,10 @@
                 vertical-align: middle;
                 white-space: normal;
                 transition: all .3s;
+                position: relative;
+                cursor: pointer;
 
-                span {
+                span.tab-title {
                     display: block;
                 }
 
@@ -37,15 +38,22 @@
                     text-decoration: none;
                 }
             }
-            &:last-child a {
+
+            &:last-child a.tab-header {
                 border-right: 1px solid rgba(153, 153, 153, .3);
             }
 
             &.ui-state-active  {
-                a {
+                a.tab-header {
                     background: #fff;
                     border-bottom: 1px solid white;
                     transition: all .3s;
+                }
+            }
+
+            &.focused {
+                .pagebuilder-options {
+                    .pagebuilder-options-visible;
                 }
             }
         }

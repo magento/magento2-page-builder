@@ -7,8 +7,22 @@ import $t from "mage/translate";
 import EventBus from "../event-bus";
 import Block from "./block";
 import {BlockReadyEventParams} from "./factory";
+import {Options} from "../stage/structural/options";
 
 export default class Tab extends Block {
+
+    /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+    public getOptions(): Options {
+        const options = super.getOptions();
+        options.removeOption("move");
+        options.removeOption("title");
+        return options;
+    }
+
     /**
      * Bind events for the current instance
      */

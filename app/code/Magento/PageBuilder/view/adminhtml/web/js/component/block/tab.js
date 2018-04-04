@@ -14,8 +14,22 @@ define(["mage/translate", "Magento_PageBuilder/js/component/event-bus", "Magento
     var _proto = Tab.prototype;
 
     /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+    _proto.getOptions = function getOptions() {
+      var options = _Block.prototype.getOptions.call(this);
+
+      options.removeOption("move");
+      options.removeOption("title");
+      return options;
+    };
+    /**
      * Bind events for the current instance
      */
+
+
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 

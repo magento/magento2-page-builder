@@ -6,7 +6,7 @@
 import Structural from "../abstract";
 
 export interface OptionInterface {
-    code?: string;
+    code: string;
     icon?: string;
     title?: string;
     classes?: string;

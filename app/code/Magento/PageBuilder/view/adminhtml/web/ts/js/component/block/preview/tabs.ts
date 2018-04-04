@@ -4,6 +4,7 @@
  */
 
 import $ from "jquery";
+import ko from "knockout";
 import "tabs";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
@@ -13,6 +14,7 @@ import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
 import PreviewBlock from "./block";
 
 export default class Tabs extends PreviewBlock {
+    public focusedTab: KnockoutObservable<number> = ko.observable();
     private element: Element;
     private renderCounter: number = 0;
 
