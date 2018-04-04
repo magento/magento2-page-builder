@@ -188,6 +188,17 @@ export default class Tabs extends PreviewBlock {
         }
         return null;
     }
+
+    /**
+     * Get the Tabs navigation alignement and applies to tab headers in the preview
+     *
+     * @returns {any}
+     */
+    public getNavigationAlignment() {
+        return {
+            textAlign: this.data.navigation_alignment(),
+        };
+    }
 }
 
 // Resolve issue with jQuery UI tabs blocking events on content editable areas

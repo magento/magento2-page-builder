@@ -201,6 +201,18 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/util
 
       return null;
     };
+    /**
+     * Get the Tabs navigation alignement and applies to tab headers in the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getNavigationAlignment = function getNavigationAlignment() {
+      return {
+        textAlign: this.data.navigation_alignment()
+      };
+    };
 
     return Tabs;
   }(_block); // Resolve issue with jQuery UI tabs blocking events on content editable areas
