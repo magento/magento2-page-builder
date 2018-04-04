@@ -172,6 +172,10 @@ define(["underscore", "../../component/config", "../../utils/directives", "../..
           if (value === "default" || value === "initial" || value === "") {
             value = "";
           }
+
+          if (key === "border-color") {
+            value = _this2.convertRgbToHex(value);
+          }
         }
 
         if (key === "color") {

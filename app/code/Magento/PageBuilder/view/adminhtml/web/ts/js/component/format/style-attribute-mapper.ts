@@ -161,6 +161,9 @@ export default class StyleAttributeMapper {
                     if (value === "default" || value === "initial" || value === "") {
                         value = "";
                     }
+                    if (key === "border-color") {
+                        value = this.convertRgbToHex(value);
+                    }
                 }
                 if (key === "color") {
                     if (value === "") {
