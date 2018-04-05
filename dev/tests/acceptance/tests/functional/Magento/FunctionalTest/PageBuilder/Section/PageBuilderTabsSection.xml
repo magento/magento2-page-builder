@@ -10,7 +10,7 @@
     <section name="TabsOnStage">
         <element name="tabsContainer" type="button" selector="//div[contains(@class,'pagebuilder-tabs')]"/>
         <element name="tabsNavigation" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')])"/>
-        <element name="tabsNavigationStyled" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')][@style='text-align: center;'])"/>
+        <element name="tabsNavAligned" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')][@style='text-align: {{arg1}};'])" parameterized="true"/>
         <element name="tabsContent" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-content')])"/>
         <element name="tabsContentDefault" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-content')][@style='border-radius: {{arg1}}px;'])" parameterized="true"/>
         <element name="tabsOptions" type="button" selector="//div[contains(@class, 'pagebuilder-tabs')]//div[@data-bind='text: parent.preview.displayLabel']"/>
@@ -19,7 +19,7 @@
         <element name="addNewTabButton" type="button" selector="//button/span[contains(text(), 'Add New Tab')]"/>
     </section>
     <section name="TabsOnFrontend">
-        <element name="tabsNavAlignCenter" type="button" selector="(//div[@data-role='tabs']//descendant::*[@role='tablist'][@style='text-align: center;'])"/>
+        <element name="tabsNavAligned" type="button" selector="(//div[@data-role='tabs']//descendant::*[@role='tablist'][@style='text-align: {{arg1}};'])" parameterized="true"/>
     </section>
     <section name="TabOnStage">
         <element name="tabHeader" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-header')][{{arg1}}]" parameterized="true"/>
