@@ -13,19 +13,19 @@ module.exports = function () {
             /**
              * Convert ../../utils/util import into Magento_Module/js/utils/util
              *
-             * @param importPath
-             * @param state
+             * @param {Object} importPath
+             * @param {Object} state
              * @constructor
              */
             ImportDeclaration: function (importPath, state) {
                 var importExpression = importPath.node.source.value;
 
                 if (!state.opts.prefix) {
-                    throw Error("Prefix must be defined");
+                    throw Error('Prefix must be defined');
                 }
 
                 // Is the file being imported from another directory?
-                if (!path.isAbsolute(importExpression) && importExpression.includes("./")) {
+                if (!path.isAbsolute(importExpression) && importExpression.includes('./')) {
                     importPath.node.source.value = path.resolve(
                         path.dirname(state.file.opts.filenameRelative),
                         importExpression

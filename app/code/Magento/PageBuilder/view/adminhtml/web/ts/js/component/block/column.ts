@@ -65,7 +65,7 @@ export default class Column extends Block {
                 $t("Move"),
                 null,
                 ["move-column"],
-                10
+                10,
             ),
         );
         return newOptions;
