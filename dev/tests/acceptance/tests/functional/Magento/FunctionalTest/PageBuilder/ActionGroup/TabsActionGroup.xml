@@ -9,15 +9,12 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="addTab">
-        <arguments>
-            <argument name="index" defaultValue="0" type="string"/>
-            <argument name="title" defaultValue="Tab 1" type="string"/>
-            <argument name="content" defaultValue="Tab 1 Content" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{PageBuilderTabsEditPanel.addNewTabButton}}" stepKey="waitForAddTabButton"/>
-        <click selector="{{PageBuilderTabsEditPanel.addNewTabButton}}" stepKey="clickAddTabButton"/>
-        <fillField selector="{{PageBuilderTabsEditPanel.tabTitle(index)}}" userInput="{{title}}" stepKey="fillTabRow1TitleField"/>
-        <fillField selector="{{PageBuilderTabsEditPanel.tabContent(index)}}" userInput="{{content}}" stepKey="fillTabRow1ContentField"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentBlock"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <wait time="2" stepKey="waitForMouseOverAnimation" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderTabsContentBlock.role)}}" stepKey="waitForOptions" />
+        <click selector="{{PageBuilderActionsSection.contentBlockAdd(PageBuilderTabsContentBlock.role)}}" stepKey="clickAddContentBlock"/>
     </actionGroup>
     <actionGroup name="openTabOptionsByIndex">
         <arguments>
