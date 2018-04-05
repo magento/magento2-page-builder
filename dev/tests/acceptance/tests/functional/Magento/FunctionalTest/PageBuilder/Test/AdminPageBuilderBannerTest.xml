@@ -4608,34 +4608,34 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
-        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
-        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="seeImageNameOnPreview1"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource400"/>
-        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed100"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource400"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed100"/>
 
         <!--Remove uploaded image by TrashBin icon-->
-        <click selector="{{ImageOnPreview.trashBinIcon}}" stepKey="removeUploadedImage1"/>
-        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
+        <click selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="removeUploadedImage1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile2">
             <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
-        <waitForElementVisible  selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="waitForUploadImage2" />
-        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="seeImageNameOnPreview2"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource2"/>
-        <seeElement selector="{{ImageOnPreview.imagePreview}}" stepKey="seeImageDisplayed1"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource2"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
 
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
-        <click selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
         <waitForPageLoad stepKey="waitForPageLoad1" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
@@ -4645,18 +4645,18 @@
             <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnPreview.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
-        <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
-        <seeElement selector="{{ImageOnPreview.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
 
         <!--Upload background mobile image-->
-        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Mobile Image')}}" stepKey="seeSelectFromGalleryBtnOnMobileImage"/>
-        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnMobileImage1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Mobile Image')}}" stepKey="seeSelectFromGalleryBtnOnMobileImage"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnMobileImage1"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <waitForPageLoad stepKey="waitForPageLoad2" />
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
-        <seeElement selector="{{ImageOnFrontend.backgroundImageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
+        <seeElement selector="{{ImageOnStorefront.backgroundImageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
     <test name="BannerPosterButtonsCanBeEditedInline">
         <annotations>

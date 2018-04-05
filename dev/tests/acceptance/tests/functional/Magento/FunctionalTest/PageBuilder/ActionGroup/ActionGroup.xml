@@ -328,6 +328,7 @@
         </arguments>
         <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForImageElement"/>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachImageFile"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <!-- <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.panelFieldUploadSummary(property.value)}}" stepKey="waitForImageUploadSummary" /> -->
     </actionGroup>
     <actionGroup name="clickSlideOutPanelFieldGeneral">
@@ -395,6 +396,7 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="waitForImageUpload" />
     </actionGroup>
     <actionGroup name="saveEditPanelSettings">
