@@ -34,6 +34,7 @@ define(["Magento_PageBuilder/js/component/format/read/default"], function (_defa
 
         case "product":
           href = this.readFromProductWidget(href);
+          break;
 
         default:
           break;

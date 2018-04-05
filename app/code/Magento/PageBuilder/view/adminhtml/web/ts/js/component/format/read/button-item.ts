@@ -28,6 +28,7 @@ export default class ButtonItem implements ReadInterface {
                 break;
             case "product":
                 href = this.readFromProductWidget(href);
+                break;
             default:
                 break;
         }
