@@ -11,7 +11,6 @@
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')])[{{arg1}}][@style='border-width: {{arg2}}px; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
         <element name="tabsOptionsTitle" type="button" selector='//div[contains(@class, "pagebuilder-tabs")]//div[@class="option-title"]//*[text()="Tabs"]'/>
         <element name="addNewTabButton" type="button" selector="//button/span[contains(text(), 'Add New Tab')]"/>
-
     </section>
     <section name="TabOnStage">
         <element name="tabHeader" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-header')][{{arg1}}]" parameterized="true"/>
@@ -19,11 +18,12 @@
         <element name="tabOptionsByIndex" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//div[contains(@class, 'pagebuilder-options-wrapper')][{{arg1}}]" parameterized="true"/>
         <element name="tabOptionsEdit" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'edit-block')]"/>
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')]//div[@role='tabpanel'])[{{arg1}}][not(contains(@style,'border:'))]" parameterized="true"/>
-        <element name="tabTitle" type="input" selector="//*[@name='tabs[{{arg1}}][title]']" parameterized="true"/>
-        <element name="tabContent" type="input" selector="//*[@role='tabpanel'][{{arg1}}]" parameterized="true"/>
-        <element name="tabContentVisible" type="button" selector="[aria-expanded='true'][aria-hidden='false']"/>
-        <element name="tabContentHidden" type="button" selector="[aria-expanded='false'][aria-hidden='true']"/>
-        <element name="tabHeaderActive" type="button" selector="ui-state-active [aria-selected='true']"/>
-        <element name="tabHeaderInactive" type="button" selector="[aria-selected='false']"/>
+        <element name="tabTitle" type="button" selector="//*[@name='tabs[{{arg1}}][title]']" parameterized="true"/>
+        <element name="tabPanel" type="button" selector="//*[@role='tabpanel'][{{arg1}}]" parameterized="true"/>
+        <element name="tabContent" type="button" selector="//*[@role='tabpanel'][{{arg1}}]//div[contains(@class, 'pagebuilder-tab')]" parameterized="true"/>
+    </section>
+    <section name="TabOnStorefront">
+        <element name="tabHeader" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-header')][{{arg1}}]" parameterized="true"/>
+        <element name="tabContent" type="button" selector="//div[contains(@class, 'tabs-content')]//*[@role='tabpanel'][{{arg1}}]" parameterized="true"/>
     </section>
 </sections>
