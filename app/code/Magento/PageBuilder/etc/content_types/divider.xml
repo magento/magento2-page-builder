@@ -6,15 +6,15 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
-	<content_types>
-		<type name="divider" sortOrder="50" translate="label">
+    <content_types>
+        <type name="divider" sortOrder="50" translate="label">
             <label>Divider</label>
             <icon>icon-pagebuilder-divider</icon>
             <form>pagebuilder_divider_form</form>
             <group>general</group>
             <allowed_parents>
-                <parent name="row" />
-                <parent name="column" />
+                <parent name="row"/>
+                <parent name="column"/>
             </allowed_parents>
             <appearances>
                 <appearance default="true" name="default">
@@ -22,24 +22,24 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property name="text_align" var="text_align" />
-                                    <property name="border_style" var="border" />
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color" />
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width" />
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius" />
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" var="margins_and_padding" />
+                                    <property name="text_align" var="text_align"/>
+                                    <property name="border_style" var="border"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute name="data-role" var="name" />
+                                    <attribute name="data-role" var="name"/>
                                 </attributes>
-                                <html placeholder="Text" var="content" />
-                                <css var="css_classes" />
+                                <html placeholder="Text" var="content"/>
+                                <css var="css_classes"/>
                             </element>
                             <element name="line" path=".//hr">
                                 <style_properties>
-                                    <property name="width" var="line_width" />
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="line_thickness" />
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="line_color" />
+                                    <property name="width" var="line_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="line_thickness"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="line_color"/>
                                 </style_properties>
                             </element>
                         </elements>
@@ -50,5 +50,5 @@
                 </appearance>
             </appearances>
         </type>
-	</content_types>
+    </content_types>
 </config>
