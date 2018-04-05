@@ -41,20 +41,11 @@
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-        <actionGroup ref="addTab" stepKey="addTab1"/>
-        <actionGroup ref="addTab" stepKey="addTab2">
-            <argument name="index" value="1"/>
-            <argument name="title" value="Tab 2"/>
-            <argument name="content" value="Tab 2 Content"/>
-        </actionGroup>
+
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="reopenEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <seeInField selector="{{PageBuilderTabsEditPanel.tabTitle('0')}}" userInput="Tab 1" stepKey="seeTab1InEditGrid"/>
-        <seeInField selector="{{PageBuilderTabsEditPanel.tabContent('0')}}" userInput="Tab 1 Content" stepKey="seeTab1ContentInEditGrid"/>
-        <seeInField selector="{{PageBuilderTabsEditPanel.tabTitle('1')}}" userInput="Tab 2" stepKey="seeTab2InEditGrid"/>
-        <seeInField selector="{{PageBuilderTabsEditPanel.tabContent('1')}}" userInput="Tab 2 Content" stepKey="seeTab2ContentInEditGrid"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <seeElement selector="//li[@role='tab'][contains(@class, 'ui-tabs-active')]/a[@title='Tab 1']/span[contains(text(), 'Tab 1')]" stepKey="seeTab1TitleOnStage"/>
         <seeElement selector="//li[@role='tab']/a[@title='Tab 2']/span[contains(text(), 'Tab 2')]" stepKey="seeTab2TitleOnStage"/>
@@ -132,7 +123,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="addTab" stepKey="addTab"/>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>

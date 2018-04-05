@@ -42,20 +42,26 @@
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+
         <comment userInput="User sees tab preview takes 100% container width" stepKey="AC2"/>
         <comment userInput="User sees tab preview min height to be 300 px" stepKey="AC3"/>
         <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC4"/>
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC5"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocused"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisible"/>
+
         <comment userInput="Tab option panel displayed on top of the tab." stepKey="AC6"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsByIndex('1')}}" stepKey="waitForTabOptionsPanel"/>
-
         <seeElement selector="{{TabOnStage.tabOptionsByIndex('1')}}" stepKey="seeTabOptionsPanel"/>
 
         <comment userInput="User doesn't see the Tabs option panel" stepKey="AC7"/>
-        <dontSeeElement selector="{{TabsOnStage.tabsOptions}}" stepKey="dontSeeTabsOptionsAfterAddTabs"/>
+        <dontSeeElement selector="{{TabsOnStage.tabsOptionsTitle}}" stepKey="dontSeeTabsOptionsAfterAddTabs"/>
 
         <comment userInput="Tab title has the default value Tab 1" stepKey="AC8"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabHeader('1')}}" attribute="title" expectedValue="Tab 1" stepKey="assertInitialSlideTitle"/>
 
         <comment userInput="A placeholder indicates that content can be added inside the tab" stepKey="AC9"/>
         <see selector="{{TabOnStage.empty}}" userInput="Drag content blocks or columns here" stepKey="seeTabPlaceholder"/>
@@ -69,10 +75,10 @@
             <argument name="property" value="PageBuilderTabName1Default"/>
         </actionGroup>
         <comment userInput="Tab has default value empty for Background Image" stepKey="commentDefaultBackgroundImage"/>
-        <seeElement selector="{{UploadImageSection.SelectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
-        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnBackgroundImage"/>
 
         <comment userInput="Tab has default value empty for Background Mobile image" stepKey="commentDefaultBackgroundMobile"/>
+        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnBackgroundMobileImage"/>
 
         <comment userInput="Tab has default value empty for Background Color" stepKey="commentDefaultBackgroundColor"/>
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderTabBackgroundColorProperty.section, PageBuilderTabBackgroundColorProperty.fieldName)}}" stepKey="getBackgroundColor"/>
