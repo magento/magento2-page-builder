@@ -10,11 +10,13 @@ use Magento\TestFramework\Helper\Bootstrap;
 
 class AppearanceTest extends \PHPUnit\Framework\TestCase
 {
-    public function testAppearances()
+    /**
+     * @magentoAppArea adminhtml
+     */
+    public function testContentTypeAndFormConfigurationAppearancesMatch()
     {
         $objectManager = Bootstrap::getObjectManager();
 
-        Bootstrap::getInstance()->loadArea('adminhtml');
         $contentTypesReader = $objectManager->create(
             \Magento\PageBuilder\Model\Config\ContentTypes\Reader::class
         );
