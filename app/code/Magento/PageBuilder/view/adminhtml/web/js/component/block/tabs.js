@@ -25,7 +25,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       return options;
     };
     /**
-     * Add a slide into the slider
+     * Add a tab
      */
 
 

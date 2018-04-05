@@ -11,7 +11,7 @@ requirejs([
     'Magento_PageBuilder/js/utils/map',
     'jquery/ui',
     'slick',
-    'jarallax',
+    'jarallax'
 ], function ($, hljs, GoogleMap) {
     'use strict';
 
@@ -113,7 +113,6 @@ requirejs([
             $(element).tabs();
         });
     });
-
 
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {

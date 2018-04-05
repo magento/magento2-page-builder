@@ -17,9 +17,10 @@
         <waitForElementVisible selector="{{SlideOnFrontend.slide(index)}}" stepKey="waitForSlide"/>
     </actionGroup>
     <actionGroup name="openSlideOptions">
+        <comment userInput="Open slide options" stepKey="commentOpen"/>
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
         <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.firstSlideNavigationDot}}"/>
-        <seeElement selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="seeSlideOptionsEdit"/>
+        <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
         <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentBlock"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
@@ -30,9 +31,10 @@
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="Open slide options by index" stepKey="commentOpenByIndex"/>
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
         <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.slideNavigationDot(index)}}"/>
-        <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="seeSlideOptionsEdit"/>
+        <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
         <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentBlock"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->

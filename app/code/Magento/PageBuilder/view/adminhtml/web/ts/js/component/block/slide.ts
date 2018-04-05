@@ -9,9 +9,9 @@ import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
 import {Options} from "../stage/structural/options";
-import Block from "./block";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
+import Block from "./block";
 
 export default class Slide extends Block {
 

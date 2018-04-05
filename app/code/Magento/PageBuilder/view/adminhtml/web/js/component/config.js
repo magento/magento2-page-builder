@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["advanced-cms-init-config", "jquery", "underscore"], function (_advancedCmsInitConfig, _jquery, _underscore) {
+define(["jquery", "underscore"], function (_jquery, _underscore) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Config =
@@ -13,7 +13,7 @@ define(["advanced-cms-init-config", "jquery", "underscore"], function (_advanced
      * @param config
      */
     Config.setInitConfig = function setInitConfig(config) {
-      Config.config = config;
+      Config.initConfig = config;
     };
     /**
      * Retrieve the init config
@@ -58,6 +58,16 @@ define(["advanced-cms-init-config", "jquery", "underscore"], function (_advanced
 
     Config.getConfig = function getConfig() {
       return Config.config;
+    };
+    /**
+     * Set config
+     *
+     * @param config
+     */
+
+
+    Config.setConfig = function setConfig(config) {
+      Config.config = config;
     };
     /**
      * Get a specific value from the configuration based on a key
@@ -266,7 +276,7 @@ define(["advanced-cms-init-config", "jquery", "underscore"], function (_advanced
     return Config;
   }();
 
-  Config.initConfig = _advancedCmsInitConfig;
+  Config.initConfig = void 0;
   Config.config = {
     dataRoleAttributeName: "data-role"
   };

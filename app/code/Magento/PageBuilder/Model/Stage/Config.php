@@ -5,6 +5,8 @@
  */
 namespace Magento\PageBuilder\Model\Stage;
 
+use Magento\Framework\UrlInterface;
+
 class Config
 {
     const DEFAULT_COMPONENT = 'Magento_PageBuilder/js/component/block/block';
@@ -26,19 +28,35 @@ class Config
     private $data;
 
     /**
+     * @var UrlInterface
+     */
+    private $urlBuilder;
+
+    /**
+     * @var \Magento\Framework\Url
+     */
+    private $frontendUrlBuilder;
+
+    /**
      * Constructor
      *
      * @param \Magento\PageBuilder\Model\Config\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
+     * @param \Magento\Framework\UrlInterface $urlBuilder
+     * @param \Magento\Framework\Url $frontendUrlBuilder
      * @param array $data
      */
     public function __construct(
         \Magento\PageBuilder\Model\Config\ConfigInterface $config,
         Config\UiComponentConfig $uiComponentConfig,
+        \Magento\Framework\UrlInterface $urlBuilder,
+        \Magento\Framework\Url $frontendUrlBuilder,
         array $data = []
     ) {
         $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
+        $this->urlBuilder = $urlBuilder;
+        $this->frontendUrlBuilder = $frontendUrlBuilder;
         $this->data = $data;
     }
 
@@ -52,7 +70,9 @@ class Config
         return [
             'groups' => $this->getGroups(),
             'content_types' => $this->getContentTypes(),
-            'stage_config' => $this->data
+            'stage_config' => $this->data,
+            'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
+            'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview')
         ];
     }
 

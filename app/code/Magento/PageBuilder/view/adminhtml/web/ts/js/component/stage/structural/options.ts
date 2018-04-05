@@ -4,10 +4,8 @@
  */
 
 import ko from "knockout";
-import _ from "underscore";
 import { Structural } from "./abstract.d";
 import { OptionInterface } from "./options/option.d";
-import {Option} from "./options/option";
 
 export class Options {
     private parent: Structural;

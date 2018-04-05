@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/block/column-group/factory", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_translate, _underscore, _array, _eventBus, _block, _factory, _resizing, _registry, _resizing2) {
+define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/block/column-group/factory", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_translate, _alert, _underscore, _array, _eventBus, _block, _factory, _resizing, _registry, _resizing2) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -100,7 +100,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/array", "M
 
 
       if (!duplicate) {
-        this.stage.parent.alertDialog({
+        (0, _alert)({
           content: (0, _translate)("There is no free space within the column group to perform this action."),
           title: (0, _translate)("Unable to duplicate column")
         });

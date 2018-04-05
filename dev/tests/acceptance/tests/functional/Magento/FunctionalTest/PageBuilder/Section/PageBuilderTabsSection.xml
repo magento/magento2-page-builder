@@ -7,17 +7,15 @@
 -->
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
-    <section name="PageBuilderTabsEditPanel">
-        <element name="addNewTabButton" type="button" selector="//button/span[contains(text(), 'Add New Tab')]"/>
-        <element name="tabTitle" type="input" selector="//*[@name='tabs[{{arg1}}][title]']" parameterized="true"/>
-        <element name="tabContent" type="input" selector="//*[@name='tabs[{{arg1}}][content]']" parameterized="true"/>
-    </section>
     <section name="TabsOnStage">
         <element name="tabsContainer" type="button" selector="//div[contains(@class,'pagebuilder-tabs')]"/>
         <element name="tabsNavigation" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-navigation')])"/>
         <element name="tabsContent" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-content')])"/>
         <element name="tabsContentDefault" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-content')][@style='border-radius: {{arg1}}px;'])" parameterized="true"/>
         <element name="tabsOptions" type="button" selector="//div[contains(@class, 'pagebuilder-tabs')]//div[@data-bind='text: parent.preview.displayLabel']"/>
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')])[{{arg1}}][@style='border-width: {{arg2}}px; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
+        <element name="tabsOptionsTitle" type="button" selector='//div[contains(@class, "pagebuilder-tabs")]//div[@class="option-title"]//*[text()="Tabs"]'/>
+        <element name="addNewTabButton" type="button" selector="//button/span[contains(text(), 'Add New Tab')]"/>
     </section>
     <section name="TabOnStage">
         <element name="tabHeader" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-header')][{{arg1}}]" parameterized="true"/>
@@ -25,5 +23,12 @@
         <element name="empty" type="button" selector="(//div[contains(@class, 'pagebuilder-tabs')]//div[contains(@class, 'pagebuilder-tab') and contains(@class, 'empty-container')])"/>
         <element name="tabOptionsByIndex" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//div[contains(@class, 'pagebuilder-options-wrapper')][{{arg1}}]" parameterized="true"/>
         <element name="tabOptionsEdit" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'edit-block')]"/>
+        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')]//div[@role='tabpanel'])[{{arg1}}][not(contains(@style,'border:'))]" parameterized="true"/>
+        <element name="tabTitle" type="input" selector="//*[@name='tabs[{{arg1}}][title]']" parameterized="true"/>
+        <element name="tabContent" type="input" selector="//*[@role='tabpanel'][{{arg1}}]" parameterized="true"/>
+        <element name="tabContentVisible" type="button" selector="[aria-expanded='true'][aria-hidden='false']"/>
+        <element name="tabContentHidden" type="button" selector="[aria-expanded='false'][aria-hidden='true']"/>
+        <element name="tabHeaderActive" type="button" selector="ui-state-active [aria-selected='true']"/>
+        <element name="tabHeaderInactive" type="button" selector="[aria-selected='false']"/>
     </section>
 </sections>
