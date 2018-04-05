@@ -17,7 +17,6 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89768 MAGETWO-89770 "/>
             <group value="pagebuilder"/>
-
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -48,7 +47,7 @@
         <!--I input HEX color code into input field-->
         <fillField selector="{{BackgroundColor.colorInputField}}" userInput="test" stepKey="inputWrongFormatColorCodeIntoInputField"/>
         <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField1"/>
-        <see userInput="Wrong color format." stepKey="seeValidationMsg" />
+        <see userInput="Wrong color format. Please specify color in HEX, RGBa, HSVa, HSLa or use color name." stepKey="seeValidationMsg" />
         <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.yellowHEX}}" stepKey="inputColorCodeIntoInputField"/>
         <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField2"/>
         <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(255, 255, 13);']" stepKey="seeSwatchInRed" />
@@ -83,11 +82,11 @@
         <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#ff0000" stepKey="seeRedColorCodeInInputField2" />
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'pagebuilder-row') and (contains(@style,'background-color: rgb(147, 55, 101);'))]" stepKey="seePreviewColorOnStage"/>
+        <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'pagebuilder-row') and (contains(@style,'background-color: rgb(255, 0, 0);'))]" stepKey="seePreviewColorOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
 
-        <seeElement selector="//div[@data-role='row' and contains(@style,'background-color: rgb(147, 55, 101)')]" stepKey="seeColorBackground"/>
+        <seeElement selector="//div[@data-role='row' and contains(@style,'background-color: rgb(255, 0, 0)')]" stepKey="seeColorBackground"/>
 
     </test>
     <test name="InitializeWithRow">
