@@ -25,7 +25,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
      */
     private $contentTypesFileResolverMock;
 
-    public function setUp()
+    protected function setUp()
     {
         $objectManager = Bootstrap::getObjectManager();
 
