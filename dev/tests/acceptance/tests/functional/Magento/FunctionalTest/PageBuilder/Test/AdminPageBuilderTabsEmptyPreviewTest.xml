@@ -20,8 +20,6 @@
             <group value="pagebuilder-tabs"/>
         </annotations>
         <before>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
@@ -45,12 +43,19 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
 
+        <!--assert computed styles matching expected depends on MQE-818 -->
         <comment userInput="User sees tab preview takes 100% container width" stepKey="AC2"/>
+        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab.empty-container'),null).getPropertyValue('width')" stepKey="getDefaultTabWidth"/>
+
         <comment userInput="User sees tab preview min height to be 300 px" stepKey="AC3"/>
+        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab.empty-container'),null).getPropertyValue('min-height')" stepKey="getDefaultTabMinHeight"/>
+
         <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC4"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="style" expectedValue="padding: 40px; background-image: none; background-color: transparent; background-size: cover;" stepKey="assertTab1DefaultStyle"/>
+
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC5"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocused"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisible"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocused"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisible"/>
 
         <comment userInput="Tab option panel displayed on top of the tab." stepKey="AC6"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsByIndex('1')}}" stepKey="waitForTabOptionsPanel"/>
@@ -61,7 +66,7 @@
 
         <comment userInput="Tab title has the default value Tab 1" stepKey="AC8"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabHeader('1')}}" attribute="title" expectedValue="Tab 1" stepKey="assertInitialSlideTitle"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabHeader('1')}}" attribute="title" expectedValue="Tab 1" stepKey="assertInitialSlideTitleAdmin"/>
 
         <comment userInput="A placeholder indicates that content can be added inside the tab" stepKey="AC9"/>
         <see selector="{{TabOnStage.empty}}" userInput="Drag content blocks or columns here" stepKey="seeTabPlaceholder"/>
@@ -75,10 +80,10 @@
             <argument name="property" value="PageBuilderTabName1Default"/>
         </actionGroup>
         <comment userInput="Tab has default value empty for Background Image" stepKey="commentDefaultBackgroundImage"/>
-        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnBackgroundImage"/>
+        <waitForElementVisible selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnBackgroundImage"/>
 
         <comment userInput="Tab has default value empty for Background Mobile image" stepKey="commentDefaultBackgroundMobile"/>
-        <seeElement selector="{{UploadImageSection.PlaceholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnBackgroundMobileImage"/>
+        <waitForElementVisible selector="{{UploadImageSection.PlaceholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnBackgroundMobileImage"/>
 
         <comment userInput="Tab has default value empty for Background Color" stepKey="commentDefaultBackgroundColor"/>
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderTabBackgroundColorProperty.section, PageBuilderTabBackgroundColorProperty.fieldName)}}" stepKey="getBackgroundColor"/>
@@ -128,6 +133,9 @@
         <!-- Verify Default Values for Tabs on storefront -->
         <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <assertElementContainsAttribute selector="{{TabOnStorefront.tabHeader('1')}}" attribute="title" expectedValue="Tab 1" stepKey="assertInitialSlideTitleStorefront"/>
+        <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocusedStorefront"/>
+        <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisibleStorefront"/>
     </test>
 </tests>
 
