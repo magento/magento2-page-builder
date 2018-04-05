@@ -136,6 +136,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/util
      * Get the Tab header style attributes for the preview
      *
      * @param {number} index
+     * @returns {any}
      */
 
 

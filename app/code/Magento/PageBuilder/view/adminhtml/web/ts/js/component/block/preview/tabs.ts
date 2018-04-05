@@ -125,6 +125,7 @@ export default class Tabs extends PreviewBlock {
      * Get the Tab header style attributes for the preview
      *
      * @param {number} index
+     * @returns {any}
      */
     public getTabHeaderStyles(index: number) {
         const borderRadius = this.data.border_radius();
