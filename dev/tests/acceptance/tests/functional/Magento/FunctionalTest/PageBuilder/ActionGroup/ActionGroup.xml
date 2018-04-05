@@ -38,6 +38,12 @@
         <see userInput="Html" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="seeOtherGroupHtml"/>
         <dontSee userInput="Search" selector="{{PageBuilderActionsSection.otherGroupBlock}}" stepKey="dontSeeOtherGroupSearch"/>
     </actionGroup>
+    <actionGroup name="closePageBuilderPanelGroups">
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <click selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
+    </actionGroup>
     <actionGroup name="navigateToAPageWithPageBuilder">
         <waitForPageLoad stepKey="waitForDashboardPageLoad"/>
         <amOnPage url="{{PageBuilderCmsPage.url}}" stepKey="amOnPageBuilderPage"/>
