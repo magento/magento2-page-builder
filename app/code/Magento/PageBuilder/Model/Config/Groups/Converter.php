@@ -76,10 +76,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      * @param array $secondElement
      * @return int
      */
-    private function sortData($firstElement, $secondElement)
+    private function sortData(array $firstElement, array $secondElement): int
     {
-        $aOrder = (int)$firstElement['sortOrder'];
-        $bOrder = (int)$secondElement['sortOrder'];
-        return $aOrder < $bOrder ? -1 : ($aOrder > $bOrder ? 1 : 0);
+        return (int)$firstElement['sortOrder'] <=> (int)$secondElement['sortOrder'];
     }
 }
