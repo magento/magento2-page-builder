@@ -55,6 +55,7 @@
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
     </actionGroup>
     <actionGroup name="expandConfigurationSection">
@@ -120,19 +121,6 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
-    <actionGroup name="openPageBuilderEditPanelSmall">
-        <arguments>
-            <argument name="contentBlockType" defaultValue=""/>
-        </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
-        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
-        <click selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
-        <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
-    </actionGroup>
     <actionGroup name="openPageBuilderEditPanelByIndex">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
@@ -162,7 +150,15 @@
         <click selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlockType.role, '1')}}" stepKey="clickDuplicateContentBlock"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, '2')}}" stepKey="waitForDuplicateContentBlock"/>
     </actionGroup>
-
+    <actionGroup name="openPageBuilderOptionsByIndex">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockNumber" defaultValue="1"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber.index)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber.index)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockNumber.index)}}" stepKey="waitForOptions" />
+    </actionGroup>
     <!-- Remove a content type which is in it's default state -->
     <actionGroup name="removeEmptyContentBlockFromStage">
         <arguments>
@@ -322,7 +318,7 @@
             <argument name="selection" defaultValue=""/>
         </arguments>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <waitForElement time="5" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
         <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="selectOption" />
         <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkInput}}" userInput="{{property.value}}" stepKey="inputURLLink"/>

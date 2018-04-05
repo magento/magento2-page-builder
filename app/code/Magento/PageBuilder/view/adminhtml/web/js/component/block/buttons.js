@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../utils/delayed-promise", "../block/factory", "../config", "../event-bus", "./block"], function (_delayedPromise, _factory, _config, _eventBus, _block) {
+define(["Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block"], function (_factory, _config, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Buttons =
@@ -36,9 +36,9 @@ define(["../../utils/delayed-promise", "../block/factory", "../config", "../even
       createBlockPromise.then(function (button) {
         _this2.addChild(button);
 
+        _this2.preview.isLiveEditing(_this2.children().indexOf(button));
+
         return button;
-      }).then((0, _delayedPromise)(300)).then(function (button) {
-        button.edit.open();
       }).catch(function (error) {
         console.error(error);
       });

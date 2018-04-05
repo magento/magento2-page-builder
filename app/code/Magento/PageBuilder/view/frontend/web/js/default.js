@@ -10,7 +10,7 @@ requirejs([
     'highlight',
     'Magento_PageBuilder/js/utils/map',
     'slick',
-    'jarallax',
+    'jarallax'
 ], function ($, hljs, GoogleMap) {
     'use strict';
 
@@ -108,7 +108,6 @@ requirejs([
         showOverlayOnHover($('div[data-role="slide"][data-show-overlay="on_hover"] > a'));
         showButtonOnHover($('div[data-role="slide"][data-show-button="on_hover"] > a'), '.pagebuilder-slide-button');
     });
-
 
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {

@@ -3,29 +3,64 @@
  * See COPYING.txt for license details.
  */
 
-import delayedPromise from "../../utils/delayed-promise";
-import createBlock from "../block/factory";
+import $t from "mage/translate";
+import _ from "underscore";
+import createBlock, {BlockReadyEventParams} from "../block/factory";
 import Config from "../config";
 import EventBus from "../event-bus";
 import {BlockRemovedParams} from "../stage/event-handling-delegate";
+import {BlockDuplicateEventParams, BlockMountEventParams} from "../stage/structural/editable-area";
+import {Option} from "../stage/structural/options/option";
+import {OptionInterface} from "../stage/structural/options/option.d";
 import Block from "./block";
+import {default as SliderPreview} from "./preview/slider";
+import Slide from "./slide";
 
 export default class Slider extends Block {
+
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<OptionInterface>}
+     */
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
+        options.push(
+            new Option(
+                this,
+                "add",
+                "<i class='icon-pagebuilder-add'></i>",
+                $t("Add"),
+                this.addSlide,
+                ["add-child"],
+                10,
+            ),
+        );
+        return options;
+    }
 
     /**
      * Add a slide into the slider
      */
     public addSlide() {
-        // Set the active slide to the index of the new slide we're creating
-        this.preview.data.activeSlide(this.children().length);
-
         createBlock(
             Config.getInitConfig("content_types").slide,
             this,
             this.stage,
-        ).then(delayedPromise(300)).then((slide) => {
-            this.addChild(slide, this.children().length);
-            slide.edit.open();
+        ).then((slide) => {
+            _.delay(() => {
+                const mountFn = (event: Event, params: BlockMountEventParams) => {
+                    if (params.id === slide.id) {
+                        (this.preview as SliderPreview).navigateToSlide(this.children().length - 1);
+                        _.delay(() => {
+                            slide.edit.open();
+                        }, 500);
+                        EventBus.off("slide:block:mount", mountFn);
+                    }
+                };
+                EventBus.on("slide:block:mount", mountFn);
+                this.addChild(slide, this.children().length);
+            });
         });
     }
 
@@ -35,16 +70,38 @@ export default class Slider extends Block {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        EventBus.on("slider:block:ready", (event: Event, params: {[key: string]: any}) => {
+        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
             if (params.id === this.id && this.children().length === 0) {
                 this.addSlide();
             }
         });
+
         // Block being removed from container
-        EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
+        EventBus.on("slide:block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {
                 // Mark the previous slide as active
-                this.preview.data.activeSlide(params.index - 1);
+                const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
+                (this.preview as SliderPreview).setActiveSlide(newIndex);
+                (this.preview as SliderPreview).setFocusedSlide(newIndex, true);
+            }
+        });
+
+        // Capture when a block is duplicated within the container
+        let duplicatedSlide: Slide;
+        let duplicatedSlideIndex: number;
+        EventBus.on("slide:block:duplicate", (event, params: BlockDuplicateEventParams) => {
+            if (params.duplicate.parent.id === this.id) {
+                duplicatedSlide = (params.duplicate as Slide);
+                duplicatedSlideIndex = params.index;
+            }
+        });
+        EventBus.on("slide:block:mount", (event: Event, params: BlockMountEventParams) => {
+            if (duplicatedSlide && params.id === duplicatedSlide.id) {
+                // Mark the new duplicate slide as active
+                (this.preview as SliderPreview).navigateToSlide(duplicatedSlideIndex);
+                // Force the focus of the slide, as the previous slide will have focus
+                (this.preview as SliderPreview).setFocusedSlide(duplicatedSlideIndex, true);
+                duplicatedSlide = duplicatedSlideIndex = null;
             }
         });
     }

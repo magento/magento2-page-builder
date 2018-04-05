@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../event-bus", "./block"], function (_underscore, _eventBus, _block) {
+define(["underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block"], function (_underscore, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Map =

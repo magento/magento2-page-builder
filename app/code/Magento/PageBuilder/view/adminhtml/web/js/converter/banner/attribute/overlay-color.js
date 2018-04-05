@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../utils/color-converter"], function (_colorConverter) {
+define(["Magento_PageBuilder/js/utils/color-converter"], function (_colorConverter) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

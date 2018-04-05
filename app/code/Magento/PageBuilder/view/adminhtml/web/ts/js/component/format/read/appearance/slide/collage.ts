@@ -55,7 +55,7 @@ export default class Collage implements ReadInterface {
                     top: paddingSrc.paddingTop.replace("px", ""),
                 },
             },
-            message: element.querySelector(".pagebuilder-collage-content div").innerHTML,
+            content: element.querySelector(".pagebuilder-collage-content div").innerHTML,
             min_height: element.querySelector(".pagebuilder-slide-wrapper").style.minHeight ?
                 parseInt(element.querySelector(".pagebuilder-slide-wrapper").style.minHeight, 10) : 0,
             mobile_image: mobileImage,

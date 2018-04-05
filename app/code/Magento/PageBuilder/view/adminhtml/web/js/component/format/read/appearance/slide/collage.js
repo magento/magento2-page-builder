@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../../../utils/color-converter", "../../../../../utils/extract-alpha-from-rgba", "../../../../../utils/image"], function (_colorConverter, _extractAlphaFromRgba, _image) {
+define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/extract-alpha-from-rgba", "Magento_PageBuilder/js/utils/image"], function (_colorConverter, _extractAlphaFromRgba, _image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -54,7 +54,7 @@ define(["../../../../../utils/color-converter", "../../../../../utils/extract-al
             top: paddingSrc.paddingTop.replace("px", "")
           }
         },
-        message: element.querySelector(".pagebuilder-collage-content div").innerHTML,
+        content: element.querySelector(".pagebuilder-collage-content div").innerHTML,
         min_height: element.querySelector(".pagebuilder-slide-wrapper").style.minHeight ? parseInt(element.querySelector(".pagebuilder-slide-wrapper").style.minHeight, 10) : 0,
         mobile_image: mobileImage,
         open_in_new_tab: target && target === "_blank" ? "1" : "0",

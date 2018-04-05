@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./default"], function (_default) {
+define(["Magento_PageBuilder/js/component/format/read/default"], function (_default) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
