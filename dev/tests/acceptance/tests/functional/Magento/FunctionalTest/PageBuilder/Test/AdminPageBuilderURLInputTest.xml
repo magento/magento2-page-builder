@@ -167,7 +167,7 @@
         <!--Go to storefront to verify Category Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderCategoryOnStoreFrontSection.CategoryLink($createSubCategoryY.name$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.CategoryLink($createSubCategoryY.name$)}}" stepKey="seeExternalLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$createSubCategoryY.name$" stepKey="seeCategoryName" />
@@ -189,9 +189,9 @@
     <test name="AdminPageBuilderProductButtonLinkTest">
         <annotations>
             <features value="[CMS] Bluefoot Image MAGETWO-83833"/>
-            <stories value="[UI Component] URL Input: Category Link MAGETWO-88961"/>
-            <title value="Admin are able to add Category link into PageBuilder content"/>
-            <description value="Admin are able to add Category link link into PageBuilder content"/>
+            <stories value="[UI Component] URL Input: Product Link MAGETWO-88962"/>
+            <title value="Admin are able to add Product link into PageBuilder content"/>
+            <description value="Admin are able to add Product link link into PageBuilder content"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89771"/>
             <group value="pagebuilder"/>
@@ -233,8 +233,8 @@
         <!--Type 2 first letters into Search box-->
         <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="te" stepKey="fill2FirstLetters"/>
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="waitForSearchResult" />
-        <see userInput="$createPreReqProduct1.name$" stepKey="seeSubCategoryOnSearchResult"/>
-        <click selector="{{PageBuilderButtonLinkSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="clickSubCategoryXOnSearchResult"/>
+        <see userInput="$createPreReqProduct1.name$" stepKey="seeProduct1OnSearchResult"/>
+        <click selector="{{PageBuilderButtonLinkSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="clickProduct1XOnSearchResult"/>
         <dontSee selector="{{PageBuilderButtonLinkSection.SearchResultBox}}" stepKey="dropdownCollapses" />
         <grabTextFrom selector="{{PageBuilderButtonLinkSection.DropdownInput}}" stepKey="textFromDropDown1"/>
         <assertEquals stepKey="assertEquals1" message="pass">
@@ -260,10 +260,10 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
 
-        <!--Go to storefront to verify Category Link-->
+        <!--Go to storefront to verify Product Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderCategoryOnStoreFrontSection.CategoryLink($createPreReqProduct2.name$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.ProductLink($createPreReqProduct2.name$)}}" stepKey="seeExternalLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$createPreReqProduct2.name$" stepKey="seeProductName" />
