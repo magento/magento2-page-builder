@@ -14,8 +14,13 @@
     </section>
     <section name="TabsOnStage">
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')])[{{arg1}}][@style='border-width: {{arg2}}px; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
+        <element name="tabsOptions" type="button" selector="//div[contains(@class, 'pagebuilder-tabs')]//div[@data-bind='text: parent.preview.displayLabel']"/>
     </section>
     <section name="TabOnStage">
+        <element name="tabHeader" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-header')][{{arg1}}]" parameterized="true"/>
+        <element name="empty" type="button" selector="(//div[contains(@class, 'pagebuilder-tabs')]//div[contains(@class, 'pagebuilder-tab') and contains(@class, 'empty-container')])"/>
+        <element name="tabOptionsByIndex" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//div[contains(@class, 'pagebuilder-options-wrapper')][{{arg1}}]" parameterized="true"/>
+        <element name="tabOptionsEdit" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'edit-block')]"/>
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-tabs') and contains(@class,'ui-tabs')]//div[@role='tabpanel'])[{{arg1}}][not(contains(@style,'border:'))]" parameterized="true"/>
     </section>
 </sections>

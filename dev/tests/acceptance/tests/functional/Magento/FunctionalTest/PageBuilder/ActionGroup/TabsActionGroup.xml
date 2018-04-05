@@ -19,4 +19,17 @@
         <fillField selector="{{PageBuilderTabsEditPanel.tabTitle(index)}}" userInput="{{title}}" stepKey="fillTabRow1TitleField"/>
         <fillField selector="{{PageBuilderTabsEditPanel.tabContent(index)}}" userInput="{{content}}" stepKey="fillTabRow1ContentField"/>
     </actionGroup>
+    <actionGroup name="openTabOptionsByIndex">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentBlockInStageVisible" />
+        <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader(index)}}"/>
+        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
+        <!-- Required time wait due to animation -->
+        <waitForPageLoad stepKey="waitForAnimation" />
+        <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+    </actionGroup>
 </actionGroups>
