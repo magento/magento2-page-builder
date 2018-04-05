@@ -147,12 +147,28 @@
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                </attributes>
+                                <html var="content" placeholder="Text"/>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/text.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/text.html</render_template>
-                    <readers>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/text"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
@@ -240,9 +256,6 @@
         <type name="divider" translate="label" sortOrder="50">
             <label>Divider</label>
             <icon>icon-pagebuilder-divider</icon>
-            <component>Magento_PageBuilder/js/component/block/divider</component>
-            <preview_template>Magento_PageBuilder/component/block/preview/divider.html</preview_template>
-            <render_template>Magento_PageBuilder/component/block/render/divider.html</render_template>
             <form>pagebuilder_divider_form</form>
             <group>general</group>
             <allowed_parents>
@@ -251,12 +264,35 @@
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                </attributes>
+                                <html var="content" placeholder="Text"/>
+                                <css var="css_classes"/>
+                            </element>
+                            <element name="line" path=".//hr">
+                                <style_properties>
+                                    <property var="line_width" name="width"/>
+                                    <property var="line_thickness" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
+                                    <property var="line_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                </style_properties>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/divider.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/divider.html</render_template>
-                    <readers>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                        <reader name="divider" component="Magento_PageBuilder/js/component/format/read/divider"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
@@ -710,7 +746,6 @@
         <type name="video" translate="label" sortOrder="10">
             <label>Video</label>
             <icon>icon-pagebuilder-video</icon>
-            <component>Magento_PageBuilder/js/component/block/video</component>
             <form>pagebuilder_video_form</form>
             <group>media</group>
             <allowed_parents>
@@ -719,12 +754,37 @@
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                </attributes>
+                            </element>
+                            <element name="video" path=".//iframe">
+                                <style_properties>
+                                    <property var="width" name="width"/>
+                                    <property var="height" name="height"/>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="video_source" name="src" converter="Magento_PageBuilder/js/converter/video/attribute/src" preview_converter="Magento_PageBuilder/js/converter/video/attribute/src"/>
+                                </attributes>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/video.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/video.html</render_template>
-                    <readers>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                        <reader name="video" component="Magento_PageBuilder/js/component/format/read/video"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
@@ -962,32 +1022,65 @@
             </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                    <attribute var="id" name="id"/>
+                                </attributes>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/anchor.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/anchor.html</render_template>
-                    <readers>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
         <type name="html" translate="label" sortOrder="20">
             <label>HTML</label>
             <icon>icon-pagebuilder-code</icon>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/html</preview_component>
             <form>pagebuilder_html_form</form>
             <group>other</group>
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
             </allowed_parents>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/html</preview_component>
             <appearances>
                 <appearance name="default" default="true">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                </attributes>
+                                <html var="html" placeholder="HTML"/>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/html.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/html.html</render_template>
-                    <readers>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                        <reader name="html" component="Magento_PageBuilder/js/component/format/read/html"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
