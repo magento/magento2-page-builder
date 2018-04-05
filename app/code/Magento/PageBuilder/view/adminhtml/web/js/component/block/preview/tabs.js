@@ -179,7 +179,6 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/util
       var borderRadius = this.data.border_radius();
       var borderColor = this.data.border_color() === "" ? this.data.border_color() : (0, _colorConverter.fromHex)(this.data.border_color(), "1");
       return {
-        zIndex: -100,
         border: this.data.border() + " " + borderColor + " " + this.data.border_width() + "px",
         borderRadius: "0px " + borderRadius + "px " + borderRadius + "px " + borderRadius + "px"
       };

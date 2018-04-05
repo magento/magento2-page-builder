@@ -168,7 +168,6 @@ export default class Tabs extends PreviewBlock {
             this.data.border_color() :
             fromHex(this.data.border_color(), "1");
         return {
-            zIndex: -100,
             border: `${this.data.border()} ${borderColor} ${this.data.border_width()}px`,
             borderRadius: `0px ${borderRadius}px ${borderRadius}px ${borderRadius}px`,
         };
