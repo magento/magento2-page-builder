@@ -4,7 +4,6 @@
  */
 
 import ko from "knockout";
-import _ from "underscore";
 import { Structural } from "./abstract.d";
 import { OptionInterface } from "./options/option.d";
 
@@ -48,6 +47,18 @@ export class Options {
             return (option.code !== code);
         }));
         this.sort();
+    }
+
+    /**
+     * Get an option from the options array
+     *
+     * @param {string} code
+     * @returns {(OptionInterface | undefined) & (OptionInterface[] | undefined)}
+     */
+    public getOption(code: string) {
+        return this.options().find((option: OptionInterface) => {
+            return (option.code === code);
+        });
     }
 
     /**

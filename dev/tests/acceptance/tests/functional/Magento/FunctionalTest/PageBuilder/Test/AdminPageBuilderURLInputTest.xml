@@ -32,6 +32,10 @@
         </actionGroup>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(PageBuilderButtonsContentBlock.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderButtonIndex1"/>
+        </actionGroup>
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="seeButtonLinkSelect"/>
         <seeOptionIsSelected selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" userInput="URL" stepKey="seeButtonLinkSelectedByDefault" />

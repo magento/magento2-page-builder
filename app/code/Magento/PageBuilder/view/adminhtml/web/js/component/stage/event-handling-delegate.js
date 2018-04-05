@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "../../utils/array", "../block/factory", "../event-bus"], function (_knockout, _array, _factory, _eventBus) {
+define(["knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/event-bus"], function (_knockout, _array, _factory, _eventBus) {
   /**
    * Handle event to remove block
    *

@@ -9,7 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="PageBuilderProductAttribute">
-        <element name="PageBuilderBtn" type="text" selector="//div[contains(@id,'{{var1}}')]//button[contains(concat(' ',normalize-space(@class),' '),'scalable magento-pagebuilder init-magento-pagebuilder action-default scalable action')]" parameterized="true"/>
+        <element name="PageBuilderBtn" type="text" selector="[data-index='{{var1}}'] button.pagebuilder-edit-button" parameterized="true"/>
         <element name="WarningMsg" type="text" selector=".pagebuilder-modal-content-body"/>
         <element name="AcceptBtn" type="button" selector=".action-primary.action-accept"/>
     </section>

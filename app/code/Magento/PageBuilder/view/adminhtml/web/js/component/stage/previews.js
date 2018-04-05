@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "../block/preview/block", "../config"], function (_loader, _block, _config) {
+define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/block/preview/block", "Magento_PageBuilder/js/component/config"], function (_loader, _block, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

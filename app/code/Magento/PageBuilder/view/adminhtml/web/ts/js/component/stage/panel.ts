@@ -7,60 +7,44 @@ import ko from "knockout";
 import "ko-draggable";
 import "ko-sortable";
 import $t from "mage/translate";
-import uiComponent from "uiComponent";
 import _ from "underscore";
 import Config, {ConfigContentBlock} from "../config";
 import EventBus from "../event-bus";
-import { StageInterface } from "../stage.d";
+import PageBuilder from "../page-builder";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
 import { Block as GroupBlock } from "./panel/group/block";
 import { load as loadPreviews } from "./previews";
 
-export default class Panel extends uiComponent implements PanelInterface {
-    public componentTemplate: string = "Magento_PageBuilder/component/stage/panel.html";
-    public defaults: object = {
-        groups: [],
-        isCollapsed: false,
-        isVisible: false,
-        originalScrollTop: false,
-        searchResults: [],
-        searchPlaceholder: $t("Find items"),
-        searchNoResult: $t("Nothing found"),
-        fullScreenTitle: $t("Full Screen"),
-        searchTitle: $t("Clear Search"),
-        searchValue: "",
-        searching: false,
-        stage: false,
-    };
+export default class Panel implements PanelInterface {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
-    // Observables
-    public isCollapsed: KnockoutObservable<boolean>;
-    public isVisible: KnockoutObservable<boolean>;
-    // End Observables
-    public stage: StageInterface;
-    public searchValue: KnockoutObservable<string> = ko.observable("");
-    public searching: KnockoutObservable<boolean> = ko.observable(false);
     public searchResults: KnockoutObservableArray<any> = ko.observableArray([]);
-    public originalScrollTop: number = 0;
+    public isCollapsed: KnockoutObservable<boolean> = ko.observable(false);
+    public isVisible: KnockoutObservable<boolean> = ko.observable(false);
+    public searching: KnockoutObservable<boolean> = ko.observable(false);
+    public searchValue: KnockoutObservable<string> = ko.observable("");
+    public searchPlaceholder: string = $t("Find items");
+    public searchNoResult: string = $t("Nothing found");
+    public fullScreenTitle: string = $t("Full Screen");
+    public searchTitle: string = $t("Clear Search");
+    public parent: PageBuilder;
+    public id: string;
+    private template: string = "Magento_PageBuilder/component/stage/panel.html";
 
-    constructor() {
-        super();
+    constructor(parent: PageBuilder) {
+        this.parent = parent;
+        this.id = this.parent.id;
+        this.initListeners();
         loadPreviews();
     }
 
     /**
-     * Bind the stage to the panel
-     *
-     * @param stage
+     * Init listeners
      */
-    public bindStage(stage: StageInterface): void {
-        this.stage = stage;
-        EventBus.on("stage:ready", (event, params) => {
-            if (this.stage.id === params.stage.id) {
-                this.populateContentBlocks();
-                this.isVisible(true);
-            }
+    public initListeners(): void {
+        EventBus.on("stage:ready:" + this.id, () => {
+            this.populateContentBlocks();
+            this.isVisible(true);
         });
     }
 
@@ -70,18 +54,7 @@ export default class Panel extends uiComponent implements PanelInterface {
      * @returns {string}
      */
     public getTemplate(): string {
-        return this.componentTemplate;
-    }
-
-    /**
-     * Initializes observable properties.
-     *
-     * @returns {Model} Chainable.
-     */
-    public initObservable(): this {
-        super.initObservable().observe("isVisible isCollapsed groups searchValue searching searchResults");
-
-        return this;
+        return this.template;
     }
 
     /**
@@ -160,18 +133,7 @@ export default class Panel extends uiComponent implements PanelInterface {
      * Traverse up to the WYSIWYG component and set as full screen
      */
     public fullScreen(): void {
-        const isFullScreen = this.stage.parent.isFullScreen();
-        if (!isFullScreen) {
-            this.originalScrollTop = jQuery(window).scrollTop();
-            _.defer(() => {
-                jQuery(window).scrollTop(0);
-            });
-        }
-
-        this.stage.parent.isFullScreen(!isFullScreen);
-        if (isFullScreen) {
-            jQuery(window).scrollTop(this.originalScrollTop);
-        }
+        EventBus.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`, {});
     }
 
     /**

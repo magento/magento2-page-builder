@@ -46,6 +46,19 @@ define(["knockout"], function (_knockout) {
       this.sort();
     };
     /**
+     * Get an option from the options array
+     *
+     * @param {string} code
+     * @returns {(OptionInterface | undefined) & (OptionInterface[] | undefined)}
+     */
+
+
+    _proto.getOption = function getOption(code) {
+      return this.options().find(function (option) {
+        return option.code === code;
+      });
+    };
+    /**
      * Sort the options
      */
 

@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import ko from "knockout";
 import $t from "mage/translate";
 import mageUtils from "mageUtils";
 import _ from "underscore";
@@ -16,7 +17,7 @@ import { EditableAreaInterface } from "./editable-area.d";
 
 export default class EditableArea implements EditableAreaInterface {
     public id: string = mageUtils.uniqueid();
-    public children: KnockoutObservableArray<Structural>;
+    public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public stage: Stage;
     public title: string = $t("Editable");
     public parent: EditableArea;
@@ -89,9 +90,17 @@ export default class EditableArea implements EditableAreaInterface {
             });
         }
 
+        // As a new block is being created, we need to fire that event as well
+        EventBus.trigger("block:create", {id: duplicate.id, block: duplicate});
+        EventBus.trigger(child.config.name + ":block:create", {id: duplicate.id, block: duplicate});
+
+        EventBus.trigger("block:duplicate", {original: child, duplicate, index});
+        EventBus.trigger(child.config.name + ":block:duplicate", {original: child, duplicate, index});
+
         if (autoAppend) {
             this.addChild(duplicate, index);
         }
+
         return duplicate;
     }
 
@@ -110,7 +119,7 @@ export default class EditableArea implements EditableAreaInterface {
      * @param child
      * @param index
      */
-    public addChild(child: Structural, index?: number): void {
+    public addChild(child: any, index?: number): void {
         child.parent = this;
         child.stage = this.stage;
         if (typeof index === "number") {
@@ -157,14 +166,10 @@ export default class EditableArea implements EditableAreaInterface {
 
     /**
      * Set the children observable array into the class
-     *
-     * @param children
      */
-    public setChildren(children: KnockoutObservableArray<Structural>) {
-        this.children = children;
-
+    public setChildren() {
         // Attach a subscription to the children of every editable area to fire the stageUpdated event
-        children.subscribe(() => EventBus.trigger("stage:updated", {stage: this.stage}));
+        this.children.subscribe(() => EventBus.trigger("stage:updated", {stage: this.stage}));
     }
 
     /**
@@ -178,4 +183,10 @@ export default class EditableArea implements EditableAreaInterface {
 export interface BlockMountEventParams {
     id: string;
     block: Block;
+}
+
+export interface BlockDuplicateEventParams {
+    original: Block;
+    duplicate: Block;
+    index: number;
 }

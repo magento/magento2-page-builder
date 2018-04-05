@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./block", "./column-group/resizing"], function (_block, _resizing) {
+define(["Magento_PageBuilder/js/component/block/preview/block", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_block, _resizing) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }

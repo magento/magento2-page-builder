@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "../../../utils/directives", "./block"], function (_knockout, _directives, _block) {
+define(["knockout", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/component/block/preview/block"], function (_knockout, _directives, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Html =

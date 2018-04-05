@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "../attribute-mapper", "../style-attribute-mapper"], function (_underscore, _attributeMapper, _styleAttributeMapper) {
+define(["underscore", "Magento_PageBuilder/js/component/format/attribute-mapper", "Magento_PageBuilder/js/component/format/style-attribute-mapper"], function (_underscore, _attributeMapper, _styleAttributeMapper) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

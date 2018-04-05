@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../config", "../factory"], function (_config, _factory) {
+define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/factory"], function (_config, _factory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../utils/extract-alpha-from-rgba"], function (_extractAlphaFromRgba) {
+define(["Magento_PageBuilder/js/utils/extract-alpha-from-rgba"], function (_extractAlphaFromRgba) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

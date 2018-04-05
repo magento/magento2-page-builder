@@ -163,8 +163,9 @@
         </after>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <waitForElementVisible time="5" selector="{{PageBuilderColumnSection.empty}}" stepKey="waitForEmptyColumn"/>
         <seeElementInDOM selector="{{PageBuilderColumnSection.empty}}" stepKey="seeEmptyColumn"/>
@@ -196,14 +197,16 @@
         </after>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <waitForElement selector="{{PageBuilderColumnSection.displayLabel('3/6')}}" stepKey="findBeforeLabel"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <waitForElement selector="{{PageBuilderColumnSection.displayLabel('1/6')}}" stepKey="findAfterLabel"/>
     </test>
@@ -412,13 +415,15 @@
         </after>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
@@ -649,15 +654,16 @@
         </after>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragSecondColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
@@ -908,13 +914,15 @@
         </after>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneSixth)}}" stepKey="seeFirstColumnWidth"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthOneThird)}}" stepKey="seeSecondColumnWidth"/>
@@ -953,23 +961,27 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeading1ToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeading2ToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeading3ToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>

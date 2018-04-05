@@ -1,60 +1,67 @@
 /*eslint-disable */
-define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiComponent", "underscore", "../config", "../event-bus", "./panel/group", "./panel/group/block", "./previews"], function (_knockout, _koDraggable, _koSortable, _translate, _uiComponent, _underscore, _config, _eventBus, _group, _block, _previews) {
+define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/stage/previews"], function (_knockout, _koDraggable, _koSortable, _translate, _underscore, _config, _eventBus, _group, _block, _previews) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Panel = _uiComponent.extend({
-    componentTemplate: "Magento_PageBuilder/component/stage/panel.html",
-    defaults: {
-      groups: [],
-      isCollapsed: false,
-      isVisible: false,
-      originalScrollTop: false,
-      searchResults: [],
-      searchPlaceholder: (0, _translate)("Find items"),
-      searchNoResult: (0, _translate)("Nothing found"),
-      fullScreenTitle: (0, _translate)("Full Screen"),
-      searchTitle: (0, _translate)("Clear Search"),
-      searchValue: "",
-      searching: false,
-      stage: false
-    },
-    groups: _knockout.observableArray([]),
-    isCollapsed: null,
-    isVisible: null,
-    stage: null,
-    searchValue: _knockout.observable(""),
-    searching: _knockout.observable(false),
-    searchResults: _knockout.observableArray([]),
-    originalScrollTop: 0,
-    initialize: function initialize() {
-      this._super();
-
+  var Panel =
+  /*#__PURE__*/
+  function () {
+    function Panel(parent) {
+      this.groups = _knockout.observableArray([]);
+      this.searchResults = _knockout.observableArray([]);
+      this.isCollapsed = _knockout.observable(false);
+      this.isVisible = _knockout.observable(false);
+      this.searching = _knockout.observable(false);
+      this.searchValue = _knockout.observable("");
+      this.searchPlaceholder = (0, _translate)("Find items");
+      this.searchNoResult = (0, _translate)("Nothing found");
+      this.fullScreenTitle = (0, _translate)("Full Screen");
+      this.searchTitle = (0, _translate)("Clear Search");
+      this.parent = void 0;
+      this.id = void 0;
+      this.template = "Magento_PageBuilder/component/stage/panel.html";
+      this.parent = parent;
+      this.id = this.parent.id;
+      this.initListeners();
       (0, _previews.load)();
-    },
-    bindStage: function bindStage(stage) {
+    }
+    /**
+     * Init listeners
+     */
+
+
+    var _proto = Panel.prototype;
+
+    _proto.initListeners = function initListeners() {
       var _this = this;
 
-      this.stage = stage;
+      _eventBus.on("stage:ready:" + this.id, function () {
+        _this.populateContentBlocks();
 
-      _eventBus.on("stage:ready", function (event, params) {
-        if (_this.stage.id === params.stage.id) {
-          _this.populateContentBlocks();
-
-          _this.isVisible(true);
-        }
+        _this.isVisible(true);
       });
-    },
-    getTemplate: function getTemplate() {
-      return this.componentTemplate;
-    },
-    initObservable: function initObservable() {
-      this._super().observe("isVisible isCollapsed groups searchValue searching searchResults");
+    };
+    /**
+     * Return the template string
+     *
+     * @returns {string}
+     */
 
-      return this;
-    },
-    search: function search(self, event) {
+
+    _proto.getTemplate = function getTemplate() {
+      return this.template;
+    };
+    /**
+     * Conduct a search on the available content blocks,
+     * and find matches for beginning of words.
+     *
+     * @param self
+     * @param event
+     */
+
+
+    _proto.search = function search(self, event) {
       this.searchValue(event.currentTarget.value.toLowerCase());
 
       if (this.searchValue() === "") {
@@ -70,8 +77,13 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiComponen
           return new _block.Block(identifier, contentBlock);
         }));
       }
-    },
-    populateContentBlocks: function populateContentBlocks() {
+    };
+    /**
+     * Populate the panel with the content blocks
+     */
+
+
+    _proto.populateContentBlocks = function populateContentBlocks() {
       var _this2 = this;
 
       var groups = _config.getInitConfig("groups");
@@ -105,32 +117,35 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiComponen
       } else {
         console.warn("Configuration is not properly initialized, please check the Ajax response.");
       }
-    },
-    fullScreen: function fullScreen() {
-      var isFullScreen = this.stage.parent.isFullScreen();
+    };
+    /**
+     * Traverse up to the WYSIWYG component and set as full screen
+     */
 
-      if (!isFullScreen) {
-        this.originalScrollTop = jQuery(window).scrollTop();
 
-        _underscore.defer(function () {
-          jQuery(window).scrollTop(0);
-        });
-      }
+    _proto.fullScreen = function fullScreen() {
+      _eventBus.trigger("pagebuilder:toggleFullScreen:" + this.parent.id, {});
+    };
+    /**
+     * Collapse the panel into the side of the UI
+     */
 
-      this.stage.parent.isFullScreen(!isFullScreen);
 
-      if (isFullScreen) {
-        jQuery(window).scrollTop(this.originalScrollTop);
-      }
-    },
-    collapse: function collapse() {
+    _proto.collapse = function collapse() {
       this.isCollapsed(!this.isCollapsed());
-    },
-    clearSearch: function clearSearch() {
+    };
+    /**
+     * Clear Search Results
+     */
+
+
+    _proto.clearSearch = function clearSearch() {
       this.searchValue("");
       this.searching(false);
-    }
-  });
+    };
+
+    return Panel;
+  }();
 
   return Panel;
 });

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "../event-bus", "./data-converter-pool-factory", "./element-converter-pool-factory"], function (_loader, _eventBus, _dataConverterPoolFactory, _elementConverterPoolFactory) {
+define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/data-converter-pool-factory", "Magento_PageBuilder/js/component/block/element-converter-pool-factory"], function (_loader, _eventBus, _dataConverterPoolFactory, _elementConverterPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

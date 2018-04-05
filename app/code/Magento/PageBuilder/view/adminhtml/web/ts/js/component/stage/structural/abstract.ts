@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
-import mageUtils from "mageUtils";
+import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
 import _ from "underscore";
 import appearanceConfig from "../../../component/block/appearance-config";
 import DataConverterPool from "../../../component/block/data-converter-pool";
@@ -29,7 +29,6 @@ import {TitleOption} from "./options/title";
 
 export default class Structural extends EditableArea implements StructuralInterface {
     public config: ConfigContentBlock;
-    public children: KnockoutObservableArray<Structural> = ko.observableArray([]);
     public edit: Edit;
     public title: string;
     public data = {};
@@ -59,7 +58,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         dataConverterPool: DataConverterPool,
     ) {
         super(stage);
-        this.setChildren(this.children);
+        this.setChildren();
         this.parent = parent;
         this.config = config;
         this.elementConverterPool = elementConverterPool;
@@ -78,9 +77,25 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     public retrieveOptions(): OptionInterface[] {
         return [
-            new Option(this, "move", "<i></i>", $t("Move"), null, ["move-structural"], 10),
+            new Option(
+                this,
+                "move",
+                "<i class='icon-admin-pagebuilder-handle'></i>",
+                $t("Move"),
+                null,
+                ["move-structural"],
+                10,
+            ),
             new TitleOption(this, this.config.label, 20),
-            new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 30),
+            new Option(
+                this,
+                "edit",
+                "<i class='icon-admin-pagebuilder-systems'></i>",
+                $t("Edit"),
+                this.onOptionEdit,
+                ["edit-block"],
+                30,
+            ),
             new Option(
                 this,
                 "duplicate",
@@ -90,7 +105,15 @@ export default class Structural extends EditableArea implements StructuralInterf
                 ["duplicate-structural"],
                 40,
             ),
-            new Option(this, "remove", "<i></i>", $t("Remove"), this.onOptionRemove, ["remove-structural"], 50),
+            new Option(
+                this,
+                "remove",
+                "<i class='icon-admin-pagebuilder-remove'></i>",
+                $t("Remove"),
+                this.onOptionRemove,
+                ["remove-structural"],
+                50,
+            ),
         ];
     }
 
@@ -139,22 +162,25 @@ export default class Structural extends EditableArea implements StructuralInterf
      * Handle block removal
      */
     public onOptionRemove(): void {
-        const removeBlock = () => EventBus.trigger("block:removed", {
-            block: this,
-            index: this.parent.children().indexOf(this),
-            parent: this.parent,
-        });
+        const removeBlock = () => {
+            const params = {
+                block: this,
+                index: this.parent.children().indexOf(this),
+                parent: this.parent,
+            };
+            EventBus.trigger("block:removed", params);
+            EventBus.trigger(this.config.name + ":block:removed", params);
+        };
 
         if (this.isConfigured()) {
-            this.stage.parent.confirmationDialog({
+            confirmationDialog({
                 actions: {
                     confirm: () => {
                         // Call the parent to remove the child element
                         removeBlock();
                     },
                 },
-                content: $t("Are you sure you want to remove this item? " +
-                    "The data within this item is not recoverable once removed."),
+                content: $t("Are you sure you want to remove this item? The data within this item is not recoverable once removed."), // tslint:disable-line:max-line-length
                 dismissKey: "pagebuilder_modal_dismissed",
                 dismissible: true,
                 title: $t("Confirm Item Removal"),
@@ -290,6 +316,15 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+    public getOptions(): Options {
+        return new Options(this, this.retrieveOptions());
+    }
+
+    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
@@ -303,25 +338,28 @@ export default class Structural extends EditableArea implements StructuralInterf
         let hasDataChanges = false;
         _.each(this.config.fields, (field, key: string) => {
             let fieldValue = data[key];
+            if (!fieldValue) {
+                fieldValue = "";
+            }
             // Default values can only ever be strings
             if (_.isObject(fieldValue)) {
-                fieldValue = JSON.stringify(fieldValue);
+                // Empty arrays as default values appear as empty strings
+                if (_.isArray(fieldValue) && fieldValue.length === 0) {
+                    fieldValue = "";
+                } else {
+                    fieldValue = JSON.stringify(fieldValue);
+                }
             }
-            if (field.default !== fieldValue) {
+            if (_.isObject(field.default)) {
+                if (JSON.stringify(field.default) !== fieldValue) {
+                    hasDataChanges = true;
+                }
+            } else if (field.default !== fieldValue) {
                 hasDataChanges = true;
-                return;
             }
+            return;
         });
         return hasDataChanges;
-    }
-
-    /**
-     * Get the options instance
-     *
-     * @returns {Options}
-     */
-    public getOptions(): Options {
-        return new Options(this, this.retrieveOptions());
     }
 
     /**
@@ -470,7 +508,9 @@ export default class Structural extends EditableArea implements StructuralInterf
                 }
                 this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
             }
+
         }
+        EventBus.trigger("previewObservables:updated", {preview: this});
     }
 
     /**
