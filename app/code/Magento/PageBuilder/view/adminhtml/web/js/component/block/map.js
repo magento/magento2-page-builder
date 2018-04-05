@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block"], function (_underscore, _eventBus, _block) {
+define(["Magento_PageBuilder/js/utils/map", "../event-bus", "./block"], function (_map, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Map =
@@ -19,65 +19,95 @@ define(["underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_Pag
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      _Block.prototype.bindEvents.call(this); // When a map is dropped for the first time open the edit panel
+      _Block.prototype.bindEvents.call(this);
 
-
-      _eventBus.on("map:block:dropped:create", function (event, params) {
+      _eventBus.on("map:block:mount", function (event, params) {
         if (params.id === _this.id) {
           setTimeout(function () {
-            _this.edit.open();
+            params.block.edit.open();
           }, 300);
         }
       });
     };
     /**
-     * Gets the map attributes
+     * Renders the map and subscribe to position for updates
      *
-     * @returns {object}
+     * @param {Element} element
+     * @returns {void}
      */
 
 
-    _proto.getAttributes = function getAttributes() {
-      var data = this.getData();
+    _proto.renderMap = function renderMap(element) {
+      var _this2 = this;
 
-      var result = _Block.prototype.getAttributes.call(this);
-
-      if (data.position) {
-        var positions = data.position.split(",");
-        var marker = {
-          lat: parseFloat(positions[0]),
-          lng: parseFloat(positions[1])
-        };
-        result["data-markers"] = "[" + JSON.stringify(marker) + "]";
-        result["data-zoom"] = positions[2];
-      }
-
-      return result;
-    };
-    /**
-     * Gets the map styles
-     *
-     * @returns {object}
-     */
-
-
-    _proto.getStyle = function getStyle() {
-      var style = _underscore.clone(_Block.prototype.getStyle.call(this));
-
-      return this.hasMarker() ? style : Object.assign(style, {
-        display: "none"
+      this.generateMap(element);
+      this.data.main.attributes.subscribe(function () {
+        _this2.updateMap();
       });
     };
     /**
-     * Check if current map has a marker
+     * Generate maps
      *
-     * @returns {boolean}
+     * @param {Element} element
+     * @returns {void}
      */
 
 
-    _proto.hasMarker = function hasMarker() {
-      var data = this.getData();
-      return data.position !== "";
+    _proto.generateMap = function generateMap(element) {
+      var position = this.data.main.attributes()["data-position"];
+      var markers = [];
+      var centerCoord = {
+        lat: 30.2672,
+        lng: -97.7431
+      };
+      var options = {
+        zoom: 8
+      };
+
+      if (position && position !== "") {
+        var pos = this.getPosition();
+        markers = pos.markers;
+        centerCoord = pos.latLng;
+        options = {
+          zoom: pos.zoom
+        };
+      }
+
+      this.map = new _map(element, markers, centerCoord, options);
+    };
+    /**
+     * Updates map
+     *
+     * @returns {void}
+     */
+
+
+    _proto.updateMap = function updateMap() {
+      if (this.data.main.attributes()["data-position"]) {
+        var pos = this.getPosition();
+        this.map.onUpdate(pos.markers, pos.latLng, pos.zoom);
+      }
+    };
+    /**
+     * Get markers, center coordinates, and zoom from data.position
+     *
+     * @returns {Object}
+     */
+
+
+    _proto.getPosition = function getPosition() {
+      var positions = this.data.main.attributes()["data-position"].split(",");
+      return {
+        latLng: {
+          lat: parseFloat(positions[0]),
+          lng: parseFloat(positions[1])
+        },
+        markers: [{
+          lat: parseFloat(positions[0]),
+          lng: parseFloat(positions[1])
+        }],
+        zoom: parseInt(positions[2], 10)
+      };
     };
 
     return Map;

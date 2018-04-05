@@ -508,7 +508,9 @@ export default class Structural extends EditableArea implements StructuralInterf
                 }
                 this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
             }
+
         }
+        EventBus.trigger("previewObservables:updated", {preview: this});
     }
 
     /**
