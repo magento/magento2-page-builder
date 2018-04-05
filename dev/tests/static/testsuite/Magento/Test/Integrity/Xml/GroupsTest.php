@@ -17,7 +17,7 @@ class GroupsTest extends \PHPUnit\Framework\TestCase
      */
     private $componentDirSearch;
 
-    public function setup()
+    protected function setUp()
     {
         $componentRegistrar = new ComponentRegistrar();
         $this->componentDirSearch = new DirSearch($componentRegistrar, new ReadFactory(new DriverPool()));
