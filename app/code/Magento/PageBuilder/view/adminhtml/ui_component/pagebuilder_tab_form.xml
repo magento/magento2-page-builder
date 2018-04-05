@@ -125,7 +125,25 @@
                 </imageUploader>
             </formElements>
         </field>
-        <field name="background_position" sortOrder="30" formElement="select">
+        <field name="mobile_image" sortOrder="30" formElement="imageUploader">
+            <settings>
+                <label translate="true">Background Mobile Image</label>
+                <componentType>imageUploader</componentType>
+            </settings>
+            <formElements>
+                <imageUploader>
+                    <settings>
+                        <allowedExtensions>jpg jpeg gif png</allowedExtensions>
+                        <maxFileSize>2097152</maxFileSize>
+                        <uploaderConfig>
+                            <param xsi:type="string" name="url">pagebuilder/contenttype/image_upload</param>
+                        </uploaderConfig>
+                        <previewTmpl>Magento_PageBuilder/form/element/uploader/preview/image.html</previewTmpl>
+                    </settings>
+                </imageUploader>
+            </formElements>
+        </field>
+        <field name="background_position" sortOrder="40" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">left top</item>
@@ -156,7 +174,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="background_size" sortOrder="40" formElement="select">
+        <field name="background_size" sortOrder="50" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">cover</item>
@@ -187,7 +205,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="background_repeat" sortOrder="50" formElement="checkbox">
+        <field name="background_repeat" sortOrder="60" formElement="checkbox">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">no-repeat</item>
@@ -210,7 +228,7 @@
                 </checkbox>
             </formElements>
         </field>
-        <field name="background_attachment" sortOrder="60" formElement="select">
+        <field name="background_attachment" sortOrder="70" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">scroll</item>
