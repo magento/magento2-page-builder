@@ -8,7 +8,7 @@ import ko from "knockout";
 import keyCodes from "Magento_Ui/js/lib/key-codes";
 
 /**
- * Add or remove the placeholder-text class from the element based on it's content
+ * Add or remove the placeholder-text class from the element based on its content
  *
  * @param {Element} element
  */

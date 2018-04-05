@@ -5,9 +5,9 @@
 
 import $t from "mage/translate";
 import EventBus from "../event-bus";
+import {Options} from "../stage/structural/options";
 import Block from "./block";
 import {BlockReadyEventParams} from "./factory";
-import {Options} from "../stage/structural/options";
 
 export default class Tab extends Block {
 
