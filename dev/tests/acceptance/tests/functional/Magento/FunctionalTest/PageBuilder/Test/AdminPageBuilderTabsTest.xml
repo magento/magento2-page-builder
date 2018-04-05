@@ -160,4 +160,56 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeaderItemDefault(PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="waitForDefaultBorderStyleTab"/>
         <waitForElementVisible selector="{{TabsOnStage.tabsContentDefault(PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="waitForDefaultBorderStyleTabs"/>
     </test>
+    <test name="TabsNavAlignCenterAppliesInAdminPreviewAndStorefront">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-86999"/>
+            <title value="Tabs - Configure Tabs navigation alignment to Center"/>
+            <description value="Configure Tabs navigation alignment to center and apply to admin preview and storefront"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89993"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+            <group value="pagebuilder-tabs-me"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Open Tabs Panel -->
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Validate and Update Nav Alignment -->
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateNavAlignment">
+            <argument name="property" value="PageBuilderTabsAlignmentLeft"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterNavAlignmentCenter">
+            <argument name="property" value="PageBuilderTabsAlignmentCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify in Admin Preview-->
+        <waitForElementVisible selector="{{TabsOnStage.tabsNavigationStyled}}" stepKey="seeTabNavigationStyled"/>
+        <!-- Verify in Storefront-->
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsNavAlignCenter}}" stepKey="seeTabsNavCentered"/>
+    </test>
 </tests>
