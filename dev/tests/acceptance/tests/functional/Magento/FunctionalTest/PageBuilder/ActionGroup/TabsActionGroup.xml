@@ -12,7 +12,7 @@
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentBlock"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
-        <wait time="2" stepKey="waitForMouseOverAnimation" />
+        <waitForPageLoad stepKey="waitForMouseOverAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderTabsContentBlock.role)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockAdd(PageBuilderTabsContentBlock.role)}}" stepKey="clickAddContentBlock"/>
     </actionGroup>
