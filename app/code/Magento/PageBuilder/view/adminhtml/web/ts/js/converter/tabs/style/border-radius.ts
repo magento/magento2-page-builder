@@ -24,7 +24,7 @@ export default class BorderRadius implements ElementConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: object): string | object {
-        let borderRadius: string = "0px";
+        let borderRadius: string = "0";
         const radius = parseInt(data.border_radius, 10) || "0";
         const alignment: string = data.navigation_alignment.toLowerCase();
         if (data.border !== "_default") {

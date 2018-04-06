@@ -13,7 +13,10 @@ export default class RemovePx implements ElementConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): object | string {
-        return value.replace("px", "");
+        if (value) {
+            return value.replace("px", "");
+        }
+        return "0";
     }
 
     /**

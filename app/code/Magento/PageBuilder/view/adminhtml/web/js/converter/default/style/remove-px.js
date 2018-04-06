@@ -18,7 +18,11 @@ define([], function () {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return value.replace("px", "");
+      if (value) {
+        return value.replace("px", "");
+      }
+
+      return "0";
     };
     /**
      * Convert value to knockout format

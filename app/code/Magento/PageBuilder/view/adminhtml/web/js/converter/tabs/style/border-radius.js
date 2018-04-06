@@ -30,7 +30,7 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      var borderRadius = "0px";
+      var borderRadius = "0";
       var radius = parseInt(data.border_radius, 10) || "0";
       var alignment = data.navigation_alignment.toLowerCase();
 
