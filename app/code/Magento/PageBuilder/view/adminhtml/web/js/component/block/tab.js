@@ -38,20 +38,20 @@ define(["mage/translate", "Magento_PageBuilder/js/component/event-bus", "Magento
 
       _eventBus.on("tab:block:mount", function (event, params) {
         if (params.id === _this.id) {
-          _this.updateDefaultTitle();
+          _this.updateDefaultTabName();
         }
       });
     };
     /**
-     * Update the title of the tab to Tab N if it has no title
+     * Update the name of the tab to Tab N if it has no title
      */
 
 
-    _proto.updateDefaultTitle = function updateDefaultTitle() {
+    _proto.updateDefaultTabName = function updateDefaultTabName() {
       var data = this.parent.stage.store.get(this.id);
 
-      if (!data.title) {
-        this.parent.stage.store.updateKey(this.id, (0, _translate)("Tab") + " " + (this.parent.children.indexOf(this) + 1), "name");
+      if (!data.tab_name) {
+        this.parent.stage.store.updateKey(this.id, (0, _translate)("Tab") + " " + (this.parent.children.indexOf(this) + 1), "tab_name");
       }
     };
 

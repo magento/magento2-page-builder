@@ -31,21 +31,21 @@ export default class Tab extends Block {
         // Block being mounted onto container
         EventBus.on("tab:block:mount", (event: Event, params: BlockReadyEventParams) => {
             if (params.id === this.id) {
-                this.updateDefaultTitle();
+                this.updateDefaultTabName();
             }
         });
     }
 
     /**
-     * Update the title of the tab to Tab N if it has no title
+     * Update the name of the tab to Tab N if it has no title
      */
-    private updateDefaultTitle() {
+    private updateDefaultTabName() {
         const data = this.parent.stage.store.get(this.id);
-        if (!data.title) {
+        if (!data.tab_name) {
             this.parent.stage.store.updateKey(
                 this.id,
                 $t("Tab") + " " + (this.parent.children.indexOf(this) + 1),
-                "name",
+                "tab_name",
             );
         }
     }
