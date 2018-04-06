@@ -3,11 +3,15 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 
 use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
 use Magento\PageBuilder\Setup\DataConverter\EavAttributeLoaderInterface;
 use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
+use Magento\PageBuilder\Setup\DataConverter\StaticEavAttributeLoaderFactory;
 
 /**
  * Render tab item to PageBuilder format
@@ -24,12 +28,33 @@ class TabsItem implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * @var StaticEavAttributeLoaderFactory
+     */
+    private $staticEavAttributeLoaderFactory;
+
+    /**
+     * @var \Magento\PageBuilder\Setup\DataConverter\Renderer\TextareaFactory
+     */
+    private $textareaFactory;
+
+    /**
+     * TabsItem constructor.
+     * @param StyleExtractorInterface $styleExtractor
+     * @param EavAttributeLoaderInterface $eavAttributeLoader
+     * @param StaticEavAttributeLoaderFactory $staticEavAttributeLoaderFactory
+     * @param \Magento\PageBuilder\Setup\DataConverter\Renderer\TextareaFactory $textareaFactory
+     */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EavAttributeLoaderInterface $eavAttributeLoader
+        EavAttributeLoaderInterface $eavAttributeLoader,
+        StaticEavAttributeLoaderFactory $staticEavAttributeLoaderFactory,
+        TextareaFactory $textareaFactory
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
+        $this->staticEavAttributeLoaderFactory = $staticEavAttributeLoaderFactory;
+        $this->textareaFactory = $textareaFactory;
     }
 
     /**
@@ -43,10 +68,12 @@ class TabsItem implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $cssClasses = $eavData['css_classes'] ?? '';
-        $cssClasses .= isset($eavData['css_classes']) ? ' data item title' : 'data item title';
 
         $rootElementAttributes = [
-            'class' => $cssClasses
+            'data-role' => 'tab',
+            'class' => $cssClasses,
+            'data-tab-name' => $eavData['title'],
+            'id' => 'tab' . $additionalData['parentChildIndex'] . '_' . $additionalData['childIndex']
         ];
 
         if (isset($itemData['formData'])) {
@@ -56,24 +83,36 @@ class TabsItem implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<div data-collapsible="true"';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-
-        $tabIndex = 'pagebuilder_tab' . ($additionalData['childIndex'] ?? '');
-
-        $rootElementHtml .= '><a class="data switch" tabindex="-1" data-toggle="switch" href="#'
-            . $tabIndex
-            . '">'
-            . $eavData['title']
-            . '</a></div>'
-            . '<div class="data item content" data-content="true" id="'
-            . $tabIndex
-            . '">'
-            . $eavData['textarea']
-            . '</div>';
+        $rootElementHtml .= '>' . $this->renderTextarea($eavData['textarea']) . '</div>';
 
         return $rootElementHtml;
+    }
+
+    /**
+     * Render the text area content type's renderer
+     *
+     * @param $content
+     * @return string
+     */
+    private function renderTextarea($content)
+    {
+        $textareaRenderer = $this->textareaFactory->create([
+            // Use a static EAV attribute loader so we can define the values
+            'eavAttributeLoader' => $this->staticEavAttributeLoaderFactory->create([
+                'eavData' => [
+                    1 => [
+                        'textarea' => $content
+                    ]
+                ]
+            ]),
+        ]);
+
+        return $textareaRenderer->render([
+            'entityId' => 1
+        ]);
     }
 }
