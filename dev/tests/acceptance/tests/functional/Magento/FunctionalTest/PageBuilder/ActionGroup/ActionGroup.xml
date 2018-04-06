@@ -154,11 +154,11 @@
     <actionGroup name="openPageBuilderOptionsByIndex">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
-            <argument name="contentBlockNumber" defaultValue="1"/>
+            <argument name="contentBlockNumber" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber.index)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber.index)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockNumber.index)}}" stepKey="waitForOptions" />
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForOptions" />
     </actionGroup>
     <!-- Remove a content type which is in it's default state -->
     <actionGroup name="removeEmptyContentBlockFromStage">
