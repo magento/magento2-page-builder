@@ -1,14 +1,16 @@
 <?php
 /**
- * Application config file resolver
- *
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 use Magento\Framework\Component\DirSearch;
 use Magento\Framework\Component\ComponentRegistrar;
+use Magento\Framework\Config\FileIterator;
 
 class FileResolver implements \Magento\Framework\Config\FileResolverInterface
 {
@@ -37,7 +39,7 @@ class FileResolver implements \Magento\Framework\Config\FileResolverInterface
     /**
      * {@inheritdoc}
      */
-    public function get($filename, $scope)
+    public function get($filename, $scope): FileIterator
     {
         $paths = $this->componentDirSearch->collectFiles(
             ComponentRegistrar::MODULE,

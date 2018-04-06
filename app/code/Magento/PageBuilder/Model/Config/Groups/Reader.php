@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Config\Groups;
 
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
@@ -33,10 +36,10 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         \Magento\PageBuilder\Model\Config\Groups\Converter $converter,
         \Magento\PageBuilder\Model\Config\Groups\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
-        $fileName = 'groups.xml',
-        $idAttributes = [],
-        $domDocumentClass = \Magento\Framework\Config\Dom::class,
-        $defaultScope = 'global'
+        string $fileName = 'groups.xml',
+        array $idAttributes = [],
+        string $domDocumentClass = \Magento\Framework\Config\Dom::class,
+        string $defaultScope = 'global'
     ) {
         parent::__construct(
             $fileResolver,

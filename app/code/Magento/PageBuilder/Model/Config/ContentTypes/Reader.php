@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
@@ -54,10 +57,10 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         \Magento\PageBuilder\Model\Config\ContentTypes\Converter $converter,
         \Magento\PageBuilder\Model\Config\ContentTypes\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
-        $fileName = '*.xml',
-        $idAttributes = [],
-        $domDocumentClass = \Magento\Framework\Config\Dom::class,
-        $defaultScope = 'content_types'
+        string $fileName = '*.xml',
+        array $idAttributes = [],
+        string $domDocumentClass = \Magento\Framework\Config\Dom::class,
+        string $defaultScope = 'content_types'
     ) {
         parent::__construct(
             $fileResolver,

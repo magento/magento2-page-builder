@@ -56,7 +56,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             }
             $typesData[$name]['sortOrder'] = $this->getAttributeValue($contentType, 'sortOrder');
         }
-        uasort($typesData, [$this, 'sortData']);
+        uasort($typesData, function ($firstElement, $secondElement) {
+            return (int)$firstElement['sortOrder'] <=> (int)$secondElement['sortOrder'];
+        });
 
         return $typesData;
     }
@@ -371,17 +373,5 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         return $attributeNode->hasAttribute($attributeName)
             ? $attributeNode->attributes->getNamedItem($attributeName)->nodeValue
             : null;
-    }
-
-    /**
-     * sort callback
-     *
-     * @param array $firstElement
-     * @param array $secondElement
-     * @return int
-     */
-    private function sortData(array $firstElement, array $secondElement): int
-    {
-        return (int)$firstElement['sortOrder'] <=> (int)$secondElement['sortOrder'];
     }
 }

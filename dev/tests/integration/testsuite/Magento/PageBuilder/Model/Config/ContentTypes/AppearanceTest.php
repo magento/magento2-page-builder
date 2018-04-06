@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 use Magento\TestFramework\Helper\Bootstrap;
@@ -28,7 +30,7 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
             if ($form) {
                 // get appearances in config
                 $configAppearances = array_keys($type['appearances']);
-                uasort($configAppearances, [$this, 'sortData']);
+                $this->sortData($configAppearances);
 
                 // get appearances in form
                 $uiReader = $objectManager->create(
@@ -44,7 +46,7 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
                 $formAppearances = array_map(function ($option) {
                     return $option['item']['value']['value'];
                 }, $appearanceOptions);
-                uasort($formAppearances, [$this, 'sortData']);
+                $this->sortData($formAppearances);
 
                 $this->assertEquals(
                     array_values($configAppearances),
@@ -55,8 +57,10 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    private function sortData($firstElement, $secondElement)
+    private function sortData(array &$appearances)
     {
-        return $firstElement < $secondElement ? -1 : ($firstElement > $secondElement ? 1 : 0);
+        uasort($appearances, function ($firstElement, $secondElement) {
+            return $firstElement <=> $secondElement;
+        });
     }
 }

@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\Test\Integrity\Xml;
 
 use Magento\Framework\Component\DirSearch;
@@ -48,7 +51,7 @@ class GroupsTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    private function getXmlFiles()
+    private function getXmlFiles(): array
     {
         $data = [];
 
@@ -71,7 +74,7 @@ class GroupsTest extends \PHPUnit\Framework\TestCase
      *
      * @return array
      */
-    private function getContentTypeGroups()
+    private function getContentTypeGroups(): array
     {
         $data = [];
 

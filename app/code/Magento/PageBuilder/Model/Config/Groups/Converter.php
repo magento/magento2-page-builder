@@ -50,7 +50,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     : null;
             }
         }
-        uasort($groupsData, [$this, 'sortData']);
+        uasort($groupsData, function ($firstElement, $secondElement) {
+            return (int)$firstElement['sortOrder'] <=> (int)$secondElement['sortOrder'];
+        });
 
         return $groupsData;
     }
@@ -67,17 +69,5 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             || ($node->nodeType === XML_CDATA_SECTION_NODE
                 || $node->nodeType === XML_TEXT_NODE
                 && trim($node->nodeValue) !== '');
-    }
-
-    /**
-     * sort callback
-     *
-     * @param array $firstElement
-     * @param array $secondElement
-     * @return int
-     */
-    private function sortData(array $firstElement, array $secondElement): int
-    {
-        return (int)$firstElement['sortOrder'] <=> (int)$secondElement['sortOrder'];
     }
 }

@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Config;
 
 use \Magento\Framework\Config\ReaderInterface;
@@ -33,7 +36,7 @@ class CompositeReader implements ReaderInterface
      * @param string|null $scope
      * @return array
      */
-    public function read($scope = null)
+    public function read($scope = null): array
     {
         $result = [];
         foreach ($this->readers as $reader) {
