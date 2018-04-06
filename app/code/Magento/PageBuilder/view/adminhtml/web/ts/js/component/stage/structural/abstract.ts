@@ -502,8 +502,6 @@ export default class Structural extends EditableArea implements StructuralInterf
                 this.data[elementName].attributes(this.convertAttributes(config[elementName], data, "preview"));
             }
             if (config[elementName].html !== undefined) {
-                data[config[elementName].html.var] = data[config[elementName].html.var]
-                    || config[elementName].html.placeholder;
                 this.data[elementName].html(this.convertHtml(config[elementName], data, "preview"));
             }
             if (config[elementName].css !== undefined && config[elementName].css.var in data) {

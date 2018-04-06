@@ -505,7 +505,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
         }
 
         if (config[elementName].html !== undefined) {
-          data[config[elementName].html.var] = data[config[elementName].html.var] || config[elementName].html.placeholder;
           this.data[elementName].html(this.convertHtml(config[elementName], data, "preview"));
         }
 
