@@ -56,7 +56,7 @@
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible time="10" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <waitForElementVisible time="10" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow" />
     </actionGroup>
     <actionGroup name="expandConfigurationSection">
         <arguments>
