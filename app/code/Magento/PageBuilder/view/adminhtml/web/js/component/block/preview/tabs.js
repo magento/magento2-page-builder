@@ -152,7 +152,6 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/util
         borderBottomColor: "",
         borderBottomStyle: "solid",
         borderBottomWidth: "2px",
-        marginLeft: "0px",
         zIndex: -index
       };
 
@@ -168,50 +167,6 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/util
       }
 
       return styles;
-    };
-    /**
-     * Get the Tabs border style attributes to wrap tabs in the preview
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getTabsBorderWrapper = function getTabsBorderWrapper() {
-      var borderRadius = this.data.border_radius();
-      var borderColor = this.data.border_color() === "" ? this.data.border_color() : (0, _colorConverter.fromHex)(this.data.border_color(), "1");
-      return {
-        border: this.data.border() + " " + borderColor + " " + this.data.border_width() + "px",
-        borderRadius: "0px " + borderRadius + "px " + borderRadius + "px " + borderRadius + "px"
-      };
-    };
-    /**
-     * Get the Tabs border style attributes to wrap tabs in the preview
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getTabHeaderLinkBorder = function getTabHeaderLinkBorder() {
-      if (this.data.border() !== "_default") {
-        return {
-          borderColor: "transparent",
-          borderRadius: "3px"
-        };
-      }
-
-      return null;
-    };
-    /**
-     * Get the Tabs navigation alignement and applies to tab headers in the preview
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getNavigationAlignment = function getNavigationAlignment() {
-      return {
-        textAlign: this.data.navigation_alignment()
-      };
     };
 
     return Tabs;
