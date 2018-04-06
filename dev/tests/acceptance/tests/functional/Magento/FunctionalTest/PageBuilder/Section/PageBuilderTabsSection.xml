@@ -24,6 +24,7 @@
     <section name="TabOnStage">
         <element name="tabHeader" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-header')][{{arg1}}]" parameterized="true"/>
         <element name="tabHeaderItemDefault" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//descendant::*[contains(@class,'tabs-content')][@style='border-radius: {{arg1}}px;'])" parameterized="true"/>
+        <element name="tabHeaderItemActive" type="button" selector="//ul[contains(@class, 'tabs-navigation')]/li[{{arg1}}][contains(@class, 'ui-state-active')]" parameterized="true"/>
         <element name="empty" type="button" selector="(//div[contains(@class, 'pagebuilder-tabs')]//div[contains(@class, 'pagebuilder-tab') and contains(@class, 'empty-container')])"/>
         <element name="tabOptionsByIndex" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//div[contains(@class, 'pagebuilder-options-wrapper')][{{arg1}}]" parameterized="true"/>
         <element name="tabOptionsEdit" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'edit-block')]"/>
@@ -34,6 +35,7 @@
     </section>
     <section name="TabOnStorefront">
         <element name="tabHeader" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-header')][{{arg1}}]" parameterized="true"/>
+        <element name="tabHeaderItemActive" type="button" selector="(//div[@data-role='tabs']//descendant::*[@role='tablist'])/li[{{arg1}}][contains(@class, 'ui-state-active')]" parameterized="true"/>
         <element name="tabContent" type="button" selector="//div[contains(@class, 'tabs-content')]//*[@role='tabpanel'][{{arg1}}]" parameterized="true"/>
     </section>
 </sections>
