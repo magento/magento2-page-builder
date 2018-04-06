@@ -173,7 +173,7 @@
         <!--Go to storefront to verify Category Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.CategoryLink($createSubCategoryY.name$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.CategoryLink($createSubCategoryY.name_lwr$)}}" stepKey="seeExternalLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$createSubCategoryY.name$" stepKey="seeCategoryName" />
