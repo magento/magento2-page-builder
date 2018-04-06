@@ -281,7 +281,9 @@ return [
                                 ],
                                 'html' => [
                                     'var' => 'html',
-                                    'placeholder' => 'custom-text'
+                                    'placeholder' => 'custom-text',
+                                    'converter' => null,
+                                    'preview_converter' => null
                                 ],
                                 'css' => [
                                     'var' => 'css_classes',

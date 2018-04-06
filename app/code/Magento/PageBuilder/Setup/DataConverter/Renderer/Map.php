@@ -48,14 +48,7 @@ class Map implements RendererInterface
         ];
 
         if (isset($eavData['map'])) {
-            $mapParts = explode(',', $eavData['map'] ?? ',,');
-            $mapParts = count($mapParts) === 3 ? $mapParts : ['', '', ''];
-            $rootElementAttributes['data-markers'] = '[{&quot;lat&quot;:'
-                . $mapParts[0]
-                . ',&quot;lng&quot;:'
-                . $mapParts[1]
-                . '}]';
-            $rootElementAttributes['data-zoom'] = $mapParts[2];
+            $rootElementAttributes['data-position'] = $eavData['map'];
         }
 
         if (isset($itemData['formData'])) {
@@ -65,6 +58,11 @@ class Map implements RendererInterface
 
             $style = $this->styleExtractor->extractStyle($formData);
             if ($style) {
+                if (isset($eavData['map'])) {
+                    $style .= ' display: inline-block;';
+                } else {
+                    $style .= ' display: none;';
+                }
                 $rootElementAttributes['style'] = $style;
             }
         }
