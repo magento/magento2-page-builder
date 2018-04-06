@@ -41,7 +41,6 @@
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="reopenEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
@@ -71,6 +70,8 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -89,7 +90,9 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+
+        <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
