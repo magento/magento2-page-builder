@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["../../../component/config", "../../../utils/directives", "../../../utils/image", "../../../utils/url"], function (_config, _directives, _image, _url) {
+define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/utils/url"], function (_config, _directives, _image, _url) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

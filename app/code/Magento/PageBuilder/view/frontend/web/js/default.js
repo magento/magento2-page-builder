@@ -10,7 +10,7 @@ requirejs([
     'highlight',
     'Magento_PageBuilder/js/utils/map',
     'slick',
-    'jarallax',
+    'jarallax'
 ], function ($, hljs, GoogleMap) {
     'use strict';
 
@@ -109,18 +109,22 @@ requirejs([
         showButtonOnHover($('div[data-role="slide"][data-show-button="on_hover"] > a'), '.pagebuilder-slide-button');
     });
 
-
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {
         var markers = [],
             centerCoord = '',
             mapOptions = {},
-            zoom;
+            zoom,
+            data;
 
-        if (element.hasAttribute('data-markers')) {
-            markers = JSON.parse(element.getAttribute('data-markers').replace(/'/g, '"'));
+        if (element.hasAttribute('data-position')) {
+            data = element.getAttribute('data-position').split(',');
+            markers.push({
+                lat: data[0],
+                lng: data[1]
+            });
             centerCoord = markers[0];
-            zoom = element.getAttribute('data-zoom');
+            zoom = data[2];
             mapOptions.zoom = parseInt(zoom, 10);
             new GoogleMap(element, markers, centerCoord, mapOptions);
         }

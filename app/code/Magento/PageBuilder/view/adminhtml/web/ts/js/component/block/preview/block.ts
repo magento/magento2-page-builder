@@ -6,6 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import _, {Dictionary} from "underscore";
+import "../../../binding/live-edit";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
 import EventBus from "../../event-bus";
@@ -72,6 +73,31 @@ export default class PreviewBlock {
                 });
             }
         });
+    }
+
+    /**
+     * Retrieve the template for the preview block
+     *
+     * @returns {string}
+     */
+    get template(): string {
+        if (this.config.preview_template) {
+            return this.config.preview_template;
+        }
+        return "";
+    }
+
+    /**
+     * Update data store
+     *
+     * @param {string} key
+     * @param {string} value
+     */
+    public updateData(key: string, value: string) {
+        const data = this.parent.stage.store.get(this.parent.id);
+
+        data[key] = value;
+        this.parent.stage.store.update(this.parent.id, data);
     }
 
     /**

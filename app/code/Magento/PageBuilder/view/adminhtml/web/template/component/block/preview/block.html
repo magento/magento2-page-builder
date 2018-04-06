@@ -6,13 +6,7 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-block pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
-    <div class="pagebuilder-block" data-bind="style: preview.previewStyle()">
-        <!-- ko if: preview.data.html() -->
-            <div data-bind="html: preview.data.html"></div>
-        <!-- /ko -->
-        <!-- ko ifnot: preview.data.html() -->
-            <span data-bind="html: $t('Block')"></span>
-        <!-- /ko -->
+    <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, html: data.main.html">
     </div>
     <!-- ko template: getOptions().template --><!-- /ko -->
 </div>

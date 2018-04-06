@@ -11,9 +11,9 @@
         <div class="pagebuilder-collage-overlay" data-bind="css: data.overlay.css, attr: data.overlay.attributes, style: data.overlay.style">
             <div data-bind="css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': data.content.html}), html: data.content.html, attr: data.content.attributes, style: data.content.style"></div>
             <!-- ko if: data.main.attributes()["data-show-button"] !== 'never_show' -->
-                <button type="button" class="pagebuilder-banner-button" data-bind="css: data.button.css, attr: data.button.attributes, style: data.button.style">
-                    <span data-bind="css: {'placeholder-text': !data.button.html()}, html: data.button.html"></span>
-                </button>
+                <a type="button" class="pagebuilder-banner-button" data-bind="css: data.button.css, attr: data.button.attributes, style: data.button.style">
+                    <span data-bind="liveEdit: { field: 'button_text', placeholder: preview.buttonPlaceholder }"></span>
+                </a>
             <!-- /ko -->
         </div>
     </div>

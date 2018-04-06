@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "../stage/structural/options/option", "./block"], function (_translate, _option, _block) {
+define(["mage/translate", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/block"], function (_translate, _option, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Row =
@@ -35,7 +35,7 @@ define(["mage/translate", "../stage/structural/options/option", "./block"], func
         removeClasses.push("disabled");
       }
 
-      newOptions.push(new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
+      newOptions.push(new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
       return newOptions;
     };
 

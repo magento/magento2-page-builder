@@ -77,9 +77,25 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     public retrieveOptions(): OptionInterface[] {
         return [
-            new Option(this, "move", "<i></i>", $t("Move"), null, ["move-structural"], 10),
+            new Option(
+                this,
+                "move",
+                "<i class='icon-admin-pagebuilder-handle'></i>",
+                $t("Move"),
+                null,
+                ["move-structural"],
+                10,
+            ),
             new TitleOption(this, this.config.label, 20),
-            new Option(this, "edit", "<i></i>", $t("Edit"), this.onOptionEdit, ["edit-block"], 30),
+            new Option(
+                this,
+                "edit",
+                "<i class='icon-admin-pagebuilder-systems'></i>",
+                $t("Edit"),
+                this.onOptionEdit,
+                ["edit-block"],
+                30,
+            ),
             new Option(
                 this,
                 "duplicate",
@@ -89,7 +105,15 @@ export default class Structural extends EditableArea implements StructuralInterf
                 ["duplicate-structural"],
                 40,
             ),
-            new Option(this, "remove", "<i></i>", $t("Remove"), this.onOptionRemove, ["remove-structural"], 50),
+            new Option(
+                this,
+                "remove",
+                "<i class='icon-admin-pagebuilder-remove'></i>",
+                $t("Remove"),
+                this.onOptionRemove,
+                ["remove-structural"],
+                50,
+            ),
         ];
     }
 
@@ -138,11 +162,15 @@ export default class Structural extends EditableArea implements StructuralInterf
      * Handle block removal
      */
     public onOptionRemove(): void {
-        const removeBlock = () => EventBus.trigger("block:removed", {
-            block: this,
-            index: this.parent.children().indexOf(this),
-            parent: this.parent,
-        });
+        const removeBlock = () => {
+            const params = {
+                block: this,
+                index: this.parent.children().indexOf(this),
+                parent: this.parent,
+            };
+            EventBus.trigger("block:removed", params);
+            EventBus.trigger(this.config.name + ":block:removed", params);
+        };
 
         if (this.isConfigured()) {
             confirmationDialog({
@@ -257,7 +285,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
         let result = "";
         if (undefined !== config.html.var) {
-            result = data[config.html.var];
+            result = this.convertHtml(config, data, "master");
         }
         return result;
     }
@@ -288,6 +316,15 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+    public getOptions(): Options {
+        return new Options(this, this.retrieveOptions());
+    }
+
+    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
@@ -301,25 +338,28 @@ export default class Structural extends EditableArea implements StructuralInterf
         let hasDataChanges = false;
         _.each(this.config.fields, (field, key: string) => {
             let fieldValue = data[key];
+            if (!fieldValue) {
+                fieldValue = "";
+            }
             // Default values can only ever be strings
             if (_.isObject(fieldValue)) {
-                fieldValue = JSON.stringify(fieldValue);
+                // Empty arrays as default values appear as empty strings
+                if (_.isArray(fieldValue) && fieldValue.length === 0) {
+                    fieldValue = "";
+                } else {
+                    fieldValue = JSON.stringify(fieldValue);
+                }
             }
-            if (field.default !== fieldValue) {
+            if (_.isObject(field.default)) {
+                if (JSON.stringify(field.default) !== fieldValue) {
+                    hasDataChanges = true;
+                }
+            } else if (field.default !== fieldValue) {
                 hasDataChanges = true;
-                return;
             }
+            return;
         });
         return hasDataChanges;
-    }
-
-    /**
-     * Get the options instance
-     *
-     * @returns {Options}
-     */
-    public getOptions(): Options {
-        return new Options(this, this.retrieveOptions());
     }
 
     /**
@@ -392,6 +432,27 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
+     * Convert html property
+     *
+     * @param {object} config
+     * @param {DataObject} data
+     * @param {string} area
+     * @returns {string}
+     */
+    private convertHtml(config: any, data: DataObject, area: string) {
+        let value = data[config.html.var] || config.html.placeholder;
+
+        const converter = "preview" === area && config.html.preview_converter
+            ? config.html.preview_converter
+            : config.html.converter;
+        if (this.elementConverterPool.get(converter)) {
+            value = this.elementConverterPool.get(converter).toDom(config.html.var, data);
+        }
+
+        return value;
+    }
+
+    /**
      * Process data for elements before its converted to knockout format
      *
      * @param {Object} data
@@ -441,10 +502,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 this.data[elementName].attributes(this.convertAttributes(config[elementName], data, "preview"));
             }
             if (config[elementName].html !== undefined) {
-                const html = data[config[elementName].html.var]
-                    ? data[config[elementName].html.var]
-                    : config[elementName].html.placeholder;
-                this.data[elementName].html(html);
+                this.data[elementName].html(this.convertHtml(config[elementName], data, "preview"));
             }
             if (config[elementName].css !== undefined && config[elementName].css.var in data) {
                 const css = data[config[elementName].css.var];
@@ -468,7 +526,9 @@ export default class Structural extends EditableArea implements StructuralInterf
                 }
                 this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
             }
+
         }
+        EventBus.trigger("previewObservables:updated", {preview: this});
     }
 
     /**

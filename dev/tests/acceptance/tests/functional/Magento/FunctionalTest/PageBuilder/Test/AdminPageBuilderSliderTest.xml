@@ -53,7 +53,7 @@
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 1 Content')" stepKey="addText1ToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation1"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
@@ -127,10 +127,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!--Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
-        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSlider2"/>
-        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot0"/>
-        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickOnAddSlideElement2"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <actionGroup ref="addSlide" stepKey="addSlide"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditSlide2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle2">
             <argument name="property" value="PageBuilderSlideItemTitle2"/>
@@ -139,7 +136,7 @@
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty2"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'Slide 2 Content')" stepKey="addText2ToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation2"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL2">
             <argument name="property" value="PageBuilderSlideItemLinkURL2"/>
         </actionGroup>
@@ -150,18 +147,12 @@
             <argument name="property" value="PageBuilderSlideItemButtonText2"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!--Verify slider and slide settings on stage after page save-->
         <comment userInput="View slides on stage after page save" stepKey="viewSliderOnStage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForElementVisible selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForSliderContainer" time="10"/>
-        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
-        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverSlideNavigationDot1"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle1"/>
-        <seeElement selector="{{SliderInAdmin.slideNavigationHandle}}" stepKey="seeSlideNavigationHandle1"/>
-        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="moveMouseOverSlideNavigationDot2"/>
-        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2"/>
-        <seeElement selector="{{SliderInAdmin.slideNavigationHandle}}" stepKey="seeSlideNavigationHandle2"/>
         <seeElement selector="{{SliderInAdmin.ShowArrows}}" stepKey="verifyArrowsYesOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeight500OnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderAlignment(PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="verifyAlignmentLeftOnAdmin"/>
@@ -241,12 +232,193 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="waitForNewSlide" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
         <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeNewSlide"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
+        <moveMouseOver selector="{{SliderInAdmin.slideWrapper}}" stepKey="onMouseOverSliderStage"/>
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <actionGroup ref="openPageBuilderOptionsByIndex" stepKey="openSliderOptions">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentBlockNumber" value="1"/>
+        </actionGroup>
+        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeEmptyContentBlockFromStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentBlockNumber" value="1"/>
         </actionGroup>
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+    </test>
+    <test name="CanDeleteSlide">
+        <annotations>
+            <features value="PageBuilder Slider MAGETWO-83767"/>
+            <stories value="Delete Slide from Slider MAGETWO-87095"/>
+            <title value="Cannot delete last slide from slider"/>
+            <description value="A user should be able delete slides when there are multiple of them."/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
+        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <comment userInput="Add slider with initial slide" stepKey="addSliderWithSlide"/>
+
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForElementVisible stepKey="waitForNewSlide" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeNewSlide"/>
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
+        <click selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="clickNavigationDot"/>
+        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{SliderInAdmin.slideOptionsRemove}}" stepKey="clickRemoveContentBlock"/>
+        <comment userInput="Verify cannot remove last slide" stepKey="cantRemoveLastSlide"/>
+
+        <seeElement selector="{{SliderInAdmin.slideOptionsRemoveDisabled}}" stepKey="seeContentBlockRemoveOptionDisabled"/>
+        <comment userInput="Add a second slide without custom content" stepKey="addSlideNoContent"/>
+
+        <actionGroup ref="addSlide" stepKey="add0Slide"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation0" />
+        <waitForElementVisible stepKey="waitForSlide0" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="closeSlide0"/>
+        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="2" stepKey="validateNumberOfSlides2"/>
+        <comment userInput="Remove slide without custom content has no confirmation modal" stepKey="removeSlideNoContent"/>
+
+        <actionGroup ref="removeSlide" stepKey="removeSlide0"/>
+        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides1"/>
+        <comment userInput="Add a slide with custom content" stepKey="addSlideCustomContent"/>
+
+        <actionGroup ref="addSlide" stepKey="addSlide1"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation1" />
+        <waitForElementVisible stepKey="waitForSlide1" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="2" stepKey="validate2SlidesAgain"/>
+        <comment userInput="Remove slide with custom content has confirmation modal" stepKey="removeSlideWithContent"/>
+
+        <actionGroup ref="removeSlide" stepKey="removeSlide1"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.modal}}" time="10" stepKey="waitForModal"/>
+        <actionGroup ref="confirmRemovalModal" stepKey="confirmSlideRemoval"/>
+        <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides0"/>
+    </test>
+    <test name="CanManageSlides">
+        <annotations>
+            <features value="PageBuilder Slider MAGETWO-83767"/>
+            <stories value=""/>
+            <title value="Can add slides and see tooltip and slide title when hovering over navigation dots"/>
+            <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-87949"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
+        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <comment userInput="User adds Slider into the content, user sees first Slide to be displayed inside the slider" stepKey="AC1"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <comment userInput="User sees Slide configuration opened with a delay." stepKey="AC2"/>
+        <waitForElementVisible stepKey="waitForNewSlide" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditSlide"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
+        <seeElement selector="{{SlideOnBackend.emptyslide}}" stepKey="seeFirstSlideOnStage"/>
+
+        <comment userInput="Slide is focused, its option panel is displayed on top of the slider dot." stepKey="AC3"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.slideNavigationDot('1')}}" attribute="class" expectedValue="active" stepKey="assertFirstDotActive"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel"/>
+
+        <comment userInput="User sees Slide 1 default title in the Slide Option Panel." stepKey="AC4"/>
+        <see userInput="Slide1" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
+
+        <comment userInput="User updates settings of first slide and saves configuration." stepKey="AC5"/>
+        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitleText1">
+            <argument name="property" value="PageBuilderSlideItemTitle1"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
+
+        <comment userInput="Slide is not focused, Option panel is not displayed" stepKey="AC6"/>
+        <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="dontSeeSlideOptionsAfterSaveSlide"/>
+
+        <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.content}}" stepKey="scrollToContent"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
+        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
+
+        <waitForElementVisible time="5" selector="{{SliderInAdmin.sliderOptions}}" stepKey="seeContentBlockOptionsMenu"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
+
+        <comment userInput="User doesn't see Slide Option panel, both option panels not displayed at once." stepKey="AC8"/>
+        <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanelStillHidden"/>
+
+        <comment userInput="User sees button (+) inside the Slider Option Panel. Tooltip shows Add New Slide" stepKey="AC9"/>
+        <seeElement selector="{{SliderInAdmin.addNewSlide}}" stepKey="seeAddNewSlideChild"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.addNewSlide}}" attribute="title" expectedValue="Add" stepKey="assertAddSlideTitle"/>
+
+        <comment userInput="User clicks (+) icon, sees new slide added to to the right." stepKey="AC10"/>
+        <actionGroup ref="addSlide" stepKey="addSecondSlide"/>
+
+        <comment userInput="User sees slide configuration opened with a delay." stepKey="AC11"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation2" />
+        <waitForElementVisible stepKey="waitForNewSlide2" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
+        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditSlide2"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel2"/>
+
+        <comment userInput="New slide is focused, its option panel is displayed on top of the slider dot" stepKey="AC12"/>
+        <waitForElementVisible selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="assertSecondDotAdded"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.slideNavigationDot('2')}}" attribute="class" expectedValue="active" stepKey="assertSecondDotActive"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel2"/>
+
+        <comment userInput="Slide has default title Title N that reflects the order of the slide in the Slider." stepKey="AC13"/>
+        <see userInput="Slide2" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
+        <click stepKey="focusOutsideStage" selector="{{PageBuilderActionsSection.searchPanel}}"/>
+
+        <comment userInput="User updates settings of second slide and saves configuration." stepKey="AC14"/>
+        <actionGroup ref="openSlideOptionsByIndex" stepKey="openSecondSlideOptions">
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitleText2">
+            <argument name="property" value="PageBuilderSlideItemTitle2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation3" />
+
+        <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide title" stepKey="AC15"/>
+        <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
+        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2InTooltip"/>
+        <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
+        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle1InTooltip"/>
     </test>
     <test name="SliderValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -275,6 +447,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
+        <click selector="{{SliderInAdmin.sliderContainer}}" stepKey="clickSlideToResetFocus"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
@@ -456,5 +629,222 @@
 
         <!--Verify image on Storefront-->
         <seeElement selector="{{ImageOnPreview.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource4"/>
+    </test>
+    <test name="SliderPosterButtonsCanBeEditedInline">
+        <annotations>
+            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <title value="Ability to edit a poster slider button inline on the stage"/>
+            <description value="A user should be able to edit a poster slider button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89565"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add slider button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify on stage and admin panel -->
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
+        </actionGroup>
+        <!--Verify in storefront -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
+    </test>
+    <test name="SliderCollageLeftButtonsCanBeEditedInline">
+        <annotations>
+            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <title value="Ability to edit a collage left slider button inline on the stage"/>
+            <description value="A user should be able to edit a collage left slider button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89565"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add slider button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageLeftAppearance">
+            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify on stage and admin panel -->
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
+        </actionGroup>
+        <!--Verify in storefront -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
+    </test>
+    <test name="SliderCollageCenterButtonsCanBeEditedInline">
+        <annotations>
+            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <title value="Ability to edit a collage center slider button inline on the stage"/>
+            <description value="A user should be able to edit a collage center slider button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89565"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add slider button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageCenterAppearance">
+            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify on stage and admin panel -->
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
+        </actionGroup>
+        <!--Verify in storefront -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
+    </test>
+    <test name="SliderCollageRightButtonsCanBeEditedInline">
+        <annotations>
+            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <title value="Ability to edit a collage right slider button inline on the stage"/>
+            <description value="A user should be able to edit a collage right slider button inline on the stage"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89565"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <!-- Add slider button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
+        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageRightAppearance">
+            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
+            <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify on stage and admin panel -->
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
+            <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
+        </actionGroup>
+        <!--Verify in storefront -->
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
+        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
     </test>
 </tests>

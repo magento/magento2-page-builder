@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "mageUtils", "underscore", "../../../utils/array", "../../event-bus"], function (_knockout, _translate, _mageUtils, _underscore, _array, _eventBus) {
+define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus"], function (_knockout, _translate, _mageUtils, _underscore, _array, _eventBus) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -71,7 +71,30 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "../../../utils
             duplicate.addChild(createDuplicate, childIndex);
           }
         });
-      }
+      } // As a new block is being created, we need to fire that event as well
+
+
+      _eventBus.trigger("block:create", {
+        id: duplicate.id,
+        block: duplicate
+      });
+
+      _eventBus.trigger(child.config.name + ":block:create", {
+        id: duplicate.id,
+        block: duplicate
+      });
+
+      _eventBus.trigger("block:duplicate", {
+        original: child,
+        duplicate: duplicate,
+        index: index
+      });
+
+      _eventBus.trigger(child.config.name + ":block:duplicate", {
+        original: child,
+        duplicate: duplicate,
+        index: index
+      });
 
       if (autoAppend) {
         this.addChild(duplicate, index);

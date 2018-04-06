@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "../config", "./element-converter-pool"], function (_loader, _config, _elementConverterPool) {
+define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/element-converter-pool"], function (_loader, _config, _elementConverterPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -72,6 +72,18 @@ define(["Magento_PageBuilder/js/component/loader", "../config", "./element-conve
               if (!!_attributeConfig.preview_converter && converters.indexOf(_attributeConfig.preview_converter) === -1 && !_elementConverterPool.get(_attributeConfig.preview_converter)) {
                 converters.push(_attributeConfig.preview_converter);
               }
+            }
+          }
+
+          if (dataMapping.elements[elementName].html !== undefined) {
+            var htmlConfig = dataMapping.elements[elementName].html;
+
+            if (!!htmlConfig.converter && converters.indexOf(htmlConfig.converter) === -1 && !_elementConverterPool.get(htmlConfig.converter)) {
+              converters.push(htmlConfig.converter);
+            }
+
+            if (!!htmlConfig.preview_converter && converters.indexOf(htmlConfig.preview_converter) === -1 && !_elementConverterPool.get(htmlConfig.preview_converter)) {
+              converters.push(htmlConfig.preview_converter);
             }
           }
         }

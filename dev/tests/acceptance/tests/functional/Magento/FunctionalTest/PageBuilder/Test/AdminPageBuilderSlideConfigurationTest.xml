@@ -39,6 +39,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
         </actionGroup>
@@ -99,6 +100,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
         </actionGroup>
@@ -152,6 +154,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation1" />
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
         </actionGroup>
@@ -267,10 +270,10 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
@@ -358,7 +361,7 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageLeft}}" stepKey="waitForCollageLeftInAdmin" />
@@ -372,7 +375,7 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!-- Validate settings appear on form -->
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <waitForElementVisible time="5" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow" />
         <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
         <seeElementInDOM selector="{{SlideOnBackend.editFormBackgroundImagePreview}}" stepKey="seeBackgroundImageOnForm"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
@@ -509,10 +512,10 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
@@ -600,7 +603,7 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageCentered}}" stepKey="waitForCollageCenteredInAdmin" />
@@ -614,7 +617,7 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!-- Validate settings persisted and appear on form -->
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <waitForElementVisible time="5" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow" />
         <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
         <seeElementInDOM selector="{{SlideOnBackend.editFormBackgroundImagePreview}}" stepKey="seeBackgroundImageOnForm"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
@@ -752,10 +755,10 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
@@ -843,7 +846,7 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
@@ -857,7 +860,7 @@
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <!-- Validate settings persisted and appear on form -->
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderRowSection.row}}" stepKey="waitForPageBuilderRow" />
+        <waitForElementVisible time="5" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow" />
         <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
         <seeElementInDOM selector="{{SlideOnBackend.editFormBackgroundImagePreview}}" stepKey="seeBackgroundImageOnForm"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
@@ -997,10 +1000,10 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
@@ -1080,10 +1083,10 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
@@ -1163,10 +1166,10 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
@@ -1246,10 +1249,10 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
@@ -1332,10 +1335,10 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
@@ -1418,11 +1421,11 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
             <argument name="property" value="PageBuilderSlideDefaultPaddingTopProperty"/>
@@ -1477,7 +1480,7 @@
         <annotations>
             <features value="PageBuilder Slider MAGETWO-83835"/>
             <stories value="Slide Configuration MAGETWO-75774"/>
-            <title value="Collage right content is previewable in admin"/>
+            <title value="Slide right collage is previewable in admin"/>
             <description value="A user should be able to preview content in admin for Slide"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -1551,19 +1554,19 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSlideContentBlock.role)}}" stepKey="waitForPreviewInStage" />
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <!-- step fails due to MAGETWO-89346 -->
-        <!--<seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>-->
+        <seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
@@ -1574,7 +1577,7 @@
         <annotations>
             <features value="PageBuilder Slider MAGETWO-83835"/>
             <stories value="Slide Configuration MAGETWO-75774"/>
-            <title value="Collage centered content is previewable in admin"/>
+            <title value="Slide collage centered is previewable in admin"/>
             <description value="A user should be able to preview content in admin for Slide"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -1648,18 +1651,19 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSlideContentBlock.role)}}" stepKey="waitForSliderPreviewInStage" />
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <!-- step fails due to MAGETWO-89346 -->
-        <!--<seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>-->
+        <seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
@@ -1670,7 +1674,7 @@
         <annotations>
             <features value="PageBuilder Slider MAGETWO-83835"/>
             <stories value="Slide Configuration MAGETWO-75774"/>
-            <title value="Collage Left content is previewable in admin"/>
+            <title value="Slide collage Left content is previewable in admin"/>
             <description value="A user should be able to preview content in admin for Slide"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -1744,18 +1748,19 @@
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
-        <click selector="div.modal-content div.mce-edit-area" stepKey="clickToTriggerValidation"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentBlockPreviewInStage(PageBuilderSlideContentBlock.role)}}" stepKey="waitForSliderPreviewInStage" />
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
-        <!-- step fails due to MAGETWO-89346 -->
-        <!--<seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>-->
+        <seeElement selector="{{SlideOnBackend.messageText(PageBuilderSlideMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{SlideOnBackend.slideBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
         <seeElement selector="{{SlideOnBackend.slideBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyle"/>
         <seeElement selector="{{SlideOnBackend.collageMinHeight(PageBuilderSlideMinimumHeightProperty.value)}}" stepKey="verifyMinHeightStyle"/>
@@ -1794,6 +1799,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
@@ -1903,6 +1909,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
@@ -1999,6 +2006,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
@@ -2084,6 +2092,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
@@ -2203,6 +2212,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
@@ -2318,6 +2328,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -2426,6 +2437,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -2522,6 +2534,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -2607,6 +2620,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -2726,6 +2740,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -2841,6 +2856,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
@@ -2955,6 +2971,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
@@ -3051,6 +3068,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
@@ -3136,6 +3154,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
@@ -3189,6 +3208,7 @@
         <moveMouseOver selector="{{SlideOnBackend.collageCentered}}" stepKey="moveMouseOverBackendSlide"/>
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOverlayBackend"/>
         <!-- check button fields -->
+        <comment userInput="Check button fields" stepKey="checkButtonFields" />
         <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStageLink"/>
         <dontSeeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideButtonTextProperty.section, PageBuilderSlideButtonTextProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm2">
@@ -3255,6 +3275,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
         </actionGroup>
@@ -3370,6 +3391,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
         </actionGroup>
@@ -3475,6 +3497,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
         </actionGroup>
@@ -3568,6 +3591,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
         </actionGroup>
@@ -3650,6 +3674,8 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
         </actionGroup>
@@ -3766,6 +3792,7 @@
         <!--Edit First Slide opens when add Slider to stage-->
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
+        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty"/>
         </actionGroup>

@@ -59,10 +59,12 @@
         }
 
         .pagebuilder-options-links {
+            background: white;
             display: flex;
             list-style: none;
             margin: 0;
             vertical-align: middle;
+            z-index: 2;
 
             .pagebuilder-options-link {
                 vertical-align: top;
@@ -74,8 +76,8 @@
                         cursor: not-allowed;
 
                         &:hover {
-                            color: @color-dark-gray;
                             background-color: #fff;
+                            color: @color-dark-gray;
                         }
                     }
                 }
@@ -91,7 +93,6 @@
                     width: 36px;
 
                     i {
-                        .abs-icon;
                         font-size: 18px;
                         line-height: 36px;
                         text-decoration: none;
@@ -142,6 +143,35 @@
     }
 }
 
+.focus-options {
+    .pagebuilder-options {
+        -webkit-transition: opacity 200ms, visibility 200ms, transform 200ms;
+        -moz-transition: opacity 200ms, visibility 200ms, transform 200ms;
+        -o-transition: opacity 200ms, visibility 200ms, transform 200ms;
+        transition: opacity 200ms, visibility 200ms, transform 200ms;
+
+        top: -20px;
+        transform: translate(-50%, -20%);
+        transition-delay: 0ms!important; // Arrow options have no delay in transitioning out
+
+        .pagebuilder-options-wrapper {
+            &:after {
+                background: #fff;
+                border: 1px solid rgba(153, 153, 153, .7);
+                bottom: -6px;
+                content: '';
+                display: block;
+                height: 12px;
+                left: calc(50% - 1px);
+                position: absolute;
+                transform: rotate(45deg) translateX(-50%);
+                width: 12px;
+                z-index: 1;
+            }
+        }
+    }
+}
+
 .type-nested {
     .pagebuilder-options:nth-of-type(2) {
         left: auto;
@@ -161,5 +191,12 @@
 .pagebuilder-stage.interacting {
     .pagebuilder-options {
         display: none;
+    }
+
+    // We still want to display any arrow options, as they're shown on focus
+    .focus-options {
+        .pagebuilder-options {
+            display: block;
+        }
     }
 }

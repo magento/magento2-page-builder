@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import _ from "underscore";
+import GoogleMap from "Magento_PageBuilder/js/utils/map";
 import EventBus from "../event-bus";
 import Block from "./block";
 
@@ -26,44 +26,74 @@ export default class Map extends Block {
     }
 
     /**
-     * Gets the map attributes
+     * Renders the map and subscribe to position for updates
      *
-     * @returns {object}
+     * @param {Element} element
+     * @returns {void}
      */
-    public getAttributes() {
-        const data = this.getData();
-        const result = super.getAttributes();
+    public renderMap(element: Element) {
+        this.generateMap(element);
+        this.data.main.attributes.subscribe(() => {
+            this.updateMap();
+        });
+    }
 
-        if (data.position) {
-            const positions = data.position.split(",");
-            const marker = {
+    /**
+     * Generate maps
+     *
+     * @param {Element} element
+     * @returns {void}
+     */
+    private generateMap(element: Element) {
+        const position = this.data.main.attributes()["data-position"];
+        let markers: any = [];
+        let centerCoord = {
+            lat: 30.2672,
+            lng: -97.7431,
+        };
+        let options = {
+            zoom: 8,
+        };
+        if (position && position !== "") {
+            const pos = this.getPosition();
+            markers = pos.markers;
+            centerCoord = pos.latLng;
+            options = {
+                zoom: pos.zoom,
+            };
+        }
+        this.map = new GoogleMap(element, markers, centerCoord, options);
+    }
+
+    /**
+     * Updates map
+     *
+     * @returns {void}
+     */
+    private updateMap() {
+        if (this.data.main.attributes()["data-position"]) {
+            const pos = this.getPosition();
+            this.map.onUpdate(pos.markers, pos.latLng, pos.zoom);
+        }
+    }
+
+    /**
+     * Get markers, center coordinates, and zoom from data.position
+     *
+     * @returns {Object}
+     */
+    private getPosition() {
+        const positions = this.data.main.attributes()["data-position"].split(",");
+        return {
+            latLng: {
                 lat: parseFloat(positions[0]),
                 lng: parseFloat(positions[1]),
-            };
-            result["data-markers"] = "[" + JSON.stringify(marker) + "]";
-            result["data-zoom"] = positions[2];
-        }
-        return result;
-    }
-
-    /**
-     * Gets the map styles
-     *
-     * @returns {object}
-     */
-    public getStyle() {
-        const style: {} = _.clone(super.getStyle());
-
-        return this.hasMarker() ? style : Object.assign(style, {display: "none"});
-    }
-
-    /**
-     * Check if current map has a marker
-     *
-     * @returns {boolean}
-     */
-    private hasMarker() {
-        const data = this.getData();
-        return data.position !== "";
+            },
+            markers: [{
+                lat: parseFloat(positions[0]),
+                lng: parseFloat(positions[1]),
+            }],
+            zoom: parseInt(positions[2], 10),
+        };
     }
 }

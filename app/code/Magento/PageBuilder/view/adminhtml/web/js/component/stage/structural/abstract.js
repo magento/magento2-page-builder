@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "../../../component/block/appearance-config", "../../../utils/string", "../../event-bus", "../../format/attribute-filter", "../../format/attribute-mapper", "../../format/style-attribute-filter", "../../format/style-attribute-mapper", "../edit", "./editable-area", "./options", "./options/option", "./options/title"], function (_knockout, _translate, _dismissibleConfirm, _underscore, _appearanceConfig, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/attribute-filter", "Magento_PageBuilder/js/component/format/attribute-mapper", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/stage/edit", "Magento_PageBuilder/js/component/stage/structural/editable-area", "Magento_PageBuilder/js/component/stage/structural/options", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/stage/structural/options/title"], function (_knockout, _translate, _dismissibleConfirm, _underscore, _appearanceConfig, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -64,7 +64,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
     var _proto = Structural.prototype;
 
     _proto.retrieveOptions = function retrieveOptions() {
-      return [new _option.Option(this, "move", "<i></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title.TitleOption(this, this.config.label, 20), new _option.Option(this, "edit", "<i></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 30), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 40), new _option.Option(this, "remove", "<i></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 50)];
+      return [new _option.Option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title.TitleOption(this, this.config.label, 20), new _option.Option(this, "edit", "<i class='icon-admin-pagebuilder-systems'></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 30), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 40), new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 50)];
     };
     /**
      * Retrieve the template for the structural
@@ -96,11 +96,15 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       var _this2 = this;
 
       var removeBlock = function removeBlock() {
-        return _eventBus.trigger("block:removed", {
+        var params = {
           block: _this2,
           index: _this2.parent.children().indexOf(_this2),
           parent: _this2.parent
-        });
+        };
+
+        _eventBus.trigger("block:removed", params);
+
+        _eventBus.trigger(_this2.config.name + ":block:removed", params);
       };
 
       if (this.isConfigured()) {
@@ -225,7 +229,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       var result = "";
 
       if (undefined !== config.html.var) {
-        result = data[config.html.var];
+        result = this.convertHtml(config, data, "master");
       }
 
       return result;
@@ -257,6 +261,16 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       return result;
     };
     /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+
+
+    _proto.getOptions = function getOptions() {
+      return new _options.Options(this, this.retrieveOptions());
+    };
+    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
@@ -272,29 +286,34 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       var hasDataChanges = false;
 
       _underscore.each(this.config.fields, function (field, key) {
-        var fieldValue = data[key]; // Default values can only ever be strings
+        var fieldValue = data[key];
+
+        if (!fieldValue) {
+          fieldValue = "";
+        } // Default values can only ever be strings
+
 
         if (_underscore.isObject(fieldValue)) {
-          fieldValue = JSON.stringify(fieldValue);
+          // Empty arrays as default values appear as empty strings
+          if (_underscore.isArray(fieldValue) && fieldValue.length === 0) {
+            fieldValue = "";
+          } else {
+            fieldValue = JSON.stringify(fieldValue);
+          }
         }
 
-        if (field.default !== fieldValue) {
+        if (_underscore.isObject(field.default)) {
+          if (JSON.stringify(field.default) !== fieldValue) {
+            hasDataChanges = true;
+          }
+        } else if (field.default !== fieldValue) {
           hasDataChanges = true;
-          return;
         }
+
+        return;
       });
 
       return hasDataChanges;
-    };
-    /**
-     * Get the options instance
-     *
-     * @returns {Options}
-     */
-
-
-    _proto.getOptions = function getOptions() {
-      return new _options.Options(this, this.retrieveOptions());
     };
     /**
      * Convert attributes
@@ -395,6 +414,26 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       return result;
     };
     /**
+     * Convert html property
+     *
+     * @param {object} config
+     * @param {DataObject} data
+     * @param {string} area
+     * @returns {string}
+     */
+
+
+    _proto.convertHtml = function convertHtml(config, data, area) {
+      var value = data[config.html.var] || config.html.placeholder;
+      var converter = "preview" === area && config.html.preview_converter ? config.html.preview_converter : config.html.converter;
+
+      if (this.elementConverterPool.get(converter)) {
+        value = this.elementConverterPool.get(converter).toDom(config.html.var, data);
+      }
+
+      return value;
+    };
+    /**
      * Process data for elements before its converted to knockout format
      *
      * @param {Object} data
@@ -466,8 +505,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
         }
 
         if (config[elementName].html !== undefined) {
-          var html = data[config[elementName].html.var] ? data[config[elementName].html.var] : config[elementName].html.placeholder;
-          this.data[elementName].html(html);
+          this.data[elementName].html(this.convertHtml(config[elementName], data, "preview"));
         }
 
         if (config[elementName].css !== undefined && config[elementName].css.var in data) {
@@ -503,6 +541,10 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
           this.data[elementName][config[elementName].tag.var](data[config[elementName].tag.var]);
         }
       }
+
+      _eventBus.trigger("previewObservables:updated", {
+        preview: this
+      });
     };
     /**
      * Attach event to updating data in data store to update observables

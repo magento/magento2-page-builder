@@ -13,6 +13,7 @@
         <element name="openPageBuilderCatalog" type="button" selector="[data-index='description'] button.pagebuilder-edit-button"/>
         <element name="openFullScreen" type="button" selector="//i[@class='icon-pagebuilder-fullscreen']"/>
         <element name="exitFullScreen" type="button" selector="//i[@class='icon-pagebuilder-fullscreen-exit']"/>
+        <element name="stageLoading" type="button" selector="div.pagebuilder-stage-loading"/>
         <element name="stageWrapper" type="button" selector="//div[@class='pagebuilder-stage-wrapper']"/>
         <element name="stageWrapperFullScreen" type="button" selector="div.pagebuilder-stage-wrapper.stage-full-screen"/>
         <element name="searchField" type="input" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
@@ -68,6 +69,10 @@
         <element name="panelFieldControlSwitch" type="input" selector="//*[@name='{{arg1}}']/parent::*/label" parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
         <element name="identifyPageBuilder" type="text" selector="//div[@class='pagebuilder-panel-groups-child']//span[text()='Row']"/>
+        <element name="editPanelSectionName" type="button" selector="//div[@data-index='{{arg1}}']" parameterized="true"/>
+        <element name="editPanelSectionExpanded" type="button" selector="//div[@data-index='{{arg1}}' and contains(@class,'_show')]" parameterized="true"/>
+        <element name="editFormUploadedImage" type="button" selector="//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//..//img" parameterized="true"/>
+        <element name="editFormUploadedImageSource" type="button" selector="//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//..//img[contains(@src,'{{arg3}}') and contains(@src,'{{arg4}}')]" parameterized="true"/>
     </section>
     <section name="AdvancedForm">
         <element name="sectionName" type="button" selector="//div[@data-index='advanced']"/>
