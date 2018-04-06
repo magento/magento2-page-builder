@@ -48,46 +48,76 @@
         <fillField selector="{{BackgroundColor.colorInputField}}" userInput="test" stepKey="inputWrongFormatColorCodeIntoInputField"/>
         <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField1"/>
         <see userInput="Wrong color format. Please specify color in HEX, RGBa, HSVa, HSLa or use color name." stepKey="seeValidationMsg" />
-        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.yellowHEX}}" stepKey="inputColorCodeIntoInputField"/>
+        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.yellowHEX}}" stepKey="inputColorCodeIntoInputField1"/>
         <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField2"/>
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.yellowHEX}}" stepKey="seeHEXInField1"/>
         <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(255, 255, 13);']" stepKey="seeSwatchInRed" />
-
-        <!--I open Color Picker and verify color picking from color box-->
         <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch1" />
         <seeElement selector="{{ColorPicker.colorWheel}}" stepKey="seeColorPickerWindow" />
-        <!--<seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColorProperty.yellowHEX}}" stepKey="seeYellowHEXOnInputFieldOfColorPicker" />-->
-        <click selector="{{ColorPicker.firstColorBox}}" stepKey="clickOnRedColorBox" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColorProperty.yellowHEX}}" stepKey="seeYellowHEXOnInputFieldOfColorPicker" />
+
+
+        <!--I input HSL color code into input field-->
+        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.orangeHSL}}" stepKey="inputColorCodeIntoInputField2"/>
+        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField3"/>
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.orangeHEX}}" stepKey="seeHEXInField2"/>
+        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch2" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColorProperty.orangeHEX}}" stepKey="seeOrangeHEXOnInputFieldOfColorPicker" />
+
+
+        <!--I input RGB color code into input field-->
+        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.greenRGB}}" stepKey="inputColorCodeIntoInputField3"/>
+        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField4"/>
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.greenHEX}}" stepKey="seeHEXInField3"/>
+        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch3" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColorProperty.greenHEX}}" stepKey="seeGreenHEXOnInputFieldOfColorPicker" />
+
+
+        <!--I input RGBA color code into input field-->
+        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.blueRGBA}}" stepKey="inputColorCodeIntoInputField4"/>
+        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField5"/>
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.blueRGBA}}" stepKey="seeHEXInField4"/>
+        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch4" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColorProperty.blueRGBA}}" stepKey="seeBlueRGBAOnInputFieldOfColorPicker" />
+
+        <!--I input color name into input field-->
+        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="purple" stepKey="inputColorCodeIntoInputField5"/>
+        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField6"/>
+        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderBackgroundColorProperty.purpleHEX}}" stepKey="seeHEXInField5"/>
+        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch5" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColorProperty.purpleHEX}}" stepKey="seePurpleHEXOnInputFieldOfColorPicker" />
+
+
+        <click selector="{{ColorPicker.firstColorBox}}" stepKey="clickOnRedColorBoxOfColorPicker" />
         <click selector="{{ColorPicker.colorWheel}}" stepKey="clickOnColorWheel" />
         <click selector="{{ColorPicker.applyBtn}}" stepKey="clickOnApplyBtn" />
         <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#804042" stepKey="seeColorCode804042InInputField1" />
         <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(128, 64, 66);']" stepKey="seeSwatchInBrown1" />
 
         <!--Verify color picking from input field and  Cancel button-->
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch2" />
+        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch6" />
         <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHEXcodeIntoInputField1" />
         <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['#0000FF',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
         <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#0000ff" stepKey="seeBlueColorCodeInInputField1" />
         <click selector="{{ColorPicker.cancelBtn}}" stepKey="cancelSelection"/>
         <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#804042" stepKey="seeColorCode804042InInputField2" />
         <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(128, 64, 66);']" stepKey="seeSwatchInBrown2" />
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch3" />
+        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch7" />
         <fillField selector="{{ColorPicker.inputField}}" userInput="#0000FF" stepKey="inputBlueHEXcodeIntoInputField2" />
         <click selector="{{ColorPicker.applyBtn}}" stepKey="applySelection"/>
         <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#0000ff" stepKey="seeBlueColorCodeInInputField2" />
 
         <!--click Out Side color picker to select a color-->
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch4" />
+        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch8" />
         <fillField selector="{{ColorPicker.inputField}}" userInput="#ff0000" stepKey="inputRedHEXcodeIntoInputField" />
-        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField3"/>
+        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField8"/>
         <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#ff0000" stepKey="seeRedColorCodeInInputField2" />
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'pagebuilder-row') and (contains(@style,'background-color: rgb(255, 0, 0);'))]" stepKey="seePreviewColorOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-
         <seeElement selector="//div[@data-role='row' and contains(@style,'background-color: rgb(255, 0, 0)')]" stepKey="seeColorBackground"/>
-
     </test>
     <test name="InitializeWithRow">
         <annotations>
