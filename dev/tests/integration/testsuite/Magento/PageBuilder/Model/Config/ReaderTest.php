@@ -11,6 +11,11 @@ use Magento\TestFramework\Helper\Bootstrap;
 class ReaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
+     * @var Bootstrap
+     */
+    private $objectManager;
+
+    /**
      * @var \Magento\PageBuilder\Model\Config\CompositeReader
      */
     private $model;
@@ -25,9 +30,15 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
      */
     private $contentTypesFileResolverMock;
 
+    /**
+     * @var \Magento\Framework\Filesystem\File\ReadFactory|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private $readFactoryMock;
+
+
     protected function setUp()
     {
-        $objectManager = Bootstrap::getObjectManager();
+        $this->objectManager = Bootstrap::getObjectManager();
 
         $this->groupsFileResolverMock = $this->createMock(
             \Magento\Framework\Config\FileResolverInterface::class
@@ -35,17 +46,20 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         $this->contentTypesFileResolverMock = $this->createMock(
             \Magento\PageBuilder\Model\Config\ContentTypes\FileResolver::class
         );
+        $this->readFactoryMock = $this->createMock(\Magento\Framework\Filesystem\File\ReadFactory::class);
+        $read = $this->createMock(\Magento\Framework\Filesystem\File\Read::class);
+        $this->readFactoryMock->expects($this->any())->method('create')->willReturn($read);
 
-        $groupsReader = $objectManager->create(
+        $groupsReader = $this->objectManager->create(
             \Magento\PageBuilder\Model\Config\Groups\Reader::class,
             ['fileResolver' => $this->groupsFileResolverMock]
         );
-        $contentTypesReader = $objectManager->create(
+        $contentTypesReader = $this->objectManager->create(
             \Magento\PageBuilder\Model\Config\ContentTypes\Reader::class,
             ['fileResolver' => $this->contentTypesFileResolverMock]
         );
 
-        $this->model = $objectManager->create(
+        $this->model = $this->objectManager->create(
             \Magento\PageBuilder\Model\Config\CompositeReader::class,
             ['readers' => [$groupsReader, $contentTypesReader]]
         );
@@ -57,14 +71,19 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
             file_get_contents(__DIR__ . '/../../_files/content_type/groups1.xml'),
             file_get_contents(__DIR__ . '/../../_files/content_type/groups2.xml'),
         ];
-        $contentTypesFileList = [
-            file_get_contents(__DIR__ . '/../../_files/content_type/type1_content_type1.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/type1_content_type2.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/type2_content_type1.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/type2_content_type2.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/type3_content_type.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/type4_content_type.xml'),
+        $contentTypesFilePaths = [
+            __DIR__ . '/../../_files/content_type/type1_content_type1.xml',
+            __DIR__ . '/../../_files/content_type/type1_content_type2.xml',
+            __DIR__ . '/../../_files/content_type/type2_content_type1.xml',
+            __DIR__ . '/../../_files/content_type/type2_content_type2.xml',
+            __DIR__ . '/../../_files/content_type/type3_content_type.xml',
+            __DIR__ . '/../../_files/content_type/type4_content_type.xml'
         ];
+
+        $fileIterator = $this->objectManager->create(
+            \Magento\Framework\Config\FileIterator::class,
+            ['readerFactory' => $this->readFactoryMock, 'paths' => $contentTypesFilePaths]
+        );
 
         $this->groupsFileResolverMock->expects($this->any())
             ->method('get')
@@ -73,7 +92,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         $this->contentTypesFileResolverMock->expects($this->any())
             ->method('get')
             ->with('*.xml', 'content_types')
-            ->willReturn($contentTypesFileList);
+            ->willReturn($fileIterator);
 
         $expected = include __DIR__ . '/../../_files/content_type/expected_merged_array.php';
         $this->assertEquals($expected, $this->model->read());
