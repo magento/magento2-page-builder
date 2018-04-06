@@ -128,21 +128,13 @@ export default class Tabs extends PreviewBlock {
      * @returns {any}
      */
     public getTabHeaderStyles(index: number) {
-        const borderRadius = this.data.border_radius();
-        const borderColor = this.data.border_color() === "" ?
-            this.data.border_color() :
-            fromHex(this.data.border_color(), "1");
-        const border = `${this.data.border()} ${borderColor} ${this.data.border_width()}px`;
-        const marginBottom = this.data.border_width() === "1" ?
-            "-2px" : `-${Math.round(this.data.border_width() * (4 / 3))}px`;
+        const mainStyles = this.parent.data.headers.style();
         const styles = {
-            border,
-            marginBottom,
-            borderRadius: `${borderRadius}px ${borderRadius}px 0px 0px`,
             borderBottomColor: "",
             borderBottomStyle: "solid",
             borderBottomWidth: "2px",
             zIndex: -index,
+            marginLeft: "0px",
         };
         if (index !== 0) {
             styles.marginLeft = `-${this.data.border_width()}px`;
@@ -150,11 +142,14 @@ export default class Tabs extends PreviewBlock {
         if (index === this.activeTab()) {
             styles.borderBottomColor = this.data.border() !== "_default" ?
             `rgba(255,255,255,1)` : "transparent";
-            styles.borderBottomWidth = `${Math.abs(parseInt(marginBottom, 10)) + 1}px`;
+            styles.borderBottomWidth = `${Math.abs(parseInt(mainStyles.marginBottom, 10)) + 1}px`;
         } else {
             styles.borderBottomColor = "transparent";
         }
-        return styles;
+        return {
+            ...mainStyles,
+            ...styles,
+        };
     }
 
 }
