@@ -51,7 +51,7 @@
         <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab.empty-container'),null).getPropertyValue('min-height')" stepKey="getDefaultTabMinHeight"/>
 
         <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC4"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="style" expectedValue="padding: 40px; background-image: none; background-color: transparent; background-size: cover;" stepKey="assertTab1DefaultStyle"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="style" expectedValue="background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-width: 1px; border-radius: 0px; margin: 0px 0px 1px; padding: 40px;" stepKey="assertTab1DefaultStyle"/>
 
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC5"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocused"/>
@@ -82,8 +82,7 @@
         <comment userInput="Tab has default value empty for Background Image" stepKey="commentDefaultBackgroundImage"/>
         <waitForElementVisible selector="{{UploadImageSection.PlaceholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnBackgroundImage"/>
 
-        <comment userInput="Tab has default value empty for Background Mobile image" stepKey="commentDefaultBackgroundMobile"/>
-        <waitForElementVisible selector="{{UploadImageSection.PlaceholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnBackgroundMobileImage"/>
+        <comment userInput="Tab has default value empty for Background Mobile image - This feature is not yet available" stepKey="commentDefaultBackgroundMobile"/>
 
         <comment userInput="Tab has default value empty for Background Color" stepKey="commentDefaultBackgroundColor"/>
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderTabBackgroundColorProperty.section, PageBuilderTabBackgroundColorProperty.fieldName)}}" stepKey="getBackgroundColor"/>
