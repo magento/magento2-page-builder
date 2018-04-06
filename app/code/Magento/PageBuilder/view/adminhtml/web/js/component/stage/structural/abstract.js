@@ -424,7 +424,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
 
     _proto.convertHtml = function convertHtml(config, data, area) {
-      var value = data[config.html.var];
+      var value = data[config.html.var] || config.html.placeholder;
       var converter = "preview" === area && config.html.preview_converter ? config.html.preview_converter : config.html.converter;
 
       if (this.elementConverterPool.get(converter)) {

@@ -440,7 +440,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {string}
      */
     private convertHtml(config: any, data: DataObject, area: string) {
-        let value = data[config.html.var];
+        let value = data[config.html.var] || config.html.placeholder;
 
         const converter = "preview" === area && config.html.preview_converter
             ? config.html.preview_converter
