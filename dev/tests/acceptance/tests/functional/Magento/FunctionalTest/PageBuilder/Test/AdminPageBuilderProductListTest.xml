@@ -8,69 +8,87 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddProductListContentBlockToCMSPage">
+    <test name="ProductListAddToCMSPage">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Product List MAGETWO-83938"/>
-            <title value="Add Product List in PageBuilder for new CMS page and view on Storefront"/>
-            <description value="A user should be able to add a product list content block into a row."/>
+            <features value="PageBuilder"/>
+            <stories value="MAGETWO-83938"/>
+            <title value="Product List - Update General Values"/>
+            <description value="Validate that updating every attribute in the General form for Product List will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84924"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productList"/>
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductListSubCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
+            <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
-            <argument name="category" value="$$createPreReqCategory$$"/>
-            <argument name="simpleProduct" value="_defaultProduct"/>
-        </actionGroup>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragProductIntoStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
-        <fillField selector="{{ProductListEditForm.categoryId}}" userInput="$$createPreReqCategory.id$$" stepKey="fillCategoryField"/>
+        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterProductListId">
+            <argument name="property" value="PageBuilderProductListProperty"/>
+            <argument name="input" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageContentSection.header}}" stepKey="waitForContentHeader" />
-        <waitForElementNotVisible time="10" selector="{{CmsNewPagePageActionsSection.spinner}}" stepKey="waitForCmsPageSpinner" />
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateProductCountInProductList" stepKey="validateProductCountStage">
+            <argument name="page" value="ProductListOnStage"/>
+            <argument name="count" value="2"/>
         </actionGroup>
-        <waitForElementVisible time="5" selector="{{ProductListEditForm.categoryId}}" stepKey="waitForCategoryInputFieldVisible"/>
-        <seeInField selector="{{ProductListEditForm.categoryId}}" userInput="$$createPreReqCategory.id$$" stepKey="validateCategoryInputFieldValue"/>
-        <amOnPage url="product-list{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForCmsPageLoad"/>
-        <seeElement selector="{{ProductOnFrontend.productDisplay}}" stepKey="productApplied"/>
-        <see userInput="{{_defaultProduct.name}}" selector="{{ProductOnFrontend.productDisplay}}" stepKey="assertProductListShowsFrontend"/>
+        <actionGroup ref="validateProductInProductList" stepKey="validateProductListStage">
+            <argument name="page" value="ProductListOnStage"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="product-list"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateProductCountInProductList" stepKey="validateProductCountStorefront">
+            <argument name="page" value="ProductListOnStorefront"/>
+            <argument name="count" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateProductInProductList" stepKey="validateProductListStorefront">
+            <argument name="page" value="ProductListOnStorefront"/>
+        </actionGroup>
     </test>
-    <test name="RemoveProductListFromStage">
+    <test name="ProductListDelete">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Product List MAGETWO-83938"/>
-            <title value="Remove product list content block from stage"/>
-            <description value="A user should be able to remove product list block from a row."/>
+            <features value="PageBuilder"/>
+            <stories value="MAGETWO-83938"/>
+            <title value="Product List - Delete Product List"/>
+            <description value="A user should be able to delete an Product List content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84919"/>
+            <testCaseId value="MAGETWO-89887"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productList"/>
         </annotations>
@@ -78,17 +96,16 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <createData entity="PageBuilderProductListSubCategory" stepKey="createPreReqCategory"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="product list" stepKey="fillSearch"/>
-        <see userInput="Product List" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
@@ -113,26 +130,33 @@
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <createData entity="PageBuilderProductListSubCategory" stepKey="createPreReqCategory"/>
-            <actionGroup ref="FillAdminSimpleProductForm" stepKey="fillProductFieldsInAdmin">
-                <argument name="category" value="$$createPreReqCategory$$"/>
-                <argument name="simpleProduct" value="_defaultProduct"/>
-            </actionGroup>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <click selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragProductListIntoStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
         </actionGroup>
-        <actionGroup ref="fillProductListPanelFieldGeneral" stepKey="enterProductListId">
+        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterProductListId">
             <argument name="property" value="PageBuilderProductListProperty"/>
+            <argument name="input" value="$$createPreReqCategory.id$$"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
@@ -160,8 +184,252 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate Style On Stage -->
-        <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
-        <waitForElementVisible selector="{{ProductListOnStage.default(PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyDefault.value, '1')}}" stepKey="waitForStyle"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage">
+            <argument name="page" value="ProductListOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage2">
+            <argument name="page" value="ProductListOnStage"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
+        <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+        </actionGroup>
+        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
+        <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="product-list"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront">
+            <argument name="page" value="ProductListOnStorefront"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="ProductListUpdateAdvancedConfigurationValues">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="MAGETWO-89915"/>
+            <title value="Product List - Update Advanced Configuration Values"/>
+            <description value="Validate that updating every attribute in the Advanced Configuration form for Product List will update the Stage and Storefront correctly."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90015"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-productList"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <createData entity="PageBuilderProductListSubCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterProductListId">
+            <argument name="property" value="PageBuilderProductListProperty"/>
+            <argument name="input" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <!-- Update Values -->
+        <comment userInput="Update Values" stepKey="commentUpdateValues"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
+            <argument name="page" value="ProductListOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
+            <argument name="page" value="ProductListOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="product-list"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+            <argument name="page" value="ProductListOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
     </test>
 </tests>

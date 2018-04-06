@@ -17,7 +17,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89375"/>
             <group value="pagebuilder"/>
-            <group value="AddImageIntoPageBuilderStage"/>
+            <group value="pagebuilder-image"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -210,7 +210,7 @@
             <argument name="property" value="PageBuilderImageAltTextProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterTitleTagProperty">
-            <argument name="property" value="PageBuilderImageTitleTagProperty"/>
+            <argument name="property" value="PageBuilderImageTitleAttributeProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -221,7 +221,7 @@
         <seeElementInDOM selector="{{ImageOnFrontend.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageLinkTarget(PageBuilderImageTargetProperty.value)}}" stepKey="seeImageTargetInDOM"/>
         <seeElementInDOM selector="{{ImageOnFrontend.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
-        <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleTagProperty.value)}}" stepKey="seeImageAltText2"/>
+        <seeElementInDOM selector="{{ImageOnFrontend.imageHasTitleTag(PageBuilderImageTitleAttributeProperty.value)}}" stepKey="seeImageAltText2"/>
         <seeElementInDOM selector="{{ImageOnPreview.imageSource(PageBuilderMobileImagePropertyGif.fileName)}}" stepKey="seeMainImageSource5"/>
         <see userInput="{{PageBuilderImageCaptionProperty.value}}" selector="{{ImageOnFrontend.imageHasCaption}}" stepKey="seeCaptionDisplayedOnStorefront"/>
         <dontSeeElement selector="{{ImageOnFrontend.imageElement('2')}}" stepKey="dontSeeMobileImageElement"/>

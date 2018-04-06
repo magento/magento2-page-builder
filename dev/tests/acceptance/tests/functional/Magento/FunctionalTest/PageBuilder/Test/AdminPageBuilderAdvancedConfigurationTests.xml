@@ -18,7 +18,6 @@
             <testCaseId value="MAGETWO-89330"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -42,7 +41,7 @@
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Check Field Labels -->
-        <comment userInput="Check Field Labels" stepKey="CommentFieldLabels"/>
+        <comment userInput="Check Field Labels" stepKey="commentFieldLabels"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -65,7 +64,7 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
         </actionGroup>
         <!-- Check Required -->
-        <comment userInput="Check Required" stepKey="CommentCheckRequired"/>
+        <comment userInput="Check Required" stepKey="commentCheckRequired"/>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="checkRequiredAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -88,7 +87,7 @@
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
         </actionGroup>
         <!-- Check Disabled -->
-        <comment userInput="Check Disabled" stepKey="CommentCheckDisabled"/>
+        <comment userInput="Check Disabled" stepKey="commentCheckDisabled"/>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="checkDisabledAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
@@ -108,13 +107,13 @@
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
         <!-- Check Drop Down Counts -->
-        <comment userInput="Check Drop Down Counts" stepKey="CommentCheckDropDownCounts"/>
+        <comment userInput="Check Drop Down Counts" stepKey="commentCheckDropDownCounts"/>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountAlignment"/>
         <assertCount actual="getDropDownCountAlignment" actualType="variable" expected="4" expectedType="int" stepKey="assertDropDownCountAlignment"/>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountBorder"/>
         <assertCount actual="getDropDownCountBorder" actualType="variable" expected="10" expectedType="int" stepKey="assertDropDownCountBorder"/>
         <!-- Check Placeholder Text -->
-        <comment userInput="Check Placeholder Text" stepKey="CommentCheckPlaceholderText"/>
+        <comment userInput="Check Placeholder Text" stepKey="commentCheckPlaceholderText"/>
         <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="checkPlaceholderTextBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
@@ -129,7 +128,7 @@
         </actionGroup>
         <actionGroup ref="validateMarginsAndPaddingPlaceholderTextSlideOutPanel" stepKey="checkPlaceholderTextMarginsAndPadding"/>
         <!-- Check Field After Labels & Field Notes -->
-        <comment userInput="Check Field After Labels and Field Notes" stepKey="CommentFieldAfterLabels"/>
+        <comment userInput="Check Field After Labels and Field Notes" stepKey="commentFieldAfterLabels"/>
         <actionGroup ref="validateSlideOutPanelFieldAfterLabelText" stepKey="validateSlideOutPanelFieldAfterLabelTextBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
@@ -144,7 +143,7 @@
         </actionGroup>
         <actionGroup ref="validateAdvancedConfigurationNotes" stepKey="validateAdvancedConfigurationNotes"/>
         <!-- Enable Border And Check Other Fields Now Enabled -->
-        <comment userInput="Enable Border And Check Other Fields Now Enabled" stepKey="CommentEnableBorder"/>
+        <comment userInput="Enable Border And Check Other Fields Now Enabled" stepKey="commentEnableBorder"/>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enableBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
@@ -153,35 +152,6 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateBorderWidthAttributeNotDisabled">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
-        <!-- Save page and verify fields (because some of them change) -->
-        <comment userInput="Save page and verify fields (because some of them change)" stepKey="CommentSavePage"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
-        <!-- Check Values After Save -->
-        <comment userInput="Check Values After Save" stepKey="CommentFieldValues"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkBorder">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
-        </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
-        <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderWidthPropertyDefault.section, PageBuilderAdvancedBorderWidthPropertyDefault.fieldName)}}" stepKey="getBorderWidth"/>
-        <assertEmpty actual="getBorderWidth" actualType="variable" message="Text field has text: $getBorderWidth" stepKey="assertBorderWidth"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="checkBorderRadius">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-        </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
-        <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
-        <actionGroup ref="seeInMarginsAndPaddingFieldSlideOutPanel" stepKey="checkMarginAndPadding">
-            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
         </actionGroup>
     </test>
     <test name="AdvancedConfigurationFunctionalAlignment">
@@ -194,7 +164,6 @@
             <testCaseId value="MAGETWO-89331"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -225,14 +194,15 @@
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
@@ -244,14 +214,15 @@
         <comment userInput="Add Alignment: Left" stepKey="commentAddAlignmentLeft"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
@@ -263,14 +234,15 @@
         <comment userInput="Add Alignment: Center" stepKey="commentAddAlignmentCenter"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
@@ -282,14 +254,15 @@
         <comment userInput="Add Alignment: Right" stepKey="commentAddAlignmentRight"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
@@ -299,28 +272,28 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Stage: Check Alignment: Default -->
         <comment userInput="Stage: Check Alignment: Default" stepKey="commentStageCheckDefault"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDefault">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Alignment: Left -->
         <comment userInput="Stage: Check Alignment: Left" stepKey="commentStageCheckLeft"/>
-        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageLeft">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageLeft">
+            <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Alignment: Center -->
         <comment userInput="Stage: Check Alignment: Center" stepKey="commentStageCheckCenter"/>
-        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageCenter">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageCenter">
+            <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Alignment: Right -->
         <comment userInput="Stage: Check Alignment: Right" stepKey="commentStageCheckRight"/>
-        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageRight">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageRight">
+            <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
             <argument name="index" value="4"/>
         </actionGroup>
@@ -329,61 +302,58 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Alignment: Default -->
         <comment userInput="Stage: Check Alignment: Default" stepKey="commentStageCheckDefault2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDefault2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Alignment: Left -->
         <comment userInput="Stage: Check Alignment: Left2" stepKey="commentStageCheckLeft2"/>
-        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageLeft2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageLeft2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Alignment: Center -->
         <comment userInput="Stage: Check Alignment: Center" stepKey="commentStageCheckCenter2"/>
-        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageCenter2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageCenter2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Alignment: Right -->
         <comment userInput="Stage: Check Alignment: Right" stepKey="commentStageCheckRight2"/>
-        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStageRight2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStageRight2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
             <argument name="index" value="4"/>
         </actionGroup>
-        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="text"/>
+        </actionGroup>
         <!-- Storefront: Check Alignment: Default -->
         <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDefault">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontDefault">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check Alignment: Left -->
         <comment userInput="Storefront: Check Alignment: Left" stepKey="commentStorefrontCheckLeft"/>
-        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStorefrontLeft">
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStorefrontLeft">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check Alignment: Center -->
         <comment userInput="Storefront: Check Alignment: Center" stepKey="commentStorefrontCheckCenter"/>
-        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStorefrontCenter">
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStorefrontCenter">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Storefront: Check Alignment: Right -->
         <comment userInput="Storefront: Check Alignment: Right" stepKey="commentStorefrontCheckRight"/>
-        <actionGroup ref="validateTextActiveAlignment" stepKey="validateStorefrontRight">
+        <actionGroup ref="validateAdvancedStyleWithAlignment" stepKey="validateStorefrontRight">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyRight"/>
             <argument name="index" value="4"/>
         </actionGroup>
@@ -398,7 +368,6 @@
             <testCaseId value="MAGETWO-89332"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -447,14 +416,15 @@
         <comment userInput="Add Border: None" stepKey="commentAddBorderNone"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
@@ -466,264 +436,249 @@
         <comment userInput="Add Border: Default" stepKey="commentAddBorderDefault"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Add Border: Dotted -->
         <comment userInput="Add Border: Dotted" stepKey="commentAddBorderDotted"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth3">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Add Border: Dashed -->
         <comment userInput="Add Border: Dashed" stepKey="commentAddBorderDashed"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDashed"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth4">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Add Border: Solid -->
         <comment userInput="Add Border: Solid" stepKey="commentAddBorderSolid"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="5"/>
+            <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText5">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth5">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Add Border: Double -->
         <comment userInput="Add Border: Double" stepKey="commentAddBorderDouble"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage6">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="6"/>
+            <argument name="contentBlockIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage6">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="6"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText6">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText6">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder6">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth6">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings6"/>
         <!-- Add Border: Groove -->
         <comment userInput="Add Border: Groove" stepKey="commentAddBorderGroove"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage7">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="7"/>
+            <argument name="contentBlockIndex" value="7"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage7">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="7"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText7">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText7">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection7"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder7">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyGroove"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth7">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings7"/>
         <!-- Add Border: Ridge -->
         <comment userInput="Add Border: Ridge" stepKey="commentAddBorderRidge"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage8">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="8"/>
+            <argument name="contentBlockIndex" value="8"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage8">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="8"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText8">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText8">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection8"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder8">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyRidge"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth8">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings8"/>
         <!-- Add Border: Inset -->
         <comment userInput="Add Border: Inset" stepKey="commentAddBorderInset"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage9">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="9"/>
+            <argument name="contentBlockIndex" value="9"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage9">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="9"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText9">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText9">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection9"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder9">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyInset"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth9">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings9"/>
         <!-- Add Border: Outset -->
         <comment userInput="Add Border: Outset" stepKey="commentAddBorderOutset"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage10">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="10"/>
+            <argument name="contentBlockIndex" value="10"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage10">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="10"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText10">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText10">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection10"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder10">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyOutset"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth10">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings10"/>
         <!-- Stage: Check Border: None -->
         <comment userInput="Stage: Check Border: None" stepKey="commentStageCheckNone"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageNone">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageNone">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border: Default -->
         <comment userInput="Stage: Check Border: Default" stepKey="commentStageCheckDefault"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDefault">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border: Dotted -->
         <comment userInput="Stage: Check Border: Dotted" stepKey="commentStageCheckDotted"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDotted">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDotted">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border: Dashed -->
         <comment userInput="Stage: Check Border: Dashed" stepKey="commentStageCheckDashed"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDashed">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDashed">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDashed"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Border: Solid -->
         <comment userInput="Stage: Check Border: Solid" stepKey="commentStageCheckSolid"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageSolid">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageSolid">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <!-- Stage: Check Border: Double -->
         <comment userInput="Stage: Check Border: Double" stepKey="commentStageCheckDouble"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDouble">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDouble">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="index" value="6"/>
         </actionGroup>
         <!-- Stage: Check Border: Groove -->
         <comment userInput="Stage: Check Border: Groove" stepKey="commentStageCheckGroove"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageGroove">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageGroove">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyGroove"/>
             <argument name="index" value="7"/>
         </actionGroup>
         <!-- Stage: Check Border: Ridge -->
         <comment userInput="Stage: Check Border: Ridge" stepKey="commentStageCheckRidge"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageRidge">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageRidge">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
             <argument name="index" value="8"/>
         </actionGroup>
         <!-- Stage: Check Border: Inset -->
         <comment userInput="Stage: Check Border: Inset" stepKey="commentStageCheckInset"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInset">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInset">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyInset"/>
             <argument name="index" value="9"/>
         </actionGroup>
         <!-- Stage: Check Border: Outset -->
         <comment userInput="Stage: Check Border: Outset" stepKey="commentStageCheckOutset"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageOutset">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageOutset">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyOutset"/>
             <argument name="index" value="10"/>
         </actionGroup>
@@ -732,153 +687,143 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Border: None -->
         <comment userInput="Stage: Check Border: None" stepKey="commentStageCheckNone2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageNone2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageNone2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border: Default -->
         <comment userInput="Stage: Check Border: Default" stepKey="commentStageCheckDefault2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDefault2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
+        <actionGroup ref="validateAdvancedStyleWithNoBorder" stepKey="validateStageDefault2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border: Dotted -->
         <comment userInput="Stage: Check Border: Dotted" stepKey="commentStageCheckDotted2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDotted2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDotted2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border: Dashed -->
         <comment userInput="Stage: Check Border: Dashed" stepKey="commentStageCheckDashed2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDashed2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDashed2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDashed"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Border: Solid -->
         <comment userInput="Stage: Check Border: Solid" stepKey="commentStageCheckSolid2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageSolid2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageSolid2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <!-- Stage: Check Border: Double -->
         <comment userInput="Stage: Check Border: Double" stepKey="commentStageCheckDouble2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageDouble2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageDouble2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="index" value="6"/>
         </actionGroup>
         <!-- Stage: Check Border: Groove -->
         <comment userInput="Stage: Check Border: Groove" stepKey="commentStageCheckGroove2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageGroove2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageGroove2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyGroove"/>
             <argument name="index" value="7"/>
         </actionGroup>
         <!-- Stage: Check Border: Ridge -->
         <comment userInput="Stage: Check Border: Ridge" stepKey="commentStageCheckRidge2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageRidge2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageRidge2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
             <argument name="index" value="8"/>
         </actionGroup>
         <!-- Stage: Check Border: Inset -->
         <comment userInput="Stage: Check Border: Inset" stepKey="commentStageCheckInset2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInset2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInset2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyInset"/>
             <argument name="index" value="9"/>
         </actionGroup>
         <!-- Stage: Check Border: Outset -->
         <comment userInput="Stage: Check Border: Outset" stepKey="commentStageCheckOutset2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageOutset2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageOutset2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyOutset"/>
             <argument name="index" value="10"/>
         </actionGroup>
-        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="text"/>
+        </actionGroup>
         <!-- Storefront: Check Border: None -->
         <comment userInput="Storefront: Check Border: None" stepKey="commentStorefrontCheckNone2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontNone2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontNone2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check Border: Default -->
         <comment userInput="Storefront: Check Border: Default" stepKey="commentStorefrontCheckDefault2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDefault2">
+        <actionGroup ref="validateAdvancedStyleWithNoBorder" stepKey="validateStorefrontDefault2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check Border: Dotted -->
         <comment userInput="Storefront: Check Border: Dotted" stepKey="commentStorefrontCheckDotted2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDotted2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontDotted2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDotted"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Storefront: Check Border: Dashed -->
         <comment userInput="Storefront: Check Border: Dashed" stepKey="commentStorefrontCheckDashed2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDashed2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontDashed2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDashed"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Storefront: Check Border: Solid -->
         <comment userInput="Storefront: Check Border: Solid" stepKey="commentStorefrontCheckSolid2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontSolid2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontSolid2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <!-- Storefront: Check Border: Double -->
         <comment userInput="Storefront: Check Border: Double" stepKey="commentStorefrontCheckDouble2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontDouble2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontDouble2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="index" value="6"/>
         </actionGroup>
         <!-- Storefront: Check Border: Groove -->
         <comment userInput="Storefront: Check Border: Groove" stepKey="commentStorefrontCheckGroove2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontGroove2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontGroove2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyGroove"/>
             <argument name="index" value="7"/>
         </actionGroup>
         <!-- Storefront: Check Border: Ridge -->
         <comment userInput="Storefront: Check Border: Ridge" stepKey="commentStorefrontCheckRidge2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontRidge2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontRidge2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyRidge"/>
             <argument name="index" value="8"/>
         </actionGroup>
         <!-- Storefront: Check Border: Inset -->
         <comment userInput="Storefront: Check Border: Inset" stepKey="commentStorefrontCheckInset2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontInset2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontInset2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyInset"/>
             <argument name="index" value="9"/>
         </actionGroup>
         <!-- Storefront: Check Border: Outset -->
         <comment userInput="Storefront: Check Border: Outset" stepKey="commentStorefrontCheckOutset2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontOutset2">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontOutset2">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyOutset"/>
             <argument name="index" value="10"/>
         </actionGroup>
@@ -893,7 +838,6 @@
             <testCaseId value="MAGETWO-89333"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -927,22 +871,20 @@
         <comment userInput="Add Border Color: Empty" stepKey="commentAddBorderColorEmpty"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
-        </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth1">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderColor1">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
@@ -952,22 +894,20 @@
         <comment userInput="Add Border Color: PlainText Green" stepKey="commentAddBorderColorPlainText"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
-        </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth2">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -977,22 +917,20 @@
         <comment userInput="Add Border Color: Hex #FF0000" stepKey="commentAddBorderColorHex"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
-        </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth3">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor3">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_FF0000"/>
@@ -1002,22 +940,20 @@
         <comment userInput="Add Border Color: rgb(0,0,255)" stepKey="commentAddBorderColorRGB"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
-        </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth4">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor4">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
@@ -1027,22 +963,20 @@
         <comment userInput="Add Border Color: Invalid" stepKey="commentAddBorderColorInvalid"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="5"/>
+            <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText5">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
-        </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth5">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColor5">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_invalid"/>
@@ -1050,39 +984,39 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Stage: Check Border Color: Empty -->
         <comment userInput="Stage: Check Border Color: Empty" stepKey="commentStageCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageEmpty">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border Color: Plaintext -->
         <comment userInput="Stage: Check Border Color: Plaintext" stepKey="commentStageCheckPlaintext"/>
-        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStagePlaintext">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStagePlaintext">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border Color: Hex -->
         <comment userInput="Stage: Check Border Color: Hex" stepKey="commentStageCheckHex"/>
-        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStageHex">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStageHex">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000_rgb"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border Color: RGB -->
         <comment userInput="Stage: Check Border Color: RGB" stepKey="commentStageCheckRGB"/>
-        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStageRGB">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStageRGB">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Border Color: Invalid -->
         <comment userInput="Stage: Check Border Color: Invalid" stepKey="commentStageCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInvalid">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInvalid">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="5"/>
         </actionGroup>
@@ -1091,84 +1025,80 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Border Color: Empty -->
         <comment userInput="Stage: Check Border Color: Empty" stepKey="commentStageCheckEmpty2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageEmpty2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border Color: Plaintext -->
         <comment userInput="Stage: Check Border Color: Plaintext" stepKey="commentStageCheckPlaintext2"/>
-        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStagePlaintext2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStagePlaintext2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border Color: Hex -->
         <comment userInput="Stage: Check Border Color: Hex" stepKey="commentStageCheckHex2"/>
-        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStageHex2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStageHex2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000_rgb"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border Color: RGB -->
         <comment userInput="Stage: Check Border Color: RGB" stepKey="commentStageCheckRGB2"/>
-        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStageRGB2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStageRGB2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Border Color: Invalid -->
         <comment userInput="Stage: Check Border Color: Invalid" stepKey="commentStageCheckInvalid2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInvalid2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInvalid2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="5"/>
         </actionGroup>
-        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="text"/>
+        </actionGroup>
         <!-- Storefront: Check Border Color: Empty -->
         <comment userInput="Storefront: Check Border Color: Empty" stepKey="commentStorefrontCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontEmpty">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontEmpty">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check Border Color: Plaintext -->
         <comment userInput="Storefront: Check Border Color: Plaintext" stepKey="commentStorefrontCheckPlaintext"/>
-        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStorefrontPlaintext">
+        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStorefrontPlaintext">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check Border Color: Hex -->
         <comment userInput="Storefront: Check Border Color: Hex" stepKey="commentStorefrontCheckHex"/>
-        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStorefrontHex">
+        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStorefrontHex">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_FF0000_rgb"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Storefront: Check Border Color: RGB -->
         <comment userInput="Storefront: Check Border Color: RGB" stepKey="commentStorefrontCheckRGB"/>
-        <actionGroup ref="validateTextActiveBorderWithColor" stepKey="validateStorefrontRGB">
+        <actionGroup ref="validateAdvancedStyleWithBorderColor" stepKey="validateStorefrontRGB">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_rgb_0_0_255"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Storefront: Check Border Color: Invalid -->
         <comment userInput="Storefront: Check Border Color: Invalid" stepKey="commentStorefrontCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontInvalid">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontInvalid">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="5"/>
         </actionGroup>
@@ -1183,7 +1113,6 @@
             <testCaseId value="MAGETWO-89355"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1217,14 +1146,15 @@
         <comment userInput="Add Border Width: Empty" stepKey="commentAddBorderWidthEmpty"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
@@ -1239,14 +1169,15 @@
         <comment userInput="Add Border Width: 0" stepKey="commentAddBorderWidth0"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
@@ -1261,14 +1192,15 @@
         <comment userInput="Add Border Width: 1" stepKey="commentAddBorderWidth1"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
@@ -1283,14 +1215,15 @@
         <comment userInput="Add Border Width: 500" stepKey="commentAddBorderWidth500"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
@@ -1305,14 +1238,15 @@
         <comment userInput="Add Border Width: Invalid" stepKey="commentAddBorderWidthInvalid"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="5"/>
+            <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText5">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
@@ -1325,39 +1259,39 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Stage: Check Border Width: Empty -->
         <comment userInput="Stage: Check Border Width: Empty" stepKey="commentStageCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageEmpty">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border Width: 0 -->
         <comment userInput="Stage: Check Border Width: 0" stepKey="commentStageCheck0"/>
-        <actionGroup ref="validateTextActiveBorderWithWidth" stepKey="validateStage0">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage0">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border Width: 1 -->
         <comment userInput="Stage: Check Border Width: 1" stepKey="commentStageCheck1"/>
-        <actionGroup ref="validateTextActiveBorderWithWidth" stepKey="validateStage1">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage1">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border Width: 500 -->
         <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck500"/>
-        <actionGroup ref="validateTextActiveBorderWithWidth" stepKey="validateStage500">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Border Width: Invalid -->
         <comment userInput="Stage: Check Border Width: Invalid" stepKey="commentStageCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInvalid">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInvalid">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="5"/>
         </actionGroup>
@@ -1366,84 +1300,80 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Border Width: Empty -->
         <comment userInput="Stage: Check Border Width: Empty" stepKey="commentStageCheckEmpty2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageEmpty2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStageEmpty2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border Width: 0 -->
         <comment userInput="Stage: Check Border Width: 0" stepKey="commentStageCheck02"/>
-        <actionGroup ref="validateTextActiveBorderWithWidth" stepKey="validateStage02">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage02">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border Width: 1 -->
         <comment userInput="Stage: Check Border Width: 1" stepKey="commentStageCheck12"/>
-        <actionGroup ref="validateTextActiveBorderWithWidth" stepKey="validateStage12">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage12">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border Width: 500 -->
         <comment userInput="Stage: Check Border Width: 500" stepKey="commentStageCheck5002"/>
-        <actionGroup ref="validateTextActiveBorderWithWidth" stepKey="validateStage5002">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Border Width: Invalid -->
         <comment userInput="Stage: Check Border Width: Invalid" stepKey="commentStageCheckInvalid2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageInvalid2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStageInvalid2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="5"/>
         </actionGroup>
-        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="text"/>
+        </actionGroup>
         <!-- Storefront: Check Border Width: Empty -->
         <comment userInput="Storefront: Check Border Width: Empty" stepKey="commentStorefrontCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontEmpty">
+        <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStorefrontEmpty">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check Border Width: 0 -->
         <comment userInput="Storefront: Check Border Width: 0" stepKey="commentStorefrontCheck0"/>
-        <actionGroup ref="validateTextActiveBorderWithWidth" stepKey="validateStorefront0">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront0">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty0"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check Border Width: 1 -->
         <comment userInput="Storefront: Check Border Width: 1" stepKey="commentStorefrontCheck1"/>
-        <actionGroup ref="validateTextActiveBorderWithWidth" stepKey="validateStorefront1">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront1">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Storefront: Check Border Width: 500 -->
         <comment userInput="Storefront: Check Border Width: 500" stepKey="commentStorefrontCheck500"/>
-        <actionGroup ref="validateTextActiveBorderWithWidth" stepKey="validateStorefront500">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Storefront: Check Border Width: Invalid -->
         <comment userInput="Storefront: Check Border Width: Invalid" stepKey="commentStorefrontCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontInvalid">
+        <actionGroup ref="validateAdvancedStyleWithNoBorderWidth" stepKey="validateStorefrontInvalid">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="index" value="5"/>
         </actionGroup>
@@ -1458,7 +1388,6 @@
             <testCaseId value="MAGETWO-89356"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1492,14 +1421,15 @@
         <comment userInput="Add Border Radius: Empty" stepKey="commentAddBorderRadiusEmpty"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
@@ -1511,14 +1441,15 @@
         <comment userInput="Add Border Radius: 0" stepKey="commentAddBorderRadius0"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
@@ -1530,14 +1461,15 @@
         <comment userInput="Add Border Radius: 1" stepKey="commentAddBorderRadius1"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
@@ -1549,14 +1481,15 @@
         <comment userInput="Add Border Radius: 1" stepKey="commentAddBorderRadius500"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
@@ -1568,14 +1501,15 @@
         <comment userInput="Add Border Radius: Invalid" stepKey="commentAddBorderRadiusInvalid"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="5"/>
+            <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText5">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
@@ -1585,35 +1519,35 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Stage: Check Border Radius: Empty -->
         <comment userInput="Stage: Check Border Radius: Empty" stepKey="commentStageCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignmentNoBorderRadius" stepKey="validateStageEmpty">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: 0 -->
         <comment userInput="Stage: Check Border Radius: 0" stepKey="commentStageCheck0"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage0">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage0">
+            <argument name="page" value="TextOnStage"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: 1 -->
         <comment userInput="Stage: Check Border Radius: 1" stepKey="commentStageCheck1"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage1">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage1">
+            <argument name="page" value="TextOnStage"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: 500 -->
         <comment userInput="Stage: Check Border Radius: 1" stepKey="commentStageCheck500"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage500">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
+            <argument name="page" value="TextOnStage"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: Invalid -->
         <comment userInput="Stage: Check Border Radius: Invalid" stepKey="commentStageCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignmentNoBorderRadius" stepKey="validateStageInvalid">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInvalid">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
@@ -1621,75 +1555,71 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Border Radius: Empty -->
         <comment userInput="Stage: Check Border Radius: Empty" stepKey="commentStageCheckEmpty2"/>
-        <actionGroup ref="validateTextNoAlignmentNoBorderRadius" stepKey="validateStageEmpty2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoBorderRadius" stepKey="validateStageEmpty2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: 0 -->
         <comment userInput="Stage: Check Border Radius: 0" stepKey="commentStageCheck02"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage02">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage02">
+            <argument name="page" value="TextOnStage"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: 1 -->
         <comment userInput="Stage: Check Border Radius: 1" stepKey="commentStageCheck12"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage12">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage12">
+            <argument name="page" value="TextOnStage"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: 500 -->
         <comment userInput="Stage: Check Border Radius: 1" stepKey="commentStageCheck5002"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage5002">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
+            <argument name="page" value="TextOnStage"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Border Radius: Invalid -->
         <comment userInput="Stage: Check Border Radius: Invalid" stepKey="commentStageCheckInvalid2"/>
-        <actionGroup ref="validateTextNoAlignmentNoBorderRadius" stepKey="validateStageInvalid2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoBorderRadius" stepKey="validateStageInvalid2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="5"/>
         </actionGroup>
-        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="text"/>
+        </actionGroup>
         <!-- Storefront: Check Border Radius: Empty -->
         <comment userInput="Storefront: Check Border Radius: Empty" stepKey="commentStorefrontCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignmentNoBorderRadius" stepKey="validateStorefrontEmpty">
+        <actionGroup ref="validateAdvancedStyleWithNoBorderRadius" stepKey="validateStorefrontEmpty">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check Border Radius: 0 -->
         <comment userInput="Storefront: Check Border Radius: 0" stepKey="commentStorefrontCheck0"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefront0">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront0">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check Border Radius: 1 -->
         <comment userInput="Storefront: Check Border Radius: 1" stepKey="commentStorefrontCheck1"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefront1">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront1">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Storefront: Check Border Radius: 500 -->
         <comment userInput="Storefront: Check Border Radius: 500" stepKey="commentStorefrontCheck500"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefront500">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Storefront: Check Border Radius: Invalid -->
         <comment userInput="Storefront: Check Border Radius: Invalid" stepKey="commentStorefrontCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignmentNoBorderRadius" stepKey="validateStorefrontInvalid">
+        <actionGroup ref="validateAdvancedStyleWithNoBorderRadius" stepKey="validateStorefrontInvalid">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="index" value="5"/>
         </actionGroup>
     </test>
@@ -1703,7 +1633,6 @@
             <testCaseId value="MAGETWO-89357"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1731,14 +1660,15 @@
         <comment userInput="Add CSS Classes: Empty" stepKey="commentAddCSSClassesEmpty"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
@@ -1750,14 +1680,15 @@
         <comment userInput="Add CSS Classes: One Class" stepKey="commentAddCSSClassesOneClass"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
@@ -1769,14 +1700,15 @@
         <comment userInput="Add CSS Classes: Multiple Classes" stepKey="commentAddCSSClassesMultipleClasses"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
@@ -1786,20 +1718,22 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Stage: Check CSS Classes: Empty -->
         <comment userInput="Stage: Check CSS Classes: Empty" stepKey="commentStageCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageEmpty">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check CSS Classes: One Class -->
         <comment userInput="Stage: Check CSS Classes: One Class" stepKey="commentStageCheckOneClass"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageOneClass">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithCssClasses" stepKey="validateStageOneClass">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check CSS Classes: Multiple Classes -->
         <comment userInput="Stage: Check CSS Classes: Multiple Classes" stepKey="commentStageCheckMultipleClasses"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageMultipleClasses">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithCssClasses" stepKey="validateStageMultipleClasses">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
@@ -1807,44 +1741,44 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check CSS Classes: Empty -->
         <comment userInput="Stage: Check CSS Classes: Empty" stepKey="commentStageCheckEmpty2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageEmpty2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check CSS Classes: One Class -->
         <comment userInput="Stage: Check CSS Classes: One Class" stepKey="commentStageCheckOneClass2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageOneClass2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithCssClasses" stepKey="validateStageOneClass2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check CSS Classes: Multiple Classes -->
         <comment userInput="Stage: Check CSS Classes: Multiple Classes" stepKey="commentStageCheckMultipleClasses2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageMultipleClasses2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithCssClasses" stepKey="validateStageMultipleClasses2">
+            <argument name="page" value="TextOnStage"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
             <argument name="index" value="3"/>
         </actionGroup>
-        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="text"/>
+        </actionGroup>
         <!-- Storefront: Check CSS Classes: Empty -->
         <comment userInput="Storefront: Check CSS Classes: Empty" stepKey="commentStorefrontCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontEmpty">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontEmpty">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check CSS Classes: One Class -->
         <comment userInput="Storefront: Check CSS Classes: One Class" stepKey="commentStorefrontCheckOneClass"/>
-        <actionGroup ref="validateTextNoAlignmentActiveCSSClasses" stepKey="validateStorefrontOneClass">
+        <actionGroup ref="validateAdvancedStyleWithCssClasses" stepKey="validateStorefrontOneClass">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyOneClass"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check CSS Classes: Multiple Classes -->
         <comment userInput="Storefront: Check CSS Classes: Multiple Classes" stepKey="commentStorefrontCheckMultipleClasses"/>
-        <actionGroup ref="validateTextNoAlignmentActiveCSSClasses" stepKey="validateStorefrontMultipleClasses">
+        <actionGroup ref="validateAdvancedStyleWithCssClasses" stepKey="validateStorefrontMultipleClasses">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
             <argument name="index" value="3"/>
         </actionGroup>
@@ -1859,7 +1793,6 @@
             <testCaseId value="MAGETWO-89358"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1896,14 +1829,15 @@
         <comment userInput="Add Margins: Empty" stepKey="commentAddMarginsEmpty"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
@@ -1915,14 +1849,15 @@
         <comment userInput="Add Margins: 0" stepKey="commentAddMargins0"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
@@ -1934,14 +1869,15 @@
         <comment userInput="Add Margins: 1" stepKey="commentAddMargins1"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
@@ -1953,14 +1889,15 @@
         <comment userInput="Add Margins: 500" stepKey="commentAddMargins500"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
@@ -1972,14 +1909,15 @@
         <comment userInput="Add Margins: Unique" stepKey="commentAddMarginsUnique"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="5"/>
+            <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText5">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
@@ -1991,14 +1929,15 @@
         <comment userInput="Add Margins: Invalid" stepKey="commentAddMarginsInvalid"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage6">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="6"/>
+            <argument name="contentBlockIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage6">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="6"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText6">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText6">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
@@ -2008,42 +1947,42 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings6"/>
         <!-- Stage: Check Margins: Empty -->
         <comment userInput="Stage: Check Margins: Empty" stepKey="commentStageCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignmentNoMargins" stepKey="validateStageEmpty">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Margins: 0 -->
         <comment userInput="Stage: Check Margins: 0" stepKey="commentStageCheck0"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage0">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage0">
+            <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Margins: 1 -->
         <comment userInput="Stage: Check Margins: 1" stepKey="commentStageCheck1"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage1">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage1">
+            <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Margins: 500 -->
         <comment userInput="Stage: Check Margins: 500" stepKey="commentStageCheck500"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage500">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
+            <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Margins: Unique -->
         <comment userInput="Stage: Check Margins: Unique" stepKey="commentStageCheckUnique"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageUnique">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique">
+            <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <!-- Stage: Check Margins: Invalid -->
         <comment userInput="Stage: Check Margins: Invalid" stepKey="commentStageCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignmentNoMargins" stepKey="validateStageInvalid">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInvalid">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="6"/>
         </actionGroup>
         <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
@@ -2051,90 +1990,85 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Margins: Empty -->
         <comment userInput="Stage: Check Margins: Empty" stepKey="commentStageCheckEmpty2"/>
-        <actionGroup ref="validateTextNoAlignmentNoMargins" stepKey="validateStageEmpty2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoMargins" stepKey="validateStageEmpty2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Margins: 0 -->
         <comment userInput="Stage: Check Margins: 0" stepKey="commentStageCheck02"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage02">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage02">
+            <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Margins: 1 -->
         <comment userInput="Stage: Check Margins: 1" stepKey="commentStageCheck12"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage12">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage12">
+            <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Margins: 500 -->
         <comment userInput="Stage: Check Margins: 500" stepKey="commentStageCheck5002"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage5002">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
+            <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Margins: Unique -->
         <comment userInput="Stage: Check Margins: Unique" stepKey="commentStageCheckUnique2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageUnique2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <!-- Stage: Check Margins: Invalid -->
         <comment userInput="Stage: Check Margins: Invalid" stepKey="commentStageCheckInvalid2"/>
-        <actionGroup ref="validateTextNoAlignmentNoMargins" stepKey="validateStageInvalid2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoMargins" stepKey="validateStageInvalid2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="6"/>
         </actionGroup>
-        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="text"/>
+        </actionGroup>
         <!-- Storefront: Check Margins: Empty -->
         <comment userInput="Storefront: Check Margins: Empty" stepKey="commentStorefrontCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignmentNoMargins" stepKey="validateStorefrontEmpty">
+        <actionGroup ref="validateAdvancedStyleWithNoMargins" stepKey="validateStorefrontEmpty">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check Margins: 0 -->
         <comment userInput="Storefront: Check Margins: 0" stepKey="commentStorefrontCheck0"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefront0">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront0">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check Margins: 1 -->
         <comment userInput="Storefront: Check Margins: 1" stepKey="commentStorefrontCheck1"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefront1">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront1">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="margin" value="PageBuilderMarginsProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Storefront: Check Margins: 500 -->
         <comment userInput="Storefront: Check Margins: 500" stepKey="commentStorefrontCheck500"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefront500">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="margin" value="PageBuilderMarginsProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Storefront: Check Margins: Unique -->
         <comment userInput="Storefront: Check Margins: Unique" stepKey="commentStorefrontCheckUnique"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontUnique">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontUnique">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <!-- Storefront: Check Margins: Invalid -->
         <comment userInput="Storefront: Check Margins: Invalid" stepKey="commentStorefrontCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignmentNoMargins" stepKey="validateStorefrontInvalid">
+        <actionGroup ref="validateAdvancedStyleWithNoMargins" stepKey="validateStorefrontInvalid">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="index" value="6"/>
         </actionGroup>
     </test>
@@ -2148,7 +2082,6 @@
             <testCaseId value="MAGETWO-89359"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -2185,14 +2118,15 @@
         <comment userInput="Add Padding: Empty" stepKey="commentAddPaddingEmpty"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText1">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
@@ -2204,14 +2138,15 @@
         <comment userInput="Add Padding: 0" stepKey="commentAddPadding0"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="2"/>
+            <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText2">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
@@ -2223,14 +2158,15 @@
         <comment userInput="Add Padding: 1" stepKey="commentAddPadding1"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="3"/>
+            <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText3">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
@@ -2242,14 +2178,15 @@
         <comment userInput="Add Padding: 500" stepKey="commentAddPadding500"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="4"/>
+            <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText4">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
@@ -2261,14 +2198,15 @@
         <comment userInput="Add Padding: Unique" stepKey="commentAddPaddingUnique"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="5"/>
+            <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="5"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText5">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
@@ -2280,14 +2218,15 @@
         <comment userInput="Add Padding: Invalid" stepKey="commentAddPaddingInvalid"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage6">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="6"/>
+            <argument name="contentBlockIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage6">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="6"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText6">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText6">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
@@ -2297,42 +2236,42 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings6"/>
         <!-- Stage: Check Padding: Empty -->
         <comment userInput="Stage: Check Padding: Empty" stepKey="commentStageCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignmentNoPadding" stepKey="validateStageEmpty">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Padding: 0 -->
         <comment userInput="Stage: Check Padding: 0" stepKey="commentStageCheck0"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage0">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage0">
+            <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Padding: 1 -->
         <comment userInput="Stage: Check Padding: 1" stepKey="commentStageCheck1"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage1">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage1">
+            <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Padding: 500 -->
         <comment userInput="Stage: Check Padding: 500" stepKey="commentStageCheck500"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage500">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage500">
+            <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Padding: Unique -->
         <comment userInput="Stage: Check Padding: Unique" stepKey="commentStageCheckUnique"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageUnique">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique">
+            <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <!-- Stage: Check Padding: Invalid -->
         <comment userInput="Stage: Check Padding: Invalid" stepKey="commentStageCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignmentNoPadding" stepKey="validateStageInvalid">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageInvalid">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="6"/>
         </actionGroup>
         <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
@@ -2340,90 +2279,85 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Padding: Empty -->
         <comment userInput="Stage: Check Padding: Empty" stepKey="commentStageCheckEmpty2"/>
-        <actionGroup ref="validateTextNoAlignmentNoPadding" stepKey="validateStageEmpty2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStageEmpty2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Stage: Check Padding: 0 -->
         <comment userInput="Stage: Check Padding: 0" stepKey="commentStageCheck02"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage02">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage02">
+            <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Stage: Check Padding: 1 -->
         <comment userInput="Stage: Check Padding: 1" stepKey="commentStageCheck12"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage12">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage12">
+            <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Stage: Check Padding: 500 -->
         <comment userInput="Stage: Check Padding: 500" stepKey="commentStageCheck5002"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStage5002">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage5002">
+            <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Stage: Check Padding: Unique -->
         <comment userInput="Stage: Check Padding: Unique" stepKey="commentStageCheckUnique2"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStageUnique2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageUnique2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <!-- Stage: Check Padding: Invalid -->
         <comment userInput="Stage: Check Padding: Invalid" stepKey="commentStageCheckInvalid2"/>
-        <actionGroup ref="validateTextNoAlignmentNoPadding" stepKey="validateStageInvalid2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStageInvalid2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="index" value="6"/>
         </actionGroup>
-        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="text"/>
+        </actionGroup>
         <!-- Storefront: Check Padding: Empty -->
         <comment userInput="Storefront: Check Padding: Empty" stepKey="commentStorefrontCheckEmpty"/>
-        <actionGroup ref="validateTextNoAlignmentNoPadding" stepKey="validateStorefrontEmpty">
+        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStorefrontEmpty">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Storefront: Check Padding: 0 -->
         <comment userInput="Storefront: Check Padding: 0" stepKey="commentStorefrontCheck0"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefront0">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront0">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="padding" value="PageBuilderPaddingPropertyDefault"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <!-- Storefront: Check Padding: 1 -->
         <comment userInput="Storefront: Check Padding: 1" stepKey="commentStorefrontCheck1"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefront1">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront1">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="padding" value="PageBuilderPaddingProperty1"/>
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- Storefront: Check Padding: 500 -->
         <comment userInput="Storefront: Check Padding: 500" stepKey="commentStorefrontCheck500"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefront500">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront500">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="padding" value="PageBuilderPaddingProperty500"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Storefront: Check Padding: Unique -->
         <comment userInput="Storefront: Check Padding: Unique" stepKey="commentStorefrontCheckUnique"/>
-        <actionGroup ref="validateTextNoAlignment" stepKey="validateStorefrontUnique">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefrontUnique">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="5"/>
         </actionGroup>
         <!-- Storefront: Check Padding: Invalid -->
         <comment userInput="Storefront: Check Padding: Invalid" stepKey="commentStorefrontCheckInvalid"/>
-        <actionGroup ref="validateTextNoAlignmentNoPadding" stepKey="validateStorefrontInvalid">
+        <actionGroup ref="validateAdvancedStyleWithNoPadding" stepKey="validateStorefrontInvalid">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="index" value="6"/>
         </actionGroup>
     </test>
@@ -2437,7 +2371,6 @@
             <testCaseId value="MAGETWO-89360"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-advancedConfig"/>
-            <group value="pagebuilder-text"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -2457,14 +2390,15 @@
         <comment userInput="Add Text To Stage" stepKey="commentAddText"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
             <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillTextFieldOnTextEditPanel" stepKey="enterText">
+        <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
             <argument name="property" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
@@ -2495,8 +2429,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check All Attributes -->
         <comment userInput="Stage: Check All Attributes" stepKey="commentStageCheck1"/>
-        <actionGroup ref="validateTextAllActive" stepKey="validateStage1">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateStage1">
+            <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -2511,8 +2445,8 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check All Attributes -->
         <comment userInput="Stage: Check All Attributes" stepKey="commentStageCheck2"/>
-        <actionGroup ref="validateTextAllActive" stepKey="validateStage2">
-            <argument name="text" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateStage2">
+            <argument name="page" value="TextOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -2522,13 +2456,13 @@
             <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <amOnPage url="text{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="prefix" value="text"/>
+        </actionGroup>
         <!-- Storefront: Check All Attributes -->
         <comment userInput="Storefront: Check All Attributes" stepKey="commentStorefrontCheck"/>
-        <actionGroup ref="validateTextAllActive" stepKey="validateStorefront">
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateStorefront">
             <argument name="page" value="TextOnStorefront"/>
-            <argument name="text" value="PageBuilderTextContentBlock"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>

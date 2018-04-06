@@ -6,8 +6,8 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-divider pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
-    <div data-bind="style: preview.previewStyle()">
-        <hr data-bind="style: {width: preview.data.line_width(), borderWidth: preview.data.line_thickness() + 'px', borderColor: preview.data.line_color()}" />
+    <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css">
+        <hr data-bind="attr: data.line.attributes, style: data.line.style, css: data.line.css"/>
     </div>
     <!-- ko template: getOptions().template --><!-- /ko -->
 </div>
