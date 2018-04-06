@@ -284,14 +284,35 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
         <actionGroup ref="addTab" stepKey="addSecondTab"/>
-        <!--<actionGroup ref="openTabOptionsByIndex" stepKey="openEditMenuSecondTab">-->
-            <!--<argument name="index" value="2"/>-->
-        <!--</actionGroup>-->
+        <!-- Open Tabs Panel -->
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Validate and Update Default Active -->
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultActive">
+            <argument name="property" value="PageBuilderTabsDefaultActiveTab"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterDefaultActiveTab2">
+            <argument name="property" value="PageBuilderTabsDefaultActiveTab2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify in Admin Preview-->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeSecondTabActiveAdminPreview"/>
+        <!-- Verify in Storefront-->
+        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeSecondTabActiveStorefront"/>
     </test>
 </tests>
