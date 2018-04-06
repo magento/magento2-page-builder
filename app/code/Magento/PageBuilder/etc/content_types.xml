@@ -822,20 +822,37 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/tabs/style/border-radius"/>
+                                    <property var="minimum_height" name="min_height" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/converter/row/style/margins-and-paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute var="name" name="data-role"/>
+                                    <attribute var="default_active_tab" name="default_active_tab"/>
+                                    <attribute var="navigation_alignment" name="navigation_alignment"/>
+                                    <attribute var="minimum_height" name="minimum_height" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
                                 </attributes>
                                 <css var="css_classes"/>
+                            </element>
+                            <element name="navigation" path=".">
+                                <style_properties>
+                                    <property var="navigation_alignment" name="text_align"/>
+                                </style_properties>
+                            </element>
+                            <element name="link" path=".">
+                                <style_properties>
+                                    <property var="border" name="z_index" converter="Magento_PageBuilder/js/converter/tabs/style/z-index"/>
+                                </style_properties>
                             </element>
                         </elements>
                     </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/tabs.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/tabs.html</render_template>
-                    <readers>
-                        <reader name="default" component="Magento_PageBuilder/js/component/format/read/default"/>
-                        <reader name="tabs" component="Magento_PageBuilder/js/component/format/read/tabs"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
