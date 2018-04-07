@@ -296,7 +296,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @param {string} element
      * @returns {DataObject}
      */
-    public getData(element: string) {
+    public getData(element?: string) {
         let data = _.extend({}, this.stage.store.get(this.id));
 
         if (undefined === element) {
