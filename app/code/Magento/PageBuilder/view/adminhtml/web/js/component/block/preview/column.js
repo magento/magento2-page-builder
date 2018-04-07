@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["./block", "./column-group/resizing"], function (_block, _resizing) {
+define(["mage/translate", "./block", "./column-group/resizing"], function (_translate, _block, _resizing) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -23,8 +23,9 @@ define(["./block", "./column-group/resizing"], function (_block, _resizing) {
         newWidth = parseFloat(newWidth);
         newWidth = Math.round(newWidth / (100 / maxColumns));
         var newLabel = newWidth + "/" + maxColumns;
+        var column = (0, _translate)("Column");
 
-        _this.displayLabel("Column " + newLabel);
+        _this.displayLabel(column + " " + newLabel);
       });
 
       return _this;
