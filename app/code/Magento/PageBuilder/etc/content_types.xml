@@ -925,7 +925,9 @@
                                 </style_properties>
                                 <attributes>
                                     <attribute var="name" name="data-role"/>
-                                    <attribute var="position" name="data-position"/>
+                                    <attribute var="position" name="data-markers" virtual="true" converter="Magento_PageBuilder/js/converter/map/attribute/markers"/>
+                                    <attribute var="position" name="data-zoom" virtual="true" converter="Magento_PageBuilder/js/converter/map/attribute/zoom"/>
+                                    <complex_attribute var="position" persist="false" reader="Magento_PageBuilder/js/property/map/position"/>
                                 </attributes>
                                 <css var="css_classes"/>
                             </element>

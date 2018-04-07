@@ -48,7 +48,17 @@ class Map implements RendererInterface
         ];
 
         if (isset($eavData['map'])) {
-            $rootElementAttributes['data-position'] = $eavData['map'];
+            $map = explode(',', $eavData['map']);
+            $rootElementAttributes['data-markers'] = '[{&quot;lat&quot;:'
+                . $map[0]
+                . ',&quot;lng&quot;:'
+                . $map[1]
+                . '}]';
+            $rootElementAttributes['data-zoom'] = $map[2];
+        }
+
+        if (!isset($eavData['map'])) {
+            $rootElementAttributes['data-markers'] = '[]';
         }
 
         if (isset($itemData['formData'])) {
