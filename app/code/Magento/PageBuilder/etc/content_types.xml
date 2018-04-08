@@ -40,7 +40,7 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="background_color" name="background_color"/>
                                     <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
                                     <property var="background_position" name="background_position"/>
                                     <property var="background_size" name="background_size"/>
@@ -57,10 +57,18 @@
                                     <attribute var="name" name="data-role"/>
                                     <attribute var="enable_parallax" name="data-enable-parallax"/>
                                     <attribute var="parallax_speed" name="data-parallax-speed"/>
+                                    <attribute var="background_color_format" name="data-background-color-format" virtual="true"/>
                                 </attributes>
                                 <css var="css_classes"/>
                             </element>
                         </elements>
+                        <converters>
+                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/converter/default/preferred-color-format">
+                                <config>
+                                    <item name="background_color_format" value="background_color_format"/>
+                                </config>
+                            </converter>
+                        </converters>
                     </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/row.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/row.html</render_template>
