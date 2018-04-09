@@ -74,6 +74,18 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
               }
             }
           }
+
+          if (dataMapping.elements[elementName].html !== undefined) {
+            var htmlConfig = dataMapping.elements[elementName].html;
+
+            if (!!htmlConfig.converter && converters.indexOf(htmlConfig.converter) === -1 && !_elementConverterPool.get(htmlConfig.converter)) {
+              converters.push(htmlConfig.converter);
+            }
+
+            if (!!htmlConfig.preview_converter && converters.indexOf(htmlConfig.preview_converter) === -1 && !_elementConverterPool.get(htmlConfig.preview_converter)) {
+              converters.push(htmlConfig.preview_converter);
+            }
+          }
         }
       }
     }

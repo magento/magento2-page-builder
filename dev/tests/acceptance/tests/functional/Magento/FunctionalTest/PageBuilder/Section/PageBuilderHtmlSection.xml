@@ -40,18 +40,18 @@
         <element name="padding" type="text" selector="(//div[@data-role='html'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="HtmlOnBackendArbitraryHtml">
-        <element name="content" type="button" selector="//div[@class='pagebuilder-html'][1]/div[@class='my-div']"/>
+        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[@class='my-div']"/>
     </section>
     <section name="HtmlOnBackendWithImage">
-        <element name="content" type="button" selector="//div[@class='pagebuilder-html'][1]/img[not(contains(@src, '{{media'))]"/>
+        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]/img[not(contains(@src, '{{media'))]"/>
     </section>
     <section name="HtmlOnFrontendWithImage">
         <element name="content" type="button" selector="//div[@data-role='html'][1]/img[not(contains(@src, '{{media'))]"/>
     </section>
     <section name="HtmlOnBackendMediaDirective">
-        <element name="content" type="button" selector="//div[@class='pagebuilder-html'][1]/img[contains(@src, '{{media')]"/>
+        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]/img[contains(@src, '{{media')]"/>
     </section>
     <section name="HtmlOnBackendNonexistentDataRole">
-        <element name="content" type="button" selector="//div[@class='pagebuilder-html'][1]/div[@data-role='row']/div[@data-role='non-existent-content-type']"/>
+        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[@data-role='row']/div[@data-role='non-existent-content-type']"/>
     </section>
 </sections>

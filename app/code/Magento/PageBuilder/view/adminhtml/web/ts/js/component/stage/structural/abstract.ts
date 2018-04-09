@@ -285,7 +285,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
         let result = "";
         if (undefined !== config.html.var) {
-            result = data[config.html.var];
+            result = this.convertHtml(config, data, "master");
         }
         return result;
     }
@@ -296,7 +296,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @param {string} element
      * @returns {DataObject}
      */
-    public getData(element: string) {
+    public getData(element?: string) {
         let data = _.extend({}, this.stage.store.get(this.id));
 
         if (undefined === element) {
@@ -432,6 +432,27 @@ export default class Structural extends EditableArea implements StructuralInterf
     }
 
     /**
+     * Convert html property
+     *
+     * @param {object} config
+     * @param {DataObject} data
+     * @param {string} area
+     * @returns {string}
+     */
+    private convertHtml(config: any, data: DataObject, area: string) {
+        let value = data[config.html.var] || config.html.placeholder;
+
+        const converter = "preview" === area && config.html.preview_converter
+            ? config.html.preview_converter
+            : config.html.converter;
+        if (this.elementConverterPool.get(converter)) {
+            value = this.elementConverterPool.get(converter).toDom(config.html.var, data);
+        }
+
+        return value;
+    }
+
+    /**
      * Process data for elements before its converted to knockout format
      *
      * @param {Object} data
@@ -481,10 +502,7 @@ export default class Structural extends EditableArea implements StructuralInterf
                 this.data[elementName].attributes(this.convertAttributes(config[elementName], data, "preview"));
             }
             if (config[elementName].html !== undefined) {
-                const html = data[config[elementName].html.var]
-                    ? data[config[elementName].html.var]
-                    : config[elementName].html.placeholder;
-                this.data[elementName].html(html);
+                this.data[elementName].html(this.convertHtml(config[elementName], data, "preview"));
             }
             if (config[elementName].css !== undefined && config[elementName].css.var in data) {
                 const css = data[config[elementName].css.var];

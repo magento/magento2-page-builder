@@ -171,7 +171,9 @@ define(["underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBu
         if (key === "background-color" || key === "border-color") {
           if (value === "default" || value === "initial" || value === "") {
             value = "";
-          } else {
+          }
+
+          if (key === "border-color") {
             value = _this2.convertRgbToHex(value);
           }
         }
