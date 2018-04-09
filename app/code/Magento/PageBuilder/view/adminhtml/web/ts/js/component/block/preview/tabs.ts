@@ -7,7 +7,6 @@ import $ from "jquery";
 import ko from "knockout";
 import "tabs";
 import _ from "underscore";
-import {fromHex} from "../../../utils/color-converter";
 import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import Block from "../block";
