@@ -229,7 +229,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       var result = "";
 
       if (undefined !== config.html.var) {
-        result = data[config.html.var];
+        result = this.convertHtml(config, data, "master");
       }
 
       return result;
@@ -414,6 +414,26 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       return result;
     };
     /**
+     * Convert html property
+     *
+     * @param {object} config
+     * @param {DataObject} data
+     * @param {string} area
+     * @returns {string}
+     */
+
+
+    _proto.convertHtml = function convertHtml(config, data, area) {
+      var value = data[config.html.var] || config.html.placeholder;
+      var converter = "preview" === area && config.html.preview_converter ? config.html.preview_converter : config.html.converter;
+
+      if (this.elementConverterPool.get(converter)) {
+        value = this.elementConverterPool.get(converter).toDom(config.html.var, data);
+      }
+
+      return value;
+    };
+    /**
      * Process data for elements before its converted to knockout format
      *
      * @param {Object} data
@@ -485,8 +505,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
         }
 
         if (config[elementName].html !== undefined) {
-          var html = data[config[elementName].html.var] ? data[config[elementName].html.var] : config[elementName].html.placeholder;
-          this.data[elementName].html(html);
+          this.data[elementName].html(this.convertHtml(config[elementName], data, "preview"));
         }
 
         if (config[elementName].css !== undefined && config[elementName].css.var in data) {

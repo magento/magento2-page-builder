@@ -50,6 +50,23 @@ export default function create(contentType: string): Promise<> {
                         }
                     }
                 }
+
+                if (dataMapping.elements[elementName].html !== undefined) {
+                    const htmlConfig = dataMapping.elements[elementName].html;
+                    if (!!htmlConfig.converter
+                        && converters.indexOf(htmlConfig.converter) === -1
+                        && !ElementConverterPool.get(htmlConfig.converter)
+                    ) {
+                        converters.push(htmlConfig.converter);
+                    }
+
+                    if (!!htmlConfig.preview_converter
+                        && converters.indexOf(htmlConfig.preview_converter) === -1
+                        && !ElementConverterPool.get(htmlConfig.preview_converter)
+                    ) {
+                        converters.push(htmlConfig.preview_converter);
+                    }
+                }
             }
         }
     }

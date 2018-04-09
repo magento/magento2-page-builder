@@ -40,10 +40,18 @@
                                     <attribute name="data-role" var="name"/>
                                     <attribute name="data-enable-parallax" var="enable_parallax"/>
                                     <attribute name="data-parallax-speed" var="parallax_speed"/>
+                                    <attribute var="background_color_format" name="data-background-color-format" virtual="true"/>
                                 </attributes>
                                 <css var="css_classes"/>
                             </element>
                         </elements>
+                        <converters>
+                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/converter/default/preferred-color-format">
+                                <config>
+                                    <item name="background_color_format" value="background_color_format"/>
+                                </config>
+                            </converter>
+                        </converters>
                     </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/row.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/row.html</render_template>

@@ -66,7 +66,7 @@ export default class Configurable implements ReadInterface {
                         );
                     }
                     if (undefined !== elementConfig.html.var) {
-                        data = this.readHtml(elementConfig, currentElement, data);
+                        data = this.readHtml(elementConfig, currentElement, data, elementConverterPool);
                     }
                     if (undefined !== elementConfig.tag.var) {
                         data = this.readHtmlTag(elementConfig, currentElement, data);
@@ -202,9 +202,15 @@ export default class Configurable implements ReadInterface {
      * @param {object} data
      * @returns {object}
      */
-    private readHtml(config: any, element: Node, data: object) {
+    private readHtml(config: any, element: Node, data: object, elementConverterPool: ElementConverterPool) {
         const result = {};
-        result[config.html.var] = element.innerHTML;
+        let value = element.innerHTML;
+
+        if (elementConverterPool.get(config.html.converter)) {
+            value = elementConverterPool.get(config.html.converter).fromDom(value);
+        }
+
+        result[config.html.var] = value;
         return _.extend(data, result);
     }
 
