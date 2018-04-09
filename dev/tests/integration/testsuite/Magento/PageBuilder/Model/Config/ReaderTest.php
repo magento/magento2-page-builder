@@ -35,7 +35,6 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
      */
     private $readFactoryMock;
 
-
     protected function setUp()
     {
         $this->objectManager = Bootstrap::getObjectManager();
