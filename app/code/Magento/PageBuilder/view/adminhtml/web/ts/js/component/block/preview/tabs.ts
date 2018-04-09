@@ -132,7 +132,6 @@ export default class Tabs extends PreviewBlock {
             borderBottomColor: "",
             borderBottomStyle: "solid",
             borderBottomWidth: "2px",
-            zIndex: -index,
             marginLeft: "0px",
         };
         if (index !== 0) {
