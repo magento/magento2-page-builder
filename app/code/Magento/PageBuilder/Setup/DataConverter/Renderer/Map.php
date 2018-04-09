@@ -45,6 +45,7 @@ class Map implements RendererInterface
         $rootElementAttributes = [
             'data-role' => 'map',
             'class' => $eavData['css_classes'] ?? '',
+            'data-markers' => '[]',
         ];
 
         if (isset($eavData['map'])) {
@@ -55,10 +56,6 @@ class Map implements RendererInterface
                 . $map[1]
                 . '}]';
             $rootElementAttributes['data-zoom'] = $map[2];
-        }
-
-        if (!isset($eavData['map'])) {
-            $rootElementAttributes['data-markers'] = '[]';
         }
 
         if (isset($itemData['formData'])) {

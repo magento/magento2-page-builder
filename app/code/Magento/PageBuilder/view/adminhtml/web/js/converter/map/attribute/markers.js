@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["underscore"], function (_underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -36,7 +36,9 @@ define([], function () {
         content = JSON.parse(content);
       }
 
-      if (content && Object.keys(content).length) {
+      if (content && _underscore.every(["lat", "lng"], function (key) {
+        return _underscore.has(content, key);
+      })) {
         var result = {
           lat: content.lat,
           lng: content.lng

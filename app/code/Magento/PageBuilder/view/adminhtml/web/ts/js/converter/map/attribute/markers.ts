@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import {ElementConverterInterface} from "../../element-converter-interface";
 
 export default class Markers implements ElementConverterInterface {
@@ -28,7 +29,7 @@ export default class Markers implements ElementConverterInterface {
         if (typeof content === "string" && content !== "") {
             content = JSON.parse(content);
         }
-        if (content && Object.keys(content).length) {
+        if (content && _.every(["lat", "lng"], (key: string) => _.has(content, key))) {
             const result = {
                 lat: content.lat,
                 lng: content.lng,

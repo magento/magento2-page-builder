@@ -373,14 +373,9 @@ export default class Structural extends EditableArea implements StructuralInterf
     private convertAttributes(config: any, data: DataObject, area: string) {
         const result = {};
         for (const attributeConfig of config.attributes) {
-             if (typeof attributeConfig.persist === "string") {
-                 if (attributeConfig.persist === "false") {
-                     attributeConfig.persist = false;
-                 }
-             }
              if (undefined !== attributeConfig.persist
                  && null !== attributeConfig.persist
-                 && false === !!attributeConfig.persist
+                 && attributeConfig.persist
              ) {
                 continue;
             }
