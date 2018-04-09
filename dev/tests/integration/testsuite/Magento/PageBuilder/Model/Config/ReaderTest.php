@@ -11,7 +11,7 @@ use Magento\TestFramework\Helper\Bootstrap;
 class ReaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var Bootstrap
+     * @var \Magento\Framework\ObjectManagerInterface
      */
     private $objectManager;
 

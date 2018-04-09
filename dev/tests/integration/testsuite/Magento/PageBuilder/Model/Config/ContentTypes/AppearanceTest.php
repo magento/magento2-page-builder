@@ -30,7 +30,7 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
             if ($form) {
                 // get appearances in config
                 $configAppearances = array_keys($type['appearances']);
-                $this->sortData($configAppearances);
+                asort($configAppearances);
 
                 // get appearances in form
                 $uiReader = $objectManager->create(
@@ -46,7 +46,7 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
                 $formAppearances = array_map(function ($option) {
                     return $option['item']['value']['value'];
                 }, $appearanceOptions);
-                $this->sortData($formAppearances);
+                asort($formAppearances);
 
                 $this->assertEquals(
                     array_values($configAppearances),
@@ -55,12 +55,5 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
                 );
             }
         }
-    }
-
-    private function sortData(array &$appearances)
-    {
-        uasort($appearances, function ($firstElement, $secondElement) {
-            return $firstElement <=> $secondElement;
-        });
     }
 }
