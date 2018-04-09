@@ -63,14 +63,16 @@ define([
             }, this);
             this.markers = [];
 
-            newMarkers.forEach(function (markerCoord) {
-                this.markers.push(
-                    new google.maps.Marker({
-                        map: this.map,
-                        position: googleLatLng(markerCoord)
-                    })
-                );
-            }, this);
+            if(newMarkers){
+                newMarkers.forEach(function (markerCoord) {
+                    this.markers.push(
+                        new google.maps.Marker({
+                            map: this.map,
+                            position: googleLatLng(markerCoord)
+                        })
+                    );
+                }, this);
+            }
         };
 
         this.setMarkers(markers);

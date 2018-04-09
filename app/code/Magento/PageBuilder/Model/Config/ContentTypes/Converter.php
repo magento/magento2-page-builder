@@ -250,7 +250,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     'converter' => $this->getAttributeValue($attributeNode, 'converter'),
                     'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
                     'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
-                    'complex' => true
+                    'complex' => true,
+                    'persist' => $this->getAttributeValue($attributeNode, 'persist'),
                 ];
             }
         }

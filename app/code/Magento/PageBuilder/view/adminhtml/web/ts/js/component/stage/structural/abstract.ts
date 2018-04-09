@@ -375,7 +375,7 @@ export default class Structural extends EditableArea implements StructuralInterf
         for (const attributeConfig of config.attributes) {
              if (undefined !== attributeConfig.persist
                  && null !== attributeConfig.persist
-                 && false === !!attributeConfig.persist
+                 && attributeConfig.persist
              ) {
                 continue;
             }
