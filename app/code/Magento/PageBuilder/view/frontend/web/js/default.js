@@ -110,7 +110,9 @@ requirejs([
         showButtonOnHover($('div[data-role="slide"][data-show-button="on_hover"] > a'), '.pagebuilder-slide-button');
 
         $('div[data-role="tabs"]').each(function (index, element) {
-            $(element).tabs();
+            $(element).tabs({
+                active: $(element).data('active-tab') || 0
+            });
         });
     });
 

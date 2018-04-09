@@ -22,7 +22,6 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.focusedTab = _knockout.observable();
-      _this.activeTab = _knockout.observable();
       _this.element = void 0;
       _this.buildTabs = _underscore.debounce(function () {
         if (_this.element && _this.element.children.length > 0) {
@@ -32,7 +31,9 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
           }
 
           (0, _jquery)(_this.element).tabs({
-            active: _this.activeTab() || 1
+            create: function create(event, ui) {
+              _this.setActiveTab(_this.data.default_active() || 0);
+            }
           });
         }
       }, 10);
@@ -53,10 +54,6 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         if (_this.element && params.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
-      });
-
-      _this.activeTab.subscribe(function (index) {
-        (0, _jquery)(_this.element).tabs("option", "active", index);
       }); // Set the stage to interacting when a tab is focused
 
 
@@ -76,7 +73,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
     var _proto = Tabs.prototype;
 
     _proto.setActiveTab = function setActiveTab(index) {
-      this.activeTab(index);
+      (0, _jquery)(this.element).tabs("option", "active", index);
     };
     /**
      * Set the focused tab
@@ -152,14 +149,14 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
       if (index !== 0) {
         styles.marginLeft = "-" + this.data.border_width() + "px";
-      }
+      } // if (index === this.activeTab()) {
+      //     styles.borderBottomColor = this.data.border() !== "_default" ?
+      //     `rgba(255,255,255,1)` : "transparent";
+      //     styles.borderBottomWidth = `${Math.abs(parseInt(mainStyles.marginBottom, 10)) + 1}px`;
+      // } else {
+      //     styles.borderBottomColor = "transparent";
+      // }
 
-      if (index === this.activeTab()) {
-        styles.borderBottomColor = this.data.border() !== "_default" ? "rgba(255,255,255,1)" : "transparent";
-        styles.borderBottomWidth = Math.abs(parseInt(mainStyles.marginBottom, 10)) + 1 + "px";
-      } else {
-        styles.borderBottomColor = "transparent";
-      }
 
       return { ...mainStyles,
         ...styles

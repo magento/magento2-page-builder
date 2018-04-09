@@ -15,7 +15,6 @@ import PreviewBlock from "./block";
 
 export default class Tabs extends PreviewBlock {
     public focusedTab: KnockoutObservable<number> = ko.observable();
-    public activeTab: KnockoutObservable<number> = ko.observable();
     private element: Element;
 
     /**
@@ -31,7 +30,9 @@ export default class Tabs extends PreviewBlock {
                 // We aren't concerned if this fails, tabs throws an Exception when we cannot destroy
             }
             $(this.element).tabs({
-                active: this.activeTab() || 1,
+                create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
+                    this.setActiveTab(this.data.default_active() || 0);
+                },
             });
         }
     }, 10);
@@ -58,9 +59,6 @@ export default class Tabs extends PreviewBlock {
                 this.buildTabs();
             }
         });
-        this.activeTab.subscribe((index: number) => {
-            $(this.element).tabs("option", "active", index);
-        });
         // Set the stage to interacting when a tab is focused
         this.focusedTab.subscribe((value: number) => {
             this.parent.stage.interacting(value !== null);
@@ -73,7 +71,7 @@ export default class Tabs extends PreviewBlock {
      * @param {number} index
      */
     public setActiveTab(index: number) {
-        this.activeTab(index);
+        $(this.element).tabs("option", "active", index);
     }
 
     /**
@@ -138,13 +136,13 @@ export default class Tabs extends PreviewBlock {
         if (index !== 0) {
             styles.marginLeft = `-${this.data.border_width()}px`;
         }
-        if (index === this.activeTab()) {
-            styles.borderBottomColor = this.data.border() !== "_default" ?
-            `rgba(255,255,255,1)` : "transparent";
-            styles.borderBottomWidth = `${Math.abs(parseInt(mainStyles.marginBottom, 10)) + 1}px`;
-        } else {
-            styles.borderBottomColor = "transparent";
-        }
+        // if (index === this.activeTab()) {
+        //     styles.borderBottomColor = this.data.border() !== "_default" ?
+        //     `rgba(255,255,255,1)` : "transparent";
+        //     styles.borderBottomWidth = `${Math.abs(parseInt(mainStyles.marginBottom, 10)) + 1}px`;
+        // } else {
+        //     styles.borderBottomColor = "transparent";
+        // }
         return {
             ...mainStyles,
             ...styles,
