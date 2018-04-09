@@ -445,8 +445,14 @@ export default class Structural extends EditableArea implements StructuralInterf
         const converter = "preview" === area && config.html.preview_converter
             ? config.html.preview_converter
             : config.html.converter;
+
         if (this.elementConverterPool.get(converter)) {
             value = this.elementConverterPool.get(converter).toDom(config.html.var, data);
+        }
+
+        // if value is empty, use placeholder
+        if (typeof value === "string" && !value.length && config.html.placeholder) {
+            value = config.html.placeholder;
         }
 
         return value;
