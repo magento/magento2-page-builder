@@ -3,18 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import PropertyReaderInterface from "../property-reader-interface";
-import Markers from "./markers";
-import Zoom from "./zoom";
+import {PropertyReaderInterface} from "../property-reader-interface";
 
 export default class Position implements PropertyReaderInterface {
-    private zoom: Zoom;
-    private markers: Markers;
-
-    constructor() {
-        this.zoom = new Zoom();
-        this.markers = new Markers();
-    }
 
     /**
      * Read position from zoom and marker from element
@@ -23,10 +14,13 @@ export default class Position implements PropertyReaderInterface {
      * @returns {string | object}
      */
     public read(element: HTMLElement): string | object {
-        return JSON.stringify(Object.assign(
-            {},
-            this.markers.read(element),
-            this.zoom.read(element),
-        ));
+        const markers = element.getAttribute("data-markers") !== ""
+            ? JSON.parse(element.getAttribute("data-markers"))[0]
+            : {};
+        const zoom = element.getAttribute("data-zoom")
+            ? { zoom: parseInt(element.getAttribute("data-zoom"), 10)}
+            : {};
+
+        return JSON.stringify(Object.assign({}, markers, zoom));
     }
 }

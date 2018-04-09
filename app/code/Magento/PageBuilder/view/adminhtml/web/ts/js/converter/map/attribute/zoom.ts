@@ -13,7 +13,7 @@ export default class Zoom implements ElementConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        return;
+        return value;
     }
 
     /**
@@ -26,11 +26,11 @@ export default class Zoom implements ElementConverterInterface {
     public toDom(name: string, data: object): string | object {
         if (data[name]) {
             let content = data[name];
-            if (typeof content === "string" && content !== "") {
+            if (typeof content === "string") {
                 content = JSON.parse(content);
             }
             return content.zoom;
         }
-        return;
+        return "";
     }
 }

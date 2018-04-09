@@ -18,7 +18,7 @@ define(["underscore"], function (_underscore) {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return;
+      return value;
     };
     /**
      * Convert value to knockout format

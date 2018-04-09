@@ -63,7 +63,7 @@ define([
             }, this);
             this.markers = [];
 
-            if(newMarkers){
+            if (newMarkers) {
                 newMarkers.forEach(function (markerCoord) {
                     this.markers.push(
                         new google.maps.Marker({

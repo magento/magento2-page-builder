@@ -14,7 +14,7 @@ export default class Markers implements ElementConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        return;
+        return value;
     }
 
     /**

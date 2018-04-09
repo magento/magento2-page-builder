@@ -18,7 +18,7 @@ define([], function () {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return;
+      return value;
     };
     /**
      * Convert value to knockout format
@@ -33,14 +33,14 @@ define([], function () {
       if (data[name]) {
         var content = data[name];
 
-        if (typeof content === "string" && content !== "") {
+        if (typeof content === "string") {
           content = JSON.parse(content);
         }
 
         return content.zoom;
       }
 
-      return;
+      return "";
     };
 
     return Zoom;

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/property/map/markers", "Magento_PageBuilder/js/property/map/zoom"], function (_markers, _zoom) {
+define([], function () {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,24 +7,22 @@ define(["Magento_PageBuilder/js/property/map/markers", "Magento_PageBuilder/js/p
   var Position =
   /*#__PURE__*/
   function () {
-    function Position() {
-      this.zoom = void 0;
-      this.markers = void 0;
-      this.zoom = new _zoom();
-      this.markers = new _markers();
-    }
+    function Position() {}
+
+    var _proto = Position.prototype;
+
     /**
      * Read position from zoom and marker from element
      *
      * @param {HTMLElement} element
      * @returns {string | object}
      */
-
-
-    var _proto = Position.prototype;
-
     _proto.read = function read(element) {
-      return JSON.stringify(Object.assign({}, this.markers.read(element), this.zoom.read(element)));
+      var markers = element.getAttribute("data-markers") !== "" ? JSON.parse(element.getAttribute("data-markers"))[0] : {};
+      var zoom = element.getAttribute("data-zoom") ? {
+        zoom: parseInt(element.getAttribute("data-zoom"), 10)
+      } : {};
+      return JSON.stringify(Object.assign({}, markers, zoom));
     };
 
     return Position;
