@@ -250,7 +250,8 @@ return [
                                         'converter' => null,
                                         'preview_converter' => null,
                                         'virtual' => null,
-                                        'complex' => true
+                                        'complex' => true,
+                                        'persist' => null
                                     ],
                                     8 => [
                                         'var' => 'complex_style_attributes_change',
@@ -258,7 +259,8 @@ return [
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
                                         'virtual' => 'false',
-                                        'complex' => true
+                                        'complex' => true,
+                                        'persist' => null
                                     ],
                                     9 => [
                                         'var' => 'complex_style_attributes_add',
@@ -266,7 +268,8 @@ return [
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
                                         'virtual' => 'true',
-                                        'complex' => true
+                                        'complex' => true,
+                                        'persist' => null
                                     ],
                                     10 => [
                                         'var' => 'new_complex',
@@ -274,7 +277,8 @@ return [
                                         'converter' => null,
                                         'preview_converter' => null,
                                         'virtual' => null,
-                                        'complex' => true
+                                        'complex' => true,
+                                        'persist' => null
                                     ]
                                 ],
                                 'tag' => [
