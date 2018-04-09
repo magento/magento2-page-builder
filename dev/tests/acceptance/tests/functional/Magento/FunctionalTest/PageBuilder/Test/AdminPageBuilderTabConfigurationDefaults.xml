@@ -92,11 +92,17 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundPosition">
             <argument name="property" value="PageBuilderTabBackgroundPositionTop"/>
         </actionGroup>
+        <comment userInput="Background Position has expected dropdown values" stepKey="commentDefaultBackgroundPositionValues"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundPositionDefault.section, PageBuilderTabBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
+        <assertEquals expected="{{PageBuilderTabBackgroundPositionDefault.optionsList}}" expectedType="array" actual="grabBackgroundPositionOptions" actualType="variable" message="Verify Background Position dropdown options" stepKey="assertBackgroundPositionOptions"/>
 
         <comment userInput="Tab has default value Cover for Background Size" stepKey="commentDefaultBackgroundSize"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundSize">
             <argument name="property" value="PageBuilderTabBackgroundSizeCover"/>
         </actionGroup>
+        <comment userInput="Background Size has expected dropdown values" stepKey="commentDefaultBackgroundSizeValues"/>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundSizeDefault.section, PageBuilderTabBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeOptions"/>
+        <assertEquals expected="{{PageBuilderTabBackgroundSizeDefault.optionsList}}" expectedType="array" actual="grabBackgroundSizeOptions" actualType="variable" message="Verify Background Size dropdown options" stepKey="assertBackgroundSizeOptions"/>
 
         <comment userInput="Tab has default value No for Background Repeat" stepKey="commentDefaultBackgroundRepeat"/>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty">
@@ -107,6 +113,9 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
             <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
         </actionGroup>
+        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundAttachmentDefault.section, PageBuilderTabBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
+        <assertEquals expected="{{PageBuilderTabBackgroundAttachmentDefault.optionsList}}" expectedType="array" actual="grabBackgroundAttachmentOptions" actualType="variable" message="Verify Background Attachment dropdown options" stepKey="assertBackgroundAttachmentOptions"/>
+
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsForTab1"/>
         <!-- Validate Default Values in Edit Tabs -->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openTabsEditMenuOnStage">
@@ -131,7 +140,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Default Values for Tabs on storefront -->
         <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabHeader('1')}}" attribute="title" expectedValue="Tab 1" stepKey="assertInitialSlideTitleStorefront"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocusedStorefront"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisibleStorefront"/>
@@ -140,7 +149,7 @@
         <annotations>
             <features value="[CMS] Bluefoot Tabs MAGETWO-83840"/>
             <stories value="Add new Tab to Tabs from the Stage and Tab configuration MAGETWO-71593"/>
-            <title value="Tab Configuration Settings: Advanced section defaults"/>
+            <title value="Tab advanced configuration has default properties"/>
             <description value="New tab has default values on Advanced section"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
