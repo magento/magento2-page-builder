@@ -142,11 +142,11 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
     _proto.getTabHeaderStyles = function getTabHeaderStyles(index) {
       var mainStyles = this.parent.data.headers.style();
+      delete mainStyles.marginBottom;
       var styles = {
         borderBottomColor: "",
-        borderBottomStyle: "solid",
+        borderBottomStyle: "none",
         borderBottomWidth: "2px",
-        zIndex: -index,
         marginLeft: "0px"
       };
 

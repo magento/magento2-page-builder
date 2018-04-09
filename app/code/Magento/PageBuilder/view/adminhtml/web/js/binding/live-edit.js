@@ -1,5 +1,4 @@
 /*eslint-disable */
-/* jscs:disable */
 define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _keyCodes) {
   "use strict";
 
@@ -15,7 +14,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
    */
 
   /**
-   * Add or remove the placeholder-text class from the element based on it's content
+   * Add or remove the placeholder-text class from the element based on its content
    *
    * @param {Element} element
    */

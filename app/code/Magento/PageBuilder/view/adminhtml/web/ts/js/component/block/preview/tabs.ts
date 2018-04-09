@@ -128,9 +128,10 @@ export default class Tabs extends PreviewBlock {
      */
     public getTabHeaderStyles(index: number) {
         const mainStyles = this.parent.data.headers.style();
+        delete mainStyles.marginBottom;
         const styles = {
             borderBottomColor: "",
-            borderBottomStyle: "solid",
+            borderBottomStyle: "none",
             borderBottomWidth: "2px",
             marginLeft: "0px",
         };
