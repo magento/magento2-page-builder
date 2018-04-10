@@ -133,9 +133,9 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       this.children().forEach(function (tab, index) {
         var tabData = tab.stage.store.get(tab.id);
         activeOptions.push({
-          value: index,
           label: tabData.tab_name,
-          labeltitle: tabData.tab_name
+          labeltitle: tabData.tab_name,
+          value: index
         });
       });
       this.parent.stage.store.updateKey(this.id, activeOptions, "_default_active_options");

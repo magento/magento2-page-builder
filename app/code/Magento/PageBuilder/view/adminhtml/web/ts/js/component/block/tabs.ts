@@ -128,13 +128,13 @@ export default class Tabs extends Block {
      * Update data store with active options
      */
     private updateTabNamesInDataStore() {
-        const activeOptions = [];
+        const activeOptions: ActiveOptions[] = [];
         this.children().forEach((tab: Tab, index: number) => {
             const tabData = tab.stage.store.get(tab.id);
             activeOptions.push({
-                value: index,
                 label: tabData.tab_name,
                 labeltitle: tabData.tab_name,
+                value: index,
             });
         });
         this.parent.stage.store.updateKey(
@@ -143,4 +143,10 @@ export default class Tabs extends Block {
             "_default_active_options",
         );
     }
+}
+
+export interface ActiveOptions {
+    label: string;
+    labeltitle: string;
+    value: number;
 }
