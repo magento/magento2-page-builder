@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
+    <content_types>
+        <type name="slide" translate="label">
+            <label>Slide</label>
+            <icon>icon-pagebuilder-slider</icon>
+            <component>Magento_PageBuilder/js/component/block/slide</component>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/slide</preview_component>
+            <form>pagebuilder_slide_form</form>
+            <group>media</group>
+            <allowed_parents>
+                <parent name="slider"/>
+            </allowed_parents>
+            <appearances>
+                <appearance name="collage-left">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/slide/collage-left.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/slide/collage-left.html</render_template>
+                    <readers>
+                        <reader component="Magento_PageBuilder/js/component/format/read/default" name="default"/>
+                        <reader component="Magento_PageBuilder/js/component/format/read/appearance/slide/collage" name="collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="collage-centered">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/slide/collage-centered.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/slide/collage-centered.html</render_template>
+                    <readers>
+                        <reader component="Magento_PageBuilder/js/component/format/read/default" name="default"/>
+                        <reader component="Magento_PageBuilder/js/component/format/read/appearance/slide/collage" name="collage"/>
+                    </readers>
+                </appearance>
+                <appearance name="collage-right">
+                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/slide/collage-right.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/appearance/slide/collage-right.html</render_template>
+                    <readers>
+                        <reader component="Magento_PageBuilder/js/component/format/read/default" name="default"/>
+                        <reader component="Magento_PageBuilder/js/component/format/read/appearance/slide/collage" name="collage"/>
+                    </readers>
+                </appearance>
+                <appearance default="true" name="poster">
+                    <preview_template>Magento_PageBuilder/component/block/preview/slide.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/slide.html</render_template>
+                    <readers>
+                        <reader component="Magento_PageBuilder/js/component/format/read/default" name="default"/>
+                        <reader component="Magento_PageBuilder/js/component/format/read/slide" name="poster"/>
+                    </readers>
+                </appearance>
+            </appearances>
+            <is_visible>false</is_visible>
+        </type>
+    </content_types>
+</config>
