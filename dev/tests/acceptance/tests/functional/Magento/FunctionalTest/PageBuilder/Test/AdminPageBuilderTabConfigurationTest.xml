@@ -40,6 +40,7 @@
         </actionGroup>
         <!-- Open Tabs Panel -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
+        <waitForPageLoad stepKey="waitForOptionsPanel"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
         <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
 
@@ -111,12 +112,14 @@
         <comment userInput="User navigates to the storefront and sees changes applied" stepKey="AC13"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadTabs"/>
 
         <comment userInput="User sees Tab 1 with custom tab name on Storefront" stepKey="AC14"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
 
         <comment userInput="Tab 1 is focused and Tab 2 is hidden" stepKey="AC15"/>
+        <waitForPageLoad stepKey="waitForTabsInit"/>
         <seeElement selector="{{TabOnStorefront.tabHeaderItemActive('1')}}" stepKey="seeFirstTabActive"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1Focused"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('2')}}" attribute="aria-hidden" expectedValue="true" stepKey="assertTab2Hidden"/>

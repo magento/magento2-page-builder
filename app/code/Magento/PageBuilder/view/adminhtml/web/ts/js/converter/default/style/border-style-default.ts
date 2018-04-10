@@ -28,6 +28,8 @@ export default class BorderStyleDefault implements ElementConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: DataObject): string {
-        return data[name].toString();
+        if (data[name]) {
+            return data[name].toString();
+        }
     }
 }
