@@ -409,6 +409,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
+        <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedSection"/>
         <!-- Fill All Advanced Fields -->
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterTextAlignment">
@@ -441,7 +442,7 @@
         <!-- Verify in Storefront -->
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
-        <!--<waitForElementVisible selector="" stepKey="seeTabHeaderItemAdvancedStylesInStorefront"/>-->
-        <!--<waitForElementVisible selector="{{TabOnStorefront.tabContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>-->
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>
     </test>
 </tests>
