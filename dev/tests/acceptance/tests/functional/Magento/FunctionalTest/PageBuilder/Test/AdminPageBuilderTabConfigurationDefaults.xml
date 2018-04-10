@@ -64,10 +64,6 @@
         <comment userInput="User doesn't see the Tabs option panel" stepKey="AC7"/>
         <dontSeeElement selector="{{TabsOnStage.tabsOptionsTitle}}" stepKey="dontSeeTabsOptionsAfterAddTabs"/>
 
-        <comment userInput="Tab title has the default value Tab 1" stepKey="AC8"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabHeader('1')}}" attribute="title" expectedValue="Tab 1" stepKey="assertInitialSlideTitleAdmin"/>
-
         <comment userInput="A placeholder indicates that content can be added inside the tab" stepKey="AC9"/>
         <see selector="{{TabOnStage.empty}}" userInput="Drag content blocks or columns here" stepKey="seeTabPlaceholder"/>
 
@@ -75,7 +71,7 @@
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
         <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
 
-        <comment userInput="Tab has default value Tab 1 for Tab Name" stepKey="commentDefaultTabName"/>
+        <comment userInput="Tab has default value Tab 1 for Tab Name" stepKey="AC8"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultTabName">
             <argument name="property" value="PageBuilderTabName1Default"/>
         </actionGroup>

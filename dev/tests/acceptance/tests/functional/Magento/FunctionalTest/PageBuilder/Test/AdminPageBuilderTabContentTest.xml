@@ -203,12 +203,11 @@
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <pressKey selector="{{ButtonsBackendSection.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty.value}}" stepKey="enterButtonText"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Button in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{ButtonsFrontendSection.buttonItemText(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty.value)}}" stepKey="seeButtonTextOnStorefront"/>
+        <seeElement selector="{{ButtonsFrontendSection.class('pagebuilder-button-primary')}}" stepKey="seeButtonTextOnStorefront"/>
     </test>
     <test name="CanAddImageToTab">
         <annotations>
@@ -633,7 +632,6 @@
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <!-- Verify Accordion in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
@@ -918,7 +916,7 @@
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <dontSeeElement selector="TabOnStage.default('2')}}" stepKey="dontSeeNewTabsOnStage"/>
+        <dontSeeElement selector="{{TabOnStage.default('2')}}" stepKey="dontSeeNewTabsOnStage"/>
     </test>
     <test name="CannotAddRowToTab">
         <annotations>
@@ -962,6 +960,6 @@
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-        <dontSeeElement selector="RowOnStage.base('2')}}" stepKey="dontSeeNewRowOnStage"/>
+        <dontSeeElement selector="{{RowOnStage.base('2')}}" stepKey="dontSeeNewRowOnStage"/>
     </test>
 </tests>
