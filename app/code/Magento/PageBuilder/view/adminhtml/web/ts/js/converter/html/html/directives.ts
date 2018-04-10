@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import {convertMediaDirectivesToUrls} from "../../../utils/directives";
+import {convertMediaDirectivesToUrls, removeQuotesInMediaDirectives} from "../../../utils/directives";
 import ElementConverterInterface from "../../element-converter-interface";
 
 export default class Directives implements ElementConverterInterface {
@@ -25,6 +25,6 @@ export default class Directives implements ElementConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: object): string {
-        return convertMediaDirectivesToUrls(data[name]);
+        return convertMediaDirectivesToUrls(removeQuotesInMediaDirectives(data[name]));
     }
 }
