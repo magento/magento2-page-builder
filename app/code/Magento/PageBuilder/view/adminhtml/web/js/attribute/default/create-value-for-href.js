@@ -1,0 +1,92 @@
+/*eslint-disable */
+define(["underscore"], function (_underscore) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+  var CreateValueForHref =
+  /*#__PURE__*/
+  function () {
+    function CreateValueForHref() {
+      this.widgetParamsByLinkType = {
+        category: {
+          type: "Magento\\Catalog\\Block\\Category\\Widget\\Link",
+          id_path: "category/:href",
+          template: "category/widget/link/link_href.phtml",
+          type_name: "Catalog Category Link"
+        },
+        product: {
+          type: "Magento\\Catalog\\Block\\Product\\Widget\\Link",
+          id_path: "product/:href",
+          template: "category/widget/link/link_href.phtml",
+          type_name: "Catalog Product Link"
+        },
+        page: {
+          type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
+          page_id: ":href",
+          template: "Magento_Catalog::category/widget/link/link_href.phtml",
+          type_name: "CMS Page Link"
+        }
+      };
+    }
+
+    var _proto = CreateValueForHref.prototype;
+
+    /**
+     * Convert value to internal format
+     *
+     * @param value string
+     * @returns {string | object}
+     */
+    _proto.fromDom = function fromDom(value) {
+      return value;
+    };
+    /**
+     * Convert value to knockout format
+     *
+     * @param name string
+     * @param data Object
+     * @returns {string}
+     */
+
+
+    _proto.toDom = function toDom(name, data) {
+      var link = data[name];
+      var href = "";
+
+      if (!link) {
+        return href;
+      }
+
+      var linkType = link.type;
+      var isHrefId = !isNaN(parseInt(link[linkType], 10));
+
+      if (isHrefId && link) {
+        href = this.convertToWidget(link[linkType], this.widgetParamsByLinkType[linkType]);
+      } else if (link[linkType]) {
+        href = link[linkType];
+      }
+
+      return href;
+    };
+    /**
+     * @param {string} href
+     * @param {object} widgetAttributes
+     * @returns {string}
+     */
+
+
+    _proto.convertToWidget = function convertToWidget(href, widgetAttributes) {
+      var attributesString = _underscore.map(widgetAttributes, function (val, key) {
+        return key + "=\"" + val.replace(":href", href) + "\"";
+      }).join(" ");
+
+      return "{{widget " + attributesString + " }}";
+    };
+
+    return CreateValueForHref;
+  }();
+
+  return CreateValueForHref;
+});
+//# sourceMappingURL=create-value-for-href.js.map

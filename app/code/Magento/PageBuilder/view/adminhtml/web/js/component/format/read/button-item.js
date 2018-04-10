@@ -24,27 +24,7 @@ define(["Magento_PageBuilder/js/component/format/read/default"], function (_defa
 
       var button = element.getElementsByTagName("a")[0];
       var advancedData = this.defaultReader.read(button);
-      var attributeLinkType = button.getAttribute("data_attribute_link_type");
-      var href = button.getAttribute("href");
-
-      switch (attributeLinkType) {
-        case "category":
-          href = this.readFromCategoryWidget(href);
-          break;
-
-        case "product":
-          href = this.readFromProductWidget(href);
-          break;
-
-        case "page":
-          href = this.readFromPageWidget(href);
-          break;
-
-        default:
-          break;
-      }
-
-      var buttonObject = (_buttonObject = {}, _buttonObject[attributeLinkType] = href, _buttonObject.setting = button.target === "_blank" ? true : false, _buttonObject.type = attributeLinkType, _buttonObject);
+      var buttonObject = (_buttonObject = {}, _buttonObject[button.getAttribute("data-link-type")] = button.getAttribute("href"), _buttonObject.setting = button.target === "_blank" ? true : false, _buttonObject.type = button.getAttribute("data-link-type"), _buttonObject);
       var response = {
         button_link: buttonObject,
         button_text: button.innerText,
@@ -54,57 +34,6 @@ define(["Magento_PageBuilder/js/component/format/read/default"], function (_defa
         delete data.css_classes;
         return Object.assign(data, response);
       });
-    };
-    /**
-     * Convert category widget string to plain href string
-     *
-     * @param {string} href
-     * @returns {string}
-     */
-
-
-    _proto.readFromCategoryWidget = function readFromCategoryWidget(href) {
-      var matches = href.match(/id_path=['"]category\/(\d+)/);
-
-      if (!matches) {
-        return href;
-      }
-
-      return matches[1];
-    };
-    /**
-     * Convert product widget string to plain href string
-     *
-     * @param {string} href
-     * @returns {string}
-     */
-
-
-    _proto.readFromProductWidget = function readFromProductWidget(href) {
-      var matches = href.match(/id_path=['"]product\/(\d+)/);
-
-      if (!matches) {
-        return href;
-      }
-
-      return matches[1];
-    };
-    /**
-     * Convert page widget string to plain href string
-     *
-     * @param {string} href
-     * @returns {string}
-     */
-
-
-    _proto.readFromPageWidget = function readFromPageWidget(href) {
-      var matches = href.match(/page_id=['"](\d+)/);
-
-      if (!matches) {
-        return href;
-      }
-
-      return matches[1];
     };
 
     return ButtonItem;

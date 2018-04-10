@@ -20,12 +20,41 @@
             <is_visible>false</is_visible>
             <appearances>
                 <appearance default="true" name="default">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <static_property name="display" value="inline-block"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute var="name" name="data-role"/>
+                                </attributes>
+                            </element>
+                            <element name="link" path="./a">
+                                <style_properties>
+                                    <property var="text_align" name="text_align"/>
+                                    <property var="border" name="border_style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <complex_attribute var="button_link" persist="false" reader="Magento_PageBuilder/js/attribute/default/link"/>
+                                    <attribute var="button_link" name="href" virtual="true" converter="Magento_PageBuilder/js/attribute/default/create-value-for-href" />
+                                    <attribute var="button_link" name="target" virtual="true" converter="Magento_PageBuilder/js/attribute/default/create-value-for-target" />
+                                    <attribute var="button_link" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/attribute/default/create-value-for-link-type" />
+                                </attributes>
+                                <css var="button_type"/>
+                            </element>
+                            <element name="link_text" path="./a/span">
+                                <html var="button_text" placeholder="Edit Button Text"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/button-item.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/button-item.html</render_template>
-                    <readers>
-                        <reader component="Magento_PageBuilder/js/component/format/read/default" name="default"/>
-                        <reader component="Magento_PageBuilder/js/component/format/read/button-item" name="button-item"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
