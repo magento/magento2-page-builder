@@ -32,6 +32,7 @@ class Options implements \Magento\Framework\Option\ArrayInterface
 
     /**
      * @param CollectionFactory $collectionFactory
+     * @param MetadataPool $metadataPool
      */
     public function __construct(
         CollectionFactory $collectionFactory,
@@ -42,7 +43,7 @@ class Options implements \Magento\Framework\Option\ArrayInterface
     }
 
     /**
-     * To option array
+     * {@inheritdoc}
      *
      * @return array
      */

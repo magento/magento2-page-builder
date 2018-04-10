@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Ui\Component\UrlInput;
 
-
+/** Provides configuration for url input with type CMS page */
 class Page implements \Magento\Ui\Model\UrlInput\ConfigInterface
 {
     /**
