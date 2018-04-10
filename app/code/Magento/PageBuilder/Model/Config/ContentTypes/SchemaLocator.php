@@ -3,7 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Model\Config;
+
+declare(strict_types=1);
+
+namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
 {
@@ -37,7 +40,7 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
      *
      * @return string|null
      */
-    public function getSchema()
+    public function getSchema(): ?string
     {
         return $this->schema;
     }
@@ -47,7 +50,7 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
      *
      * @return string|null
      */
-    public function getPerFileSchema()
+    public function getPerFileSchema(): ?string
     {
         return $this->perFileSchema;
     }

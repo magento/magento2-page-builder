@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config;
+namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
@@ -20,8 +20,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     public function convert($source): array
     {
         return [
-            'types' => $this->convertTypes($source),
-            'groups' => $this->convertGroups($source)
+            'types' => $this->convertTypes($source)
         ];
     }
 
@@ -55,7 +54,12 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     }
                 }
             }
+            $typesData[$name]['sortOrder'] = $this->getAttributeValue($contentType, 'sortOrder');
         }
+        uasort($typesData, function ($firstElement, $secondElement) {
+            return (int)$firstElement['sortOrder'] <=> (int)$secondElement['sortOrder'];
+        });
+
         return $typesData;
     }
 
@@ -246,7 +250,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     'converter' => $this->getAttributeValue($attributeNode, 'converter'),
                     'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
                     'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
-                    'complex' => true
+                    'complex' => true,
+                    'persist' => $this->getAttributeValue($attributeNode, 'persist'),
                 ];
             }
         }
@@ -343,33 +348,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             }
         }
         return $converters;
-    }
-
-    /**
-     * Convert data for groups
-     *
-     * @param \DOMDocument $source
-     * @return array
-     */
-    private function convertGroups(\DOMDocument $source): array
-    {
-        $groupsData = [];
-        /** @var \DOMNode $source */
-        $groups = $source->getElementsByTagName('groups');
-        /** @var \DOMNode $group */
-        foreach ($groups->item(0)->childNodes as $group) {
-            if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
-                $name = $group->attributes->getNamedItem('name')->nodeValue;
-                /** @var \DOMElement $childNode */
-                foreach ($group->childNodes as $childNode) {
-                    if ($this->isConfigNode($childNode)) {
-                        $groupsData[$name][$childNode->nodeName] = $childNode->nodeValue;
-                    }
-                }
-                $groupsData[$name]['sortOrder'] = $group->attributes->getNamedItem('sortOrder')->nodeValue;
-            }
-        }
-        return $groupsData;
     }
 
     /**

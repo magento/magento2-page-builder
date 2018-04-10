@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
+    <content_types>
+        <type name="button-item" translate="label">
+            <label>Button</label>
+            <icon>icon-pagebuilder-button</icon>
+            <component>Magento_PageBuilder/js/component/block/button-item</component>
+            <preview_component>Magento_PageBuilder/js/component/block/preview/button-item</preview_component>
+            <form>pagebuilder_button_item_form</form>
+            <group>general</group>
+            <allowed_parents>
+                <parent name="buttons"/>
+            </allowed_parents>
+            <is_visible>false</is_visible>
+            <appearances>
+                <appearance default="true" name="default">
+                    <preview_template>Magento_PageBuilder/component/block/preview/button-item.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/button-item.html</render_template>
+                    <readers>
+                        <reader component="Magento_PageBuilder/js/component/format/read/default" name="default"/>
+                        <reader component="Magento_PageBuilder/js/component/format/read/button-item" name="button-item"/>
+                    </readers>
+                </appearance>
+            </appearances>
+        </type>
+    </content_types>
+</config>

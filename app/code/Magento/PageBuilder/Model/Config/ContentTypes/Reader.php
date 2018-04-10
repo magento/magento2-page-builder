@@ -3,7 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Model\Config;
+
+declare(strict_types=1);
+
+namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {
@@ -15,7 +18,6 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      * @var array
      */
     protected $_idAttributes = [
-        '/config/groups/group' => 'name',
         self::TYPE_PATH => 'name',
         self::TYPE_PATH . '/allowed_parents/parent' => 'name',
         self::TYPE_PATH . '/appearances/appearance' => 'name',
@@ -41,9 +43,9 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
     /**
      * Constructor
      *
-     * @param \Magento\Framework\Config\FileResolverInterface $fileResolver
-     * @param \Magento\PageBuilder\Model\Config\Converter $converter
-     * @param \Magento\PageBuilder\Model\Config\SchemaLocator $schemaLocator
+     * @param \Magento\PageBuilder\Model\Config\ContentTypes\FileResolver $fileResolver
+     * @param \Magento\PageBuilder\Model\Config\ContentTypes\Converter $converter
+     * @param \Magento\PageBuilder\Model\Config\ContentTypes\SchemaLocator $schemaLocator
      * @param \Magento\Framework\Config\ValidationStateInterface $validationState
      * @param string $fileName
      * @param array $idAttributes
@@ -51,14 +53,14 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      * @param string $defaultScope
      */
     public function __construct(
-        \Magento\Framework\Config\FileResolverInterface $fileResolver,
-        \Magento\PageBuilder\Model\Config\Converter $converter,
-        \Magento\PageBuilder\Model\Config\SchemaLocator $schemaLocator,
+        \Magento\PageBuilder\Model\Config\ContentTypes\FileResolver $fileResolver,
+        \Magento\PageBuilder\Model\Config\ContentTypes\Converter $converter,
+        \Magento\PageBuilder\Model\Config\ContentTypes\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
-        $fileName = 'content_types.xml',
-        $idAttributes = [],
-        $domDocumentClass = \Magento\Framework\Config\Dom::class,
-        $defaultScope = 'global'
+        string $fileName = '*.xml',
+        array $idAttributes = [],
+        string $domDocumentClass = \Magento\Framework\Config\Dom::class,
+        string $defaultScope = 'content_types'
     ) {
         parent::__construct(
             $fileResolver,

@@ -11,14 +11,15 @@
     <actionGroup name="addTextToTinyMCE">
         <arguments>
             <argument name="property" defaultValue=""/>
+            <argument name="section" defaultValue="TextOnConfiguration"/>
         </arguments>
         <comment userInput="Adding Text To Tiny MCE" stepKey="commentAddTextToTinyMCE"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.textIFrame}}" stepKey="waitForIFrame"/>
+        <waitForElementVisible selector="#{{section.tinyMCEIFrame}}" stepKey="waitForIFrame"/>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + '{{property.value}}')" stepKey="addTextToWYSIWYG"/>
         <!-- Must click Tiny MCE or form will not recognize that text has been added -->
-        <click selector="{{TextOnConfiguration.textIFrame}}" stepKey="clickIFrame"/>
-        <switchToIFrame selector="{{TextOnConfiguration.textIFrameId}}" stepKey="switchToIFrame"/>
-        <waitForElementVisible selector="{{TextOnConfiguration.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
+        <click selector="#{{section.tinyMCEIFrame}}" stepKey="clickIFrame"/>
+        <switchToIFrame selector="{{section.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{section.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
         <switchToIFrame selector="" stepKey="exitIFrame"/>
     </actionGroup>
     <actionGroup name="addVariableToTinyMCE">
@@ -34,7 +35,7 @@
         <waitForElementVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForInsertVariable2"/>
         <click selector="{{VariableSection.InsertWidget}}" stepKey="clickInsertVariable2"/>
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
-        <switchToIFrame selector="{{TextOnConfiguration.textIFrameId}}" stepKey="switchToIFrame"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(variable.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
         <switchToIFrame selector="" stepKey="exitIFrame"/>
     </actionGroup>
@@ -65,7 +66,7 @@
         <click selector="{{WidgetSection.InsertWidget}}" stepKey="clickInsertWidget2"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
         <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
-        <switchToIFrame selector="{{TextOnConfiguration.textIFrameId}}" stepKey="switchToIFrame"/>
+        <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(widget.editPanelValue, '1')}}" stepKey="waitForWidget"/>
         <switchToIFrame selector="" stepKey="exitIFrame"/>
     </actionGroup>

@@ -2,9 +2,9 @@
 
 ## Configuration
 
-Use the content type configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
+Use the content type and group configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
 
-The following is an example of a content type configuration in `content_type.xml`:
+The following is an example of a group configuration in `etc/groups.xml`
 
 ``` xml
 <!-- Definition of main menu, used for grouping content types  -->
@@ -13,6 +13,18 @@ The following is an example of a content type configuration in `content_type.xml
         <label>Media</label>
     </group>
 </groups>
+```
+### Configuration reference
+
+| Element             | Description                                                              |
+| ------------------- | ------------------------------------------------------------------------ |
+| `group`             | Describes the group name, translated field, and sort order in the menu.  |
+| `label`             | Label displayed on the menu.                                             |
+
+
+The following is an example of a content type configuration in `etc/content_types/banner.xml`:
+
+``` xml
 <content_types>
     <!-- Content type declaration -->
     <type name="banner" translate="label" sortOrder="1">
@@ -130,18 +142,18 @@ The following is an example of a content type configuration in `content_type.xml
 ```
 ### Configuration reference
 
-| Element             | Description                                                                                                               |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `type`              | Describes the content type name, translated field, and sort order in the menu group.                                      |
-| `label`             | Label displayed on the menu and stage.                                                                                    |
-| `icon`              | Icon displayed on the menu.                                                                                               |
-| `component`         | View model responsible for rendering the preview and master format.                                                       |
-| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                      |
-| `form`              | UI component form used for editing the content type                                                                       |
-| `group`             | Existing menu group that contains this content type.                                                                      |
-| `allowed_parents`   | List of parent content types that can accept this type as a child.                                                        |
-| `appearances`       | Appearance configuration.                                                                                                 |
-| `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true. |
+| Element             | Description                                                                                                                             |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.  |
+| `label`             | Label displayed on the menu and stage.                                                                                                  |
+| `icon`              | Icon displayed on the menu.                                                                                                             |
+| `component`         | View model responsible for rendering the preview and master format.                                                                     |
+| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                    |
+| `form`              | UI component form used for editing the content type                                                                                     |
+| `group`             | Existing menu group that contains this content type.                                                                                    |
+| `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                      |
+| `appearances`       | Appearance configuration.                                                                                                               |
+| `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.               |
 
 
 ### `form` configuration reference

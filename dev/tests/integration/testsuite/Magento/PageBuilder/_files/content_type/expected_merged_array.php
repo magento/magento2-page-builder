@@ -20,6 +20,7 @@ return [
     ],
     'types' => [
         'type1' => [
+            'sortOrder' => '1',
             'label' => 'Type 1 Label',
             'icon' => 'pagebuilder-type1-custom-icon',
             'form' => 'pagebuilder_type1_custom_form',
@@ -84,6 +85,7 @@ return [
             ]
         ],
         'type2' => [
+            'sortOrder' => '2',
             'label' => 'Type 2 Label',
             'icon' => 'pagebuilder-type2-custom-icon',
             'component' => 'Path/to/custom/component',
@@ -248,7 +250,8 @@ return [
                                         'converter' => null,
                                         'preview_converter' => null,
                                         'virtual' => null,
-                                        'complex' => true
+                                        'complex' => true,
+                                        'persist' => null
                                     ],
                                     8 => [
                                         'var' => 'complex_style_attributes_change',
@@ -256,7 +259,8 @@ return [
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
                                         'virtual' => 'false',
-                                        'complex' => true
+                                        'complex' => true,
+                                        'persist' => null
                                     ],
                                     9 => [
                                         'var' => 'complex_style_attributes_add',
@@ -264,7 +268,8 @@ return [
                                         'converter' => 'Path/to/custom/converter',
                                         'preview_converter' => 'Path/to/preview/custom/converter',
                                         'virtual' => 'true',
-                                        'complex' => true
+                                        'complex' => true,
+                                        'persist' => null
                                     ],
                                     10 => [
                                         'var' => 'new_complex',
@@ -272,7 +277,8 @@ return [
                                         'converter' => null,
                                         'preview_converter' => null,
                                         'virtual' => null,
-                                        'complex' => true
+                                        'complex' => true,
+                                        'persist' => null
                                     ]
                                 ],
                                 'tag' => [
@@ -502,12 +508,14 @@ return [
             ]
         ],
         'type3' => [
+            'sortOrder' => '3',
             'label' => 'Type 3',
             'icon' => 'pagebuilder-type3-icon',
             'form' => 'pagebuilder_type3_form',
             'group' => 'group1'
         ],
         'type4' => [
+            'sortOrder' => null,
             'label' => 'Type 4',
             'icon' => 'pagebuilder-type4-icon',
             'component' => 'Path/to/component',
