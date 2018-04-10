@@ -111,7 +111,7 @@ export function convertMediaDirectivesToUrls(html: string): string {
             if (urlMatches && typeof urlMatches[1] !== "undefined") {
                 html = html.replace(
                     mediaDirective,
-                    Config.getInitConfig("media_url") + urlMatches[1].replace(/"$/g, "").replace(/&quot;$/g, ""),
+                    Config.getInitConfig("media_url") + urlMatches[1].replace(/"$/, "").replace(/&quot;$/, ""),
                 );
             }
         });

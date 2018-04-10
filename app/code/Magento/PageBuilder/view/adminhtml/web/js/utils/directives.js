@@ -117,7 +117,7 @@ define(["Magento_PageBuilder/js/component/config"], function (_config) {
         var urlMatches = mediaDirective.match(urlRegExp);
 
         if (urlMatches && typeof urlMatches[1] !== "undefined") {
-          html = html.replace(mediaDirective, _config.getInitConfig("media_url") + urlMatches[1].replace(/"$/g, "").replace(/&quot;$/g, ""));
+          html = html.replace(mediaDirective, _config.getInitConfig("media_url") + urlMatches[1].replace(/"$/, "").replace(/&quot;$/, ""));
         }
       });
     }
