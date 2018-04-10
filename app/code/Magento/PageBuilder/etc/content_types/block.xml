@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
+    <content_types>
+        <type name="block" sortOrder="1" translate="label">
+            <label>Block</label>
+            <icon>icon-pagebuilder-block</icon>
+            <component>Magento_PageBuilder/js/component/block/content-block</component>
+            <form>pagebuilder_block_form</form>
+            <group>magento</group>
+            <backend_block>Magento\PageBuilder\Block\ContentType\Block</backend_block>
+            <allowed_parents>
+                <parent name="row"/>
+                <parent name="column"/>
+            </allowed_parents>
+            <appearances>
+                <appearance default="true" name="default">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property name="text_align" var="text_align"/>
+                                    <property name="border_style" var="border"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" var="margins_and_padding"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute name="data-role" var="name"/>
+                                    <attribute name="data-identifier" var="identifier"/>
+                                </attributes>
+                                <html placeholder="Block" var="html"/>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
+                    <preview_template>Magento_PageBuilder/component/block/preview/block.html</preview_template>
+                    <render_template>Magento_PageBuilder/component/block/render/block.html</render_template>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                </appearance>
+            </appearances>
+        </type>
+    </content_types>
+</config>

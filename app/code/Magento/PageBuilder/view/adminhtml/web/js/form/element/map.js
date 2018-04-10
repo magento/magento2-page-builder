@@ -27,10 +27,19 @@ define([
          */
         renderMap: function (element) {
             // Get the start value and convert the value into an array
-            var startValue = this.value() ? this.value().split(',') : [30.2672, -97.7431, 8],
-                mapOptions = {
-                zoom: parseInt(startValue[2], 10),
-                center: new google.maps.LatLng(startValue[0], startValue[1]),
+            var startValue = this.value(),
+                mapOptions;
+
+            if (typeof startValue === 'string' && startValue !== '') {
+                startValue = JSON.parse(startValue);
+            }
+
+            mapOptions = {
+                zoom: startValue.zoom ? parseInt(startValue.zoom, 10) : 8,
+                center: new google.maps.LatLng(
+                    startValue.lat ? startValue.lat : 30.2672,
+                    startValue.lng ? startValue.lng : -97.7431
+                ),
                 scrollwheel: false,
                 disableDoubleClickZoom: false,
                 // mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -49,7 +58,7 @@ define([
 
             // Add marker if there is a start value
             if (this.value()) {
-                this.addMarker(startValue[0], startValue[1]);
+                this.addMarker(startValue.lat, startValue.lng);
             }
 
             // After click, add and update both Lat and Lng.
@@ -114,32 +123,45 @@ define([
          */
         onUpdate: function () {
             this._super();
+            var content = this.value(),
+                latLng,
+                zoom;
 
             if (!this.map || this.value() === '' || this.value() === this.exportValue()) {
                 return;
             }
 
-            // Convert the value into an arrav
-            var value  = this.value().split(','),
-                latLng = new google.maps.LatLng(value[0], value[1]);
+            if (typeof this.value() === 'string' && this.value() !== '') {
+                content = JSON.parse(this.value());
+            }
 
+            latLng = new google.maps.LatLng(content.lat, content.lng);
+            zoom = content.zoom;
+
+            if (typeof zoom !== 'number') {
+                zoom = parseInt(zoom, 10);
+            }
             this.marker.setPosition(latLng);
-            this.map.setZoom(parseInt(value[2], 10));
+            this.map.setZoom(zoom);
             this.map.setCenter(latLng);
         },
 
         /**
-         * Returns current latitude, longitude, and zoom level as a single string
+         * Returns current lat, lng, and zoom level as a single string
          *
          * @param {Object} latLng
-         * @return {String}
+         * @return {Object}
          */
         exportValue: function (latLng) {
             var position = this.marker ?
                 this.marker.getPosition() : new google.maps.LatLng(this.map.center.lat(), this.map.center.lng()),
                 curLatLng = latLng ? latLng : position;
 
-            return curLatLng.lat() + ',' + curLatLng.lng() + ',' + this.map.getZoom();
+            return JSON.stringify({
+                lat: curLatLng.lat(),
+                lng: curLatLng.lng(),
+                zoom: this.map.getZoom()
+            });
         }
     });
 });
