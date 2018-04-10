@@ -48,10 +48,11 @@
         <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab.empty-container'),null).getPropertyValue('width')" stepKey="getDefaultTabWidth"/>
 
         <comment userInput="User sees tab preview min height to be 300 px" stepKey="AC3"/>
-        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab.empty-container'),null).getPropertyValue('min-height')" stepKey="getDefaultTabMinHeight"/>
+        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab.empty-container'),null).getPropertyValue('min-height')" stepKey="getComputedTabMinHeight"/>
+        <!--<assertEquals expected="300px" expectedType="string" actual="getComputedTabMinHeight" actualType="variable" message="Computed min height was $getComputedTabMinHeight" stepKey="assertComputedTabMinHeight"/>-->
 
         <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC4"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="style" expectedValue="background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-width: 1px; border-radius: 0px; margin: 0px 0px 1px; padding: 40px;" stepKey="assertTab1DefaultStyle"/>
+        <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="style" expectedValue="border-width: 1px; border-radius: 0px; margin: 0px 0px 1px; padding: 40px;" stepKey="assertTab1DefaultStyle"/>
 
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC5"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocused"/>
@@ -137,13 +138,26 @@
             <argument name="property" value="PageBuilderTabsAlignmentLeft"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+
+        <comment userInput="View default Tabs with empty Tab on stage" stepKey="viewTabOnStage"/>
+        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleAdmin1"/>
+
+        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
+        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
+
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Default Values for Tabs on storefront -->
         <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.tabHeader('1')}}" attribute="title" expectedValue="Tab 1" stepKey="assertInitialSlideTitleStorefront"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocusedStorefront"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisibleStorefront"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
+        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleStorefront"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionStorefront"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeStorefront"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTabBackgroundRepeatNoStorefront"/>
+        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentStorefront"/>
+
     </test>
     <test name="TabAdvancedSectionDefaults">
         <annotations>
