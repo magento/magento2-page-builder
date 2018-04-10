@@ -50,6 +50,26 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       });
     };
     /**
+     * Generate the additional classes required for the container for tab alignment
+     *
+     * @returns {{[p: string]: boolean}}
+     */
+
+
+    _proto.getAdditionalClasses = function getAdditionalClasses() {
+      var navigationStyles = this.getStyle("navigation");
+
+      if (navigationStyles.textAlign) {
+        var _ref;
+
+        return _ref = {}, _ref["tab-align-" + navigationStyles.textAlign] = true, _ref;
+      }
+
+      return {
+        "tab-align-left": true
+      };
+    };
+    /**
      * Bind events for the current instance
      */
 

@@ -65,13 +65,23 @@ div[data-role='tabs'] {
 
     .tabs-content {
         border: 1px solid rgba(153, 153, 153, .3);
-        border-top-left-radius: 0 !important;
         position: relative;
         z-index: 9;
 
         [data-role='tab'] {
             box-sizing: border-box;
             min-height: inherit;
+        }
+    }
+
+    &.tab-align-left {
+        .tabs-content {
+            border-top-left-radius: 0 !important;
+        }
+    }
+    &.tab-align-right {
+        .tabs-content {
+            border-top-right-radius: 0 !important;
         }
     }
 }

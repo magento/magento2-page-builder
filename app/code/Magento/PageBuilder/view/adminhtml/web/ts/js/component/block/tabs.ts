@@ -64,6 +64,23 @@ export default class Tabs extends Block {
     }
 
     /**
+     * Generate the additional classes required for the container for tab alignment
+     *
+     * @returns {{[p: string]: boolean}}
+     */
+    public getAdditionalClasses(): {[key: string]: boolean} {
+        const navigationStyles = this.getStyle("navigation");
+        if (navigationStyles.textAlign) {
+            return {
+                ["tab-align-" + navigationStyles.textAlign]: true,
+            };
+        }
+        return {
+            "tab-align-left": true,
+        };
+    }
+
+    /**
      * Bind events for the current instance
      */
     protected bindEvents() {

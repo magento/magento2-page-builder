@@ -131,6 +131,23 @@ export default class Tabs extends PreviewBlock {
             marginLeft: "-" + headerStyles.borderWidth,
         };
     }
+
+    /**
+     * Add an alignment class to the tab container based on the navigation style
+     *
+     * @returns {any}
+     */
+    public getTabContainerClasses() {
+        const navigationStyles = this.parent.data.navigation.style();
+        if (navigationStyles.textAlign) {
+            return {
+                ["tab-align-" + navigationStyles.textAlign]: true,
+            };
+        }
+        return {
+            "tab-align-left": true,
+        };
+    }
 }
 
 // Resolve issue with jQuery UI tabs blocking events on content editable areas
