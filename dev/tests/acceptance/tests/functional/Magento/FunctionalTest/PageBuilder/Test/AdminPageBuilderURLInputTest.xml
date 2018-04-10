@@ -139,8 +139,8 @@
         <dontSee userInput="$createSubCategoryX.name$" stepKey="dontSeeLevel3Category"/>
 
         <!--Type 2 first letters into Search box-->
+        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" stepKey="focusOnField"/>
         <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="su" stepKey="fill2FirstLetters"/>
-        <wait time="10" stepKey="waitForElementVisible"/>
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.SearchResult($createSubCategoryX.name$)}}" stepKey="waitForSearchResult" />
         <see userInput="$createSubCategoryX.name$" stepKey="seeSubCategoryOnSearchResult"/>
         <click selector="{{PageBuilderButtonLinkSection.SearchResult($createSubCategoryX.name$)}}" stepKey="clickSubCategoryXOnSearchResult"/>
@@ -153,7 +153,7 @@
         <seeElement selector="{{PageBuilderButtonLinkSection.RemoveBtn}}" stepKey="seeXButtonInField1" />
 
         <!--Expand dropdown again to verify highlighted not cleared yet-->
-        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
+        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="expandButtonLinkDropdownInput3" />
         <seeInField  selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="su" stepKey="seeSearchNotCleared"/>
         <wait time="3" stepKey="wait"/>
         <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkItemSelected($createSubCategoryX.name$)}}" stepKey="seeSearchResultHighlighted" />
@@ -243,6 +243,7 @@
         <dontSee userInput="$createPreReqProduct2.name$" stepKey="dontSeeProduct2"/>
 
         <!--Type 2 first letters into Search box-->
+        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" stepKey="focusOnField"/>
         <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="te" stepKey="fill2FirstLetters"/>
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="waitForSearchResult" />
         <see userInput="$createPreReqProduct1.name$" stepKey="seeProduct1OnSearchResult"/>
@@ -258,7 +259,6 @@
         <!--Expand dropdown again to verify highlighted not cleared yet-->
         <click selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
         <seeInField  selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="te" stepKey="seeSearchNotCleared"/>
-        <wait time="10" stepKey="wait"/>
         <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkItemSelected($createPreReqProduct1.name$)}}" stepKey="seeSearchResultHighlighted" />
 
         <!--Select another product from dropdown-->
@@ -295,5 +295,103 @@
         </assertRegExp>
         <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
         <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1" />
+    </test>
+    <test name="AdminPageBuilderPageButtonLinkTest">
+        <annotations>
+            <features value="[CMS] Bluefoot Image MAGETWO-83833"/>
+            <stories value="[UI Component] URL Input: CMS Link MAGETWO-MAGETWO-88960"/>
+            <title value="Admin are able to add  link into PageBuilder content"/>
+            <description value="Admin are able to add CMS  link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90276"/>
+            <group value="pagebuilder"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <createData entity="_newDefaultCmsPage" stepKey="createCMSPageA" />
+        <createData entity="_newDefaultCmsPage" stepKey="createCMSPageB" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(PageBuilderButtonsContentBlock.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
+
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStageForButtonItem">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+            <argument name="contentBlockIndex" value="PageBuilderButtonIndex1"/>
+        </actionGroup>
+
+        <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderButtonItemLinkProperty.section, PageBuilderButtonItemLinkProperty.fieldName)}}" userInput="Page" stepKey="selectOption" />
+
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <see userInput="$createCMSPageA.title$" stepKey="seeCMSPageA"/>
+
+        <!--Type 2 first letters into Search box-->
+        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" stepKey="focusOnField"/>
+        <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="cm" stepKey="fill2FirstLetters"/>
+        <waitForElementVisible selector="{{PageBuilderButtonLinkSection.SearchResult($createCMSPageA.title$)}}" stepKey="waitForSearchResult" />
+        <seeElement selector="{{PageBuilderButtonLinkSection.SearchResult($createCMSPageA.title$)}}" stepKey="seeCMSPageAOnSearchResult"/>
+        <click selector="{{PageBuilderButtonLinkSection.SearchResult($createCMSPageA.title$)}}" stepKey="clickCMSPageAXOnSearchResult"/>
+        <dontSee selector="{{PageBuilderButtonLinkSection.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderButtonLinkSection.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">$createCMSPageA.title$</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderButtonLinkSection.RemoveBtn}}" stepKey="seeXButtonInField1" />
+
+        <!--Expand dropdown again to verify highlighted not cleared yet-->
+        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
+        <seeInField  selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="cm" stepKey="seeSearchNotCleared"/>
+        <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkItemSelected($createCMSPageA.title$)}}" stepKey="seeSearchResultHighlighted" />
+
+        <!--Select another product from dropdown-->
+        <click selector="{{PageBuilderButtonLinkSection.SearchResult($createCMSPageB.title$)}}" stepKey="clickCMSPageBOnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderButtonLinkSection.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">$createCMSPageB.title$</expectedResult>
+            <actualResult type="variable">textFromDropDown2</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderButtonLinkSection.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify CMS Page Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.ProductLink($createCMSPageB.title$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="$createCMSPageB.title$" stepKey="seePageName" />
+
+        <deleteData createDataKey="createCMSPageB" stepKey="deleteCreatedCMSPageB" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[@class='element-children buttons-container ui-sortable']//a[@title='Edit']" stepKey="waitForSettingBtn" />
+        <click selector="//div[@class='element-children buttons-container ui-sortable']//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="waitForButtonLinkSelect2"/>
+        <grabTextFrom selector="{{PageBuilderButtonLinkSection.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <assertRegExp stepKey="assertEquals3" message="pass">
+            <expectedResult type="string">/^Page with ID: [0-9]+ doesn't exist$/</expectedResult>
+            <actualResult type="variable">textFromDropDown3</actualResult>
+        </assertRegExp>
+        <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
+        <deleteData createDataKey="createCMSPageB" stepKey="deletePreReqCMSPageB" />
     </test>
 </tests>
