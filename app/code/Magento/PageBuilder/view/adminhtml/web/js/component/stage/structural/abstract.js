@@ -342,7 +342,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
         var _attributeConfig = _ref;
 
-        if (undefined !== _attributeConfig.persist && null !== _attributeConfig.persist && false === !!_attributeConfig.persist) {
+        if (undefined !== _attributeConfig.persist && null !== _attributeConfig.persist && _attributeConfig.persist) {
           continue;
         }
 

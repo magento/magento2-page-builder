@@ -114,17 +114,12 @@ requirejs([
         var markers = [],
             centerCoord = '',
             mapOptions = {},
-            zoom,
-            data;
+            zoom;
 
-        if (element.hasAttribute('data-position')) {
-            data = element.getAttribute('data-position').split(',');
-            markers.push({
-                lat: data[0],
-                lng: data[1]
-            });
+        if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '[]') {
+            markers = JSON.parse(element.getAttribute('data-markers'));
+            zoom = element.getAttribute('data-zoom');
             centerCoord = markers[0];
-            zoom = data[2];
             mapOptions.zoom = parseInt(zoom, 10);
             new GoogleMap(element, markers, centerCoord, mapOptions);
         }
