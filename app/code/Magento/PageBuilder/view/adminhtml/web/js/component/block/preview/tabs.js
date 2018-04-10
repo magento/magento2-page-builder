@@ -84,6 +84,8 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
 
     _proto.setFocusedTab = function setFocusedTab(index, force) {
+      var _this2 = this;
+
       if (force === void 0) {
         force = false;
       }
@@ -98,7 +100,12 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
       if (this.element) {
         _underscore.defer(function () {
-          document.execCommand("selectAll", false, null);
+          if (document.activeElement && document.activeElement.classList.contains("tab-title") && document.activeElement.hasAttribute("contenteditable")) {
+            document.execCommand("selectAll", false, null);
+          } else {
+            // If the active element isn't the tab title, we're not interacting with the stage
+            _this2.parent.stage.interacting(false);
+          }
         });
       }
     };
