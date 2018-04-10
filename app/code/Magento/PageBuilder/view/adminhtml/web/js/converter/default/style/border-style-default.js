@@ -4,12 +4,12 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var ZIndex =
+  var BorderStyleDefault =
   /*#__PURE__*/
   function () {
-    function ZIndex() {}
+    function BorderStyleDefault() {}
 
-    var _proto = ZIndex.prototype;
+    var _proto = BorderStyleDefault.prototype;
 
     /**
      * Convert value to internal format
@@ -18,28 +18,28 @@ define([], function () {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
+      if (!value) {
+        return "_default";
+      }
+
       return value;
     };
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
-     * @returns {string | object}
+     * @param {string} name
+     * @param {DataObject} data
+     * @returns {string}
      */
 
 
     _proto.toDom = function toDom(name, data) {
-      if (data.border !== "_default") {
-        return "-1";
-      }
-
-      return "0";
+      return data[name].toString();
     };
 
-    return ZIndex;
+    return BorderStyleDefault;
   }();
 
-  return ZIndex;
+  return BorderStyleDefault;
 });
-//# sourceMappingURL=z-index.js.map
+//# sourceMappingURL=border-style-default.js.map

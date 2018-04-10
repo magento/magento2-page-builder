@@ -130,36 +130,17 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
       this.setFocusedTab(index);
     };
     /**
-     * Get the Tab header style attributes for the preview
+     * Copy over border styles to the tab headers
      *
-     * @param {number} index
      * @returns {any}
      */
 
 
-    _proto.getTabHeaderStyles = function getTabHeaderStyles(index) {
-      var mainStyles = this.parent.data.headers.style();
-      delete mainStyles.marginBottom;
-      var styles = {
-        borderBottomColor: "",
-        borderBottomStyle: "none",
-        borderBottomWidth: "2px",
-        marginLeft: "0px"
-      };
-
-      if (index !== 0) {
-        styles.marginLeft = "-" + this.data.border_width() + "px";
-      } // if (index === this.activeTab()) {
-      //     styles.borderBottomColor = this.data.border() !== "_default" ?
-      //     `rgba(255,255,255,1)` : "transparent";
-      //     styles.borderBottomWidth = `${Math.abs(parseInt(mainStyles.marginBottom, 10)) + 1}px`;
-      // } else {
-      //     styles.borderBottomColor = "transparent";
-      // }
-
-
-      return { ...mainStyles,
-        ...styles
+    _proto.getTabHeaderStyles = function getTabHeaderStyles() {
+      var headerStyles = this.parent.data.headers.style();
+      return { ...headerStyles,
+        marginBottom: "-" + headerStyles.borderWidth,
+        marginLeft: "-" + headerStyles.borderWidth
       };
     };
 

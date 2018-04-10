@@ -821,6 +821,9 @@
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
+                                <style_properties>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/converter/row/style/margins-and-paddings"/>
+                                </style_properties>
                                 <attributes>
                                     <attribute var="name" name="data-role"/>
                                     <attribute var="default_active" name="data-active-tab"/>
@@ -829,11 +832,10 @@
                             </element>
                             <element name="headers" path=".//ul/li">
                                 <style_properties>
-                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/tabs/headers/style/border-radius"/>
-                                    <property var="border_width" name="margin_bottom" converter="Magento_PageBuilder/js/converter/tabs/headers/style/margin-bottom"/>
+                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/default/style/border-style-default"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
                                     <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
                                     <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
-                                    <property var="border" name="border_style"/>
                                 </style_properties>
                             </element>
                             <element name="navigation" path=".//ul">
@@ -843,13 +845,12 @@
                             </element>
                             <element name="content" path=".//div">
                                 <style_properties>
+                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/default/style/border-style-default"/>
                                     <property var="text_align" name="text_align"/>
-                                    <property var="border" name="border"/>
                                     <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
                                     <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
-                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/tabs/style/border-radius"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
                                     <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
-                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/converter/row/style/margins-and-paddings"/>
                                 </style_properties>
                             </element>
                         </elements>

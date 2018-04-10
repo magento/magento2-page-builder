@@ -2,6 +2,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+import {DataObject} from "../component/data-store";
 
 export interface ElementConverterInterface {
     /**
@@ -15,9 +16,9 @@ export interface ElementConverterInterface {
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {DataObject} data
      * @returns {string | object}
      */
-    toDom(name: string, data: object): string | object;
+    toDom(name: string, data: DataObject): string | object;
 }

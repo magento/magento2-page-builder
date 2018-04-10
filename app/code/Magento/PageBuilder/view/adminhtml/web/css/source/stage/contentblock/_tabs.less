@@ -7,23 +7,31 @@
     .tabs-navigation {
         display: block;
         font-size: 0;
-        margin: -1px -1px -1px -0px;
-        position: relative;
-        z-index: 10;
+        margin: 0;
+        padding: 0;
+
+        & > :first-child  {
+            margin-left: 0!important;
+        }
 
         li.tab-header-li {
+            background: #f6f6f6;
+            border: 1px solid rgba(153, 153, 153, .3);
+            border-bottom: 0!important;
+            border-bottom-left-radius: 0!important;
+            border-bottom-right-radius: 0!important;
             display: inline-block;
+            margin: 0;
+            position: relative;
+            z-index: 1;
 
             a.tab-header {
-                background: #f6f6f6;
-                border: 1px solid rgba(153, 153, 153, .3);
                 border-right: 0;
-                color: @field-label__color;
+                color: black;
                 cursor: pointer!important;
                 display: block;
-                font-size: @field-label__font-size;
-                font-weight: @font-weight__semibold;
-                line-height: @field-label__line-height;
+                font-size: 14px;
+                font-weight: bold;
                 padding: 1.4rem 2rem;
                 position: relative;
                 transition: all .3s;
@@ -32,11 +40,6 @@
 
                 span.tab-title {
                     display: block;
-
-                    &:active,
-                    &:focus {
-                        cursor: text!important;
-                    }
                 }
 
                 &:hover {
@@ -44,14 +47,16 @@
                 }
             }
 
-            &:last-child a.tab-header {
+            &:last-child {
                 border-right: 1px solid rgba(153, 153, 153, .3);
             }
 
             &.ui-state-active  {
+                background: #fff;
+                z-index: 19;
+
                 a.tab-header {
-                    background: #fff;
-                    border-bottom: 2px solid white;
+                    position: relative;
                     transition: all .3s;
                 }
             }
@@ -65,24 +70,33 @@
     }
 
     .tabs-content {
+        border: 1px solid transparent;
+        border-top-left-radius: 0!important;
         position: relative;
         z-index: 9;
 
-        .pagebuilder-content-type-wrapper.ui-tabs-panel {
+        > .element-children {
+            min-height: inherit;
             padding: 0;
+        }
+
+        .pagebuilder-content-type.pagebuilder-tab {
+            min-height: inherit;
+
+            &.empty-container {
+                min-height: 220px;
+            }
+
+            > .element-children {
+                min-height: inherit;
+                padding: 0;
+            }
         }
     }
 }
 
-.pagebuilder-content-type.pagebuilder-tab {
+.pagebuilder-content-type-wrapper.ui-tabs-panel {
+    margin-top: 0;
     min-height: inherit;
-
-    &.empty-container {
-        min-height: 300px;
-    }
-
-    > .element-children {
-        min-height: inherit;
-        padding: 0;
-    }
+    padding: 0;
 }

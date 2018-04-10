@@ -119,36 +119,18 @@ export default class Tabs extends PreviewBlock {
     }
 
     /**
-     * Get the Tab header style attributes for the preview
+     * Copy over border styles to the tab headers
      *
-     * @param {number} index
      * @returns {any}
      */
-    public getTabHeaderStyles(index: number) {
-        const mainStyles = this.parent.data.headers.style();
-        delete mainStyles.marginBottom;
-        const styles = {
-            borderBottomColor: "",
-            borderBottomStyle: "none",
-            borderBottomWidth: "2px",
-            marginLeft: "0px",
-        };
-        if (index !== 0) {
-            styles.marginLeft = `-${this.data.border_width()}px`;
-        }
-        // if (index === this.activeTab()) {
-        //     styles.borderBottomColor = this.data.border() !== "_default" ?
-        //     `rgba(255,255,255,1)` : "transparent";
-        //     styles.borderBottomWidth = `${Math.abs(parseInt(mainStyles.marginBottom, 10)) + 1}px`;
-        // } else {
-        //     styles.borderBottomColor = "transparent";
-        // }
+    public getTabHeaderStyles() {
+        const headerStyles = this.parent.data.headers.style();
         return {
-            ...mainStyles,
-            ...styles,
+            ...headerStyles,
+            marginBottom: "-" + headerStyles.borderWidth,
+            marginLeft: "-" + headerStyles.borderWidth,
         };
     }
-
 }
 
 // Resolve issue with jQuery UI tabs blocking events on content editable areas
