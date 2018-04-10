@@ -49,7 +49,7 @@ define(["mageUtils", "Magento_PageBuilder/js/component/block/appearance-config",
             }
 
             if (undefined !== elementConfig.html.var) {
-              data = _this.readHtml(elementConfig, currentElement, data);
+              data = _this.readHtml(elementConfig, currentElement, data, elementConverterPool);
             }
 
             if (undefined !== elementConfig.tag.var) {
@@ -224,9 +224,15 @@ define(["mageUtils", "Magento_PageBuilder/js/component/block/appearance-config",
      */
 
 
-    _proto.readHtml = function readHtml(config, element, data) {
+    _proto.readHtml = function readHtml(config, element, data, elementConverterPool) {
       var result = {};
-      result[config.html.var] = element.innerHTML;
+      var value = element.innerHTML;
+
+      if (elementConverterPool.get(config.html.converter)) {
+        value = elementConverterPool.get(config.html.converter).fromDom(value);
+      }
+
+      result[config.html.var] = value;
       return _.extend(data, result);
     };
     /**

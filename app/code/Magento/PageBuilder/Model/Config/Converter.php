@@ -266,6 +266,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         if ($htmlNode) {
             $htmlData['var']= $this->getAttributeValue($htmlNode, 'var');
             $htmlData['placeholder'] = $this->getAttributeValue($htmlNode, 'placeholder');
+            $htmlData['converter'] = $this->getAttributeValue($htmlNode, 'converter');
+            $htmlData['preview_converter'] = $this->getAttributeValue($htmlNode, 'preview_converter');
         }
         return $htmlData;
     }

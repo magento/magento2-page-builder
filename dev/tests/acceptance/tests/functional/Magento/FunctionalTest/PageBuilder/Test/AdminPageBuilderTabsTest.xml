@@ -366,11 +366,13 @@
         <!-- Verify in Admin Preview -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <waitForElementVisible selector="{{TabsOnStage.tabsContentMinHeight}}" stepKey="seeMinHeightAdminPreview"/>
+        <!--assert computed styles matching expected depends on MQE-818 -->
+        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab'),null).getPropertyValue('min-height')" stepKey="getComputedTabMinHeight"/>
+        <!--<assertEquals expected="1000px" expectedType="string" actual="getComputedTabMinHeight" actualType="variable" message="Computed min height was $getComputedTabMinHeight" stepKey="assertComputedTabMinHeight"/>-->
         <!-- Verify in Storefront-->
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
-        <waitForElementVisible selector="{{TabsOnFrontend.tabsMinHeight}}" stepKey="seeMinHeightStorefront"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeMinHeightStorefront"/>
     </test>
     <test name="TabsAdvancedSettingsApplyInAdminPreviewAndStorefront">
         <annotations>

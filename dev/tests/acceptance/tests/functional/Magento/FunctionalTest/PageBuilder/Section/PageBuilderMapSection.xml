@@ -9,60 +9,73 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
-        <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and @style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; height: {{arg7}}; position: relative; overflow: hidden;']" parameterized="true"/>
-        <element name="map" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
-        <element name="mapWithPin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
-        <element name="mapPinLocation" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
-        <!-- Configuration Elements-->
-        <element name="mapWidth" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'width: {{arg2}};')]" parameterized="true"/>
-        <element name="mapHeight" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'height: {{arg2}};')]" parameterized="true"/>
-        <element name="mapAlignment" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="mapNoAlignment" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and not(contains(@style, 'text-align:'))]" parameterized="true"/>
-        <element name="mapCssClass" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="mapMargin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="mapPadding" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'preview.renderMap') and contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
+        <element name="pin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
+        <element name="pinLocation" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
+        <!-- General Configuration -->
+        <element name="width" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'width: {{arg2}};')]" parameterized="true"/>
+        <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}};')]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <!-- Map Buttons -->
-        <element name="mapFullScreen" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Toggle fullscreen view']" parameterized="true"/>
-        <element name="mapPegman" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))]" parameterized="true"/>
-        <element name="mapSatelliteView" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@title='Show satellite imagery']" parameterized="true"/>
-        <element name="mapStreetView" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@title='Show street map']" parameterized="true"/>
-        <element name="mapZoomIn" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Zoom in']" parameterized="true"/>
-        <element name="mapZoomOut" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Zoom out']" parameterized="true"/>
+        <element name="fullScreen" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Toggle fullscreen view']" parameterized="true"/>
+        <element name="pegman" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))]" parameterized="true"/>
+        <element name="satelliteView" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@title='Show satellite imagery']" parameterized="true"/>
+        <element name="streetView" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@title='Show street map']" parameterized="true"/>
+        <element name="zoomIn" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Zoom in']" parameterized="true"/>
+        <element name="zoomOut" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Zoom out']" parameterized="true"/>
     </section>
-    <section name="MapOnFrontend">
+    <section name="MapOnStorefront">
         <element name="emptyMap" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(@src) and contains(@style, 'display: none;')]" parameterized="true"/>
-        <element name="map" type="button" selector="(//div[@data-role='map'])[{{arg1}}]" parameterized="true"/>
-        <element name="mapWithPin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
-        <element name="mapPinLocation" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
-        <element name="mapZoom" type="button" selector="(//div[@data-role='map'])[{{arg1}}][@data-zoom='{{arg2}}']" parameterized="true"/>
-        <!-- Configuration Elements-->
-        <element name="mapWidth" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'width: {{arg2}};')]" parameterized="true"/>
-        <element name="mapHeight" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}};')]" parameterized="true"/>
-        <element name="mapAlignment" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
-        <element name="mapNoAlignment" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="mapCssClass" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
-        <element name="mapMargin" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="mapPadding" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="base" type="button" selector="(//div[@data-role='map'])[{{arg1}}]" parameterized="true"/>
+        <element name="pin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
+        <element name="pinLocation" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
+        <element name="zoom" type="button" selector="(//div[@data-role='map'])[{{arg1}}][@data-zoom='{{arg2}}']" parameterized="true"/>
+        <!-- General Configuration -->
+        <element name="width" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'width: {{arg2}};')]" parameterized="true"/>
+        <element name="height" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}};')]" parameterized="true"/>
+        <!-- Advanced Configuration -->
+        <element name="alignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <!-- Map Buttons -->
-        <element name="mapFullScreen" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//button[@title='Toggle fullscreen view']" parameterized="true"/>
-        <element name="mapPegman" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))]" parameterized="true"/>
-        <element name="mapSatelliteView" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@title='Show satellite imagery']" parameterized="true"/>
-        <element name="mapStreetView" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@title='Show street map']" parameterized="true"/>
-        <element name="mapZoomIn" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//button[@title='Zoom in']" parameterized="true"/>
-        <element name="mapZoomOut" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//button[@title='Zoom out']" parameterized="true"/>
+        <element name="fullScreen" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//button[@title='Toggle fullscreen view']" parameterized="true"/>
+        <element name="pegman" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))]" parameterized="true"/>
+        <element name="satelliteView" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@title='Show satellite imagery']" parameterized="true"/>
+        <element name="streetView" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@title='Show street map']" parameterized="true"/>
+        <element name="zoomIn" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//button[@title='Zoom in']" parameterized="true"/>
+        <element name="zoomOut" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//button[@title='Zoom out']" parameterized="true"/>
     </section>
     <section name="MapOnConfigurationPanel">
-        <element name="map" type="button" selector="//div[@data-index='position']//div[@class='map-field']"/>
-        <element name="mapWithPin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2.png')]"/>
-        <element name="mapPosition" type="input" selector="//div[@data-index='position']//div[@class='map-field']/../input"/>
-        <element name="mapPositionJS" type="input" selector=".admin__field-map input[type=\'text\']"/>
-        <element name="mapHelperText" type="button" selector="//div[@data-index='position']//span[.='You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.']"/>
+        <element name="base" type="button" selector="//div[@data-index='position']//div[@class='map-field']"/>
+        <element name="pin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2.png')]"/>
+        <element name="position" type="input" selector="//div[@data-index='position']//div[@class='map-field']/../input"/>
+        <element name="positionJS" type="input" selector=".admin__field-map input[type=\'text\']"/>
+        <element name="helperText" type="button" selector="//div[@data-index='position']//span[.='You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.']"/>
         <!-- Map Buttons -->
-        <element name="mapFullScreen" type="button" selector="//div[@data-index='position']//div[@class='map-field']//button[@title='Toggle fullscreen view']"/>
-        <element name="mapPegman" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))]"/>
-        <element name="mapSatelliteView" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[@title='Show satellite imagery']"/>
-        <element name="mapStreetView" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[@title='Show street map']"/>
-        <element name="mapZoomIn" type="button" selector="//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom in']"/>
-        <element name="mapZoomOut" type="button" selector="//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom out']"/>
-        </section>
+        <element name="fullScreen" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Toggle fullscreen view'])[{{arg1}}]" parameterized="true"/>
+        <element name="pegman" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))])[{{arg1}}]" parameterized="true"/>
+        <element name="satelliteView" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//div[@title='Show satellite imagery'])[{{arg1}}]" parameterized="true"/>
+        <element name="streetView" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//div[@title='Show street map'])[{{arg1}}]" parameterized="true"/>
+        <element name="zoomIn" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom in'])[{{arg1}}]" parameterized="true"/>
+        <element name="zoomOut" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Zoom out'])[{{arg1}}]" parameterized="true"/>
+    </section>
 </sections>
