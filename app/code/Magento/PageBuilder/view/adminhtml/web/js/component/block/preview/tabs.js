@@ -100,7 +100,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
       if (this.element) {
         _underscore.defer(function () {
-          if (document.activeElement && document.activeElement.classList.contains("tab-title") && document.activeElement.hasAttribute("contenteditable")) {
+          if ((0, _jquery)(":focus").hasClass("tab-title") && (0, _jquery)(":focus").prop("contenteditable")) {
             document.execCommand("selectAll", false, null);
           } else {
             // If the active element isn't the tab title, we're not interacting with the stage

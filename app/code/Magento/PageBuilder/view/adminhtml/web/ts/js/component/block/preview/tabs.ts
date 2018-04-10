@@ -89,10 +89,7 @@ export default class Tabs extends PreviewBlock {
 
         if (this.element) {
             _.defer(() => {
-                if (document.activeElement
-                    && document.activeElement.classList.contains("tab-title")
-                    && document.activeElement.hasAttribute("contenteditable")
-                ) {
+                if ($(":focus").hasClass("tab-title") && $(":focus").prop("contenteditable")) {
                     document.execCommand("selectAll", false, null);
                 } else {
                     // If the active element isn't the tab title, we're not interacting with the stage
