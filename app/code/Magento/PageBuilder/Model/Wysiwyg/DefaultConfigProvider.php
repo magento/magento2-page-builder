@@ -4,10 +4,12 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Wysiwyg;
 
 /**
- * Class DefaultConfigProvider returns data required to render tinymce4 editor
+ * This DefaultConfigProvider overrides existing configuration provided from the cms module
  */
 class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigProviderInterface
 {
@@ -27,7 +29,7 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
     /**
      * {@inheritdoc}
      */
-    public function getConfig($config)
+    public function getConfig($config): \Magento\Framework\DataObject
     {
         $config->addData([
             'tinymce4' => [
