@@ -85,7 +85,7 @@ export default class ButtonItem extends Block {
     }
 
     /**
-     * Convert plain href string to product widget string
+     * Convert plain href string to cms page widget string
      *
      * @param {string} href
      * @returns {string}
