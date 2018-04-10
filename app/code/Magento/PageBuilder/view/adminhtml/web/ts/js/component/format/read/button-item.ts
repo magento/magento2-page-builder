@@ -29,6 +29,9 @@ export default class ButtonItem implements ReadInterface {
             case "product":
                 href = this.readFromProductWidget(href);
                 break;
+            case "page":
+                href = this.readFromPageWidget(href);
+                break;
             default:
                 break;
         }
@@ -82,4 +85,19 @@ export default class ButtonItem implements ReadInterface {
         return matches[1];
     }
 
+    /**
+     * Convert page widget string to plain href string
+     *
+     * @param {string} href
+     * @returns {string}
+     */
+    private readFromPageWidget(href: string): string {
+        const matches = href.match(/page_id=['"](\d+)/);
+
+        if (!matches) {
+            return href;
+        }
+
+        return matches[1];
+    }
 }

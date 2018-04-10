@@ -25,6 +25,9 @@ export default class ButtonItem extends Block {
                 case "product":
                     href = this.convertToProductWidget(href);
                     break;
+                case "page":
+                    href = this.convertToPageWidget(href);
+                    break;
                 case "default":
                     break;
             }
@@ -74,6 +77,25 @@ export default class ButtonItem extends Block {
             id_path: `product/${href}`,
             template: "category/widget/link/link_href.phtml",
             type_name: "Catalog Product Link",
+        };
+
+        const attributesString = _.map(attributes, (val, key) => `${key}='${val}'`).join(" ");
+
+        return `{{widget ${attributesString} }}`;
+    }
+
+    /**
+     * Convert plain href string to product widget string
+     *
+     * @param {string} href
+     * @returns {string}
+     */
+    private convertToPageWidget(href: string): string {
+        const attributes = {
+            type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
+            page_id: `${href}`,
+            template: "category/widget/link/link_href.phtml",
+            type_name: "CMS Page Link",
         };
 
         const attributesString = _.map(attributes, (val, key) => `${key}='${val}'`).join(" ");

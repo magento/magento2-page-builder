@@ -34,6 +34,10 @@ define(["underscore", "Magento_PageBuilder/js/component/block/block"], function 
             href = this.convertToProductWidget(href);
             break;
 
+          case "page":
+            href = this.convertToPageWidget(href);
+            break;
+
           case "default":
             break;
         }
@@ -87,6 +91,28 @@ define(["underscore", "Magento_PageBuilder/js/component/block/block"], function 
         id_path: "product/" + href,
         template: "category/widget/link/link_href.phtml",
         type_name: "Catalog Product Link"
+      };
+
+      var attributesString = _underscore.map(attributes, function (val, key) {
+        return key + "='" + val + "'";
+      }).join(" ");
+
+      return "{{widget " + attributesString + " }}";
+    };
+    /**
+     * Convert plain href string to product widget string
+     *
+     * @param {string} href
+     * @returns {string}
+     */
+
+
+    _proto.convertToPageWidget = function convertToPageWidget(href) {
+      var attributes = {
+        type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
+        page_id: "" + href,
+        template: "category/widget/link/link_href.phtml",
+        type_name: "CMS Page Link"
       };
 
       var attributesString = _underscore.map(attributes, function (val, key) {

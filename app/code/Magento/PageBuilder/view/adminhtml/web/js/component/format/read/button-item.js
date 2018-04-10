@@ -36,6 +36,10 @@ define(["Magento_PageBuilder/js/component/format/read/default"], function (_defa
           href = this.readFromProductWidget(href);
           break;
 
+        case "page":
+          href = this.readFromPageWidget(href);
+          break;
+
         default:
           break;
       }
@@ -78,6 +82,23 @@ define(["Magento_PageBuilder/js/component/format/read/default"], function (_defa
 
     _proto.readFromProductWidget = function readFromProductWidget(href) {
       var matches = href.match(/id_path=['"]product\/(\d+)/);
+
+      if (!matches) {
+        return href;
+      }
+
+      return matches[1];
+    };
+    /**
+     * Convert page widget string to plain href string
+     *
+     * @param {string} href
+     * @returns {string}
+     */
+
+
+    _proto.readFromPageWidget = function readFromPageWidget(href) {
+      var matches = href.match(/page_id=['"](\d+)/);
 
       if (!matches) {
         return href;
