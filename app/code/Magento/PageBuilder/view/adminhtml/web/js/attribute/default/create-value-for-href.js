@@ -12,19 +12,19 @@ define(["underscore"], function (_underscore) {
         category: {
           type: "Magento\\Catalog\\Block\\Category\\Widget\\Link",
           id_path: "category/:href",
-          template: "category/widget/link/link_href.phtml",
+          template: "Magento_PageBuilder::pagebuilder/widget/link_href.phtml",
           type_name: "Catalog Category Link"
         },
         product: {
           type: "Magento\\Catalog\\Block\\Product\\Widget\\Link",
           id_path: "product/:href",
-          template: "category/widget/link/link_href.phtml",
+          template: "Magento_PageBuilder::pagebuilder/widget/link_href.phtml",
           type_name: "Catalog Product Link"
         },
         page: {
           type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
           page_id: ":href",
-          template: "Magento_Catalog::category/widget/link/link_href.phtml",
+          template: "Magento_PageBuilder::pagebuilder/widget/link_href.phtml",
           type_name: "CMS Page Link"
         }
       };
@@ -78,7 +78,7 @@ define(["underscore"], function (_underscore) {
 
     _proto.convertToWidget = function convertToWidget(href, widgetAttributes) {
       var attributesString = _underscore.map(widgetAttributes, function (val, key) {
-        return key + "=\"" + val.replace(":href", href) + "\"";
+        return key + "='" + val.replace(":href", href) + "'";
       }).join(" ");
 
       return "{{widget " + attributesString + " }}";

@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import PropertyReaderInterface from "../../property/property-reader-interface";
+import PropertyReaderInterface from "../../../property/property-reader-interface";
 
 export default class Link implements PropertyReaderInterface {
 
@@ -29,7 +29,6 @@ export default class Link implements PropertyReaderInterface {
 
         return {
             [attributeLinkType]: href,
-            // href,
             setting: element.target === "_blank",
             type: attributeLinkType,
         };

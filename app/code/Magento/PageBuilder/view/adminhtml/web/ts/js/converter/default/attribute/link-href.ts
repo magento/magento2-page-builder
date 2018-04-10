@@ -3,29 +3,29 @@
  * See COPYING.txt for license details.
  */
 import _ from "underscore";
-import ElementConverterInterface from "../../converter/element-converter-interface";
+import ElementConverterInterface from "../../element-converter-interface";
 
 export default class CreateValueForHref implements ElementConverterInterface {
     /**
      * @type object
      */
-    public widgetParamsByLinkType: object = {
+    private widgetParamsByLinkType: object = {
         category: {
             type: "Magento\\Catalog\\Block\\Category\\Widget\\Link",
             id_path: `category/:href`,
-            template: "category/widget/link/link_href.phtml",
+            template: "Magento_PageBuilder::pagebuilder/widget/link_href.phtml",
             type_name: "Catalog Category Link",
         },
         product: {
             type: "Magento\\Catalog\\Block\\Product\\Widget\\Link",
             id_path: `product/:href`,
-            template: "category/widget/link/link_href.phtml",
+            template: "Magento_PageBuilder::pagebuilder/widget/link_href.phtml",
             type_name: "Catalog Product Link",
         },
         page: {
             type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
             page_id: `:href`,
-            template: "Magento_Catalog::category/widget/link/link_href.phtml",
+            template: "Magento_PageBuilder::pagebuilder/widget/link_href.phtml",
             type_name: "CMS Page Link",
         },
     };
@@ -72,10 +72,10 @@ export default class CreateValueForHref implements ElementConverterInterface {
      * @param {object} widgetAttributes
      * @returns {string}
      */
-    public convertToWidget(href: string, widgetAttributes: object): string {
+    private convertToWidget(href: string, widgetAttributes: object): string {
         const attributesString = _.map(
             widgetAttributes,
-            (val: string, key: string) => `${key}="${val.replace(":href", href)}"`).join(" ");
+            (val: string, key: string) => `${key}='${val.replace(":href", href)}'`).join(" ");
 
         return `{{widget ${attributesString} }}`;
     }

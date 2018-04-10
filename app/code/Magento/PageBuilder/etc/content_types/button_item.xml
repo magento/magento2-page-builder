@@ -10,7 +10,7 @@
         <type name="button-item" translate="label">
             <label>Button</label>
             <icon>icon-pagebuilder-button</icon>
-            <component>Magento_PageBuilder/js/component/block/button-item</component>
+            <component>Magento_PageBuilder/js/component/block/block</component>
             <preview_component>Magento_PageBuilder/js/component/block/preview/button-item</preview_component>
             <form>pagebuilder_button_item_form</form>
             <group>general</group>
@@ -40,15 +40,15 @@
                                     <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
                                 </style_properties>
                                 <attributes>
-                                    <complex_attribute var="button_link" persist="false" reader="Magento_PageBuilder/js/attribute/default/link"/>
-                                    <attribute var="button_link" name="href" virtual="true" converter="Magento_PageBuilder/js/attribute/default/create-value-for-href" />
-                                    <attribute var="button_link" name="target" virtual="true" converter="Magento_PageBuilder/js/attribute/default/create-value-for-target" />
-                                    <attribute var="button_link" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/attribute/default/create-value-for-link-type" />
+                                    <complex_attribute var="button_link" persist="false" reader="Magento_PageBuilder/js/converter/default/attribute/link"/>
+                                    <attribute var="button_link" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
+                                    <attribute var="button_link" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
+                                    <attribute var="button_link" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
                                 </attributes>
                                 <css var="button_type"/>
                             </element>
                             <element name="link_text" path="./a/span">
-                                <html var="button_text" placeholder="Edit Button Text"/>
+                                <html var="button_text" placeholder=""/>
                             </element>
                         </elements>
                     </data_mapping>
