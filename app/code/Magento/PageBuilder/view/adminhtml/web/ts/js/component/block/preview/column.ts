@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $t from "mage/translate";
 import {ConfigContentBlock} from "../../config";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
@@ -23,7 +24,8 @@ export default class Column extends PreviewBlock {
             newWidth = parseFloat(newWidth);
             newWidth = Math.round(newWidth / (100 / maxColumns));
             const newLabel = `${newWidth}/${maxColumns}`;
-            this.displayLabel(`Column ${newLabel}`);
+            const column = $t("Column");
+            this.displayLabel(`${column} ${newLabel}`);
         });
 
     }

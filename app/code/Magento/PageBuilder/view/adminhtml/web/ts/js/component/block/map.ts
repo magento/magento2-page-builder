@@ -45,8 +45,8 @@ export default class Map extends Block {
      * @returns {void}
      */
     private generateMap(element: Element) {
-        const position = this.data.main.attributes()["data-position"];
-        let markers: any = [];
+        let markers: any = typeof this.data.main.attributes()["data-markers"] === "string" ?
+            JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
         let centerCoord = {
             lat: 30.2672,
             lng: -97.7431,
@@ -54,7 +54,8 @@ export default class Map extends Block {
         let options = {
             zoom: 8,
         };
-        if (position && position !== "") {
+
+        if (markers && markers !== "" && markers.length && Object.keys(markers[0]).length) {
             const pos = this.getPosition();
             markers = pos.markers;
             centerCoord = pos.latLng;
@@ -71,7 +72,11 @@ export default class Map extends Block {
      * @returns {void}
      */
     private updateMap() {
-        if (this.data.main.attributes()["data-position"]) {
+        let markers = this.data.main.attributes()["data-markers"];
+        if (typeof markers === "string" && markers !== "") {
+           markers = JSON.parse(this.data.main.attributes()["data-markers"]) ;
+        }
+        if (markers.length) {
             const pos = this.getPosition();
             this.map.onUpdate(pos.markers, pos.latLng, pos.zoom);
         }
@@ -83,17 +88,23 @@ export default class Map extends Block {
      * @returns {Object}
      */
     private getPosition() {
-        const positions = this.data.main.attributes()["data-position"].split(",");
+        const markers: any = typeof this.data.main.attributes()["data-markers"] === "string" ?
+            JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
+        let zoom: number = this.data.main.attributes()["data-zoom"];
+        if (typeof zoom !== "number") {
+            zoom = parseInt(zoom, 10);
+        }
+
         return {
             latLng: {
-                lat: parseFloat(positions[0]),
-                lng: parseFloat(positions[1]),
+                lat: parseFloat(markers[0].lat),
+                lng: parseFloat(markers[0].lng),
             },
             markers: [{
-                lat: parseFloat(positions[0]),
-                lng: parseFloat(positions[1]),
+                lat: parseFloat(markers[0].lat),
+                lng: parseFloat(markers[0].lng),
             }],
-            zoom: parseInt(positions[2], 10),
+            zoom,
         };
     }
 }

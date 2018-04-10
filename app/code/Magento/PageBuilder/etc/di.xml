@@ -460,4 +460,12 @@
     <type name="Magento\Catalog\Model\Product\Attribute\Repository">
         <plugin name="process_extension_attributes" type="Magento\PageBuilder\Plugin\Catalog\Model\Product\Attribute\RepositoryPlugin"/>
     </type>
+    <type name="Magento\PageBuilder\Model\Config\CompositeReader">
+        <arguments>
+            <argument name="readers" xsi:type="array">
+                <item name="contentTypesReader" xsi:type="object" sortOrder="10">Magento\PageBuilder\Model\Config\ContentTypes\Reader</item>
+                <item name="groupsReader" xsi:type="object" sortOrder="20">Magento\PageBuilder\Model\Config\Groups\Reader</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
