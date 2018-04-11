@@ -8,10 +8,10 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddColumnContentBlockToCMSPage">
+    <test name="ColumnAddToCMSPage">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Add a column into a row"/>
             <description value="A user should be able to add a column into a row."/>
             <severity value="CRITICAL"/>
@@ -36,10 +36,10 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
     </test>
-    <test name="RemoveColumnFromStage">
+    <test name="ColumnDelete">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Remove a column from a row"/>
             <description value="A user should be able to remove columns from rows."/>
             <severity value="CRITICAL"/>
@@ -76,10 +76,10 @@
         <dontSeeElement selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
         <dontSeeElement selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="dontSeeColumnGroup"/>
     </test>
-    <test name="SlideOutPanelWithSettingsContainRequiredFields">
+    <test name="ColumnSlideOutPanelWithSettingsContainRequiredFields">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Displays requires column settings"/>
             <description value="Slide out panel with required settings appear"/>
             <severity value="CRITICAL"/>
@@ -140,8 +140,8 @@
     </test>
     <test name="ColumnPlaceholderInAdminPreview">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Empty Column Admin Preview MAGETWO-87068"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-87068: Empty Column Admin Preview"/>
             <title value="Column placeholder in admin preview"/>
             <description value="A user should see the column placeholder that suggests any content blocks can be dragged there"/>
             <severity value="CRITICAL"/>
@@ -172,8 +172,8 @@
     </test>
     <test name="ColumnLabelsUpdate">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-87273"/>
-            <stories value="Column Configuration MAGETWO-87068"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-87068: Empty Column Admin Preview"/>
             <title value="Labels for columns update"/>
             <description value="A user should be able to edit the width of a column and see it update."/>
             <severity value="CRITICAL"/>
@@ -212,8 +212,8 @@
     </test>
     <test name="ColumnCanInteractEditPanel">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Can close the edit panel"/>
             <description value="A user should be able to open the edit form on an added column."/>
             <severity value="CRITICAL"/>
@@ -250,8 +250,8 @@
     </test>
     <test name="ColumnSettingsAppearInAdmin">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Admin Preview MAGETWO-72429"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-72429: Column Admin Preview"/>
             <title value="Configuration settings apply in admin"/>
             <description value="A user should be able to preview column configuration settings."/>
             <severity value="CRITICAL"/>
@@ -311,8 +311,8 @@
     </test>
     <test name="ColumnSettingsAppearOnFrontend">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Column settings appear on frontend"/>
             <description value="Validate selected column settings appear on the frontend"/>
             <severity value="CRITICAL"/>
@@ -392,8 +392,8 @@
     </test>
     <test name="ColumnAppearanceSettingsShowOnFrontend">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Column appearance settings show on frontend"/>
             <description value="Validate column appearance settings appear on the frontend"/>
             <severity value="CRITICAL"/>
@@ -469,8 +469,8 @@
     </test>
     <test name="ColumnChangesPreserved">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Column settings appear on the column form after page save"/>
             <description value="Validate selected column settings appear on the form after page save"/>
             <severity value="CRITICAL"/>
@@ -553,10 +553,10 @@
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
     </test>
-    <test name="PreviewBackgroundImage">
+    <test name="ColumnPreviewBackgroundImage">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Upload and preview an image for column background style"/>
             <description value="Upload an image file to edit column form and see a preview in the admin panel"/>
             <severity value="CRITICAL"/>
@@ -588,10 +588,10 @@
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
     </test>
-    <test name="ValidateBackgroundImageUrl">
+    <test name="ColumnValidateBackgroundImageUrl">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Background Image Url is displayed on front end"/>
             <description value="Validate background image appears on the frontend"/>
             <severity value="CRITICAL"/>
@@ -632,8 +632,8 @@
     </test>
     <test name="ColumnBackgroundColorPreserved">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-66176"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
             <title value="Column background color is preserved on edit"/>
             <description value="Validate column background color is preserved on edit"/>
             <severity value="CRITICAL"/>
@@ -751,8 +751,8 @@
     </test>
     <test name="ColumnValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Column - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Column."/>
             <severity value="CRITICAL"/>
@@ -888,10 +888,10 @@
         <seeElement selector="{{ColumnsOnFrontend.columnPadding}}" stepKey="seeColumnPaddingStyle"/>
         <seeElement selector="{{ColumnsOnFrontend.columnClass}}" stepKey="seeColumnClass"/>
     </test>
-    <test name="RemovingColumnDistributesWidth">
+    <test name="ColumnRemovingDistributesWidth">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Delete Columns From Container MAGETWO-83556"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-83556: Delete Columns from Container"/>
             <title value="Column Width Distribution"/>
             <description value="Removing a column distributes column widths"/>
             <severity value="CRITICAL"/>
@@ -936,8 +936,8 @@
     </test>
     <test name="ColumnFullHeightShowsOnFrontend">
         <annotations>
-            <features value="PageBuilder Column MAGETWO-83768"/>
-            <stories value="Column Configuration MAGETWO-71365"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-71365: Bluefoot Columns to be the same height in the row"/>
             <title value="Bluefoot columns to be the same height in the row"/>
             <description value="Validate columns are the same height on the frontend"/>
             <severity value="CRITICAL"/>
@@ -988,10 +988,10 @@
         <seeElement selector="{{ColumnsOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
     </test>
-    <test name="CanAddImageToColumn">
+    <test name="ColumnCanAddImage">
         <annotations>
-            <features value="[CMS] Bluefoot Row MAGETWO-83767"/>
-            <stories value="[UI component] MediaGalleryImage: inside form MAGETWO-86533"/>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
             <title value="Add an image content block into column"/>
             <description value="A user should be able to add an image into a column."/>
             <severity value="CRITICAL"/>

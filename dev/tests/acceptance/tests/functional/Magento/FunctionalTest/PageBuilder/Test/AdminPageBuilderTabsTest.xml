@@ -8,14 +8,16 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddTabsContentBlockToCMSPage">
+    <test name="TabsAddToCMSPage">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Tabs MAGETWO-83942"/>
+            <features value="Pagebuilder: Tabs"/>
+            <stories value="MAGETWO-83942: Tabs"/>
             <title value="Add Tabs in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add Tabs into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84922"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
             <group value="skip"/>
         </annotations>
         <before>
@@ -71,15 +73,16 @@
         <dontSee selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" stepKey="dontSeeTab1ContentOnStorefront"/>
         <see selector="div[data-role='tabs'] div.content" userInput="Tab 2 Content" stepKey="seeTab2ContentOnStorefront"/>
     </test>
-    <test name="RemoveTabsFromStage">
+    <test name="TabsDelete">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Tabs MAGETWO-83942"/>
+            <features value="Pagebuilder: Tabs"/>
+            <stories value="MAGETWO-83942: Tabs"/>
             <title value="Remove tabs content block from stage"/>
             <description value="A user should be able to remove tabs block from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -105,8 +108,8 @@
     </test>
     <test name="TabsValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Tabs"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Tabs - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Tabs."/>
             <severity value="CRITICAL"/>

@@ -8,11 +8,11 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddAccordionContentBlockToCMSPage">
+    <test name="AccordionAddToCMSPage">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Accordion MAGETWO-83940"/>
-            <title value="Add Accordion in PageBuilder for new CMS page and view on Storefront"/>
+            <features value="Pagebuilder: Accordion"/>
+            <stories value="MAGETWO-83940: Accordion"/>
+            <title value="Accordion - Add Accordion in PageBuilder for new CMS page and view on Storefront"/>
             <description value="The user should be able to add the accordion media content type and it should be visible on the frontend"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84915"/>
@@ -49,11 +49,11 @@
         <seeElement selector="{{AccordionFrontendSection.itemTitleElement(PageBuilderItemProperty.title)}}" stepKey="seeAccordionTitleOnStorefront"/>
         <seeElement selector="{{AccordionFrontendSection.itemContentElement(PageBuilderItemProperty.content)}}" stepKey="seeAccordionContentOnStorefront"/>
     </test>
-    <test name="RemoveAccordionFromStage">
+    <test name="AccordionDelete">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Accordion MAGETWO-83940"/>
-            <title value="Remove accordion content block from stage"/>
+            <features value="Pagebuilder: Accordion"/>
+            <stories value="MAGETWO-83940: Accordion"/>
+            <title value="Accordion - Remove accordion content block from stage"/>
             <description value="A user should be able to remove accordion block from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
@@ -84,8 +84,8 @@
     </test>
     <test name="AccordionValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Accordion"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Accordion - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Accordion."/>
             <severity value="CRITICAL"/>

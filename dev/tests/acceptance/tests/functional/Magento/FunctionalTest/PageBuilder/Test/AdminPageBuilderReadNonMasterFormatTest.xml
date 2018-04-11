@@ -8,16 +8,16 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="ReadText">
+    <test name="WYSIWYGConversionReadText">
         <annotations>
-            <features value="PageBuilder Data Format and Migration MAGETWO-83849"/>
-            <stories value="CMS Content Migration from WYSIWYG to Bluefoot MAGETWO-66620"/>
+            <features value="Pagebuilder: WYSIWYG Conversion"/>
+            <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
             <title value="Text in WYSIWYG converted to HTML content type"/>
             <description value="Text in WYSIWYG converted to HTML content type"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-86075"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-html"/>
+            <group value="pagebuilder-wysiwygConversion"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -51,16 +51,16 @@
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
         <see userInput="{{simpleCmsPage.content}}" selector="{{HtmlOnStage.base('1')}}" stepKey="assertHtmlContent"/>
     </test>
-    <test name="ReadHtml">
+    <test name="WYSIWYGConversionReadHtml">
         <annotations>
-            <features value="PageBuilder Data Format and Migration MAGETWO-83849"/>
-            <stories value="CMS Content Migration from WYSIWYG to Bluefoot MAGETWO-66620"/>
+            <features value="Pagebuilder: WYSIWYG Conversion"/>
+            <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
             <title value="HTML in WYSIWYG converted to HTML content type"/>
             <description value="HTML in WYSIWYG converted to HTML content type"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87937"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-html"/>
+            <group value="pagebuilder-wysiwygConversion"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -95,16 +95,16 @@
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendArbitraryHtml.content}}" stepKey="assertHtmlContent"/>
     </test>
-    <test name="ReadHtmlWithNonexistentDataRole">
+    <test name="WYSIWYGConversionReadHtmlWithNonexistentDataRole">
         <annotations>
-            <features value="PageBuilder Data Format and Migration MAGETWO-83849"/>
-            <stories value="CMS Content Migration from WYSIWYG to Bluefoot MAGETWO-66620"/>
+            <features value="Pagebuilder: WYSIWYG Conversion"/>
+            <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
             <title value="HTML with element that has nonexistent data-role converted to HTML content type"/>
             <description value="HTML with element that has nonexistent data-role converted to HTML content type"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87945"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-html"/>
+            <group value="pagebuilder-wysiwygConversion"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -139,18 +139,18 @@
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendNonexistentDataRole.content}}" stepKey="assertHtmlContent"/>
     </test>
-    <test name="ReadHtmlWithImage">
+    <test name="WYSIWYGConversionReadHtmlWithImage">
         <annotations>
-            <features value="PageBuilder Data Format and Migration MAGETWO-83849"/>
-            <stories value="CMS Content Migration from WYSIWYG to Bluefoot MAGETWO-66620"/>
+            <features value="Pagebuilder: WYSIWYG Conversion"/>
+            <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
             <title value="HTML with media url directive converted to HTML content type"/>
             <description value="HTML with media url directive converted to HTML content type"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87946"/>
-            <group value="skip"/>
-            <!--This test failed on mainline, see: MAGETWO-88779-->
             <group value="pagebuilder"/>
-            <group value="pagebuilder-html"/>
+            <group value="pagebuilder-wysiwygConversion"/>
+            <!--This test failed on mainline, see: MAGETWO-88779-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -190,16 +190,16 @@
         <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         <seeElementInDOM selector="{{HtmlOnFrontendWithImage.content}}" stepKey="assertHtmlContent2"/>
     </test>
-    <test name="ReadHtmlWithNewImage">
+    <test name="WYSIWYGConversionReadHtmlWithNewImage">
         <annotations>
-            <features value="PageBuilder Data Format and Migration MAGETWO-83849"/>
-            <stories value="CMS Content Migration from WYSIWYG to Bluefoot MAGETWO-66620"/>
+            <features value="Pagebuilder: WYSIWYG Conversion"/>
+            <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
             <title value="HTML with media url directive for a new image converted to HTML content type"/>
             <description value="HTML with media url directive for a new image converted to HTML content type"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87946"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-html"/>
+            <group value="pagebuilder-wysiwygConversion"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

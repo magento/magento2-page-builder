@@ -8,15 +8,16 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="ActivatePageBuilderFullScreen">
+    <test name="PanelActivatePageBuilderFullScreen">
         <annotations>
-            <features value="PageBuilder Preview MAGETWO-83848"/>
-            <stories value="PageBuilder in Fullscreen Mode MAGETWO-71798"/>
+            <features value="Pagebuilder: Panel"/>
+            <stories value="MAGETWO-71798: Bluefoot in full screen mode"/>
             <title value="Activate PageBuilder CMS in fullscreen mode and then unactivate it."/>
             <description value="You should be able to activate PageBuilder FullScreen in Admin."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81951"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -40,15 +41,16 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStage2"/>
         <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
     </test>
-    <test name="ShowPanelGroups">
+    <test name="PanelShowPanelGroups">
         <annotations>
-            <features value="PageBuilder Preview MAGETWO-83848"/>
-            <stories value="Filtering Pagebuilder Content on Panel MAGETWO-71566"/>
+            <features value="Pagebuilder: Panel"/>
+            <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
             <title value="Display Existing PageBuilder Panel Content Block Groups"/>
             <description value="The PageBuilder panel should display existing content block groups, and open the first section by default."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81826"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -64,15 +66,16 @@
         <seeElement selector='{{PageBuilderActionsSection.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypes"/>
     </test>
-    <test name="SearchOneCharInPanel">
+    <test name="PanelSearchOneCharInPanel">
         <annotations>
-            <features value="PageBuilder Preview MAGETWO-83848"/>
-            <stories value="Filtering Pagebuilder Content on Panel MAGETWO-71566"/>
+            <features value="Pagebuilder: Panel"/>
+            <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
             <title value="Search for one character in PageBuilder Panel"/>
             <description value="When typing one letter into the panel search box, I see Content Blocks that contains words that start with letter entered."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81827"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -90,15 +93,16 @@
         <see userInput="Banner" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockBanner"/>
         <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockStaticBlock"/>
     </test>
-    <test name="SearchRemovedContentBlock">
+    <test name="PanelSearchRemovedContentBlock">
         <annotations>
-            <features value="PageBuilder Preview MAGETWO-83848"/>
-            <stories value="Bluefoot Search Blocks removal MAGETWO-66517/Bluefoot Code block removal MAGETWO-87074"/>
+            <features value="Pagebuilder: Panel"/>
+            <stories value="MAGETWO-66517: Bluefoot Search Blocks removal"/>
             <title value="Search for removed content block on PageBuilder Panel"/>
             <description value="When typing Search/Code into the panel search box, I shouldn't see Code/Search Content Blocks displays"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MMAGETWO-88637"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -116,15 +120,16 @@
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="Code" stepKey="fillCode"/>
         <dontSee userInput="Code" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateCodeButtons"/>
     </test>
-    <test name="SearchThreeCharInPanel">
+    <test name="PanelSearchThreeCharInPanel">
         <annotations>
-            <features value="PageBuilder Preview MAGETWO-83848"/>
-            <stories value="Filtering Pagebuilder Content on Panel MAGETWO-71566"/>
+            <features value="Pagebuilder: Panel"/>
+            <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
             <title value="Search for three characters in PageBuilder Panel"/>
             <description value="When typing three letters into the panel search box, I see content blocks that contains words that start with letters entered."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81827"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -140,15 +145,16 @@
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="blo" stepKey="fillSearch"/>
         <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockButtons"/>
     </test>
-    <test name="SearchNoMatchesInPanel">
+    <test name="PanelSearchNoMatchesInPanel">
         <annotations>
-            <features value="PageBuilder Preview MAGETWO-83848"/>
-            <stories value="Filtering Pagebuilder Content on Panel MAGETWO-71566"/>
+            <features value="Pagebuilder: Panel"/>
+            <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
             <title value="Search for no matches in PageBuilder Panel"/>
             <description value="When there is no match on a search, display appropriate message."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81831"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -164,16 +170,16 @@
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="abcdef" stepKey="fillSearch"/>
         <see userInput="Nothing found" selector="{{PageBuilderActionsSection.nothingFound}}" stepKey="validateNothingFound"/>
     </test>
-    <test name="ClearSearchInPanel">
+    <test name="PanelClearSearchInPanel">
         <annotations>
-            <features value="PageBuilder Preview MAGETWO-83848"/>
-            <stories value="Filtering Pagebuilder Content on Panel MAGETWO-71566"/>
+            <features value="Pagebuilder: Panel"/>
+            <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
             <title value="Clear search in PageBuilder Panel using clear search button and backspace"/>
             <description value="The clear search button is displayed only when I start typing in the search field. When a search is cleared, content block groups are displayed."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81828"/>
-            <testCaseId value="MAGETWO-81829"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

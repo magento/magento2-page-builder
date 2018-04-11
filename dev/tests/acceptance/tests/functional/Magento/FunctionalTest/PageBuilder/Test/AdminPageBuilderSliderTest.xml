@@ -8,10 +8,10 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddSliderContentBlockToCMSPage">
+    <test name="SliderAddToCMSPage">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Slider MAGETWO-83933"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-83933: Advanced Slider"/>
             <title value="Add Slider in PageBuilder for new CMS page, customize slider settings and view on Storefront"/>
             <description value="The user should be able to add the slides media content type to slider media content type and it should be visible on the frontend"/>
             <severity value="CRITICAL"/>
@@ -203,10 +203,10 @@
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2Background"/>
         <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearanceOnStorefront"/>
     </test>
-    <test name="RemoveSliderFromStage">
+    <test name="SliderDelete">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Slider MAGETWO-83933"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-83933: Advanced Slider"/>
             <title value="Remove slider content block from stage"/>
             <description value="A user should be able to remove slider block from a row."/>
             <severity value="CRITICAL"/>
@@ -247,10 +247,10 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
     </test>
-    <test name="CanDeleteSlide">
+    <test name="SlideCanDeleteSlide">
         <annotations>
-            <features value="PageBuilder Slider MAGETWO-83767"/>
-            <stories value="Delete Slide from Slider MAGETWO-87095"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-87095: Delete Slide from Slider"/>
             <title value="Cannot delete last slide from slider"/>
             <description value="A user should be able delete slides when there are multiple of them."/>
             <severity value="CRITICAL"/>
@@ -317,10 +317,10 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmSlideRemoval"/>
         <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides0"/>
     </test>
-    <test name="CanManageSlides">
+    <test name="SlideCanManageSlides">
         <annotations>
-            <features value="PageBuilder Slider MAGETWO-83767"/>
-            <stories value=""/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-83933: Advanced Slider"/>
             <title value="Can add slides and see tooltip and slide title when hovering over navigation dots"/>
             <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
             <severity value="CRITICAL"/>
@@ -422,8 +422,8 @@
     </test>
     <test name="SliderValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Slider - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Slider."/>
             <severity value="CRITICAL"/>
@@ -483,8 +483,8 @@
     </test>
     <test name="SlideValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Slide - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Slide."/>
             <severity value="CRITICAL"/>
@@ -538,10 +538,10 @@
         <!-- Validate Style On Stage. Currently Not Implemented -->
         <comment userInput="Validate Style On Stage. Currently Not Implemented" stepKey="CommentValidateStage"/>
         </test>
-    <test name="CanAddImageToSlide">
+    <test name="SlideCanAddImageToSlide">
         <annotations>
-            <features value="PageBuilder Row MAGETWO-83767"/>
-            <stories value="[UI component] MediaGalleryImage: inside form MAGETWO-86533"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
             <title value="Add an image content block into slide"/>
             <description value="A user should be able to add an image into a slide."/>
             <severity value="CRITICAL"/>
@@ -632,8 +632,8 @@
     </test>
     <test name="SliderPosterButtonsCanBeEditedInline">
         <annotations>
-            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
-            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-87988: Editing text inputs from the Stage"/>
             <title value="Ability to edit a poster slider button inline on the stage"/>
             <description value="A user should be able to edit a poster slider button inline on the stage"/>
             <severity value="CRITICAL"/>
@@ -684,8 +684,8 @@
     </test>
     <test name="SliderCollageLeftButtonsCanBeEditedInline">
         <annotations>
-            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
-            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-87988: Editing text inputs from the Stage"/>
             <title value="Ability to edit a collage left slider button inline on the stage"/>
             <description value="A user should be able to edit a collage left slider button inline on the stage"/>
             <severity value="CRITICAL"/>
@@ -739,8 +739,8 @@
     </test>
     <test name="SliderCollageCenterButtonsCanBeEditedInline">
         <annotations>
-            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
-            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-87988: Editing text inputs from the Stage"/>
             <title value="Ability to edit a collage center slider button inline on the stage"/>
             <description value="A user should be able to edit a collage center slider button inline on the stage"/>
             <severity value="CRITICAL"/>
@@ -794,8 +794,8 @@
     </test>
     <test name="SliderCollageRightButtonsCanBeEditedInline">
         <annotations>
-            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
-            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-87988: Editing text inputs from the Stage"/>
             <title value="Ability to edit a collage right slider button inline on the stage"/>
             <description value="A user should be able to edit a collage right slider button inline on the stage"/>
             <severity value="CRITICAL"/>

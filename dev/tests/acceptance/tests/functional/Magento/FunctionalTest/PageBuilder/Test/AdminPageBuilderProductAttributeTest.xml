@@ -8,15 +8,16 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="CanCreatePageBuilderProductAttribute">
+    <test name="ProductAttributeCanCreatePageBuilderProductAttribute">
         <annotations>
-            <features value="MAGETWO-68814-Bluefoot integration (as extension)"/>
-            <stories value="MAGETWO-84243-BlueFoot as an input type for custom product attributes"/>
+            <features value="Pagebuilder: Product Attribute"/>
+            <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
             <testCaseId value="MAGETWO-88222"/>
             <title value="Can create product attribute with pagebuilder"/>
             <description value="The user should be able to create product attribute type of pagebuilder"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-productAttribute"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -35,17 +36,18 @@
         <waitForPageLoad time="10" stepKey="waitForPageToLoad"/>
         <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="seePageBuilderIsSaved" />
     </test>
-    <test name="CanCreateProductWithPageBuilderProductAttribute">
+    <test name="ProductAttributeCanCreateProductWithPageBuilderProductAttribute">
         <annotations>
-            <features value="MAGETWO-68814-Bluefoot integration (as extension)"/>
-            <stories value="MAGETWO-84243-BlueFoot as an input type for custom product attributes"/>
+            <features value="Pagebuilder: Product Attribute"/>
+            <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
             <testCaseId value="MAGETWO-88223"/>
             <title value="Can create product using pagebuilder product attribute"/>
             <description value="Can create product using pagebuilder product attribute and see it on Storefront"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
-            <group value="skip"/>
+            <group value="pagebuilder-productAttribute"/>
             <!--Bug link MAGETWO-87851-->
+            <group value="skip"/>
         </annotations>
         <before>
             <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
@@ -90,15 +92,16 @@
         <waitForPageLoad stepKey="waitForPageLoad5"/>
         <see userInput="Hello Product Page From PageBuilder" stepKey="pagebuilderContent"/>
     </test>
-    <test name="CanDownGradePageBuilderProductAttributeToTextArea">
+    <test name="ProductAttributeCanDownGradePageBuilderProductAttributeToTextArea">
         <annotations>
-            <features value="MAGETWO-68814-Bluefoot integration (as extension)"/>
-            <stories value="MAGETWO-84243-BlueFoot as an input type for custom product attributes"/>
+            <features value="Pagebuilder: Product Attribute"/>
+            <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
             <testCaseId value="MAGETWO-88224"/>
             <title value="Can downgrade pagebuilder product attribute to text area product attribute"/>
             <description value="Can downgrade pagebuilder product attribute to text area product attribute"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-productAttribute"/>
             <!-- Skipped; see MAGETWO-88218 -->
             <group value="skip"/>
         </annotations>
@@ -152,15 +155,16 @@
         <dontSeeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="dontSeeTinyMCE4" />
         <seeElement selector="{{ProductAttributeWYSIWYGSection.TextArea($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seeTextAreaAttribute" />
     </test>
-    <test name="CanDownGradePageBuilderProductAttributeToTextEditor">
+    <test name="ProductAttributeCanDownGradePageBuilderProductAttributeToTextEditor">
         <annotations>
-            <features value="MAGETWO-68814-Bluefoot integration (as extension)"/>
-            <stories value="MAGETWO-84243-BlueFoot as an input type for custom product attributes"/>
+            <features value="Pagebuilder: Product Attribute"/>
+            <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
             <testCaseId value="MAGETWO-88224"/>
             <title value="Can downgrade pagebuilder product attribute to text editor product attribute"/>
             <description value="Can downgrade pagebuilder product attribute to text editor product attribute"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-productAttribute"/>
             <!-- Skipped; see MAGETWO-88218 -->
             <group value="skip"/>
         </annotations>
@@ -216,17 +220,18 @@
         <waitForPageLoad stepKey="waitForPageLoad9" />
         <seeElement selector="{{ProductAttributeWYSIWYGSection.TinyMCE4($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seeTinyMCE4Attribute"/>
     </test>
-    <test name="CanUpgradeTextEditorProductAttributeToPageBuilder">
+    <test name="ProductAttributeCanUpgradeTextEditorProductAttributeToPageBuilder">
         <annotations>
-            <features value="MAGETWO-68814-Bluefoot integration (as extension)"/>
-            <stories value="MAGETWO-84243-BlueFoot as an input type for custom product attributes"/>
+            <features value="Pagebuilder: Product Attribute"/>
+            <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
             <testCaseId value="MAGETWO-88222"/>
             <title value="Can upgrade texteditor product attribute to pagebuilder product attribute"/>
             <description value="Can upgrade texteditor product attribute to pagebuilder product attribute"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
-            <group value="skip"/>
+            <group value="pagebuilder-productAttribute"/>
             <!--Bug link MAGETWO-87851-->
+            <group value="skip"/>
         </annotations>
         <before>
             <createData stepKey="myProductAttributeCreation" entity="productAttributeWysiwyg"/>
@@ -275,15 +280,16 @@
         <waitForPageLoad stepKey="waitForPageLoad9" />
         <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seePagebuilderBtn"/>
     </test>
-    <test name="CanCreatePageBuilderProductAttributeOnProductForm">
+    <test name="ProductAttributeCanCreatePageBuilderProductAttributeOnProductForm">
         <annotations>
-            <features value="MAGETWO-68814-Bluefoot integration (as extension)"/>
-            <stories value="MAGETWO-84243-BlueFoot as an input type for custom product attributes"/>
+            <features value="Pagebuilder: Product Attribute"/>
+            <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
             <testCaseId value="MAGETWO-88485"/>
             <title value="Can create pagebuilder product attribute on product form"/>
             <description value="Can create pagebuilder product attribute on product form"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-productAttribute"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
