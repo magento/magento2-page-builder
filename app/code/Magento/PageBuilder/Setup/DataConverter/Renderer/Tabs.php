@@ -84,19 +84,19 @@ class Tabs implements RendererInterface
     /**
      * Render the tab headers
      *
-     * @param $childIndex
-     * @param $tabItems
+     * @param int $childIndex
+     * @param array $tabItems
      * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function renderTabHeaders($childIndex, $tabItems)
+    private function renderTabHeaders(int $childIndex, array $tabItems): string
     {
         $tabHeaderElementHtml = '';
         foreach ($tabItems as $tabIndex => $tabItem) {
             $tabItemEavData = $this->tabItemEavAttributeLoader->load($tabItem['entityId']);
-            $tabId = 'tab' . $childIndex . '_' . $tabIndex;
-            $tabHeaderElementHtml .= '<li role="tab" class="tab-header-li">'
-                . '<a href="#' . $tabId . '" class="tab-header" title="' . $tabItemEavData['title'] . '">'
+            $tabId = 'tab' . $childIndex . '-' . $tabIndex;
+            $tabHeaderElementHtml .= '<li role="tab" class="tab-header">'
+                . '<a href="#' . $tabId . '" class="tab-title" title="' . $tabItemEavData['title'] . '">'
                 . '<span class="tab-title">' . $tabItemEavData['title'] . '</span>'
                 . '</a>'
                 . '</li>';

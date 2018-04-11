@@ -33,17 +33,17 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       var _this = this;
 
       this.preview.setActiveTab(this.children().length - 1);
-      (0, _factory)(_config.getInitConfig("content_types").tab, this, this.stage).then(function (tab) {
+      (0, _factory)(_config.getInitConfig("content_types")["tab-item"], this, this.stage).then(function (tab) {
         _underscore.defer(function () {
-          var mountFn = function mountFn(event, params) {
+          var mountFunction = function mountFunction(event, params) {
             if (params.id === tab.id) {
               _this.preview.setFocusedTab(_this.children().length - 1);
 
-              _eventBus.off("tab:block:mount", mountFn);
+              _eventBus.off("tab-item:block:mount", mountFunction);
             }
           };
 
-          _eventBus.on("tab:block:mount", mountFn);
+          _eventBus.on("tab-item:block:mount", mountFunction);
 
           _this.addChild(tab, _this.children().length);
         });
@@ -87,7 +87,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       }); // Block being removed from container
 
 
-      _eventBus.on("tab:block:removed", function (event, params) {
+      _eventBus.on("tab-item:block:removed", function (event, params) {
         if (params.parent.id === _this2.id) {
           // Mark the previous slide as active
           var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
@@ -100,14 +100,14 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       var duplicatedTab;
       var duplicatedTabIndex;
 
-      _eventBus.on("tab:block:duplicate", function (event, params) {
+      _eventBus.on("tab-item:block:duplicate", function (event, params) {
         if (params.duplicate.parent.id === _this2.id) {
           duplicatedTab = params.duplicate;
           duplicatedTabIndex = params.index;
         }
       });
 
-      _eventBus.on("tab:block:mount", function (event, params) {
+      _eventBus.on("tab-item:block:mount", function (event, params) {
         if (duplicatedTab && params.id === duplicatedTab.id) {
           _this2.preview.setFocusedTab(duplicatedTabIndex, true);
 

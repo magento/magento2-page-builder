@@ -49,12 +49,12 @@ export default class Tabs extends PreviewBlock {
                 this.buildTabs();
             }
         });
-        EventBus.on("tab:block:create", (event: Event, params: BlockCreateEventParams) => {
+        EventBus.on("tab-item:block:create", (event: Event, params: BlockCreateEventParams) => {
             if (this.element && params.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }
         });
-        EventBus.on("tab:block:removed", (event: Event, params: BlockCreateEventParams) => {
+        EventBus.on("tab-item:block:removed", (event: Event, params: BlockCreateEventParams) => {
             if (this.element && params.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }
