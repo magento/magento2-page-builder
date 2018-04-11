@@ -7,7 +7,7 @@
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-button-item no-system-border" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }">
     <!-- ko template: getOptions().template --><!-- /ko -->
-    <a data-bind="attr: { class: legacyData.button_type() }, style: previewStyle()">
+    <a data-bind="attr: { class: previewData.button_type() }, style: previewStyle()">
         <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }, hasFocus: $parent.parent.preview.isLiveEditing() === $index(), event: { focusout: onFocusOut.call($data) }"></span>
     </a>
 </div>
