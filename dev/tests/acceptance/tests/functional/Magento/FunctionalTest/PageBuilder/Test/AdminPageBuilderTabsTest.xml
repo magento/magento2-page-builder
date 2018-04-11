@@ -64,7 +64,7 @@
     <test name="RemoveTabsFromStage">
         <annotations>
             <features value="PageBuilder - Tabs"/>
-            <stories value="Tabs MAGETWO-83942"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
             <title value="Remove tabs content block from stage"/>
             <description value="A user should be able to remove tabs block from a row."/>
             <severity value="CRITICAL"/>
@@ -99,7 +99,7 @@
     <test name="TabsValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-83415"/>
+            <stories value="MAGETWO-83415: Advanced Configuration settings"/>
             <title value="Tabs - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Tabs."/>
             <severity value="CRITICAL"/>
@@ -165,7 +165,7 @@
     <test name="TabsNavAlignCenterAppliesInAdminPreviewAndStorefront">
         <annotations>
             <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-86999"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
             <title value="Tabs - Configure Tabs navigation alignment to Center"/>
             <description value="Configure Tabs navigation alignment to center and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
@@ -216,7 +216,7 @@
     <test name="TabsNavAlignRightAppliesInAdminPreviewAndStorefront">
         <annotations>
             <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-86999"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
             <title value="Tabs - Configure Tabs navigation alignment to Right"/>
             <description value="Configure Tabs navigation alignment to right and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
@@ -267,7 +267,7 @@
     <test name="TabsDefaultActiveTabToSecondTab">
         <annotations>
             <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-86999"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
             <title value="Tabs - Change Tabs Default Active Tab to Second Tab"/>
             <description value="Configure Tabs Default Active Tab to second tab and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
@@ -320,7 +320,7 @@
     <test name="TabsMinHeightAppliesInAdminPreviewAndStorefront">
         <annotations>
             <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-86999"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
             <title value="Tabs - Update Tabs minimum height and verify on Admin and Storefront"/>
             <description value="Configure Tabs minimum height and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
@@ -366,9 +366,7 @@
         <!-- Verify in Admin Preview -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!--assert computed styles matching expected depends on MQE-818 -->
-        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab'),null).getPropertyValue('min-height')" stepKey="getComputedTabMinHeight"/>
-        <!--<assertEquals expected="1000px" expectedType="string" actual="getComputedTabMinHeight" actualType="variable" message="Computed min height was $getComputedTabMinHeight" stepKey="assertComputedTabMinHeight"/>-->
+        <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeTabMinHeightAdmin1"/>
         <!-- Verify in Storefront-->
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
@@ -377,7 +375,7 @@
     <test name="TabsAdvancedSettingsApplyInAdminPreviewAndStorefront">
         <annotations>
             <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-86999"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
             <title value="Tabs - Customized Tabs Advanced Settings apply to admin preview storefront"/>
             <description value="Configure Tabs advanced settings and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
