@@ -12,7 +12,10 @@ class ProductList extends \Magento\Catalog\Block\Product\ListProduct
      */
     public function getProductCollection()
     {
-        return $this->_getProductCollection();
+        $productCollection = $this->_getProductCollection();
+        $productCount = $this->getProductCount() ? $this->getProductCount() : 4;
+        $products = array_slice($productCollection->getItems(), 0, $productCount);
+        return $products;
     }
 
     /**
