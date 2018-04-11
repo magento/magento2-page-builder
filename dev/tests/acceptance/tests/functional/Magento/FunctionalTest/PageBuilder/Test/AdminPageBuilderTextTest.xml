@@ -8,6 +8,79 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="TextAddTextWithCustomTinyMCE">
+        <annotations>
+            <features value="[CMS] Drag &amp; Drop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <stories value="Customized WYSIWYG Toolbar inside Page Builder MAGETWO-86820"/>
+            <title value="Custom WYSIWYG inside Pagebuilder"/>
+            <description value="Custom buttons on WYSIWYG toolbar inside PageBuilder"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90274"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-text"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        </actionGroup>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.undo}}" stepKey="seeUndo"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.redo}}" stepKey="seeRedo"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="seeFontsize"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.textColor}}" stepKey="seeTextColor"/>
+        <seeElement selector="{{WYSIWYGOnPageBuilder.backgroundColor}}" stepKey="seeBackgroundColor"/>
+
+        <!--Verify FontSize-->
+        <click selector="{{WYSIWYGOnPageBuilder.fontSize}}" stepKey="clickOnFontSize"/>
+        <see userInput="10px" stepKey="see10px" />
+        <see userInput="12px" stepKey="see12px" />
+        <see userInput="14px" stepKey="see14px" />
+        <see userInput="16px" stepKey="see16px" />
+        <see userInput="18px" stepKey="see18px" />
+        <see userInput="20px" stepKey="see20px" />
+        <see userInput="24px" stepKey="see24px" />
+        <see userInput="26px" stepKey="see26px" />
+        <see userInput="28px" stepKey="see28px" />
+        <see userInput="32px" stepKey="see32px" />
+        <see userInput="34px" stepKey="see34px" />
+        <see userInput="36px" stepKey="see36px" />
+        <see userInput="38px" stepKey="see38px" />
+        <see userInput="40px" stepKey="see40px" />
+        <see userInput="42px" stepKey="see42px" />
+        <see userInput="48px" stepKey="see48px" />
+        <see userInput="52px" stepKey="see52px" />
+        <see userInput="56px" stepKey="see56px" />
+        <see userInput="64px" stepKey="see64px" />
+        <see userInput="72px" stepKey="see72px" />
+
+        <!--Verify FontStyle on preview-->
+        <executeJS function="tinyMCE.get('pagebuilder_text_form_content').setContent('Hello World!');" stepKey="executeJSFillContent"/>
+        <click selector="{{WYSIWYGOnPageBuilder.style}}" stepKey="expandStyleList"/>
+        <see userInput="Important" stepKey="seeImportantStyle"/>
+        <click selector="//span[text()='Important']" stepKey="selectFormatStyle" />
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <seeElement selector="//p[@class='cms-content-important' and text()='Hello World!']" stepKey="seeTextInImportantStyleOnPreview" />
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+
+        <!--Verify FontStyle on Storeview-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
+        <waitForPageLoad  stepKey="waitForPageLoad3"/>
+        <seeElement selector="//p[@class='cms-content-important' and text()='Hello World!']" stepKey="seeTextInImportantStyleOnStorefront" />
+    </test>
     <test name="TextAddTextWithTinyMCE">
         <annotations>
             <features value="PageBuilder"/>
