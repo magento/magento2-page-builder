@@ -1,14 +1,14 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block"], function (_config, _eventBus, _block) {
+define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_config, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Product =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(Product, _Block);
+  function (_PreviewBlock) {
+    _inheritsLoose(Product, _PreviewBlock);
 
     function Product() {
-      return _Block.apply(this, arguments) || this;
+      return _PreviewBlock.apply(this, arguments) || this;
     }
 
     var _proto = Product.prototype;
@@ -19,7 +19,7 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/compo
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      _Block.prototype.bindEvents.call(this);
+      _PreviewBlock.prototype.bindEvents.call(this);
 
       _eventBus.on("previewObservables:updated", function (event, params) {
         if (params.preview.id === _this.id) {
