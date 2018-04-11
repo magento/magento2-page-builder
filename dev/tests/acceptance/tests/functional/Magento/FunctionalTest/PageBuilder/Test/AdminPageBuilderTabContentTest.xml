@@ -63,8 +63,6 @@
         <!-- Verify Text in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.tabHeader('1')}}" attribute="title" expectedValue="Tab 1" stepKey="assertTab1TitleStorefront"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocusedStorefront"/>
         <see userInput="This is some text" stepKey="assertTextOnStorefront"/>
     </test>
     <test name="CanAddBlockToTab">
@@ -112,6 +110,13 @@
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
+            <argument name="property" value="PageBuilderBlockIdentifierProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Block in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
@@ -267,7 +272,6 @@
         <waitForElementVisible selector="{{ImageOnStage.imagePreview}}" stepKey="waitForImagePreview"/>
         <waitForElementVisible selector="{{ImageOnStage.imageSourceOnStage('magentoStage')}}" stepKey="waitForImageSource"/>
         <seeElement selector="{{ImageOnStage.imageSourceOnStage('magentoStage')}}" stepKey="seeImageSourceOnStage" />
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeElement selector="{{ImageOnStage.imageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Image in Tab on storefront -->
