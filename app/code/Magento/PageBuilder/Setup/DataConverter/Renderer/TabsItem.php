@@ -56,7 +56,7 @@ class TabsItem implements RendererInterface
             'data-role' => 'tab-item',
             'class' => $cssClasses,
             'data-tab-name' => $eavData['title'],
-            'id' => 'tab' . $additionalData['parentChildIndex'] . '_' . $additionalData['childIndex']
+            'id' => 'tab' . $additionalData['parentChildIndex'] . '-' . $additionalData['childIndex']
         ];
 
         if (isset($itemData['formData'])) {
