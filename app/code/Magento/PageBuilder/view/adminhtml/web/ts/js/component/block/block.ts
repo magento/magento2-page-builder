@@ -6,7 +6,6 @@
 import _ from "underscore";
 import appearanceConfig from "../../component/block/appearance-config";
 import {ConfigContentBlock, ConfigFieldConfig} from "../config";
-import Stage from "../stage";
 import getPreviewInstance from "../stage/previews";
 import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
@@ -29,19 +28,19 @@ export default class Block extends Structural implements BlockInterface {
      * Block constructor
      *
      * @param {EditableArea} parent
-     * @param {Stage} stage
+     * @param {string} stageId
      * @param {ConfigContentBlock} config
      * @param formData
      */
     constructor(
         parent: EditableArea,
-        stage: Stage,
         config: ConfigContentBlock,
+        stageId,
         formData: any,
         elementConverterPool: ElementConverterPool,
         dataConverterPool: DataConverterPool,
     ) {
-        super(parent, stage, config, elementConverterPool, dataConverterPool);
+        super(parent, config, stageId, elementConverterPool, dataConverterPool);
 
         this.preview = getPreviewInstance(this, config);
 
@@ -52,7 +51,7 @@ export default class Block extends Structural implements BlockInterface {
             });
         }
 
-        this.stage.store.update(
+        this.store.update(
             this.id,
             _.extend(defaults, formData),
         );

@@ -10,12 +10,11 @@ import _ from "underscore";
 import DataStore from "./data-store";
 import EventBus from "./event-bus";
 import buildStage from "./stage-builder";
-import {StageInterface} from "./stage.d";
 import {handleEvents} from "./stage/event-handling-delegate";
 import Save from "./stage/save";
-import EditableArea from "./stage/structural/editable-area";
+import Collection from "../collection";
 
-export default class Stage extends EditableArea implements StageInterface {
+export default class Stage {
     public config: {} = {
         name: "stage",
     };
@@ -35,6 +34,7 @@ export default class Stage extends EditableArea implements StageInterface {
                 value: renderedOutput,
             }));
     }, 500);
+    private collection: Collection;
 
     /**
      * Constructor
@@ -42,12 +42,14 @@ export default class Stage extends EditableArea implements StageInterface {
      * @param parent
      */
     constructor(parent: any) {
-        super();
+        this.collection = new Collection();
+        this.collection.getChildren().subscribe(
+            () => EventBus.trigger("stage:updated", {stageId: this.stageId})
+        );
         this.parent = parent;
         this.id = parent.id;
         this.loading = parent.loading;
         this.stage = this;
-        this.setChildren();
 
         // Create our state and store objects
         this.store = new DataStore();
@@ -69,7 +71,7 @@ export default class Stage extends EditableArea implements StageInterface {
         // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
         // can occur concurrently.
         EventBus.on("stage:updated", (event, params) => {
-            if (params.stage.id === this.id) {
+            if (params.stageId === this.id) {
                 this.saveRenderTree.call(this);
             }
         });
@@ -91,7 +93,7 @@ export default class Stage extends EditableArea implements StageInterface {
      */
     public ready() {
         EventBus.trigger(`stage:ready:${ this.id }`, { stage: this });
-        this.children.valueHasMutated();
+        this.collection.getChildren().valueHasMutated();
         this.loading(false);
     }
 
@@ -101,13 +103,46 @@ export default class Stage extends EditableArea implements StageInterface {
      * @param child
      */
     public removeChild(child: any): void {
-        if (this.children().length === 1) {
-            alertDialog( {
+        if (this.collection.getChildren().length === 1) {
+            alertDialog({
                 content: $t("You are not able to remove the final row from the content."),
                 title: $t("Unable to Remove"),
             });
             return;
         }
-        super.removeChild(child);
+        this.collection.removeChild(child);
+    }
+
+    /**
+     * Return the children of the current element
+     *
+     * @returns {KnockoutObservableArray<ContentTypeInterface>}
+     */
+    public getChildren(): KnockoutObservableArray<ContentTypeInterface> {
+        return this.collection.getChildren();
+    }
+
+    /**
+     * Add a child into the observable array
+     *
+     * @param child
+     * @param index
+     */
+    public addChild(child: ContentTypeInterface, index?: number): void {
+        child.parent = this;
+        this.collection.addChild(child, index);
+    }
+
+    /**
+     * Set the children observable array into the class
+     *
+     * @param children
+     */
+    public setChildren(children: KnockoutObservableArray<ContentTypeInterface>) {
+        this.collection.setChildren(children);
+    }
+
+    get children() {
+        return this.collection.getChildren();
     }
 }

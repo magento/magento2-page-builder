@@ -4,16 +4,16 @@
  */
 
 import _ from "underscore";
-import Block from "./block";
+import ContentType from "../../content-type";
 
-export default class ButtonItem extends Block {
+export default class ButtonItem extends ContentType {
 
     /**
      * Get the attributes for link
      * returns {object}
      */
     public getLinkAttributes(): {} {
-        const data = this.getData();
+        const data = this.content.getData();
 
         if (typeof data.button_link === "object") {
             let href = data.button_link[data.button_link.type];

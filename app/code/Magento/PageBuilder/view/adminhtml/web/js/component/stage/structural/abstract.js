@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/attribute-filter", "Magento_PageBuilder/js/component/format/attribute-mapper", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/stage/edit", "Magento_PageBuilder/js/component/stage/structural/editable-area", "Magento_PageBuilder/js/component/stage/structural/options", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/stage/structural/options/title"], function (_knockout, _translate, _dismissibleConfirm, _underscore, _appearanceConfig, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/attribute-filter", "Magento_PageBuilder/js/component/format/attribute-mapper", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/stage/edit", "Magento_PageBuilder/js/component/stage/structural/editable-area", "Magento_PageBuilder/js/component/stage/structural/options", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/stage/structural/options/title", "Magento_PageBuilder/js/component/data-store"], function (_knockout, _translate, _dismissibleConfirm, _underscore, _appearanceConfig, _string, _eventBus, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _edit, _editableArea, _options, _option, _title, _dataStore) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -22,10 +22,10 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
      * @param elementConverterPool
      * @param dataConverterPool
      */
-    function Structural(parent, stage, config, elementConverterPool, dataConverterPool) {
+    function Structural(parent, config, stageId, elementConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _EditableArea.call(this, stage) || this;
+      _this = _EditableArea.call(this, stageId) || this;
       _this.config = void 0;
       _this.edit = void 0;
       _this.title = void 0;
@@ -46,9 +46,10 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       _this.parent = parent;
       _this.config = config;
       _this.elementConverterPool = elementConverterPool;
-      _this.dataConverterPool = dataConverterPool; // Create a new instance of edit for our editing needs
+      _this.dataConverterPool = dataConverterPool;
+      _this.store = new _dataStore(); // Create a new instance of edit for our editing needs
 
-      _this.edit = new _edit(_this, _this.stage.store);
+      _this.edit = new _edit(_this, _this.store);
 
       _this.bindUpdatePreviewObservablesOnChange();
 
@@ -135,7 +136,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
     _proto.getCss = function getCss(element) {
       var result = {};
       var css = "";
-      var data = this.stage.store.get(this.id);
+      var data = this.store.get(this.id);
 
       if (element === undefined) {
         if ("css_classes" in data && data.css_classes !== "") {
@@ -165,7 +166,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
 
     _proto.getStyle = function getStyle(element) {
-      var data = _underscore.extend({}, this.stage.store.get(this.id), this.config);
+      var data = _underscore.extend({}, this.store.get(this.id), this.config);
 
       if (element === undefined) {
         if (typeof data.appearance !== "undefined" && typeof data.appearances !== "undefined" && typeof data.appearances[data.appearance] !== "undefined") {
@@ -194,7 +195,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
 
     _proto.getAttributes = function getAttributes(element) {
-      var data = _underscore.extend({}, this.stage.store.get(this.id), this.config);
+      var data = _underscore.extend({}, this.store.get(this.id), this.config);
 
       if (element === undefined) {
         if (undefined === data.appearance || !data.appearance) {
@@ -224,7 +225,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
 
     _proto.getHtml = function getHtml(element) {
-      var data = this.stage.store.get(this.id);
+      var data = this.store.get(this.id);
       var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
       var result = "";
 
@@ -243,7 +244,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
 
     _proto.getData = function getData(element) {
-      var data = _underscore.extend({}, this.stage.store.get(this.id));
+      var data = _underscore.extend({}, this.store.get(this.id));
 
       if (undefined === element) {
         return data;
@@ -554,8 +555,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
     _proto.bindUpdatePreviewObservablesOnChange = function bindUpdatePreviewObservablesOnChange() {
       var _this4 = this;
 
-      this.stage.store.subscribe(function (data) {
-        _this4.updatePreviewObservables(_underscore.extend({}, _this4.stage.store.get(_this4.id)));
+      this.store.subscribe(function (data) {
+        _this4.updatePreviewObservables(_underscore.extend({}, _this4.store.get(_this4.id)));
       }, this.id);
     };
 

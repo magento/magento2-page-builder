@@ -32,7 +32,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
     _proto.addSlide = function addSlide() {
       var _this = this;
 
-      (0, _factory)(_config.getInitConfig("content_types").slide, this, this.stage).then(function (slide) {
+      (0, _factory)(_config.getConfig("content_types").slide, this, this.stage).then(function (slide) {
         _underscore.delay(function () {
           var mountFn = function mountFn(event, params) {
             if (params.id === slide.id) {

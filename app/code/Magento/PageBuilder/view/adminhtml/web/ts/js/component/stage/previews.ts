@@ -14,7 +14,7 @@ const previews: any[] = [];
  * Load all preview instances into our cache
  */
 export function load(): void {
-    const contentBlocks = Config.getInitConfig("content_types") as ConfigContentBlocks;
+    const contentBlocks = Config.getConfig("content_types") as ConfigContentBlocks;
     const blocksToLoad: string[] = [];
     const blockCodes: any[] = []; // @todo should be string, but TS complains
     Object.keys(contentBlocks).forEach((blockKey) => {

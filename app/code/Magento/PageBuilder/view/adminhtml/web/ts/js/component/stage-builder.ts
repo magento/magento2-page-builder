@@ -75,13 +75,13 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
 function createElementBlock(element: HTMLElement, stage: Stage, parent?: EditableArea): Promise<EditableArea> {
     parent = parent || stage;
     const role = element.getAttribute(Config.getValueAsString("dataRoleAttributeName"));
-    const config = Config.getInitConfig("content_types")[role];
+    const config = Config.getConfig("content_types")[role];
 
     return getElementData(element, config).then(
         (data: object) => createBlock(
             config,
             parent,
-            stage,
+            stage.id,
             data,
             getElementChildren(element).length,
         ),
@@ -143,18 +143,18 @@ function getElementChildren(element: Element) {
  */
 
 function buildEmpty(stage: Stage, initialValue: string) {
-    const stageConfig = Config.getInitConfig("stage_config");
-    const rootContentTypeConfig = Config.getContentType(stageConfig.root_content_type);
-    const htmlDisplayContentTypeConfig = Config.getContentType(stageConfig.html_display_content_type);
+    const stageConfig = Config.getConfig("stage_config");
+    const rootContentTypeConfig = Config.getContentTypeConfig(stageConfig.root_content_type);
+    const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-        return createBlock(rootContentTypeConfig, stage, stage, {}).then((row: Block) => {
+        return createBlock(rootContentTypeConfig, stage, stage.id, {}).then((row: Block) => {
             stage.addChild(row);
             if (htmlDisplayContentTypeConfig && initialValue) {
                 return createBlock(
                     htmlDisplayContentTypeConfig,
                     stage,
-                    stage,
+                    stage.id,
                     {
                         html: initialValue,
                     },

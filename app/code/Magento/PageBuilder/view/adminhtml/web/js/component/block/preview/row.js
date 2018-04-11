@@ -19,10 +19,10 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax
      * @param {Block} parent
      * @param {ConfigContentBlock} config
      */
-    function Row(parent, config) {
+    function Row(parent, config, elementConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _PreviewBlock.call(this, parent, config, elementConverterPool, dataConverterPool) || this;
       _this.getChildren = void 0;
       _this.wrapClass = _knockout.observable(false);
       _this.element = void 0;
@@ -37,17 +37,17 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax
           _underscore.defer(function () {
             // Build Parallax on elements with the correct class
             jarallax(_this.element, {
-              imgPosition: _this.data.background_position() || "50% 50%",
-              imgRepeat: _this.data.background_repeat() === "0" ? "no-repeat" : "repeat",
-              imgSize: _this.data.background_size() || "cover",
-              speed: _this.data.parallax_speed() || 0.5
+              imgPosition: _this.data.main.style().backgroundPosition || "50% 50%",
+              imgRepeat: _this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
+              imgSize: _this.data.main.style().backgroundSize || "cover",
+              speed: _this.data.main.attributes()["data-parallax-speed"] || 0.5
             });
             jarallax(_this.element, "onResize");
           });
         }
       }, 50);
 
-      _this.parent.stage.store.subscribe(_this.buildJarallax);
+      _this.parent.store.subscribe(_this.buildJarallax);
 
       _eventBus.on("row:block:ready", function (event, params) {
         if (params.id === _this.parent.id) {

@@ -15,14 +15,14 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
      * Block constructor
      *
      * @param {EditableArea} parent
-     * @param {Stage} stage
+     * @param {string} stageId
      * @param {ConfigContentBlock} config
      * @param formData
      */
-    function Block(parent, stage, config, formData, elementConverterPool, dataConverterPool) {
+    function Block(parent, config, stageId, formData, elementConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _Structural.call(this, parent, stage, config, elementConverterPool, dataConverterPool) || this;
+      _this = _Structural.call(this, parent, config, stageId, elementConverterPool, dataConverterPool) || this;
       _this.title = void 0;
       _this.editOnInsert = true;
       _this.preview = void 0;
@@ -36,7 +36,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
         });
       }
 
-      _this.stage.store.update(_this.id, _underscore.extend(defaults, formData));
+      _this.store.update(_this.id, _underscore.extend(defaults, formData));
 
       return _this;
     }

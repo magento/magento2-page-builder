@@ -17,9 +17,9 @@ import createBlock from "../factory";
  */
 export function createColumn(parent: ColumnGroup, width: number, index?: number): Promise<Column> {
     return createBlock(
-        Config.getContentType("column"),
+        Config.getContentTypeConfig("column"),
         parent,
-        parent.stage,
+        parent.stageId,
         {width: parseFloat(width.toString()) + "%"},
     ).then((column) => {
         parent.addChild(column, index);

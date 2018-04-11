@@ -39,7 +39,7 @@ ko.bindingHandlers.liveEdit = {
          * Blur event on element
          */
         const onBlur = () => {
-            viewModel.preview.updateData(field, stripHtml(element.innerText));
+            viewModel.updateData(field, stripHtml(element.innerText));
         };
 
         /**
@@ -88,7 +88,7 @@ ko.bindingHandlers.liveEdit = {
             }
         };
         element.setAttribute("data-placeholder", placeholder);
-        element.innerText = viewModel.preview.data[field]();
+        element.innerText = viewModel.previewData[field]();
         element.contentEditable = true;
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
@@ -116,7 +116,7 @@ ko.bindingHandlers.liveEdit = {
     update(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field} = valueAccessor();
 
-        element.innerText = viewModel.preview.data[field]();
+        element.innerText = viewModel.previewData[field]();
         if (element.innerText.length === 0) {
             $(element).addClass("placeholder-text");
         } else {

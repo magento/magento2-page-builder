@@ -4,10 +4,10 @@
  */
 
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
-import EventBus from "../event-bus";
-import Block from "./block";
+import EventBus from "../../event-bus";
+import PreviewBlock from "./block";
 
-export default class Map extends Block {
+export default class Map extends PreviewBlock {
 
     /**
      * Open edit menu on map content type drop with a delay of 300ms
@@ -17,7 +17,7 @@ export default class Map extends Block {
 
         // When a map is dropped for the first time open the edit panel
         EventBus.on("map:block:dropped:create", (event: Event, params: {[key: string]: any}) => {
-            if (params.id === this.id) {
+            if (params.id === this.parent.id) {
                 setTimeout(() => {
                     this.edit.open();
                 }, 300);

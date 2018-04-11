@@ -4,15 +4,15 @@
  */
 
 import events from "uiEvents";
+import ContentType from "../../content-type";
 import {ConfigContentBlock} from "../config";
 import Stage from "../stage";
 import EditableArea from "../stage/structural/editable-area";
 import Uploader from "../uploader";
-import Block from "./block";
 import DataConverterPool from "./data-converter-pool";
 import ElementConverterPool from "./element-converter-pool";
 
-export default class Image extends Block {
+export default class Image extends ContentType {
     /**
      * Uploader instance
      */
@@ -24,20 +24,20 @@ export default class Image extends Block {
      */
     constructor(
         parent: EditableArea,
-        stage: Stage,
+        stageId,
         config: ConfigContentBlock,
         formData: any,
         elementConverterPool: ElementConverterPool,
         dataConverterPool: DataConverterPool,
     ) {
-        super(parent, stage, config, formData, elementConverterPool, dataConverterPool);
+        super(parent, stageId, config, formData, elementConverterPool, dataConverterPool);
 
         // Create uploader
         this.uploader = new Uploader(
             this.id,
             "imageuploader_" + this.id,
             Object.assign({}, Uploader.getDefaultConfig(), {
-                value: this.stage.store.get(this.id).image,
+                value: this.store.get(this.id).image,
             }),
         );
 
@@ -45,7 +45,7 @@ export default class Image extends Block {
         this.uploader.onUploaded(this.onImageUploaded.bind(this));
 
         // Notify all subscribers when preview image data gets modified
-        this.preview.data.image.subscribe((data) => {
+        this.preview.previewData.image.subscribe((data) => {
             events.trigger("image:assigned:" + this.id, data[0]);
         });
     }
@@ -65,7 +65,7 @@ export default class Image extends Block {
      * @param {Array} data - list of each files' data
      */
     private onImageUploaded(data: object[]) {
-        this.stage.store.updateKey(
+        this.store.updateKey(
             this.id,
             data,
             "image",

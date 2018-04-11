@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/block/column-group/factory", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_translate, _alert, _underscore, _array, _eventBus, _block, _factory, _resizing, _registry, _resizing2) {
+define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/column-group/factory", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_translate, _alert, _underscore, _contentTypeCollection, _array, _eventBus, _factory, _resizing, _registry, _resizing2) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(ColumnGroup, _Block);
+  function (_ContentTypeCollectio) {
+    _inheritsLoose(ColumnGroup, _ContentTypeCollectio);
 
     /**
      * @param {EditableArea} parent
@@ -13,10 +13,10 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
      * @param {ConfigContentBlock} config
      * @param formData
      */
-    function ColumnGroup(parent, stage, config, formData) {
+    function ColumnGroup(parent, config, stageId, formData, elementConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _Block.call(this, parent, stage, config, formData) || this;
+      _this = _ContentTypeCollectio.call(this, parent, config, stageId, formData, elementConverterPool, dataConverterPool) || this;
 
       _eventBus.on("block:removed", function (event, params) {
         if (params.parent.id === _this.id) {
@@ -61,7 +61,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
 
       // Are we duplicating from a parent?
       if (this.children().length === 0 || this.children().length > 0 && (0, _resizing2.getColumnsWidth)(this) < 100) {
-        return _Block.prototype.duplicateChild.call(this, child, autoAppend);
+        return _ContentTypeCollectio.prototype.duplicateChild.call(this, child, autoAppend);
       }
 
       var duplicate; // Attempt to split the current column into parts
@@ -69,7 +69,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
       var splitTimes = Math.round((0, _resizing2.getColumnWidth)(child) / (0, _resizing2.getSmallestColumnWidth)());
 
       if (splitTimes > 1) {
-        duplicate = _Block.prototype.duplicateChild.call(this, child, autoAppend);
+        duplicate = _ContentTypeCollectio.prototype.duplicateChild.call(this, child, autoAppend);
         var originalWidth = 0;
         var duplicateWidth = 0;
 
@@ -92,7 +92,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
         var shrinkableColumn = (0, _resizing2.findShrinkableColumn)(child);
 
         if (shrinkableColumn) {
-          duplicate = _Block.prototype.duplicateChild.call(this, child, autoAppend);
+          duplicate = _ContentTypeCollectio.prototype.duplicateChild.call(this, child, autoAppend);
           (0, _resizing.updateColumnWidth)(shrinkableColumn, (0, _resizing2.getAcceptedColumnWidth)(((0, _resizing2.getColumnWidth)(shrinkableColumn) - (0, _resizing2.getSmallestColumnWidth)()).toString()));
           (0, _resizing.updateColumnWidth)(duplicate, (0, _resizing2.getSmallestColumnWidth)());
         }
@@ -156,7 +156,8 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
       _eventBus.trigger("block:instanceDropped", {
         blockInstance: column,
         index: movePosition.insertIndex,
-        parent: this
+        parent: this,
+        stageId: this.stageId
       }); // Modify the old neighbour
 
 
@@ -275,7 +276,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
     };
 
     return ColumnGroup;
-  }(_block);
+  }(_contentTypeCollection);
 
   return ColumnGroup;
 });

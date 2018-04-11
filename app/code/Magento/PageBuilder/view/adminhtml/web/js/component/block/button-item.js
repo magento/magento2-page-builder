@@ -1,16 +1,16 @@
 /*eslint-disable */
-define(["underscore", "Magento_PageBuilder/js/component/block/block"], function (_underscore, _block) {
+define(["underscore", "Magento_PageBuilder/js/content-type"], function (_underscore, _contentType) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ButtonItem =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(ButtonItem, _Block);
+  function (_ContentType) {
+    _inheritsLoose(ButtonItem, _ContentType);
 
     function ButtonItem() {
-      return _Block.apply(this, arguments) || this;
+      return _ContentType.apply(this, arguments) || this;
     }
 
     var _proto = ButtonItem.prototype;
@@ -20,7 +20,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/block"], function 
      * returns {object}
      */
     _proto.getLinkAttributes = function getLinkAttributes() {
-      var data = this.getData();
+      var data = this.content.getData();
 
       if (_typeof(data.button_link) === "object") {
         var href = data.button_link[data.button_link.type];
@@ -97,7 +97,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/block"], function 
     };
 
     return ButtonItem;
-  }(_block);
+  }(_contentType);
 
   return ButtonItem;
 });

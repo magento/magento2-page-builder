@@ -41,7 +41,7 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/utils
       }
 
       var imageUrl = value[0].url;
-      var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getInitConfig("media_url"), imageUrl);
+      var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getConfig("media_url"), imageUrl);
       var mediaPath = imageUrl.split(mediaUrl);
       return "{{media url=" + mediaPath[1] + "}}";
     };

@@ -12,17 +12,13 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBu
      *
      * @param stage
      */
-    function EditableArea(stage) {
+    function EditableArea(stageId) {
       this.id = _mageUtils.uniqueid();
       this.children = _knockout.observableArray([]);
       this.stage = void 0;
       this.title = (0, _translate)("Editable");
       this.parent = void 0;
-
-      if (stage) {
-        this.stage = stage;
-      }
-
+      this.stageId = stageId;
       this.bindEvents();
     }
     /**
@@ -56,7 +52,7 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBu
         autoAppend = true;
       }
 
-      var store = this.stage.store;
+      var store = this.store;
       var instance = child.constructor;
       var duplicate = new instance(child.parent, child.stage, child.config, child.getData(), child.elementConverterPool, child.dataConverterPool);
       var index = child.parent.children.indexOf(child) + 1 || null; // Copy the data from the data store
@@ -71,30 +67,7 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBu
             duplicate.addChild(createDuplicate, childIndex);
           }
         });
-      } // As a new block is being created, we need to fire that event as well
-
-
-      _eventBus.trigger("block:create", {
-        id: duplicate.id,
-        block: duplicate
-      });
-
-      _eventBus.trigger(child.config.name + ":block:create", {
-        id: duplicate.id,
-        block: duplicate
-      });
-
-      _eventBus.trigger("block:duplicate", {
-        original: child,
-        duplicate: duplicate,
-        index: index
-      });
-
-      _eventBus.trigger(child.config.name + ":block:duplicate", {
-        original: child,
-        duplicate: duplicate,
-        index: index
-      });
+      }
 
       if (autoAppend) {
         this.addChild(duplicate, index);

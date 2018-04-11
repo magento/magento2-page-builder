@@ -16,7 +16,7 @@ function onBlockRemoved(event: Event, params: BlockRemovedParams): void {
     params.parent.removeChild(params.block);
 
     // Remove the instance from the data store
-    params.parent.stage.store.remove(params.block.id);
+    params.parent.store.remove(params.block.id);
 }
 
 /**
@@ -49,7 +49,7 @@ function onBlockDropped(event: Event, params: BlockDroppedParams) {
 
     new Promise<Block>((resolve, reject) => {
         if (params.block) {
-            return createBlock(params.block.config, params.parent, params.parent.stage).then((block: Block) => {
+            return createBlock(params.block.config, params.parent, params.stageId).then((block: Block) => {
                 params.parent.addChild(block, index);
                 EventBus.trigger("block:dropped:create", {id: block.id, block});
                 EventBus.trigger(params.block.config.name + ":block:dropped:create", {id: block.id, block});
@@ -97,40 +97,40 @@ function onSortingStop(event: Event, params: SortParams): void {
 export function handleEvents(stage: Stage) {
     // Block dropped from left hand panel
     EventBus.on("block:dropped", (event, params: BlockDroppedParams) => {
-        if (params.parent.stage.id === stage.id) {
+        if (params.stageId === stage.id) {
             onBlockDropped(event, params);
         }
     });
 
     // Block instance being moved between structural elements
     EventBus.on("block:instanceDropped", (event, params: BlockInstanceDroppedParams) => {
-        if (params.parent.stage.id === stage.id) {
+        if (params.stageId === stage.id) {
             onBlockInstanceDropped(event, params);
         }
     });
 
     // Block being removed from container
     EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
-        if (params.parent.stage.id === stage.id) {
+        if (params.stageId === stage.id) {
             onBlockRemoved(event, params);
         }
     });
 
     // Block sorted within the same structural element
     EventBus.on("block:sorted", (event, params: BlockSortedParams) => {
-        if (params.parent.stage.id === stage.id) {
+        if (params.stageId === stage.id) {
             onBlockSorted(event, params);
         }
     });
 
     // Observe sorting actions
     EventBus.on("block:sortStart", (event, params: SortParams) => {
-        if (params.block.stage.id === stage.id) {
+        if (params.stageId === stage.id) {
             onSortingStart(event, params);
         }
     });
     EventBus.on("block:sortStop", (event, params: SortParams) => {
-        if (params.block.stage.id === stage.id) {
+        if (params.stageId === stage.id) {
             onSortingStop(event, params);
         }
     });

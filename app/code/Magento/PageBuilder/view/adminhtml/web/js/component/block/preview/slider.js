@@ -76,7 +76,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
 
       _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
 
-      _this.parent.stage.store.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
+      _this.parent.store.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
 
 
       _eventBus.on("previewSortable:sortupdate", function (event, params) {

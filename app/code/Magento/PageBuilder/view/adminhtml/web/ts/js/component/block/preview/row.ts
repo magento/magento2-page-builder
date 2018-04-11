@@ -38,10 +38,10 @@ export default class Row extends PreviewBlock {
                 jarallax(
                     this.element,
                     {
-                        imgPosition: this.data.background_position() || "50% 50%",
-                        imgRepeat: this.data.background_repeat() === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.background_size() || "cover",
-                        speed: this.data.parallax_speed() || 0.5,
+                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
+                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
+                        imgSize: this.data.main.style().backgroundSize || "cover",
+                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
                     },
                 );
                 jarallax(this.element, "onResize");
@@ -53,10 +53,10 @@ export default class Row extends PreviewBlock {
      * @param {Block} parent
      * @param {ConfigContentBlock} config
      */
-    constructor(parent: Block, config: ConfigContentBlock) {
-        super(parent, config);
+    constructor(parent: Block, config: ConfigContentBlock, elementConverterPool, dataConverterPool) {
+        super(parent, config, elementConverterPool, dataConverterPool);
 
-        this.parent.stage.store.subscribe(this.buildJarallax);
+        this.parent.store.subscribe(this.buildJarallax);
         EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParams) => {
             if (params.id === this.parent.id) {
                 this.buildJarallax();

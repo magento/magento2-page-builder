@@ -1,14 +1,14 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/block/block"], function (_block) {
+define(["Magento_PageBuilder/js/content-type-collection"], function (_contentTypeCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Accordion =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(Accordion, _Block);
+  function (_ContentTypeCollectio) {
+    _inheritsLoose(Accordion, _ContentTypeCollectio);
 
     function Accordion() {
-      return _Block.apply(this, arguments) || this;
+      return _ContentTypeCollectio.apply(this, arguments) || this;
     }
 
     var _proto = Accordion.prototype;
@@ -49,7 +49,7 @@ define(["Magento_PageBuilder/js/component/block/block"], function (_block) {
     };
 
     return Accordion;
-  }(_block);
+  }(_contentTypeCollection);
 
   return Accordion;
 });

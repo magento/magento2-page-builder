@@ -17,8 +17,8 @@ export default class Button extends PreviewBlock {
      * @param {Block} parent
      * @param {ConfigContentBlock} config
      */
-    constructor(parent: Block, config: ConfigContentBlock) {
-        super(parent, config);
+    constructor(parent: Block, config: ConfigContentBlock, elementConverterPool, dataConverterPool) {
+        super(parent, config, elementConverterPool, dataConverterPool);
     }
 
     /**

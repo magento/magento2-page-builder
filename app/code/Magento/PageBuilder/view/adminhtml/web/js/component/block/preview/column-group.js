@@ -119,7 +119,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
         _this2.resizeMouseDown = true;
 
         _eventBus.trigger("interaction:start", {
-          stage: _this2.parent.stage
+          stageId: _this2.parent.stageId
         });
       });
     };
@@ -157,11 +157,11 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
 
           _eventBus.trigger("column:drag:start", {
             column: columnInstance,
-            stage: _this3.parent.stage
+            stageId: _this3.parent.stageId
           });
 
           _eventBus.trigger("interaction:start", {
-            stage: _this3.parent.stage
+            stageId: _this3.parent.stageId
           });
         },
         stop: function stop() {
@@ -185,11 +185,11 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
 
           _eventBus.trigger("column:drag:stop", {
             column: draggedColumn,
-            stage: _this3.parent.stage
+            stageId: _this3.parent.stageId
           });
 
           _eventBus.trigger("interaction:stop", {
-            stage: _this3.parent.stage
+            stageId: _this3.parent.stageId
           });
         }
       });
@@ -228,7 +228,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
     _proto.endAllInteractions = function endAllInteractions() {
       if (this.resizing() === true) {
         _eventBus.trigger("interaction:stop", {
-          stage: this.parent.stage
+          stageId: this.parent.stageId
         });
       }
 
@@ -498,7 +498,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
           // Always calculate drop positions when an element is dragged over
           _this6.dropPositions = (0, _dragdrop.calculateDropPositions)(_this6.parent); // Is the element currently being dragged a column?
 
-          if (currentDraggedBlock instanceof _block.Block && currentDraggedBlock.getConfig() === _config.getContentType("column")) {
+          if (currentDraggedBlock instanceof _block.Block && currentDraggedBlock.getConfig() === _config.getContentTypeConfig("column")) {
             _this6.dropOverElement = true;
           }
         }

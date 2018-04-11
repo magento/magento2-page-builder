@@ -9,7 +9,7 @@ define(["knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/j
   function onBlockRemoved(event, params) {
     params.parent.removeChild(params.block); // Remove the instance from the data store
 
-    params.parent.stage.store.remove(params.block.id);
+    params.parent.store.remove(params.block.id);
   }
   /**
    * Handle when an instance of an existing block is dropped onto a container
@@ -43,7 +43,7 @@ define(["knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/j
     var index = params.index || 0;
     new Promise(function (resolve, reject) {
       if (params.block) {
-        return (0, _factory)(params.block.config, params.parent, params.parent.stage).then(function (block) {
+        return (0, _factory)(params.block.config, params.parent, params.stageId).then(function (block) {
           params.parent.addChild(block, index);
 
           _eventBus.trigger("block:dropped:create", {
@@ -105,41 +105,41 @@ define(["knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/j
   function handleEvents(stage) {
     // Block dropped from left hand panel
     _eventBus.on("block:dropped", function (event, params) {
-      if (params.parent.stage.id === stage.id) {
+      if (params.stageId === stage.id) {
         onBlockDropped(event, params);
       }
     }); // Block instance being moved between structural elements
 
 
     _eventBus.on("block:instanceDropped", function (event, params) {
-      if (params.parent.stage.id === stage.id) {
+      if (params.stageId === stage.id) {
         onBlockInstanceDropped(event, params);
       }
     }); // Block being removed from container
 
 
     _eventBus.on("block:removed", function (event, params) {
-      if (params.parent.stage.id === stage.id) {
+      if (params.stageId === stage.id) {
         onBlockRemoved(event, params);
       }
     }); // Block sorted within the same structural element
 
 
     _eventBus.on("block:sorted", function (event, params) {
-      if (params.parent.stage.id === stage.id) {
+      if (params.stageId === stage.id) {
         onBlockSorted(event, params);
       }
     }); // Observe sorting actions
 
 
     _eventBus.on("block:sortStart", function (event, params) {
-      if (params.block.stage.id === stage.id) {
+      if (params.stageId === stage.id) {
         onSortingStart(event, params);
       }
     });
 
     _eventBus.on("block:sortStop", function (event, params) {
-      if (params.block.stage.id === stage.id) {
+      if (params.stageId === stage.id) {
         onSortingStop(event, params);
       }
     });

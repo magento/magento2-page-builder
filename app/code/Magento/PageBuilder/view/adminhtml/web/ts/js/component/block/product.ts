@@ -21,7 +21,7 @@ export default class Product extends Block {
                 if (attributes["data-sku"] === "") {
                     return;
                 }
-                const url = Config.getInitConfig("preview_url");
+                const url = Config.getConfig("preview_url");
                 const requestData = {
                     is_preview: true,
                     role: this.config.name,

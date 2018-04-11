@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/block/block"], function (_block) {
+define(["Magento_PageBuilder/js/content-type"], function (_contentType) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var InlineBlock =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(InlineBlock, _Block);
+  function (_ContentType) {
+    _inheritsLoose(InlineBlock, _ContentType);
 
     function InlineBlock() {
       var _temp, _this;
@@ -14,11 +14,11 @@ define(["Magento_PageBuilder/js/component/block/block"], function (_block) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.editOnInsert = false, _temp) || _this;
+      return (_temp = _this = _ContentType.call.apply(_ContentType, [this].concat(args)) || this, _this.editOnInsert = false, _temp) || _this;
     }
 
     return InlineBlock;
-  }(_block);
+  }(_contentType);
 
   return InlineBlock;
 });

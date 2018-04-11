@@ -8,9 +8,9 @@ import createBlock from "../block/factory";
 import Config from "../config";
 import EventBus from "../event-bus";
 import {BlockMountEventParams} from "../stage/structural/editable-area";
-import Block from "./block";
+import ContentTypeCollection from "../../content-type-collection";
 
-export default class Buttons extends Block {
+export default class Buttons extends ContentTypeCollection {
 
     public bindEvents() {
         super.bindEvents();
@@ -27,9 +27,9 @@ export default class Buttons extends Block {
      */
     public addButton() {
         const createBlockPromise: Promise<Block> = createBlock(
-            Config.getInitConfig("content_types")["button-item"],
+            Config.getConfig("content_types")["button-item"],
             this.parent,
-            this.stage,
+            this.stageId,
             {},
         );
 

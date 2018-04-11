@@ -6,11 +6,14 @@
 import loadModule from "Magento_PageBuilder/js/component/loader";
 import {ConfigContentBlock} from "../config";
 import EventBus from "../event-bus";
-import Stage from "../stage";
 import EditableArea, {BlockMountEventParams} from "../stage/structural/editable-area";
 import Block from "./block";
+import PreviewBlock from "./preview/block";
 import dataConverterPoolFactory from "./data-converter-pool-factory";
 import elementConverterPoolFactory from "./element-converter-pool-factory";
+import PreviewBuilder from "../../preview-builder";
+import ContentBuilder from "../../content-builder";
+import Content from "../../content";
 
 /**
  * Retrieve the block instance from the config object
@@ -19,7 +22,17 @@ import elementConverterPoolFactory from "./element-converter-pool-factory";
  * @returns {any|string}
  */
 function getBlockComponentPath(config: ConfigContentBlock): string {
-    return config.component || "Magento_PageBuilder/js/component/block/block";
+    return config.component || "Magento_PageBuilder/js/content-type";
+}
+
+/**
+ * Retrieve the block instance from the config object
+ *
+ * @param config
+ * @returns {any|string}
+ */
+function getPreviewBlockComponentPath(config: ConfigContentBlock): string {
+    return config.preview_component || "Magento_PageBuilder/js/component/block/preview/block";
 }
 
 /**
@@ -57,7 +70,7 @@ function fireBlockReadyEvent(block: Block, childrenLength: number) {
  *
  * @param {ConfigContentBlock} config
  * @param {EditableArea} parent
- * @param {Stage} stage
+ * @param stageId
  * @param {object} formData
  * @param {number} childrenLength
  * @returns {Promise<Block>}
@@ -65,31 +78,57 @@ function fireBlockReadyEvent(block: Block, childrenLength: number) {
 export default function createBlock(
     config: ConfigContentBlock,
     parent: EditableArea,
-    stage: Stage,
+    stageId,
     formData?: object,
     childrenLength: number = 0,
 ): Promise<Block> {
-    stage = stage || parent.stage;
     formData = formData || {};
     const componentsPromise: Array<Promise<any>> = [
         elementConverterPoolFactory(config.name),
         dataConverterPoolFactory(config.name),
     ];
+    const contentBuilder = new ContentBuilder();
+    const previewBuilder = new PreviewBuilder();
     return new Promise((resolve: (blockComponent: any) => void) => {
         Promise.all(componentsPromise).then((loadedConverters) => {
             const [elementConverterPool, dataConverterPool] = loadedConverters;
-            loadModule([getBlockComponentPath(config)], (blockComponent: typeof Block) => {
-                resolve(new blockComponent(parent, stage, config, formData, elementConverterPool, dataConverterPool));
+            loadModule([getBlockComponentPath(config), getPreviewBlockComponentPath(config)], (...blockComponents: any) => {
+                const [blockComponent, previewComponent] = blockComponents;
+                previewBuilder.setElementDataConverter(elementConverterPool)
+                    .setDataConverter(dataConverterPool)
+                    .setConfig(config)
+                    .setClassInstance(previewComponent);
+                contentBuilder.setElementDataConverter(elementConverterPool)
+                    .setDataConverter(dataConverterPool)
+                    .setClassInstance(Content);
+
+                const defaults: FieldDefaults = {};
+                if (config.fields) {
+                    _.each(config.fields, (field: ConfigFieldConfig, key: string | number) => {
+                        defaults[key] = field.default;
+                    });
+                }
+
+                resolve(
+                    new blockComponent(
+                        parent,
+                        config,
+                        stageId,
+                        _.extend(defaults, formData),
+                        previewBuilder,
+                        contentBuilder
+                    )
+                );
             });
         }).catch((error) => {
             console.error(error);
         });
     }).then((block: Block) => {
-        EventBus.trigger("block:create", {id: block.id, block});
-        EventBus.trigger(config.name + ":block:create", {id: block.id, block});
-        fireBlockReadyEvent(block, childrenLength);
-        return block;
-    });
+            EventBus.trigger("block:create", {id: block.id, block});
+            EventBus.trigger(config.name + ":block:create", {id: block.id, block});
+            fireBlockReadyEvent(block, childrenLength);
+            return block;
+        });
 }
 
 export interface BlockCreateEventParams {

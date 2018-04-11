@@ -1,14 +1,14 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/block"], function (_translate, _option, _block) {
+define(["mage/translate", "Magento_PageBuilder/js/content-type-collection", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_translate, _contentTypeCollection, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Row =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(Row, _Block);
+  function (_ContentTypeCollectio) {
+    _inheritsLoose(Row, _ContentTypeCollectio);
 
     function Row() {
-      return _Block.apply(this, arguments) || this;
+      return _ContentTypeCollectio.apply(this, arguments) || this;
     }
 
     var _proto = Row.prototype;
@@ -19,7 +19,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/stage/structural/opt
      * @returns {Array<Option>}
      */
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _Block.prototype.retrieveOptions.call(this);
+      var options = _ContentTypeCollectio.prototype.retrieveOptions.call(this);
 
       var newOptions = options.filter(function (option) {
         return option.code !== "remove";
@@ -27,7 +27,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/stage/structural/opt
       var removeClasses = ["remove-structural"];
       var removeFn = this.onOptionRemove;
 
-      if (this.stage.children().length < 2) {
+      if (this.parent.children().length < 2) {
         removeFn = function removeFn() {
           return;
         };
@@ -40,7 +40,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/stage/structural/opt
     };
 
     return Row;
-  }(_block);
+  }(_contentTypeCollection);
 
   return Row;
 });

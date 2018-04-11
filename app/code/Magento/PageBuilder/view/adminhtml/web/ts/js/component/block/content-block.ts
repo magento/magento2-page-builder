@@ -22,7 +22,7 @@ export default class ContentBlock extends Block {
                 if (attributes["data-identifier"] === "") {
                     return;
                 }
-                const url = Config.getInitConfig("preview_url");
+                const url = Config.getConfig("preview_url");
                 const requestData = {
                     identifier: attributes["data-identifier"],
                     role: this.config.name,

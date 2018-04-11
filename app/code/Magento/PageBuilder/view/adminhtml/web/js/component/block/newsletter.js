@@ -35,7 +35,7 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/compo
             return;
           }
 
-          var url = _config.getInitConfig("preview_url");
+          var url = _config.getConfig("preview_url");
 
           var requestData = {
             button_text: attributes["data-button-text"],

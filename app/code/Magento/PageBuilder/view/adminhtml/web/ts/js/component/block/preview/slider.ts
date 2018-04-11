@@ -92,7 +92,7 @@ export default class Slider extends PreviewBlock {
         });
 
         this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-        this.parent.stage.store.subscribe(this.buildSlick);
+        this.parent.store.subscribe(this.buildSlick);
 
         // Set the active slide to the new position of the sorted slide
         EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {

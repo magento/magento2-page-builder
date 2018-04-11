@@ -10,7 +10,7 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
    */
 
   function load() {
-    var contentBlocks = _config.getInitConfig("content_types");
+    var contentBlocks = _config.getConfig("content_types");
 
     var blocksToLoad = [];
     var blockCodes = []; // @todo should be string, but TS complains

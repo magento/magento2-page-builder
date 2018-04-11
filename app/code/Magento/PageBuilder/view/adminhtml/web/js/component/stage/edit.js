@@ -10,7 +10,7 @@ define(["uiEvents"], function (_uiEvents) {
     /**
      * Initiate the edit class with an instance of structural
      *
-     * @param {Structural} instance
+     * @param {ContentTypeInterface} instance
      * @param {DataStore} store
      */
     function Edit(instance, store) {

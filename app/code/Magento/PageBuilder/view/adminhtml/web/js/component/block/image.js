@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["uiEvents", "Magento_PageBuilder/js/component/uploader", "Magento_PageBuilder/js/component/block/block"], function (_uiEvents, _uploader, _block) {
+define(["uiEvents", "Magento_PageBuilder/js/content-type", "Magento_PageBuilder/js/component/uploader"], function (_uiEvents, _contentType, _uploader) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(Image, _Block);
+  function (_ContentType) {
+    _inheritsLoose(Image, _ContentType);
 
     /**
      * Uploader instance
@@ -15,20 +15,20 @@ define(["uiEvents", "Magento_PageBuilder/js/component/uploader", "Magento_PageBu
      * Create image uploader and add listener for when image gets uploaded through this instance
      * {@inheritDoc}
      */
-    function Image(parent, stage, config, formData, elementConverterPool, dataConverterPool) {
+    function Image(parent, stageId, config, formData, elementConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _Block.call(this, parent, stage, config, formData, elementConverterPool, dataConverterPool) || this; // Create uploader
+      _this = _ContentType.call(this, parent, stageId, config, formData, elementConverterPool, dataConverterPool) || this; // Create uploader
 
       _this.uploader = void 0;
       _this.uploader = new _uploader(_this.id, "imageuploader_" + _this.id, Object.assign({}, _uploader.getDefaultConfig(), {
-        value: _this.stage.store.get(_this.id).image
+        value: _this.store.get(_this.id).image
       })); // Register listener when image gets uploaded from uploader UI component
 
       _this.uploader.onUploaded(_this.onImageUploaded.bind(_this)); // Notify all subscribers when preview image data gets modified
 
 
-      _this.preview.data.image.subscribe(function (data) {
+      _this.preview.previewData.image.subscribe(function (data) {
         _uiEvents.trigger("image:assigned:" + _this.id, data[0]);
       });
 
@@ -54,11 +54,11 @@ define(["uiEvents", "Magento_PageBuilder/js/component/uploader", "Magento_PageBu
 
 
     _proto.onImageUploaded = function onImageUploaded(data) {
-      this.stage.store.updateKey(this.id, data, "image");
+      this.store.updateKey(this.id, data, "image");
     };
 
     return Image;
-  }(_block);
+  }(_contentType);
 
   return Image;
 });

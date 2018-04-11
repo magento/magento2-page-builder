@@ -44,7 +44,7 @@ export default class Slider extends Block {
      */
     public addSlide() {
         createBlock(
-            Config.getInitConfig("content_types").slide,
+            Config.getConfig("content_types").slide,
             this,
             this.stage,
         ).then((slide) => {

@@ -6,13 +6,13 @@
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
+import ContentTypeCollection from "../../content-type-collection";
 import {moveArrayItem} from "../../utils/array";
 import {ConfigContentBlock} from "../config";
 import EventBus from "../event-bus";
 import Stage from "../stage";
 import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
-import Block from "./block";
 import Column from "./column";
 import {createColumn} from "./column-group/factory";
 import {resizeColumn, updateColumnWidth} from "./column-group/resizing";
@@ -24,7 +24,7 @@ import {
     getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth,
 } from "./preview/column-group/resizing";
 
-export default class ColumnGroup extends Block {
+export default class ColumnGroup extends ContentTypeCollection {
 
     /**
      * @param {EditableArea} parent
@@ -32,8 +32,15 @@ export default class ColumnGroup extends Block {
      * @param {ConfigContentBlock} config
      * @param formData
      */
-    constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
-        super(parent, stage, config, formData);
+    constructor(
+        parent: EditableArea,
+        config: ConfigContentBlock,
+        stageId,
+        formData: any,
+        elementConverterPool: ElementConverterPool,
+        dataConverterPool: DataConverterPool,
+    ) {
+        super(parent, config, stageId, formData, elementConverterPool, dataConverterPool);
 
         EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {
@@ -179,6 +186,7 @@ export default class ColumnGroup extends Block {
             blockInstance: column,
             index: movePosition.insertIndex,
             parent: this,
+            stageId: this.stageId,
         });
 
         // Modify the old neighbour

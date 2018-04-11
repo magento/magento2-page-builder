@@ -9,7 +9,6 @@ import Stage from "../../stage";
 export interface EditableAreaInterface {
     id: string;
     children: KnockoutObservableArray<any>;
-    stage: Stage;
     title: string;
 
     addChild(child: Structural, index?: number): void;

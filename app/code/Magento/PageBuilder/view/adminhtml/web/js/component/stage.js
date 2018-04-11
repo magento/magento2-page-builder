@@ -1,57 +1,57 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/event-handling-delegate", "Magento_PageBuilder/js/component/stage/save", "Magento_PageBuilder/js/component/stage/structural/editable-area"], function (_knockout, _translate, _alert, _underscore, _dataStore, _eventBus, _stageBuilder, _eventHandlingDelegate, _save, _editableArea) {
-  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/event-handling-delegate", "Magento_PageBuilder/js/component/stage/save", "Magento_PageBuilder/js/collection"], function (_knockout, _translate, _alert, _underscore, _dataStore, _eventBus, _stageBuilder, _eventHandlingDelegate, _save, _collection) {
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
   var Stage =
   /*#__PURE__*/
-  function (_EditableArea) {
-    _inheritsLoose(Stage, _EditableArea);
-
+  function () {
     /**
      * Constructor
      *
      * @param parent
      */
     function Stage(parent) {
-      var _this;
+      var _this = this;
 
-      _this = _EditableArea.call(this) || this;
-      _this.config = {
+      this.config = {
         name: "stage"
       };
-      _this.loading = void 0;
-      _this.parent = void 0;
-      _this.showBorders = _knockout.observable(false);
-      _this.interacting = _knockout.observable(false);
-      _this.userSelect = _knockout.observable(true);
-      _this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
-      _this.stage = void 0;
-      _this.store = void 0;
-      _this.template = "Magento_PageBuilder/component/stage.html";
-      _this.save = new _save();
-      _this.saveRenderTree = _underscore.debounce(function () {
+      this.loading = void 0;
+      this.parent = void 0;
+      this.showBorders = _knockout.observable(false);
+      this.interacting = _knockout.observable(false);
+      this.userSelect = _knockout.observable(true);
+      this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
+      this.stage = void 0;
+      this.store = void 0;
+      this.template = "Magento_PageBuilder/component/stage.html";
+      this.save = new _save();
+      this.saveRenderTree = _underscore.debounce(function () {
         _this.save.renderTree(_this.children).then(function (renderedOutput) {
           return _eventBus.trigger("stage:renderTree:" + _this.id, {
             value: renderedOutput
           });
         });
       }, 500);
-      _this.parent = parent;
-      _this.id = parent.id;
-      _this.loading = parent.loading;
-      _this.stage = _this;
+      this.collection = void 0;
+      this.collection = new _collection();
+      this.collection.getChildren().subscribe(function () {
+        return _eventBus.trigger("stage:updated", {
+          stageId: _this.stageId
+        });
+      });
+      this.parent = parent;
+      this.id = parent.id;
+      this.loading = parent.loading;
+      this.stage = this; // Create our state and store objects
 
-      _this.setChildren(); // Create our state and store objects
+      this.store = new _dataStore(); // Handle events for this stage instance
 
-
-      _this.store = new _dataStore(); // Handle events for this stage instance
-
-      (0, _eventHandlingDelegate.handleEvents)(_this);
-
-      _this.initListeners();
-
-      (0, _stageBuilder)(_this, parent.initialValue).then(_this.ready.bind(_this));
-      return _this;
+      (0, _eventHandlingDelegate.handleEvents)(this);
+      this.initListeners();
+      (0, _stageBuilder)(this, parent.initialValue).then(this.ready.bind(this));
     }
     /**
      * Init listeners.
@@ -72,7 +72,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       // can occur concurrently.
 
       _eventBus.on("stage:updated", function (event, params) {
-        if (params.stage.id === _this2.id) {
+        if (params.stageId === _this2.id) {
           _this2.saveRenderTree.call(_this2);
         }
       });
@@ -105,7 +105,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
         stage: this
       });
 
-      this.children.valueHasMutated();
+      this.collection.getChildren().valueHasMutated();
       this.loading(false);
     };
     /**
@@ -116,7 +116,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
 
 
     _proto.removeChild = function removeChild(child) {
-      if (this.children().length === 1) {
+      if (this.collection.getChildren().length === 1) {
         (0, _alert)({
           content: (0, _translate)("You are not able to remove the final row from the content."),
           title: (0, _translate)("Unable to Remove")
@@ -124,11 +124,50 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
         return;
       }
 
-      _EditableArea.prototype.removeChild.call(this, child);
+      this.collection.removeChild(child);
+    };
+    /**
+     * Return the children of the current element
+     *
+     * @returns {KnockoutObservableArray<ContentTypeInterface>}
+     */
+
+
+    _proto.getChildren = function getChildren() {
+      return this.collection.getChildren();
+    };
+    /**
+     * Add a child into the observable array
+     *
+     * @param child
+     * @param index
+     */
+
+
+    _proto.addChild = function addChild(child, index) {
+      child.parent = this;
+      this.collection.addChild(child, index);
+    };
+    /**
+     * Set the children observable array into the class
+     *
+     * @param children
+     */
+
+
+    _proto.setChildren = function setChildren(children) {
+      this.collection.setChildren(children);
     };
 
+    _createClass(Stage, [{
+      key: "children",
+      get: function get() {
+        return this.collection.getChildren();
+      }
+    }]);
+
     return Stage;
-  }(_editableArea);
+  }();
 
   return Stage;
 });

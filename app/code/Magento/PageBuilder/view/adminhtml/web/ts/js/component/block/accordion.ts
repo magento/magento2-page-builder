@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import Block from "./block";
+import ContentTypeCollection from "../../content-type-collection";
 
 interface AccordionDataObject {
     content: string;
@@ -11,7 +11,7 @@ interface AccordionDataObject {
     title: string;
 }
 
-export default class Accordion extends Block {
+export default class Accordion extends ContentTypeCollection {
 
     /**
      * Retrieve the data-mage-init contents

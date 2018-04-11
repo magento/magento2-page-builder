@@ -3,14 +3,14 @@
  * See COPYING.txt for license details.
  */
 
-import Structural from "../abstract";
+import ContentTypeInterface from "../../../../content-type";
 import { OptionInterface } from "./option.d";
 
 export class Option implements OptionInterface {
     public classes: string;
     public code: string;
     public icon: string;
-    public parent: Structural;
+    public parent: ContentTypeInterface;
     public sort: number;
     public title: string;
     public action: () => void;
@@ -29,7 +29,7 @@ export class Option implements OptionInterface {
      * @param optionTemplate
      */
     constructor(
-        parent: Structural,
+        parent: ContentTypeInterface,
         code: string,
         icon: string,
         title: string,

@@ -22,7 +22,7 @@ export default class Newsletter extends Block {
                 if (attributes["data-title"] === "") {
                     return;
                 }
-                const url = Config.getInitConfig("preview_url");
+                const url = Config.getConfig("preview_url");
                 const requestData = {
                     button_text: attributes["data-button-text"],
                     label_text: attributes["data-label-text"],

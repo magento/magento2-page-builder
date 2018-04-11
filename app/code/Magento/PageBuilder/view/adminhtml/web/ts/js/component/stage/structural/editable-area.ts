@@ -27,10 +27,8 @@ export default class EditableArea implements EditableAreaInterface {
      *
      * @param stage
      */
-    constructor(stage?: Stage) {
-        if (stage) {
-            this.stage = stage;
-        }
+    constructor(stageId) {
+        this.stageId = stageId;
 
         this.bindEvents();
     }
@@ -61,7 +59,7 @@ export default class EditableArea implements EditableAreaInterface {
      * @returns {Structural | void}
      */
     public duplicateChild(child: Structural, autoAppend: boolean = true): Structural | void {
-        const store = this.stage.store;
+        const store = this.store;
         const instance = child.constructor as typeof Block;
         const duplicate = new instance(
             child.parent,
@@ -89,13 +87,6 @@ export default class EditableArea implements EditableAreaInterface {
                 }
             });
         }
-
-        // As a new block is being created, we need to fire that event as well
-        EventBus.trigger("block:create", {id: duplicate.id, block: duplicate});
-        EventBus.trigger(child.config.name + ":block:create", {id: duplicate.id, block: duplicate});
-
-        EventBus.trigger("block:duplicate", {original: child, duplicate, index});
-        EventBus.trigger(child.config.name + ":block:duplicate", {original: child, duplicate, index});
 
         if (autoAppend) {
             this.addChild(duplicate, index);

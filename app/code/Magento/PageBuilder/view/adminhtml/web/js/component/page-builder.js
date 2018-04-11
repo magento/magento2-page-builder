@@ -18,7 +18,7 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/component
       this.isFullScreen = _knockout.observable(false);
       this.loading = _knockout.observable(true);
 
-      _config.setInitConfig(config);
+      _config.setConfig(config);
 
       this.initialValue = initialValue;
       this.isFullScreen(config.isFullScreen);

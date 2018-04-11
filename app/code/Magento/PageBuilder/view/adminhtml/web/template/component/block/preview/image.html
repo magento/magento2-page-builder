@@ -5,10 +5,10 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image type-nested" data-bind="event: {mouseover: preview.onMouseOver, mouseout: preview.onMouseOut}, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image type-nested" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <figure data-bind="style: data.main.style, attr: data.main.attributes, css: data.main.css">
-        <div data-bind="scope: getUploader().getUiComponent()">
+        <div data-bind="scope: parent.getUploader().getUiComponent()">
             <!-- ko template: getTemplate() --><!-- /ko -->
         </div>
         <div class="preview-image-container">

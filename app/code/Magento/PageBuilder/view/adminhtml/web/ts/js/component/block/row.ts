@@ -5,11 +5,11 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
+import ContentTypeCollection from "../../content-type-collection";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
-import Block from "./block";
 
-export default class Row extends Block {
+export default class Row extends ContentTypeCollection {
 
     /**
      * Return an array of options
@@ -23,7 +23,7 @@ export default class Row extends Block {
         });
         const removeClasses = ["remove-structural"];
         let removeFn = this.onOptionRemove;
-        if (this.stage.children().length < 2) {
+        if (this.parent.children().length < 2) {
             removeFn = () => { return; };
             removeClasses.push("disabled");
         }

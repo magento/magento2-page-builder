@@ -26,6 +26,7 @@ import { Options } from "./options";
 import {Option} from "./options/option";
 import {OptionInterface} from "./options/option.d";
 import {TitleOption} from "./options/title";
+import DataStore from "../../data-store"
 
 export default class Structural extends EditableArea implements StructuralInterface {
     public config: ConfigContentBlock;
@@ -52,20 +53,22 @@ export default class Structural extends EditableArea implements StructuralInterf
      */
     constructor(
         parent: EditableArea,
-        stage: Stage,
         config: ConfigContentBlock,
+        stageId,
         elementConverterPool: ElementConverterPool,
         dataConverterPool: DataConverterPool,
     ) {
-        super(stage);
+        super(stageId);
         this.setChildren();
         this.parent = parent;
         this.config = config;
         this.elementConverterPool = elementConverterPool;
         this.dataConverterPool = dataConverterPool;
 
+        this.store = new DataStore();
+
         // Create a new instance of edit for our editing needs
-        this.edit = new Edit(this, this.stage.store);
+        this.edit = new Edit(this, this.store);
 
         this.bindUpdatePreviewObservablesOnChange();
     }
@@ -198,7 +201,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     public getCss(element: string) {
         const result: object = {};
         let css: string = "";
-        const data = this.stage.store.get(this.id);
+        const data = this.store.get(this.id);
         if (element === undefined) {
             if ("css_classes" in data && data.css_classes !== "") {
                 css = data.css_classes;
@@ -223,7 +226,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getStyle(element: string) {
-        let data = _.extend({}, this.stage.store.get(this.id), this.config);
+        let data = _.extend({}, this.store.get(this.id), this.config);
         if (element === undefined) {
             if (typeof data.appearance !== "undefined" &&
                 typeof data.appearances !== "undefined" &&
@@ -251,7 +254,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getAttributes(element: string) {
-        let data = _.extend({}, this.stage.store.get(this.id), this.config);
+        let data = _.extend({}, this.store.get(this.id), this.config);
         if (element === undefined) {
             if (undefined === data.appearance || !data.appearance) {
                 data.appearance = undefined !== this.config.fields.appearance
@@ -281,7 +284,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {object}
      */
     public getHtml(element: string) {
-        const data = this.stage.store.get(this.id);
+        const data = this.store.get(this.id);
         const config = appearanceConfig(this.config.name, data.appearance).data_mapping.elements[element];
         let result = "";
         if (undefined !== config.html.var) {
@@ -297,7 +300,7 @@ export default class Structural extends EditableArea implements StructuralInterf
      * @returns {DataObject}
      */
     public getData(element?: string) {
-        let data = _.extend({}, this.stage.store.get(this.id));
+        let data = _.extend({}, this.store.get(this.id));
 
         if (undefined === element) {
             return data;
@@ -535,9 +538,9 @@ export default class Structural extends EditableArea implements StructuralInterf
      * Attach event to updating data in data store to update observables
      */
     private bindUpdatePreviewObservablesOnChange(): void {
-        this.stage.store.subscribe(
+        this.store.subscribe(
             (data: DataObject) => {
-                this.updatePreviewObservables(_.extend({}, this.stage.store.get(this.id)));
+                this.updatePreviewObservables(_.extend({}, this.store.get(this.id)));
             },
             this.id,
         );

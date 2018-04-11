@@ -5,9 +5,9 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container pagebuilder-row children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'empty-row': children().length == 0, 'jarallax': preview.data.enable_parallax() == 1}), event: {mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false, afterRender: function (element) { setTimeout(function () { preview.initParallax.call(preview, element); }, 0) }">
+<div class="pagebuilder-content-type type-container pagebuilder-row children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'empty-row': parent.children().length == 0, 'jarallax': data.main.attributes()['data-enable-parallax'] == 1}), event: {mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false, afterRender: function (element) { setTimeout(function () { initParallax.call($data, element); }, 0) }">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <!-- ko template: previewChildTemplate --><!-- /ko -->
-    <div class="pagebuilder-display-label" data-bind="text: function () { return preview.displayLabel().toUpperCase(); }()"></div>
-    <div class="pagebuilder-empty-container empty-placeholder" data-bind="css: {visible: children().length == 0}, i18n: 'Drag content blocks or columns here'"></div>
+    <div class="pagebuilder-display-label" data-bind="text: function () { return displayLabel().toUpperCase(); }()"></div>
+    <div class="pagebuilder-empty-container empty-placeholder" data-bind="css: {visible: parent.children().length == 0}, i18n: 'Drag content blocks or columns here'"></div>
 </div>

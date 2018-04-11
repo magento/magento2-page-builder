@@ -64,10 +64,10 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
     parent = parent || stage;
     var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
 
-    var config = _config.getInitConfig("content_types")[role];
+    var config = _config.getConfig("content_types")[role];
 
     return getElementData(element, config).then(function (data) {
-      return (0, _factory)(config, parent, stage, data, getElementChildren(element).length);
+      return (0, _factory)(config, parent, stage.id, data, getElementChildren(element).length);
     });
   }
   /**
@@ -129,18 +129,18 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
 
 
   function buildEmpty(stage, initialValue) {
-    var stageConfig = _config.getInitConfig("stage_config");
+    var stageConfig = _config.getConfig("stage_config");
 
-    var rootContentTypeConfig = _config.getContentType(stageConfig.root_content_type);
+    var rootContentTypeConfig = _config.getContentTypeConfig(stageConfig.root_content_type);
 
-    var htmlDisplayContentTypeConfig = _config.getContentType(stageConfig.html_display_content_type);
+    var htmlDisplayContentTypeConfig = _config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-      return (0, _factory)(rootContentTypeConfig, stage, stage, {}).then(function (row) {
+      return (0, _factory)(rootContentTypeConfig, stage, stage.id, {}).then(function (row) {
         stage.addChild(row);
 
         if (htmlDisplayContentTypeConfig && initialValue) {
-          return (0, _factory)(htmlDisplayContentTypeConfig, stage, stage, {
+          return (0, _factory)(htmlDisplayContentTypeConfig, stage, stage.id, {
             html: initialValue
           }).then(function (text) {
             row.addChild(text);

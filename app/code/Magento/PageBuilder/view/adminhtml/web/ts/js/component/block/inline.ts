@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import Block from "./block";
+import ContentType from "../../content-type";
 
-export default class InlineBlock extends Block {
+export default class InlineBlock extends ContentType {
     public editOnInsert: boolean = false;
 }

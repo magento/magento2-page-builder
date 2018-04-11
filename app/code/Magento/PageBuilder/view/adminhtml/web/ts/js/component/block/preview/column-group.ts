@@ -126,7 +126,7 @@ export default class ColumnGroup extends PreviewBlock {
             this.resizeLastPosition = null;
             this.resizeMouseDown = true;
 
-            EventBus.trigger("interaction:start", {stage: this.parent.stage});
+            EventBus.trigger("interaction:start", {stageId: this.parent.stageId});
         });
     }
 
@@ -159,9 +159,9 @@ export default class ColumnGroup extends PreviewBlock {
 
                 EventBus.trigger("column:drag:start", {
                     column: columnInstance,
-                    stage: this.parent.stage,
+                    stageId: this.parent.stageId,
                 });
-                EventBus.trigger("interaction:start", {stage: this.parent.stage});
+                EventBus.trigger("interaction:start", {stageId: this.parent.stageId});
             },
             stop: () => {
                 const draggedColumn: Column = getDragColumn();
@@ -181,9 +181,9 @@ export default class ColumnGroup extends PreviewBlock {
 
                 EventBus.trigger("column:drag:stop", {
                     column: draggedColumn,
-                    stage: this.parent.stage,
+                    stageId: this.parent.stageId,
                 });
-                EventBus.trigger("interaction:stop", {stage: this.parent.stage});
+                EventBus.trigger("interaction:stop", {stageId: this.parent.stageId});
             },
         });
     }
@@ -213,7 +213,7 @@ export default class ColumnGroup extends PreviewBlock {
      */
     private endAllInteractions() {
         if (this.resizing() === true) {
-            EventBus.trigger("interaction:stop", {stage: this.parent.stage});
+            EventBus.trigger("interaction:stop", {stageId: this.parent.stageId});
         }
 
         this.resizing(false);
@@ -505,7 +505,7 @@ export default class ColumnGroup extends PreviewBlock {
 
                 // Is the element currently being dragged a column?
                 if (currentDraggedBlock instanceof GroupBlock &&
-                    currentDraggedBlock.getConfig() === Config.getContentType("column")
+                    currentDraggedBlock.getConfig() === Config.getContentTypeConfig("column")
                 ) {
                     this.dropOverElement = true;
                 }

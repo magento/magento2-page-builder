@@ -9,7 +9,7 @@ use Magento\Framework\UrlInterface;
 
 class Config
 {
-    const DEFAULT_COMPONENT = 'Magento_PageBuilder/js/component/block/block';
+    const DEFAULT_COMPONENT = 'Magento_PageBuilder/js/content-type';
     const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/component/block/preview/block';
 
     /**

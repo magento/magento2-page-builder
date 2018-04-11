@@ -5,8 +5,9 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
-define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"],
-    function(ko, jQuery, _, EventBus) {
+define([
+    "knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/content-type", "jquery/ui"],
+    function(ko, jQuery, _, EventBus, ContentType) {
 
     /**
      * Retrieve the view model for an element
@@ -113,7 +114,8 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
-                    originalEle: ui.item
+                    originalEle: ui.item,
+                    stageId: block.stageId
                 };
 
                 // ui.position to ensure we're only reacting to sorting events
@@ -140,7 +142,8 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
-                    originalEle: ui.item
+                    originalEle: ui.item,
+                    stageId: block.stageId
                 };
 
                 // ui.position to ensure we're only reacting to sorting events
@@ -191,7 +194,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
 
                 // Detect if we're sorting items within the stage
                 if (typeof newParent.stageId === 'function' && newParent.stageId()) {
-                    newParent = block.stage;
+                    newParent = newParent.stage;
                 }
 
                 // Fire our events on the various parents of the operation
@@ -201,14 +204,16 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
                         EventBus.trigger("block:sorted", {
                             parent: newParent,
                             block: block,
-                            index: newIndex
+                            index: newIndex,
+                            stageId: block.stageId
                         });
                     } else {
                         block.originalParent.removeChild(block);
                         EventBus.trigger("block:instanceDropped", {
                             parent: newParent,
                             blockInstance: block,
-                            index: newIndex
+                            index: newIndex,
+                            stageId: block.stageId
                         });
                     }
 
@@ -279,11 +284,13 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
                     event.stopPropagation();
                     // Emit the blockDropped event upon the target
                     // Detect if the target is the parent UI component, if so swap the target to the stage
-                    target = typeof target.addChild === "undefined" ? target.stage : target;
+                    var stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.parent.id;
+                    target = typeof target.parent.preview !== "undefined" ? target.parent : target.stage;
                     EventBus.trigger("block:dropped", {
                         parent: target,
+                        stageId: stageId,
                         block: block,
-                        index: this.draggedItem.index()
+                        index: this.draggedItem.index(),
                     });
                     this.draggedItem.remove();
                 }

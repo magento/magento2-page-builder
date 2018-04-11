@@ -46,7 +46,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
 
 
       var onBlur = function onBlur() {
-        viewModel.preview.updateData(field, stripHtml(element.innerText));
+        viewModel.updateData(field, stripHtml(element.innerText));
       };
       /**
        * Click event on element
@@ -100,7 +100,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       };
 
       element.setAttribute("data-placeholder", placeholder);
-      element.innerText = viewModel.preview.data[field]();
+      element.innerText = viewModel.previewData[field]();
       element.contentEditable = true;
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
@@ -127,7 +127,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       var _valueAccessor2 = valueAccessor(),
           field = _valueAccessor2.field;
 
-      element.innerText = viewModel.preview.data[field]();
+      element.innerText = viewModel.previewData[field]();
 
       if (element.innerText.length === 0) {
         (0, _jquery.default)(element).addClass("placeholder-text");
