@@ -8,59 +8,6 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddTabsContentBlockToCMSPage">
-        <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="Tabs MAGETWO-83942"/>
-            <title value="Add Tabs in PageBuilder for new CMS page and view on Storefront"/>
-            <description value="A user should be able to add Tabs into a row."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84922"/>
-            <group value="skip"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="reopenEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <seeElement selector="//li[@role='tab'][contains(@class, 'ui-tabs-active')]/a[@title='Tab 1']/span[contains(text(), 'Tab 1')]" stepKey="seeTab1TitleOnStage"/>
-        <seeElement selector="//li[@role='tab']/a[@title='Tab 2']/span[contains(text(), 'Tab 2')]" stepKey="seeTab2TitleOnStage"/>
-        <see selector="div.ui-tabs" userInput="Tab 1 Content" stepKey="seeTab1ContentOnStage"/>
-        <dontSee selector="div.ui-tabs" userInput="Tab 2 Content" stepKey="dontSeeTab2ContentOnStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForElementVisible selector="div[data-role='tabs'] div[role='tab'] a" stepKey="waitForTabsElementVisible"/>
-        <see selector="div[data-role='tabs'] div[role='tab'] a" userInput="Tab 1" stepKey="seeTab1TitleOnStorefront"/>
-        <see selector="div[data-role='tabs'] div[role='tab'] a" userInput="Tab 2" stepKey="seeTab2TitleOnStorefront"/>
-        <see selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" stepKey="seeTab1ContentOnStorefront"/>
-        <dontSee selector="div[data-role='tabs'] div.content" userInput="Tab 2 Content" stepKey="dontSeeTab2ContentOnStorefront"/>
-        <click selector="a[href='#pagebuilder_tab1']" stepKey="clickTab2OnStorefront"/>
-        <dontSee selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" stepKey="dontSeeTab1ContentOnStorefront"/>
-        <see selector="div[data-role='tabs'] div.content" userInput="Tab 2 Content" stepKey="seeTab2ContentOnStorefront"/>
-    </test>
     <test name="RemoveTabsFromStage">
         <annotations>
             <features value="PageBuilder - Tabs"/>
