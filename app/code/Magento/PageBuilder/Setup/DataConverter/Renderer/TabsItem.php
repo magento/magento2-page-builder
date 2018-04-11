@@ -11,7 +11,6 @@ namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
 use Magento\PageBuilder\Setup\DataConverter\EavAttributeLoaderInterface;
 use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
-use Magento\PageBuilder\Setup\DataConverter\StaticEavAttributeLoaderFactory;
 
 /**
  * Render tab item to PageBuilder format
@@ -29,32 +28,16 @@ class TabsItem implements RendererInterface
     private $eavAttributeLoader;
 
     /**
-     * @var StaticEavAttributeLoaderFactory
-     */
-    private $staticEavAttributeLoaderFactory;
-
-    /**
-     * @var \Magento\PageBuilder\Setup\DataConverter\Renderer\TextareaFactory
-     */
-    private $textareaFactory;
-
-    /**
      * TabsItem constructor.
      * @param StyleExtractorInterface $styleExtractor
      * @param EavAttributeLoaderInterface $eavAttributeLoader
-     * @param StaticEavAttributeLoaderFactory $staticEavAttributeLoaderFactory
-     * @param \Magento\PageBuilder\Setup\DataConverter\Renderer\TextareaFactory $textareaFactory
      */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EavAttributeLoaderInterface $eavAttributeLoader,
-        StaticEavAttributeLoaderFactory $staticEavAttributeLoaderFactory,
-        TextareaFactory $textareaFactory
+        EavAttributeLoaderInterface $eavAttributeLoader
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
-        $this->staticEavAttributeLoaderFactory = $staticEavAttributeLoaderFactory;
-        $this->textareaFactory = $textareaFactory;
     }
 
     /**
@@ -87,32 +70,8 @@ class TabsItem implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '>' . $this->renderTextarea($eavData['textarea']) . '</div>';
+        $rootElementHtml .= '><div data-role="text">' . $eavData['textarea'] . '</div></div>';
 
         return $rootElementHtml;
-    }
-
-    /**
-     * Render the text area content type's renderer
-     *
-     * @param $content
-     * @return string
-     */
-    private function renderTextarea($content)
-    {
-        $textareaRenderer = $this->textareaFactory->create([
-            // Use a static EAV attribute loader so we can define the values
-            'eavAttributeLoader' => $this->staticEavAttributeLoaderFactory->create([
-                'eavData' => [
-                    1 => [
-                        'textarea' => $content
-                    ]
-                ]
-            ]),
-        ]);
-
-        return $textareaRenderer->render([
-            'entityId' => 1
-        ]);
     }
 }

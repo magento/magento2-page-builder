@@ -84,12 +84,12 @@ class Tabs implements RendererInterface
     /**
      * Render the tab headers
      *
-     * @param $childIndex
-     * @param $tabItems
+     * @param int $childIndex
+     * @param array $tabItems
      * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function renderTabHeaders($childIndex, $tabItems)
+    private function renderTabHeaders(int $childIndex, array $tabItems): string
     {
         $tabHeaderElementHtml = '';
         foreach ($tabItems as $tabIndex => $tabItem) {
