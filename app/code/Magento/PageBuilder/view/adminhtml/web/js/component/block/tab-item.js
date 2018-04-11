@@ -2,16 +2,16 @@
 define(["mage/translate", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block"], function (_translate, _eventBus, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var Tab =
+  var TabItem =
   /*#__PURE__*/
   function (_Block) {
-    _inheritsLoose(Tab, _Block);
+    _inheritsLoose(TabItem, _Block);
 
-    function Tab() {
+    function TabItem() {
       return _Block.apply(this, arguments) || this;
     }
 
-    var _proto = Tab.prototype;
+    var _proto = TabItem.prototype;
 
     /**
      * Get the options instance
@@ -36,7 +36,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/event-bus", "Magento
       _Block.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
-      _eventBus.on("tab:block:mount", function (event, params) {
+      _eventBus.on("tab-item:block:mount", function (event, params) {
         if (params.id === _this.id) {
           _this.updateDefaultTabName();
         }
@@ -55,9 +55,9 @@ define(["mage/translate", "Magento_PageBuilder/js/component/event-bus", "Magento
       }
     };
 
-    return Tab;
+    return TabItem;
   }(_block);
 
-  return Tab;
+  return TabItem;
 });
-//# sourceMappingURL=tab.js.map
+//# sourceMappingURL=tab-item.js.map

@@ -9,7 +9,7 @@ import {Options} from "../stage/structural/options";
 import Block from "./block";
 import {BlockReadyEventParams} from "./factory";
 
-export default class Tab extends Block {
+export default class TabItem extends Block {
 
     /**
      * Get the options instance
@@ -29,7 +29,7 @@ export default class Tab extends Block {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        EventBus.on("tab:block:mount", (event: Event, params: BlockReadyEventParams) => {
+        EventBus.on("tab-item:block:mount", (event: Event, params: BlockReadyEventParams) => {
             if (params.id === this.id) {
                 this.updateDefaultTabName();
             }

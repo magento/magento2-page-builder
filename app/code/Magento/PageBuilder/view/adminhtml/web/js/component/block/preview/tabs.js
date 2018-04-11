@@ -44,13 +44,13 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         }
       });
 
-      _eventBus.on("tab:block:create", function (event, params) {
+      _eventBus.on("tab-item:block:create", function (event, params) {
         if (_this.element && params.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
       });
 
-      _eventBus.on("tab:block:removed", function (event, params) {
+      _eventBus.on("tab-item:block:removed", function (event, params) {
         if (_this.element && params.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }

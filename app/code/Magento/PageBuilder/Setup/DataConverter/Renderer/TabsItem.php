@@ -53,7 +53,7 @@ class TabsItem implements RendererInterface
         $cssClasses = $eavData['css_classes'] ?? '';
 
         $rootElementAttributes = [
-            'data-role' => 'tab',
+            'data-role' => 'tab-item',
             'class' => $cssClasses,
             'data-tab-name' => $eavData['title'],
             'id' => 'tab' . $additionalData['parentChildIndex'] . '_' . $additionalData['childIndex']

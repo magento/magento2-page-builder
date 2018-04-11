@@ -46,18 +46,18 @@ export default class Tabs extends Block {
     public addTab() {
         (this.preview as TabsPreview).setActiveTab(this.children().length - 1);
         createBlock(
-            Config.getInitConfig("content_types").tab,
+            Config.getInitConfig("content_types")["tab-item"],
             this,
             this.stage,
         ).then((tab) => {
             _.defer(() => {
-                const mountFn = (event: Event, params: BlockMountEventParams) => {
+                const mountFunction = (event: Event, params: BlockMountEventParams) => {
                     if (params.id === tab.id) {
                         (this.preview as TabsPreview).setFocusedTab(this.children().length - 1);
-                        EventBus.off("tab:block:mount", mountFn);
+                        EventBus.off("tab-item:block:mount", mountFunction);
                     }
                 };
-                EventBus.on("tab:block:mount", mountFn);
+                EventBus.on("tab-item:block:mount", mountFunction);
                 this.addChild(tab, this.children().length);
             });
         });
@@ -93,7 +93,7 @@ export default class Tabs extends Block {
         });
 
         // Block being removed from container
-        EventBus.on("tab:block:removed", (event, params: BlockRemovedParams) => {
+        EventBus.on("tab-item:block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {
                 // Mark the previous slide as active
                 const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
@@ -104,13 +104,13 @@ export default class Tabs extends Block {
         // Capture when a block is duplicated within the container
         let duplicatedTab: Tab;
         let duplicatedTabIndex: number;
-        EventBus.on("tab:block:duplicate", (event, params: BlockDuplicateEventParams) => {
+        EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
             if (params.duplicate.parent.id === this.id) {
                 duplicatedTab = (params.duplicate as Tab);
                 duplicatedTabIndex = params.index;
             }
         });
-        EventBus.on("tab:block:mount", (event: Event, params: BlockMountEventParams) => {
+        EventBus.on("tab-item:block:mount", (event: Event, params: BlockMountEventParams) => {
             if (duplicatedTab && params.id === duplicatedTab.id) {
                 (this.preview as TabsPreview).setFocusedTab(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;
