@@ -4,12 +4,12 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var CreateValueForLinkType =
+  var CreateValueForTarget =
   /*#__PURE__*/
   function () {
-    function CreateValueForLinkType() {}
+    function CreateValueForTarget() {}
 
-    var _proto = CreateValueForLinkType.prototype;
+    var _proto = CreateValueForTarget.prototype;
 
     /**
      * Convert value to internal format
@@ -30,12 +30,16 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name] ? data[name].type : "";
+      if (!data[name]) {
+        return "";
+      }
+
+      return data[name].setting ? "_blank" : "";
     };
 
-    return CreateValueForLinkType;
+    return CreateValueForTarget;
   }();
 
-  return CreateValueForLinkType;
+  return CreateValueForTarget;
 });
-//# sourceMappingURL=create-value-for-link-type.js.map
+//# sourceMappingURL=link-target.js.map
