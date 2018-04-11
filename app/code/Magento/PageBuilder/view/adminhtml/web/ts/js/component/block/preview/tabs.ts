@@ -138,12 +138,14 @@ export default class Tabs extends PreviewBlock {
     }
 
     /**
-     * Add an alignment class to the tab container based on the navigation style
+     * Reset and add an alignment class to the tab container based on the navigation style
      *
      * @returns {any}
      */
     public getTabContainerClasses() {
         const navigationStyles = this.parent.data.navigation.style();
+        // Reset alignment class
+        $(this.element).removeClass("tab-align-left tab-align-center tab-align-right");
         if (navigationStyles.textAlign) {
             return {
                 ["tab-align-" + navigationStyles.textAlign]: true,

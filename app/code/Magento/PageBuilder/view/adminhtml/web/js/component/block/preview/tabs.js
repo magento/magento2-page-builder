@@ -151,14 +151,16 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
       };
     };
     /**
-     * Add an alignment class to the tab container based on the navigation style
+     * Reset and add an alignment class to the tab container based on the navigation style
      *
      * @returns {any}
      */
 
 
     _proto.getTabContainerClasses = function getTabContainerClasses() {
-      var navigationStyles = this.parent.data.navigation.style();
+      var navigationStyles = this.parent.data.navigation.style(); // Reset alignment class
+
+      (0, _jquery)(this.element).removeClass("tab-align-left tab-align-center tab-align-right");
 
       if (navigationStyles.textAlign) {
         var _ref;
