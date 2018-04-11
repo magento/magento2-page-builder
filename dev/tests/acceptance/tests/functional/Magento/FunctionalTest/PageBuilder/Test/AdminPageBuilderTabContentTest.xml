@@ -17,7 +17,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89954"/>
             <group value="pagebuilder"/>
-            <group value="run"/>
+            <group value="pagebuilder-tabs-content"/>
         </annotations>
         <before>
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
@@ -55,6 +55,8 @@
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'This is some text')" stepKey="addTextToWYSIWYG"/>
+        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Verify Tab Height Adjusts to Content - Depends on MQE-818 -->
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -102,6 +104,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Block to Tab -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextOntoTab">
             <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
@@ -111,7 +116,7 @@
         <!-- Verify Block in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{BlockOnStorefront('1').hr}}" stepKey="seeBlockContentFrontend"/>
+        <seeElement selector="{{BlockOnStorefront.hr('1')}}" stepKey="seeBlockContentFrontend"/>
     </test>
     <test name="CanAddNewsletterToTab">
         <annotations>
@@ -246,6 +251,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Image to Tab -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragImageOntoTab">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
@@ -304,6 +312,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Video to Tab -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragVideoOntoTab">
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
@@ -371,6 +382,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Banner to Tab -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragBannerOntoTab">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
@@ -382,7 +396,7 @@
         </actionGroup>
         <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
         <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner89"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Banner in Tab on storefront -->
@@ -427,6 +441,8 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Slider to Tab -->
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
+        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragSliderOntoTab">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
@@ -708,13 +724,11 @@
             <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
             <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -730,6 +744,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Anchor to Tab -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupOther"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragAnchorOntoTab">
             <argument name="contentBlockType" value="PageBuilderAnchorContentBlock"/>
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
@@ -854,6 +871,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add HTML to Tab -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupOther"/>
+        </actionGroup>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragHtmlOntoTab">
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
