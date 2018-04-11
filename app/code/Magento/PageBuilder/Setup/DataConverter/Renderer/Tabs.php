@@ -95,8 +95,8 @@ class Tabs implements RendererInterface
         foreach ($tabItems as $tabIndex => $tabItem) {
             $tabItemEavData = $this->tabItemEavAttributeLoader->load($tabItem['entityId']);
             $tabId = 'tab' . $childIndex . '_' . $tabIndex;
-            $tabHeaderElementHtml .= '<li role="tab" class="tab-header-li">'
-                . '<a href="#' . $tabId . '" class="tab-header" title="' . $tabItemEavData['title'] . '">'
+            $tabHeaderElementHtml .= '<li role="tab" class="tab-header">'
+                . '<a href="#' . $tabId . '" class="tab-title" title="' . $tabItemEavData['title'] . '">'
                 . '<span class="tab-title">' . $tabItemEavData['title'] . '</span>'
                 . '</a>'
                 . '</li>';
