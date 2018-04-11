@@ -209,7 +209,7 @@
         <waitForElementVisible selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenteredAdmin"/>
         <!-- Verify in Storefront-->
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <waitForElementVisible selector="{{TabsOnFrontend.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenteredStorefront"/>
     </test>
@@ -260,7 +260,7 @@
         <waitForElementVisible selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentRight.value)}}" stepKey="seeTabsNavAlignedRightAdmin"/>
         <!-- Verify in Storefront-->
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <waitForElementVisible selector="{{TabsOnFrontend.tabsNavAligned(PageBuilderTabsAlignmentRight.value)}}" stepKey="seeTabsNavAlignedRightStorefront"/>
     </test>
@@ -313,7 +313,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeSecondTabActiveAdminPreview"/>
         <!-- Verify in Storefront-->
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeSecondTabActiveStorefront"/>
     </test>
@@ -370,7 +370,7 @@
         <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab'),null).getPropertyValue('min-height')" stepKey="getComputedTabMinHeight"/>
         <!--<assertEquals expected="1000px" expectedType="string" actual="getComputedTabMinHeight" actualType="variable" message="Computed min height was $getComputedTabMinHeight" stepKey="assertComputedTabMinHeight"/>-->
         <!-- Verify in Storefront-->
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <waitForElementVisible selector="{{TabsOnFrontend.tabsMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeMinHeightStorefront"/>
     </test>
@@ -440,7 +440,7 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeaderItemAdvancedStyles}}" stepKey="seeTabHeaderItemAdvancedStylesInAdminPreview"/>
         <waitForElementVisible selector="{{TabsOnStage.tabsContentAdvancedStyles}}" stepKey="seeTabsContentAdvancedStylesInAdminPreview"/>
         <!-- Verify in Storefront -->
-        <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront"/>
         <waitForElementVisible selector="{{TabsOnFrontend.tabsContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>
