@@ -44,4 +44,4 @@ define([], function () {
 
   return BorderStyleDefault;
 });
-//# sourceMappingURL=border-style-default.js.map
+//# sourceMappingURL=border-style.js.map
