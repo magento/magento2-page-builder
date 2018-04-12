@@ -11,7 +11,7 @@
         <i class="icon-pagebuilder-tabs"></i> <span data-bind="text: $t('Tabs');"></span>
     <!-- /ko -->
     <!-- ko if: previewData.tabs().length > 0 -->
-        <div class="pagebuilder-tabs" data-bind="style: previewStyle(), afterRender: function (element) { preview.onContainerRender(element); }">
+        <div class="pagebuilder-tabs" data-bind="style: previewStyle(), afterRender: onContainerRender">
             <ul role="tablist" class="tabs-horiz" data-bind="foreach: previewData.tabs">
                 <li role="tab" class="tab">
                     <a href="#no-tab" class="ui-tabs-anchor" data-value="grid" title="Title 1" data-bind="attr: { href: '#tab_' + $parent.id + '_' + record_id, title: title }">
@@ -21,7 +21,7 @@
             </ul>
 
             <div class="tab-content" data-bind="foreach: previewData.tabs">
-                <div id="no-tab" role="tabpanel" style="background: none; border-top: 1px solid #adadad;" data-bind="afterRender: function () { $parent.preview.onTabRender(); }, attr: { id: 'tab_' + $parent.id + '_' + record_id }, html: content">
+                <div id="no-tab" role="tabpanel" style="background: none; border-top: 1px solid #adadad;" data-bind="afterRender: $parent.onTabRender.bind($parent), attr: { id: 'tab_' + $parent.id + '_' + record_id }, html: content">
 
                 </div>
             </div>

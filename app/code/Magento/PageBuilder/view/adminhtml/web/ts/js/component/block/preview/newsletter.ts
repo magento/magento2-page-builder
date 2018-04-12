@@ -3,17 +3,17 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../config";
-import EventBus from "../event-bus";
-import Block from "./block";
+import Config from "../../config";
+import EventBus from "../../event-bus";
+import PreviewBlock from "./block";
 
-export default class Newsletter extends Block {
+export default class Newsletter extends PreviewBlock {
     public editOnInsert: boolean = false;
 
     /**
      * Bind events for the current instance
      */
-    protected bindEvents() {
+    public bindEvents() {
         super.bindEvents();
 
         EventBus.on("previewObservables:updated", (event, params) => {

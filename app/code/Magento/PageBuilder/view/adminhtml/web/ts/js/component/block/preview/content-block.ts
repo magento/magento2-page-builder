@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../config";
-import EventBus from "../event-bus";
-import Block from "./block";
+import Config from "../../config";
+import EventBus from "../../event-bus";
+import PreviewBlock from "./block";
 
-export default class ContentBlock extends Block {
+export default class ContentBlock extends PreviewBlock {
     public editOnInsert: boolean = false;
 
     /**
