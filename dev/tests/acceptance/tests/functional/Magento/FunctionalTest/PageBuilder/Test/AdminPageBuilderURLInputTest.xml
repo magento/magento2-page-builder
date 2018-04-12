@@ -373,7 +373,7 @@
         <!--Go to storefront to verify CMS Page Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink($createCMSPageB.title$)}}" stepKey="seePageLinkOnStoreFront" />
+        <seeElement selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink($createCMSPageB.identifier$)}}" stepKey="seePageLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$createCMSPageB.title$" stepKey="seePageName" />
