@@ -66,7 +66,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       // Any store state changes trigger a stage update event
       this.store.subscribe(function () {
         return _eventBus.trigger("stage:updated", {
-          stage: _this2
+          stageId: _this2.id
         });
       }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
       // can occur concurrently.

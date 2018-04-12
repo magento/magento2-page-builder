@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _jarallax, _underscore, _eventBus, _block) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block", "mage/translate", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_jquery, _knockout, _jarallax, _underscore, _eventBus, _block, _translate, _option) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -64,13 +64,40 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax
       return _this;
     }
     /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+
+
+    var _proto = Row.prototype;
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _PreviewBlock.prototype.retrieveOptions.call(this);
+
+      var newOptions = options.filter(function (option) {
+        return option.code !== "remove";
+      });
+      var removeClasses = ["remove-structural"];
+      var removeFn = this.onOptionRemove;
+
+      if (this.parent.parent.children().length < 2) {
+        removeFn = function removeFn() {
+          return;
+        };
+
+        removeClasses.push("disabled");
+      }
+
+      newOptions.push(new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
+      return newOptions;
+    };
+    /**
      * Init the parallax element
      *
      * @param {Element} element
      */
 
-
-    var _proto = Row.prototype;
 
     _proto.initParallax = function initParallax(element) {
       this.element = element;

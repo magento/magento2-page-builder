@@ -66,7 +66,7 @@ export default class Stage {
      */
     public initListeners() {
         // Any store state changes trigger a stage update event
-        this.store.subscribe(() => EventBus.trigger("stage:updated", {stage: this}));
+        this.store.subscribe(() => EventBus.trigger("stage:updated", {stageId: this.id}));
 
         // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
         // can occur concurrently.
