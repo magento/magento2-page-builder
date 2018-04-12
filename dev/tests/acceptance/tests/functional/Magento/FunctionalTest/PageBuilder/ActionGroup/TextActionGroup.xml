@@ -62,9 +62,8 @@
         <click selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="clickCmsPageLinkRow"/>
         <waitForElementNotVisible selector="//td[contains(@class,'col-url')][contains(text(),'{{page}}')]" stepKey="waitForPageSelectionModalToClose"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear4"/>
+        <waitForPageLoad stepKey="waitForPanelSlideOut"/>
         <waitForElementVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidget2"/>
-        <!-- Required time wait due to animation -->
-        <wait time="0.5" stepKey="waitForAnimation" />
         <click selector="{{WidgetSection.InsertWidget}}" stepKey="clickInsertWidget2"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear5"/>
         <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
