@@ -5,11 +5,11 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
-import createBlock, {BlockReadyEventParams} from "../block/factory";
+import createBlock from "../block/factory";
 import Config from "../config";
 import EventBus from "../event-bus";
 import {BlockRemovedParams} from "../stage/event-handling-delegate";
-import {BlockDuplicateEventParams, BlockMountEventParams} from "../stage/structural/editable-area";
+import BlockMountEventParamsInterface from "./block-mount-event-params.d";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
 import Block from "./block";
@@ -49,7 +49,7 @@ export default class Slider extends Block {
             this.stage,
         ).then((slide) => {
             _.delay(() => {
-                const mountFn = (event: Event, params: BlockMountEventParams) => {
+                const mountFn = (event: Event, params: BlockMountEventParamsInterface) => {
                     if (params.id === slide.id) {
                         (this.preview as SliderPreview).navigateToSlide(this.children().length - 1);
                         _.delay(() => {
@@ -70,7 +70,7 @@ export default class Slider extends Block {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
+        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
             if (params.id === this.id && this.children().length === 0) {
                 this.addSlide();
             }
@@ -95,7 +95,7 @@ export default class Slider extends Block {
                 duplicatedSlideIndex = params.index;
             }
         });
-        EventBus.on("slide:block:mount", (event: Event, params: BlockMountEventParams) => {
+        EventBus.on("slide:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
             if (duplicatedSlide && params.id === duplicatedSlide.id) {
                 // Mark the new duplicate slide as active
                 (this.preview as SliderPreview).navigateToSlide(duplicatedSlideIndex);

@@ -7,11 +7,11 @@
 
 <div class="pagebuilder-content-type type-nested pagebuilder-entity pagebuilder-entity-preview pagebuilder-no-blur pagebuilder-live-edit dashboard-store-stats pagebuilder-accordion" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
-    <!-- ko if: legacyData.items().length == 0 -->
+    <!-- ko if: previewData.items().length == 0 -->
     <i class="icon-pagebuilder-accordian"></i> <span data-bind="text: $t('Accordion');"></span>
     <!-- /ko -->
-    <!-- ko if: legacyData.items().length > 0 -->
-    <div class="pagebuilder-accordion" data-bind="style: previewStyle(), foreach: legacyData.items, afterRender: function (element) { preview.onContainerRender(element); }">
+    <!-- ko if: previewData.items().length > 0 -->
+    <div class="pagebuilder-accordion" data-bind="style: previewStyle(), foreach: previewData.items, afterRender: function (element) { preview.onContainerRender(element); }">
         <div data-role="collapsible" class="accordion-collapsible">
             <div data-role="trigger">
                 <span data-bind="text: title"></span>

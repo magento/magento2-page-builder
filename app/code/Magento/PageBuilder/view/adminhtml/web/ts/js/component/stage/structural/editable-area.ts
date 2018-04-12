@@ -171,11 +171,6 @@ export default class EditableArea implements EditableAreaInterface {
     }
 }
 
-export interface BlockMountEventParams {
-    id: string;
-    block: Block;
-}
-
 export interface BlockDuplicateEventParams {
     original: Block;
     duplicate: Block;

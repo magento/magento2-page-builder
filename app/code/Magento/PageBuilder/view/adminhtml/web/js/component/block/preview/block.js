@@ -387,10 +387,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
      * @returns {boolean}
      */
     _proto.isConfigured = function isConfigured() {
-      if (this.parent.children && this.parent.children().length > 0) {
-        return true;
-      }
-
       var data = this.parent.store.get(this.parent.id);
       var hasDataChanges = false;
 

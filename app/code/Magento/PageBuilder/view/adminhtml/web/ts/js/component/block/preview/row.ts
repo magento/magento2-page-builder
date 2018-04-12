@@ -10,9 +10,9 @@ import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
-import {BlockMountEventParams} from "../../stage/structural/editable-area";
+import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
 import Block from "../block";
-import {BlockReadyEventParams} from "../factory";
+import BlockReadyEventParamsInterface from "../../block/block-ready-event-params.d";
 import PreviewBlock from "./block";
 
 export default class Row extends PreviewBlock {
@@ -57,12 +57,12 @@ export default class Row extends PreviewBlock {
         super(parent, config, elementConverterPool, dataConverterPool);
 
         this.parent.store.subscribe(this.buildJarallax);
-        EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParams) => {
+        EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
             if (params.id === this.parent.id) {
                 this.buildJarallax();
             }
         });
-        EventBus.on("block:mount", (event: Event, params: BlockMountEventParams) => {
+        EventBus.on("block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
             if (params.block.parent.id === this.parent.id) {
                 this.buildJarallax();
             }
