@@ -14,7 +14,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
    */
   function buildFromContent(stage, value) {
     var stageDocument = document.createElement("div");
-    stageDocument.setAttribute(_config.getValueAsString("dataRoleAttributeName"), "stage");
+    stageDocument.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = value;
     return buildElementIntoStage(stageDocument, stage, stage);
   }
@@ -29,7 +29,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
 
 
   function buildElementIntoStage(element, parent, stage) {
-    if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
+    if (element instanceof HTMLElement && element.getAttribute(_config.getConfig("dataRoleAttributeName"))) {
       var childPromises = [];
       var childElements = [];
       var children = getElementChildren(element);
@@ -62,9 +62,9 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
 
   function createElementBlock(element, stage, parent) {
     parent = parent || stage;
-    var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
+    var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
 
-    var config = _config.getConfig("content_types")[role];
+    var config = _config.getContentTypeConfig(role);
 
     return getElementData(element, config).then(function (data) {
       return (0, _factory)(config, parent, stage.id, data, getElementChildren(element).length);
@@ -106,7 +106,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
       _.forEach(element.childNodes, function (child) {
         // Only search elements which tagName's and not script tags
         if (child.tagName && child.tagName !== "SCRIPT") {
-          if (child.hasAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
+          if (child.hasAttribute(_config.getConfig("dataRoleAttributeName"))) {
             children.push(child);
           } else {
             children = getElementChildren(child);

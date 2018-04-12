@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import $ from "jquery";
 import _ from "underscore";
 
 export default class Config {
@@ -14,7 +13,7 @@ export default class Config {
      * @param config
      */
     public static setConfig(config: object): void {
-        Config.initConfig = config;
+        Config.config = _.extend(Config.config, config);
     }
 
     /**
@@ -25,12 +24,12 @@ export default class Config {
      */
     public static getConfig(key?: string): any {
         if (key) {
-            if (typeof Config.initConfig[key] !== "undefined") {
-                return Config.initConfig[key];
+            if (typeof Config.config[key] !== "undefined") {
+                return Config.config[key];
             }
             return null;
         }
-        return Config.initConfig;
+        return Config.config;
     }
 
     /**
@@ -47,33 +46,6 @@ export default class Config {
         return null;
     }
 
-    /**
-     * Get a specific value from the configuration based on a key
-     *
-     * @param key
-     * @returns {any}
-     */
-    public static getValue(key: string): object | string | void {
-        if (typeof Config.config[key] !== "undefined") {
-            return Config.config[key];
-        }
-        if (Config.getConfig(key)) {
-            return Config.getConfig(key);
-        }
-        return null;
-    }
-
-    /**
-     * Retrieve a value as a string
-     *
-     * @param key
-     * @returns {String}
-     */
-    public static getValueAsString(key: string): string {
-        return String(Config.getValue(key));
-    }
-
-    private static initConfig: any;
     private static config: any = {
         dataRoleAttributeName: "data-role",
     };
