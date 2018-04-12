@@ -45,10 +45,10 @@
 
         <!--assert computed styles matching expected depends on MQE-818 -->
         <comment userInput="User sees tab preview takes 100% container width" stepKey="AC2"/>
-        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab.empty-container'),null).getPropertyValue('width')" stepKey="getDefaultTabWidth"/>
+        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab .pagebuilder-empty-container'),null).getPropertyValue('width')" stepKey="getDefaultTabWidth"/>
 
         <comment userInput="User sees tab preview min height to be 300 px" stepKey="AC3"/>
-        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab.empty-container'),null).getPropertyValue('min-height')" stepKey="getComputedTabMinHeight"/>
+        <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefaultMinHeight.value)}}" stepKey="seeTabMinHeightAdmin1"/>
 
         <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC4"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabContent('1')}}" attribute="style" expectedValue="border-width: 1px; border-radius: 0px; margin: 0px 0px 1px; padding: 40px;" stepKey="assertTab1DefaultStyle"/>
