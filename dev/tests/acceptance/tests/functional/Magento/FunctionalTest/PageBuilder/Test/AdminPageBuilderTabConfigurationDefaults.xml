@@ -38,14 +38,14 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
+        <waitForPageLoad stepKey="waitForTabsToLoad"/>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
 
-        <!--assert computed styles matching expected depends on MQE-818 -->
         <comment userInput="User sees tab preview takes 100% container width" stepKey="AC2"/>
-        <executeJS function="window.getComputedStyle(document.querySelector('.pagebuilder-content-type.pagebuilder-tab .pagebuilder-empty-container'),null).getPropertyValue('width')" stepKey="getDefaultTabWidth"/>
+        <!--assert computed styles matching expected depends on MQE-818 -->
 
         <comment userInput="User sees tab preview min height to be 300 px" stepKey="AC3"/>
         <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefaultMinHeight.value)}}" stepKey="seeTabMinHeightAdmin1"/>
@@ -146,6 +146,7 @@
         <!-- Verify Default Values for Tabs on storefront -->
         <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForTabsToLoadStorefront"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionStorefront"/>
