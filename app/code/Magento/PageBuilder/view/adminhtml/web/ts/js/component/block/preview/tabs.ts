@@ -60,8 +60,15 @@ export default class Tabs extends PreviewBlock {
             }
         });
         // Set the stage to interacting when a tab is focused
+        let focusTabValue: number;
         this.focusedTab.subscribe((value: number) => {
-            this.parent.stage.interacting(value !== null);
+            focusTabValue = value;
+            // If we're stopping the interaction we need to wait, to ensure any other actions can complete
+            _.delay(() => {
+                if (focusTabValue === value) {
+                    this.parent.stage.interacting(value !== null);
+                }
+            }, (value === null ? 200 : 0));
         });
     }
 

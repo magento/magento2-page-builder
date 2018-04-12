@@ -57,8 +57,16 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
       }); // Set the stage to interacting when a tab is focused
 
 
+      var focusTabValue;
+
       _this.focusedTab.subscribe(function (value) {
-        _this.parent.stage.interacting(value !== null);
+        focusTabValue = value; // If we're stopping the interaction we need to wait, to ensure any other actions can complete
+
+        _underscore.delay(function () {
+          if (focusTabValue === value) {
+            _this.parent.stage.interacting(value !== null);
+          }
+        }, value === null ? 200 : 0);
       });
 
       return _this;
