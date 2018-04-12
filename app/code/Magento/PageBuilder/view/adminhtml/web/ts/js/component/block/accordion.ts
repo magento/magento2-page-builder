@@ -36,8 +36,8 @@ export default class Accordion extends ContentTypeCollection {
      * @returns {number[]|[]}
      */
     public getActive() {
-        if (this.getData().items) {
-            const items = this.getData().items as AccordionDataObject[];
+        if (this.preview.previewData.items()) {
+            const items = this.preview.previewData.items() as AccordionDataObject[];
             const activeItems = items.map(
                     (item, index) =>
                         item.open_on_load === "1" ? index : null,

@@ -35,8 +35,8 @@ define(["Magento_PageBuilder/js/content-type-collection"], function (_contentTyp
 
 
     _proto.getActive = function getActive() {
-      if (this.getData().items) {
-        var items = this.getData().items;
+      if (this.preview.previewData.items()) {
+        var items = this.preview.previewData.items();
         var activeItems = items.map(function (item, index) {
           return item.open_on_load === "1" ? index : null;
         }).filter(function (item) {

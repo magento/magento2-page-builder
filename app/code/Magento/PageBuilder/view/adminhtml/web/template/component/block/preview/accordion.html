@@ -11,13 +11,13 @@
     <i class="icon-pagebuilder-accordian"></i> <span data-bind="text: $t('Accordion');"></span>
     <!-- /ko -->
     <!-- ko if: previewData.items().length > 0 -->
-    <div class="pagebuilder-accordion" data-bind="style: previewStyle(), foreach: previewData.items, afterRender: function (element) { preview.onContainerRender(element); }">
+    <div class="pagebuilder-accordion" data-bind="style: previewStyle(), foreach: previewData.items(), afterRender: onContainerRender">
         <div data-role="collapsible" class="accordion-collapsible">
             <div data-role="trigger">
                 <span data-bind="text: title"></span>
             </div>
         </div>
-        <div data-role="content" data-bind="html: content, afterRender: function () { $parent.preview.onItemRender(); }" class="accordion-content"></div>
+        <div data-role="content" data-bind="html: content, afterRender: $parent.onItemRender.bind($parent)" class="accordion-content"></div>
     </div>
     <!-- /ko -->
 </div>
