@@ -485,7 +485,8 @@ export default class PreviewBlock {
             (data: DataObject) => {
                 this.convert.updatePreviewObservables(
                     this,
-                    _.extend({}, this.parent.store.get(this.parent.id))
+                    _.extend({}, this.parent.store.get(this.parent.id)),
+                    "preview",
                 );
                 EventBus.trigger("previewObservables:updated", {preview: this});
             },

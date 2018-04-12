@@ -429,7 +429,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       var _this5 = this;
 
       this.parent.store.subscribe(function (data) {
-        _this5.convert.updatePreviewObservables(_this5, _underscore.extend({}, _this5.parent.store.get(_this5.parent.id)));
+        _this5.convert.updatePreviewObservables(_this5, _underscore.extend({}, _this5.parent.store.get(_this5.parent.id)), "preview");
 
         _eventBus.trigger("previewObservables:updated", {
           preview: _this5

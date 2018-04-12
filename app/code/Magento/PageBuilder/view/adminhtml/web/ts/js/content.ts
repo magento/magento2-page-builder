@@ -200,7 +200,8 @@ export default class Content {
             (data: DataObject) => {
                 this.convert.updatePreviewObservables(
                     this,
-                    _.extend({name: this.parent.config.name}, this.parent.store.get(this.parent.id))
+                    _.extend({name: this.parent.config.name}, this.parent.store.get(this.parent.id)),
+                    "master",
                 );
             },
             this.parent.id,

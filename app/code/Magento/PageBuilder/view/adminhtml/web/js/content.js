@@ -180,7 +180,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
       this.parent.store.subscribe(function (data) {
         _this.convert.updatePreviewObservables(_this, _underscore.extend({
           name: _this.parent.config.name
-        }, _this.parent.store.get(_this.parent.id)));
+        }, _this.parent.store.get(_this.parent.id)), "master");
       }, this.parent.id);
     };
 
