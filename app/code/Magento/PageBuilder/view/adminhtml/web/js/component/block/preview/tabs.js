@@ -150,28 +150,6 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         marginLeft: "-" + headerStyles.borderWidth
       };
     };
-    /**
-     * Add an alignment class to the tab container based on the navigation style
-     *
-     * @returns {any}
-     */
-
-
-    _proto.getTabContainerClasses = function getTabContainerClasses() {
-      var navigationStyles = this.parent.data.navigation.style();
-
-      if (navigationStyles.textAlign) {
-        return {
-          "tab-align-left": navigationStyles.textAlign === "left",
-          "tab-align-center": navigationStyles.textAlign === "center",
-          "tab-align-right": navigationStyles.textAlign === "right"
-        };
-      }
-
-      return {
-        "tab-align-left": true
-      };
-    };
 
     return Tabs;
   }(_block); // Resolve issue with jQuery UI tabs blocking events on content editable areas
