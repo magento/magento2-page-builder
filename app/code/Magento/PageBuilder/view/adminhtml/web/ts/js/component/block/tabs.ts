@@ -15,7 +15,6 @@ import {OptionInterface} from "../stage/structural/options/option.d";
 import Block from "./block";
 import {BlockReadyEventParams} from "./factory";
 import TabsPreview from "./preview/tabs";
-import Tab from "./tab";
 
 export default class Tabs extends Block {
 
@@ -102,11 +101,11 @@ export default class Tabs extends Block {
         });
 
         // Capture when a block is duplicated within the container
-        let duplicatedTab: Tab;
+        let duplicatedTab: Block;
         let duplicatedTabIndex: number;
         EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
             if (params.duplicate.parent.id === this.id) {
-                duplicatedTab = (params.duplicate as Tab);
+                duplicatedTab = params.duplicate;
                 duplicatedTabIndex = params.index;
             }
         });
@@ -129,11 +128,11 @@ export default class Tabs extends Block {
      */
     private updateTabNamesInDataStore() {
         const activeOptions: ActiveOptions[] = [];
-        this.children().forEach((tab: Tab, index: number) => {
+        this.children().forEach((tab: Block, index: number) => {
             const tabData = tab.stage.store.get(tab.id);
             activeOptions.push({
-                label: tabData.tab_name,
-                labeltitle: tabData.tab_name,
+                label: tabData.tab_name.toString(),
+                labeltitle: tabData.tab_name.toString(),
                 value: index,
             });
         });

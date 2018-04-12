@@ -133,8 +133,8 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       this.children().forEach(function (tab, index) {
         var tabData = tab.stage.store.get(tab.id);
         activeOptions.push({
-          label: tabData.tab_name,
-          labeltitle: tabData.tab_name,
+          label: tabData.tab_name.toString(),
+          labeltitle: tabData.tab_name.toString(),
           value: index
         });
       });
