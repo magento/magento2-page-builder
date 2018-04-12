@@ -4,8 +4,8 @@ define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/block/
 
   var Tabs =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(Tabs, _Block);
+  function (_PreviewBlock) {
+    _inheritsLoose(Tabs, _PreviewBlock);
 
     function Tabs() {
       var _temp, _this;
@@ -14,7 +14,7 @@ define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/block/
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _Block.call.apply(_Block, [this].concat(args)) || this, _this.element = void 0, _this.renderCounter = 0, _temp) || _this;
+      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.element = void 0, _this.renderCounter = 0, _temp) || _this;
     }
 
     var _proto = Tabs.prototype;
@@ -37,7 +37,7 @@ define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/block/
 
       ++this.renderCounter;
 
-      if (this.data.tabs().length === this.renderCounter) {
+      if (this.previewData.tabs().length === this.renderCounter) {
         _underscore.delay(function () {
           return (0, _jquery)(_this2.element).tabs();
         }, 50);
@@ -53,10 +53,10 @@ define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/block/
     _proto.setupDataFields = function setupDataFields() {
       var _this3 = this;
 
-      _Block.prototype.setupDataFields.call(this);
+      _PreviewBlock.prototype.setupDataFields.call(this);
 
       this.updateDataValue("tabs", []);
-      this.data.tabs.subscribe(function (data) {
+      this.previewData.tabs.subscribe(function (data) {
         _this3.renderCounter = 0;
         (0, _jquery)(_this3.element).tabs("destroy");
       });

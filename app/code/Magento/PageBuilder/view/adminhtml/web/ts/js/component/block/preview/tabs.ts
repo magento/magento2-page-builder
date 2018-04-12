@@ -6,9 +6,9 @@
 import $ from "jquery";
 import "tabs";
 import _ from "underscore";
-import Block from "./block";
+import PreviewBlock from "./block";
 
-export default class Tabs extends Block {
+export default class Tabs extends PreviewBlock {
     private element: Element;
     private renderCounter: number = 0;
 
@@ -26,7 +26,8 @@ export default class Tabs extends Block {
      */
     public onTabRender() {
         ++this.renderCounter;
-        if (this.data.tabs().length === this.renderCounter) {
+
+        if (this.previewData.tabs().length === this.renderCounter) {
             _.delay(() => $(this.element).tabs(), 50);
             this.renderCounter = 0;
         }
@@ -39,7 +40,7 @@ export default class Tabs extends Block {
         super.setupDataFields();
 
         this.updateDataValue("tabs", []);
-        this.data.tabs.subscribe((data) => {
+        this.previewData.tabs.subscribe((data) => {
             this.renderCounter = 0;
             $(this.element).tabs("destroy");
         });
