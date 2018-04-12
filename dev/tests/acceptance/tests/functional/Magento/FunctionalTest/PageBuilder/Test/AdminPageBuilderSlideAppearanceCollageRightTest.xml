@@ -31,22 +31,21 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!--Edit First Slide opens when add Slider to stage-->
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
             <argument name="property" value="PageBuilderSlideDefaultPaddingTopProperty"/>
         </actionGroup>
@@ -131,10 +130,13 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
-        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideMessageProperty"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <seeElement selector="{{SlideOnBackend.collageBackgroundColor}}" stepKey="verifyCollageBackgroundColorInAdmin"/>
@@ -143,11 +145,10 @@
         <seeElement selector="{{SlideOnBackend.collageBackgroundRepeat}}" stepKey="verifyCollageBackgroundRepeatInAdmin"/>
         <seeElement selector="{{SlideOnBackend.collageBackgroundAttachment}}" stepKey="verifyCollageBackgroundAttachmentInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <!-- Validate settings persisted and appear on form -->
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementVisible time="5" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow" />
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <seeElementInDOM selector="{{SlideOnBackend.editFormBackgroundImagePreview}}" stepKey="seeBackgroundImageOnForm"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
             <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
@@ -173,7 +174,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentScrollOnForm">
             <argument name="property" value="PageBuilderSlideBackgroundAttachmentScrollProperty"/>
         </actionGroup>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection2"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearanceCollageRightOnForm">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -222,9 +223,11 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <!-- Validate settings on frontend -->
-        <comment userInput="Validate slide on frontend" stepKey="goToFrontend"/>
-        <amOnPage url="Slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
         <seeElement selector="{{SlideOnFrontend.slideBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
@@ -277,22 +280,21 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!--Edit First Slide opens when add Slider to stage-->
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
             <argument name="property" value="PageBuilderSlideDefaultPaddingTopProperty"/>
         </actionGroup>
@@ -324,11 +326,16 @@
             <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="Slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
@@ -364,22 +371,21 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!--Edit First Slide opens when add Slider to stage-->
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeDefaultPaddingTopInAdmin">
             <argument name="property" value="PageBuilderSlideDefaultPaddingTopProperty"/>
         </actionGroup>
@@ -408,11 +414,16 @@
             <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="Slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
@@ -448,20 +459,18 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!--Edit First Slide opens when add Slider to stage-->
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
-        <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection"/>
-        <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner1"/>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -504,16 +513,15 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <executeJS function="tinymce.activeEditor.setContent('Good Night!')" stepKey="addTextToWYSIWYG"/>
-        <click selector="{{TextOnBackend.triggerValidation}}" stepKey="clickToTriggerValidation"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner2"/>
+        <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
+            <argument name="property" value="PageBuilderSlideMessageProperty"/>
+            <argument name="section" value="SlideOnConfigurationPanel"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner4"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
         <seeElement selector="{{SlideOnBackend.backgroundImageSource(PageBuilderSlideBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
@@ -546,17 +554,17 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!--Edit First Slide opens when add Slider to stage-->
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -576,9 +584,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
         </actionGroup>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideNewTabProperty.section, PageBuilderSlideNewTabProperty.fieldName)}}" stepKey="waitForElementVisible" />
-        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderSlideNewTabProperty.fieldName)}}" stepKey="clickProperty"/>
-        <wait time="1" stepKey="waitForClick3"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterSlideNewTab">
+            <argument name="property" value="PageBuilderSlideNewTabProperty"/>
+        </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeSecondaryProperty">
             <argument name="property" value="PageBuilderSlideButtonTypeSecondaryProperty"/>
         </actionGroup>
@@ -600,17 +608,17 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <waitForPageLoad stepKey="waitForCmsPageToSave"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab" />
-        <!-- Validate settings on backend -->
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOverlayBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOverlayBackend"/>
-        <!-- check button fields -->
         <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <dontSeeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideButtonTextProperty.section, PageBuilderSlideButtonTextProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm2">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
@@ -621,9 +629,11 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeSlideButtonTypeProperty2">
             <argument name="property" value="PageBuilderSlideButtonTypePrimaryProperty"/>
         </actionGroup>
-        <!-- Validate settings on frontend -->
-        <comment userInput="Validate slide on frontend" stepKey="goToFrontend"/>
-        <amOnPage url="Slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend9"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
@@ -667,17 +677,17 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!--Edit First Slide opens when add Slider to stage-->
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -718,7 +728,8 @@
             <argument name="property" value="PageBuilderSlideButtonTypePrimaryProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate settings on backend -->
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonText"/>
@@ -727,10 +738,11 @@
         <waitForElement time="2" selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="waitForOnHoverButtonText" />
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonText"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Validate settings on frontend -->
-        <comment userInput="Validate slide on frontend" stepKey="goToFrontend"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="Slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend5"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
@@ -777,17 +789,17 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!--Edit First Slide opens when add Slider to stage-->
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -810,17 +822,19 @@
             <argument name="property" value="PageBuilderSlideShowContentOverlayNeverShowProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate settings on backend -->
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.collageRight}}" stepKey="moveMouseOverBackendSlide"/>
         <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyStillDontSeeOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Validate settings on frontend -->
-        <comment userInput="Validate slide on frontend" stepKey="goToFrontend"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="Slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend9"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
@@ -864,17 +878,17 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!--Edit First Slide opens when add Slider to stage-->
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -903,7 +917,8 @@
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate settings on backend -->
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -912,10 +927,11 @@
         <waitForElement time="2" selector="{{SlideOnBackend.collageOverlay}}" stepKey="waitForOnHoverOverlayBackend" />
         <seeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Validate settings on frontend -->
-        <comment userInput="Validate slide on frontend" stepKey="goToFrontend"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="Slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend7"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
@@ -962,17 +978,17 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <!--Edit First Slide opens when add Slider to stage-->
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <waitForElementVisible time="3" selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm"/>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterAppearanceProperty">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -1013,7 +1029,8 @@
             <argument name="property" value="PageBuilderSlideOverlayTransparencyProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Validate settings on backend -->
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.collageRight}}" stepKey="waitForCollageRightInAdmin" />
         <seeElement selector="{{SlideOnBackend.collageRight}}" stepKey="verifyCollageRightInAdmin"/>
         <dontSeeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifyDontSeeOverlayBackend"/>
@@ -1024,10 +1041,11 @@
         <seeElement selector="{{SlideOnBackend.collageOverlay}}" stepKey="verifySeeOnHoverOverlayBackend"/>
         <seeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifySeeOnHoverButtonTextBackend"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Validate settings on frontend -->
-        <comment userInput="Validate slide on frontend" stepKey="goToFrontend"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage"/>
-        <amOnPage url="Slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide}}" stepKey="verifySlideInFrontend"/>
         <waitForElementVisible time="3" selector="{{SlideOnFrontend.collageRight}}" stepKey="waitForCollageRightInFrontend11"/>
         <seeElement selector="{{SlideOnFrontend.collageRight}}" stepKey="verifyCollageRightInFrontend"/>
@@ -1078,18 +1096,19 @@
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Add slider button -->
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="waitForMediaGroup" />
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterCollageRightAppearance">
             <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
@@ -1097,20 +1116,24 @@
             <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Verify on stage and admin panel -->
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
         <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
         <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
         <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
             <argument name="property" value="PageBuilderSlideButtonTextProperty2"/>
         </actionGroup>
-        <!--Verify in storefront -->
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <see userInput="{{PageBuilderPageTitle.pageName}}" selector="{{CmsNewPagePageActionsSection.cmsPageTitle}}" stepKey="assertTitleSavedCmsPage2"/>
-        <amOnPage url="slider{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SliderOnFrontend.buttonText(PageBuilderSlideButtonTextProperty2.value)}}" stepKey="seeButtonTextStorefront"/>
     </test>
 </tests>

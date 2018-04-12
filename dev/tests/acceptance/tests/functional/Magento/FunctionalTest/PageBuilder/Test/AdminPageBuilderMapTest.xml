@@ -55,7 +55,7 @@
         <actionGroup ref="validateMapButtons" stepKey="validateMapButtons2"/>
         <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPinStage2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Verify Default Map in Storefront -->
         <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
@@ -272,7 +272,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -437,7 +437,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -545,7 +545,7 @@
         <grabValueFrom selector="{{MapOnConfigurationPanel.position}}" stepKey="mapPositionEditPanel2"/>
         <assertRegExp expected="{{PageBuilderMapPositionDefaultProperty.position}}" actual="mapPositionEditPanel" actualType="variable" message="actual=$mapPositionEditPanel" stepKey="assertPinPosition2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Storefront: Verify Pin Position -->
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPin3">
@@ -600,7 +600,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
         <!-- Check Storefront -->
@@ -655,7 +655,7 @@
         <!-- Storefront: Get Initial Pin Location -->
         <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStoreFront"/>
         <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="grabPinLocationStoreFront"/>
@@ -696,7 +696,7 @@
         <!-- Storefront: Verify Pin Location Moved On Storefront -->
         <switchToNextTab stepKey="switchToNextTab2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStoreFront2"/>
         <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
@@ -839,7 +839,7 @@
         <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsStage"/>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront After Save -->
         <comment userInput="Validate Storefront After Save" stepKey="commentValidateStorefront"/>
@@ -982,7 +982,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Verify Storefront -->
         <actionGroup ref="validateMap" stepKey="validateDuplicateOnStoreFront">
@@ -1049,7 +1049,7 @@
         <!-- Verify Map Not In Stage -->
         <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderMapContentBlock.role, '1')}}" stepKey="dontSeeContentBlockInStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Verify Map Not In Storefront -->
         <dontSeeElementInDOM selector="{{MapOnStorefront.base('1')}}" stepKey="dontSeeContentBlockInStorefront"/>
