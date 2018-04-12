@@ -128,7 +128,7 @@
 
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="seeButtonLinkSelect"/>
-        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderButtonItemLinkProperty.section, PageBuilderButtonItemLinkProperty.fieldName)}}" userInput="{{CategoryLink.value}}" stepKey="selectOption" />
+        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderButtonItemLinkProperty.section, PageBuilderButtonItemLinkProperty.fieldName)}}" userInput="Category" stepKey="selectOption" />
 
         <!--See dropdown beside Button Link Select-->
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
@@ -233,7 +233,7 @@
 
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="waitForButtonLinkSelect"/>
         <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="seeButtonLinkSelect"/>
-        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderButtonItemLinkProperty.section, PageBuilderButtonItemLinkProperty.fieldName)}}" userInput="{{ProductLink.value}}" stepKey="selectOption" />
+        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderButtonItemLinkProperty.section, PageBuilderButtonItemLinkProperty.fieldName)}}" userInput="Product" stepKey="selectOption" />
 
         <!--See dropdown beside Button Link Select-->
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
@@ -300,8 +300,8 @@
         <annotations>
             <features value="[CMS] Bluefoot Image MAGETWO-83833"/>
             <stories value="[UI Component] URL Input: CMS Link MAGETWO-MAGETWO-88960"/>
-            <title value="Admin are able to add  link into PageBuilder content"/>
-            <description value="Admin are able to add CMS  link into PageBuilder content"/>
+            <title value="Admin are able to add CMS Page link into PageBuilder content"/>
+            <description value="Admin are able to add CMS Page link into PageBuilder content"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90276"/>
             <group value="pagebuilder"/>
@@ -359,7 +359,7 @@
         <seeInField  selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="cm" stepKey="seeSearchNotCleared"/>
         <seeElement selector="{{PageBuilderButtonLinkSection.ButtonLinkItemSelected($createCMSPageA.title$)}}" stepKey="seeSearchResultHighlighted" />
 
-        <!--Select another product from dropdown-->
+        <!--Select another page from dropdown-->
         <click selector="{{PageBuilderButtonLinkSection.SearchResult($createCMSPageB.title$)}}" stepKey="clickCMSPageBOnSearchResult"/>
         <grabTextFrom selector="{{PageBuilderButtonLinkSection.DropdownInput}}" stepKey="textFromDropDown2"/>
         <assertEquals stepKey="assertEquals2" message="pass">
@@ -373,11 +373,12 @@
         <!--Go to storefront to verify CMS Page Link-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <waitForPageLoad  stepKey="waitForPageLoad1"/>
-        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.ProductLink($createCMSPageB.title$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <seeElement selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink($createCMSPageB.title$)}}" stepKey="seePageLinkOnStoreFront" />
         <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="$createCMSPageB.title$" stepKey="seePageName" />
 
+        <!--Verify Link when Page get deleted -->
         <deleteData createDataKey="createCMSPageB" stepKey="deleteCreatedCMSPageB" />
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
