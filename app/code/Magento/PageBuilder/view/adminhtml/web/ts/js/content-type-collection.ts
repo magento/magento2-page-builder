@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import ko from "knockout";
 import {ConfigContentBlock} from "./component/config";
 import EventBus from "./component/event-bus";
 import ContentTypeCollectionInterface from "./content-type-collection.d";

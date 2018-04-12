@@ -13,7 +13,7 @@ import $ from "jquery";
 import ko from "knockout";
 import Config from "../../config";
 import EventBus from "../../event-bus";
-import {BlockMountEventParams} from "../../stage/structural/editable-area";
+import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
 import ColumnGroup from "./column-group";
@@ -80,7 +80,7 @@ export default class Column extends PreviewBlock {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column-group")) {
-            EventBus.on("column:block:mount", (event: Event, params: BlockMountEventParams) => {
+            EventBus.on("column:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
                 if (params.id === this.id) {
                     this.createColumnGroup();
                 }

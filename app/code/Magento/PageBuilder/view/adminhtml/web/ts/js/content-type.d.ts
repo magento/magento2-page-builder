@@ -3,11 +3,13 @@
  * See COPYING.txt for license details.
  */
 
+import Config from "./component/config";
+
 export interface ContentTypeInterface {
     id: string;
     stageId: string;
     parent: ContentTypeInterface;
-    config: {},
+    config: Config,
     data: {},
     preview: {}
 }

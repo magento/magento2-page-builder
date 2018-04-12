@@ -449,10 +449,6 @@ export default class PreviewBlock {
      * @returns {boolean}
      */
     private isConfigured() {
-        if (this.parent.children && this.parent.children().length > 0) {
-            return true;
-        }
-
         const data = this.parent.store.get(this.parent.id);
         let hasDataChanges = false;
         _.each(this.parent.config.fields, (field, key: string) => {

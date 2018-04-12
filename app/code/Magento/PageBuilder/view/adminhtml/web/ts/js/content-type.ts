@@ -5,16 +5,11 @@
 
 import ko from "knockout";
 import mageUtils from "mageUtils";
-import _ from "underscore";
-import DataConverterPool from "./component/block/data-converter-pool";
-import ElementConverterPool from "./component/block/element-converter-pool";
 import PreviewBlock from "./component/block/preview/block";
 import {ConfigContentBlock} from "./component/config";
 import DataStore from "./component/data-store";
 import EventBus from "./component/event-bus";
-import getPreviewInstance from "./component/stage/previews";
 import ContentTypeInterface from "./content-type.d";
-import Content from "./content";
 
 export default class ContentType implements ContentTypeInterface {
     public id: string = mageUtils.uniqueid();

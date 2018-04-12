@@ -12,7 +12,8 @@ import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 import Block from "../block";
-import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
+import BlockCreateEventParamsInterface from "../block-create-event-params.d";
+import BlockReadyEventParamsInterface from "../block-ready-event-params.d";
 import PreviewBlock from "./block";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
@@ -85,7 +86,7 @@ export default class Slider extends PreviewBlock {
 
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
-        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
+        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
             if (params.id === this.parent.id) {
                 sliderReady = true;
             }
@@ -111,7 +112,7 @@ export default class Slider extends PreviewBlock {
             }
         });
         // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
-        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParams) => {
+        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParamsInterface) => {
             if (this.element && sliderReady && params.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }

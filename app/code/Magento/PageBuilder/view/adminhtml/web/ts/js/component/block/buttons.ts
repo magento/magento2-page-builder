@@ -7,7 +7,7 @@ import delayedPromise from "../../utils/delayed-promise";
 import createBlock from "../block/factory";
 import Config from "../config";
 import EventBus from "../event-bus";
-import {BlockMountEventParams} from "../stage/structural/editable-area";
+import BlockMountEventParamsInterface from "./block-mount-event-params.d";
 import ContentTypeCollection from "../../content-type-collection";
 
 export default class Buttons extends ContentTypeCollection {
@@ -15,7 +15,7 @@ export default class Buttons extends ContentTypeCollection {
     public bindEvents() {
         super.bindEvents();
 
-        EventBus.on("buttons:block:ready", (event: Event, params: BlockMountEventParams) => {
+        EventBus.on("buttons:block:ready", (event: Event, params: BlockMountEventParamsInterface) => {
             if (params.id === this.id && this.children().length === 0) {
                 this.addButton();
             }
