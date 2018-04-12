@@ -45,7 +45,10 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
 
           _eventBus.on("tab-item:block:mount", mountFunction);
 
-          _this.addChild(tab, _this.children().length);
+          _this.addChild(tab, _this.children().length); // Update the default tab title when adding a new tab
+
+
+          _this.parent.stage.store.updateKey(tab.id, (0, _translate)("Tab") + " " + (_this.children.indexOf(tab) + 1), "tab_name");
         });
       });
     };

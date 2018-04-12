@@ -22,31 +22,4 @@ export default class TabItem extends Block {
         options.removeOption("title");
         return options;
     }
-
-    /**
-     * Bind events for the current instance
-     */
-    protected bindEvents() {
-        super.bindEvents();
-        // Block being mounted onto container
-        EventBus.on("tab-item:block:mount", (event: Event, params: BlockReadyEventParams) => {
-            if (params.id === this.id) {
-                this.updateDefaultTabName();
-            }
-        });
-    }
-
-    /**
-     * Update the name of the tab to Tab N if it has no title
-     */
-    private updateDefaultTabName() {
-        const data = this.parent.stage.store.get(this.id);
-        if (!data.tab_name) {
-            this.parent.stage.store.updateKey(
-                this.id,
-                $t("Tab") + " " + (this.parent.children.indexOf(this) + 1),
-                "tab_name",
-            );
-        }
-    }
 }

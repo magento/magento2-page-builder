@@ -58,6 +58,13 @@ export default class Tabs extends Block {
                 };
                 EventBus.on("tab-item:block:mount", mountFunction);
                 this.addChild(tab, this.children().length);
+
+                // Update the default tab title when adding a new tab
+                this.parent.stage.store.updateKey(
+                    tab.id,
+                    $t("Tab") + " " + (this.children.indexOf(tab) + 1),
+                    "tab_name",
+                );
             });
         });
     }
