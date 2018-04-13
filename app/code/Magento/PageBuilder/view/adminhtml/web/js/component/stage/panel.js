@@ -79,6 +79,31 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
       }
     };
     /**
+     * Traverse up to the WYSIWYG component and set as full screen
+     */
+
+
+    _proto.fullScreen = function fullScreen() {
+      _eventBus.trigger("pagebuilder:toggleFullScreen:" + this.parent.id, {});
+    };
+    /**
+     * Collapse the panel into the side of the UI
+     */
+
+
+    _proto.collapse = function collapse() {
+      this.isCollapsed(!this.isCollapsed());
+    };
+    /**
+     * Clear Search Results
+     */
+
+
+    _proto.clearSearch = function clearSearch() {
+      this.searchValue("");
+      this.searching(false);
+    };
+    /**
      * Populate the panel with the content blocks
      */
 
@@ -117,31 +142,6 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
       } else {
         console.warn("Configuration is not properly initialized, please check the Ajax response.");
       }
-    };
-    /**
-     * Traverse up to the WYSIWYG component and set as full screen
-     */
-
-
-    _proto.fullScreen = function fullScreen() {
-      _eventBus.trigger("pagebuilder:toggleFullScreen:" + this.parent.id, {});
-    };
-    /**
-     * Collapse the panel into the side of the UI
-     */
-
-
-    _proto.collapse = function collapse() {
-      this.isCollapsed(!this.isCollapsed());
-    };
-    /**
-     * Clear Search Results
-     */
-
-
-    _proto.clearSearch = function clearSearch() {
-      this.searchValue("");
-      this.searching(false);
     };
 
     return Panel;

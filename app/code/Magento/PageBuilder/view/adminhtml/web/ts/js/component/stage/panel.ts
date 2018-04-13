@@ -89,9 +89,31 @@ export default class Panel implements PanelInterface {
     }
 
     /**
+     * Traverse up to the WYSIWYG component and set as full screen
+     */
+    public fullScreen(): void {
+        EventBus.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`, {});
+    }
+
+    /**
+     * Collapse the panel into the side of the UI
+     */
+    public collapse(): void {
+        this.isCollapsed(!this.isCollapsed());
+    }
+
+    /**
+     * Clear Search Results
+     */
+    public clearSearch(): void {
+        this.searchValue("");
+        this.searching(false);
+    }
+
+    /**
      * Populate the panel with the content blocks
      */
-    public populateContentBlocks(): void {
+    private populateContentBlocks(): void {
         const groups = Config.getInitConfig("groups");
         const contentBlocks = Config.getInitConfig("content_types");
 
@@ -127,27 +149,5 @@ export default class Panel implements PanelInterface {
         } else {
             console.warn( "Configuration is not properly initialized, please check the Ajax response." );
         }
-    }
-
-    /**
-     * Traverse up to the WYSIWYG component and set as full screen
-     */
-    public fullScreen(): void {
-        EventBus.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`, {});
-    }
-
-    /**
-     * Collapse the panel into the side of the UI
-     */
-    public collapse(): void {
-        this.isCollapsed(!this.isCollapsed());
-    }
-
-    /**
-     * Clear Search Results
-     */
-    public clearSearch(): void {
-        this.searchValue("");
-        this.searching(false);
     }
 }

@@ -10,11 +10,11 @@ export class Option implements OptionInterface {
     public classes: string;
     public code: string;
     public icon: string;
-    public parent: Structural;
     public sort: number;
     public title: string;
     public action: () => void;
     public optionTemplate: string;
+    private parent: Structural;
 
     /**
      * Option constructor

@@ -27,11 +27,11 @@ define([], function () {
       this.classes = void 0;
       this.code = void 0;
       this.icon = void 0;
-      this.parent = void 0;
       this.sort = void 0;
       this.title = void 0;
       this.action = void 0;
       this.optionTemplate = void 0;
+      this.parent = void 0;
       this.parent = parent;
       this.code = code;
       this.icon = icon;
