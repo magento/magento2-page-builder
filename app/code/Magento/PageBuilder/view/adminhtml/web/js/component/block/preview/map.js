@@ -1,14 +1,14 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_map, _eventBus, _block) {
+define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/event-bus"], function (_map, _preview, _eventBus) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Map =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Map, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Map, _Preview);
 
     function Map() {
-      return _PreviewBlock.apply(this, arguments) || this;
+      return _Preview.apply(this, arguments) || this;
     }
 
     var _proto = Map.prototype;
@@ -19,7 +19,7 @@ define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/component/ev
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      _PreviewBlock.prototype.bindEvents.call(this); // When a map is dropped for the first time open the edit panel
+      _Preview.prototype.bindEvents.call(this); // When a map is dropped for the first time open the edit panel
 
 
       _eventBus.on("map:block:dropped:create", function (event, params) {
@@ -123,7 +123,7 @@ define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/component/ev
     };
 
     return Map;
-  }(_block);
+  }(_preview);
 
   return Map;
 });

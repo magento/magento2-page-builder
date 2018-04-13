@@ -1,81 +1,58 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/convert", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/stage/edit", "Magento_PageBuilder/js/component/stage/structural/options", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/stage/structural/options/title", "Magento_PageBuilder/js/component/block/preview/sortable/binding"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _underscore, _liveEdit, _convert, _appearanceConfig, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _edit, _options, _option, _title, _binding) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/component/block/preview/sortable/binding", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/stage/edit", "Magento_PageBuilder/js/component/stage/structural/options", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/stage/structural/options/title"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _underscore, _liveEdit, _appearanceConfig, _binding, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _edit, _options, _option, _title) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  var PreviewBlock =
+  var Preview =
   /*#__PURE__*/
   function () {
     /**
-     * PreviewBlock constructor
-     *
-     * @param {Block} parent
-     * @param {object} config
+     * @deprecated
      */
-    function PreviewBlock(parent, config, elementConverterPool, dataConverterPool) {
-      var _this = this;
 
+    /**
+     * @deprecated
+     */
+
+    /**
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    function Preview(parent, config, observableUpdater) {
       this.parent = void 0;
       this.config = void 0;
-      this.previewData = {};
       this.data = {};
       this.displayLabel = void 0;
-      this.previewStyle = void 0;
       this.edit = void 0;
-      this.title = (0, _translate)("Editable");
-      this.elementConverterPool = void 0;
-      this.dataConverterPool = void 0;
+      this.previewData = {};
+      this.previewStyle = void 0;
+      this.observableUpdater = void 0;
       this.mouseover = false;
-      this.convert = void 0;
-      this.elementConverterPool = elementConverterPool;
-      this.dataConverterPool = dataConverterPool;
-      var styleAttributeMapper = new _styleAttributeMapper();
-      var styleAttributeFilter = new _styleAttributeFilter();
       this.parent = parent;
-      this.config = config || {};
-      this.displayLabel = _knockout.observable(this.config.label); // Create a new instance of edit for our editing needs
-
+      this.config = config;
       this.edit = new _edit(this.parent, this.parent.store);
-      this.convert = new _convert(this.elementConverterPool, this.dataConverterPool);
-      this.setupDataFields(); // Calculate the preview style utilising the style attribute mapper & appearance system
-
-      this.previewStyle = _knockout.computed(function () {
-        var data = _underscore.mapObject(_this.previewData, function (value) {
-          if (_knockout.isObservable(value)) {
-            return value();
-          }
-
-          return value;
-        });
-
-        if (typeof data.appearance !== "undefined" && typeof config.appearances !== "undefined" && typeof config.appearances[data.appearance] !== "undefined") {
-          _underscore.extend(data, config.appearances[data.appearance]);
-        } // Extract data values our of observable functions
-
-
-        return _this.afterStyleMapped(styleAttributeMapper.toDom(styleAttributeFilter.filter(data)));
-      });
-      Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
-        if (_knockout.isObservable(_this.previewData[key])) {
-          _this.previewData[key].subscribe(function () {
-            _this.previewStyle.notifySubscribers();
-          });
-        }
-      });
+      this.observableUpdater = observableUpdater;
+      this.displayLabel = _knockout.observable(this.config.label);
+      this.setupDataFields();
       this.bindEvents();
-      this.bindUpdatePreviewObservablesOnChange();
     }
+    /**
+     * Retrieve the preview template
+     *
+     * @returns {string}
+     */
+
+
+    var _proto = Preview.prototype;
+
     /**
      * Update data store
      *
      * @param {string} key
      * @param {string} value
      */
-
-
-    var _proto = PreviewBlock.prototype;
-
     _proto.updateData = function updateData(key, value) {
       var data = this.parent.store.get(this.parent.id);
       data[key] = value;
@@ -86,6 +63,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
      *
      * @param {string} key
      * @param value
+     * @deprecated
      */
 
 
@@ -133,12 +111,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.onMouseOut = function onMouseOut(context, event) {
-      var _this2 = this;
+      var _this = this;
 
       this.mouseover = false;
 
       _underscore.delay(function () {
-        if (!_this2.mouseover) {
+        if (!_this.mouseover) {
           var currentTarget = event.currentTarget;
           var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 
@@ -156,6 +134,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
      * After children render fire an event
      *
      * @param {Element} element
+     * @deprecated
      */
 
 
@@ -280,19 +259,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.onOptionRemove = function onOptionRemove() {
-      var _this3 = this;
+      var _this2 = this;
 
       var removeBlock = function removeBlock() {
         var params = {
-          block: _this3.parent,
-          index: _this3.parent.parent.getChildren().indexOf(_this3.parent),
-          parent: _this3.parent.parent,
-          stageId: _this3.parent.stageId
+          block: _this2.parent,
+          index: _this2.parent.parent.getChildren().indexOf(_this2.parent),
+          parent: _this2.parent.parent,
+          stageId: _this2.parent.stageId
         };
 
         _eventBus.trigger("block:removed", params);
 
-        _eventBus.trigger(_this3.parent.config.name + ":block:removed", params);
+        _eventBus.trigger(_this2.parent.config.name + ":block:removed", params);
       };
 
       if (this.isConfigured()) {
@@ -339,17 +318,55 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.bindEvents = function bindEvents() {
+      var _this3 = this;
+
       _eventBus.on("block:sortStart", this.onSortStart.bind(this.parent));
+
+      this.parent.store.subscribe(function (data) {
+        _this3.observableUpdater.update(_this3, _underscore.extend({}, _this3.parent.store.get(_this3.parent.id)), "preview");
+
+        _eventBus.trigger("previewObservables:updated", {
+          preview: _this3
+        });
+      }, this.parent.id);
     };
     /**
      * Setup fields observables within the data class property
+     *
+     * @deprecated
      */
 
 
     _proto.setupDataFields = function setupDataFields() {
       var _this4 = this;
 
-      // Create an empty observable for all fields
+      var styleAttributeMapper = new _styleAttributeMapper();
+      var styleAttributeFilter = new _styleAttributeFilter(); // Calculate the preview style utilising the style attribute mapper & appearance system
+
+      this.previewStyle = _knockout.computed(function () {
+        var data = _underscore.mapObject(_this4.previewData, function (value) {
+          if (_knockout.isObservable(value)) {
+            return value();
+          }
+
+          return value;
+        });
+
+        if (typeof data.appearance !== "undefined" && typeof _this4.config.appearances !== "undefined" && typeof _this4.config.appearances[data.appearance] !== "undefined") {
+          _underscore.extend(data, _this4.config.appearances[data.appearance]);
+        } // Extract data values our of observable functions
+
+
+        return _this4.afterStyleMapped(styleAttributeMapper.toDom(styleAttributeFilter.filter(data)));
+      });
+      Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
+        if (_knockout.isObservable(_this4.previewData[key])) {
+          _this4.previewData[key].subscribe(function () {
+            _this4.previewStyle.notifySubscribers();
+          });
+        }
+      }); // Create an empty observable for all fields
+
       if (this.config.fields) {
         _underscore.keys(this.config.fields).forEach(function (key) {
           _this4.updateDataValue(key, "");
@@ -368,6 +385,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
      *
      * @param {StyleAttributeMapperResult} styles
      * @returns {StyleAttributeMapperResult}
+     * @deprecated
      */
 
 
@@ -375,17 +393,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       return styles;
     };
     /**
-     * Retrieve the preview template
-     *
-     * @returns {string}
-     */
-
-
-    /**
      * Does the current instance have any children or values different from the default for it's type?
      *
      * @returns {boolean}
      */
+
+
     _proto.isConfigured = function isConfigured() {
       var data = this.parent.store.get(this.parent.id);
       var hasDataChanges = false;
@@ -420,34 +433,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
       return hasDataChanges;
     };
-    /**
-     * Attach event to updating data in data store to update observables
-     */
 
-
-    _proto.bindUpdatePreviewObservablesOnChange = function bindUpdatePreviewObservablesOnChange() {
-      var _this5 = this;
-
-      this.parent.store.subscribe(function (data) {
-        _this5.convert.updatePreviewObservables(_this5, _underscore.extend({}, _this5.parent.store.get(_this5.parent.id)));
-
-        _eventBus.trigger("previewObservables:updated", {
-          preview: _this5
-        });
-      }, this.parent.id);
-    };
-
-    _createClass(PreviewBlock, [{
+    _createClass(Preview, [{
       key: "previewTemplate",
       get: function get() {
         var appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
-        var template = (0, _appearanceConfig)(this.config.name, appearance).preview_template;
-
-        if (undefined === template) {
-          template = "Magento_PageBuilder/component/block/preview/abstract.html";
-        }
-
-        return template;
+        return (0, _appearanceConfig)(this.config.name, appearance).preview_template;
       }
       /**
        * Retrieve the preview child template
@@ -462,9 +453,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       }
     }]);
 
-    return PreviewBlock;
+    return Preview;
   }();
 
-  return PreviewBlock;
+  return Preview;
 });
-//# sourceMappingURL=block.js.map
+//# sourceMappingURL=preview.js.map

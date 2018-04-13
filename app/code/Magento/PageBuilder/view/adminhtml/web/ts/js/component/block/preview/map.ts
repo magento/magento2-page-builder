@@ -4,10 +4,10 @@
  */
 
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
+import Preview from "../../../preview";
 import EventBus from "../../event-bus";
-import PreviewBlock from "./block";
 
-export default class Map extends PreviewBlock {
+export default class Map extends Preview {
 
     /**
      * Open edit menu on map content type drop with a delay of 300ms

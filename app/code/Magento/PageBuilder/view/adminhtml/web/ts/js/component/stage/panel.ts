@@ -14,7 +14,6 @@ import PageBuilder from "../page-builder";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
 import { Block as GroupBlock } from "./panel/group/block";
-import { load as loadPreviews } from "./previews";
 
 export default class Panel implements PanelInterface {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
@@ -35,7 +34,6 @@ export default class Panel implements PanelInterface {
         this.parent = parent;
         this.id = this.parent.id;
         this.initListeners();
-        loadPreviews();
     }
 
     /**

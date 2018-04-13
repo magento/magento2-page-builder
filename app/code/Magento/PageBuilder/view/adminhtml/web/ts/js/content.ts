@@ -4,46 +4,48 @@
  */
 
 import _ from "underscore";
-import DataConverterPool from "./component/block/data-converter-pool";
-import ElementConverterPool from "./component/block/element-converter-pool";
-import {DataObject} from "./component/data-store";
 import appearanceConfig from "./component/block/appearance-config";
-import {fromSnakeToCamelCase} from "./utils/string";
+import {DataObject} from "./component/data-store";
 import AttributeFilter from "./component/format/attribute-filter";
 import AttributeMapper from "./component/format/attribute-mapper";
 import StyleAttributeFilter from "./component/format/style-attribute-filter";
 import StyleAttributeMapper from "./component/format/style-attribute-mapper";
-import Convert from "./convert";
+import ContentTypeInterface from "./content-type.d";
+import ObservableUpdater from "./observable-updater";
 
 export default class Content {
     public data = {};
-    private parent;
-    private elementConverterPool: ElementConverterPool;
-    private dataConverterPool: DataConverterPool;
+    private parent: ContentTypeInterface;
+    private observableUpdater: ObservableUpdater;
+    /**
+     * @deprecated
+     */
     private attributeFilter: AttributeFilter = new AttributeFilter();
+    /**
+     * @deprecated
+     */
     private attributeMapper: AttributeMapper =  new AttributeMapper();
+    /**
+     * @deprecated
+     */
     private styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
+    /**
+     * @deprecated
+     */
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();
 
     /**
-     * @param parent
-     * @param elementConverterPool
-     * @param dataConverterPool
+     * @param {ContentTypeInterface} parent
+     * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent,
-        elementConverterPool: ElementConverterPool,
-        dataConverterPool: DataConverterPool,
+        parent: ContentTypeInterface,
+        observableUpdater: ObservableUpdater,
     ) {
         this.parent = parent;
-        this.elementConverterPool = elementConverterPool;
-        this.dataConverterPool = dataConverterPool;
-
-        this.convert = new Convert(this.elementConverterPool, this.dataConverterPool);
-
-        this.bindUpdatePreviewObservablesOnChange();
+        this.observableUpdater = observableUpdater;
+        this.bindEvents();
     }
-
 
     /**
      * Retrieve the render template
@@ -51,11 +53,7 @@ export default class Content {
      * @returns {string}
      */
     get renderTemplate(): string {
-        let template = appearanceConfig(this.parent.config.name, this.getData().appearance).render_template;
-        if (undefined === template) {
-            template = "Magento_PageBuilder/component/block/render/abstract.html";
-        }
-        return template;
+        return appearanceConfig(this.parent.config.name, this.getData().appearance).render_template;
     }
 
     /**
@@ -71,6 +69,7 @@ export default class Content {
      * Get data for css binding, example {"class-name": true}
      *
      * @returns {DataObject}
+     * @deprecated
      */
     public getCss(element: string) {
         const result: object = {};
@@ -98,6 +97,7 @@ export default class Content {
      * Get data for style binding, example {"backgroundColor": "#cccccc"}
      *
      * @returns {DataObject}
+     * @deprecated
      */
     public getStyle(element: string) {
         let data = _.extend({}, this.parent.store.get(this.parent.id), this.parent.config);
@@ -113,11 +113,11 @@ export default class Content {
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;
 
-        data = this.convert.convertData(data, appearanceConfiguration.data_mapping.converters);
+        data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
 
         let result = {};
         if (config[element].style.length) {
-            result = this.convert.convertStyle(config[element], data, "master");
+            result = this.observableUpdater.convertStyle(config[element], data, "master");
         }
         return result;
     }
@@ -126,6 +126,7 @@ export default class Content {
      * Get data for attr binding, example {"data-role": "element"}
      *
      * @returns {DataObject}
+     * @deprecated
      */
     public getAttributes(element: string) {
         let data = _.extend({}, this.parent.store.get(this.parent.id), this.parent.config);
@@ -141,11 +142,11 @@ export default class Content {
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;
 
-        data = this.convert.convertData(data, appearanceConfiguration.data_mapping.converters);
+        data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
 
         let result = {};
         if (config[element].attributes.length) {
-            result = this.convert.convertAttributes(config[element], data, "master");
+            result = this.observableUpdater.convertAttributes(config[element], data, "master");
         }
 
         return result;
@@ -156,13 +157,14 @@ export default class Content {
      *
      * @param {string} element
      * @returns {object}
+     * @deprecated
      */
     public getHtml(element: string) {
         const data = this.parent.store.get(this.parent.id);
         const config = appearanceConfig(this.parent.config.name, data.appearance).data_mapping.elements[element];
         let result = "";
         if (undefined !== config.html.var) {
-            result = this.convert.convertHtml(config, data, "master");
+            result = this.observableUpdater.convertHtml(config, data, "master");
         }
         return result;
     }
@@ -172,6 +174,7 @@ export default class Content {
      *
      * @param {string} element
      * @returns {DataObject}
+     * @deprecated
      */
     public getData(element: string) {
         let data = _.extend({}, this.parent.store.get(this.parent.id));
@@ -183,7 +186,7 @@ export default class Content {
         const appearanceConfiguration = appearanceConfig(this.parent.config.name, data.appearance);
         const config = appearanceConfiguration.data_mapping.elements;
 
-        data = this.convert.convertData(data, appearanceConfiguration.data_mapping.converters);
+        data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
 
         const result = {};
         if (undefined !== config[element].tag.var) {
@@ -195,12 +198,12 @@ export default class Content {
     /**
      * Attach event to updating data in data store to update observables
      */
-    private bindUpdatePreviewObservablesOnChange(): void {
+    private bindEvents(): void {
         this.parent.store.subscribe(
             (data: DataObject) => {
-                this.convert.updatePreviewObservables(
+                this.observableUpdater.update(
                     this,
-                    _.extend({name: this.parent.config.name}, this.parent.store.get(this.parent.id))
+                    _.extend({name: this.parent.config.name}, this.parent.store.get(this.parent.id)),
                 );
             },
             this.parent.id,

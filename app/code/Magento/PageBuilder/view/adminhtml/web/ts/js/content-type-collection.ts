@@ -3,26 +3,30 @@
  * See COPYING.txt for license details.
  */
 
-import {ConfigContentBlock} from "./component/config";
-import EventBus from "./component/event-bus";
-import ContentTypeCollectionInterface from "./content-type-collection.d";
-import ContentType from "./content-type";
-import ContentTypeInterface from "./content-type.d";
 import Collection from "./collection";
+import EventBus from "./component/event-bus";
+import ContentType from "./content-type";
+import ContentTypeCollectionInterface from "./content-type-collection.d";
+import ContentTypeInterface from "./content-type.d";
 
 export default class ContentTypeCollection extends ContentType implements ContentTypeCollectionInterface {
     private collection: Collection = new Collection();
 
+    /**
+     * @param parent
+     * @param config
+     * @param stageId
+     */
     constructor(
         parent: ContentTypeInterface,
         config: ConfigContentBlock,
-        stageId,
-        formData,
-        previewBuilder,
-        contentBuilder,
+        stageId: string,
     ) {
-        super(parent, config, stageId, formData, previewBuilder, contentBuilder);
+        super(parent, config, stageId);
         this.bindEvents();
+        this.collection.getChildren().subscribe(
+            () => EventBus.trigger("stage:updated", {stageId: this.stageId}),
+        );
     }
 
     /**
@@ -71,11 +75,5 @@ export default class ContentTypeCollection extends ContentType implements Conten
 
     get children() {
         return this.collection.getChildren();
-    }
-
-    private bindEvents() {
-        this.collection.getChildren().subscribe(
-            () => EventBus.trigger("stage:updated", {stageId: this.stageId})
-        );
     }
 }

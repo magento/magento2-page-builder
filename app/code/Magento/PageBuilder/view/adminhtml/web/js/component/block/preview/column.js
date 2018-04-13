@@ -1,13 +1,13 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block", "Magento_PageBuilder/js/component/block/preview/column-group/resizing", "jquery", "knockout", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/preview/column-group", "Magento_PageBuilder/js/component/block/factory"], function (_translate, _block, _resizing, _jquery, _knockout, _config, _eventBus, _option, _columnGroup, _factory) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/block/preview/column-group", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _preview, _config, _eventBus, _option, _factory, _columnGroup, _resizing) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Column =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Column, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Column, _Preview);
 
     /**
      * @param {Block} parent
@@ -16,7 +16,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"
     function Column(parent, config, elementDataConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config, elementDataConverterPool, dataConverterPool) || this;
+      _this = _Preview.call(this, parent, config, elementDataConverterPool, dataConverterPool) || this;
       _this.resizing = _knockout.observable(false);
 
       _this.previewData.width.subscribe(function (newWidth) {
@@ -74,7 +74,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _PreviewBlock.prototype.bindEvents.call(this);
+      _Preview.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
         _eventBus.on("column:block:mount", function (event, params) {
@@ -108,7 +108,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _PreviewBlock.prototype.retrieveOptions.call(this);
+      var options = _Preview.prototype.retrieveOptions.call(this);
 
       var newOptions = options.filter(function (option) {
         return option.code !== "move";
@@ -189,7 +189,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"
     };
 
     return Column;
-  }(_block);
+  }(_preview);
 
   return Column;
 });

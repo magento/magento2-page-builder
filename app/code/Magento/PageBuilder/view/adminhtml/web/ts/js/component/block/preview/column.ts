@@ -3,23 +3,23 @@
  * See COPYING.txt for license details.
  */
 
-import $t from "mage/translate";
-import {ConfigContentBlock} from "../../config";
-import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
-import Block from "../block";
-import PreviewBlock from "./block";
-import {getMaxColumns} from "./column-group/resizing";
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
+import Preview from "../../../preview";
+import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
+import {ConfigContentBlock} from "../../config";
 import Config from "../../config";
 import EventBus from "../../event-bus";
-import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
+import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
-import ColumnGroup from "./column-group";
+import Block from "../block";
 import createBlock from "../factory";
+import ColumnGroup from "./column-group";
+import {getMaxColumns} from "./column-group/resizing";
 
-export default class Column extends PreviewBlock {
+export default class Column extends Preview {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
 
     /**

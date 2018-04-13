@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "underscore", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _underscore, _block) {
+define(["jquery", "underscore", "Magento_PageBuilder/js/preview"], function (_jquery, _underscore, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Accordion =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Accordion, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Accordion, _Preview);
 
     function Accordion() {
       var _temp, _this;
@@ -14,7 +14,7 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/component/block/preview/
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.element = void 0, _this.renderCounter = 0, _temp) || _this;
+      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, _this.element = void 0, _this.renderCounter = 0, _temp) || _this;
     }
 
     var _proto = Accordion.prototype;
@@ -57,7 +57,7 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/component/block/preview/
     _proto.setupDataFields = function setupDataFields() {
       var _this3 = this;
 
-      _PreviewBlock.prototype.setupDataFields.call(this);
+      _Preview.prototype.setupDataFields.call(this);
 
       this.updateDataValue("items", []);
       this.previewData.items.subscribe(function (data) {
@@ -67,7 +67,7 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/component/block/preview/
     };
 
     return Accordion;
-  }(_block);
+  }(_preview);
 
   return Accordion;
 });

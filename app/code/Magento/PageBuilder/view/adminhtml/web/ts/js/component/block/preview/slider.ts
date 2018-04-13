@@ -8,16 +8,16 @@ import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick.min";
 import _ from "underscore";
 import "../../../binding/focus";
+import Preview from "../../../preview";
 import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 import Block from "../block";
 import BlockCreateEventParamsInterface from "../block-create-event-params.d";
 import BlockReadyEventParamsInterface from "../block-ready-event-params.d";
-import PreviewBlock from "./block";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
-export default class Slider extends PreviewBlock {
+export default class Slider extends Preview {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
     private element: Element;

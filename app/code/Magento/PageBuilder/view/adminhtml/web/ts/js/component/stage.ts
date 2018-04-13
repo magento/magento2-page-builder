@@ -7,12 +7,12 @@ import ko from "knockout";
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
+import Collection from "../collection";
 import DataStore from "./data-store";
 import EventBus from "./event-bus";
 import buildStage from "./stage-builder";
 import {handleEvents} from "./stage/event-handling-delegate";
 import Save from "./stage/save";
-import Collection from "../collection";
 
 export default class Stage {
     public config: {} = {
@@ -44,7 +44,7 @@ export default class Stage {
     constructor(parent: any) {
         this.collection = new Collection();
         this.collection.getChildren().subscribe(
-            () => EventBus.trigger("stage:updated", {stageId: this.stageId})
+            () => EventBus.trigger("stage:updated", {stageId: this.stageId}),
         );
         this.parent = parent;
         this.id = parent.id;

@@ -4,9 +4,9 @@
  */
 
 import $t from "mage/translate";
-import PreviewBlock from "./block";
+import Preview from "../../../preview";
 
-export default class Banner extends PreviewBlock {
+export default class Banner extends Preview {
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**

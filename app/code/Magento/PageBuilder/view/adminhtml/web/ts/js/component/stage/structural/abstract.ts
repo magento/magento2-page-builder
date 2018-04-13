@@ -13,6 +13,7 @@ import ElementConverterPool from "../../../component/block/element-converter-poo
 import {fromSnakeToCamelCase} from "../../../utils/string";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
+import DataStore from "../../data-store";
 import EventBus from "../../event-bus";
 import AttributeFilter from "../../format/attribute-filter";
 import AttributeMapper from "../../format/attribute-mapper";
@@ -26,7 +27,6 @@ import { Options } from "./options";
 import {Option} from "./options/option";
 import {OptionInterface} from "./options/option.d";
 import {TitleOption} from "./options/title";
-import DataStore from "../../data-store"
 
 export default class Structural extends EditableArea implements StructuralInterface {
     public config: ConfigContentBlock;

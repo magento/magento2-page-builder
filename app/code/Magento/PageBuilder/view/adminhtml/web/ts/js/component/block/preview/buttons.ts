@@ -4,8 +4,8 @@
  */
 
 import ko from "knockout";
-import PreviewBlock from "./block";
+import Preview from "../../../preview";
 
-export default class Buttons extends PreviewBlock {
+export default class Buttons extends Preview {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
 }

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/data-converter-pool-factory", "Magento_PageBuilder/js/component/block/element-converter-pool-factory", "Magento_PageBuilder/js/preview-builder", "Magento_PageBuilder/js/content-builder"], function (_loader, _eventBus, _dataConverterPoolFactory, _elementConverterPoolFactory, _previewBuilder, _contentBuilder) {
+define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/content-factory", "Magento_PageBuilder/js/component/block/preview-factory"], function (_loader, _eventBus, _contentFactory, _previewFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -24,28 +24,17 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
       childrenLength = 0;
     }
 
-    var promises = [(0, _elementConverterPoolFactory)(config.name), (0, _dataConverterPoolFactory)(config.name)];
-    var contentBuilder = new _contentBuilder();
-    var previewBuilder = new _previewBuilder();
     return new Promise(function (resolve) {
-      Promise.all(promises).then(function (resolvedPromises) {
-        var elementConverterPool = resolvedPromises[0],
-            dataConverterPool = resolvedPromises[1];
-        var componentPaths = [config.component, config.preview_component, config.content_component];
-        (0, _loader)(componentPaths, function () {
-          for (var _len = arguments.length, loadedComponents = new Array(_len), _key = 0; _key < _len; _key++) {
-            loadedComponents[_key] = arguments[_key];
-          }
-
-          var ContentTypeComponent = loadedComponents[0],
-              PreviewComponent = loadedComponents[1],
-              ContentComponent = loadedComponents[2];
-          previewBuilder.setElementDataConverter(elementConverterPool).setDataConverter(dataConverterPool).setConfig(config).setClassInstance(PreviewComponent);
-          contentBuilder.setElementDataConverter(elementConverterPool).setDataConverter(dataConverterPool).setClassInstance(ContentComponent);
-          resolve(new ContentTypeComponent(parent, config, stageId, prepareData(config, data), previewBuilder, contentBuilder));
+      (0, _loader)([config.component], function (ContentTypeComponent) {
+        var contentType = new ContentTypeComponent(parent, config, stageId);
+        Promise.all([(0, _previewFactory)(contentType, config), (0, _contentFactory)(contentType, config)]).then(function (resolvedPromises) {
+          var previewComponent = resolvedPromises[0],
+              contentComponent = resolvedPromises[1];
+          contentType.preview = previewComponent;
+          contentType.content = contentComponent;
+          contentType.store.update(contentType.id, prepareData(config, data));
+          resolve(contentType);
         });
-      }).catch(function (error) {
-        console.error(error);
       });
     }).then(function (block) {
       _eventBus.trigger("block:create", {
@@ -60,6 +49,8 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
 
       fireBlockReadyEvent(block, childrenLength);
       return block;
+    }).catch(function (error) {
+      console.error(error);
     });
   }
   /**

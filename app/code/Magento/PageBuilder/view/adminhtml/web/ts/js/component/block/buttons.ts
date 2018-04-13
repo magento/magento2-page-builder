@@ -3,12 +3,12 @@
  * See COPYING.txt for license details.
  */
 
+import ContentTypeCollection from "../../content-type-collection";
 import delayedPromise from "../../utils/delayed-promise";
 import createBlock from "../block/factory";
 import Config from "../config";
 import EventBus from "../event-bus";
 import BlockMountEventParamsInterface from "./block-mount-event-params.d";
-import ContentTypeCollection from "../../content-type-collection";
 
 export default class Buttons extends ContentTypeCollection {
 

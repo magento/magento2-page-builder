@@ -1,13 +1,13 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/block/preview/block"], function (_knockout, _translate, _colorConverter, _numberConverter, _block) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (_knockout, _translate, _preview, _colorConverter, _numberConverter) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slide =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Slide, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Slide, _Preview);
 
     /**
      * Slide constructor
@@ -18,7 +18,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
     function Slide(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _Preview.call(this, parent, config) || this;
       _this.showOverlayHover = _knockout.observable(false);
       _this.showButtonHover = _knockout.observable(false);
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
@@ -201,7 +201,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
     };
 
     return Slide;
-  }(_block);
+  }(_preview);
 
   return Slide;
 });

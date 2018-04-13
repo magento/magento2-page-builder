@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import Preview from "../../../preview";
 import Config from "../../config";
 import EventBus from "../../event-bus";
-import PreviewBlock from "./block";
 
-export default class ProductList extends PreviewBlock {
+export default class ProductList extends Preview {
 
     /**
      * Bind events for the current instance

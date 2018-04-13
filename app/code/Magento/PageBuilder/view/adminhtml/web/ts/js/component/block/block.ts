@@ -5,6 +5,7 @@
 
 import _ from "underscore";
 import appearanceConfig from "../../component/block/appearance-config";
+import PreviewBlock from "../../preview";
 import {ConfigContentBlock, ConfigFieldConfig} from "../config";
 import getPreviewInstance from "../stage/previews";
 import Structural from "../stage/structural/abstract";
@@ -12,7 +13,6 @@ import EditableArea from "../stage/structural/editable-area";
 import { Block as BlockInterface } from "./block.d";
 import DataConverterPool from "./data-converter-pool";
 import ElementConverterPool from "./element-converter-pool";
-import PreviewBlock from "./preview/block";
 
 interface FieldDefaults {
     [key: string]: any;

@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/block/preview/block", "Magento_PageBuilder/js/component/block/preview/column-group/dragdrop", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _underscore, _config, _eventBus, _block, _block2, _dragdrop, _registry, _resizing) {
+define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/block/preview/column-group/dragdrop", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _underscore, _preview, _config, _eventBus, _block, _dragdrop, _registry, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(ColumnGroup, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(ColumnGroup, _Preview);
 
     /**
      * @param {Block} parent
@@ -14,7 +14,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
     function ColumnGroup(parent, config) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _Preview.call(this, parent, config) || this;
       _this.resizing = _knockout.observable(false);
       _this.dropPlaceholder = void 0;
       _this.movePlaceholder = void 0;
@@ -506,7 +506,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
     };
 
     return ColumnGroup;
-  }(_block2);
+  }(_preview);
 
   return ColumnGroup;
 });

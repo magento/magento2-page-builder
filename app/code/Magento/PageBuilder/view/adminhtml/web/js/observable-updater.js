@@ -1,8 +1,8 @@
 /*eslint-disable */
-define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/component/block/appearance-config"], function (_knockout, _underscore, _string, _appearanceConfig) {
+define(["knockout", "underscore", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/utils/string"], function (_knockout, _underscore, _appearanceConfig, _string) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-  var Convert =
+  var ObservableUpdater =
   /*#__PURE__*/
   function () {
     /**
@@ -10,7 +10,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
      * @param {DataConverterPool} dataConverterPool
      * @param converterResolver
      */
-    function Convert(elementConverterPool, dataConverterPool, converterResolver) {
+    function ObservableUpdater(elementConverterPool, dataConverterPool, converterResolver) {
       this.elementConverterPool = void 0;
       this.dataConverterPool = void 0;
       this.converterResolver = void 0;
@@ -25,9 +25,9 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
      */
 
 
-    var _proto = Convert.prototype;
+    var _proto = ObservableUpdater.prototype;
 
-    _proto.updateObservables = function updateObservables(viewModel, data) {
+    _proto.update = function update(viewModel, data) {
       var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
       var appearanceConfiguration = (0, _appearanceConfig)(viewModel.parent.config.name, appearance);
 
@@ -243,9 +243,9 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       return data;
     };
 
-    return Convert;
+    return ObservableUpdater;
   }();
 
-  return Convert;
+  return ObservableUpdater;
 });
-//# sourceMappingURL=convert.js.map
+//# sourceMappingURL=observable-updater.js.map

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/component/format/attribute-filter", "Magento_PageBuilder/js/component/format/attribute-mapper", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/convert"], function (_underscore, _appearanceConfig, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper, _convert) {
+define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/component/format/attribute-filter", "Magento_PageBuilder/js/component/format/attribute-mapper", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper"], function (_underscore, _appearanceConfig, _attributeFilter, _attributeMapper, _styleAttributeFilter, _styleAttributeMapper) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -8,24 +8,36 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
   /*#__PURE__*/
   function () {
     /**
-     * @param parent
-     * @param elementConverterPool
-     * @param dataConverterPool
+     * @deprecated
      */
-    function Content(parent, elementConverterPool, dataConverterPool) {
+
+    /**
+     * @deprecated
+     */
+
+    /**
+     * @deprecated
+     */
+
+    /**
+     * @deprecated
+     */
+
+    /**
+     * @param {ContentTypeInterface} parent
+     * @param {ObservableUpdater} observableUpdater
+     */
+    function Content(parent, observableUpdater) {
       this.data = {};
       this.parent = void 0;
-      this.elementConverterPool = void 0;
-      this.dataConverterPool = void 0;
+      this.observableUpdater = void 0;
       this.attributeFilter = new _attributeFilter();
       this.attributeMapper = new _attributeMapper();
       this.styleAttributeFilter = new _styleAttributeFilter();
       this.styleAttributeMapper = new _styleAttributeMapper();
       this.parent = parent;
-      this.elementConverterPool = elementConverterPool;
-      this.dataConverterPool = dataConverterPool;
-      this.convert = new _convert(this.elementConverterPool, this.dataConverterPool);
-      this.bindUpdatePreviewObservablesOnChange();
+      this.observableUpdater = observableUpdater;
+      this.bindEvents();
     }
     /**
      * Retrieve the render template
@@ -40,6 +52,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
      * Get data for css binding, example {"class-name": true}
      *
      * @returns {DataObject}
+     * @deprecated
      */
     _proto.getCss = function getCss(element) {
       var result = {};
@@ -70,6 +83,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
      * Get data for style binding, example {"backgroundColor": "#cccccc"}
      *
      * @returns {DataObject}
+     * @deprecated
      */
 
 
@@ -86,11 +100,11 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
       var config = appearanceConfiguration.data_mapping.elements;
-      data = this.convert.convertData(data, appearanceConfiguration.data_mapping.converters);
+      data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
       var result = {};
 
       if (config[element].style.length) {
-        result = this.convert.convertStyle(config[element], data, "master");
+        result = this.observableUpdater.convertStyle(config[element], data, "master");
       }
 
       return result;
@@ -99,6 +113,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
      * Get data for attr binding, example {"data-role": "element"}
      *
      * @returns {DataObject}
+     * @deprecated
      */
 
 
@@ -115,11 +130,11 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
       var config = appearanceConfiguration.data_mapping.elements;
-      data = this.convert.convertData(data, appearanceConfiguration.data_mapping.converters);
+      data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
       var result = {};
 
       if (config[element].attributes.length) {
-        result = this.convert.convertAttributes(config[element], data, "master");
+        result = this.observableUpdater.convertAttributes(config[element], data, "master");
       }
 
       return result;
@@ -129,6 +144,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
      *
      * @param {string} element
      * @returns {object}
+     * @deprecated
      */
 
 
@@ -138,7 +154,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
       var result = "";
 
       if (undefined !== config.html.var) {
-        result = this.convert.convertHtml(config, data, "master");
+        result = this.observableUpdater.convertHtml(config, data, "master");
       }
 
       return result;
@@ -148,6 +164,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
      *
      * @param {string} element
      * @returns {DataObject}
+     * @deprecated
      */
 
 
@@ -160,7 +177,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
 
       var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
       var config = appearanceConfiguration.data_mapping.elements;
-      data = this.convert.convertData(data, appearanceConfiguration.data_mapping.converters);
+      data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
       var result = {};
 
       if (undefined !== config[element].tag.var) {
@@ -174,11 +191,11 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
      */
 
 
-    _proto.bindUpdatePreviewObservablesOnChange = function bindUpdatePreviewObservablesOnChange() {
+    _proto.bindEvents = function bindEvents() {
       var _this = this;
 
       this.parent.store.subscribe(function (data) {
-        _this.convert.updatePreviewObservables(_this, _underscore.extend({
+        _this.observableUpdater.update(_this, _underscore.extend({
           name: _this.parent.config.name
         }, _this.parent.store.get(_this.parent.id)));
       }, this.parent.id);
@@ -187,13 +204,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
     _createClass(Content, [{
       key: "renderTemplate",
       get: function get() {
-        var template = (0, _appearanceConfig)(this.parent.config.name, this.getData().appearance).render_template;
-
-        if (undefined === template) {
-          template = "Magento_PageBuilder/component/block/render/abstract.html";
-        }
-
-        return template;
+        return (0, _appearanceConfig)(this.parent.config.name, this.getData().appearance).render_template;
       }
       /**
        * Retrieve the child template

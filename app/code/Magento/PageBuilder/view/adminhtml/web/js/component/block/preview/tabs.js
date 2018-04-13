@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _tabs, _underscore, _block) {
+define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/preview"], function (_jquery, _tabs, _underscore, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Tabs, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Tabs, _Preview);
 
     function Tabs() {
       var _temp, _this;
@@ -14,7 +14,7 @@ define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/block/
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.element = void 0, _this.renderCounter = 0, _temp) || _this;
+      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, _this.element = void 0, _this.renderCounter = 0, _temp) || _this;
     }
 
     var _proto = Tabs.prototype;
@@ -53,7 +53,7 @@ define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/block/
     _proto.setupDataFields = function setupDataFields() {
       var _this3 = this;
 
-      _PreviewBlock.prototype.setupDataFields.call(this);
+      _Preview.prototype.setupDataFields.call(this);
 
       this.updateDataValue("tabs", []);
       this.previewData.tabs.subscribe(function (data) {
@@ -63,7 +63,7 @@ define(["jquery", "tabs", "underscore", "Magento_PageBuilder/js/component/block/
     };
 
     return Tabs;
-  }(_block);
+  }(_preview);
 
   return Tabs;
 });

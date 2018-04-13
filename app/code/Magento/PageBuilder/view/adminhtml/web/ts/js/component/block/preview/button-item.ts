@@ -4,11 +4,11 @@
  */
 
 import $t from "mage/translate";
+import Preview from "../../../preview";
 import {ConfigContentBlock} from "../../config";
 import Block from "../block";
-import PreviewBlock from "./block";
 
-export default class Button extends PreviewBlock {
+export default class Button extends Preview {
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**

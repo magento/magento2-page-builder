@@ -9,9 +9,9 @@ import $t from "mage/translate";
 import ContentTypeCollection from "../../content-type-collection";
 import Config from "../config";
 import EventBus from "../event-bus";
-import BlockMountEventParamsInterface from "./block-mount-event-params.d";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
+import BlockMountEventParamsInterface from "./block-mount-event-params.d";
 import ColumnGroup from "./column-group";
 import createBlock from "./factory";
 

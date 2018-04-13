@@ -5,27 +5,30 @@
 
 import ko from "knockout";
 import _ from "underscore";
+import appearanceConfig from "./component/block/appearance-config";
 import DataConverterPool from "./component/block/data-converter-pool";
 import ElementConverterPool from "./component/block/element-converter-pool";
 import {DataObject} from "./component/data-store";
-import ContentTypeInterface from "./content-type.d";
 import {fromSnakeToCamelCase} from "./utils/string";
-import appearanceConfig from "./component/block/appearance-config";
 
-export default class Convert {
+export default class ObservableUpdater {
     private elementConverterPool: ElementConverterPool;
     private dataConverterPool: DataConverterPool;
+    private converterResolver: Function;
 
     /**
-     * @param elementConverterPool
-     * @param dataConverterPool
+     * @param {ElementConverterPool} elementConverterPool
+     * @param {DataConverterPool} dataConverterPool
+     * @param converterResolver
      */
     constructor(
         elementConverterPool: ElementConverterPool,
         dataConverterPool: DataConverterPool,
+        converterResolver: Function,
     ) {
         this.elementConverterPool = elementConverterPool;
         this.dataConverterPool = dataConverterPool;
+        this.converterResolver = converterResolver;
     }
 
     /**
@@ -33,7 +36,7 @@ export default class Convert {
      *
      * @param {object} data
      */
-    public updatePreviewObservables(viewModel, data: object, area: string) {
+    public update(viewModel, data: object) {
         const appearance = data && data.appearance !== undefined ? data.appearance : undefined;
         const appearanceConfiguration = appearanceConfig(viewModel.parent.config.name, appearance);
         if (undefined === appearanceConfiguration
@@ -58,13 +61,13 @@ export default class Convert {
             data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
 
             if (config[elementName].style !== undefined) {
-                viewModel.data[elementName].style(this.convertStyle(config[elementName], data, area));
+                viewModel.data[elementName].style(this.convertStyle(config[elementName], data));
             }
             if (config[elementName].attributes !== undefined) {
-                viewModel.data[elementName].attributes(this.convertAttributes(config[elementName], data, area));
+                viewModel.data[elementName].attributes(this.convertAttributes(config[elementName], data));
             }
             if (config[elementName].html !== undefined) {
-                viewModel.data[elementName].html(this.convertHtml(config[elementName], data, area));
+                viewModel.data[elementName].html(this.convertHtml(config[elementName], data));
             }
             if (config[elementName].css !== undefined && config[elementName].css.var in data) {
                 const css = data[config[elementName].css.var];
@@ -96,10 +99,9 @@ export default class Convert {
      *
      * @param {object} config
      * @param {DataObject} data
-     * @param {string} area
      * @returns {object}
      */
-    public convertAttributes(config: any, data: DataObject, area: string) {
+    public convertAttributes(config: any, data: DataObject) {
         const result = {};
         for (const attributeConfig of config.attributes) {
             if (undefined !== attributeConfig.persist
@@ -109,9 +111,7 @@ export default class Convert {
                 continue;
             }
             let value = data[attributeConfig.var];
-            const converter = "preview" === area && attributeConfig.preview_converter
-                ? attributeConfig.preview_converter
-                : attributeConfig.converter;
+            const converter = this.converterResolver(attributeConfig);
             if (this.elementConverterPool.get(converter)) {
                 value = this.elementConverterPool.get(converter).toDom(attributeConfig.var, data);
             }
@@ -125,10 +125,9 @@ export default class Convert {
      *
      * @param {object}config
      * @param {object}data
-     * @param {string} area
      * @returns {object}
      */
-    public convertStyle(config: any, data: any, area: string) {
+    public convertStyle(config: any, data: any) {
         const result = {};
         if (config.style) {
             for (const propertyConfig of config.style) {
@@ -143,9 +142,7 @@ export default class Convert {
                     value = propertyConfig.value;
                 } else {
                     value = data[propertyConfig.var];
-                    const converter = "preview" === area && propertyConfig.preview_converter
-                        ? propertyConfig.preview_converter
-                        : propertyConfig.converter;
+                    const converter = this.converterResolver(propertyConfig);
                     if (this.elementConverterPool.get(converter)) {
                         value = this.elementConverterPool.get(converter).toDom(propertyConfig.var, data);
                     }
@@ -165,15 +162,11 @@ export default class Convert {
      *
      * @param {object} config
      * @param {DataObject} data
-     * @param {string} area
      * @returns {string}
      */
-    public convertHtml(config: any, data: DataObject, area: string) {
+    public convertHtml(config: any, data: DataObject) {
         let value = data[config.html.var] || config.html.placeholder;
-
-        const converter = "preview" === area && config.html.preview_converter
-            ? config.html.preview_converter
-            : config.html.converter;
+        const converter = this.converterResolver(config.html);
         if (this.elementConverterPool.get(converter)) {
             value = this.elementConverterPool.get(converter).toDom(config.html.var, data);
         }

@@ -5,14 +5,14 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
+import Preview from "../../../preview";
 import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
 import {ConfigContentBlock} from "../../config";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
-import PreviewBlock from "./block";
 
-export default class Slide extends PreviewBlock {
+export default class Slide extends Preview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
     private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
     private buttonPlaceholder: string = $t("Edit Button Text");

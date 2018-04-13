@@ -5,7 +5,8 @@
 
 import ko from "knockout";
 import mageUtils from "mageUtils";
-import PreviewBlock from "./component/block/preview/block";
+import Preview from "./preview";
+import Content from "./content";
 import {ConfigContentBlock} from "./component/config";
 import DataStore from "./component/data-store";
 import EventBus from "./component/event-bus";
@@ -19,50 +20,31 @@ export default class ContentType implements ContentTypeInterface {
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
     public element: JQuery<HTMLElement>;
     public store: DataStore = new DataStore();
-    public preview: PreviewBlock;
-    private previewBuilder;
-    private content;
-    private contentBuilder;
+    public preview: Preview;
+    public content: Content;
 
     /**
-     * Abstract structural constructor
-     *
      * @param parent
      * @param config
-     * @param contentBuilder
+     * @param stageId
      */
     constructor(
         parent: ContentTypeInterface,
         config: ConfigContentBlock,
-        stageId,
-        formData,
-        previewBuilder,
-        contentBuilder,
+        stageId: string,
     ) {
-        this.stageId = stageId;
         this.parent = parent;
         this.config = config;
-        this.previewBuilder = previewBuilder;
-        this.contentBuilder = contentBuilder;
+        this.stageId = stageId;
+        this.bindEvents();
+    }
 
-        this.preview = this.previewBuilder.setContentType(this)
-            .build();
-        this.content = this.contentBuilder.setContentType(this)
-            .build();
-
+    protected bindEvents() {
         const eventName: string = this.id + ":updated";
         const paramObj: any = {};
         paramObj[this.id] = this;
-
         this.store.subscribe(() => EventBus.trigger(eventName, paramObj));
 
-        this.store.subscribe(
-            () => EventBus.trigger("stage:updated", {stageId: this.stageId})
-        );
-
-        this.store.update(
-            this.id,
-            formData,
-        );
+        this.store.subscribe(() => EventBus.trigger("stage:updated", {stageId: this.stageId}));
     }
 }

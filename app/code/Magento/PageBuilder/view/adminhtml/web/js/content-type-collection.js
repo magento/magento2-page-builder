@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/content-type", "Magento_PageBuilder/js/collection"], function (_eventBus, _contentType, _collection) {
+define(["Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/content-type"], function (_collection, _eventBus, _contentType) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -11,13 +11,24 @@ define(["Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/co
   function (_ContentType) {
     _inheritsLoose(ContentTypeCollection, _ContentType);
 
-    function ContentTypeCollection(parent, config, stageId, formData, previewBuilder, contentBuilder) {
+    /**
+     * @param parent
+     * @param config
+     * @param stageId
+     */
+    function ContentTypeCollection(parent, config, stageId) {
       var _this;
 
-      _this = _ContentType.call(this, parent, config, stageId, formData, previewBuilder, contentBuilder) || this;
+      _this = _ContentType.call(this, parent, config, stageId) || this;
       _this.collection = new _collection();
 
       _this.bindEvents();
+
+      _this.collection.getChildren().subscribe(function () {
+        return _eventBus.trigger("stage:updated", {
+          stageId: _this.stageId
+        });
+      });
 
       return _this;
     }
@@ -76,16 +87,6 @@ define(["Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/co
 
     _proto.setChildren = function setChildren(children) {
       this.collection.setChildren(children);
-    };
-
-    _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
-
-      this.collection.getChildren().subscribe(function () {
-        return _eventBus.trigger("stage:updated", {
-          stageId: _this2.stageId
-        });
-      });
     };
 
     _createClass(ContentTypeCollection, [{

@@ -5,13 +5,13 @@
 import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
+import Preview from "../../../preview";
 import Config, {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
 import Block from "../block";
 import Column from "../column";
 import {default as ColumnGroupBlock} from "../column-group";
-import PreviewBlock from "./block";
 import {calculateDropPositions, DropPosition} from "./column-group/dragdrop";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./column-group/registry";
 import {
@@ -19,7 +19,7 @@ import {
     getAdjacentColumn, getColumnWidth, getMaxColumns,
 } from "./column-group/resizing";
 
-export default class ColumnGroup extends PreviewBlock {
+export default class ColumnGroup extends Preview {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
 
     private dropPlaceholder: JQuery<HTMLElement>;

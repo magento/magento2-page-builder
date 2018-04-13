@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_config, _eventBus, _block) {
+define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus"], function (_preview, _config, _eventBus) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Newsletter =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Newsletter, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Newsletter, _Preview);
 
     function Newsletter() {
       var _temp, _this;
@@ -14,7 +14,7 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/compo
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _PreviewBlock.call.apply(_PreviewBlock, [this].concat(args)) || this, _this.editOnInsert = false, _temp) || _this;
+      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, _this.editOnInsert = false, _temp) || _this;
     }
 
     var _proto = Newsletter.prototype;
@@ -25,7 +25,7 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/compo
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _PreviewBlock.prototype.bindEvents.call(this);
+      _Preview.prototype.bindEvents.call(this);
 
       _eventBus.on("previewObservables:updated", function (event, params) {
         if (params.preview.id === _this2.id) {
@@ -52,7 +52,7 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/compo
     };
 
     return Newsletter;
-  }(_block);
+  }(_preview);
 
   return Newsletter;
 });

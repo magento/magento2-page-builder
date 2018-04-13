@@ -4,16 +4,14 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import EventBus from "../event-bus";
-import dataConverterPoolFactory from "./data-converter-pool-factory";
-import elementConverterPoolFactory from "./element-converter-pool-factory";
-import PreviewBuilder from "../../preview-builder";
-import ContentBuilder from "../../content-builder";
-import ContentTypeInterface from  "../../content-type.d";
-import FieldDefaultsInterface from "./field-defaults.d";
-import ConfigFieldInterface from "./config-field.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeInterface from "../../content-type.d";
+import EventBus from "../event-bus";
 import BlockMountEventParamsInterface from "./block-mount-event-params.d";
+import ConfigFieldInterface from "./config-field.d";
+import contentFactory from "./content-factory";
+import FieldDefaultsInterface from "./field-defaults.d";
+import previewFactory from "./preview-factory";
 
 /**
  * Create new content type instance
@@ -32,46 +30,36 @@ export default function createBlock(
     data?: object = {},
     childrenLength: number = 0,
 ): Promise<ContentTypeInterface> {
-    const promises: Array<Promise<any>> = [
-        elementConverterPoolFactory(config.name),
-        dataConverterPoolFactory(config.name),
-    ];
-    const contentBuilder = new ContentBuilder();
-    const previewBuilder = new PreviewBuilder();
     return new Promise((resolve: (blockComponent: any) => void) => {
-        Promise.all(promises).then((resolvedPromises) => {
-            const [elementConverterPool, dataConverterPool,] = resolvedPromises;
-            const componentPaths: Array<string> = [config.component, config.preview_component, config.content_component];
-            loadModule(componentPaths, (...loadedComponents: any) => {
-                const [ContentTypeComponent, PreviewComponent, ContentComponent] = loadedComponents;
-                previewBuilder.setElementDataConverter(elementConverterPool)
-                    .setDataConverter(dataConverterPool)
-                    .setConfig(config)
-                    .setClassInstance(PreviewComponent);
-
-                contentBuilder.setElementDataConverter(elementConverterPool)
-                    .setDataConverter(dataConverterPool)
-                    .setClassInstance(ContentComponent);
-
-                resolve(
-                    new ContentTypeComponent(
-                        parent,
-                        config,
-                        stageId,
-                        prepareData(config, data),
-                        previewBuilder,
-                        contentBuilder
-                    )
+        loadModule([config.component], (ContentTypeComponent: any) => {
+            const contentType = new ContentTypeComponent(
+                parent,
+                config,
+                stageId,
+            );
+            Promise.all(
+                [
+                    previewFactory(contentType, config),
+                    contentFactory(contentType, config),
+                ],
+            ).then((resolvedPromises) => {
+                const [previewComponent, contentComponent] = resolvedPromises;
+                contentType.preview = previewComponent;
+                contentType.content = contentComponent;
+                contentType.store.update(
+                    contentType.id,
+                    prepareData(config, data),
                 );
+                resolve(contentType);
             });
-        }).catch((error) => {
-            console.error(error);
         });
     }).then((block: ContentTypeInterface) => {
         EventBus.trigger("block:create", {id: block.id, block});
         EventBus.trigger(config.name + ":block:create", {id: block.id, block});
         fireBlockReadyEvent(block, childrenLength);
         return block;
+    }).catch((error) => {
+        console.error(error);
     });
 }
 

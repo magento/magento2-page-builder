@@ -5,60 +5,31 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import _ from "underscore";
+import Preview from "../../../preview";
+import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
+import BlockReadyEventParamsInterface from "../../block/block-ready-event-params.d";
 import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
-import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
-import Block from "../block";
-import BlockReadyEventParamsInterface from "../../block/block-ready-event-params.d";
-import PreviewBlock from "./block";
-import $t from "mage/translate";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
+import Block from "../block";
 
-
-export default class Row extends PreviewBlock {
+export default class Row extends Preview {
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);
     private element: Element;
 
     /**
-     * Debounce and defer the init of Jarallax
-     *
-     * @type {(() => void) & _.Cancelable}
-     */
-    private buildJarallax = _.debounce(() => {
-        // Destroy all instances of the plugin prior
-        try {
-            jarallax(this.element, "destroy");
-        } catch (e) {
-            // Failure of destroying is acceptable
-        }
-        if (this.element && $(this.element).hasClass("jarallax")) {
-            _.defer(() => {
-                // Build Parallax on elements with the correct class
-                jarallax(
-                    this.element,
-                    {
-                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
-                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.main.style().backgroundSize || "cover",
-                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
-                    },
-                );
-                jarallax(this.element, "onResize");
-            });
-        }
-    }, 50);
-
-    /**
      * @param {Block} parent
      * @param {ConfigContentBlock} config
+     * @param convert
      */
-    constructor(parent: Block, config: ConfigContentBlock, elementConverterPool, dataConverterPool) {
-        super(parent, config, elementConverterPool, dataConverterPool);
+    constructor(parent: Block, config: ConfigContentBlock, convert) {
+        super(parent, config, convert);
 
         this.parent.store.subscribe(this.buildJarallax);
         EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
@@ -112,26 +83,31 @@ export default class Row extends PreviewBlock {
     }
 
     /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
+     * Debounce and defer the init of Jarallax
      *
-     * @returns styles
+     * @type {(() => void) & _.Cancelable}
      */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+    private buildJarallax = _.debounce(() => {
+        // Destroy all instances of the plugin prior
+        try {
+            jarallax(this.element, "destroy");
+        } catch (e) {
+            // Failure of destroying is acceptable
         }
-
-        // If the bottom margin is 0, we set it to 1px to overlap the rows to create a single border
-        if (styles.marginBottom === "0px") {
-            styles.marginBottom = "1px";
+        if (this.element && $(this.element).hasClass("jarallax")) {
+            _.defer(() => {
+                // Build Parallax on elements with the correct class
+                jarallax(
+                    this.element,
+                    {
+                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
+                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
+                        imgSize: this.data.main.style().backgroundSize || "cover",
+                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
+                    },
+                );
+                jarallax(this.element, "onResize");
+            });
         }
-
-        // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-        if (this.data.border && this.data.border() === "_default") {
-            styles.border = "none";
-        }
-
-        return styles;
-    }
+    }, 50);
 }

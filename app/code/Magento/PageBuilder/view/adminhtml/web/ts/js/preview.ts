@@ -7,106 +7,80 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
-import _, {Dictionary} from "underscore";
-import "../../../binding/live-edit";
-import DataConverterPool from "../../../component/block/data-converter-pool";
-import ElementConverterPool from "../../../component/block/element-converter-pool";
-import ContentType from "../../../content-type";
-import Convert from "../../../convert";
-import appearanceConfig from "../../block/appearance-config";
-import {ConfigContentBlock} from "../../config";
-import {DataObject} from "../../data-store";
-import EventBus from "../../event-bus";
-import StyleAttributeFilter from "../../format/style-attribute-filter";
-import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
-import Edit from "../../stage/edit";
-import { Options } from "../../stage/structural/options";
-import {Option} from "../../stage/structural/options/option";
-import {OptionInterface} from "../../stage/structural/options/option.d";
-import {TitleOption} from "../../stage/structural/options/title";
-import Block from "../block";
-import "./sortable/binding";
+import _ from "underscore";
+import "./binding/live-edit";
+import appearanceConfig from "./component/block/appearance-config";
+import "./component/block/preview/sortable/binding";
+import {DataObject} from "./component/data-store";
+import EventBus from "./component/event-bus";
+import StyleAttributeFilter from "./component/format/style-attribute-filter";
+import StyleAttributeMapper, {StyleAttributeMapperResult} from "./component/format/style-attribute-mapper";
+import Edit from "./component/stage/edit";
+import { Options } from "./component/stage/structural/options";
+import {Option} from "./component/stage/structural/options/option";
+import {OptionInterface} from "./component/stage/structural/options/option.d";
+import {TitleOption} from "./component/stage/structural/options/title";
+import ContentTypeConfigInterface from "./content-type-config.d";
+import ContentTypeInterface from "./content-type.d";
+import ObservableUpdater from "./observable-updater";
 
 interface PreviewData {
     [key: string]: KnockoutObservable<any>;
 }
 
-export default class PreviewBlock {
-    public parent: Block;
-    public config: any;
-    public previewData: PreviewData = {};
+export default class Preview {
+    public parent: ContentTypeInterface;
+    public config: ContentTypeConfigInterface;
     public data: PreviewData = {};
     public displayLabel: KnockoutObservable<string>;
-    public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
     public edit: Edit;
-    public title: string = $t("Editable");
-    private elementConverterPool: ElementConverterPool;
-    private dataConverterPool: DataConverterPool;
+    /**
+     * @deprecated
+     */
+    public previewData: PreviewData = {};
+    /**
+     * @deprecated
+     */
+    public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
+    private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;
-    private convert: Convert;
 
     /**
-     * PreviewBlock constructor
-     *
-     * @param {Block} parent
-     * @param {object} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
     constructor(
         parent: Block,
-        config: ConfigContentBlock,
-        elementConverterPool,
-        dataConverterPool,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
     ) {
-        this.elementConverterPool = elementConverterPool;
-        this.dataConverterPool = dataConverterPool;
-        const styleAttributeMapper = new StyleAttributeMapper();
-        const styleAttributeFilter = new StyleAttributeFilter();
-
         this.parent = parent;
-        this.config = config || {};
-        this.displayLabel = ko.observable(this.config.label);
-
-        // Create a new instance of edit for our editing needs
+        this.config = config;
         this.edit = new Edit(this.parent, this.parent.store);
-
-        this.convert = new Convert(this.elementConverterPool, this.dataConverterPool);
-
+        this.observableUpdater = observableUpdater;
+        this.displayLabel = ko.observable(this.config.label);
         this.setupDataFields();
-
-        // Calculate the preview style utilising the style attribute mapper & appearance system
-        this.previewStyle = ko.computed(() => {
-            const data = _.mapObject(this.previewData, (value) => {
-                if (ko.isObservable(value)) {
-                    return value();
-                }
-                return value;
-            });
-
-            if (typeof data.appearance !== "undefined" &&
-                typeof config.appearances !== "undefined" &&
-                typeof config.appearances[data.appearance] !== "undefined") {
-                _.extend(data, config.appearances[data.appearance]);
-            }
-
-            // Extract data values our of observable functions
-            return this.afterStyleMapped(
-                styleAttributeMapper.toDom(
-                    styleAttributeFilter.filter(data),
-                ),
-            );
-        });
-
-        Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
-            if (ko.isObservable(this.previewData[key])) {
-                this.previewData[key].subscribe(() => {
-                    this.previewStyle.notifySubscribers();
-                });
-            }
-        });
-
         this.bindEvents();
+    }
 
-        this.bindUpdatePreviewObservablesOnChange();
+    /**
+     * Retrieve the preview template
+     *
+     * @returns {string}
+     */
+    get previewTemplate(): string {
+        const appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
+        return appearanceConfig(this.config.name, appearance).preview_template;
+    }
+
+    /**
+     * Retrieve the preview child template
+     *
+     * @returns {string}
+     */
+    get previewChildTemplate(): string {
+        return "Magento_PageBuilder/component/block/preview/children.html";
     }
 
     /**
@@ -127,6 +101,7 @@ export default class PreviewBlock {
      *
      * @param {string} key
      * @param value
+     * @deprecated
      */
     public updateDataValue(key: string, value: any) {
         if (typeof this.previewData[key] !== "undefined" && ko.isObservable(this.previewData[key])) {
@@ -190,6 +165,7 @@ export default class PreviewBlock {
      * After children render fire an event
      *
      * @param {Element} element
+     * @deprecated
      */
     public afterChildrenRender(element: Element): void {
         EventBus.trigger("block:childrenRendered", {id: this.parent.id, block: this.parent, element});
@@ -386,12 +362,59 @@ export default class PreviewBlock {
      */
     protected bindEvents() {
         EventBus.on("block:sortStart", this.onSortStart.bind(this.parent));
+        this.parent.store.subscribe(
+            (data: DataObject) => {
+                this.observableUpdater.update(
+                    this,
+                    _.extend({}, this.parent.store.get(this.parent.id)),
+                    "preview",
+                );
+                EventBus.trigger("previewObservables:updated", {preview: this});
+            },
+            this.parent.id,
+        );
     }
 
     /**
      * Setup fields observables within the data class property
+     *
+     * @deprecated
      */
     protected setupDataFields() {
+        const styleAttributeMapper = new StyleAttributeMapper();
+        const styleAttributeFilter = new StyleAttributeFilter();
+
+        // Calculate the preview style utilising the style attribute mapper & appearance system
+        this.previewStyle = ko.computed(() => {
+            const data = _.mapObject(this.previewData, (value) => {
+                if (ko.isObservable(value)) {
+                    return value();
+                }
+                return value;
+            });
+
+            if (typeof data.appearance !== "undefined" &&
+                typeof this.config.appearances !== "undefined" &&
+                typeof this.config.appearances[data.appearance] !== "undefined") {
+                _.extend(data, this.config.appearances[data.appearance]);
+            }
+
+            // Extract data values our of observable functions
+            return this.afterStyleMapped(
+                styleAttributeMapper.toDom(
+                    styleAttributeFilter.filter(data),
+                ),
+            );
+        });
+
+        Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach((key) => {
+            if (ko.isObservable(this.previewData[key])) {
+                this.previewData[key].subscribe(() => {
+                    this.previewStyle.notifySubscribers();
+                });
+            }
+        });
+
         // Create an empty observable for all fields
         if (this.config.fields) {
             _.keys(this.config.fields).forEach((key: string) => {
@@ -415,32 +438,10 @@ export default class PreviewBlock {
      *
      * @param {StyleAttributeMapperResult} styles
      * @returns {StyleAttributeMapperResult}
+     * @deprecated
      */
     protected afterStyleMapped(styles: StyleAttributeMapperResult) {
         return styles;
-    }
-
-    /**
-     * Retrieve the preview template
-     *
-     * @returns {string}
-     */
-    get previewTemplate(): string {
-        const appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
-        let template = appearanceConfig(this.config.name, appearance).preview_template;
-        if (undefined === template) {
-            template = "Magento_PageBuilder/component/block/preview/abstract.html";
-        }
-        return template;
-    }
-
-    /**
-     * Retrieve the preview child template
-     *
-     * @returns {string}
-     */
-    get previewChildTemplate(): string {
-        return "Magento_PageBuilder/component/block/preview/children.html";
     }
 
     /**
@@ -475,22 +476,6 @@ export default class PreviewBlock {
             return;
         });
         return hasDataChanges;
-    }
-
-    /**
-     * Attach event to updating data in data store to update observables
-     */
-    private bindUpdatePreviewObservablesOnChange(): void {
-        this.parent.store.subscribe(
-            (data: DataObject) => {
-                this.convert.updatePreviewObservables(
-                    this,
-                    _.extend({}, this.parent.store.get(this.parent.id))
-                );
-                EventBus.trigger("previewObservables:updated", {preview: this});
-            },
-            this.parent.id,
-        );
     }
 }
 

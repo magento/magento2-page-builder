@@ -6,9 +6,9 @@
 import $ from "jquery";
 import "tabs";
 import _ from "underscore";
-import PreviewBlock from "./block";
+import Preview from "../../../preview";
 
-export default class Tabs extends PreviewBlock {
+export default class Tabs extends Preview {
     private element: Element;
     private renderCounter: number = 0;
 

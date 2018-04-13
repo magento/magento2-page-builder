@@ -1,14 +1,14 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_config, _eventBus, _block) {
+define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus"], function (_preview, _config, _eventBus) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ProductList =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(ProductList, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(ProductList, _Preview);
 
     function ProductList() {
-      return _PreviewBlock.apply(this, arguments) || this;
+      return _Preview.apply(this, arguments) || this;
     }
 
     var _proto = ProductList.prototype;
@@ -19,7 +19,7 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/compo
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      _PreviewBlock.prototype.bindEvents.call(this);
+      _Preview.prototype.bindEvents.call(this);
 
       _eventBus.on("previewObservables:updated", function (event, params) {
         if (params.preview.id === _this.id) {
@@ -46,7 +46,7 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/compo
     };
 
     return ProductList;
-  }(_block);
+  }(_preview);
 
   return ProductList;
 });

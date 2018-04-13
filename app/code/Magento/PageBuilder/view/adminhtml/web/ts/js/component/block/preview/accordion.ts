@@ -6,9 +6,9 @@
 import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
-import PreviewBlock from "./block";
+import Preview from "../../../preview";
 
-export default class Accordion extends PreviewBlock {
+export default class Accordion extends Preview {
     private element: Element;
     private renderCounter: number = 0;
 

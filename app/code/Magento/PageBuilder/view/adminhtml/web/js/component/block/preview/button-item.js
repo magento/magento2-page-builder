@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"], function (_translate, _block) {
+define(["mage/translate", "Magento_PageBuilder/js/preview"], function (_translate, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Button =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Button, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Button, _Preview);
 
     /**
      * Button constructor
@@ -16,7 +16,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"
     function Button(parent, config, elementConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config, elementConverterPool, dataConverterPool) || this;
+      _this = _Preview.call(this, parent, config, elementConverterPool, dataConverterPool) || this;
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
       return _this;
     }
@@ -43,7 +43,7 @@ define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"
     };
 
     return Button;
-  }(_block);
+  }(_preview);
 
   return Button;
 });

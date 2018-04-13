@@ -4,11 +4,11 @@
  */
 
 import { Structural } from 'stage/structural/abstract.d';
-import PreviewBlock from "./preview/block";
+import Preview from "../../preview";
 
 export interface Block extends Structural {
     title: string;
     editOnInsert: boolean;
-    preview: PreviewBlock;
+    preview: Preview;
     childEntityKeys: Array<string>;
 }
