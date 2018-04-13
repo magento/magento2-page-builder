@@ -9,13 +9,14 @@ import "Magento_PageBuilder/js/resource/slick/slick.min";
 import _ from "underscore";
 import "../../../binding/focus";
 import Preview from "../../../preview";
-import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
 import {BlockRemovedParams} from "../../stage/event-handling-delegate";
-import Block from "../block";
 import BlockCreateEventParamsInterface from "../block-create-event-params.d";
 import BlockReadyEventParamsInterface from "../block-ready-event-params.d";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
+import ObservableUpdater from "../../../observable-updater";
+import {ContentTypeInterface} from "../../../content-type.d";
+import {ContentTypeConfigInterface} from "../../../content-type-config.d";
 
 export default class Slider extends Preview {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
@@ -23,6 +24,58 @@ export default class Slider extends Preview {
     private element: Element;
     private childSubscribe: KnockoutSubscription;
     private blockHeightReset: boolean;
+
+    /**
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater
+    ) {
+        super(parent, config);
+
+        // We only start forcing the containers height once the slider is ready
+        let sliderReady: boolean = false;
+        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
+            if (params.id === this.parent.id) {
+                sliderReady = true;
+            }
+        });
+
+        this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
+        this.parent.store.subscribe(this.buildSlick);
+
+        // Set the active slide to the new position of the sorted slide
+        EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
+            if (params.instance.id === this.parent.id) {
+                $(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
+                this.setActiveSlide(params.newPosition);
+            }
+        });
+        // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
+        EventBus.on("slide:block:removed", (event: Event, params: BlockRemovedParams) => {
+            if (params.block.parent.id === this.parent.id) {
+                this.forceContainerHeight();
+                const data = this.parent.children().slice(0);
+                this.parent.children([]);
+                this.parent.children(data);
+            }
+        });
+        // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
+        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParamsInterface) => {
+            if (this.element && sliderReady && params.block.parent.id === this.parent.id) {
+                this.forceContainerHeight();
+            }
+        });
+
+        // Set the stage to interacting when a slide is focused
+        this.focusedSlide.subscribe((value: number) => {
+            this.parent.stage.interacting(value !== null);
+        });
+    }
 
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
@@ -76,53 +129,6 @@ export default class Slider extends Preview {
             });
         }
     }, 10);
-
-    /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
-     */
-    constructor(parent: Block, config: ConfigContentBlock) {
-        super(parent, config);
-
-        // We only start forcing the containers height once the slider is ready
-        let sliderReady: boolean = false;
-        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
-            if (params.id === this.parent.id) {
-                sliderReady = true;
-            }
-        });
-
-        this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-        this.parent.store.subscribe(this.buildSlick);
-
-        // Set the active slide to the new position of the sorted slide
-        EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
-            if (params.instance.id === this.parent.id) {
-                $(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
-                this.setActiveSlide(params.newPosition);
-            }
-        });
-        // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
-        EventBus.on("slide:block:removed", (event: Event, params: BlockRemovedParams) => {
-            if (params.block.parent.id === this.parent.id) {
-                this.forceContainerHeight();
-                const data = this.parent.children().slice(0);
-                this.parent.children([]);
-                this.parent.children(data);
-            }
-        });
-        // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
-        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParamsInterface) => {
-            if (this.element && sliderReady && params.block.parent.id === this.parent.id) {
-                this.forceContainerHeight();
-            }
-        });
-
-        // Set the stage to interacting when a slide is focused
-        this.focusedSlide.subscribe((value: number) => {
-            this.parent.stage.interacting(value !== null);
-        });
-    }
 
     /**
      * Capture an after render event

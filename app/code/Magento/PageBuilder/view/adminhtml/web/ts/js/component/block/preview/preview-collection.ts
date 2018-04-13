@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import Block from "./block";
+import Preview from "../../../preview";
 
-export default class PreviewCollection extends Block {
+export default class PreviewCollection extends Preview {
     /**
      * Retrieve the preview child template
      *

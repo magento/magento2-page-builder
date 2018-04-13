@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import ContentType from "../../content-type";
-
-export default class InlineBlock extends ContentType {
+export interface ObservableObject {
+    [key: string]: KnockoutObservable<any>;
 }

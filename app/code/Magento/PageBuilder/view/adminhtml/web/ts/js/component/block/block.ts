@@ -20,7 +20,6 @@ interface FieldDefaults {
 
 export default class Block extends Structural implements BlockInterface {
     public title: string;
-    public editOnInsert: boolean = true;
     public preview: PreviewBlock;
     public childEntityKeys: string[] = [];
 

@@ -16,28 +16,25 @@ import EventBus from "./component/event-bus";
 import StyleAttributeFilter from "./component/format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "./component/format/style-attribute-mapper";
 import Edit from "./component/stage/edit";
-import { Options } from "./component/stage/structural/options";
+import {Options} from "./component/stage/structural/options";
 import {Option} from "./component/stage/structural/options/option";
 import {OptionInterface} from "./component/stage/structural/options/option.d";
 import {TitleOption} from "./component/stage/structural/options/title";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 import ObservableUpdater from "./observable-updater";
-
-interface PreviewData {
-    [key: string]: KnockoutObservable<any>;
-}
+import ObservableObject from "./observable-object.d";
 
 export default class Preview {
     public parent: ContentTypeInterface;
     public config: ContentTypeConfigInterface;
-    public data: PreviewData = {};
+    public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
     public edit: Edit;
     /**
      * @deprecated
      */
-    public previewData: PreviewData = {};
+    public previewData: ObservableObject = {};
     /**
      * @deprecated
      */
@@ -51,7 +48,7 @@ export default class Preview {
      * @param {ObservableUpdater} observableUpdater
      */
     constructor(
-        parent: Block,
+        parent: ContentTypeInterface,
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater,
     ) {
@@ -118,7 +115,7 @@ export default class Preview {
     /**
      * Set state based on mouseover event for the preview
      *
-     * @param {PreviewBlock} context
+     * @param {Preview} context
      * @param {Event} event
      */
     public onMouseOver(context: PreviewBlock, event: Event) {
@@ -141,10 +138,10 @@ export default class Preview {
     /**
      * Set state based on mouseout event for the preview
      *
-     * @param {PreviewBlock} context
+     * @param {Preview} context
      * @param {Event} event
      */
-    public onMouseOut(context: PreviewBlock, event: Event) {
+    public onMouseOut(context: Preview, event: Event) {
         this.mouseover = false;
         _.delay(() => {
             if (!this.mouseover) {
@@ -367,7 +364,6 @@ export default class Preview {
                 this.observableUpdater.update(
                     this,
                     _.extend({}, this.parent.store.get(this.parent.id)),
-                    "preview",
                 );
                 EventBus.trigger("previewObservables:updated", {preview: this});
             },
@@ -477,10 +473,4 @@ export default class Preview {
         });
         return hasDataChanges;
     }
-}
-
-export interface BlockChildrenRenderedEventParams {
-    block: Block;
-    element: Element;
-    id: string;
 }

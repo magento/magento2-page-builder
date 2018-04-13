@@ -38,7 +38,6 @@ export default class Tabs extends Preview {
      */
     protected setupDataFields() {
         super.setupDataFields();
-
         this.updateDataValue("tabs", []);
         this.previewData.tabs.subscribe((data) => {
             this.renderCounter = 0;

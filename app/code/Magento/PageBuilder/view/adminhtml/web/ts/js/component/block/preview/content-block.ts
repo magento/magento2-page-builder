@@ -8,14 +8,11 @@ import Config from "../../config";
 import EventBus from "../../event-bus";
 
 export default class ContentBlock extends Preview {
-    public editOnInsert: boolean = false;
-
     /**
      * Bind events for the current instance
      */
     protected bindEvents() {
         super.bindEvents();
-
         EventBus.on("previewObservables:updated", (event, params) => {
             if (params.preview.id === this.id) {
                 const attributes = this.data.main.attributes();

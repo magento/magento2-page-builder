@@ -8,7 +8,6 @@ import ko from "knockout";
 import $t from "mage/translate";
 import Preview from "../../../preview";
 import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
-import {ConfigContentBlock} from "../../config";
 import Config from "../../config";
 import EventBus from "../../event-bus";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
@@ -18,17 +17,25 @@ import Block from "../block";
 import createBlock from "../factory";
 import ColumnGroup from "./column-group";
 import {getMaxColumns} from "./column-group/resizing";
+import ObservableUpdater from "../../../observable-updater";
+import {ContentTypeInterface} from "../../../content-type.d";
+import {ContentTypeConfigInterface} from "../../../content-type-config.d";
+
 
 export default class Column extends Preview {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    constructor(parent: Block, config: ConfigContentBlock, elementDataConverterPool, dataConverterPool) {
-        super(parent, config, elementDataConverterPool, dataConverterPool);
-
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater
+    ) {
+        super(parent, config, observableUpdater);
         this.previewData.width.subscribe((newWidth) => {
             const maxColumns = getMaxColumns();
             newWidth = parseFloat(newWidth);

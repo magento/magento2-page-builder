@@ -18,6 +18,7 @@ import {
     calculateGhostWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth,
     getAdjacentColumn, getColumnWidth, getMaxColumns,
 } from "./column-group/resizing";
+import ObservableUpdater from "../../../observable-updater";
 
 export default class ColumnGroup extends Preview {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
@@ -44,15 +45,6 @@ export default class ColumnGroup extends Preview {
     private dropPositions: DropPosition[] = [];
     private dropPosition: DropPosition;
     private movePosition: DropPosition;
-
-    /**
-     * @param {Block} parent
-     * @param {object} config
-     */
-    constructor(parent: Block, config: ConfigContentBlock) {
-        super(parent, config);
-        this.parent = parent;
-    }
 
     /**
      * Init the droppable & resizing interactions

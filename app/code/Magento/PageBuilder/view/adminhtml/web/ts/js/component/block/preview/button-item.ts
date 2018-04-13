@@ -12,16 +12,6 @@ export default class Button extends Preview {
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
-     * Button constructor
-     *
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
-     */
-    constructor(parent: Block, config: ConfigContentBlock, elementConverterPool, dataConverterPool) {
-        super(parent, config, elementConverterPool, dataConverterPool);
-    }
-
-    /**
      * After child render record element
      * returns {object}
      */

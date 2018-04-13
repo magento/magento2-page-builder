@@ -11,12 +11,12 @@ import _ from "underscore";
 import Preview from "../../../preview";
 import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
 import BlockReadyEventParamsInterface from "../../block/block-ready-event-params.d";
-import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
-import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
-import Block from "../block";
+import ObservableUpdater from "../../../observable-updater";
+import {ContentTypeInterface} from "../../../content-type.d";
+import {ContentTypeConfigInterface} from "../../../content-type-config.d";
 
 export default class Row extends Preview {
     public getChildren: KnockoutComputed<{}>;
@@ -24,12 +24,16 @@ export default class Row extends Preview {
     private element: Element;
 
     /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
-     * @param convert
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    constructor(parent: Block, config: ConfigContentBlock, convert) {
-        super(parent, config, convert);
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater
+    ) {
+        super(parent, config, observableUpdater);
 
         this.parent.store.subscribe(this.buildJarallax);
         EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {

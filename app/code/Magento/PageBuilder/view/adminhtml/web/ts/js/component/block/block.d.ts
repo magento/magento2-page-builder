@@ -7,8 +7,6 @@ import { Structural } from 'stage/structural/abstract.d';
 import Preview from "../../preview";
 
 export interface Block extends Structural {
-    title: string;
-    editOnInsert: boolean;
-    preview: Preview;
+    title: string;preview: Preview;
     childEntityKeys: Array<string>;
 }

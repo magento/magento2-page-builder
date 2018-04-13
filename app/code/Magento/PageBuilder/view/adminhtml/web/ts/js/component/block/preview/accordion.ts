@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
 import Preview from "../../../preview";
+import ObservableObject from "../../../observable-object.d";
 
 export default class Accordion extends Preview {
     private element: Element;
@@ -44,12 +45,10 @@ export default class Accordion extends Preview {
      */
     protected setupDataFields() {
         super.setupDataFields();
-
         this.updateDataValue("items", []);
         this.previewData.items.subscribe((data) => {
             this.renderCounter = 0;
             $(this.element).accordion("destroy");
         });
     }
-
 }

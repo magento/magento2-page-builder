@@ -8,9 +8,10 @@ import $t from "mage/translate";
 import Preview from "../../../preview";
 import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
-import {ConfigContentBlock} from "../../config";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
-import Block from "../block";
+import ObservableUpdater from "../../../observable-updater";
+import {ContentTypeInterface} from "../../../content-type.d";
+import {ContentTypeConfigInterface} from "../../../content-type-config.d";
 
 export default class Slide extends Preview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
@@ -18,13 +19,16 @@ export default class Slide extends Preview {
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
-     * Slide constructor
-     *
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    constructor(parent: Block, config: ConfigContentBlock) {
-        super(parent, config);
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater
+    ) {
+        super(parent, config, observableUpdater);
         const slider = this.parent.parent;
         this.displayLabel($t("Slide") + (slider.children().indexOf(this.parent) + 1));
         slider.children.subscribe((children) => {

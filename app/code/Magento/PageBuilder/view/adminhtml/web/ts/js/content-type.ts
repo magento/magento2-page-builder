@@ -5,12 +5,12 @@
 
 import ko from "knockout";
 import mageUtils from "mageUtils";
-import Preview from "./preview";
-import Content from "./content";
 import {ConfigContentBlock} from "./component/config";
 import DataStore from "./component/data-store";
 import EventBus from "./component/event-bus";
+import Content from "./content";
 import ContentTypeInterface from "./content-type.d";
+import Preview from "./preview";
 
 export default class ContentType implements ContentTypeInterface {
     public id: string = mageUtils.uniqueid();

@@ -14,17 +14,17 @@ import {fromSnakeToCamelCase} from "./utils/string";
 export default class ObservableUpdater {
     private elementConverterPool: ElementConverterPool;
     private dataConverterPool: DataConverterPool;
-    private converterResolver: Function;
+    private converterResolver: (config: object) => string;
 
     /**
      * @param {ElementConverterPool} elementConverterPool
      * @param {DataConverterPool} dataConverterPool
-     * @param converterResolver
+     * @param {(config: object) => string} converterResolver
      */
     constructor(
         elementConverterPool: ElementConverterPool,
         dataConverterPool: DataConverterPool,
-        converterResolver: Function,
+        converterResolver: (config: object) => string,
     ) {
         this.elementConverterPool = elementConverterPool;
         this.dataConverterPool = dataConverterPool;

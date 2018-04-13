@@ -14,7 +14,6 @@ export default class ProductList extends Preview {
      */
     protected bindEvents() {
         super.bindEvents();
-
         EventBus.on("previewObservables:updated", (event, params) => {
             if (params.preview.id === this.id) {
                 const attributes = this.data.main.attributes();

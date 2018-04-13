@@ -4,7 +4,6 @@
  */
 
 import ContentTypeConfigInterface from "../../content-type-config.d";
-import ContentTypeInterface from "../../content-type.d";
 import ObservableUpdater from "../../observable-updater";
 import dataConverterPoolFactory from "./data-converter-pool-factory";
 import elementConverterPoolFactory from "./element-converter-pool-factory";
@@ -14,12 +13,12 @@ import elementConverterPoolFactory from "./element-converter-pool-factory";
  *
  * @param {ContentTypeConfigInterface} config
  * @param {Function} converterResolver
- * @returns {Promise<ContentTypeInterface>}
+ * @returns {Promise<ObservableUpdater>}
  */
 export default function create(
     config: ContentTypeConfigInterface,
-    converterResolver: Function,
-): Promise<ContentTypeInterface> {
+    converterResolver: (config: object) => string,
+): Promise<ObservableUpdater> {
     const promises: Array<Promise<any>> = [
         elementConverterPoolFactory(config.name),
         dataConverterPoolFactory(config.name),

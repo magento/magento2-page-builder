@@ -12,9 +12,10 @@ import StyleAttributeFilter from "./component/format/style-attribute-filter";
 import StyleAttributeMapper from "./component/format/style-attribute-mapper";
 import ContentTypeInterface from "./content-type.d";
 import ObservableUpdater from "./observable-updater";
+import ObservableObject from "./observable-object.d";
 
 export default class Content {
-    public data = {};
+    public data: ObservableObject = {};
     private parent: ContentTypeInterface;
     private observableUpdater: ObservableUpdater;
     /**
