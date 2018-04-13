@@ -8,7 +8,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/component/block/appear
     /**
      * @param {ElementConverterPool} elementConverterPool
      * @param {DataConverterPool} dataConverterPool
-     * @param converterResolver
+     * @param {(config: object) => string} converterResolver
      */
     function ObservableUpdater(elementConverterPool, dataConverterPool, converterResolver) {
       this.elementConverterPool = void 0;

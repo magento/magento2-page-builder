@@ -7,47 +7,26 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview", "M
   function (_Preview) {
     _inheritsLoose(ColumnGroup, _Preview);
 
-    /**
-     * @param {Block} parent
-     * @param {object} config
-     */
-    function ColumnGroup(parent, config) {
-      var _this;
+    function ColumnGroup() {
+      var _temp, _this;
 
-      _this = _Preview.call(this, parent, config) || this;
-      _this.resizing = _knockout.observable(false);
-      _this.dropPlaceholder = void 0;
-      _this.movePlaceholder = void 0;
-      _this.groupElement = void 0;
-      _this.resizeGhost = void 0;
-      _this.resizeColumnInstance = void 0;
-      _this.resizeColumnWidths = [];
-      _this.resizeMaxGhostWidth = void 0;
-      _this.resizeMouseDown = void 0;
-      _this.resizeLeftLastColumnShrunk = void 0;
-      _this.resizeRightLastColumnShrunk = void 0;
-      _this.resizeLastPosition = void 0;
-      _this.resizeLastColumnInPair = void 0;
-      _this.resizeHistory = {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, _this.resizing = _knockout.observable(false), _this.dropPlaceholder = void 0, _this.movePlaceholder = void 0, _this.groupElement = void 0, _this.resizeGhost = void 0, _this.resizeColumnInstance = void 0, _this.resizeColumnWidths = [], _this.resizeMaxGhostWidth = void 0, _this.resizeMouseDown = void 0, _this.resizeLeftLastColumnShrunk = void 0, _this.resizeRightLastColumnShrunk = void 0, _this.resizeLastPosition = void 0, _this.resizeLastColumnInPair = void 0, _this.resizeHistory = {
         left: [],
         right: []
-      };
-      _this.dropOverElement = void 0;
-      _this.dropPositions = [];
-      _this.dropPosition = void 0;
-      _this.movePosition = void 0;
-      _this.parent = parent;
-      return _this;
+      }, _this.dropOverElement = void 0, _this.dropPositions = [], _this.dropPosition = void 0, _this.movePosition = void 0, _temp) || _this;
     }
+
+    var _proto = ColumnGroup.prototype;
+
     /**
      * Init the droppable & resizing interactions
      *
      * @param group
      */
-
-
-    var _proto = ColumnGroup.prototype;
-
     _proto.bindInteractions = function bindInteractions(group) {
       this.groupElement = (0, _jquery)(group);
       this.initDroppable(this.groupElement);
@@ -202,8 +181,8 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview", "M
 
 
     _proto.setColumnsAsResizing = function setColumnsAsResizing() {
-      for (var _len = arguments.length, columns = new Array(_len), _key = 0; _key < _len; _key++) {
-        columns[_key] = arguments[_key];
+      for (var _len2 = arguments.length, columns = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        columns[_key2] = arguments[_key2];
       }
 
       columns.forEach(function (column) {

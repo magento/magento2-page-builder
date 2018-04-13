@@ -10,15 +10,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
     _inheritsLoose(Slide, _Preview);
 
     /**
-     * Slide constructor
-     *
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    function Slide(parent, config) {
+    function Slide(parent, config, observableUpdater) {
       var _this;
 
-      _this = _Preview.call(this, parent, config) || this;
+      _this = _Preview.call(this, parent, config, observableUpdater) || this;
       _this.showOverlayHover = _knockout.observable(false);
       _this.showButtonHover = _knockout.observable(false);
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");

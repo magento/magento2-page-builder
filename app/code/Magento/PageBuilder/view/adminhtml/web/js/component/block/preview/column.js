@@ -10,13 +10,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
     _inheritsLoose(Column, _Preview);
 
     /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    function Column(parent, config, elementDataConverterPool, dataConverterPool) {
+    function Column(parent, config, observableUpdater) {
       var _this;
 
-      _this = _Preview.call(this, parent, config, elementDataConverterPool, dataConverterPool) || this;
+      _this = _Preview.call(this, parent, config, observableUpdater) || this;
       _this.resizing = _knockout.observable(false);
 
       _this.previewData.width.subscribe(function (newWidth) {
@@ -133,7 +134,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
     /**
      * Wrap the current column in a group
      *
-     * @returns {Promise<Block>}
+     * @returns {Promise<ContentTypeInterface>}
      */
 
 
@@ -166,7 +167,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
     /**
      * Fire the mount event for blocks
      *
-     * @param {Block} blocks
+     * @param {ContentTypeInterface[]} blocks
      */
 
 

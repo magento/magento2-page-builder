@@ -13,14 +13,12 @@ import EventBus from "../../event-bus";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
-import Block from "../block";
 import createBlock from "../factory";
 import ColumnGroup from "./column-group";
 import {getMaxColumns} from "./column-group/resizing";
 import ObservableUpdater from "../../../observable-updater";
 import {ContentTypeInterface} from "../../../content-type.d";
 import {ContentTypeConfigInterface} from "../../../content-type-config.d";
-
 
 export default class Column extends Preview {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
@@ -149,9 +147,9 @@ export default class Column extends Preview {
     /**
      * Wrap the current column in a group
      *
-     * @returns {Promise<Block>}
+     * @returns {Promise<ContentTypeInterface>}
      */
-    public createColumnGroup(): Promise<Block> {
+    public createColumnGroup(): Promise<ContentTypeInterface> {
         if (!(this.parent.parent instanceof ColumnGroup)) {
             const index = this.parent.children().indexOf(this.parent);
             // Remove child instantly to stop content jumping around
@@ -181,9 +179,9 @@ export default class Column extends Preview {
     /**
      * Fire the mount event for blocks
      *
-     * @param {Block} blocks
+     * @param {ContentTypeInterface[]} blocks
      */
-    private fireMountEvent(...blocks: Block[]) {
+    private fireMountEvent(...blocks: ContentTypeInterface[]) {
         blocks.forEach((block) => {
             EventBus.trigger("block:mount", {id: block.id, block});
             EventBus.trigger(block.config.name + ":block:mount", {id: block.id, block});

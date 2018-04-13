@@ -8,16 +8,11 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
     _inheritsLoose(Slider, _Preview);
 
     /**
-     * Assign a debounce and delay to the init of slick to ensure the DOM has updated
-     *
-     * @type {(() => any) & _.Cancelable}
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-
-    /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
-     */
-    function Slider(parent, config) {
+    function Slider(parent, config, observableUpdater) {
       var _this;
 
       _this = _Preview.call(this, parent, config) || this; // We only start forcing the containers height once the slider is ready
@@ -115,12 +110,17 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
       return _this;
     }
     /**
-     * Capture an after render event
+     * Assign a debounce and delay to the init of slick to ensure the DOM has updated
+     *
+     * @type {(() => any) & _.Cancelable}
      */
 
 
     var _proto = Slider.prototype;
 
+    /**
+     * Capture an after render event
+     */
     _proto.onAfterRender = function onAfterRender() {
       this.buildSlick();
     };

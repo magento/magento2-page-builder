@@ -10,7 +10,7 @@ define(["Magento_PageBuilder/js/observable-updater", "Magento_PageBuilder/js/com
    *
    * @param {ContentTypeConfigInterface} config
    * @param {Function} converterResolver
-   * @returns {Promise<ContentTypeInterface>}
+   * @returns {Promise<ObservableUpdater>}
    */
   function create(config, converterResolver) {
     var promises = [(0, _elementConverterPoolFactory)(config.name), (0, _dataConverterPoolFactory)(config.name)];

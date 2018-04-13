@@ -8,13 +8,7 @@ define(["Magento_PageBuilder/js/content-type"], function (_contentType) {
     _inheritsLoose(InlineBlock, _ContentType);
 
     function InlineBlock() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _ContentType.call.apply(_ContentType, [this].concat(args)) || this, _this.editOnInsert = false, _temp) || _this;
+      return _ContentType.apply(this, arguments) || this;
     }
 
     return InlineBlock;

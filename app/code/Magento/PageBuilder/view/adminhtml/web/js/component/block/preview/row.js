@@ -8,14 +8,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
     _inheritsLoose(Row, _Preview);
 
     /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
-     * @param convert
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    function Row(parent, config, convert) {
+    function Row(parent, config, observableUpdater) {
       var _this;
 
-      _this = _Preview.call(this, parent, config, convert) || this;
+      _this = _Preview.call(this, parent, config, observableUpdater) || this;
       _this.getChildren = void 0;
       _this.wrapClass = _knockout.observable(false);
       _this.element = void 0;

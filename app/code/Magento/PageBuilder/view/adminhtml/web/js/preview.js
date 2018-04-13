@@ -81,7 +81,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     /**
      * Set state based on mouseover event for the preview
      *
-     * @param {PreviewBlock} context
+     * @param {Preview} context
      * @param {Event} event
      */
 
@@ -105,7 +105,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     /**
      * Set state based on mouseout event for the preview
      *
-     * @param {PreviewBlock} context
+     * @param {Preview} context
      * @param {Event} event
      */
 
@@ -323,7 +323,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       _eventBus.on("block:sortStart", this.onSortStart.bind(this.parent));
 
       this.parent.store.subscribe(function (data) {
-        _this3.observableUpdater.update(_this3, _underscore.extend({}, _this3.parent.store.get(_this3.parent.id)), "preview");
+        _this3.observableUpdater.update(_this3, _underscore.extend({}, _this3.parent.store.get(_this3.parent.id)));
 
         _eventBus.trigger("previewObservables:updated", {
           preview: _this3

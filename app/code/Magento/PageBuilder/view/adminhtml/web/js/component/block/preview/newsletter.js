@@ -8,13 +8,7 @@ define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/conf
     _inheritsLoose(Newsletter, _Preview);
 
     function Newsletter() {
-      var _temp, _this;
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, _this.editOnInsert = false, _temp) || _this;
+      return _Preview.apply(this, arguments) || this;
     }
 
     var _proto = Newsletter.prototype;
@@ -23,13 +17,13 @@ define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/conf
      * Bind events for the current instance
      */
     _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
+      var _this = this;
 
       _Preview.prototype.bindEvents.call(this);
 
       _eventBus.on("previewObservables:updated", function (event, params) {
-        if (params.preview.id === _this2.id) {
-          var attributes = _this2.data.main.attributes();
+        if (params.preview.id === _this.id) {
+          var attributes = _this.data.main.attributes();
 
           if (attributes["data-title"] === "") {
             return;
@@ -41,11 +35,11 @@ define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/conf
             button_text: attributes["data-button-text"],
             label_text: attributes["data-label-text"],
             placeholder: attributes["data-placeholder"],
-            role: _this2.config.name,
+            role: _this.config.name,
             title: attributes["data-title"]
           };
           jQuery.post(url, requestData, function (response) {
-            _this2.data.main.html(response.content !== undefined ? response.content.trim() : "");
+            _this.data.main.html(response.content !== undefined ? response.content.trim() : "");
           });
         }
       });

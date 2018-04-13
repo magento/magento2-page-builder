@@ -24,7 +24,6 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
 
       _this = _Structural.call(this, parent, config, stageId, elementConverterPool, dataConverterPool) || this;
       _this.title = void 0;
-      _this.editOnInsert = true;
       _this.preview = void 0;
       _this.childEntityKeys = [];
       _this.preview = (0, _previews)(_this, config);

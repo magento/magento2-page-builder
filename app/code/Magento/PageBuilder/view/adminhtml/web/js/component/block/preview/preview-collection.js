@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/block/preview/block"], function (_block) {
+define(["Magento_PageBuilder/js/preview"], function (_preview) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -8,11 +8,11 @@ define(["Magento_PageBuilder/js/component/block/preview/block"], function (_bloc
 
   var PreviewCollection =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(PreviewCollection, _Block);
+  function (_Preview) {
+    _inheritsLoose(PreviewCollection, _Preview);
 
     function PreviewCollection() {
-      return _Block.apply(this, arguments) || this;
+      return _Preview.apply(this, arguments) || this;
     }
 
     var _proto = PreviewCollection.prototype;
@@ -42,7 +42,7 @@ define(["Magento_PageBuilder/js/component/block/preview/block"], function (_bloc
     }]);
 
     return PreviewCollection;
-  }(_block);
+  }(_preview);
 
   return PreviewCollection;
 });
