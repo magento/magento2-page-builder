@@ -19,11 +19,20 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
     private $assetRepo;
 
     /**
-     * @param \Magento\Framework\View\Asset\Repository $assetRepo
+     * @var array
      */
-    public function __construct(\Magento\Framework\View\Asset\Repository $assetRepo)
-    {
+    private $additionalSettings;
+
+    /**
+     * @param \Magento\Framework\View\Asset\Repository $assetRepo
+     * @param array $additionalSettings
+     */
+    public function __construct(
+        \Magento\Framework\View\Asset\Repository $assetRepo,
+        array $additionalSettings
+    ) {
         $this->assetRepo = $assetRepo;
+        $this->additionalSettings = $additionalSettings;
     }
 
     /**
@@ -60,49 +69,7 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
                     $this->assetRepo->getUrl('Magento_PageBuilder/css/source/wysiwyg/tinymce.css')
                 ]
             ],
-            'settings' => [
-                'fontsize_formats' => '10px 12px 14px 16px 18px 20px 24px 26px 28px 32px 34px 36px 38px 40px 42px ' .
-                    '48px 52px 56px 64px 72px',
-                'style_formats' => [
-                    [
-                        'title' => 'Paragraph',
-                        'block' => 'p'
-                    ],
-                    [
-                        'title' => 'Heading 1',
-                        'block' => 'h1'
-                    ],
-                    [
-                        'title' => 'Heading 2',
-                        'block' => 'h2'
-                    ],
-                    [
-                        'title' => 'Heading 3',
-                        'block' => 'h3'
-                    ],
-                    [
-                        'title' => 'Heading 4',
-                        'block' => 'h4'
-                    ],
-                    [
-                        'title' => 'Heading 5',
-                        'block' => 'h5'
-                    ],
-                    [
-                        'title' => 'Heading 6',
-                        'block' => 'h6'
-                    ],
-                    [
-                        'title' => 'Important',
-                        'block' => 'p',
-                        'classes' => 'cms-content-important'
-                    ],
-                    [
-                        'title' => 'Preformatted',
-                        'block' => 'pre'
-                    ]
-                ]
-            ]
+            'settings' => $this->additionalSettings
         ]);
         return $config;
     }
