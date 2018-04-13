@@ -21,9 +21,9 @@ export default class Tabs extends PreviewBlock {
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
      *
-     * @type {((activeTab?: number) => void) & _.Cancelable}
+     * @type {(() => void) & _.Cancelable}
      */
-    private buildTabs = _.debounce((activeTab?: number) => {
+    private buildTabs = _.debounce(() => {
         if (this.element && this.element.children.length > 0) {
             try {
                 $(this.element).tabs("destroy");
@@ -32,7 +32,7 @@ export default class Tabs extends PreviewBlock {
             }
             $(this.element).tabs({
                 create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
-                    this.setActiveTab(activeTab || this.data.default_active() || 0);
+                    this.setActiveTab(this.data.default_active() || 0);
                 },
             });
         }
@@ -50,25 +50,15 @@ export default class Tabs extends PreviewBlock {
                 this.buildTabs();
             }
         });
-        EventBus.on("tab-item:block:create", (event: Event, params: BlockCreateEventParams) => {
-            if (this.element && params.block.parent.id === this.parent.id) {
-                this.buildTabs();
-            }
-        });
-        EventBus.on("tab-item:block:removed", (event: Event, params: BlockCreateEventParams) => {
-            if (this.element && params.block.parent.id === this.parent.id) {
-                this.buildTabs();
+        EventBus.on("tab-item:block:mount", (event: Event, params: BlockCreateEventParams) => {
+            if (params.block.parent.id === this.parent.id) {
+                this.refreshTabs();
             }
         });
         // Set the active tab to the new position of the sorted tab
         EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
             if (params.instance.id === this.parent.id) {
-                _.defer(() => {
-                    const data = this.parent.children().slice(0);
-                    this.parent.children([]);
-                    this.parent.children(data);
-                    this.buildTabs(params.newPosition);
-                });
+                this.refreshTabs(params.newPosition, true);
             }
         });
         // Set the stage to interacting when a tab is focused
@@ -82,6 +72,24 @@ export default class Tabs extends PreviewBlock {
                 }
             }, (value === null ? 200 : 0));
         });
+    }
+
+    /**
+     * Refresh the tabs instance when new content appears
+     *
+     * @param {number} focusIndex
+     * @param {boolean} forceFocus
+     * @param {number} activeIndex
+     */
+    public refreshTabs(focusIndex?: number, forceFocus?: boolean, activeIndex?: number) {
+        if (this.element) {
+            $(this.element).tabs("refresh");
+            if (focusIndex) {
+                this.setFocusedTab(focusIndex, forceFocus);
+            } else if (activeIndex) {
+                this.setActiveTab(activeIndex);
+            }
+        }
     }
 
     /**

@@ -10,7 +10,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
      *
-     * @type {((activeTab?: number) => void) & _.Cancelable}
+     * @type {(() => void) & _.Cancelable}
      */
 
     /**
@@ -23,7 +23,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.focusedTab = _knockout.observable();
       _this.element = void 0;
-      _this.buildTabs = _underscore.debounce(function (activeTab) {
+      _this.buildTabs = _underscore.debounce(function () {
         if (_this.element && _this.element.children.length > 0) {
           try {
             (0, _jquery)(_this.element).tabs("destroy");
@@ -32,7 +32,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
           (0, _jquery)(_this.element).tabs({
             create: function create(event, ui) {
-              _this.setActiveTab(activeTab || _this.data.default_active() || 0);
+              _this.setActiveTab(_this.data.default_active() || 0);
             }
           });
         }
@@ -44,30 +44,16 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         }
       });
 
-      _eventBus.on("tab-item:block:create", function (event, params) {
-        if (_this.element && params.block.parent.id === _this.parent.id) {
-          _this.buildTabs();
-        }
-      });
-
-      _eventBus.on("tab-item:block:removed", function (event, params) {
-        if (_this.element && params.block.parent.id === _this.parent.id) {
-          _this.buildTabs();
+      _eventBus.on("tab-item:block:mount", function (event, params) {
+        if (params.block.parent.id === _this.parent.id) {
+          _this.refreshTabs();
         }
       }); // Set the active tab to the new position of the sorted tab
 
 
       _eventBus.on("previewSortable:sortupdate", function (event, params) {
         if (params.instance.id === _this.parent.id) {
-          _underscore.defer(function () {
-            var data = _this.parent.children().slice(0);
-
-            _this.parent.children([]);
-
-            _this.parent.children(data);
-
-            _this.buildTabs(params.newPosition);
-          });
+          _this.refreshTabs(params.newPosition, true);
         }
       }); // Set the stage to interacting when a tab is focused
 
@@ -87,13 +73,33 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
       return _this;
     }
     /**
+     * Refresh the tabs instance when new content appears
+     *
+     * @param {number} focusIndex
+     * @param {boolean} forceFocus
+     * @param {number} activeIndex
+     */
+
+
+    var _proto = Tabs.prototype;
+
+    _proto.refreshTabs = function refreshTabs(focusIndex, forceFocus, activeIndex) {
+      if (this.element) {
+        (0, _jquery)(this.element).tabs("refresh");
+
+        if (focusIndex) {
+          this.setFocusedTab(focusIndex, forceFocus);
+        } else if (activeIndex) {
+          this.setActiveTab(activeIndex);
+        }
+      }
+    };
+    /**
      * Set the active tab, we maintain a reference to it in an observable for when we rebuild the tab instance
      *
      * @param {number} index
      */
 
-
-    var _proto = Tabs.prototype;
 
     _proto.setActiveTab = function setActiveTab(index) {
       (0, _jquery)(this.element).tabs("option", "active", index);
