@@ -22,7 +22,6 @@ ko.bindingHandlers.previewSortable = {
         let originalPosition: number;
         $(element).sortable(options)
             .on("sortstart", (event: Event, ui: JQueryUI.SortableUIParams) => {
-                event.stopPropagation();
                 originalPosition = ui.item.index();
                 EventBus.trigger("previewSortable:sortstart", {
                     instance,
@@ -32,13 +31,16 @@ ko.bindingHandlers.previewSortable = {
             })
             .on("sortupdate", (event: Event, ui: JQueryUI.SortableUIParams) => {
                 const index = ui.item.index();
-                moveArrayItem(instance.children, originalPosition, index);
-                EventBus.trigger("previewSortable:sortupdate", {
-                    instance,
-                    newPosition: index,
-                    originalPosition,
-                    ui,
-                });
+                if (originalPosition !== index) {
+                    ui.item.remove();
+                    moveArrayItem(instance.children, originalPosition, index);
+                    EventBus.trigger("previewSortable:sortupdate", {
+                        instance,
+                        newPosition: index,
+                        originalPosition,
+                        ui,
+                    });
+                }
             });
     },
 };

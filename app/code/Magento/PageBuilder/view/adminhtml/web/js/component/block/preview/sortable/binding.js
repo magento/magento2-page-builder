@@ -26,7 +26,6 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/utils/array", "Magento_Pag
 
       var originalPosition;
       (0, _jquery.default)(element).sortable(options).on("sortstart", function (event, ui) {
-        event.stopPropagation();
         originalPosition = ui.item.index();
 
         _eventBus.default.trigger("previewSortable:sortstart", {
@@ -36,14 +35,18 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/utils/array", "Magento_Pag
         });
       }).on("sortupdate", function (event, ui) {
         var index = ui.item.index();
-        (0, _array.moveArrayItem)(instance.children, originalPosition, index);
 
-        _eventBus.default.trigger("previewSortable:sortupdate", {
-          instance: instance,
-          newPosition: index,
-          originalPosition: originalPosition,
-          ui: ui
-        });
+        if (originalPosition !== index) {
+          ui.item.remove();
+          (0, _array.moveArrayItem)(instance.children, originalPosition, index);
+
+          _eventBus.default.trigger("previewSortable:sortupdate", {
+            instance: instance,
+            newPosition: index,
+            originalPosition: originalPosition,
+            ui: ui
+          });
+        }
       });
     }
   };
