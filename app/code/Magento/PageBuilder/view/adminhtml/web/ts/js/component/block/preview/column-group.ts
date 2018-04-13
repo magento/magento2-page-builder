@@ -5,6 +5,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
+import ObservableUpdater from "../../../observable-updater";
 import Preview from "../../../preview";
 import Config from "../../config";
 import EventBus from "../../event-bus";
@@ -17,7 +18,6 @@ import {
     calculateGhostWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth,
     getAdjacentColumn, getColumnWidth, getMaxColumns,
 } from "./column-group/resizing";
-import ObservableUpdater from "../../../observable-updater";
 
 export default class ColumnGroup extends Preview {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
@@ -145,7 +145,7 @@ export default class ColumnGroup extends Preview {
             start: (event: Event) => {
                 const columnInstance: Column = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
-                setDragColumn(columnInstance);
+                setDragColumn(columnInstance.parent);
                 this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
 
                 EventBus.trigger("column:drag:start", {
@@ -186,7 +186,7 @@ export default class ColumnGroup extends Preview {
      */
     private setColumnsAsResizing(...columns: Column[]) {
         columns.forEach((column) => {
-            column.resizing(true);
+            column.preview.resizing(true);
         });
     }
 
@@ -195,7 +195,7 @@ export default class ColumnGroup extends Preview {
      */
     private unsetResizingColumns() {
         (this.parent as ColumnGroupBlock).children().forEach((column: Column) => {
-            column.resizing(false);
+            column.preview.resizing(false);
         });
     }
 
@@ -478,6 +478,7 @@ export default class ColumnGroup extends Preview {
                 }
 
                 const column: Column = getDragColumn();
+
                 if (this.movePosition && column && column.parent !== this.parent) {
                     (this.parent as ColumnGroupBlock).onExistingColumnDrop(event, this.movePosition);
                 }
