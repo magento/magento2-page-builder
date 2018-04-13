@@ -26,7 +26,7 @@ import {EditableAreaInterface} from "./stage/structural/editable-area.d";
  */
 function buildFromContent(stage: Stage, value: string) {
     const stageDocument = document.createElement("div");
-    stageDocument.setAttribute(Config.getValueAsString("dataRoleAttributeName"), "stage");
+    stageDocument.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = value;
     return buildElementIntoStage(stageDocument, stage, stage);
 }
@@ -41,7 +41,7 @@ function buildFromContent(stage: Stage, value: string) {
  */
 function buildElementIntoStage(element: Element, parent: EditableArea, stage: Stage): Promise<any> {
     if (element instanceof HTMLElement
-        && element.getAttribute(Config.getValueAsString("dataRoleAttributeName"))
+        && element.getAttribute(Config.getConfig("dataRoleAttributeName"))
     ) {
         const childPromises: Array<Promise<EditableArea>> = [];
         const childElements: Element[] = [];
@@ -74,8 +74,8 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
  */
 function createElementBlock(element: HTMLElement, stage: Stage, parent?: EditableArea): Promise<EditableArea> {
     parent = parent || stage;
-    const role = element.getAttribute(Config.getValueAsString("dataRoleAttributeName"));
-    const config = Config.getConfig("content_types")[role];
+    const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
+    const config = Config.getContentTypeConfig(role);
 
     return getElementData(element, config).then(
         (data: object) => createBlock(
@@ -120,7 +120,7 @@ function getElementChildren(element: Element) {
         _.forEach(element.childNodes, (child: HTMLElement) => {
             // Only search elements which tagName's and not script tags
             if (child.tagName && child.tagName !== "SCRIPT") {
-                if (child.hasAttribute(Config.getValueAsString("dataRoleAttributeName"))) {
+                if (child.hasAttribute(Config.getConfig("dataRoleAttributeName"))) {
                     children.push(child);
                 } else {
                     children = getElementChildren(child);

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define([], function () {
+define(["underscore"], function (_underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -15,7 +15,7 @@ define([], function () {
      * @param config
      */
     Config.setConfig = function setConfig(config) {
-      Config.initConfig = config;
+      Config.config = _underscore.extend(Config.config, config);
     };
     /**
      * Retrieve the init config
@@ -27,14 +27,14 @@ define([], function () {
 
     Config.getConfig = function getConfig(key) {
       if (key) {
-        if (typeof Config.initConfig[key] !== "undefined") {
-          return Config.initConfig[key];
+        if (typeof Config.config[key] !== "undefined") {
+          return Config.config[key];
         }
 
         return null;
       }
 
-      return Config.initConfig;
+      return Config.config;
     };
     /**
      * Retrieve a content type from the configuration
@@ -51,41 +51,10 @@ define([], function () {
 
       return null;
     };
-    /**
-     * Get a specific value from the configuration based on a key
-     *
-     * @param key
-     * @returns {any}
-     */
-
-
-    Config.getValue = function getValue(key) {
-      if (typeof Config.config[key] !== "undefined") {
-        return Config.config[key];
-      }
-
-      if (Config.getConfig(key)) {
-        return Config.getConfig(key);
-      }
-
-      return null;
-    };
-    /**
-     * Retrieve a value as a string
-     *
-     * @param key
-     * @returns {String}
-     */
-
-
-    Config.getValueAsString = function getValueAsString(key) {
-      return String(Config.getValue(key));
-    };
 
     return Config;
   }();
 
-  Config.initConfig = void 0;
   Config.config = {
     dataRoleAttributeName: "data-role"
   };

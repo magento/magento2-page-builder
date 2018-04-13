@@ -4,12 +4,6 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-
-  /**
-   * Render the tree into a string
-   *
-   * @param {KnockoutObservableArray<Structural>} tree
-   */
   var Save =
   /*#__PURE__*/
   function () {
@@ -31,11 +25,12 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
       var element = (0, _jquery)("<div>");
       return new Promise(function (resolve, reject) {
         _engine.waitForFinishRender().then(function () {
+          _knockout.cleanNode(element[0]);
+
           var filtered = (0, _filterHtml)(element);
           var output = (0, _directives)(filtered.html());
-          console.log(output);
-          resolve(output);
           element.remove();
+          resolve(output);
         });
 
         _knockout.applyBindingsToNode(element[0], {
