@@ -72,15 +72,6 @@ export default class Preview {
     }
 
     /**
-     * Retrieve the preview child template
-     *
-     * @returns {string}
-     */
-    get previewChildTemplate(): string {
-        return "Magento_PageBuilder/component/block/preview/children.html";
-    }
-
-    /**
      * Update data store
      *
      * @param {string} key
@@ -260,9 +251,6 @@ export default class Preview {
             child.parent,
             child.config,
             child.stageId,
-            child.content.getData(),
-            child.previewBuilder,
-            child.contentBuilder,
         );
         const index = child.parent.children.indexOf(child) + 1 || null;
         // Copy the data from the data store

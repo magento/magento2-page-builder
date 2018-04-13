@@ -58,15 +58,6 @@ export default class Content {
     }
 
     /**
-     * Retrieve the child template
-     *
-     * @returns {string}
-     */
-    get renderChildTemplate(): string {
-        return "Magento_PageBuilder/component/block/render/children.html";
-    }
-
-    /**
      * Get data for css binding, example {"class-name": true}
      *
      * @returns {DataObject}

@@ -34,9 +34,10 @@ export default class ObservableUpdater {
     /**
      * Update preview observables after data changed in data store
      *
+     * @param {object} viewModel
      * @param {object} data
      */
-    public update(viewModel, data: object) {
+    public update(viewModel: object, data: object) {
         const appearance = data && data.appearance !== undefined ? data.appearance : undefined;
         const appearanceConfiguration = appearanceConfig(viewModel.parent.config.name, appearance);
         if (undefined === appearanceConfiguration

@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import Preview from "../../../preview";
+import Preview from "./preview";
 
 export default class PreviewCollection extends Preview {
     /**
