@@ -6,6 +6,9 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import {ContentTypeConfigInterface} from "../../../content-type-config.d";
+import {ContentTypeInterface} from "../../../content-type.d";
+import ObservableUpdater from "../../../observable-updater";
 import Preview from "../../../preview";
 import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
 import Config from "../../config";
@@ -16,9 +19,6 @@ import {OptionInterface} from "../../stage/structural/options/option.d";
 import createBlock from "../factory";
 import ColumnGroup from "./column-group";
 import {getMaxColumns} from "./column-group/resizing";
-import ObservableUpdater from "../../../observable-updater";
-import {ContentTypeInterface} from "../../../content-type.d";
-import {ContentTypeConfigInterface} from "../../../content-type-config.d";
 
 export default class Column extends Preview {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
@@ -31,7 +31,7 @@ export default class Column extends Preview {
     constructor(
         parent: ContentTypeInterface,
         config: ContentTypeConfigInterface,
-        observableUpdater: ObservableUpdater
+        observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
         this.previewData.width.subscribe((newWidth) => {
@@ -46,39 +46,6 @@ export default class Column extends Preview {
     }
 
     /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
-     */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
-        // Extract data values our of observable functions
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        if (this.previewData.background_image && typeof this.previewData.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
-        }
-
-        // If we have left and right margins we need to minus this from the total width
-        if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
-            const margins = this.previewData.margins_and_padding().margin;
-            const horizontalMargin = parseInt(margins.left || 0, 10) +
-                parseInt(margins.right || 0, 10);
-            styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
-        }
-
-        // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
-        if (styles.marginRight === "0px") {
-            styles.marginRight = "1px";
-        }
-
-        // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-        if (this.previewData.border && this.previewData.border() === "_default") {
-            styles.border = "none";
-        }
-
-        return styles;
-    }
-
-    /**
      * Bind events for the current instance
      */
     public bindEvents() {
@@ -86,7 +53,7 @@ export default class Column extends Preview {
 
         if (Config.getContentTypeConfig("column-group")) {
             EventBus.on("column:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
-                if (params.id === this.id) {
+                if (params.id === this.parent.id) {
                     this.createColumnGroup();
                 }
             });
@@ -99,7 +66,7 @@ export default class Column extends Preview {
      * @param element
      */
     public initColumn(element: Element) {
-        this.element = $(element);
+        this.parent.element = $(element);
         EventBus.trigger("column:initElement", {
             column: this.parent,
             element: $(element),
@@ -145,15 +112,15 @@ export default class Column extends Preview {
     }
 
     /**
-     * Wrap the current column in a group
+     * Wrap the current column in a group if it not in a column-group
      *
      * @returns {Promise<ContentTypeInterface>}
      */
     public createColumnGroup(): Promise<ContentTypeInterface> {
-        if (!(this.parent.parent instanceof ColumnGroup)) {
-            const index = this.parent.children().indexOf(this.parent);
+        if (this.parent.parent.config.name !== "column-group") {
+            const index = this.parent.parent.children().indexOf(this.parent);
             // Remove child instantly to stop content jumping around
-            this.parent.parent.removeChild(this);
+            this.parent.parent.removeChild(this.parent);
             // Create a new instance of column group to wrap our columns with
             return createBlock(
                 Config.getContentTypeConfig("column-group"),
@@ -174,6 +141,39 @@ export default class Column extends Preview {
                 });
             });
         }
+    }
+
+    /**
+     * Update the style attribute mapper converts images to directives, override it to include the correct URL
+     *
+     * @returns styles
+     */
+    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
+        // Extract data values our of observable functions
+        // The style attribute mapper converts images to directives, override it to include the correct URL
+        if (this.previewData.background_image && typeof this.previewData.background_image()[0] === "object") {
+            styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
+        }
+
+        // If we have left and right margins we need to minus this from the total width
+        if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
+            const margins = this.previewData.margins_and_padding().margin;
+            const horizontalMargin = parseInt(margins.left || 0, 10) +
+                parseInt(margins.right || 0, 10);
+            styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
+        }
+
+        // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
+        if (styles.marginRight === "0px") {
+            styles.marginRight = "1px";
+        }
+
+        // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
+        if (this.previewData.border && this.previewData.border() === "_default") {
+            styles.border = "none";
+        }
+
+        return styles;
     }
 
     /**

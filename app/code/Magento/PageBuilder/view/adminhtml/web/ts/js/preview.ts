@@ -368,6 +368,23 @@ export default class Preview {
         const styleAttributeMapper = new StyleAttributeMapper();
         const styleAttributeFilter = new StyleAttributeFilter();
 
+        // Create an empty observable for all fields
+        if (this.config.fields) {
+            _.keys(this.config.fields).forEach((key: string) => {
+                this.updateDataValue(key, "");
+            });
+        }
+
+        // Subscribe to this blocks data in the store
+        this.parent.store.subscribe(
+            (data: DataObject) => {
+                _.forEach(data, (value, key) => {
+                    this.updateDataValue(key, value);
+                });
+            },
+            this.parent.id,
+        );
+
         // Calculate the preview style utilising the style attribute mapper & appearance system
         this.previewStyle = ko.computed(() => {
             const data = _.mapObject(this.previewData, (value) => {
@@ -398,23 +415,6 @@ export default class Preview {
                 });
             }
         });
-
-        // Create an empty observable for all fields
-        if (this.config.fields) {
-            _.keys(this.config.fields).forEach((key: string) => {
-                this.updateDataValue(key, "");
-            });
-        }
-
-        // Subscribe to this blocks data in the store
-        this.parent.store.subscribe(
-            (data: DataObject) => {
-                _.forEach(data, (value, key) => {
-                    this.updateDataValue(key, value);
-                });
-            },
-            this.parent.id,
-        );
     }
 
     /**

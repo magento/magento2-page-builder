@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/block/preview/column-group", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _preview, _config, _eventBus, _option, _factory, _columnGroup, _resizing) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _preview, _config, _eventBus, _option, _factory, _resizing) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -33,44 +33,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
       return _this;
     }
     /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
+     * Bind events for the current instance
      */
 
 
     var _proto = Column.prototype;
-
-    _proto.afterStyleMapped = function afterStyleMapped(styles) {
-      // Extract data values our of observable functions
-      // The style attribute mapper converts images to directives, override it to include the correct URL
-      if (this.previewData.background_image && _typeof(this.previewData.background_image()[0]) === "object") {
-        styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
-      } // If we have left and right margins we need to minus this from the total width
-
-
-      if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
-        var margins = this.previewData.margins_and_padding().margin;
-        var horizontalMargin = parseInt(margins.left || 0, 10) + parseInt(margins.right || 0, 10);
-        styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
-      } // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
-
-
-      if (styles.marginRight === "0px") {
-        styles.marginRight = "1px";
-      } // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-
-
-      if (this.previewData.border && this.previewData.border() === "_default") {
-        styles.border = "none";
-      }
-
-      return styles;
-    };
-    /**
-     * Bind events for the current instance
-     */
-
 
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
@@ -79,7 +46,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
 
       if (_config.getContentTypeConfig("column-group")) {
         _eventBus.on("column:block:mount", function (event, params) {
-          if (params.id === _this2.id) {
+          if (params.id === _this2.parent.id) {
             _this2.createColumnGroup();
           }
         });
@@ -93,7 +60,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
 
 
     _proto.initColumn = function initColumn(element) {
-      this.element = (0, _jquery)(element);
+      this.parent.element = (0, _jquery)(element);
 
       _eventBus.trigger("column:initElement", {
         column: this.parent,
@@ -132,7 +99,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
       });
     };
     /**
-     * Wrap the current column in a group
+     * Wrap the current column in a group if it not in a column-group
      *
      * @returns {Promise<ContentTypeInterface>}
      */
@@ -141,10 +108,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
     _proto.createColumnGroup = function createColumnGroup() {
       var _this3 = this;
 
-      if (!(this.parent.parent instanceof _columnGroup)) {
-        var index = this.parent.children().indexOf(this.parent); // Remove child instantly to stop content jumping around
+      if (this.parent.parent.config.name !== "column-group") {
+        var index = this.parent.parent.children().indexOf(this.parent); // Remove child instantly to stop content jumping around
 
-        this.parent.parent.removeChild(this); // Create a new instance of column group to wrap our columns with
+        this.parent.parent.removeChild(this.parent); // Create a new instance of column group to wrap our columns with
 
         return (0, _factory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId).then(function (columnGroup) {
           return Promise.all([(0, _factory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
@@ -163,6 +130,39 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
           });
         });
       }
+    };
+    /**
+     * Update the style attribute mapper converts images to directives, override it to include the correct URL
+     *
+     * @returns styles
+     */
+
+
+    _proto.afterStyleMapped = function afterStyleMapped(styles) {
+      // Extract data values our of observable functions
+      // The style attribute mapper converts images to directives, override it to include the correct URL
+      if (this.previewData.background_image && _typeof(this.previewData.background_image()[0]) === "object") {
+        styles.backgroundImage = "url(" + this.previewData.background_image()[0].url + ")";
+      } // If we have left and right margins we need to minus this from the total width
+
+
+      if (this.previewData.margins_and_padding && this.previewData.margins_and_padding().margin) {
+        var margins = this.previewData.margins_and_padding().margin;
+        var horizontalMargin = parseInt(margins.left || 0, 10) + parseInt(margins.right || 0, 10);
+        styles.width = "calc(" + styles.width + " - " + horizontalMargin + "px)";
+      } // If the right margin is 0, we set it to 1px to overlap the columns to create a single border
+
+
+      if (styles.marginRight === "0px") {
+        styles.marginRight = "1px";
+      } // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
+
+
+      if (this.previewData.border && this.previewData.border() === "_default") {
+        styles.border = "none";
+      }
+
+      return styles;
     };
     /**
      * Fire the mount event for blocks

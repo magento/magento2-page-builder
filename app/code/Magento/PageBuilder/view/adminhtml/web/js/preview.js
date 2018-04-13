@@ -341,7 +341,20 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       var _this4 = this;
 
       var styleAttributeMapper = new _styleAttributeMapper();
-      var styleAttributeFilter = new _styleAttributeFilter(); // Calculate the preview style utilising the style attribute mapper & appearance system
+      var styleAttributeFilter = new _styleAttributeFilter(); // Create an empty observable for all fields
+
+      if (this.config.fields) {
+        _underscore.keys(this.config.fields).forEach(function (key) {
+          _this4.updateDataValue(key, "");
+        });
+      } // Subscribe to this blocks data in the store
+
+
+      this.parent.store.subscribe(function (data) {
+        _underscore.forEach(data, function (value, key) {
+          _this4.updateDataValue(key, value);
+        });
+      }, this.parent.id); // Calculate the preview style utilising the style attribute mapper & appearance system
 
       this.previewStyle = _knockout.computed(function () {
         var data = _underscore.mapObject(_this4.previewData, function (value) {
@@ -365,20 +378,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
             _this4.previewStyle.notifySubscribers();
           });
         }
-      }); // Create an empty observable for all fields
-
-      if (this.config.fields) {
-        _underscore.keys(this.config.fields).forEach(function (key) {
-          _this4.updateDataValue(key, "");
-        });
-      } // Subscribe to this blocks data in the store
-
-
-      this.parent.store.subscribe(function (data) {
-        _underscore.forEach(data, function (value, key) {
-          _this4.updateDataValue(key, value);
-        });
-      }, this.parent.id);
+      });
     };
     /**
      * Callback function to update the styles are mapped

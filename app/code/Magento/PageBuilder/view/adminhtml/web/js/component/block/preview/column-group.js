@@ -131,7 +131,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview", "M
           var columnInstance = _knockout.dataFor((0, _jquery)(event.target)[0]); // Use the global state as columns can be dragged between groups
 
 
-          (0, _registry.setDragColumn)(columnInstance);
+          (0, _registry.setDragColumn)(columnInstance.parent);
           _this3.dropPositions = (0, _dragdrop.calculateDropPositions)(_this3.parent);
 
           _eventBus.trigger("column:drag:start", {
@@ -186,7 +186,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview", "M
       }
 
       columns.forEach(function (column) {
-        column.resizing(true);
+        column.preview.resizing(true);
       });
     };
     /**
@@ -196,7 +196,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview", "M
 
     _proto.unsetResizingColumns = function unsetResizingColumns() {
       this.parent.children().forEach(function (column) {
-        column.resizing(false);
+        column.preview.resizing(false);
       });
     };
     /**
