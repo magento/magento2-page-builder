@@ -222,7 +222,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         start: function start(event, ui) {
           borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
           (0, _jquery)(this).css("paddingLeft", borderWidth);
-          ui.helper.width(ui.item.outerWidth());
+          ui.helper.css("width", "");
           self.parent.stage.interacting(true);
           self.lockInteracting = true;
         },

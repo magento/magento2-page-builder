@@ -202,7 +202,7 @@ export default class Tabs extends PreviewBlock {
             start(event: Event, ui: JQueryUI.SortableUIParams) {
                 borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
                 $(this).css("paddingLeft", borderWidth);
-                ui.helper.width(ui.item.outerWidth());
+                ui.helper.css("width", "");
                 self.parent.stage.interacting(true);
                 self.lockInteracting = true;
             },
