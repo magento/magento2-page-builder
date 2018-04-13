@@ -16,6 +16,7 @@ import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Tabs extends PreviewBlock {
     public focusedTab: KnockoutObservable<number> = ko.observable();
+    private lockInteracting: boolean;
     private element: Element;
 
     /**
@@ -67,7 +68,7 @@ export default class Tabs extends PreviewBlock {
             focusTabValue = value;
             // If we're stopping the interaction we need to wait, to ensure any other actions can complete
             _.delay(() => {
-                if (focusTabValue === value) {
+                if (focusTabValue === value && !this.lockInteracting) {
                     this.parent.stage.interacting(value !== null);
                 }
             }, (value === null ? 200 : 0));
@@ -119,6 +120,7 @@ export default class Tabs extends PreviewBlock {
                 if ($(":focus").hasClass("tab-title") && $(":focus").prop("contenteditable")) {
                     document.execCommand("selectAll", false, null);
                 } else {
+                    console.log("cancel interacting");
                     // If the active element isn't the tab title, we're not interacting with the stage
                     this.parent.stage.interacting(false);
                 }
@@ -170,6 +172,7 @@ export default class Tabs extends PreviewBlock {
      * @returns {JQueryUI.SortableOptions}
      */
     public getSortableOptions(): SortableOptions {
+        const self = this;
         let borderWidth: number;
         return {
             handle: ".tab-drag-handle",
@@ -200,6 +203,8 @@ export default class Tabs extends PreviewBlock {
                 borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
                 $(this).css("paddingLeft", borderWidth);
                 ui.helper.width(ui.item.outerWidth());
+                self.parent.stage.interacting(true);
+                self.lockInteracting = true;
             },
 
             /**
@@ -210,6 +215,8 @@ export default class Tabs extends PreviewBlock {
              */
             stop(event: Event, ui: JQueryUI.SortableUIParams) {
                 $(this).css("paddingLeft", "");
+                self.parent.stage.interacting(false);
+                self.lockInteracting = false;
             },
 
             placeholder: {

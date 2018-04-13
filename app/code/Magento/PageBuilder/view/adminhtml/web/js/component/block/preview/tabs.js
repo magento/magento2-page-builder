@@ -22,6 +22,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
       _this = _PreviewBlock.call(this, parent, config) || this;
       _this.focusedTab = _knockout.observable();
+      _this.lockInteracting = void 0;
       _this.element = void 0;
       _this.buildTabs = _underscore.debounce(function () {
         if (_this.element && _this.element.children.length > 0) {
@@ -64,7 +65,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         focusTabValue = value; // If we're stopping the interaction we need to wait, to ensure any other actions can complete
 
         _underscore.delay(function () {
-          if (focusTabValue === value) {
+          if (focusTabValue === value && !_this.lockInteracting) {
             _this.parent.stage.interacting(value !== null);
           }
         }, value === null ? 200 : 0);
@@ -132,7 +133,8 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
           if ((0, _jquery)(":focus").hasClass("tab-title") && (0, _jquery)(":focus").prop("contenteditable")) {
             document.execCommand("selectAll", false, null);
           } else {
-            // If the active element isn't the tab title, we're not interacting with the stage
+            console.log("cancel interacting"); // If the active element isn't the tab title, we're not interacting with the stage
+
             _this2.parent.stage.interacting(false);
           }
         });
@@ -187,6 +189,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
 
     _proto.getSortableOptions = function getSortableOptions() {
+      var self = this;
       var borderWidth;
       return {
         handle: ".tab-drag-handle",
@@ -220,6 +223,8 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
           borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
           (0, _jquery)(this).css("paddingLeft", borderWidth);
           ui.helper.width(ui.item.outerWidth());
+          self.parent.stage.interacting(true);
+          self.lockInteracting = true;
         },
 
         /**
@@ -230,6 +235,8 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
          */
         stop: function stop(event, ui) {
           (0, _jquery)(this).css("paddingLeft", "");
+          self.parent.stage.interacting(false);
+          self.lockInteracting = false;
         },
         placeholder: {
           /**
