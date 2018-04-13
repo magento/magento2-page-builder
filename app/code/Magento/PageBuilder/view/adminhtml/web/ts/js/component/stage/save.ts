@@ -10,12 +10,6 @@ import filterHtml from "../../component/format/filter-html";
 import decodeAllDataUrlsInString from "../../utils/directives";
 import Structural from "./structural/abstract";
 
-/**
- * Render the tree into a string
- *
- * @param {KnockoutObservableArray<Structural>} tree
- */
-
 export default class Save {
     private rootTemplate: string = "Magento_PageBuilder/component/block/render/root.html";
 
@@ -29,11 +23,11 @@ export default class Save {
         const element = $("<div>");
         return new Promise((resolve, reject) => {
             engine.waitForFinishRender().then(() => {
+                ko.cleanNode(element[0]);
                 const filtered: JQuery = filterHtml(element);
                 const output = decodeAllDataUrlsInString(filtered.html());
-                console.log(output);
-                resolve(output);
                 element.remove();
+                resolve(output);
             });
             ko.applyBindingsToNode(
                 element[0],
