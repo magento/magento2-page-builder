@@ -151,7 +151,7 @@
         <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForTabsToLoadStorefront"/>
+        <waitForPageLoad stepKey="waitForTabsToLoadStorefront" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionStorefront"/>
@@ -190,7 +190,7 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <waitForPageLoad stepKey="waitForOptionsPanel"/>
+        <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
 
         <comment userInput="Edit tab name inline on stage" stepKey="AC2"/>
@@ -212,7 +212,7 @@
         <comment userInput="User sees Tab 1 with custom tab name on Storefront" stepKey="AC4"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
     </test>
@@ -248,7 +248,7 @@
         </actionGroup>
         <!-- Open Tabs Panel -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
-        <waitForPageLoad stepKey="waitForOptionsPanel"/>
+        <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
         <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
 
@@ -264,7 +264,7 @@
         </actionGroup>
         <comment userInput="User updates tab settings and saves configuration" stepKey="AC3"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Custom Tab name is displayed within the stage in place of the default title" stepKey="AC4"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -293,7 +293,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <waitForPageLoad stepKey="waitForAnimation2" />
+        <waitForPageLoad stepKey="waitForAnimation2" time="30"/>
 
         <comment userInput="Tab 2 that was just edited is displayed on stage after edit panel save with custom name" stepKey="AC7"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
@@ -323,11 +323,11 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
 
         <comment userInput="Tab 1 is focused and Tab 2 is hidden" stepKey="focus"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive('1')}}" stepKey="waitForFirstTabHeader"/>
-        <waitForPageLoad stepKey="waitForTabsInit"/>
+        <waitForPageLoad stepKey="waitForTabsInit" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1Visible"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent('2')}}" attribute="aria-hidden" expectedValue="true" stepKey="assertTab2Hidden"/>
@@ -400,7 +400,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -450,7 +450,7 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImageProperty.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
@@ -521,7 +521,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -566,7 +566,7 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
@@ -637,7 +637,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -685,7 +685,7 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
@@ -759,7 +759,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -812,7 +812,7 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
@@ -885,7 +885,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -953,7 +953,7 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
@@ -1024,7 +1024,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -1072,7 +1072,7 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
@@ -1150,7 +1150,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -1224,7 +1224,7 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
@@ -1301,7 +1301,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -1353,7 +1353,7 @@
         <comment userInput="Verify tabs on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
@@ -1427,7 +1427,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -1500,7 +1500,7 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
@@ -1576,7 +1576,7 @@
         </actionGroup>
 
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
 
         <comment userInput="Add and customize second tab" stepKey="AC2"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
@@ -1629,7 +1629,7 @@
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
@@ -1681,7 +1681,7 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <waitForPageLoad stepKey="waitForOptionsPanel"/>
+        <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
         <!-- Open Tabs Panel -->
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
@@ -1754,20 +1754,20 @@
             <argument name="to" value="2"/>
         </actionGroup>
         <comment userInput="Verify tab 2 on stage" stepKey="AC4"/>
-        <waitForPageLoad stepKey="waitForPageLoadAdmin"/>
+        <waitForPageLoad stepKey="waitForPageLoadAdmin" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tab2ContentAdvancedStyles}}" stepKey="seeTab2ContentAdvancedStylesInAdminPreview"/>
 
         <!-- Verify in Storefront -->
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForPageLoadStoreFront"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
 
         <waitForElementVisible selector="{{TabOnStorefront.tab1ContentAdvancedStyles}}" stepKey="seeTabContentAdvancedStylesInStorefront1"/>
         <waitForElementVisible selector="{{TabOnStorefront.tab1ContentAdvancedClass}}" stepKey="seeTabContentClassInStorefront1"/>
 
         <click selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="switchToTab"/>
-        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" />
+        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" time="30"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabContent('2')}}" stepKey="seeNewTabContent"/>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
