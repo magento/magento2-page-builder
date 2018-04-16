@@ -203,7 +203,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
       var store = child.store;
       var instance = child.constructor;
-      var duplicate = new instance(child.parent, child.config, child.stageId, child.content.getData(), child.previewBuilder, child.contentBuilder);
+      var duplicate = new instance(child.parent, child.config, child.stageId);
       var index = child.parent.children.indexOf(child) + 1 || null; // Copy the data from the data store
 
       store.update(duplicate.id, Object.assign({}, store.get(child.id))); // Duplicate the instances children into the new duplicate
@@ -439,17 +439,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       get: function get() {
         var appearance = this.previewData.appearance ? this.previewData.appearance() : undefined;
         return (0, _appearanceConfig)(this.config.name, appearance).preview_template;
-      }
-      /**
-       * Retrieve the preview child template
-       *
-       * @returns {string}
-       */
-
-    }, {
-      key: "previewChildTemplate",
-      get: function get() {
-        return "Magento_PageBuilder/component/block/preview/children.html";
       }
     }]);
 

@@ -10,8 +10,8 @@ import {fromHex} from "../../../utils/color-converter";
 import {percentToDecimal} from "../../../utils/number-converter";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import ObservableUpdater from "../../../observable-updater";
-import {ContentTypeInterface} from "../../../content-type.d";
-import {ContentTypeConfigInterface} from "../../../content-type-config.d";
+import ContentTypeInterface from "../../../content-type.d";
+import ContentTypeConfigInterface from "../../../content-type-config.d";
 
 export default class Slide extends Preview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);

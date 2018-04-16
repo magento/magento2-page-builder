@@ -11,12 +11,12 @@ import EventBus from "../event-bus";
 import {BlockRemovedParams} from "../stage/event-handling-delegate";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
-import Block from "./block";
+import ContentTypeCollection from "../../content-type-collection";
 import BlockMountEventParamsInterface from "./block-mount-event-params.d";
 import {default as SliderPreview} from "./preview/slider";
 import Slide from "./slide";
 
-export default class Slider extends Block {
+export default class Slider extends ContentTypeCollection {
 
     /**
      * Return an array of options

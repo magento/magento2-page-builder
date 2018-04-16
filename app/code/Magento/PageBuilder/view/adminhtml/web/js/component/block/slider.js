@@ -1,14 +1,14 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/block"], function (_translate, _underscore, _factory, _config, _eventBus, _option, _block) {
+define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/content-type-collection"], function (_translate, _underscore, _factory, _config, _eventBus, _option, _contentTypeCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(Slider, _Block);
+  function (_ContentTypeCollectio) {
+    _inheritsLoose(Slider, _ContentTypeCollectio);
 
     function Slider() {
-      return _Block.apply(this, arguments) || this;
+      return _ContentTypeCollectio.apply(this, arguments) || this;
     }
 
     var _proto = Slider.prototype;
@@ -19,7 +19,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
      * @returns {Array<OptionInterface>}
      */
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _Block.prototype.retrieveOptions.call(this);
+      var options = _ContentTypeCollectio.prototype.retrieveOptions.call(this);
 
       options.push(new _option.Option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add"), this.addSlide, ["add-child"], 10));
       return options;
@@ -60,7 +60,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _Block.prototype.bindEvents.call(this); // Block being mounted onto container
+      _ContentTypeCollectio.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
       _eventBus.on("slider:block:ready", function (event, params) {
@@ -106,7 +106,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
     };
 
     return Slider;
-  }(_block);
+  }(_contentTypeCollection);
 
   return Slider;
 });

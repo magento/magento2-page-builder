@@ -21,6 +21,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/component/block/appear
     /**
      * Update preview observables after data changed in data store
      *
+     * @param {object} viewModel
      * @param {object} data
      */
 

@@ -12,13 +12,14 @@ define(["uiEvents", "Magento_PageBuilder/js/content-type", "Magento_PageBuilder/
      */
 
     /**
-     * Create image uploader and add listener for when image gets uploaded through this instance
-     * {@inheritDoc}
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {number} stageId
      */
-    function Image(parent, stageId, config, formData, elementConverterPool, dataConverterPool) {
+    function Image(parent, config, stageId) {
       var _this;
 
-      _this = _ContentType.call(this, parent, stageId, config, formData, elementConverterPool, dataConverterPool) || this; // Create uploader
+      _this = _ContentType.call(this, parent, config, stageId) || this; // Create uploader
 
       _this.uploader = void 0;
       _this.uploader = new _uploader(_this.id, "imageuploader_" + _this.id, Object.assign({}, _uploader.getDefaultConfig(), {

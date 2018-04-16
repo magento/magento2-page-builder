@@ -19,18 +19,16 @@ export default class Image extends ContentType {
     private uploader: Uploader;
 
     /**
-     * Create image uploader and add listener for when image gets uploaded through this instance
-     * {@inheritDoc}
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {number} stageId
      */
     constructor(
         parent: EditableArea,
-        stageId,
         config: ConfigContentBlock,
-        formData: any,
-        elementConverterPool: ElementConverterPool,
-        dataConverterPool: DataConverterPool,
+        stageId,
     ) {
-        super(parent, stageId, config, formData, elementConverterPool, dataConverterPool);
+        super(parent, config, stageId);
 
         // Create uploader
         this.uploader = new Uploader(

@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/preview"], function (_knockout, _preview) {
+define(["knockout", "Magento_PageBuilder/js/preview-collection"], function (_knockout, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Buttons =
   /*#__PURE__*/
-  function (_Preview) {
-    _inheritsLoose(Buttons, _Preview);
+  function (_PreviewCollection) {
+    _inheritsLoose(Buttons, _PreviewCollection);
 
     function Buttons() {
       var _temp, _this;
@@ -14,11 +14,11 @@ define(["knockout", "Magento_PageBuilder/js/preview"], function (_knockout, _pre
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _temp) || _this;
+      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.isLiveEditing = _knockout.observable(false), _temp) || _this;
     }
 
     return Buttons;
-  }(_preview);
+  }(_previewCollection);
 
   return Buttons;
 });

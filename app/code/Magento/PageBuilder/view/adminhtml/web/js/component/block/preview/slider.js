@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/event-bus"], function (_jquery, _knockout, _slick, _underscore, _focus, _preview, _eventBus) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/event-bus"], function (_jquery, _knockout, _slick, _underscore, _focus, _previewCollection, _eventBus) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
   /*#__PURE__*/
-  function (_Preview) {
-    _inheritsLoose(Slider, _Preview);
+  function (_PreviewCollection) {
+    _inheritsLoose(Slider, _PreviewCollection);
 
     /**
      * @param {ContentTypeInterface} parent
@@ -15,7 +15,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
     function Slider(parent, config, observableUpdater) {
       var _this;
 
-      _this = _Preview.call(this, parent, config) || this; // We only start forcing the containers height once the slider is ready
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // We only start forcing the containers height once the slider is ready
 
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);
@@ -183,7 +183,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
-      _Preview.prototype.afterChildrenRender.call(this, element);
+      _PreviewCollection.prototype.afterChildrenRender.call(this, element);
 
       this.element = element;
     };
@@ -247,7 +247,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
     };
 
     return Slider;
-  }(_preview);
+  }(_previewCollection);
 
   return Slider;
 });

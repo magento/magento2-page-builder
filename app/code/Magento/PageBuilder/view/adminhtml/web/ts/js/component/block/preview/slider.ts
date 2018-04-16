@@ -8,17 +8,17 @@ import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick.min";
 import _ from "underscore";
 import "../../../binding/focus";
-import Preview from "../../../preview";
+import PreviewCollection from "../../../preview-collection";
 import EventBus from "../../event-bus";
 import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 import BlockCreateEventParamsInterface from "../block-create-event-params.d";
 import BlockReadyEventParamsInterface from "../block-ready-event-params.d";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 import ObservableUpdater from "../../../observable-updater";
-import {ContentTypeInterface} from "../../../content-type.d";
-import {ContentTypeConfigInterface} from "../../../content-type-config.d";
+import ContentTypeInterface from "../../../content-type.d";
+import ContentTypeConfigInterface from "../../../content-type-config.d";
 
-export default class Slider extends Preview {
+export default class Slider extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
     private element: Element;
@@ -35,7 +35,7 @@ export default class Slider extends Preview {
         config: ContentTypeConfigInterface,
         observableUpdater: ObservableUpdater
     ) {
-        super(parent, config);
+        super(parent, config, observableUpdater);
 
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;

@@ -1,13 +1,13 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _preview, _config, _eventBus, _option, _factory, _resizing) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _previewCollection, _config, _eventBus, _option, _factory, _resizing) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Column =
   /*#__PURE__*/
-  function (_Preview) {
-    _inheritsLoose(Column, _Preview);
+  function (_PreviewCollection) {
+    _inheritsLoose(Column, _PreviewCollection);
 
     /**
      * @param {ContentTypeInterface} parent
@@ -17,7 +17,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
     function Column(parent, config, observableUpdater) {
       var _this;
 
-      _this = _Preview.call(this, parent, config, observableUpdater) || this;
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.resizing = _knockout.observable(false);
 
       _this.previewData.width.subscribe(function (newWidth) {
@@ -42,7 +42,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
-      _Preview.prototype.bindEvents.call(this);
+      _PreviewCollection.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
         _eventBus.on("column:block:mount", function (event, params) {
@@ -76,7 +76,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _Preview.prototype.retrieveOptions.call(this);
+      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
       var newOptions = options.filter(function (option) {
         return option.code !== "move";
@@ -190,7 +190,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview"
     };
 
     return Column;
-  }(_preview);
+  }(_previewCollection);
 
   return Column;
 });

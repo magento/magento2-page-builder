@@ -7,12 +7,11 @@ import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
 import ContentTypeCollection from "../../content-type-collection";
+import ContentTypeInterface from "../../content-type.d";
+import ContentTypeConfigInterface from "../../content-type-config.d";
 import {moveArrayItem} from "../../utils/array";
 import {ConfigContentBlock} from "../config";
 import EventBus from "../event-bus";
-import Stage from "../stage";
-import Structural from "../stage/structural/abstract";
-import EditableArea from "../stage/structural/editable-area";
 import Column from "./column";
 import {createColumn} from "./column-group/factory";
 import {resizeColumn, updateColumnWidth} from "./column-group/resizing";
@@ -27,20 +26,16 @@ import {
 export default class ColumnGroup extends ContentTypeCollection {
 
     /**
-     * @param {EditableArea} parent
-     * @param {Stage} stage
-     * @param {ConfigContentBlock} config
-     * @param formData
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {number} stageId
      */
     constructor(
         parent: EditableArea,
         config: ConfigContentBlock,
         stageId,
-        formData: any,
-        elementConverterPool: ElementConverterPool,
-        dataConverterPool: DataConverterPool,
     ) {
-        super(parent, config, stageId, formData, elementConverterPool, dataConverterPool);
+        super(parent, config, stageId);
 
         EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {

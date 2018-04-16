@@ -6,7 +6,7 @@ import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
 import ObservableUpdater from "../../../observable-updater";
-import Preview from "../../../preview";
+import PreviewCollection from "../../../preview-collection";
 import Config from "../../config";
 import EventBus from "../../event-bus";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
@@ -19,7 +19,7 @@ import {
     getAdjacentColumn, getColumnWidth, getMaxColumns,
 } from "./column-group/resizing";
 
-export default class ColumnGroup extends Preview {
+export default class ColumnGroup extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
 
     private dropPlaceholder: JQuery<HTMLElement>;

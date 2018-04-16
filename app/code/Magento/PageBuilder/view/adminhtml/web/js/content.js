@@ -206,17 +206,6 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
       get: function get() {
         return (0, _appearanceConfig)(this.parent.config.name, this.getData().appearance).render_template;
       }
-      /**
-       * Retrieve the child template
-       *
-       * @returns {string}
-       */
-
-    }, {
-      key: "renderChildTemplate",
-      get: function get() {
-        return "Magento_PageBuilder/component/block/render/children.html";
-      }
     }]);
 
     return Content;

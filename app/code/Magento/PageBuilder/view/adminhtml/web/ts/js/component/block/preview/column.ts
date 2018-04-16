@@ -9,7 +9,7 @@ import $t from "mage/translate";
 import {ContentTypeConfigInterface} from "../../../content-type-config.d";
 import {ContentTypeInterface} from "../../../content-type.d";
 import ObservableUpdater from "../../../observable-updater";
-import Preview from "../../../preview";
+import PreviewCollection from "../../../preview-collection";
 import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
 import Config from "../../config";
 import EventBus from "../../event-bus";
@@ -20,7 +20,7 @@ import createBlock from "../factory";
 import ColumnGroup from "./column-group";
 import {getMaxColumns} from "./column-group/resizing";
 
-export default class Column extends Preview {
+export default class Column extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
 
     /**

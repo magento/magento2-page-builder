@@ -1,14 +1,14 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/block"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _option, _block) {
+define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/content-type"], function (_translate, _underscore, _colorConverter, _directives, _numberConverter, _option, _contentType) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slide =
   /*#__PURE__*/
-  function (_Block) {
-    _inheritsLoose(Slide, _Block);
+  function (_ContentType) {
+    _inheritsLoose(Slide, _ContentType);
 
     function Slide() {
-      return _Block.apply(this, arguments) || this;
+      return _ContentType.apply(this, arguments) || this;
     }
 
     var _proto = Slide.prototype;
@@ -19,7 +19,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/color-conv
      * @returns {Options}
      */
     _proto.getOptions = function getOptions() {
-      var options = _Block.prototype.getOptions.call(this);
+      var options = _ContentType.prototype.getOptions.call(this);
 
       options.removeOption("move");
       return options;
@@ -258,7 +258,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/color-conv
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _Block.prototype.retrieveOptions.call(this);
+      var options = _ContentType.prototype.retrieveOptions.call(this);
 
       var newOptions = options.filter(function (option) {
         return option.code !== "remove";
@@ -279,7 +279,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/utils/color-conv
     };
 
     return Slide;
-  }(_block);
+  }(_contentType);
 
   return Slide;
 });

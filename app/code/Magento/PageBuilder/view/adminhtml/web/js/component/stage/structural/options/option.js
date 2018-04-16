@@ -12,8 +12,6 @@ define([], function () {
   /*#__PURE__*/
   function () {
     /**
-     * Option constructor
-     *
      * @param parent
      * @param code
      * @param icon

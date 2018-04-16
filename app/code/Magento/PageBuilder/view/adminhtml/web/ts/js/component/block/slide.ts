@@ -11,9 +11,9 @@ import {percentToDecimal} from "../../utils/number-converter";
 import {Options} from "../stage/structural/options";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
-import Block from "./block";
+import ContentType from "../../content-type";
 
-export default class Slide extends Block {
+export default class Slide extends ContentType {
 
     /**
      * Get the options instance

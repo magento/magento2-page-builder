@@ -8,15 +8,14 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
     _inheritsLoose(ColumnGroup, _ContentTypeCollectio);
 
     /**
-     * @param {EditableArea} parent
-     * @param {Stage} stage
-     * @param {ConfigContentBlock} config
-     * @param formData
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {number} stageId
      */
-    function ColumnGroup(parent, config, stageId, formData, elementConverterPool, dataConverterPool) {
+    function ColumnGroup(parent, config, stageId) {
       var _this;
 
-      _this = _ContentTypeCollectio.call(this, parent, config, stageId, formData, elementConverterPool, dataConverterPool) || this;
+      _this = _ContentTypeCollectio.call(this, parent, config, stageId) || this;
 
       _eventBus.on("block:removed", function (event, params) {
         if (params.parent.id === _this.id) {

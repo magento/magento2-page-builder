@@ -8,7 +8,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import _ from "underscore";
-import Preview from "../../../preview";
+import PreviewCollection from "../../../preview-collection";
 import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
 import BlockReadyEventParamsInterface from "../../block/block-ready-event-params.d";
 import EventBus from "../../event-bus";
@@ -18,7 +18,7 @@ import ObservableUpdater from "../../../observable-updater";
 import {ContentTypeInterface} from "../../../content-type.d";
 import {ContentTypeConfigInterface} from "../../../content-type-config.d";
 
-export default class Row extends Preview {
+export default class Row extends PreviewCollection {
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);
     private element: Element;

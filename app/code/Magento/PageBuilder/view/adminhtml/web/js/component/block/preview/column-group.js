@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/block/preview/column-group/dragdrop", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _underscore, _preview, _config, _eventBus, _block, _dragdrop, _registry, _resizing) {
+define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/block/preview/column-group/dragdrop", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _underscore, _previewCollection, _config, _eventBus, _block, _dragdrop, _registry, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
   /*#__PURE__*/
-  function (_Preview) {
-    _inheritsLoose(ColumnGroup, _Preview);
+  function (_PreviewCollection) {
+    _inheritsLoose(ColumnGroup, _PreviewCollection);
 
     function ColumnGroup() {
       var _temp, _this;
@@ -14,7 +14,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview", "M
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, _this.resizing = _knockout.observable(false), _this.dropPlaceholder = void 0, _this.movePlaceholder = void 0, _this.groupElement = void 0, _this.resizeGhost = void 0, _this.resizeColumnInstance = void 0, _this.resizeColumnWidths = [], _this.resizeMaxGhostWidth = void 0, _this.resizeMouseDown = void 0, _this.resizeLeftLastColumnShrunk = void 0, _this.resizeRightLastColumnShrunk = void 0, _this.resizeLastPosition = void 0, _this.resizeLastColumnInPair = void 0, _this.resizeHistory = {
+      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.resizing = _knockout.observable(false), _this.dropPlaceholder = void 0, _this.movePlaceholder = void 0, _this.groupElement = void 0, _this.resizeGhost = void 0, _this.resizeColumnInstance = void 0, _this.resizeColumnWidths = [], _this.resizeMaxGhostWidth = void 0, _this.resizeMouseDown = void 0, _this.resizeLeftLastColumnShrunk = void 0, _this.resizeRightLastColumnShrunk = void 0, _this.resizeLastPosition = void 0, _this.resizeLastColumnInPair = void 0, _this.resizeHistory = {
         left: [],
         right: []
       }, _this.dropOverElement = void 0, _this.dropPositions = [], _this.dropPosition = void 0, _this.movePosition = void 0, _temp) || _this;
@@ -485,7 +485,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview", "M
     };
 
     return ColumnGroup;
-  }(_preview);
+  }(_previewCollection);
 
   return ColumnGroup;
 });

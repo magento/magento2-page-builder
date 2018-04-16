@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "underscore", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_jquery, _knockout, _translate, _jarallax, _underscore, _preview, _eventBus, _option) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "underscore", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_jquery, _knockout, _translate, _jarallax, _underscore, _previewCollection, _eventBus, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Row =
   /*#__PURE__*/
-  function (_Preview) {
-    _inheritsLoose(Row, _Preview);
+  function (_PreviewCollection) {
+    _inheritsLoose(Row, _PreviewCollection);
 
     /**
      * @param {ContentTypeInterface} parent
@@ -15,7 +15,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
     function Row(parent, config, observableUpdater) {
       var _this;
 
-      _this = _Preview.call(this, parent, config, observableUpdater) || this;
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.getChildren = void 0;
       _this.wrapClass = _knockout.observable(false);
       _this.element = void 0;
@@ -66,7 +66,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
     var _proto = Row.prototype;
 
     _proto.retrieveOptions = function retrieveOptions() {
-      var options = _Preview.prototype.retrieveOptions.call(this);
+      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
       var newOptions = options.filter(function (option) {
         return option.code !== "remove";
@@ -104,7 +104,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
 
     return Row;
-  }(_preview);
+  }(_previewCollection);
 
   return Row;
 });
