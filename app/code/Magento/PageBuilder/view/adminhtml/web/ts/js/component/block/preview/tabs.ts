@@ -59,8 +59,11 @@ export default class Tabs extends PreviewBlock {
         // Set the active tab to the new position of the sorted tab
         EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
             if (params.instance.id === this.parent.id) {
+                this.refreshTabs();
+
+                // We need to wait for the tabs to refresh before executing the focus
                 _.defer(() => {
-                    this.refreshTabs(params.newPosition, true);
+                    this.setFocusedTab(params.newPosition, true);
                 });
             }
         });
@@ -201,8 +204,15 @@ export default class Tabs extends PreviewBlock {
              * @param {JQueryUI.SortableUIParams} ui
              */
             start(event: Event, ui: JQueryUI.SortableUIParams) {
-                borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
-                $(this).css("paddingLeft", borderWidth);
+                /**
+                 * Due to the way we use negative margins to overlap the borders we need to apply a padding to the
+                 * container when we're moving the first item to ensure the tabs remain in the same place.
+                 */
+                if (ui.item.index() === 0) {
+                    borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
+                    $(this).css("paddingLeft", borderWidth);
+                }
+
                 ui.helper.css("width", "");
                 self.parent.stage.interacting(true);
                 self.lockInteracting = true;

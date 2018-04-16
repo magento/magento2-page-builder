@@ -54,8 +54,11 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
       _eventBus.on("previewSortable:sortupdate", function (event, params) {
         if (params.instance.id === _this.parent.id) {
+          _this.refreshTabs(); // We need to wait for the tabs to refresh before executing the focus
+
+
           _underscore.defer(function () {
-            _this.refreshTabs(params.newPosition, true);
+            _this.setFocusedTab(params.newPosition, true);
           });
         }
       }); // Set the stage to interacting when a tab is focused
@@ -221,8 +224,15 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
          * @param {JQueryUI.SortableUIParams} ui
          */
         start: function start(event, ui) {
-          borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
-          (0, _jquery)(this).css("paddingLeft", borderWidth);
+          /**
+           * Due to the way we use negative margins to overlap the borders we need to apply a padding to the
+           * container when we're moving the first item to ensure the tabs remain in the same place.
+           */
+          if (ui.item.index() === 0) {
+            borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
+            (0, _jquery)(this).css("paddingLeft", borderWidth);
+          }
+
           ui.helper.css("width", "");
           self.parent.stage.interacting(true);
           self.lockInteracting = true;

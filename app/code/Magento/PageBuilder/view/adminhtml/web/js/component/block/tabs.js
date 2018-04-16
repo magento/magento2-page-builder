@@ -37,7 +37,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
         _underscore.defer(function () {
           var mountFunction = function mountFunction(event, params) {
             if (params.id === tab.id) {
-              _this.preview.refreshTabs(_this.children().length - 1, true);
+              _this.preview.setFocusedTab(_this.children().length - 1);
 
               _eventBus.off("tab-item:block:mount", mountFunction);
             }

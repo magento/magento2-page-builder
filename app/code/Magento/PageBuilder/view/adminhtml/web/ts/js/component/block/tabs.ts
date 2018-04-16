@@ -52,7 +52,7 @@ export default class Tabs extends Block {
             _.defer(() => {
                 const mountFunction = (event: Event, params: BlockMountEventParams) => {
                     if (params.id === tab.id) {
-                        (this.preview as TabsPreview).refreshTabs(this.children().length - 1, true);
+                        (this.preview as TabsPreview).setFocusedTab(this.children().length - 1);
                         EventBus.off("tab-item:block:mount", mountFunction);
                     }
                 };
