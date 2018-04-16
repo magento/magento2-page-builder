@@ -8,75 +8,10 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="TabsAddToCMSPage">
+    <test name="RemoveTabsFromStage">
         <annotations>
             <features value="Pagebuilder: Tabs"/>
-            <stories value="MAGETWO-83942: Tabs"/>
-            <title value="Add Tabs in PageBuilder for new CMS page and view on Storefront"/>
-            <description value="A user should be able to add Tabs into a row."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84922"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-tabs"/>
-            <group value="skip"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
-        <actionGroup ref="addTab" stepKey="addTab1"/>
-        <actionGroup ref="addTab" stepKey="addTab2">
-            <argument name="index" value="1"/>
-            <argument name="title" value="Tab 2"/>
-            <argument name="content" value="Tab 2 Content"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="reopenEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <seeInField selector="{{PageBuilderTabsEditPanel.tabTitle('0')}}" userInput="Tab 1" stepKey="seeTab1InEditGrid"/>
-        <seeInField selector="{{PageBuilderTabsEditPanel.tabContent('0')}}" userInput="Tab 1 Content" stepKey="seeTab1ContentInEditGrid"/>
-        <seeInField selector="{{PageBuilderTabsEditPanel.tabTitle('1')}}" userInput="Tab 2" stepKey="seeTab2InEditGrid"/>
-        <seeInField selector="{{PageBuilderTabsEditPanel.tabContent('1')}}" userInput="Tab 2 Content" stepKey="seeTab2ContentInEditGrid"/>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <seeElement selector="//li[@role='tab'][contains(@class, 'ui-tabs-active')]/a[@title='Tab 1']/span[contains(text(), 'Tab 1')]" stepKey="seeTab1TitleOnStage"/>
-        <seeElement selector="//li[@role='tab']/a[@title='Tab 2']/span[contains(text(), 'Tab 2')]" stepKey="seeTab2TitleOnStage"/>
-        <see selector="div.ui-tabs" userInput="Tab 1 Content" stepKey="seeTab1ContentOnStage"/>
-        <dontSee selector="div.ui-tabs" userInput="Tab 2 Content" stepKey="dontSeeTab2ContentOnStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForElementVisible selector="div[data-role='tabs'] div[role='tab'] a" stepKey="waitForTabsElementVisible"/>
-        <see selector="div[data-role='tabs'] div[role='tab'] a" userInput="Tab 1" stepKey="seeTab1TitleOnStorefront"/>
-        <see selector="div[data-role='tabs'] div[role='tab'] a" userInput="Tab 2" stepKey="seeTab2TitleOnStorefront"/>
-        <see selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" stepKey="seeTab1ContentOnStorefront"/>
-        <dontSee selector="div[data-role='tabs'] div.content" userInput="Tab 2 Content" stepKey="dontSeeTab2ContentOnStorefront"/>
-        <click selector="a[href='#pagebuilder_tab1']" stepKey="clickTab2OnStorefront"/>
-        <dontSee selector="div[data-role='tabs'] div.content" userInput="Tab 1 Content" stepKey="dontSeeTab1ContentOnStorefront"/>
-        <see selector="div[data-role='tabs'] div.content" userInput="Tab 2 Content" stepKey="seeTab2ContentOnStorefront"/>
-    </test>
-    <test name="TabsDelete">
-        <annotations>
-            <features value="Pagebuilder: Tabs"/>
-            <stories value="MAGETWO-83942: Tabs"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
             <title value="Remove tabs content block from stage"/>
             <description value="A user should be able to remove tabs block from a row."/>
             <severity value="CRITICAL"/>
@@ -101,7 +36,9 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+
+        <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
@@ -128,14 +65,19 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
+        <!-- Open Tabs Panel -->
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="addTab" stepKey="addTab"/>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
@@ -159,13 +101,294 @@
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderPaddingProperty40"/>
+            <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Style On Stage -->
         <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
-        <waitForElementVisible selector="{{TabsOnStage.default('1', PageBuilderAdvancedBorderWidthPropertyDefault.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingProperty40.value)}}" stepKey="waitForStyle"/>
-        <!-- Validate Tab (Not Tabs) Style On Stage -->
-        <waitForElementVisible selector="{{TabOnStage.default('1')}}" stepKey="waitForStyle2"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemDefault(PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="waitForDefaultBorderStyleTab"/>
+        <waitForElementVisible selector="{{TabsOnStage.tabsContentDefault(PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="waitForDefaultBorderStyleTabs"/>
+    </test>
+    <test name="TabsNavAlignCenterAppliesInAdminPreviewAndStorefront">
+        <annotations>
+            <features value="PageBuilder - Tabs"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
+            <title value="Tabs - Configure Tabs navigation alignment to Center"/>
+            <description value="Configure Tabs navigation alignment to center and apply to admin preview and storefront"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89993"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Open Tabs Panel -->
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Validate and Update Nav Alignment -->
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateNavAlignment">
+            <argument name="property" value="PageBuilderTabsAlignmentLeft"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterNavAlignmentCenter">
+            <argument name="property" value="PageBuilderTabsAlignmentCenter"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify in Admin Preview-->
+        <waitForElementVisible selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenteredAdmin"/>
+        <!-- Verify in Storefront-->
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsNavAligned(PageBuilderTabsAlignmentCenter.value)}}" stepKey="seeTabsNavAlignedCenteredStorefront"/>
+    </test>
+    <test name="TabsNavAlignRightAppliesInAdminPreviewAndStorefront">
+        <annotations>
+            <features value="PageBuilder - Tabs"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
+            <title value="Tabs - Configure Tabs navigation alignment to Right"/>
+            <description value="Configure Tabs navigation alignment to right and apply to admin preview and storefront"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90082"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Open Tabs Panel -->
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Validate and Update Nav Alignment -->
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateNavAlignment">
+            <argument name="property" value="PageBuilderTabsAlignmentLeft"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterNavAlignmentRight">
+            <argument name="property" value="PageBuilderTabsAlignmentRight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify in Admin Preview-->
+        <waitForElementVisible selector="{{TabsOnStage.tabsNavAligned(PageBuilderTabsAlignmentRight.value)}}" stepKey="seeTabsNavAlignedRightAdmin"/>
+        <!-- Verify in Storefront-->
+        <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsNavAligned(PageBuilderTabsAlignmentRight.value)}}" stepKey="seeTabsNavAlignedRightStorefront"/>
+    </test>
+    <test name="TabsDefaultActiveTabToSecondTab">
+        <annotations>
+            <features value="PageBuilder - Tabs"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
+            <title value="Tabs - Change Tabs Default Active Tab to Second Tab"/>
+            <description value="Configure Tabs Default Active Tab to second tab and apply to admin preview and storefront"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90083"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="addTab" stepKey="addSecondTab"/>
+        <!-- Open Tabs Panel -->
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Validate and Update Default Active -->
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultActive">
+            <argument name="property" value="PageBuilderTabsDefaultActiveTab"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterDefaultActiveTab2">
+            <argument name="property" value="PageBuilderTabsDefaultActiveTab2"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify in Admin Preview-->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive('2')}}" stepKey="seeSecondTabActiveAdminPreview"/>
+        <!-- Verify in Storefront-->
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive('2')}}" stepKey="seeSecondTabActiveStorefront"/>
+    </test>
+    <test name="TabsMinHeightAppliesInAdminPreviewAndStorefront">
+        <annotations>
+            <features value="PageBuilder - Tabs"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
+            <title value="Tabs - Update Tabs minimum height and verify on Admin and Storefront"/>
+            <description value="Configure Tabs minimum height and apply to admin preview and storefront"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90084"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Open Tabs Panel -->
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Validate and Update Minimum Height -->
+        <actionGroup ref="validateSlideOutPanelField" stepKey="seePositionAttribute">
+            <argument name="property" value="PageBuilderTabsDefaultMinHeight"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultMinimumHeight">
+            <argument name="property" value="PageBuilderTabsDefaultMinHeight"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinimumHeight">
+            <argument name="property" value="PageBuilderTabsDefinedMinHeight"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify in Admin Preview -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeTabMinHeightAdmin1"/>
+        <!-- Verify in Storefront-->
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsMinHeight(PageBuilderTabsDefinedMinHeight.value)}}" stepKey="seeMinHeightStorefront"/>
+    </test>
+    <test name="TabsAdvancedSettingsApplyInAdminPreviewAndStorefront">
+        <annotations>
+            <features value="PageBuilder - Tabs"/>
+            <stories value="MAGETWO-86999: Tabs Configuration"/>
+            <title value="Tabs - Customized Tabs Advanced Settings apply to admin preview storefront"/>
+            <description value="Configure Tabs advanced settings and apply to admin preview and storefront"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89997"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Add Tabs to Stage -->
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Open Tabs Panel -->
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedSection"/>
+        <!-- Fill All Advanced Fields -->
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterTextAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCSSClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterMarginsAndPaddings">
+            <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify in Admin Preview -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemAdvancedStyles}}" stepKey="seeTabHeaderItemAdvancedStylesInAdminPreview"/>
+        <waitForElementVisible selector="{{TabsOnStage.tabsContentAdvancedStyles}}" stepKey="seeTabsContentAdvancedStylesInAdminPreview"/>
+        <!-- Verify in Storefront -->
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>
     </test>
 </tests>
