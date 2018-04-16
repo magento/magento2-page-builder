@@ -3,7 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import ElementConverterInterface from "../../element-converter-interface";
+import {DataObject} from "../../../component/data-store";
+import {ElementConverterInterface} from "../../element-converter-interface";
 
 export default class RemovePx implements ElementConverterInterface {
     /**
@@ -23,7 +24,9 @@ export default class RemovePx implements ElementConverterInterface {
      * @param data Object
      * @returns {string | object}
      */
-    public toDom(name: string, data: object): object | string {
-        return data[name] + "px";
+    public toDom(name: string, data: DataObject): string {
+        if (data[name]) {
+            return data[name] + "px";
+        }
     }
 }
