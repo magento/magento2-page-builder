@@ -54,7 +54,9 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
       _eventBus.on("previewSortable:sortupdate", function (event, params) {
         if (params.instance.id === _this.parent.id) {
-          _this.refreshTabs(params.newPosition, true);
+          _underscore.defer(function () {
+            _this.refreshTabs(params.newPosition, true);
+          });
         }
       }); // Set the stage to interacting when a tab is focused
 
@@ -133,8 +135,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
           if ((0, _jquery)(":focus").hasClass("tab-title") && (0, _jquery)(":focus").prop("contenteditable")) {
             document.execCommand("selectAll", false, null);
           } else {
-            console.log("cancel interacting"); // If the active element isn't the tab title, we're not interacting with the stage
-
+            // If the active element isn't the tab title, we're not interacting with the stage
             _this2.parent.stage.interacting(false);
           }
         });

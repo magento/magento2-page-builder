@@ -59,7 +59,9 @@ export default class Tabs extends PreviewBlock {
         // Set the active tab to the new position of the sorted tab
         EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
             if (params.instance.id === this.parent.id) {
-                this.refreshTabs(params.newPosition, true);
+                _.defer(() => {
+                    this.refreshTabs(params.newPosition, true);
+                });
             }
         });
         // Set the stage to interacting when a tab is focused
@@ -120,7 +122,6 @@ export default class Tabs extends PreviewBlock {
                 if ($(":focus").hasClass("tab-title") && $(":focus").prop("contenteditable")) {
                     document.execCommand("selectAll", false, null);
                 } else {
-                    console.log("cancel interacting");
                     // If the active element isn't the tab title, we're not interacting with the stage
                     this.parent.stage.interacting(false);
                 }
