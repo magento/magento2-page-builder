@@ -525,17 +525,17 @@
     </actionGroup>
     <actionGroup name="expandPageBuilderPanelGroup">
         <arguments>
-            <argument name="group" defaultValue="PageBuilderPanelGroupGeneral"/>
+            <argument name="group" defaultValue=""/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroup(group.name)}}" stepKey="waitForGroupVisible"/>
-        <conditionalClick selector="{{PageBuilderActionsSection.panelGroup(group.name)}}" dependentSelector="{{PageBuilderActionsSection.panelGroupActive(group.name)}}" visible="false" stepKey="expandGroup"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroupActive(group.name)}}" stepKey="waitForGroupExpanded"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroup(group.section)}}" stepKey="waitForGroupVisible"/>
+        <conditionalClick selector="{{PageBuilderActionsSection.panelGroup(group.section)}}" dependentSelector="{{PageBuilderActionsSection.panelGroupActive(group.name)}}" visible="false" stepKey="expandGroup"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroupActive(group.section)}}" stepKey="waitForGroupExpanded"/>
     </actionGroup>
     <actionGroup name="navigateToStoreFront">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
         </arguments>
-        <amOnPage url="{{contentBlockType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
+        <amOnPage url="{{contentBlockType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="validateOnHoverOptionMenu">

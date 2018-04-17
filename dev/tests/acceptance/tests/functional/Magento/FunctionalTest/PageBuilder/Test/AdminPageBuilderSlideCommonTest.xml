@@ -35,7 +35,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -233,7 +233,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <comment userInput="User sees Slide configuration first slide open by default with a delay after rendering Slider on the stage" stepKey="AC0"/>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
@@ -345,7 +345,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <comment userInput="User adds Slider into the content, user sees first Slide to be displayed inside the slider" stepKey="AC1"/>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
@@ -434,6 +434,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
+            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -447,12 +448,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
@@ -483,7 +485,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <comment userInput="Add slider with initial slide" stepKey="addSliderWithSlide"/>
 
@@ -549,7 +551,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -608,7 +610,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -671,7 +673,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -788,7 +790,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -853,7 +855,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -916,7 +918,7 @@
         <!--See PageBuilder fullsize-->
         <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waiForPageBuilderVisible" />
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragAdvancedSliderOntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -1003,7 +1005,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
@@ -1017,7 +1019,7 @@
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
-            <argument name="property" value="PageBuilderSlideMessageProperty"/>
+            <argument name="property" value="PageBuilderSlideMessageLongProperty"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
