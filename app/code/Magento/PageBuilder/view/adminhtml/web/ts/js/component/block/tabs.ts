@@ -95,6 +95,12 @@ export default class Tabs extends Block {
         let duplicatedTabIndex: number;
         EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
             if (params.duplicate.parent.id === this.id) {
+                const tabData = params.duplicate.stage.store.get(params.duplicate.id);
+                this.parent.stage.store.updateKey(
+                    params.duplicate.id,
+                    tabData.tab_name.toString() + " Copy",
+                    "tab_name",
+                );
                 duplicatedTab = params.duplicate;
                 duplicatedTabIndex = params.index;
             }
