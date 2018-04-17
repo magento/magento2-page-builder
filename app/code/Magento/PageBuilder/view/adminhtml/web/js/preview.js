@@ -25,9 +25,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       this.config = void 0;
       this.data = {};
       this.displayLabel = void 0;
-      this.edit = void 0;
       this.previewData = {};
       this.previewStyle = void 0;
+      this.edit = void 0;
       this.observableUpdater = void 0;
       this.mouseover = false;
       this.parent = parent;
@@ -188,7 +188,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       this.clone(this.parent);
     };
     /**
-     * Duplicate a child of the current instance
+     * Duplicate content type
      *
      * @param {ContentTypeInterface} child
      * @param {boolean} autoAppend
@@ -204,27 +204,29 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       var store = child.store;
       var instance = child.constructor;
       var duplicate = new instance(child.parent, child.config, child.stageId);
-      var index = child.parent.children.indexOf(child) + 1 || null; // Copy the data from the data store
+      duplicate.preview = child.preview;
+      duplicate.content = child.content;
+      var index = child.parent.children.indexOf(child) + 1 || null;
+      store.update(duplicate.id, Object.assign({}, store.get(child.id)));
+      this.dispatchContentTypeCloneEvents(child, duplicate, index);
 
-      store.update(duplicate.id, Object.assign({}, store.get(child.id))); // Duplicate the instances children into the new duplicate
+      if (autoAppend) {
+        child.parent.addChild(duplicate, index);
+      }
 
-      if (typeof child.children === "function" && child.children().length > 0) {
-        child.children().forEach(function (subChild, childIndex) {
-          /*
-          duplicate.addChild(
-              this.clone(subChild, false),
-              childIndex,
-          );
-          */
-          var createDuplicate = duplicate.preview.clone(subChild, false);
-
-          if (createDuplicate) {
-            duplicate.addChild(createDuplicate, childIndex);
-          }
-        });
-      } // As a new block is being created, we need to fire that event as well
+      return duplicate;
+    };
+    /**
+     * Dispatch content type clone events
+     *
+     * @param {ContentTypeInterface} child
+     * @param {ContentTypeInterface} duplicate
+     * @param {number} index
+     */
 
 
+    _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(child, duplicate, index) {
+      // As a new block is being created, we need to fire that event as well
       _eventBus.trigger("block:create", {
         id: duplicate.id,
         block: duplicate
@@ -246,12 +248,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
         duplicate: duplicate,
         index: index
       });
-
-      if (autoAppend) {
-        child.parent.addChild(duplicate, index);
-      }
-
-      return duplicate;
     };
     /**
      * Handle block removal

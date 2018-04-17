@@ -23,9 +23,47 @@ define(["Magento_PageBuilder/js/preview"], function (_preview) {
      * @returns {boolean}
      */
     _proto.isConfigured = function isConfigured() {
-      if (this.parent.children && this.parent.children().length > 0) {
+      if (this.parent.getChildren().length > 0) {
         return true;
       }
+    };
+    /**
+     * Duplicate content type
+     *
+     * @param {ContentTypeInterface} child
+     * @param {boolean} autoAppend
+     * @returns {ContentTypeInterface}
+     */
+
+
+    _proto.clone = function clone(child, autoAppend) {
+      if (autoAppend === void 0) {
+        autoAppend = true;
+      }
+
+      var store = child.store;
+      var instance = child.constructor;
+      var duplicate = new instance(child.parent, child.config, child.stageId);
+      duplicate.preview = child.preview;
+      duplicate.content = child.content;
+      var index = child.parent.getChildren().indexOf(child) + 1 || null;
+      store.update(duplicate.id, Object.assign({}, store.get(child.id)));
+      child.getChildren()().forEach(function (subChild, childIndex) {
+        var createDuplicate = subChild.preview.clone(subChild, false);
+        createDuplicate.preview = subChild.preview;
+        createDuplicate.content = subChild.content;
+
+        if (createDuplicate) {
+          duplicate.addChild(createDuplicate, childIndex);
+        }
+      });
+      this.dispatchContentTypeCloneEvents(child, duplicate, index);
+
+      if (autoAppend) {
+        child.parent.addChild(duplicate, index);
+      }
+
+      return duplicate;
     };
 
     _createClass(PreviewCollection, [{

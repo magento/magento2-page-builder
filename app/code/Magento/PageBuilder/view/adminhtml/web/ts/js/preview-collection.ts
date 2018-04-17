@@ -4,6 +4,7 @@
  */
 
 import Preview from "./preview";
+import ContentTypeInterface from "./content-type.d";
 
 export default class PreviewCollection extends Preview {
     /**
@@ -21,8 +22,51 @@ export default class PreviewCollection extends Preview {
      * @returns {boolean}
      */
     protected isConfigured() {
-        if (this.parent.children && this.parent.children().length > 0) {
+        if (this.parent.getChildren().length > 0) {
             return true;
         }
+    }
+
+    /**
+     * Duplicate content type
+     *
+     * @param {ContentTypeInterface} child
+     * @param {boolean} autoAppend
+     * @returns {ContentTypeInterface}
+     */
+    public clone(child: ContentTypeInterface, autoAppend: boolean = true): ContentTypeInterface {
+        const store = child.store;
+        const instance = child.constructor as typeof ContentType;
+        const duplicate = new instance(
+            child.parent,
+            child.config,
+            child.stageId,
+        );
+        duplicate.preview = child.preview;
+        duplicate.content = child.content;
+        const index = child.parent.getChildren().indexOf(child) + 1 || null;
+        store.update(
+            duplicate.id,
+            Object.assign({}, store.get(child.id)),
+        );
+
+        child.getChildren()().forEach((subChild: ContentTypeInterface, childIndex: number) => {
+            const createDuplicate = subChild.preview.clone(subChild, false);
+            createDuplicate.preview = subChild.preview;
+            createDuplicate.content = subChild.content;
+            if (createDuplicate) {
+                duplicate.addChild(
+                    createDuplicate,
+                    childIndex,
+                );
+            }
+        });
+
+        this.dispatchContentTypeCloneEvents(child, duplicate, index);
+
+        if (autoAppend) {
+            child.parent.addChild(duplicate, index);
+        }
+        return duplicate;
     }
 }

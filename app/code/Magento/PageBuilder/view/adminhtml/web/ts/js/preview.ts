@@ -30,7 +30,6 @@ export default class Preview {
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
-    public edit: Edit;
     /**
      * @deprecated
      */
@@ -39,6 +38,7 @@ export default class Preview {
      * @deprecated
      */
     public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
+    private edit: Edit;
     private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;
 
@@ -181,7 +181,7 @@ export default class Preview {
      *
      * @returns {Array<OptionInterface>}
      */
-    public retrieveOptions(): OptionInterface[] {
+    protected retrieveOptions(): OptionInterface[] {
         return [
             new Option(
                 this,
@@ -238,7 +238,7 @@ export default class Preview {
     }
 
     /**
-     * Duplicate a child of the current instance
+     * Duplicate content type
      *
      * @param {ContentTypeInterface} child
      * @param {boolean} autoAppend
@@ -252,42 +252,40 @@ export default class Preview {
             child.config,
             child.stageId,
         );
+        duplicate.preview = child.preview;
+        duplicate.content = child.content;
         const index = child.parent.children.indexOf(child) + 1 || null;
-        // Copy the data from the data store
         store.update(
             duplicate.id,
             Object.assign({}, store.get(child.id)),
         );
-        // Duplicate the instances children into the new duplicate
-        if (typeof child.children === "function" && child.children().length > 0) {
-            child.children().forEach((subChild: ContentTypeInterface, childIndex: number) => {
-                /*
-                duplicate.addChild(
-                    this.clone(subChild, false),
-                    childIndex,
-                );
-                */
-                const createDuplicate = duplicate.preview.clone(subChild, false);
-                if (createDuplicate) {
-                    duplicate.addChild(
-                        createDuplicate,
-                        childIndex,
-                    );
-                }
-            });
-        }
 
+        this.dispatchContentTypeCloneEvents(child, duplicate, index);
+
+        if (autoAppend) {
+            child.parent.addChild(duplicate, index);
+        }
+        return duplicate;
+    }
+
+    /**
+     * Dispatch content type clone events
+     *
+     * @param {ContentTypeInterface} child
+     * @param {ContentTypeInterface} duplicate
+     * @param {number} index
+     */
+    protected dispatchContentTypeCloneEvents(
+        child: ContentTypeInterface,
+        duplicate: ContentTypeInterface,
+        index: number
+    ) {
         // As a new block is being created, we need to fire that event as well
         EventBus.trigger("block:create", {id: duplicate.id, block: duplicate});
         EventBus.trigger(child.parent.config.name + ":block:create", {id: duplicate.id, block: duplicate});
 
         EventBus.trigger("block:duplicate", {original: child, duplicate, index});
         EventBus.trigger(child.parent.config.name + ":block:duplicate", {original: child, duplicate, index});
-
-        if (autoAppend) {
-            child.parent.addChild(duplicate, index);
-        }
-        return duplicate;
     }
 
     /**
@@ -433,7 +431,7 @@ export default class Preview {
      *
      * @returns {boolean}
      */
-    private isConfigured() {
+    protected isConfigured() {
         const data = this.parent.store.get(this.parent.id);
         let hasDataChanges = false;
         _.each(this.parent.config.fields, (field, key: string) => {
