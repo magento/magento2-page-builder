@@ -22,6 +22,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live
       this.displayLabel = void 0;
       this.previewStyle = void 0;
       this.mouseover = false;
+      this.mouseoverContext = void 0;
       var styleAttributeMapper = new _styleAttributeMapper();
       var styleAttributeFilter = new _styleAttributeFilter();
       this.parent = parent;
@@ -106,6 +107,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live
       }
 
       this.mouseover = true;
+      this.mouseoverContext = context;
       var currentTarget = event.currentTarget;
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 
@@ -130,7 +132,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live
       this.mouseover = false;
 
       _underscore.delay(function () {
-        if (!_this2.mouseover) {
+        if (!_this2.mouseover && _this2.mouseoverContext === context) {
           var currentTarget = event.currentTarget;
           var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 

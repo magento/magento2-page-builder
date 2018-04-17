@@ -10,6 +10,7 @@ export class TitleOption implements OptionInterface {
     public parent: Structural;
     public name: string;
     public sort: number;
+    public code: string;
 
     /**
      * @param {Structural} parent
@@ -23,6 +24,7 @@ export class TitleOption implements OptionInterface {
         this.parent = parent;
         this.name = name || $t("Block");
         this.sort = sort;
+        this.code = "title";
     }
 
     get template(): string {

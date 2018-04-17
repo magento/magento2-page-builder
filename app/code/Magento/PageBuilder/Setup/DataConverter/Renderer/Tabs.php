@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 
 use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
@@ -24,12 +27,19 @@ class Tabs implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * @var EavAttributeLoaderInterface
+     */
+    private $tabItemEavAttributeLoader;
+
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EavAttributeLoaderInterface $eavAttributeLoader
+        EavAttributeLoaderInterface $eavAttributeLoader,
+        EavAttributeLoaderInterface $tabItemEavAttributeLoader
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
+        $this->tabItemEavAttributeLoader = $tabItemEavAttributeLoader;
     }
 
     /**
@@ -58,24 +68,39 @@ class Tabs implements RendererInterface
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-        $rootElementHtml .= '><div class="product data items" data-mage-init="'
-            . $this->getMageInitValue()
-            . '">'
+        $rootElementHtml .= '><ul role="tablist" class="tabs-navigation">';
+        if (isset($itemData['children']['tabs_items']) && count($itemData['children']['tabs_items']) > 0) {
+            $rootElementHtml .= $this->renderTabHeaders(
+                $additionalData['childIndex'],
+                $itemData['children']['tabs_items']
+            );
+        }
+        $rootElementHtml .= '</ul><div class="tabs-content">'
             . (isset($additionalData['children']) ? $additionalData['children'] : '')
             . '</div></div>';
-
         return $rootElementHtml;
     }
 
     /**
-     * Get data-mage-init attribute value
+     * Render the tab headers
      *
+     * @param int $childIndex
+     * @param array $tabItems
      * @return string
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function getMageInitValue()
+    private function renderTabHeaders(int $childIndex, array $tabItems): string
     {
-        return '{&quot;tabs&quot;:{&quot;openedState&quot;:' .
-            '&quot;active&quot;,&quot;collapsibleElement&quot;:&quot;[data-collapsible=true]&quot;,' .
-            '&quot;content&quot;:&quot;[data-content=true]&quot;}}';
+        $tabHeaderElementHtml = '';
+        foreach ($tabItems as $tabIndex => $tabItem) {
+            $tabItemEavData = $this->tabItemEavAttributeLoader->load($tabItem['entityId']);
+            $tabId = 'tab' . $childIndex . '-' . $tabIndex;
+            $tabHeaderElementHtml .= '<li role="tab" class="tab-header">'
+                . '<a href="#' . $tabId . '" class="tab-title" title="' . $tabItemEavData['title'] . '">'
+                . '<span class="tab-title">' . $tabItemEavData['title'] . '</span>'
+                . '</a>'
+                . '</li>';
+        }
+        return $tabHeaderElementHtml;
     }
 }

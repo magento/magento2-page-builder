@@ -74,8 +74,8 @@ class TreeConverter
         if (isset($jsonTree['type']) || isset($jsonTree['contentType'])) {
             $jsonTree = [$jsonTree];
         }
-        foreach ($jsonTree as $treeItem) {
-            $html .= $this->convertTreeItem($treeItem, 0);
+        foreach ($jsonTree as $childIndex => $treeItem) {
+            $html .= $this->convertTreeItem($treeItem, ['childIndex' => $childIndex]);
         }
         return $html;
     }
@@ -83,13 +83,13 @@ class TreeConverter
     /**
      * Convert content type item
      *
-     * @param array $itemData
-     * @param int $childIndex
+     * @param $itemData
+     * @param array $additionalData
      * @param array $children
-     *
      * @return string
+     * @throws UnableMigrateWithOutParentException
      */
-    private function convertTreeItem($itemData, $childIndex, $children = [])
+    private function convertTreeItem($itemData, $additionalData = [], $children = [])
     {
         $contentType = isset($itemData['type']) ? $itemData['type'] : $itemData['contentType'];
         $renderer = $this->rendererPool->getRenderer($contentType);
@@ -104,14 +104,24 @@ class TreeConverter
                 $childRenderer = $this->childrenRendererPool->getChildrenRenderer($contentType);
                 $childrenHtml = $childRenderer->render(
                     $itemChildren,
-                    function ($childItem, $childIndex, $children = []) {
-                        return $this->convertTreeItem($childItem, $childIndex, $children);
+                    function ($childItem, $childIndex, $children = []) use ($additionalData) {
+                        return $this->convertTreeItem(
+                            $childItem,
+                            [
+                                'childIndex' => $childIndex,
+                                'parentChildIndex' => $additionalData['childIndex'],
+                            ],
+                            $children
+                        );
                     }
                 );
                 return $this->processItemRendering(
                     $renderer,
                     $itemData,
-                    ['children' => $childrenHtml]
+                    [
+                        'children' => $childrenHtml,
+                        'childIndex' => $additionalData['childIndex'],
+                    ]
                 );
             } catch (UnableMigrateWithOutParentException $exception) {
                 $defaultRenderer = $this->rendererPool->getRenderer('default');
@@ -128,7 +138,7 @@ class TreeConverter
         return $this->processItemRendering(
             $renderer,
             $itemData,
-            ['childIndex' => $childIndex]
+            $additionalData
         );
     }
 
