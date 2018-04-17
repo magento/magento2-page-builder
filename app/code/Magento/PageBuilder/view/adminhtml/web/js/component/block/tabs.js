@@ -87,7 +87,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
         if (params.duplicate.parent.id === _this2.id) {
           var tabData = params.duplicate.stage.store.get(params.duplicate.id);
 
-          _this2.parent.stage.store.updateKey(params.duplicate.id, tabData.tab_name.toString() + " Copy", "tab_name");
+          _this2.parent.stage.store.updateKey(params.duplicate.id, tabData.tab_name.toString() + " copy", "tab_name");
 
           duplicatedTab = params.duplicate;
           duplicatedTabIndex = params.index;

@@ -98,7 +98,7 @@ export default class Tabs extends Block {
                 const tabData = params.duplicate.stage.store.get(params.duplicate.id);
                 this.parent.stage.store.updateKey(
                     params.duplicate.id,
-                    tabData.tab_name.toString() + " Copy",
+                    tabData.tab_name.toString() + " copy",
                     "tab_name",
                 );
                 duplicatedTab = params.duplicate;
