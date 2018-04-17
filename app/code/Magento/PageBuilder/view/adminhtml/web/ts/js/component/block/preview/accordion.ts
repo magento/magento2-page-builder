@@ -6,8 +6,8 @@
 import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
-import Preview from "../../../preview";
 import ObservableObject from "../../../observable-object.d";
+import Preview from "../../../preview";
 
 export default class Accordion extends Preview {
     private element: Element;
@@ -31,7 +31,7 @@ export default class Accordion extends Preview {
             require(["accordion"], () => {
                 _.delay(
                     () => $(this.element).accordion({
-                        active: this.parent.getActive(),
+                        active: this.parent.content.getActive(),
                     }),
                     50,
                 );

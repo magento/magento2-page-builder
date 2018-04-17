@@ -41,7 +41,7 @@ define(["jquery", "underscore", "Magento_PageBuilder/js/preview"], function (_jq
         require(["accordion"], function () {
           _underscore.delay(function () {
             return (0, _jquery)(_this2.element).accordion({
-              active: _this2.parent.getActive()
+              active: _this2.parent.content.getActive()
             });
           }, 50);
         });
