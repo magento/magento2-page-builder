@@ -8,9 +8,9 @@ import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
 import filterHtml from "../../component/format/filter-html";
 import decodeAllDataUrlsInString from "../../utils/directives";
-import Structural from "./structural/abstract";
+import ContentTypeInterface from "../../content-type.d";
 
-export default class Save {
+export default class MasterFormatRenderer {
     private rootTemplate: string = "Magento_PageBuilder/component/block/render/root.html";
 
     /**
@@ -19,7 +19,7 @@ export default class Save {
      * @param {KnockoutObservableArray<Structural>} tree
      * @returns {Promise<string>}
      */
-    public renderTree(tree: KnockoutObservableArray<Structural>): Promise<string> {
+    public applyBindings(tree: KnockoutObservableArray<ContentTypeInterface>): Promise<string> {
         const element = $("<div>");
         return new Promise((resolve, reject) => {
             engine.waitForFinishRender().then(() => {
