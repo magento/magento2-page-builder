@@ -34,6 +34,7 @@ export default class Structural extends EditableArea implements StructuralInterf
     public data = {};
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
     public element: JQuery<HTMLElement>;
+    public fieldsToIgnoreOnRemove: string[] = [];
     private attributeFilter: AttributeFilter = new AttributeFilter();
     private attributeMapper: AttributeMapper =  new AttributeMapper();
     private styleAttributeFilter: StyleAttributeFilter = new StyleAttributeFilter();
@@ -343,6 +344,9 @@ export default class Structural extends EditableArea implements StructuralInterf
         const data = this.getData();
         let hasDataChanges = false;
         _.each(this.config.fields, (field, key: string) => {
+            if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
+                return;
+            }
             let fieldValue = data[key];
             if (!fieldValue) {
                 fieldValue = "";

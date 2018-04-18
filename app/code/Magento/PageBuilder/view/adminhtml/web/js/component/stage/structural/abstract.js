@@ -34,6 +34,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
         width: "100%"
       });
       _this.element = void 0;
+      _this.fieldsToIgnoreOnRemove = [];
       _this.attributeFilter = new _attributeFilter();
       _this.attributeMapper = new _attributeMapper();
       _this.styleAttributeFilter = new _styleAttributeFilter();
@@ -281,6 +282,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
 
     _proto.isConfigured = function isConfigured() {
+      var _this3 = this;
+
       if (this.children().length > 0) {
         return true;
       }
@@ -289,6 +292,10 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
       var hasDataChanges = false;
 
       _underscore.each(this.config.fields, function (field, key) {
+        if (_this3.fieldsToIgnoreOnRemove && _this3.fieldsToIgnoreOnRemove.includes(key)) {
+          return;
+        }
+
         var fieldValue = data[key];
 
         if (!fieldValue) {
@@ -472,7 +479,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
 
     _proto.updatePreviewObservables = function updatePreviewObservables(data) {
-      var _this3 = this;
+      var _this4 = this;
 
       var appearance = data && data.appearance !== undefined ? data.appearance : undefined;
       var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, appearance);
@@ -522,7 +529,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
               });
             }
 
-            var _arr2 = Object.keys(_this3.data[elementName].css());
+            var _arr2 = Object.keys(_this4.data[elementName].css());
 
             for (var _i5 = 0; _i5 < _arr2.length; _i5++) {
               var className = _arr2[_i5];
@@ -532,7 +539,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
               }
             }
 
-            _this3.data[elementName].css(newClasses);
+            _this4.data[elementName].css(newClasses);
           })();
         }
 
@@ -555,10 +562,10 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
 
     _proto.bindUpdatePreviewObservablesOnChange = function bindUpdatePreviewObservablesOnChange() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.stage.store.subscribe(function (data) {
-        _this4.updatePreviewObservables(_underscore.extend({}, _this4.stage.store.get(_this4.id)));
+        _this5.updatePreviewObservables(_underscore.extend({}, _this5.stage.store.get(_this5.id)));
       }, this.id);
     };
 
