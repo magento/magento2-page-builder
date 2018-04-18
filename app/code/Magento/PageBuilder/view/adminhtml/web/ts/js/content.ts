@@ -11,8 +11,8 @@ import AttributeMapper from "./component/format/attribute-mapper";
 import StyleAttributeFilter from "./component/format/style-attribute-filter";
 import StyleAttributeMapper from "./component/format/style-attribute-mapper";
 import ContentTypeInterface from "./content-type.d";
-import ObservableUpdater from "./observable-updater";
 import ObservableObject from "./observable-object.d";
+import ObservableUpdater from "./observable-updater";
 
 export default class Content {
     public data: ObservableObject = {};

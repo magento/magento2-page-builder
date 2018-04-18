@@ -5,10 +5,11 @@
 
 import ContentTypeInterface from "../content-type.d"
 
-export interface SortParamsInterface {
+export default interface SortParamsInterface {
     block: ContentTypeInterface;
     event: Event;
     originalEle: JQuery;
     placeholder: JQuery;
     helper?: any;
+    stageId: string;
 }

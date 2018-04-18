@@ -3,13 +3,17 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "./component/config";
+import ContentTypeConfigInterface from "./content-type-config.d";
+import Preview from "./preview";
+import Content from "./content";
+import DataStore from "./component/data-store";
 
-export interface ContentTypeInterface {
+export default interface ContentTypeInterface {
     id: string;
     stageId: string;
-    parent: ContentTypeInterface;
-    config: Config,
-    data: {},
-    preview: {}
+    parent: this;
+    config: ContentTypeConfigInterface,
+    preview: Preview
+    content: Content
+    store: DataStore
 }

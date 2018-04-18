@@ -8,15 +8,15 @@ import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick.min";
 import _ from "underscore";
 import "../../../binding/focus";
+import ContentTypeConfigInterface from "../../../content-type-config.d";
+import ContentTypeInterface from "../../../content-type.d";
+import ObservableUpdater from "../../../observable-updater";
 import PreviewCollection from "../../../preview-collection";
 import EventBus from "../../event-bus";
 import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 import BlockCreateEventParamsInterface from "../block-create-event-params.d";
 import BlockReadyEventParamsInterface from "../block-ready-event-params.d";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
-import ObservableUpdater from "../../../observable-updater";
-import ContentTypeInterface from "../../../content-type.d";
-import ContentTypeConfigInterface from "../../../content-type-config.d";
 
 export default class Slider extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
@@ -33,7 +33,7 @@ export default class Slider extends PreviewCollection {
     constructor(
         parent: ContentTypeInterface,
         config: ContentTypeConfigInterface,
-        observableUpdater: ObservableUpdater
+        observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
 

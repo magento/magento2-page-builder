@@ -12,8 +12,6 @@ export default class Edit {
     private store: DataStore;
 
     /**
-     * Initiate the edit class with an instance of structural
-     *
      * @param {ContentTypeInterface} instance
      * @param {DataStore} store
      */

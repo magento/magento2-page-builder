@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 import $t from "mage/translate";
-import ContentTypeInterface from "../../../../content-type";
+import Preview from "../../../../preview";
 import {OptionInterface} from "./option.d";
 
 export class TitleOption implements OptionInterface {
-    public parent: ContentTypeInterface;
+    public parent: Preview;
     public name: string;
     public sort: number;
 
@@ -16,7 +16,7 @@ export class TitleOption implements OptionInterface {
      * @param {number} sort
      */
     constructor(
-        parent: ContentTypeInterface,
+        parent: Preview,
         name: string,
         sort: number,
     ) {

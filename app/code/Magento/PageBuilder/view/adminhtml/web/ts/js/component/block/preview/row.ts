@@ -8,15 +8,15 @@ import ko from "knockout";
 import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import _ from "underscore";
+import {ContentTypeConfigInterface} from "../../../content-type-config.d";
+import {ContentTypeInterface} from "../../../content-type.d";
+import ObservableUpdater from "../../../observable-updater";
 import PreviewCollection from "../../../preview-collection";
 import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
 import BlockReadyEventParamsInterface from "../../block/block-ready-event-params.d";
 import EventBus from "../../event-bus";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
-import ObservableUpdater from "../../../observable-updater";
-import {ContentTypeInterface} from "../../../content-type.d";
-import {ContentTypeConfigInterface} from "../../../content-type-config.d";
 
 export default class Row extends PreviewCollection {
     public getChildren: KnockoutComputed<{}>;
@@ -31,7 +31,7 @@ export default class Row extends PreviewCollection {
     constructor(
         parent: ContentTypeInterface,
         config: ContentTypeConfigInterface,
-        observableUpdater: ObservableUpdater
+        observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
 

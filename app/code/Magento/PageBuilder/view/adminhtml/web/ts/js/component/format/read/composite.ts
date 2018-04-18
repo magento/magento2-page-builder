@@ -45,7 +45,7 @@ export default class AttributeReaderComposite implements ReadInterface {
                             });
                             resolve(result);
                         }).catch((error) => {
-                            console.error( error );
+                            console.error(error);
                         });
                     });
                 } catch (e) {

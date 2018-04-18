@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/master-format-renderer", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/block/factory"], function (_knockout, _translate, _alert, _underscore, _collection, _dataStore, _eventBus, _stageBuilder, _masterFormatRenderer, _array, _factory) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/master-format-renderer"], function (_knockout, _translate, _alert, _underscore, _collection, _array, _factory, _dataStore, _eventBus, _stageBuilder, _masterFormatRenderer) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -8,14 +8,15 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
   /*#__PURE__*/
   function () {
     /**
-     * @param parent
+     * @param {PageBuilderInterface} parent
      */
     function Stage(parent) {
+      this.parent = void 0;
       this.id = void 0;
       this.config = {
         name: "stage"
       };
-      this.loading = void 0;
+      this.loading = _knockout.observable(true);
       this.showBorders = _knockout.observable(false);
       this.interacting = _knockout.observable(false);
       this.userSelect = _knockout.observable(true);
@@ -24,8 +25,8 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       this.template = "Magento_PageBuilder/component/stage.html";
       this.masterFormatRenderer = new _masterFormatRenderer();
       this.collection = new _collection();
+      this.parent = parent;
       this.id = parent.id;
-      this.loading = parent.loading;
       this.initListeners();
       (0, _stageBuilder)(this, parent.initialValue).then(this.ready.bind(this));
     }
@@ -113,7 +114,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
 
       this.collection.getChildren().subscribe(function () {
         return _eventBus.trigger("stage:updated", {
-          stageId: _this.stageId
+          stageId: _this.id
         });
       }); // Block dropped from left hand panel
 

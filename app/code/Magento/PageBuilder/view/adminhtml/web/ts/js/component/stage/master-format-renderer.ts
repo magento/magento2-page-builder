@@ -7,8 +7,8 @@ import $ from "jquery";
 import ko from "knockout";
 import engine from "Magento_Ui/js/lib/knockout/template/engine";
 import filterHtml from "../../component/format/filter-html";
-import decodeAllDataUrlsInString from "../../utils/directives";
 import ContentTypeInterface from "../../content-type.d";
+import decodeAllDataUrlsInString from "../../utils/directives";
 
 export default class MasterFormatRenderer {
     private rootTemplate: string = "Magento_PageBuilder/component/block/render/root.html";

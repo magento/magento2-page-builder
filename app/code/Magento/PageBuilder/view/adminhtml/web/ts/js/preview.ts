@@ -22,8 +22,9 @@ import {OptionInterface} from "./component/stage/structural/options/option.d";
 import {TitleOption} from "./component/stage/structural/options/title";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
-import ObservableUpdater from "./observable-updater";
 import ObservableObject from "./observable-object.d";
+import ObservableUpdater from "./observable-updater";
+import SortParamsInterface from "./component/sort-params.d";
 
 export default class Preview {
     public parent: ContentTypeInterface;
@@ -109,7 +110,7 @@ export default class Preview {
      * @param {Preview} context
      * @param {Event} event
      */
-    public onMouseOver(context: PreviewBlock, event: Event) {
+    public onMouseOver(context: Preview, event: Event) {
         if (this.mouseover) {
             return;
         }
@@ -246,7 +247,7 @@ export default class Preview {
      */
     public clone(child: ContentTypeInterface, autoAppend: boolean = true): ContentTypeInterface {
         const store = child.store;
-        const instance = child.constructor as typeof ContentType;
+        const instance = child.constructor as typeof ContentTypeInterface;
         const duplicate = new instance(
             child.parent,
             child.config,
@@ -254,7 +255,7 @@ export default class Preview {
         );
         duplicate.preview = child.preview;
         duplicate.content = child.content;
-        const index = child.parent.children.indexOf(child) + 1 || null;
+        const index = child.parent.collection.children.indexOf(child) + 1 || null;
         store.update(
             duplicate.id,
             Object.assign({}, store.get(child.id)),
@@ -278,7 +279,7 @@ export default class Preview {
     protected dispatchContentTypeCloneEvents(
         child: ContentTypeInterface,
         duplicate: ContentTypeInterface,
-        index: number
+        index: number,
     ) {
         // As a new block is being created, we need to fire that event as well
         EventBus.trigger("block:create", {id: duplicate.id, block: duplicate});
@@ -318,25 +319,6 @@ export default class Preview {
             });
         } else {
             removeBlock();
-        }
-    }
-
-    /**
-     * Event called when starting starts on this element
-     *
-     * @param event
-     * @param params
-     */
-    public onSortStart(event: Event, params: SortParams): void {
-        if (params.block.id === this.id) {
-            const originalEle = jQuery(params.originalEle);
-            originalEle.show();
-            originalEle.addClass("pagebuilder-sorting-original");
-
-            // Reset the width & height of the helper
-            jQuery(params.helper)
-                .css({width: "", height: ""})
-                .html(jQuery("<h3 />").text(this.title).html());
         }
     }
 
@@ -458,5 +440,24 @@ export default class Preview {
             return;
         });
         return hasDataChanges;
+    }
+
+    /**
+     * Event called when starting starts on this element
+     *
+     * @param {Event} event
+     * @param {SortParamsInterface} params
+     */
+    private onSortStart(event: Event, params: SortParamsInterface): void {
+        if (params.block.id === this.parent.id) {
+            const originalEle = $(params.originalEle);
+            originalEle.show();
+            originalEle.addClass("pagebuilder-sorting-original");
+
+            // Reset the width & height of the helper
+            $(params.helper)
+                .css({width: "", height: ""})
+                .html($("<h3 />").text(this.title).html());
+        }
     }
 }

@@ -8,25 +8,25 @@ import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import _ from "underscore";
 import Collection from "../collection";
-import DataStore from "./data-store";
-import EventBus from "./event-bus";
-import buildStage from "./stage-builder";
-import MasterFormatRenderer from "./stage/master-format-renderer";
+import ContentTypeInterface from "../content-type.d";
 import {moveArrayItem} from "../utils/array";
-import createBlock from "./block/factory";
 import BlockDroppedParamsInterface from "./block-dropped-params.d.ts";
 import BlockInstanceDroppedParamsInterface from "./block-instance-dropped-params.d.ts";
-import SortParamsInterface from "./sort-params.d.ts";
-import BlockSortedParamsInterface from "./block-sorted-params.d";
 import BlockRemovedParamsInterface from "./block-removed-params.d";
-import ContentTypeInterface from "../content-type.d";
+import BlockSortedParamsInterface from "./block-sorted-params.d";
+import createBlock from "./block/factory";
+import DataStore from "./data-store";
+import EventBus from "./event-bus";
+import SortParamsInterface from "./sort-params.d.ts";
+import buildStage from "./stage-builder";
+import MasterFormatRenderer from "./stage/master-format-renderer";
+import PageBuilderInterface from "./page-builder.d"
 
 export default class Stage {
+    public parent: PageBuilderInterface;
     public id: string;
-    public config: {} = {
-        name: "stage",
-    };
-    public loading: KnockoutObservable<boolean>;
+    public config: {} = {name: "stage",};
+    public loading: KnockoutObservable<boolean> = ko.observable(true);
     public showBorders: KnockoutObservable<boolean> = ko.observable(false);
     public interacting: KnockoutObservable<boolean> = ko.observable(false);
     public userSelect: KnockoutObservable<boolean> = ko.observable(true);
@@ -37,11 +37,11 @@ export default class Stage {
     private collection: Collection = new Collection();
 
     /**
-     * @param parent
+     * @param {PageBuilderInterface} parent
      */
-    constructor(parent: any) {
+    constructor(parent: PageBuilderInterface) {
+        this.parent = parent;
         this.id = parent.id;
-        this.loading = parent.loading;
         this.initListeners();
         buildStage(this, parent.initialValue).then(this.ready.bind(this));
     }
@@ -59,7 +59,7 @@ export default class Stage {
      * The stage has been initiated fully and is ready
      */
     public ready() {
-        EventBus.trigger(`stage:ready:${ this.id }`, { stage: this });
+        EventBus.trigger(`stage:ready:${ this.id }`, {stage: this});
         this.collection.getChildren().valueHasMutated();
         this.loading(false);
     }
@@ -118,7 +118,7 @@ export default class Stage {
      */
     protected initListeners() {
         this.collection.getChildren().subscribe(
-            () => EventBus.trigger("stage:updated", {stageId: this.stageId}),
+            () => EventBus.trigger("stage:updated", {stageId: this.id}),
         );
         // Block dropped from left hand panel
         EventBus.on("block:dropped", (event, params: BlockDroppedParamsInterface) => {
@@ -233,7 +233,7 @@ export default class Stage {
                 reject("Parameter block missing from event.");
             }
         }).catch((error: string) => {
-            console.error( error );
+            console.error(error);
         });
     }
 

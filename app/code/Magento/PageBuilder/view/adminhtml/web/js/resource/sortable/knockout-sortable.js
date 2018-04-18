@@ -284,8 +284,8 @@ define([
                     event.stopPropagation();
                     // Emit the blockDropped event upon the target
                     // Detect if the target is the parent UI component, if so swap the target to the stage
-                    var stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.parent.id;
-                    target = typeof target.parent.preview !== "undefined" ? target.parent : target.stage;
+                    var stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.id;
+                    target = typeof target.parent.preview !== "undefined" ? target.parent : target;
                     EventBus.trigger("block:dropped", {
                         parent: target,
                         stageId: stageId,

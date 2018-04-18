@@ -5,8 +5,9 @@
 
 import ContentTypeInterface from "../content-type.d"
 
-export interface BlockSortedParamsInterface {
+export default interface BlockSortedParamsInterface {
     parent: ContentTypeInterface;
     block: ContentTypeInterface;
     index: number;
+    stageId: string;
 }

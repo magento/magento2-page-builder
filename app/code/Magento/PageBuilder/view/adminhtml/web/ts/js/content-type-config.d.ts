@@ -5,7 +5,7 @@
 
 import ConfigFieldInterface from "./component/block/config-field.d";
 
-export interface ContentTypeConfigInterface {
+export default interface ContentTypeConfigInterface {
     name: string;
     label: string;
     icon: string;

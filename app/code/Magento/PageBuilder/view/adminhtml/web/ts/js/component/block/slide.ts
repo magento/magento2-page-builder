@@ -5,13 +5,13 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
+import ContentType from "../../content-type";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
 import {Options} from "../stage/structural/options";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
-import ContentType from "../../content-type";
 
 export default class Slide extends ContentType {
 

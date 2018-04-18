@@ -200,6 +200,6 @@ export default function build(
             title: $t("Advanced CMS Error"),
         });
         EventBus.trigger("stage:error", error);
-        console.error( error );
+        console.error(error);
     });
 }

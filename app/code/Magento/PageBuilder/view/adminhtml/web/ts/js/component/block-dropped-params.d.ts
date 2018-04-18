@@ -6,10 +6,11 @@
 import ContentTypeInterface from "../content-type.d"
 import ContentTypeConfigInterface from "../content-type-config.d"
 
-export interface BlockDroppedParamsInterface {
+export default interface BlockDroppedParamsInterface {
     parent: ContentTypeInterface;
     index: number;
     block: {
         config: ContentTypeConfigInterface,
     };
+    stageId: string;
 }

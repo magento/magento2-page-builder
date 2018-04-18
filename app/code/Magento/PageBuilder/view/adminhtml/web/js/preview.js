@@ -206,7 +206,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       var duplicate = new instance(child.parent, child.config, child.stageId);
       duplicate.preview = child.preview;
       duplicate.content = child.content;
-      var index = child.parent.children.indexOf(child) + 1 || null;
+      var index = child.parent.collection.children.indexOf(child) + 1 || null;
       store.update(duplicate.id, Object.assign({}, store.get(child.id)));
       this.dispatchContentTypeCloneEvents(child, duplicate, index);
 
@@ -286,26 +286,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
         });
       } else {
         removeBlock();
-      }
-    };
-    /**
-     * Event called when starting starts on this element
-     *
-     * @param event
-     * @param params
-     */
-
-
-    _proto.onSortStart = function onSortStart(event, params) {
-      if (params.block.id === this.id) {
-        var originalEle = jQuery(params.originalEle);
-        originalEle.show();
-        originalEle.addClass("pagebuilder-sorting-original"); // Reset the width & height of the helper
-
-        jQuery(params.helper).css({
-          width: "",
-          height: ""
-        }).html(jQuery("<h3 />").text(this.title).html());
       }
     };
     /**
@@ -428,6 +408,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       });
 
       return hasDataChanges;
+    };
+    /**
+     * Event called when starting starts on this element
+     *
+     * @param {Event} event
+     * @param {SortParamsInterface} params
+     */
+
+
+    _proto.onSortStart = function onSortStart(event, params) {
+      if (params.block.id === this.parent.id) {
+        var originalEle = (0, _jquery)(params.originalEle);
+        originalEle.show();
+        originalEle.addClass("pagebuilder-sorting-original"); // Reset the width & height of the helper
+
+        (0, _jquery)(params.helper).css({
+          width: "",
+          height: ""
+        }).html((0, _jquery)("<h3 />").text(this.title).html());
+      }
     };
 
     _createClass(Preview, [{

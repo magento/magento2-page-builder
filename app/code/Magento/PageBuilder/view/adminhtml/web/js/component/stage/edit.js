@@ -8,8 +8,6 @@ define(["uiEvents"], function (_uiEvents) {
   /*#__PURE__*/
   function () {
     /**
-     * Initiate the edit class with an instance of structural
-     *
      * @param {ContentTypeInterface} instance
      * @param {DataStore} store
      */

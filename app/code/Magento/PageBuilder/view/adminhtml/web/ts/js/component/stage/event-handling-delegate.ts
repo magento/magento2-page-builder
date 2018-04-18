@@ -59,7 +59,7 @@ function onBlockDropped(event: Event, params: BlockDroppedParams) {
             reject("Parameter block missing from event.");
         }
     }).catch((error: string) => {
-        console.error( error );
+        console.error(error);
     });
 }
 

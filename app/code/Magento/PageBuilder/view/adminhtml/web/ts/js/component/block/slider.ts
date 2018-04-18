@@ -5,13 +5,13 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
+import ContentTypeCollection from "../../content-type-collection";
 import createBlock from "../block/factory";
 import Config from "../config";
 import EventBus from "../event-bus";
 import {BlockRemovedParams} from "../stage/event-handling-delegate";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
-import ContentTypeCollection from "../../content-type-collection";
 import BlockMountEventParamsInterface from "./block-mount-event-params.d";
 import {default as SliderPreview} from "./preview/slider";
 import Slide from "./slide";

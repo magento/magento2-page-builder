@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import Preview from "./preview";
 import ContentTypeInterface from "./content-type.d";
+import Preview from "./preview";
 
 export default class PreviewCollection extends Preview {
     /**
