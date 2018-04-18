@@ -90,7 +90,7 @@ export default class Tabs extends PreviewBlock {
     public refreshTabs(focusIndex?: number, forceFocus?: boolean, activeIndex?: number) {
         if (this.element) {
             $(this.element).tabs("refresh");
-            if (focusIndex) {
+            if (focusIndex >= 0) {
                 this.setFocusedTab(focusIndex, forceFocus);
             } else if (activeIndex) {
                 this.setActiveTab(activeIndex);

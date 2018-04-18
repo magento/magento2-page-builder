@@ -93,7 +93,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
       if (this.element) {
         (0, _jquery)(this.element).tabs("refresh");
 
-        if (focusIndex) {
+        if (focusIndex >= 0) {
           this.setFocusedTab(focusIndex, forceFocus);
         } else if (activeIndex) {
           this.setActiveTab(activeIndex);
