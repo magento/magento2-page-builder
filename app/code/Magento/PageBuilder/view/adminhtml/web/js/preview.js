@@ -301,11 +301,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       this.parent.store.subscribe(function (data) {
         _this3.observableUpdater.update(_this3, _underscore.extend({}, _this3.parent.store.get(_this3.parent.id)));
 
+        _this3.afterObservablesUpdated();
+
         _eventBus.trigger("previewObservables:updated", {
           preview: _this3
         });
       }, this.parent.id);
     };
+    /**
+     * After observables updated, allows to modify observables
+     */
+
+
+    _proto.afterObservablesUpdated = function afterObservablesUpdated() {};
     /**
      * Setup fields observables within the data class property
      *

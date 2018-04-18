@@ -197,8 +197,15 @@ export default class Content {
                     this,
                     _.extend({name: this.parent.config.name}, this.parent.store.get(this.parent.id)),
                 );
+                this.afterObservablesUpdated();
             },
             this.parent.id,
         );
+    }
+
+    /**
+     * After observables updated, allows to modify observables
+     */
+    protected afterObservablesUpdated(): void {
     }
 }

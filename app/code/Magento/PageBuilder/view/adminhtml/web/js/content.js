@@ -198,8 +198,16 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
         _this.observableUpdater.update(_this, _underscore.extend({
           name: _this.parent.config.name
         }, _this.parent.store.get(_this.parent.id)));
+
+        _this.afterObservablesUpdated();
       }, this.parent.id);
     };
+    /**
+     * After observables updated, allows to modify observables
+     */
+
+
+    _proto.afterObservablesUpdated = function afterObservablesUpdated() {};
 
     _createClass(Content, [{
       key: "renderTemplate",

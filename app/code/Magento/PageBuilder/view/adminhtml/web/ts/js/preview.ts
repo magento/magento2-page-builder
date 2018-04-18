@@ -333,10 +333,17 @@ export default class Preview {
                     this,
                     _.extend({}, this.parent.store.get(this.parent.id)),
                 );
+                this.afterObservablesUpdated();
                 EventBus.trigger("previewObservables:updated", {preview: this});
             },
             this.parent.id,
         );
+    }
+
+    /**
+     * After observables updated, allows to modify observables
+     */
+    protected afterObservablesUpdated(): void {
     }
 
     /**
