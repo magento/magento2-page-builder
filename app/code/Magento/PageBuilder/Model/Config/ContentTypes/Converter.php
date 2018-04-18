@@ -8,8 +8,31 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
+use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
+use Magento\Framework\ObjectManagerInterface;
+
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
+    /**
+     * @var ArgumentParser
+     */
+    private $parser;
+
+    /**
+     * @var ObjectManagerInterface
+     */
+    private $objectManager;
+
+    /**
+     * @param ArgumentParser $parser
+     * @param ObjectManagerInterface $objectManager
+     */
+    public function __construct(ArgumentParser $parser, ObjectManagerInterface $objectManager)
+    {
+        $this->parser = $parser;
+        $this->objectManager = $objectManager;
+    }
+
     /**
      * Convert XML structure into output array
      *
@@ -43,6 +66,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 if ($this->isConfigNode($childNode)) {
                     if ('appearances' === $childNode->nodeName) {
                         $typesData[$name][$childNode->nodeName] = $this->convertAppearancesData($childNode);
+                    } elseif ('additional_data' === $childNode->nodeName) {
+                        $typesData[$name][$childNode->nodeName] = $this->convertAdditionalData($childNode);
                     } elseif ('allowed_parents' === $childNode->nodeName) {
                         $parents = [];
                         foreach ($childNode->getElementsByTagName('parent') as $parentNode) {
@@ -171,6 +196,59 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             'elements' => $elementData,
             'converters' => $converters
         ];
+    }
+
+    /**
+     * @param \DOMElement $elementNode
+     * @return array
+     */
+    private function convertAdditionalData(\DOMElement $elementNode): array
+    {
+        $additionalData = [];
+        $xmlArgumentsNodes = $elementNode->getElementsByTagName('arguments');
+
+        if (!$xmlArgumentsNodes->length) {
+            return $additionalData;
+        }
+
+        /** @var $xmlArgumentsNode \DOMElement */
+        foreach ($xmlArgumentsNodes as $xmlArgumentsNode) {
+            // add here logic to process additional_data
+            $parsedArgumentsData = $this->parser->parse($xmlArgumentsNode);
+
+            $convertAdditionalDataArray = function (array $data) use (&$convertAdditionalDataArray) {
+                $name = $data['name'] ?? null;
+                $item =& $data['item'] ?? null;
+                $value = $data['value'] ?? null;
+
+                unset($data['name'], $data['item'], $data['value'], $data['xsi:type']);
+
+                if (is_scalar($value)) {
+                    return $value;
+                } elseif (is_array($item) && is_scalar($name)) {
+                    $data[$name] = $item;
+
+                    if (isset($item['converter']) && $item['converter']['xsi:type'] === 'object') {
+                        $converterClassName = $item['converter']['value'];
+                        unset($data[$name]['converter']);
+                        $converter = $this->getConverter($converterClassName);
+                        return $converter->convert($convertAdditionalDataArray($data[$name]));
+                    }
+
+                    return $convertAdditionalDataArray($data[$name]);
+                } else {
+                    foreach (array_keys($data) as $key) {
+                        $data[$key] = $convertAdditionalDataArray($data[$key]);
+                    }
+                }
+
+                return $data;
+            };
+
+            $additionalData[$parsedArgumentsData['name']] = $convertAdditionalDataArray($parsedArgumentsData);
+        }
+
+        return $additionalData;
     }
 
     /**
@@ -376,5 +454,13 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         return $attributeNode->hasAttribute($attributeName)
             ? $attributeNode->attributes->getNamedItem($attributeName)->nodeValue
             : null;
+    }
+
+    /**
+     * @return \Magento\Framework\Config\ConverterInterface
+     */
+    private function getConverter($className): \Magento\Framework\Config\ConverterInterface
+    {
+        return $this->objectManager->get($className);
     }
 }

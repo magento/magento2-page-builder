@@ -18,12 +18,13 @@ define(["uiEvents", "Magento_PageBuilder/js/component/uploader", "Magento_PageBu
     function Image(parent, stage, config, formData, elementConverterPool, dataConverterPool) {
       var _this;
 
-      _this = _Block.call(this, parent, stage, config, formData, elementConverterPool, dataConverterPool) || this; // Create uploader
-
+      _this = _Block.call(this, parent, stage, config, formData, elementConverterPool, dataConverterPool) || this;
       _this.uploader = void 0;
-      _this.uploader = new _uploader(_this.id, "imageuploader_" + _this.id, Object.assign({}, _uploader.getDefaultConfig(), {
+      var uploaderConfiguration = Object.assign({}, config.additional_data.uploaderConfig.settings, {
         value: _this.stage.store.get(_this.id).image
-      })); // Register listener when image gets uploaded from uploader UI component
+      }); // Create uploader
+
+      _this.uploader = new _uploader(_this.id, "imageuploader_" + _this.id, uploaderConfiguration); // Register listener when image gets uploaded from uploader UI component
 
       _this.uploader.onUploaded(_this.onImageUploaded.bind(_this)); // Notify all subscribers when preview image data gets modified
 

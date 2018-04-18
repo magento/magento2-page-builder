@@ -32,13 +32,19 @@ export default class Image extends Block {
     ) {
         super(parent, stage, config, formData, elementConverterPool, dataConverterPool);
 
+        const uploaderConfiguration = Object.assign(
+            {},
+            config.additional_data.uploaderConfig.settings,
+            {
+                value: this.stage.store.get(this.id).image,
+            },
+        );
+
         // Create uploader
         this.uploader = new Uploader(
             this.id,
             "imageuploader_" + this.id,
-            Object.assign({}, Uploader.getDefaultConfig(), {
-                value: this.stage.store.get(this.id).image,
-            }),
+            uploaderConfiguration,
         );
 
         // Register listener when image gets uploaded from uploader UI component
