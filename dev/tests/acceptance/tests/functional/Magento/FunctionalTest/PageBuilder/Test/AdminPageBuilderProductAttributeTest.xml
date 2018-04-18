@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="ProductAttributeCanCreatePageBuilderProductAttribute">
+    <test name="CanCreatePageBuilderProductAttribute">
         <annotations>
             <features value="Pagebuilder: Product Attribute"/>
             <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
@@ -36,7 +36,7 @@
         <waitForPageLoad time="10" stepKey="waitForPageToLoad"/>
         <seeOptionIsSelected selector="{{AttributePropertiesSection.InputType}}" userInput="Page Builder" stepKey="seePageBuilderIsSaved" />
     </test>
-    <test name="ProductAttributeCanCreateProductWithPageBuilderProductAttribute">
+    <test name="CanCreateProductWithPageBuilderProductAttribute">
         <annotations>
             <features value="Pagebuilder: Product Attribute"/>
             <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
@@ -92,7 +92,7 @@
         <waitForPageLoad stepKey="waitForPageLoad5"/>
         <see userInput="Hello Product Page From PageBuilder" stepKey="pagebuilderContent"/>
     </test>
-    <test name="ProductAttributeCanDownGradePageBuilderProductAttributeToTextArea">
+    <test name="CanDownGradePageBuilderProductAttributeToTextArea">
         <annotations>
             <features value="Pagebuilder: Product Attribute"/>
             <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
@@ -155,7 +155,7 @@
         <dontSeeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="dontSeeTinyMCE4" />
         <seeElement selector="{{ProductAttributeWYSIWYGSection.TextArea($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seeTextAreaAttribute" />
     </test>
-    <test name="ProductAttributeCanDownGradePageBuilderProductAttributeToTextEditor">
+    <test name="CanDownGradePageBuilderProductAttributeToTextEditor">
         <annotations>
             <features value="Pagebuilder: Product Attribute"/>
             <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
@@ -220,7 +220,7 @@
         <waitForPageLoad stepKey="waitForPageLoad9" />
         <seeElement selector="{{ProductAttributeWYSIWYGSection.TinyMCE4($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seeTinyMCE4Attribute"/>
     </test>
-    <test name="ProductAttributeCanUpgradeTextEditorProductAttributeToPageBuilder">
+    <test name="CanUpgradeTextEditorProductAttributeToPageBuilder">
         <annotations>
             <features value="Pagebuilder: Product Attribute"/>
             <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>
@@ -280,7 +280,7 @@
         <waitForPageLoad stepKey="waitForPageLoad9" />
         <seeElement selector="{{PageBuilderProductAttribute.PageBuilderBtn($$myProductAttributeCreation.attribute_code$$)}}" stepKey="seePagebuilderBtn"/>
     </test>
-    <test name="ProductAttributeCanCreatePageBuilderProductAttributeOnProductForm">
+    <test name="CanCreatePageBuilderProductAttributeOnProductForm">
         <annotations>
             <features value="Pagebuilder: Product Attribute"/>
             <stories value="MAGETWO-84243: BlueFoot as an input type for custom product attributes"/>

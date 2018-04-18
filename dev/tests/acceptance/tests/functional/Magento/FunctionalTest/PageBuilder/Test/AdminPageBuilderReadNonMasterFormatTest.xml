@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="WYSIWYGConversionReadText">
+    <test name="ReadText">
         <annotations>
             <features value="Pagebuilder: WYSIWYG Conversion"/>
             <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
@@ -52,7 +52,7 @@
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
         <see userInput="{{simpleCmsPage.content}}" selector="{{HtmlOnStage.base('1')}}" stepKey="assertHtmlContent"/>
     </test>
-    <test name="WYSIWYGConversionReadHtml">
+    <test name="ReadHtml">
         <annotations>
             <features value="Pagebuilder: WYSIWYG Conversion"/>
             <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
@@ -97,7 +97,7 @@
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendArbitraryHtml.content}}" stepKey="assertHtmlContent"/>
     </test>
-    <test name="WYSIWYGConversionReadHtmlWithNonexistentDataRole">
+    <test name="ReadHtmlWithNonexistentDataRole">
         <annotations>
             <features value="Pagebuilder: WYSIWYG Conversion"/>
             <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
@@ -142,7 +142,7 @@
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage('html')}}" stepKey="seeContentBlockInStage"/>
         <seeElementInDOM selector="{{HtmlOnBackendNonexistentDataRole.content}}" stepKey="assertHtmlContent"/>
     </test>
-    <test name="WYSIWYGConversionReadHtmlWithImage">
+    <test name="ReadHtmlWithImage">
         <annotations>
             <features value="Pagebuilder: WYSIWYG Conversion"/>
             <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
@@ -194,7 +194,7 @@
         <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         <seeElementInDOM selector="{{HtmlOnFrontendWithImage.content}}" stepKey="assertHtmlContent2"/>
     </test>
-    <test name="WYSIWYGConversionReadHtmlWithNewImage">
+    <test name="ReadHtmlWithNewImage">
         <annotations>
             <features value="Pagebuilder: WYSIWYG Conversion"/>
             <stories value="MAGETWO-66620: CMS Content Migration from WYSIWYG to Bluefoot"/>
