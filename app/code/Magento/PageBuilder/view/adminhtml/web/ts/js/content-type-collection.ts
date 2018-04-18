@@ -39,6 +39,19 @@ export default class ContentTypeCollection extends ContentType implements Conten
     }
 
     /**
+     * Return the preview of children of the current element
+     *
+     * @returns {KnockoutObservableArray<Preview>}
+     */
+    public getChildrenPreview(): any[] {
+        const previewArray: any[] = [];
+        this.collection.children().forEach((preview: any) => {
+            previewArray.push(preview.preview);
+        });
+        return previewArray;
+    }
+
+    /**
      * Add a child into the observable array
      *
      * @param child

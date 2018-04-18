@@ -45,6 +45,20 @@ define(["Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/component/e
       return this.collection.getChildren();
     };
     /**
+     * Return the preview of children of the current element
+     *
+     * @returns {KnockoutObservableArray<Preview>}
+     */
+
+
+    _proto.getChildrenPreview = function getChildrenPreview() {
+      var previewArray = [];
+      this.collection.children().forEach(function (preview) {
+        previewArray.push(preview.preview);
+      });
+      return previewArray;
+    };
+    /**
      * Add a child into the observable array
      *
      * @param child

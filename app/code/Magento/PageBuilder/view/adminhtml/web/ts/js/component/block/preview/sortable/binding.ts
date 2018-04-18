@@ -17,7 +17,7 @@ ko.bindingHandlers.previewSortable = {
      * @param context
      */
     init(element, valueAccessor, allBindingsAccessor, data, context: KnockoutBindingContext) {
-        const instance: Structural = context.$data;
+        const instance: Structural = context.$data.parent;
         const options: JQueryUI.SortableOptions = ko.unwrap(valueAccessor());
         let originalPosition: number;
         $(element).sortable(options)

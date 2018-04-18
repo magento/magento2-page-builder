@@ -10,8 +10,12 @@ import ContentTypeInterface from "../../../content-type.d";
 import ObservableUpdater from "../../../observable-updater";
 import Preview from "../../../preview";
 import {fromHex} from "../../../utils/color-converter";
+import {getImageUrl} from "../../../utils/directives";
 import {percentToDecimal} from "../../../utils/number-converter";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
+import {Options} from "../../stage/structural/options";
+import {Option} from "../../stage/structural/options/option";
+import {OptionInterface} from "../../stage/structural/options/option.d";
 
 export default class Slide extends Preview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
@@ -42,16 +46,17 @@ export default class Slide extends Preview {
      * @returns {any}
      */
     public getBackgroundStyles() {
+        const data = this.parent.store.get(this.parent.id);
         let backgroundImage: string = "none";
-        if (this.data.background_image && this.data.background_image() !== "" &&
-            this.data.background_image() !== undefined &&
-            this.data.background_image()[0] !== undefined) {
-            backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+        if (data.background_image && data.background_image !== "" &&
+            data.background_image !== undefined &&
+            data.background_image[0] !== undefined) {
+            backgroundImage = "url(" + data.background_image[0].url + ")";
         }
         return {
             backgroundImage,
-            backgroundSize: this.data.background_size(),
-            minHeight: this.data.min_height() ? this.data.min_height() + "px" : "300px",
+            backgroundSize: data.background_size,
+            minHeight: data.min_height ? data.min_height + "px" : "300px",
             overflow: "hidden",
             paddingBottom: "",
             paddingLeft: "",
@@ -66,13 +71,14 @@ export default class Slide extends Preview {
      * @returns {any}
      */
     public getOverlayStyles() {
-        const paddingTop = this.data.margins_and_padding().padding.top || "0";
-        const paddingRight = this.data.margins_and_padding().padding.right || "0";
-        const paddingBottom = this.data.margins_and_padding().padding.bottom || "0";
-        const paddingLeft = this.data.margins_and_padding().padding.left || "0";
+        const data = this.parent.store.get(this.parent.id);
+        const paddingTop = data.margins_and_padding.padding.top || "0";
+        const paddingRight = data.margins_and_padding.padding.right || "0";
+        const paddingBottom = data.margins_and_padding.padding.bottom || "0";
+        const paddingLeft = data.margins_and_padding.padding.left || "0";
         return {
             backgroundColor: this.getOverlayColorStyle().backgroundColor,
-            minHeight: this.data.min_height() ? this.data.min_height() + "px" : "300px",
+            minHeight: data.min_height ? data.min_height + "px" : "300px",
             paddingBottom: paddingBottom + "px",
             paddingLeft: paddingLeft + "px",
             paddingRight: paddingRight + "px",
@@ -86,11 +92,12 @@ export default class Slide extends Preview {
      * @returns {any}
      */
     public getOverlayColorStyle() {
+        const data = this.parent.store.get(this.parent.id);
         let overlayColor: string = "transparent";
-        if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
-            if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
-                const colors = this.data.overlay_color();
-                const alpha = percentToDecimal(this.data.overlay_transparency());
+        if (data.show_overlay === "always" || this.showOverlayHover()) {
+            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+                const colors = data.overlay_color;
+                const alpha = percentToDecimal(data.overlay_transparency);
                 overlayColor = fromHex(colors, alpha);
             } else {
                 overlayColor = "transparent";
@@ -107,7 +114,8 @@ export default class Slide extends Preview {
      * @returns {boolean}
      */
     public isContentEmpty(): boolean {
-        return this.data.content() === "" || this.data.content() === undefined;
+        const data = this.parent.store.get(this.parent.id);
+        return data.content === "" || data.content === undefined;
     }
 
     /**
@@ -119,7 +127,7 @@ export default class Slide extends Preview {
         if (this.isContentEmpty()) {
             return $t("Edit slide text");
         } else {
-            return $t(this.data.content());
+            return $t(this.parent.store.get(this.parent.id).content);
         }
     }
 
@@ -133,7 +141,7 @@ export default class Slide extends Preview {
             opacity : "0",
             visibility : "hidden",
         };
-        if (this.data.show_button() === "always" || this.showButtonHover()) {
+        if (this.parent.store.get(this.parent.id).show_button === "always" || this.showButtonHover()) {
             buttonStyle.opacity = "1";
             buttonStyle.visibility = "visible";
         }
@@ -144,11 +152,12 @@ export default class Slide extends Preview {
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOverWrapper() {
-        if (this.preview.data.show_overlay() === "on_hover") {
-            this.preview.showOverlayHover(true);
+        if (this.parent.store.get(this.parent.id).show_overlay === "on_hover") {
+            this.showOverlayHover(true);
+
         }
-        if (this.preview.data.show_button() === "on_hover") {
-            this.preview.showButtonHover(true);
+        if (this.parent.store.get(this.parent.id).show_button === "on_hover") {
+            this.showButtonHover(true);
         }
     }
 
@@ -156,11 +165,11 @@ export default class Slide extends Preview {
      * Set state based on overlay mouseout event for the preview
      */
     public onMouseOutWrapper() {
-        if (this.preview.data.show_overlay() === "on_hover") {
-            this.preview.showOverlayHover(false);
+        if (this.parent.store.get(this.parent.id).show_overlay === "on_hover") {
+            this.showOverlayHover(false);
         }
-        if (this.preview.data.show_button() === "on_hover") {
-            this.preview.showButtonHover(false);
+        if (this.parent.store.get(this.parent.id).show_button === "on_hover") {
+            this.showButtonHover(false);
         }
     }
 
@@ -171,17 +180,122 @@ export default class Slide extends Preview {
      * @param {StyleAttributeMapperResult} styles
      * @returns {StyleAttributeMapperResult}
      */
+
+    /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+    public getOptions(): Options {
+        const options = super.getOptions();
+        options.removeOption("move");
+        return options;
+    }
+
+    /**
+     * Get the slide wrapper styles for the storefront
+     *
+     * @returns {object}
+     */
+    public getSlideStyles(type: string): {} {
+        const data = this.parent.store.get(this.parent.id);
+        const style = _.clone(this.getStyle());
+
+        let backgroundImage: any = "";
+        if (type === "image") {
+            backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
+        }
+
+        if (type === "mobileImage") {
+            if (this.getMobileImage()) {
+                backgroundImage = this.getStyle().mobileImage;
+            } else {
+                if (this.getImage()) {
+                    backgroundImage = this.getStyle().backgroundImage;
+                } else {
+                    backgroundImage = "none";
+                }
+            }
+        }
+
+        return Object.assign(
+            style,
+            {
+                backgroundImage,
+                backgroundSize: data.background_size,
+                border: "",
+                borderColor: "",
+                borderRadius: "",
+                borderWidth: "",
+                marginBottom: "",
+                marginLeft: "",
+                marginRight: "",
+                marginTop: "",
+                paddingBottom: "",
+                paddingLeft: "",
+                paddingRight: "",
+                paddingTop: "",
+            },
+        );
+    }
+
+    /**
+     * Get the slide overlay attributes for the storefront
+     *
+     * @returns {object}
+     */
+    public getOverlayAttributes(): {} {
+        const data = this.parent.store.get(this.parent.id);
+        let overlayColorAttr: string = "transparent";
+        if (data.show_overlay !== "never_show") {
+            if (data.overlay_color !== "" && data.overlay_color !== undefined) {
+                overlayColorAttr = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
+            }
+        }
+        return {
+            "data-overlay-color" : overlayColorAttr,
+        };
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
+        const newOptions = options.filter((option) => {
+            return (option.code !== "remove");
+        });
+        const removeClasses = ["remove-structural"];
+        let removeFn = this.onOptionRemove;
+        if (this.parent.parent.children().length <= 1) {
+            removeFn = () => { return; };
+            removeClasses.push("disabled");
+        }
+        newOptions.push(new Option(
+            this,
+            "remove",
+            "<i class='icon-admin-pagebuilder-remove'></i>",
+            $t("Remove"),
+            removeFn,
+            removeClasses,
+            100,
+        ));
+        return newOptions;
+    }
     protected afterStyleMapped(styles: StyleAttributeMapperResult): StyleAttributeMapperResult {
         // Extract data values our of observable functions
         // The style attribute mapper converts images to directives, override it to include the correct URL
-        if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+        const data = this.parent.store.get(this.parent.id);
+        if (data.background_image && typeof data.background_image[0] === "object") {
+            styles.backgroundImage = "url(" + data.background_image[0].url + ")";
         }
-        if (typeof this.data.mobile_image
-            && this.data.mobile_image() !== ""
-            && typeof this.data.mobile_image()[0] === "object"
+        if (data.mobile_image
+            && data.mobile_image !== ""
+            && typeof data.mobile_image[0] === "object"
         ) {
-            styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
+            styles.mobileImage = "url(" + data.mobile_image[0].url + ")";
         }
         return styles;
     }
