@@ -18,7 +18,6 @@ Here is example of extending preview component.
 define(["Magento_PageBuilder/js/preview"], function (Preview) {
     var Custom = function() {
         Preview.apply(this, arguments);
-        this._age = 28;
     };
 
     Custom.prototype = Object.create(Preview.prototype);
