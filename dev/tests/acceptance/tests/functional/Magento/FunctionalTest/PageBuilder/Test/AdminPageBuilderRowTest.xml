@@ -1045,4 +1045,110 @@
         <!-- Note that Advanced section is a shared form and is covered in AdvancedConfigurationEditPanelVisual test -->
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
     </test>
+    <test name="RowValidateBackgroundSectionDefaultValues">
+        <annotations>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-90461: Add Missing Tests For Row"/>
+            <title value="Row - Validate Background Section Default Values"/>
+            <description value="Validate the default values for every attribute in the Background section for Row. Validate Stage and Storefront as well."/>
+            <severity value="AVERAGE"/>
+            <testCaseId value="MAGETWO-90527"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <!-- Validate Default Values -->
+        <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
+        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor"/>
+        <assertEmpty actual="getBackgroundColor" actualType="variable" message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor"/>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage">
+            <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderRowBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderRowBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
+            <argument name="property" value="PageBuilderRowBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderRowBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateRowBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="index" value="1"/>
+            <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Default"/>
+            <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Default"/>
+            <argument name="backgroundRepeat" value="PageBuilderRowBackgroundRepeat_Default"/>
+            <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateRowBackgroundAttributesWithNoImageOrColor" stepKey="validateStage2">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="index" value="1"/>
+            <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Default"/>
+            <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Default"/>
+            <argument name="backgroundRepeat" value="PageBuilderRowBackgroundRepeat_Default"/>
+            <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor2"/>
+        <assertEmpty actual="getBackgroundColor2" actualType="variable" message="Text field has text: $getBackgroundColor2" stepKey="assertBackgroundColor2"/>
+        <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage2">
+            <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition2">
+            <argument name="property" value="PageBuilderRowBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize2">
+            <argument name="property" value="PageBuilderRowBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateBackgroundRepeat2">
+            <argument name="property" value="PageBuilderRowBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment2">
+            <argument name="property" value="PageBuilderRowBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateRowBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+            <argument name="page" value="RowOnStorefront"/>
+            <argument name="index" value="1"/>
+            <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Default"/>
+            <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Default"/>
+            <argument name="backgroundRepeat" value="PageBuilderRowBackgroundRepeat_Default"/>
+            <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Default"/>
+        </actionGroup>
+    </test>
 </tests>

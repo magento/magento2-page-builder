@@ -371,6 +371,13 @@
         <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
         <waitForElementVisible selector="{{PageBuilderActionsSection.editFormUploadedImageSource(property.section, property.fieldName, property.baseFileName, property.fileType)}}" stepKey="seeUploadedFile"/>
     </actionGroup>
+    <actionGroup name="seeNoImageUploadedOnSlideOut">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormNoUploadedImage(property.name)}}" stepKey="seeNoUploadedFile"/>
+    </actionGroup>
     <actionGroup name="seeInFieldSlideOutProperty">
         <arguments>
             <argument name="property" defaultValue=""/>
