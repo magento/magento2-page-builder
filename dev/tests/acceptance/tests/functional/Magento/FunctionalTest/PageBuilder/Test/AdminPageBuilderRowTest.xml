@@ -986,4 +986,63 @@
         <waitForPageLoad stepKey="waitForContentLoaded"/>
         <seeElement selector="{{ImageOnStorefront.backgroundImageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
+    <test name="RowNoRequiredAttributes">
+        <annotations>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-90461: Add Missing Tests For Row"/>
+            <title value="Row - No Required Attributes"/>
+            <description value="The edit form for Row should not have any required attributes."/>
+            <severity value="AVERAGE"/>
+            <testCaseId value="MAGETWO-90524"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <!-- Validate Background Fields Not Required -->
+        <comment userInput="Validate Background Fields Not Required" stepKey="commentBackground"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundImage">
+            <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderRowBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderRowBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundRepeat">
+            <argument name="property" value="PageBuilderRowBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderRowBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxBackground">
+            <argument name="section" value="ParallaxBackgroundForm"/>
+        </actionGroup>
+        <!-- Validate Parallax Background Fields Not Required -->
+        <comment userInput="Validate Parallax Background Fields Not Required" stepKey="commentParallaxBackground"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateParallaxBackground">
+            <argument name="property" value="PageBuilderRowParallax_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateParallaxBackgroundSpeed">
+            <argument name="property" value="PageBuilderRowParallaxSpeed_Default"/>
+        </actionGroup>
+        <!-- Note that Advanced section is a shared form and is covered in AdvancedConfigurationEditPanelVisual test -->
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+    </test>
 </tests>
