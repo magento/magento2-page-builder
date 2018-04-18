@@ -5,7 +5,42 @@
 
 import ko from "knockout";
 import PreviewCollection from "../../../preview-collection";
+import createBlock from "../../block/factory";
+import Config from "../../config";
+import EventBus from "../../event-bus";
+import BlockMountEventParamsInterface from "../block-mount-event-params.d";
+import ButtonItem from "../button-item"
 
 export default class Buttons extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
+
+    public bindEvents() {
+        super.bindEvents();
+
+        EventBus.on("buttons:block:ready", (event: Event, params: BlockMountEventParamsInterface) => {
+            if (params.id === this.parent.id && this.parent.children().length === 0) {
+                this.addButton();
+            }
+        });
+    }
+
+    /**
+     * Add button-item to buttons children array
+     */
+    public addButton() {
+        const createBlockPromise: Promise<ButtonItem> = createBlock(
+            Config.getConfig("content_types")["button-item"],
+            this.parent,
+            this.parent.stageId,
+            {},
+        );
+
+        createBlockPromise.then((button: ButtonItem) => {
+            this.parent.addChild(button);
+            this.isLiveEditing(this.parent.children().indexOf(button));
+            return button;
+        }).catch((error: Error) => {
+            console.error(error);
+        });
+    }
 }

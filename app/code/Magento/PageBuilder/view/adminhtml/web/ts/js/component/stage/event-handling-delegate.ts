@@ -16,6 +16,7 @@ function onBlockRemoved(event: Event, params: BlockRemovedParams): void {
     params.parent.removeChild(params.block);
 
     // Remove the instance from the data store
+
     params.parent.store.remove(params.block.id);
 }
 
