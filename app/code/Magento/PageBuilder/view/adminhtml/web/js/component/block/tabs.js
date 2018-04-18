@@ -72,10 +72,10 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
 
       _eventBus.on("tab-item:block:removed", function (event, params) {
         if (params.parent.id === _this2.id) {
-          // Mark the previous slide as active
+          // Mark the previous tab as active
           var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
 
-          _this2.preview.setFocusedTab(newIndex);
+          _this2.preview.refreshTabs(newIndex, true);
         }
       }); // Capture when a block is duplicated within the container
 
@@ -96,7 +96,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
 
       _eventBus.on("tab-item:block:mount", function (event, params) {
         if (duplicatedTab && params.id === duplicatedTab.id) {
-          _this2.preview.setFocusedTab(duplicatedTabIndex, true);
+          _this2.preview.refreshTabs(duplicatedTabIndex, true);
 
           duplicatedTab = duplicatedTabIndex = null;
         }

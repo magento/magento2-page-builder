@@ -12,15 +12,17 @@ import EventBus from "../../event-bus";
 import Block from "../block";
 import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
 import PreviewBlock from "./block";
+import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Tabs extends PreviewBlock {
     public focusedTab: KnockoutObservable<number> = ko.observable();
+    private lockInteracting: boolean;
     private element: Element;
 
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
      *
-     * @type {(() => any) & _.Cancelable}
+     * @type {(() => void) & _.Cancelable}
      */
     private buildTabs = _.debounce(() => {
         if (this.element && this.element.children.length > 0) {
@@ -49,14 +51,20 @@ export default class Tabs extends PreviewBlock {
                 this.buildTabs();
             }
         });
-        EventBus.on("tab-item:block:create", (event: Event, params: BlockCreateEventParams) => {
-            if (this.element && params.block.parent.id === this.parent.id) {
-                this.buildTabs();
+        EventBus.on("tab-item:block:mount", (event: Event, params: BlockCreateEventParams) => {
+            if (params.block.parent.id === this.parent.id) {
+                this.refreshTabs();
             }
         });
-        EventBus.on("tab-item:block:removed", (event: Event, params: BlockCreateEventParams) => {
-            if (this.element && params.block.parent.id === this.parent.id) {
-                this.buildTabs();
+        // Set the active tab to the new position of the sorted tab
+        EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
+            if (params.instance.id === this.parent.id) {
+                this.refreshTabs();
+
+                // We need to wait for the tabs to refresh before executing the focus
+                _.defer(() => {
+                    this.setFocusedTab(params.newPosition, true);
+                });
             }
         });
         // Set the stage to interacting when a tab is focused
@@ -65,11 +73,29 @@ export default class Tabs extends PreviewBlock {
             focusTabValue = value;
             // If we're stopping the interaction we need to wait, to ensure any other actions can complete
             _.delay(() => {
-                if (focusTabValue === value) {
+                if (focusTabValue === value && !this.lockInteracting) {
                     this.parent.stage.interacting(value !== null);
                 }
             }, (value === null ? 200 : 0));
         });
+    }
+
+    /**
+     * Refresh the tabs instance when new content appears
+     *
+     * @param {number} focusIndex
+     * @param {boolean} forceFocus
+     * @param {number} activeIndex
+     */
+    public refreshTabs(focusIndex?: number, forceFocus?: boolean, activeIndex?: number) {
+        if (this.element) {
+            $(this.element).tabs("refresh");
+            if (focusIndex) {
+                this.setFocusedTab(focusIndex, forceFocus);
+            } else if (activeIndex) {
+                this.setActiveTab(activeIndex);
+            }
+        }
     }
 
     /**
@@ -143,6 +169,101 @@ export default class Tabs extends PreviewBlock {
             marginLeft: "-" + headerStyles.borderWidth,
         };
     }
+
+    /**
+     * Get the sortable options for the tab heading sorting
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+    public getSortableOptions(): SortableOptions {
+        const self = this;
+        let borderWidth: number;
+        return {
+            handle: ".tab-drag-handle",
+            tolerance: "pointer",
+            cursor: "grabbing",
+            cursorAt: { left: 8, top: 25 },
+
+            /**
+             * Provide custom helper element
+             *
+             * @param {Event} event
+             * @param {JQueryUI.Sortable} element
+             * @returns {Element}
+             */
+            helper(event: Event, element: JQueryUI.Sortable): Element {
+                const helper = $(element).clone().css("opacity", "0.7");
+                helper[0].querySelector(".pagebuilder-options").remove();
+                return helper[0];
+            },
+
+            /**
+             * Add a padding to the navigation UL to resolve issues of negative margins when sorting
+             *
+             * @param {Event} event
+             * @param {JQueryUI.SortableUIParams} ui
+             */
+            start(event: Event, ui: JQueryUI.SortableUIParams) {
+                /**
+                 * Due to the way we use negative margins to overlap the borders we need to apply a padding to the
+                 * container when we're moving the first item to ensure the tabs remain in the same place.
+                 */
+                if (ui.item.index() === 0) {
+                    borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
+                    $(this).css("paddingLeft", borderWidth);
+                }
+
+                ui.helper.css("width", "");
+                self.parent.stage.interacting(true);
+                self.lockInteracting = true;
+            },
+
+            /**
+             * Remove the padding once the operation is completed
+             *
+             * @param {Event} event
+             * @param {JQueryUI.SortableUIParams} ui
+             */
+            stop(event: Event, ui: JQueryUI.SortableUIParams) {
+                $(this).css("paddingLeft", "");
+                self.parent.stage.interacting(false);
+                self.lockInteracting = false;
+            },
+
+            placeholder: {
+                /**
+                 * Provide custom placeholder element
+                 *
+                 * @param {JQuery<Element>} item
+                 * @returns {JQuery<Element>}
+                 */
+                element(item: JQuery<Element>) {
+                    const placeholder = item
+                        .clone()
+                        .show()
+                        .css({
+                            display: "inline-block",
+                            opacity: "0.3",
+                        })
+                        .removeClass("focused")
+                        .addClass("sortable-placeholder");
+                    placeholder[0].querySelector(".pagebuilder-options").remove();
+                    return placeholder[0];
+                },
+                update() {
+                    return;
+                },
+            },
+        };
+    }
+}
+
+interface PlaceholderOptions {
+    element: (clone: JQuery<Element>) => JQuery<Element>;
+    update: () => boolean;
+}
+interface SortableOptions extends JQueryUI.SortableOptions {
+    placeholder?: any | string | PlaceholderOptions;
 }
 
 // Resolve issue with jQuery UI tabs blocking events on content editable areas

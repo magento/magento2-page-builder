@@ -84,9 +84,9 @@ export default class Tabs extends Block {
         // Block being removed from container
         EventBus.on("tab-item:block:removed", (event, params: BlockRemovedParams) => {
             if (params.parent.id === this.id) {
-                // Mark the previous slide as active
+                // Mark the previous tab as active
                 const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
-                (this.preview as TabsPreview).setFocusedTab(newIndex);
+                (this.preview as TabsPreview).refreshTabs(newIndex, true);
             }
         });
 
@@ -107,7 +107,7 @@ export default class Tabs extends Block {
         });
         EventBus.on("tab-item:block:mount", (event: Event, params: BlockMountEventParams) => {
             if (duplicatedTab && params.id === duplicatedTab.id) {
-                (this.preview as TabsPreview).setFocusedTab(duplicatedTabIndex, true);
+                (this.preview as TabsPreview).refreshTabs(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;
             }
             if (this.id === params.block.parent.id) {

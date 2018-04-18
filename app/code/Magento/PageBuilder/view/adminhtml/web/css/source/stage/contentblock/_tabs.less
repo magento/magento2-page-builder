@@ -45,6 +45,55 @@
                 &:hover {
                     text-decoration: none;
                 }
+
+                .tab-drag-handle {
+                    height: 100%;
+                    left: 2px;
+                    opacity: 0;
+                    position: absolute;
+                    top: 0;
+                    transition: all .3s;
+                    visibility: hidden;
+                    width: 14px;
+
+                    &:before {
+                        .abs-icon;
+                        color: @color-dark-gray0;
+                        content: @icon-gripper__content;
+                        display: block;
+                        font-size: 16px;
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+
+                        cursor: move; /* fallback if grab cursor is unsupported */
+                        cursor: grab;
+                        cursor: -moz-grab;
+                        cursor: -webkit-grab;
+                    }
+
+                    &:active:before {
+                        cursor: grabbing;
+                        cursor: -moz-grabbing;
+                        cursor: -webkit-grabbing;
+                    }
+                }
+            }
+
+            &.sortable-placeholder {
+                opacity: .3;
+            }
+
+            &.ui-sortable-helper {
+                box-shadow: 0 1px 10px rgba(0, 0, 0, .3);
+                opacity: .7;
+                white-space: nowrap;
+
+                a.tab-title .tab-drag-handle:before {
+                    cursor: grabbing;
+                    cursor: -moz-grabbing;
+                    cursor: -webkit-grabbing;
+                }
             }
 
             &:last-child {
@@ -62,6 +111,11 @@
             }
 
             &.focused {
+                a.tab-title .tab-drag-handle {
+                    opacity: 1;
+                    visibility: visible;
+                }
+
                 .pagebuilder-options {
                     .pagebuilder-options-visible;
                 }
@@ -78,6 +132,10 @@
         > .element-children {
             min-height: inherit;
             padding: 0;
+
+            > .pagebuilder-content-type-wrapper:not(:first-child) {
+                display: none;
+            }
         }
 
         .pagebuilder-content-type.pagebuilder-tab {
