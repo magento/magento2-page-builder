@@ -6,11 +6,11 @@ Adding new content type starts with [configuration](content-type-configuration.m
 
 ## Preview, PreviewCollection, Content and ContentCollection
 
-If your content type have preview logic, you need to specify `preview_component`, otherwise the default one `Magento_PageBuilder/js/preview` will be used.
+If your content type has custom preview logic, you need to specify `preview_component`, otherwise the default one `Magento_PageBuilder/js/preview` will be used.
 
 If your content type can have other components as children, you need to extend `Magento_PageBuilder/js/preview-collection` component. Otherwice you need to extend `Magento_PageBuilder/js/preview`.
 
-In the preview component you can add custom logic that will be available in the template and do additional modifications to observables used in preview templates. 
+In the preview component you can add custom logic that will be available in the template. You can also do modifications to observables used in preview template if you override `afterObservablesUpdated` method. 
 
 Here is example of extending preview component.
 
@@ -29,7 +29,7 @@ define(["Magento_PageBuilder/js/preview"], function (Preview) {
     /**
      * Owerride isConfigured method in parent
      */
-    John.prototype.isConfigured = function() {
+    Custom.prototype.isConfigured = function() {
         return super_.isConfigured.call(this);
     };
 
@@ -37,7 +37,7 @@ define(["Magento_PageBuilder/js/preview"], function (Preview) {
 });
 ```
 
-You can also specify `content_component` if you want to do additional modifications to observables used in master format templates.
+You can also specify `content_component` if you want to do modifications to observables used in master format templates.
 
 ## Config
 
