@@ -15,9 +15,11 @@ define(["mage/translate"], function (_translate) {
       this.parent = void 0;
       this.name = void 0;
       this.sort = void 0;
+      this.code = void 0;
       this.parent = parent;
       this.name = name || (0, _translate)("Block");
       this.sort = sort;
+      this.code = "title";
     }
 
     _createClass(TitleOption, [{

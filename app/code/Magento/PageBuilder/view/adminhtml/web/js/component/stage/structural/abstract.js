@@ -135,22 +135,25 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
     _proto.getCss = function getCss(element) {
       var result = {};
       var css = "";
-      var data = this.stage.store.get(this.id);
+
+      var data = _underscore.extend({}, this.stage.store.get(this.id));
 
       if (element === undefined) {
         if ("css_classes" in data && data.css_classes !== "") {
-          css = data.css_classes;
+          css = data.css_classes.toString();
         }
       } else {
-        var config = (0, _appearanceConfig)(this.config.name, data.appearance).data_mapping.elements[element];
+        var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, data.appearance.toString());
+        var config = appearanceConfiguration.data_mapping.elements[element];
 
         if (config.css && config.css.var !== undefined && config.css.var in data) {
-          css = data[config.css.var];
+          data = this.convertData(data, appearanceConfiguration.data_mapping.converters);
+          css = data[config.css.var].toString();
         }
       }
 
       if (css) {
-        css.toString().split(" ").map(function (value, index) {
+        css.split(" ").map(function (value, index) {
           return result[value] = true;
         });
       }
@@ -342,7 +345,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
 
         var _attributeConfig = _ref;
 
-        if (undefined !== _attributeConfig.persist && null !== _attributeConfig.persist && false === !!_attributeConfig.persist) {
+        if (undefined !== _attributeConfig.persist && null !== _attributeConfig.persist && _attributeConfig.persist) {
           continue;
         }
 
@@ -513,7 +516,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-
             var css = data[config[elementName].css.var];
             var newClasses = {};
 
-            if (css.length > 0) {
+            if (css && css.length > 0) {
               css.toString().split(" ").map(function (value, index) {
                 return newClasses[value] = true;
               });

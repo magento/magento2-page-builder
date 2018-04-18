@@ -9,6 +9,7 @@ requirejs([
     'jquery',
     'highlight',
     'Magento_PageBuilder/js/utils/map',
+    'jquery/ui',
     'slick',
     'jarallax'
 ], function ($, hljs, GoogleMap) {
@@ -107,6 +108,23 @@ requirejs([
 
         showOverlayOnHover($('div[data-role="slide"][data-show-overlay="on_hover"] > a'));
         showButtonOnHover($('div[data-role="slide"][data-show-button="on_hover"] > a'), '.pagebuilder-slide-button');
+
+        $('div[data-role="tabs"]').each(function (index, element) {
+            $(element).tabs({
+                active: $(element).data('active-tab') || 0,
+                create:
+
+                    /**
+                     * Adjust the margin bottom of the navigation to correctly display the active tab
+                     */
+                    function () {
+                        var borderWidth = parseInt($(this).find('.tabs-content').css('borderWidth').toString(), 10);
+
+                        $(this).find('.tabs-navigation').css('marginBottom', -borderWidth);
+                        $(this).find('.tabs-navigation li:not(:first-child)').css('marginLeft', -borderWidth);
+                    }
+            });
+        });
     });
 
     /* Google Maps */
@@ -114,17 +132,12 @@ requirejs([
         var markers = [],
             centerCoord = '',
             mapOptions = {},
-            zoom,
-            data;
+            zoom;
 
-        if (element.hasAttribute('data-position')) {
-            data = element.getAttribute('data-position').split(',');
-            markers.push({
-                lat: data[0],
-                lng: data[1]
-            });
+        if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '[]') {
+            markers = JSON.parse(element.getAttribute('data-markers'));
+            zoom = element.getAttribute('data-zoom');
             centerCoord = markers[0];
-            zoom = data[2];
             mapOptions.zoom = parseInt(zoom, 10);
             new GoogleMap(element, markers, centerCoord, mapOptions);
         }

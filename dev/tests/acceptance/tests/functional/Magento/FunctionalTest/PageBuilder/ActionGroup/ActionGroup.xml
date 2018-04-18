@@ -96,6 +96,7 @@
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentBlockNameInEditFormTitle" />
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToContainer">
@@ -336,6 +337,7 @@
         </arguments>
         <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForImageElement"/>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachImageFile"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
     </actionGroup>
     <actionGroup name="clickSlideOutPanelFieldGeneral">
@@ -410,6 +412,7 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="waitForImageUpload" />
     </actionGroup>
     <actionGroup name="saveEditPanelSettings">
@@ -421,7 +424,7 @@
     </actionGroup>
     <actionGroup name="closeEditPanelSettings">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForCloseButton" />
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForCloseButton" />
         <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="clickCloseButton"/>
         <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
         <waitForElementVisible time="1" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton" />

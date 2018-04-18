@@ -69,74 +69,69 @@
     </fieldset>
     <fieldset name="general" sortOrder="20">
         <settings>
-            <label/>
+            <label translate="true">General</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
         </settings>
-        <container name="tabs" component="Magento_Ui/js/dynamic-rows/dynamic-rows" template="Magento_PageBuilder/dynamic-rows/grid">
+        <field name="default_active" formElement="select" sortOrder="20">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Default Active Tab</label>
+                <imports>
+                    <link name="setOptions">${ $.provider }:data._default_active_options</link>
+                </imports>
+            </settings>
+        </field>
+        <field name="min_height" sortOrder="30" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">Tabs</item>
-                    <item name="fallbackResetTpl" xsi:type="string">Magento_Backend/form/element/helper/fallback-reset-link</item>
-                    <item name="componentType" xsi:type="string">dynamicRows</item>
-                    <item name="recordTemplate" xsi:type="string">record</item>
-                    <item name="deleteButtonLabel" xsi:type="string">Remove</item>
-                    <item name="addButtonLabel" xsi:type="string">Add New Tab</item>
-                    <item name="deleteProperty" xsi:type="boolean">false</item>
-                    <item name="dndConfig" xsi:type="array">
-                        <item name="enabled" xsi:type="boolean">false</item>
-                    </item>
+                    <item name="default" xsi:type="number">300</item>
                 </item>
             </argument>
-            <container name="record" component="Magento_Ui/js/dynamic-rows/record">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="isTemplate" xsi:type="boolean">true</item>
-                        <item name="is_collection" xsi:type="boolean">true</item>
-                        <item name="showFallbackReset" xsi:type="boolean">false</item>
-                    </item>
-                </argument>
-                <field name="title" formElement="input">
-                    <argument name="data" xsi:type="array">
-                        <item name="config" xsi:type="array">
-                            <item name="fit" xsi:type="boolean">false</item>
-                        </item>
-                    </argument>
+            <settings>
+                <label translate="true">Minimum Height</label>
+                <additionalClasses>
+                    <class name="admin__field-x-small">true</class>
+                </additionalClasses>
+                <addAfter>px</addAfter>
+                <dataType>text</dataType>
+                <dataScope>min_height</dataScope>
+                <validation>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="navigation_alignment" formElement="select" sortOrder="40" component="Magento_PageBuilder/js/form/element/dependent-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">left</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Tab Navigation Alignment</label>
+            </settings>
+            <formElements>
+                <select>
                     <settings>
-                        <validation>
-                            <rule name="required-entry" xsi:type="boolean">true</rule>
-                        </validation>
-                        <showFallbackReset>false</showFallbackReset>
-                        <dataType>text</dataType>
-                        <label translate="true">Title</label>
-                        <dataScope>title</dataScope>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">left</item>
+                                <item name="label" xsi:type="string" translate="true">Left</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">center</item>
+                                <item name="label" xsi:type="string" translate="true">Center</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">right</item>
+                                <item name="label" xsi:type="string" translate="true">Right</item>
+                            </option>
+                        </options>
                     </settings>
-                </field>
-                <field name="content" formElement="textarea">
-                    <settings>
-                        <validation>
-                            <rule name="required-entry" xsi:type="boolean">true</rule>
-                        </validation>
-                        <label translate="true">Content</label>
-                        <dataType>text</dataType>
-                        <dataScope>content</dataScope>
-                    </settings>
-                </field>
-                <actionDelete template="Magento_Backend/dynamic-rows/cells/action-delete" sortOrder="50">
-                    <argument name="data" xsi:type="array">
-                        <item name="config" xsi:type="array">
-                            <item name="fit" xsi:type="boolean">false</item>
-                        </item>
-                    </argument>
-                    <settings>
-                        <additionalClasses>
-                            <class name="data-grid-actions-cell">true</class>
-                        </additionalClasses>
-                        <dataType>text</dataType>
-                        <label translate="true">Actions</label>
-                        <componentType>actionDelete</componentType>
-                    </settings>
-                </actionDelete>
-            </container>
-        </container>
+                </select>
+            </formElements>
+        </field>
     </fieldset>
     <fieldset name="advanced">
         <field name="border">
@@ -149,7 +144,7 @@
         <field name="margins_and_padding">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">{"margin":{"top":"0","right":"0","bottom":"0","left":"0"},"padding":{"top":"40","right":"40","bottom":"40","left":"40"}}</item>
+                    <item name="default" xsi:type="string">{"margin":{"top":"0","right":"0","bottom":"0","left":"0"},"padding":{"top":"0","right":"0","bottom":"0","left":"0"}}</item>
                 </item>
             </argument>
         </field>

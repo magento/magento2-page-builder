@@ -55,8 +55,7 @@ define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/component/ev
 
 
     _proto.generateMap = function generateMap(element) {
-      var position = this.data.main.attributes()["data-position"];
-      var markers = [];
+      var markers = typeof this.data.main.attributes()["data-markers"] === "string" ? JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
       var centerCoord = {
         lat: 30.2672,
         lng: -97.7431
@@ -65,7 +64,7 @@ define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/component/ev
         zoom: 8
       };
 
-      if (position && position !== "") {
+      if (markers && markers !== "" && markers.length && Object.keys(markers[0]).length) {
         var pos = this.getPosition();
         markers = pos.markers;
         centerCoord = pos.latLng;
@@ -84,7 +83,13 @@ define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/component/ev
 
 
     _proto.updateMap = function updateMap() {
-      if (this.data.main.attributes()["data-position"]) {
+      var markers = this.data.main.attributes()["data-markers"];
+
+      if (typeof markers === "string" && markers !== "") {
+        markers = JSON.parse(this.data.main.attributes()["data-markers"]);
+      }
+
+      if (markers.length) {
         var pos = this.getPosition();
         this.map.onUpdate(pos.markers, pos.latLng, pos.zoom);
       }
@@ -97,17 +102,23 @@ define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/component/ev
 
 
     _proto.getPosition = function getPosition() {
-      var positions = this.data.main.attributes()["data-position"].split(",");
+      var markers = typeof this.data.main.attributes()["data-markers"] === "string" ? JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
+      var zoom = this.data.main.attributes()["data-zoom"];
+
+      if (typeof zoom !== "number") {
+        zoom = parseInt(zoom, 10);
+      }
+
       return {
         latLng: {
-          lat: parseFloat(positions[0]),
-          lng: parseFloat(positions[1])
+          lat: parseFloat(markers[0].lat),
+          lng: parseFloat(markers[0].lng)
         },
         markers: [{
-          lat: parseFloat(positions[0]),
-          lng: parseFloat(positions[1])
+          lat: parseFloat(markers[0].lat),
+          lng: parseFloat(markers[0].lng)
         }],
-        zoom: parseInt(positions[2], 10)
+        zoom: zoom
       };
     };
 

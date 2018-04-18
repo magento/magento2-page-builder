@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
  * Copyright © Magento, Inc. All rights reserved.
@@ -5,23 +6,7 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
-    <groups>
-        <group name="group1" translate="label" sortOrder="1">
-            <label>Group 1</label>
-        </group>
-        <group name="group2" translate="label" sortOrder="2">
-            <label>Group 2</label>
-        </group>
-    </groups>
     <content_types>
-        <!-- type with only required sections -->
-        <type name="type1" translate="label">
-            <label>Type 1</label>
-            <icon>pagebuilder-type1-icon</icon>
-            <form>pagebuilder_type1_form</form>
-            <group>group1</group>
-        </type>
-        <!-- type with all sections -->
         <type name="type2" translate="label">
             <label>Type 2</label>
             <icon>pagebuilder-type2-icon</icon>
@@ -135,13 +120,6 @@
                     <render_template>Path/to/render/template</render_template>
                 </appearance>
             </appearances>
-        </type>
-        <!-- add type that will not be in other file -->
-        <type name="type3" translate="label">
-            <label>Type 3</label>
-            <icon>pagebuilder-type3-icon</icon>
-            <form>pagebuilder_type3_form</form>
-            <group>group1</group>
         </type>
     </content_types>
 </config>

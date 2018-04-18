@@ -26,6 +26,7 @@ export default class PreviewBlock {
     public displayLabel: KnockoutObservable<string>;
     public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
     private mouseover: boolean = false;
+    private mouseoverContext: PreviewBlock;
 
     /**
      * PreviewBlock constructor
@@ -130,6 +131,7 @@ export default class PreviewBlock {
         }
 
         this.mouseover = true;
+        this.mouseoverContext = context;
         const currentTarget = event.currentTarget;
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
@@ -150,7 +152,7 @@ export default class PreviewBlock {
     public onMouseOut(context: PreviewBlock, event: Event) {
         this.mouseover = false;
         _.delay(() => {
-            if (!this.mouseover) {
+            if (!this.mouseover && this.mouseoverContext === context) {
                 const currentTarget = event.currentTarget;
                 let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
