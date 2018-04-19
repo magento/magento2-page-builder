@@ -15,7 +15,7 @@ $_productCollection = $block->getProductCollection();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
 ?>
 
-<?php if ($_productCollection !== false && count($_productCollection)): ?>
+<?php if ($_productCollection !== false && $_productCollection->count()): ?>
     <?php
     $viewMode = 'grid';
     $image = 'pagebuilder_page_list';
