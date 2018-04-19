@@ -238,23 +238,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       var _this2 = this;
 
       (0, _factory)(_config.getConfig("content_types").slide, this.parent, this.parent.stageId).then(function (slide) {
-        _underscore.delay(function () {
-          var mountFn = function mountFn(event, params) {
-            if (params.id === slide.id) {
+        var mountFn = function mountFn(event, params) {
+          if (params.id === slide.id) {
+            _underscore.delay(function () {
               _this2.navigateToSlide(_this2.parent.children().length - 1);
 
-              _underscore.delay(function () {
-                slide.preview.onOptionEdit();
-              }, 500);
+              slide.preview.onOptionEdit();
+            }, 500);
 
-              _eventBus.off("slide:block:mount", mountFn);
-            }
-          };
+            _eventBus.off("slide:block:mount", mountFn);
+          }
+        };
 
-          _eventBus.on("slide:block:mount", mountFn);
+        _eventBus.on("slide:block:mount", mountFn);
 
-          _this2.parent.addChild(slide, _this2.parent.children().length);
-        });
+        _this2.parent.addChild(slide, _this2.parent.children().length);
       });
     };
     /**
@@ -276,7 +274,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
 
       _eventBus.on("slide:block:removed", function (event, params) {
-        if (params.parent.id === _this3.id) {
+        if (params.parent.id === _this3.parent.id) {
           // Mark the previous slide as active
           var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
 

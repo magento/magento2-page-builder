@@ -23,7 +23,7 @@ define(["Magento_PageBuilder/js/preview"], function (_preview) {
      * @returns {boolean}
      */
     _proto.isConfigured = function isConfigured() {
-      if (this.parent.getChildren().length > 0) {
+      if (this.parent.children().length > 0) {
         return true;
       }
     };

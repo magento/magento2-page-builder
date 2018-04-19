@@ -42,17 +42,17 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
     var _proto = Slide.prototype;
 
     _proto.getBackgroundStyles = function getBackgroundStyles() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.previewData;
       var backgroundImage = "none";
 
-      if (data.background_image && data.background_image !== "" && data.background_image !== undefined && data.background_image[0] !== undefined) {
-        backgroundImage = "url(" + data.background_image[0].url + ")";
+      if (data.background_image() && data.background_image() !== "" && data.background_image() !== undefined && data.background_image()[0] !== undefined) {
+        backgroundImage = "url(" + data.background_image()[0].url + ")";
       }
 
       return {
         backgroundImage: backgroundImage,
-        backgroundSize: data.background_size,
-        minHeight: data.min_height ? data.min_height + "px" : "300px",
+        backgroundSize: data.background_size(),
+        minHeight: data.min_height() ? data.min_height() + "px" : "300px",
         overflow: "hidden",
         paddingBottom: "",
         paddingLeft: "",
@@ -68,11 +68,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
 
 
     _proto.getOverlayStyles = function getOverlayStyles() {
-      var data = this.parent.store.get(this.parent.id);
-      var paddingTop = data.margins_and_padding.padding.top || "0";
-      var paddingRight = data.margins_and_padding.padding.right || "0";
-      var paddingBottom = data.margins_and_padding.padding.bottom || "0";
-      var paddingLeft = data.margins_and_padding.padding.left || "0";
+      var data = this.previewData.margins_and_padding();
+      var paddingTop = data.padding.top || "0";
+      var paddingRight = data.padding.right || "0";
+      var paddingBottom = data.padding.bottom || "0";
+      var paddingLeft = data.padding.left || "0";
       return {
         backgroundColor: this.getOverlayColorStyle().backgroundColor,
         minHeight: data.min_height ? data.min_height + "px" : "300px",
@@ -90,13 +90,13 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
 
 
     _proto.getOverlayColorStyle = function getOverlayColorStyle() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.previewData;
       var overlayColor = "transparent";
 
-      if (data.show_overlay === "always" || this.showOverlayHover()) {
-        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          var colors = data.overlay_color;
-          var alpha = (0, _numberConverter.percentToDecimal)(data.overlay_transparency);
+      if (data.show_overlay() === "always" || this.showOverlayHover()) {
+        if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
+          var colors = data.overlay_color();
+          var alpha = (0, _numberConverter.percentToDecimal)(data.overlay_transparency());
           overlayColor = (0, _colorConverter.fromHex)(colors, alpha);
         } else {
           overlayColor = "transparent";
@@ -115,8 +115,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
 
 
     _proto.isContentEmpty = function isContentEmpty() {
-      var data = this.parent.store.get(this.parent.id);
-      return data.content === "" || data.content === undefined;
+      var data = this.previewData.content();
+      return data === "" || data === undefined;
     };
     /**
      * Get the content for the preview
@@ -129,7 +129,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
       if (this.isContentEmpty()) {
         return (0, _translate)("Edit slide text");
       } else {
-        return (0, _translate)(this.parent.store.get(this.parent.id).content);
+        return (0, _translate)(this.previewData.content());
       }
     };
     /**
@@ -145,7 +145,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
         visibility: "hidden"
       };
 
-      if (this.parent.store.get(this.parent.id).show_button === "always" || this.showButtonHover()) {
+      if (this.previewData.show_button() === "always" || this.showButtonHover()) {
         buttonStyle.opacity = "1";
         buttonStyle.visibility = "visible";
       }
@@ -158,11 +158,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
 
 
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
-      if (this.parent.store.get(this.parent.id).show_overlay === "on_hover") {
+      if (this.previewData.show_overlay() === "on_hover") {
         this.showOverlayHover(true);
       }
 
-      if (this.parent.store.get(this.parent.id).show_button === "on_hover") {
+      if (this.previewData.show_button() === "on_hover") {
         this.showButtonHover(true);
       }
     };
@@ -172,11 +172,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
 
 
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
-      if (this.parent.store.get(this.parent.id).show_overlay === "on_hover") {
+      if (this.previewData.show_overlay() === "on_hover") {
         this.showOverlayHover(false);
       }
 
-      if (this.parent.store.get(this.parent.id).show_button === "on_hover") {
+      if (this.previewData.show_button() === "on_hover") {
         this.showButtonHover(false);
       }
     };
@@ -209,7 +209,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
 
 
     _proto.getSlideStyles = function getSlideStyles(type) {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.previewData;
 
       var style = _.clone(this.getStyle());
 
@@ -233,7 +233,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
 
       return Object.assign(style, {
         backgroundImage: backgroundImage,
-        backgroundSize: data.background_size,
+        backgroundSize: data.background_size(),
         border: "",
         borderColor: "",
         borderRadius: "",
@@ -256,12 +256,12 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
 
 
     _proto.getOverlayAttributes = function getOverlayAttributes() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.previewData;
       var overlayColorAttr = "transparent";
 
-      if (data.show_overlay !== "never_show") {
-        if (data.overlay_color !== "" && data.overlay_color !== undefined) {
-          overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
+      if (data.show_overlay() !== "never_show") {
+        if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
+          overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color(), (0, _numberConverter.percentToDecimal)(data.overlay_transparency()));
         }
       }
 
@@ -300,14 +300,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
     _proto.afterStyleMapped = function afterStyleMapped(styles) {
       // Extract data values our of observable functions
       // The style attribute mapper converts images to directives, override it to include the correct URL
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.previewData;
 
-      if (data.background_image && _typeof(data.background_image[0]) === "object") {
-        styles.backgroundImage = "url(" + data.background_image[0].url + ")";
+      if (data.background_image() && _typeof(data.background_image()[0]) === "object") {
+        styles.backgroundImage = "url(" + data.background_image()[0].url + ")";
       }
 
-      if (data.mobile_image && data.mobile_image !== "" && _typeof(data.mobile_image[0]) === "object") {
-        styles.mobileImage = "url(" + data.mobile_image[0].url + ")";
+      if (data.mobile_image() && data.mobile_image() !== "" && _typeof(data.mobile_image()[0]) === "object") {
+        styles.mobileImage = "url(" + data.mobile_image()[0].url + ")";
       }
 
       return styles;

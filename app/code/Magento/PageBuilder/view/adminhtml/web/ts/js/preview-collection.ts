@@ -22,7 +22,7 @@ export default class PreviewCollection extends Preview {
      * @returns {boolean}
      */
     protected isConfigured() {
-        if (this.parent.getChildren().length > 0) {
+        if (this.parent.children().length > 0) {
             return true;
         }
     }
