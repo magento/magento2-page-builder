@@ -11,6 +11,9 @@ namespace Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider\
 use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderInterface;
 use Magento\Framework\File\Size;
 
+/**
+ * Provides maximum filesize allowed for upload based on php ini settings
+ */
 class MaxFileSize implements ProviderInterface
 {
     /**

@@ -10,6 +10,9 @@ namespace Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData;
 
 use Magento\Framework\ObjectManagerInterface;
 
+/**
+ * Generates ProviderInterface instances
+ */
 class ProviderFactory
 {
     /**

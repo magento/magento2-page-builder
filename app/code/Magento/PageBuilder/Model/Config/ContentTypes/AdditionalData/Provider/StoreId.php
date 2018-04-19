@@ -11,6 +11,9 @@ namespace Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider;
 use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
+/**
+ * Provides current store ID
+ */
 class StoreId implements ProviderInterface
 {
     /**

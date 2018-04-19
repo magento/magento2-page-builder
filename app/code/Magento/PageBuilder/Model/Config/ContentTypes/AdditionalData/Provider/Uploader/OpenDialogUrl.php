@@ -11,6 +11,9 @@ namespace Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider\
 use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 
+/**
+ * Provides open dialog URL for media gallery slideout
+ */
 class OpenDialogUrl implements ProviderInterface
 {
     /**

@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData;
 
+/**
+ * Provides runtime-specific data for additional data content types configuration
+ */
 interface ProviderInterface
 {
     /**
