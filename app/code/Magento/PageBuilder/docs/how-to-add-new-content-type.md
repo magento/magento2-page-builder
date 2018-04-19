@@ -53,7 +53,7 @@ Let's create templates specified in the configuration. Preview template `app/cod
 
 ``` HTML
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" data-bind="event: {mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false" style="padding: 5px;">
-    <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css(), html: data.main.html"></div>
+    <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, html: data.main.html"></div>
     <!-- ko template: getOptions().template --><!-- /ko -->
 </div>
 ```
@@ -61,10 +61,10 @@ Let's create templates specified in the configuration. Preview template `app/cod
 And master template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/master/simple.html`.
 
 ``` HTML
-<div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css(), html: data.main.html"></div>
+<div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, html: data.main.html"></div>
 ```
 
-In the `simple.xml` above we defined border attributes and form for component. Let's create form `Vendor/ModuleName/view/adminhtml/ui_component/modulename_simple_form.xml` that would allow us edit these attributes.
+In the `simple.xml` above we defined border attributes and form for component. Let's create form `Vendor/ModuleName/view/adminhtml/ui_component/modulename_simple_form.xml` which enables the user to modify these attributes from the admin.
 
 ``` XML
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form">
@@ -191,7 +191,7 @@ And the last part is to add button to a template.
 
 ``` HTML
 <!-- ko template: getOptions().template --><!-- /ko -->
-<button type="button" data-bind="click: helloWorld, i18n: 'Display Hello World'"/>
+<button type="button" click="helloWorld" translate="'Display Hello World'"/>
 ```
 
 Now, let's add content type that can contain other content types. Create configuration `Vendor\ModuleName\etc\content_types\complex.xml`.
@@ -262,7 +262,7 @@ Now need to create preview and render templates.
 `Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/complex.html`
 
 ``` HTML
-<div class="pagebuilder-content-type type-container pagebuilder-complex children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css(), event: {mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type type-container pagebuilder-complex children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, event: {mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <!-- ko template: previewChildTemplate --><!-- /ko -->
 </div>
