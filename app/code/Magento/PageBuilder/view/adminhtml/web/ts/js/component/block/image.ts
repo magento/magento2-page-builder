@@ -34,7 +34,7 @@ export default class Image extends Block {
 
         const uploaderConfiguration = Object.assign(
             {},
-            config.additional_data.uploaderConfig.settings,
+            config.additional_data.uploaderConfig,
             {
                 value: this.stage.store.get(this.id).image,
             },

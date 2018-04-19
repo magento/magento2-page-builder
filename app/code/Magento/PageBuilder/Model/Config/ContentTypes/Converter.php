@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
-use Magento\Framework\ObjectManagerInterface;
+use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderFactoryInterface;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
@@ -19,18 +19,18 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private $parser;
 
     /**
-     * @var ObjectManagerInterface
+     * @var ProviderFactoryInterface
      */
-    private $objectManager;
+    private $providerFactory;
 
     /**
      * @param ArgumentParser $parser
-     * @param ObjectManagerInterface $objectManager
+     * @param ProviderFactoryInterface $providerFactory
      */
-    public function __construct(ArgumentParser $parser, ObjectManagerInterface $objectManager)
+    public function __construct(ArgumentParser $parser, ProviderFactoryInterface $providerFactory)
     {
         $this->parser = $parser;
-        $this->objectManager = $objectManager;
+        $this->providerFactory = $providerFactory;
     }
 
     /**
@@ -213,28 +213,25 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
 
         /** @var $xmlArgumentsNode \DOMElement */
         foreach ($xmlArgumentsNodes as $xmlArgumentsNode) {
-            // add here logic to process additional_data
             $parsedArgumentsData = $this->parser->parse($xmlArgumentsNode);
 
             $convertAdditionalDataArray = function (array $data) use (&$convertAdditionalDataArray) {
                 $name = $data['name'] ?? null;
-                $item =& $data['item'] ?? null;
+                $item = $data['item'] ?? null;
                 $value = $data['value'] ?? null;
+                $xsiType = $data['xsi:type'] ?? null;
 
                 unset($data['name'], $data['item'], $data['value'], $data['xsi:type']);
 
-                if (is_scalar($value)) {
+                $hasDataProviderFactory = $xsiType === 'object';
+
+                if ($hasDataProviderFactory && is_scalar($value)) {
+                    $providerInstance = $this->providerFactory->createInstance($value);
+                    return $providerInstance->getData();
+                } elseif (is_scalar($value)) {
                     return $value;
                 } elseif (is_array($item) && is_scalar($name)) {
                     $data[$name] = $item;
-
-                    if (isset($item['converter']) && $item['converter']['xsi:type'] === 'object') {
-                        $converterClassName = $item['converter']['value'];
-                        unset($data[$name]['converter']);
-                        $converter = $this->getConverter($converterClassName);
-                        return $converter->convert($convertAdditionalDataArray($data[$name]));
-                    }
-
                     return $convertAdditionalDataArray($data[$name]);
                 } else {
                     foreach (array_keys($data) as $key) {
@@ -454,13 +451,5 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         return $attributeNode->hasAttribute($attributeName)
             ? $attributeNode->attributes->getNamedItem($attributeName)->nodeValue
             : null;
-    }
-
-    /**
-     * @return \Magento\Framework\Config\ConverterInterface
-     */
-    private function getConverter($className): \Magento\Framework\Config\ConverterInterface
-    {
-        return $this->objectManager->get($className);
     }
 }

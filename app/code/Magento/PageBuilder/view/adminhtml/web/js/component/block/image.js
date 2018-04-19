@@ -20,7 +20,7 @@ define(["uiEvents", "Magento_PageBuilder/js/component/uploader", "Magento_PageBu
 
       _this = _Block.call(this, parent, stage, config, formData, elementConverterPool, dataConverterPool) || this;
       _this.uploader = void 0;
-      var uploaderConfiguration = Object.assign({}, config.additional_data.uploaderConfig.settings, {
+      var uploaderConfiguration = Object.assign({}, config.additional_data.uploaderConfig, {
         value: _this.stage.store.get(_this.id).image
       }); // Create uploader
 
