@@ -197,6 +197,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.clone = function clone(contentBlock, autoAppend) {
+      var _this2 = this;
+
       if (autoAppend === void 0) {
         autoAppend = true;
       }
@@ -204,22 +206,34 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       var contentBlockData = contentBlock.store.get(contentBlock.id);
       var index = contentBlock.parent.collection.children.indexOf(contentBlock) + 1 || null;
       (0, _factory)(contentBlock.config, contentBlock.parent, contentBlock.stageId, contentBlockData).then(function (duplicateBlock) {
-        var duplicateEventParams = {
-          original: contentBlock,
-          duplicateBlock: duplicateBlock,
-          index: index
-        };
-
         if (autoAppend) {
           contentBlock.parent.addChild(duplicateBlock, index);
         }
 
-        _eventBus.trigger("block:duplicate", duplicateEventParams);
-
-        _eventBus.trigger(contentBlock.config.name + ":block:duplicate", duplicateEventParams);
+        _this2.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
 
         return duplicateBlock;
       });
+    };
+    /**
+     * Dispatch content type clone events
+     *
+     * @param {ContentTypeInterface} originalBlock
+     * @param {ContentTypeInterface} duplicateBlock
+     * @param {number} index
+     */
+
+
+    _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(originalBlock, duplicateBlock, index) {
+      var duplicateEventParams = {
+        original: originalBlock,
+        duplicateBlock: duplicateBlock,
+        index: index
+      };
+
+      _eventBus.trigger("block:duplicate", duplicateEventParams);
+
+      _eventBus.trigger(originalBlock.parent.config.name + ":block:duplicate", duplicateEventParams);
     };
     /**
      * Handle block removal
@@ -227,19 +241,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.onOptionRemove = function onOptionRemove() {
-      var _this2 = this;
+      var _this3 = this;
 
       var removeBlock = function removeBlock() {
         var params = {
-          block: _this2.parent,
-          index: _this2.parent.parent.getChildren().indexOf(_this2.parent),
-          parent: _this2.parent.parent,
-          stageId: _this2.parent.stageId
+          block: _this3.parent,
+          index: _this3.parent.parent.getChildren().indexOf(_this3.parent),
+          parent: _this3.parent.parent,
+          stageId: _this3.parent.stageId
         };
 
         _eventBus.trigger("block:removed", params);
 
-        _eventBus.trigger(_this2.parent.config.name + ":block:removed", params);
+        _eventBus.trigger(_this3.parent.config.name + ":block:removed", params);
       };
 
       if (this.isConfigured()) {
@@ -266,17 +280,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this3 = this;
+      var _this4 = this;
 
       _eventBus.on("block:sortStart", this.onSortStart.bind(this.parent));
 
       this.parent.store.subscribe(function (data) {
-        _this3.observableUpdater.update(_this3, _underscore.extend({}, _this3.parent.store.get(_this3.parent.id)));
+        _this4.observableUpdater.update(_this4, _underscore.extend({}, _this4.parent.store.get(_this4.parent.id)));
 
-        _this3.afterObservablesUpdated();
+        _this4.afterObservablesUpdated();
 
         _eventBus.trigger("previewObservables:updated", {
-          preview: _this3
+          preview: _this4
         });
       }, this.parent.id);
     };
@@ -294,26 +308,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.setupDataFields = function setupDataFields() {
-      var _this4 = this;
+      var _this5 = this;
 
       var styleAttributeMapper = new _styleAttributeMapper();
       var styleAttributeFilter = new _styleAttributeFilter(); // Create an empty observable for all fields
 
       if (this.config.fields) {
         _underscore.keys(this.config.fields).forEach(function (key) {
-          _this4.updateDataValue(key, "");
+          _this5.updateDataValue(key, "");
         });
       } // Subscribe to this blocks data in the store
 
 
       this.parent.store.subscribe(function (data) {
         _underscore.forEach(data, function (value, key) {
-          _this4.updateDataValue(key, value);
+          _this5.updateDataValue(key, value);
         });
       }, this.parent.id); // Calculate the preview style utilising the style attribute mapper & appearance system
 
       this.previewStyle = _knockout.computed(function () {
-        var data = _underscore.mapObject(_this4.previewData, function (value) {
+        var data = _underscore.mapObject(_this5.previewData, function (value) {
           if (_knockout.isObservable(value)) {
             return value();
           }
@@ -321,17 +335,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
           return value;
         });
 
-        if (typeof data.appearance !== "undefined" && typeof _this4.config.appearances !== "undefined" && typeof _this4.config.appearances[data.appearance] !== "undefined") {
-          _underscore.extend(data, _this4.config.appearances[data.appearance]);
+        if (typeof data.appearance !== "undefined" && typeof _this5.config.appearances !== "undefined" && typeof _this5.config.appearances[data.appearance] !== "undefined") {
+          _underscore.extend(data, _this5.config.appearances[data.appearance]);
         } // Extract data values our of observable functions
 
 
-        return _this4.afterStyleMapped(styleAttributeMapper.toDom(styleAttributeFilter.filter(data)));
+        return _this5.afterStyleMapped(styleAttributeMapper.toDom(styleAttributeFilter.filter(data)));
       });
       Object.keys(styleAttributeFilter.getAllowedAttributes()).forEach(function (key) {
-        if (_knockout.isObservable(_this4.previewData[key])) {
-          _this4.previewData[key].subscribe(function () {
-            _this4.previewStyle.notifySubscribers();
+        if (_knockout.isObservable(_this5.previewData[key])) {
+          _this5.previewData[key].subscribe(function () {
+            _this5.previewStyle.notifySubscribers();
           });
         }
       });

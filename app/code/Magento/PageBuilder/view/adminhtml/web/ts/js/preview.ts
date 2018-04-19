@@ -256,21 +256,36 @@ export default class Preview {
             contentBlock.stageId,
             contentBlockData
         ).then((duplicateBlock: ContentTypeInterface) => {
-            const duplicateEventParams = {
-                original: contentBlock,
-                duplicateBlock,
-                index,
-            };
-
             if (autoAppend) {
                 contentBlock.parent.addChild(duplicateBlock, index);
             }
 
-            EventBus.trigger("block:duplicate", duplicateEventParams);
-            EventBus.trigger(contentBlock.config.name + ":block:duplicate", duplicateEventParams);
+            this.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
 
             return duplicateBlock;
         });
+    }
+
+    /**
+     * Dispatch content type clone events
+     *
+     * @param {ContentTypeInterface} originalBlock
+     * @param {ContentTypeInterface} duplicateBlock
+     * @param {number} index
+     */
+    protected dispatchContentTypeCloneEvents(
+        originalBlock: ContentTypeInterface,
+        duplicateBlock: ContentTypeInterface,
+        index: number,
+    ) {
+        const duplicateEventParams = {
+            original: originalBlock,
+            duplicateBlock,
+            index,
+        };
+
+        EventBus.trigger("block:duplicate", duplicateEventParams);
+        EventBus.trigger(originalBlock.parent.config.name + ":block:duplicate", duplicateEventParams);
     }
 
     /**
