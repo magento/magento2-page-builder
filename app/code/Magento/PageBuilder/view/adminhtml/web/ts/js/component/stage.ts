@@ -6,9 +6,9 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
+import events from "uiEvents";
 import _ from "underscore";
 import DataStore from "./data-store";
-import EventBus from "./event-bus";
 import buildStage from "./stage-builder";
 import {StageInterface} from "./stage.d";
 import {handleEvents} from "./stage/event-handling-delegate";
@@ -31,7 +31,7 @@ export default class Stage extends EditableArea implements StageInterface {
     private save: Save = new Save();
     private saveRenderTree = _.debounce(() => {
         this.save.renderTree(this.children)
-            .then((renderedOutput) => EventBus.trigger(`stage:renderTree:${ this.id }`, {
+            .then((renderedOutput) => events.trigger(`stage:renderTree:${ this.id }`, {
                 value: renderedOutput,
             }));
     }, 500);
@@ -64,17 +64,17 @@ export default class Stage extends EditableArea implements StageInterface {
      */
     public initListeners() {
         // Any store state changes trigger a stage update event
-        this.store.subscribe(() => EventBus.trigger("stage:updated", {stage: this}));
+        this.store.subscribe(() => events.trigger("stage:updated", {stage: this}));
 
         // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
         // can occur concurrently.
-        EventBus.on("stage:updated", (event, params) => {
-            if (params.stage.id === this.id) {
+        events.on("stage:updated", (event, args) => {
+            if (args.stage.id === this.id) {
                 this.saveRenderTree.call(this);
             }
         });
-        EventBus.on("interaction:start", () => this.interacting(true));
-        EventBus.on("interaction:stop", () => this.interacting(false));
+        events.on("interaction:start", () => this.interacting(true));
+        events.on("interaction:stop", () => this.interacting(false));
     }
 
     /**
@@ -90,7 +90,7 @@ export default class Stage extends EditableArea implements StageInterface {
      * The stage has been initiated fully and is ready
      */
     public ready() {
-        EventBus.trigger(`stage:ready:${ this.id }`, { stage: this });
+        events.trigger(`stage:ready:${ this.id }`, { stage: this });
         this.children.valueHasMutated();
         this.loading(false);
     }

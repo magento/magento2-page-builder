@@ -1,33 +1,33 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/event-bus"], function (_knockout, _array, _factory, _eventBus) {
+define(["knockout", "uiEvents", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/block/factory"], function (_knockout, _uiEvents, _array, _factory) {
   /**
    * Handle event to remove block
    *
    * @param event
-   * @param params
+   * @param args
    */
-  function onBlockRemoved(event, params) {
-    params.parent.removeChild(params.block); // Remove the instance from the data store
+  function onBlockRemoved(event, args) {
+    args.parent.removeChild(args.block); // Remove the instance from the data store
 
-    params.parent.stage.store.remove(params.block.id);
+    args.parent.stage.store.remove(args.block.id);
   }
   /**
    * Handle when an instance of an existing block is dropped onto a container
    *
    * @param {Event} event
-   * @param {BlockInstanceDroppedParams} params
+   * @param {BlockInstanceDroppedParams} args
    */
 
 
-  function onBlockInstanceDropped(event, params) {
-    var originalParent = params.blockInstance.parent;
-    params.blockInstance.parent = params.parent;
-    params.parent.addChild(params.blockInstance, params.index);
+  function onBlockInstanceDropped(event, args) {
+    var originalParent = args.blockInstance.parent;
+    args.blockInstance.parent = args.parent;
+    args.parent.addChild(args.blockInstance, args.index);
 
-    _eventBus.trigger("block:moved", {
-      block: params.blockInstance,
-      index: params.index,
-      newParent: params.parent,
+    _uiEvents.trigger("block:moved", {
+      block: args.blockInstance,
+      index: args.index,
+      newParent: args.parent,
       originalParent: originalParent
     });
   }
@@ -35,23 +35,23 @@ define(["knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/j
    * Handle a block being dropped into a container
    *
    * @param {Event} event
-   * @param {BlockDroppedParams} params
+   * @param {BlockDroppedParams} args
    */
 
 
-  function onBlockDropped(event, params) {
-    var index = params.index || 0;
+  function onBlockDropped(event, args) {
+    var index = args.index || 0;
     new Promise(function (resolve, reject) {
-      if (params.block) {
-        return (0, _factory)(params.block.config, params.parent, params.parent.stage).then(function (block) {
-          params.parent.addChild(block, index);
+      if (args.block) {
+        return (0, _factory)(args.block.config, args.parent, args.parent.stage).then(function (block) {
+          args.parent.addChild(block, index);
 
-          _eventBus.trigger("block:dropped:create", {
+          _uiEvents.trigger("block:dropped:create", {
             id: block.id,
             block: block
           });
 
-          _eventBus.trigger(params.block.config.name + ":block:dropped:create", {
+          _uiEvents.trigger(args.block.config.name + ":block:dropped:create", {
             id: block.id,
             block: block
           });
@@ -69,31 +69,31 @@ define(["knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/j
    * Handle a block being sorted within it's own container
    *
    * @param {Event} event
-   * @param {BlockSortedParams} params
+   * @param {BlockSortedParams} args
    */
 
 
-  function onBlockSorted(event, params) {
-    var originalIndex = _knockout.utils.arrayIndexOf(params.parent.children(), params.block);
+  function onBlockSorted(event, args) {
+    var originalIndex = _knockout.utils.arrayIndexOf(args.parent.children(), args.block);
 
-    if (originalIndex !== params.index) {
-      (0, _array.moveArrayItem)(params.parent.children, originalIndex, params.index);
+    if (originalIndex !== args.index) {
+      (0, _array.moveArrayItem)(args.parent.children, originalIndex, args.index);
     }
   }
   /**
    * On sorting start & end show all borders on the stage
    *
    * @param {Event} event
-   * @param {SortParams} params
+   * @param {SortParams} args
    */
 
 
-  function onSortingStart(event, params) {
-    params.block.stage.showBorders(true);
+  function onSortingStart(event, args) {
+    args.block.stage.showBorders(true);
   }
 
-  function onSortingStop(event, params) {
-    params.block.stage.showBorders(false);
+  function onSortingStop(event, args) {
+    args.block.stage.showBorders(false);
   }
   /**
    * Handle container related events for the stage
@@ -104,43 +104,43 @@ define(["knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/j
 
   function handleEvents(stage) {
     // Block dropped from left hand panel
-    _eventBus.on("block:dropped", function (event, params) {
-      if (params.parent.stage.id === stage.id) {
-        onBlockDropped(event, params);
+    _uiEvents.on("block:dropped", function (event, args) {
+      if (args.parent.stage.id === stage.id) {
+        onBlockDropped(event, args);
       }
     }); // Block instance being moved between structural elements
 
 
-    _eventBus.on("block:instanceDropped", function (event, params) {
-      if (params.parent.stage.id === stage.id) {
-        onBlockInstanceDropped(event, params);
+    _uiEvents.on("block:instanceDropped", function (event, args) {
+      if (args.parent.stage.id === stage.id) {
+        onBlockInstanceDropped(event, args);
       }
     }); // Block being removed from container
 
 
-    _eventBus.on("block:removed", function (event, params) {
+    _uiEvents.on("block:removed", function (event, params) {
       if (params.parent.stage.id === stage.id) {
         onBlockRemoved(event, params);
       }
     }); // Block sorted within the same structural element
 
 
-    _eventBus.on("block:sorted", function (event, params) {
-      if (params.parent.stage.id === stage.id) {
-        onBlockSorted(event, params);
+    _uiEvents.on("block:sorted", function (event, args) {
+      if (args.parent.stage.id === stage.id) {
+        onBlockSorted(event, args);
       }
     }); // Observe sorting actions
 
 
-    _eventBus.on("block:sortStart", function (event, params) {
-      if (params.block.stage.id === stage.id) {
-        onSortingStart(event, params);
+    _uiEvents.on("block:sortStart", function (event, args) {
+      if (args.block.stage.id === stage.id) {
+        onSortingStart(event, args);
       }
     });
 
-    _eventBus.on("block:sortStop", function (event, params) {
-      if (params.block.stage.id === stage.id) {
-        onSortingStop(event, params);
+    _uiEvents.on("block:sortStop", function (event, args) {
+      if (args.block.stage.id === stage.id) {
+        onSortingStop(event, args);
       }
     });
   }

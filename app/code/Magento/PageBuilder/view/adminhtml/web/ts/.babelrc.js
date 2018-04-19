@@ -14,7 +14,7 @@ module.exports = {
                 ["transform-class-properties", {loose: true}]
             ]
         },
-        ['es6-to-magento-amd', {magentoClasses: ['uiComponent', 'uiElement', 'uiClass']}]
+        ['es6-to-magento-amd', {magentoClasses: ['uiComponent', 'uiElement', 'uiClass', 'uiEvents']}]
     ],
     plugins: [
         ['./babel/resolve-imports', {prefix: 'Magento_PageBuilder/'}],

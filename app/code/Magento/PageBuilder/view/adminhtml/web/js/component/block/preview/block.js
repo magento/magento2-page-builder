@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/block/preview/sortable/binding"], function (_jquery, _knockout, _underscore, _liveEdit, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _binding) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/block/preview/sortable/binding"], function (_jquery, _knockout, _uiEvents, _underscore, _liveEdit, _styleAttributeFilter, _styleAttributeMapper, _binding) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -154,13 +154,13 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/binding/live
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
-      _eventBus.trigger("block:childrenRendered", {
+      _uiEvents.trigger("block:childrenRendered", {
         id: this.parent.id,
         block: this.parent,
         element: element
       });
 
-      _eventBus.trigger(this.parent.config.name + ":block:childrenRendered", {
+      _uiEvents.trigger(this.parent.config.name + ":block:childrenRendered", {
         block: this.parent,
         element: element,
         id: this.parent.id

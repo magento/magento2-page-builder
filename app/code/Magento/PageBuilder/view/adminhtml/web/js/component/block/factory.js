@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/data-converter-pool-factory", "Magento_PageBuilder/js/component/block/element-converter-pool-factory"], function (_loader, _eventBus, _dataConverterPoolFactory, _elementConverterPoolFactory) {
+define(["Magento_PageBuilder/js/component/loader", "uiEvents", "Magento_PageBuilder/js/component/block/data-converter-pool-factory", "Magento_PageBuilder/js/component/block/element-converter-pool-factory"], function (_loader, _uiEvents, _dataConverterPoolFactory, _elementConverterPoolFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -24,12 +24,12 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
 
   function fireBlockReadyEvent(block, childrenLength) {
     var fire = function fire() {
-      _eventBus.trigger("block:ready", {
+      _uiEvents.trigger("block:ready", {
         id: block.id,
         block: block
       });
 
-      _eventBus.trigger(block.config.name + ":block:ready", {
+      _uiEvents.trigger(block.config.name + ":block:ready", {
         id: block.id,
         block: block
       });
@@ -40,19 +40,19 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
     } else {
       var mountCounter = 0;
 
-      var eventCallback = function eventCallback(event, params) {
-        if (params.block.parent.id === block.id) {
+      var eventCallback = function eventCallback(event, args) {
+        if (args.block.parent.id === block.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
             fire();
 
-            _eventBus.off("block:mount", eventCallback);
+            _uiEvents.off("block:mount:fire:ready");
           }
         }
       };
 
-      _eventBus.on("block:mount", eventCallback);
+      _uiEvents.on("block:mount", eventCallback, "block:mount:fire:ready");
     }
   }
   /**
@@ -86,12 +86,12 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
         console.error(error);
       });
     }).then(function (block) {
-      _eventBus.trigger("block:create", {
+      _uiEvents.trigger("block:create", {
         id: block.id,
         block: block
       });
 
-      _eventBus.trigger(config.name + ":block:create", {
+      _uiEvents.trigger(config.name + ":block:create", {
         id: block.id,
         block: block
       });

@@ -6,9 +6,9 @@
 import $ from "jquery";
 import ko from "knockout";
 import "tabs";
+import events from "uiEvents";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
-import EventBus from "../../event-bus";
 import Block from "../block";
 import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
 import PreviewBlock from "./block";
@@ -44,17 +44,17 @@ export default class Tabs extends PreviewBlock {
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
 
-        EventBus.on("tabs:block:ready", (event: Event, params: BlockReadyEventParams) => {
+        events.on("tabs:block:ready", (event: Event, params: BlockReadyEventParams) => {
             if (params.id === this.parent.id && this.element) {
                 this.buildTabs();
             }
         });
-        EventBus.on("tab-item:block:create", (event: Event, params: BlockCreateEventParams) => {
+        events.on("tab-item:block:create", (event: Event, params: BlockCreateEventParams) => {
             if (this.element && params.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }
         });
-        EventBus.on("tab-item:block:removed", (event: Event, params: BlockCreateEventParams) => {
+        events.on("tab-item:block:removed", (event: Event, params: BlockCreateEventParams) => {
             if (this.element && params.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }

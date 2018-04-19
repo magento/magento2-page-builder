@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/event-handling-delegate", "Magento_PageBuilder/js/component/stage/save", "Magento_PageBuilder/js/component/stage/structural/editable-area"], function (_knockout, _translate, _alert, _underscore, _dataStore, _eventBus, _stageBuilder, _eventHandlingDelegate, _save, _editableArea) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/event-handling-delegate", "Magento_PageBuilder/js/component/stage/save", "Magento_PageBuilder/js/component/stage/structural/editable-area"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _dataStore, _stageBuilder, _eventHandlingDelegate, _save, _editableArea) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Stage =
@@ -31,7 +31,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       _this.save = new _save();
       _this.saveRenderTree = _underscore.debounce(function () {
         _this.save.renderTree(_this.children).then(function (renderedOutput) {
-          return _eventBus.trigger("stage:renderTree:" + _this.id, {
+          return _uiEvents.trigger("stage:renderTree:" + _this.id, {
             value: renderedOutput
           });
         });
@@ -65,23 +65,23 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
 
       // Any store state changes trigger a stage update event
       this.store.subscribe(function () {
-        return _eventBus.trigger("stage:updated", {
+        return _uiEvents.trigger("stage:updated", {
           stage: _this2
         });
       }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
       // can occur concurrently.
 
-      _eventBus.on("stage:updated", function (event, params) {
-        if (params.stage.id === _this2.id) {
+      _uiEvents.on("stage:updated", function (event, args) {
+        if (args.stage.id === _this2.id) {
           _this2.saveRenderTree.call(_this2);
         }
       });
 
-      _eventBus.on("interaction:start", function () {
+      _uiEvents.on("interaction:start", function () {
         return _this2.interacting(true);
       });
 
-      _eventBus.on("interaction:stop", function () {
+      _uiEvents.on("interaction:stop", function () {
         return _this2.interacting(false);
       });
     };
@@ -101,7 +101,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
 
 
     _proto.ready = function ready() {
-      _eventBus.trigger("stage:ready:" + this.id, {
+      _uiEvents.trigger("stage:ready:" + this.id, {
         stage: this
       });
 

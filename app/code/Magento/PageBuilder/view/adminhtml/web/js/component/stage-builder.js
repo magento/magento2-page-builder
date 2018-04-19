@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/format-validator", "Magento_PageBuilder/js/component/format/read/composite"], function (_translate, _alert, _, _directives, _factory, _config, _eventBus, _formatValidator, _composite) {
+define(["mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/format/format-validator", "Magento_PageBuilder/js/component/format/read/composite"], function (_translate, _alert, _uiEvents, _, _directives, _factory, _config, _formatValidator, _composite) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -180,7 +180,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
         title: (0, _translate)("Advanced CMS Error")
       });
 
-      _eventBus.trigger("stage:error", error);
+      _uiEvents.trigger("stage:error", error);
 
       console.error(error);
     });

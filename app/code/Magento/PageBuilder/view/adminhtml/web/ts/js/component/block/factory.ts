@@ -4,8 +4,8 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
+import events from "uiEvents";
 import {ConfigContentBlock} from "../config";
-import EventBus from "../event-bus";
 import Stage from "../stage";
 import EditableArea, {BlockMountEventParams} from "../stage/structural/editable-area";
 import Block from "./block";
@@ -30,25 +30,25 @@ function getBlockComponentPath(config: ConfigContentBlock): string {
  */
 function fireBlockReadyEvent(block: Block, childrenLength: number) {
     const fire = () => {
-        EventBus.trigger("block:ready", {id: block.id, block});
-        EventBus.trigger(block.config.name + ":block:ready", {id: block.id, block});
+        events.trigger("block:ready", {id: block.id, block});
+        events.trigger(block.config.name + ":block:ready", {id: block.id, block});
     };
 
     if (childrenLength === 0) {
         fire();
     } else {
         let mountCounter = 0;
-        const eventCallback = (event: Event, params: BlockMountEventParams) => {
-            if (params.block.parent.id === block.id) {
+        const eventCallback = (event: Event, args: BlockMountEventParams) => {
+            if (args.block.parent.id === block.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
                     fire();
-                    EventBus.off("block:mount", eventCallback);
+                    events.off("block:mount:fire:ready");
                 }
             }
         };
-        EventBus.on("block:mount", eventCallback);
+        events.on("block:mount", eventCallback, "block:mount:fire:ready");
     }
 }
 
@@ -85,8 +85,8 @@ export default function createBlock(
             console.error(error);
         });
     }).then((block: Block) => {
-        EventBus.trigger("block:create", {id: block.id, block});
-        EventBus.trigger(config.name + ":block:create", {id: block.id, block});
+        events.trigger("block:create", {id: block.id, block});
+        events.trigger(config.name + ":block:create", {id: block.id, block});
         fireBlockReadyEvent(block, childrenLength);
         return block;
     });

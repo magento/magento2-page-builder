@@ -5,11 +5,11 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import events from "uiEvents";
 import _, {Dictionary} from "underscore";
 import "../../../binding/live-edit";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
-import EventBus from "../../event-bus";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import Block from "../block";
@@ -172,8 +172,8 @@ export default class PreviewBlock {
      * @param {Element} element
      */
     public afterChildrenRender(element: Element): void {
-        EventBus.trigger("block:childrenRendered", {id: this.parent.id, block: this.parent, element});
-        EventBus.trigger(
+        events.trigger("block:childrenRendered", {id: this.parent.id, block: this.parent, element});
+        events.trigger(
             this.parent.config.name + ":block:childrenRendered",
             {
                 block: this.parent,

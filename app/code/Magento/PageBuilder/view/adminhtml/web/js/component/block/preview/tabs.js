@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _tabs, _underscore, _eventBus, _block) {
+define(["jquery", "knockout", "tabs", "uiEvents", "underscore", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _tabs, _uiEvents, _underscore, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
@@ -38,19 +38,19 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         }
       }, 10);
 
-      _eventBus.on("tabs:block:ready", function (event, params) {
+      _uiEvents.on("tabs:block:ready", function (event, params) {
         if (params.id === _this.parent.id && _this.element) {
           _this.buildTabs();
         }
       });
 
-      _eventBus.on("tab-item:block:create", function (event, params) {
+      _uiEvents.on("tab-item:block:create", function (event, params) {
         if (_this.element && params.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
       });
 
-      _eventBus.on("tab-item:block:removed", function (event, params) {
+      _uiEvents.on("tab-item:block:removed", function (event, params) {
         if (_this.element && params.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
