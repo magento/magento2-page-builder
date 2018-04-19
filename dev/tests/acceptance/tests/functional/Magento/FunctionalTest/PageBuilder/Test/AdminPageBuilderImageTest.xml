@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="ImageAddImageIntoPageBuilderStage">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-71618"/>
+            <features value="Pagebuilder: Image"/>
+            <stories value="MAGETWO-71618: [UI component] MediaGalleryImage: from the stage"/>
             <title value="AddImageIntoPageBuilderStage"/>
             <description value="upload and select images to/from Magento Media Gallery from the Bluefoot Stage."/>
             <severity value="CRITICAL"/>
@@ -56,7 +56,7 @@
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
@@ -110,7 +110,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="image"/>
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -119,8 +119,8 @@
     </test>
     <test name="ImageAddImageContentBlockToCMSPage">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83926"/>
+            <features value="Pagebuilder: Image"/>
+            <stories value="MAGETWO-83926: Image"/>
             <title value="Add Image in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add an image into a row."/>
             <severity value="CRITICAL"/>
@@ -143,7 +143,7 @@
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
@@ -219,7 +219,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="image"/>
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -242,8 +242,8 @@
     </test>
     <test name="ImageRemoveImageFromStage">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83926"/>
+            <features value="Pagebuilder: Image"/>
+            <stories value="MAGETWO-83926: Image"/>
             <title value="Remove image content block from stage"/>
             <description value="A user should be able to remove image block from a row."/>
             <severity value="CRITICAL"/>
@@ -263,7 +263,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
@@ -277,8 +277,8 @@
     </test>
     <test name="ImageValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Image"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Image - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Image."/>
             <severity value="CRITICAL"/>
@@ -301,7 +301,7 @@
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
@@ -388,7 +388,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="image"/>
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -404,8 +404,8 @@
     </test>
     <test name="ImageUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-90097"/>
+            <features value="Pagebuilder: Image"/>
+            <stories value="MAGETWO-90097: [Tech Debt] Add Tests to Update Advanced Configuration For Each Content Type 2"/>
             <title value="Image - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Image will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -428,7 +428,7 @@
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
@@ -559,7 +559,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="image"/>
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -578,8 +578,8 @@
     </test>
     <test name="ImageCanAddEmptyImagePreview">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87077"/>
+            <features value="Pagebuilder: Image"/>
+            <stories value="MAGETWO-87077: Empty Image Admin Preview"/>
             <title value="Add empty image preview"/>
             <description value="A user should be able to add an empty image preview to stage"/>
             <severity value="CRITICAL"/>
@@ -602,7 +602,7 @@
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
             <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
@@ -612,7 +612,7 @@
         <seeElement selector="{{ImageOnStage.imagePreview}}" stepKey="seeImagePreview"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="image"/>
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

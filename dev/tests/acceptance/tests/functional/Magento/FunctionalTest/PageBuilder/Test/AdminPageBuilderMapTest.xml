@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="MapDefaultState">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87083"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-87083: Empty Map Admin Preview"/>
             <title value="Map - Default Map State"/>
             <description value="Tests default state of a map content block in the stage and storefront"/>
             <severity value="CRITICAL"/>
@@ -34,7 +34,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -55,7 +55,7 @@
         <actionGroup ref="validateMapButtons" stepKey="validateMapButtons2"/>
         <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPinStage2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Verify Default Map in Storefront -->
         <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
@@ -68,8 +68,8 @@
     </test>
     <test name="MapEditPanelGeneralSectionDefaultState">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87083"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-87083: Empty Map Admin Preview"/>
             <title value="Map - General Section Default State"/>
             <description value="Tests the following for each attribute under General Section: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
@@ -92,7 +92,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -164,8 +164,8 @@
     </test>
     <test name="MapValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Map - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Map."/>
             <severity value="CRITICAL"/>
@@ -188,7 +188,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -272,7 +272,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -288,8 +288,8 @@
     </test>
     <test name="MapUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89915"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-89915: [Tech Debt] Add Tests to Update Advanced Configuration For Each Content Type"/>
             <title value="Map - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Map will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -312,7 +312,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -437,7 +437,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -456,8 +456,8 @@
     </test>
     <test name="MapVerifyOnHoverOptionMenu">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87083"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-87083: Empty Map Admin Preview"/>
             <title value="Map - Verify On Hover Option Menu"/>
             <description value="Test verifies that on hover option menu for Map content block contains all buttons"/>
             <severity value="CRITICAL"/>
@@ -480,7 +480,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -492,8 +492,8 @@
     </test>
     <test name="MapAddPinToMap">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87083"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-87083: Empty Map Admin Preview"/>
             <title value="Map - Add Pin To Map"/>
             <description value="A user should be able to add a pin to a map and see the pin on Edit Panel, Stage, and Storefront."/>
             <severity value="CRITICAL"/>
@@ -516,7 +516,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -545,7 +545,7 @@
         <grabValueFrom selector="{{MapOnConfigurationPanel.position}}" stepKey="mapPositionEditPanel2"/>
         <assertRegExp expected="{{PageBuilderMapPositionDefaultProperty.position}}" actual="mapPositionEditPanel" actualType="variable" message="actual=$mapPositionEditPanel" stepKey="assertPinPosition2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Storefront: Verify Pin Position -->
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPin3">
@@ -554,8 +554,8 @@
     </test>
     <test name="MapCannotAddPinToMapOnStageOrStoreFront">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87083"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-87083: Empty Map Admin Preview"/>
             <title value="Map - Cannot Add Pin To Map In Stage Or Store Front"/>
             <description value="A user should not be able to add a pin to a map from the Stage nor the store front."/>
             <severity value="CRITICAL"/>
@@ -578,7 +578,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -600,7 +600,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
         <!-- Check Storefront -->
@@ -610,8 +610,8 @@
     </test>
     <test name="MapMoveMapPinByClick">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87083"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-87083: Empty Map Admin Preview"/>
             <title value="Map - Move Map Pin By Clicking On Map"/>
             <description value="A user should be able to move a map pin by clicking on the map on the Edit Panel"/>
             <severity value="CRITICAL"/>
@@ -634,7 +634,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -655,7 +655,7 @@
         <!-- Storefront: Get Initial Pin Location -->
         <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStoreFront"/>
         <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="grabPinLocationStoreFront"/>
@@ -696,7 +696,7 @@
         <!-- Storefront: Verify Pin Location Moved On Storefront -->
         <switchToNextTab stepKey="switchToNextTab2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStoreFront2"/>
         <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="grabPinLocationStoreFront2"/>
@@ -705,8 +705,8 @@
     </test>
     <test name="MapAddAllAttributes">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87083"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-87083: Empty Map Admin Preview"/>
             <title value="Map - Add Map With All Attributes"/>
             <description value="A user should be able to add a map with all attribute fields filled."/>
             <severity value="CRITICAL"/>
@@ -729,7 +729,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -839,7 +839,7 @@
         <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsStage"/>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront After Save -->
         <comment userInput="Validate Storefront After Save" stepKey="commentValidateStorefront"/>
@@ -869,8 +869,8 @@
     </test>
     <test name="MapDuplicate">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87083"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-87083: Empty Map Admin Preview"/>
             <title value="Map - Duplicate Map"/>
             <description value="A user should be able to duplicate a map content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
@@ -893,7 +893,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -982,7 +982,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Verify Storefront -->
         <actionGroup ref="validateMap" stepKey="validateDuplicateOnStoreFront">
@@ -1009,8 +1009,8 @@
     </test>
     <test name="MapDelete">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87083"/>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-87083: Empty Map Admin Preview"/>
             <title value="Map - Delete Map"/>
             <description value="A user should be able to delete a map content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
@@ -1033,7 +1033,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupInteractive"/>
+            <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
@@ -1049,7 +1049,7 @@
         <!-- Verify Map Not In Stage -->
         <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderMapContentBlock.role, '1')}}" stepKey="dontSeeContentBlockInStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="map"/>
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Verify Map Not In Storefront -->
         <dontSeeElementInDOM selector="{{MapOnStorefront.base('1')}}" stepKey="dontSeeContentBlockInStorefront"/>
