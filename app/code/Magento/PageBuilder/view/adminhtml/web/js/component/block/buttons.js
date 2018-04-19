@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block"], function (_factory, _config, _eventBus, _block) {
+define(["uiEvents", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/block"], function (_uiEvents, _factory, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Buttons =
@@ -18,8 +18,8 @@ define(["Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/j
 
       _Block.prototype.bindEvents.call(this);
 
-      _eventBus.on("buttons:block:ready", function (event, params) {
-        if (params.id === _this.id && _this.children().length === 0) {
+      _uiEvents.on("buttons:block:ready", function (event, args) {
+        if (args.id === _this.id && _this.children().length === 0) {
           _this.addButton();
         }
       });

@@ -6,10 +6,10 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import mageUtils from "mageUtils";
+import events from "uiEvents";
 import _ from "underscore";
 import { moveArrayItemIntoArray, removeArrayItem } from "../../../utils/array";
 import Block from "../../block/block";
-import EventBus from "../../event-bus";
 import Stage from "../../stage";
 import {SortParams} from "../event-handling-delegate";
 import Structural from "./abstract";
@@ -91,11 +91,11 @@ export default class EditableArea implements EditableAreaInterface {
         }
 
         // As a new block is being created, we need to fire that event as well
-        EventBus.trigger("block:create", {id: duplicate.id, block: duplicate});
-        EventBus.trigger(child.config.name + ":block:create", {id: duplicate.id, block: duplicate});
+        events.trigger("block:create", {id: duplicate.id, block: duplicate});
+        events.trigger(child.config.name + ":block:create", {id: duplicate.id, block: duplicate});
 
-        EventBus.trigger("block:duplicate", {original: child, duplicate, index});
-        EventBus.trigger(child.config.name + ":block:duplicate", {original: child, duplicate, index});
+        events.trigger("block:duplicate", {original: child, duplicate, index});
+        events.trigger(child.config.name + ":block:duplicate", {original: child, duplicate, index});
 
         if (autoAppend) {
             this.addChild(duplicate, index);
@@ -131,8 +131,8 @@ export default class EditableArea implements EditableAreaInterface {
 
         // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
         _.defer(() => {
-            EventBus.trigger("block:mount", {id: child.id, block: child});
-            EventBus.trigger(child.config.name + ":block:mount", {id: child.id, block: child});
+            events.trigger("block:mount", {id: child.id, block: child});
+            events.trigger(child.config.name + ":block:mount", {id: child.id, block: child});
         });
     }
 
@@ -169,14 +169,14 @@ export default class EditableArea implements EditableAreaInterface {
      */
     public setChildren() {
         // Attach a subscription to the children of every editable area to fire the stageUpdated event
-        this.children.subscribe(() => EventBus.trigger("stage:updated", {stage: this.stage}));
+        this.children.subscribe(() => events.trigger("stage:updated", {stage: this.stage}));
     }
 
     /**
      * Bind events for the current instance
      */
     protected bindEvents() {
-        EventBus.on("block:sortStart", this.onSortStart.bind(this));
+        events.on("block:sortStart", this.onSortStart.bind(this));
     }
 }
 

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/block"], function (_translate, _underscore, _factory, _config, _eventBus, _option, _block) {
+define(["mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/block"], function (_translate, _uiEvents, _underscore, _factory, _config, _option, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
@@ -42,11 +42,11 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
                 slide.edit.open();
               }, 500);
 
-              _eventBus.off("slide:block:mount", mountFn);
+              _uiEvents.off("slide:block:mount:tab");
             }
           };
 
-          _eventBus.on("slide:block:mount", mountFn);
+          _uiEvents.on("slide:block:mount", mountFn, "slide:block:mount:tab");
 
           _this.addChild(slide, _this.children().length);
         });
@@ -63,17 +63,16 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       _Block.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
-      _eventBus.on("slider:block:ready", function (event, params) {
-        if (params.id === _this2.id && _this2.children().length === 0) {
+      argsevents.on("slider:block:ready", function (event, args) {
+        if (args.id === _this2.id && _this2.children().length === 0) {
           _this2.addSlide();
         }
       }); // Block being removed from container
 
-
-      _eventBus.on("slide:block:removed", function (event, params) {
-        if (params.parent.id === _this2.id) {
+      _uiEvents.on("slide:block:removed", function (event, args) {
+        if (args.parent.id === _this2.id) {
           // Mark the previous slide as active
-          var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
+          var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
           _this2.preview.setActiveSlide(newIndex);
 
@@ -85,15 +84,15 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/component/block/
       var duplicatedSlide;
       var duplicatedSlideIndex;
 
-      _eventBus.on("slide:block:duplicate", function (event, params) {
-        if (params.duplicate.parent.id === _this2.id) {
-          duplicatedSlide = params.duplicate;
-          duplicatedSlideIndex = params.index;
+      _uiEvents.on("slide:block:duplicate", function (event, args) {
+        if (args.duplicate.parent.id === _this2.id) {
+          duplicatedSlide = args.duplicate;
+          duplicatedSlideIndex = args.index;
         }
       });
 
-      _eventBus.on("slide:block:mount", function (event, params) {
-        if (duplicatedSlide && params.id === duplicatedSlide.id) {
+      _uiEvents.on("slide:block:mount", function (event, args) {
+        if (duplicatedSlide && args.id === duplicatedSlide.id) {
           // Mark the new duplicate slide as active
           _this2.preview.navigateToSlide(duplicatedSlideIndex); // Force the focus of the slide, as the previous slide will have focus
 

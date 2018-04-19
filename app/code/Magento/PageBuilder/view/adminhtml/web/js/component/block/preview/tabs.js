@@ -38,20 +38,20 @@ define(["jquery", "knockout", "tabs", "uiEvents", "underscore", "Magento_PageBui
         }
       }, 10);
 
-      _uiEvents.on("tabs:block:ready", function (event, params) {
-        if (params.id === _this.parent.id && _this.element) {
+      _uiEvents.on("tabs:block:ready", function (event, args) {
+        if (args.id === _this.parent.id && _this.element) {
           _this.buildTabs();
         }
       });
 
-      _uiEvents.on("tab-item:block:create", function (event, params) {
-        if (_this.element && params.block.parent.id === _this.parent.id) {
+      _uiEvents.on("tab-item:block:create", function (event, args) {
+        if (_this.element && args.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
       });
 
-      _uiEvents.on("tab-item:block:removed", function (event, params) {
-        if (_this.element && params.block.parent.id === _this.parent.id) {
+      _uiEvents.on("tab-item:block:removed", function (event, args) {
+        if (_this.element && args.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
       }); // Set the stage to interacting when a tab is focused

@@ -7,9 +7,9 @@ import ko from "knockout";
 import "ko-draggable";
 import "ko-sortable";
 import $t from "mage/translate";
+import events from "uiEvents";
 import _ from "underscore";
 import Config, {ConfigContentBlock} from "../config";
-import EventBus from "../event-bus";
 import PageBuilder from "../page-builder";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
@@ -42,7 +42,7 @@ export default class Panel implements PanelInterface {
      * Init listeners
      */
     public initListeners(): void {
-        EventBus.on("stage:ready:" + this.id, () => {
+        events.on("stage:ready:" + this.id, () => {
             this.populateContentBlocks();
             this.isVisible(true);
         });
@@ -133,7 +133,7 @@ export default class Panel implements PanelInterface {
      * Traverse up to the WYSIWYG component and set as full screen
      */
     public fullScreen(): void {
-        EventBus.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`, {});
+        events.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`);
     }
 
     /**

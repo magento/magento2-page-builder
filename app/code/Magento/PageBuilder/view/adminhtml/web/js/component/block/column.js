@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/block/column-group", "Magento_PageBuilder/js/component/block/factory"], function (_jquery, _knockout, _translate, _config, _eventBus, _option, _block, _columnGroup, _factory) {
+define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/block/column-group", "Magento_PageBuilder/js/component/block/factory"], function (_jquery, _knockout, _translate, _uiEvents, _config, _option, _block, _columnGroup, _factory) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Column =
@@ -28,8 +28,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/componen
       _Block.prototype.bindEvents.call(this);
 
       if (_config.getContentType("column-group")) {
-        _eventBus.on("column:block:mount", function (event, params) {
-          if (params.id === _this2.id) {
+        _uiEvents.on("column:block:mount", function (event, args) {
+          if (args.id === _this2.id) {
             _this2.createColumnGroup();
           }
         });
@@ -45,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/componen
     _proto.initColumn = function initColumn(element) {
       this.element = (0, _jquery)(element);
 
-      _eventBus.trigger("column:initElement", {
+      _uiEvents.trigger("column:initElement", {
         column: this,
         element: (0, _jquery)(element),
         parent: this.parent
@@ -75,7 +75,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/componen
 
 
     _proto.bindResizeHandle = function bindResizeHandle(handle) {
-      _eventBus.trigger("column:bindResizeHandle", {
+      _uiEvents.trigger("column:bindResizeHandle", {
         column: this,
         handle: (0, _jquery)(handle),
         parent: this.parent
@@ -127,12 +127,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/componen
       }
 
       blocks.forEach(function (block) {
-        _eventBus.trigger("block:mount", {
+        _uiEvents.trigger("block:mount", {
           id: block.id,
           block: block
         });
 
-        _eventBus.trigger(block.config.name + ":block:mount", {
+        _uiEvents.trigger(block.config.name + ":block:mount", {
           id: block.id,
           block: block
         });

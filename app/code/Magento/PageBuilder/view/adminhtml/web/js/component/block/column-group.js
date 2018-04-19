@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/block/column-group/factory", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_translate, _alert, _underscore, _array, _eventBus, _block, _factory, _resizing, _registry, _resizing2) {
+define(["mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/block/block", "Magento_PageBuilder/js/component/block/column-group/factory", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_translate, _alert, _uiEvents, _underscore, _array, _block, _factory, _resizing, _registry, _resizing2) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -18,24 +18,24 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
 
       _this = _Block.call(this, parent, stage, config, formData) || this;
 
-      _eventBus.on("block:removed", function (event, params) {
-        if (params.parent.id === _this.id) {
-          _this.spreadWidth(event, params);
+      _uiEvents.on("block:removed", function (event, args) {
+        if (args.parent.id === _this.id) {
+          _this.spreadWidth(event, args);
         }
       }); // Listen for resizing events from child columns
 
 
-      _eventBus.on("column:bindResizeHandle", function (event, params) {
+      _uiEvents.on("column:bindResizeHandle", function (event, args) {
         // Does the events parent match the previews parent? (e.g. column group)
         if (params.parent.id === _this.id) {
-          _this.preview.registerResizeHandle(params.column, params.handle);
+          _this.preview.registerResizeHandle(args.column, args.handle);
         }
       });
 
-      _eventBus.on("column:initElement", function (event, params) {
+      _uiEvents.on("column:initElement", function (event, args) {
         // Does the events parent match the previews parent? (e.g. column group)
-        if (params.parent.id === _this.id) {
-          _this.preview.bindDraggable(params.column);
+        if (args.parent.id === _this.id) {
+          _this.preview.bindDraggable(args.column);
         }
       });
 
@@ -153,7 +153,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
       (0, _resizing.updateColumnWidth)(column, (0, _resizing2.getSmallestColumnWidth)());
       column.parent.removeChild(column);
 
-      _eventBus.trigger("block:instanceDropped", {
+      _uiEvents.trigger("block:instanceDropped", {
         blockInstance: column,
         index: movePosition.insertIndex,
         parent: this

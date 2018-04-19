@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/stage/previews"], function (_knockout, _koDraggable, _koSortable, _translate, _underscore, _config, _eventBus, _group, _block, _previews) {
+define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/panel/group", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/stage/previews"], function (_knockout, _koDraggable, _koSortable, _translate, _uiEvents, _underscore, _config, _group, _block, _previews) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -36,7 +36,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _eventBus.on("stage:ready:" + this.id, function () {
+      _uiEvents.on("stage:ready:" + this.id, function () {
         _this.populateContentBlocks();
 
         _this.isVisible(true);
@@ -124,7 +124,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
 
 
     _proto.fullScreen = function fullScreen() {
-      _eventBus.trigger("pagebuilder:toggleFullScreen:" + this.parent.id, {});
+      _uiEvents.trigger("pagebuilder:toggleFullScreen:" + this.parent.id);
     };
     /**
      * Collapse the panel into the side of the UI

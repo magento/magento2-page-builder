@@ -6,6 +6,7 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
+import events from "uiEvents";
 import _ from "underscore";
 import appearanceConfig from "../../../component/block/appearance-config";
 import DataConverterPool from "../../../component/block/data-converter-pool";
@@ -13,7 +14,6 @@ import ElementConverterPool from "../../../component/block/element-converter-poo
 import {fromSnakeToCamelCase} from "../../../utils/string";
 import {ConfigContentBlock} from "../../config";
 import {DataObject} from "../../data-store";
-import EventBus from "../../event-bus";
 import AttributeFilter from "../../format/attribute-filter";
 import AttributeMapper from "../../format/attribute-mapper";
 import StyleAttributeFilter from "../../format/style-attribute-filter";
@@ -168,8 +168,8 @@ export default class Structural extends EditableArea implements StructuralInterf
                 index: this.parent.children().indexOf(this),
                 parent: this.parent,
             };
-            EventBus.trigger("block:removed", params);
-            EventBus.trigger(this.config.name + ":block:removed", params);
+            events.trigger("block:removed", params);
+            events.trigger(this.config.name + ":block:removed", params);
         };
 
         if (this.isConfigured()) {
@@ -534,7 +534,7 @@ export default class Structural extends EditableArea implements StructuralInterf
             }
 
         }
-        EventBus.trigger("previewObservables:updated", {preview: this});
+        events.trigger("previewObservables:updated", {preview: this});
     }
 
     /**

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage", "Magento_PageBuilder/js/component/stage/panel"], function (_knockout, _mageUtils, _underscore, _config, _eventBus, _stage, _panel) {
+define(["knockout", "mageUtils", "uiEvents", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage", "Magento_PageBuilder/js/component/stage/panel"], function (_knockout, _mageUtils, _uiEvents, _underscore, _config, _stage, _panel) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -37,7 +37,7 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/component
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _eventBus.on("pagebuilder:toggleFullScreen:" + this.id, function () {
+      _uiEvents.on("pagebuilder:toggleFullScreen:" + this.id, function () {
         return _this.toggleFullScreen();
       });
 
@@ -73,7 +73,7 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/component
         });
       }
 
-      _eventBus.trigger("pagebuilder:fullScreen:" + this.id, {
+      _uiEvents.trigger("pagebuilder:fullScreen:" + this.id, {
         fullScreen: this.isFullScreen()
       });
     };

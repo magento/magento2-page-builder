@@ -6,10 +6,10 @@
 import $ from "jquery";
 import ko from "knockout";
 import "Magento_PageBuilder/js/resource/slick/slick.min";
+import events from "uiEvents";
 import _ from "underscore";
 import "../../../binding/focus";
 import {ConfigContentBlock} from "../../config";
-import EventBus from "../../event-bus";
 import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 import Block from "../block";
 import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
@@ -85,8 +85,8 @@ export default class Slider extends PreviewBlock {
 
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
-        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
-            if (params.id === this.parent.id) {
+        events.on("slider:block:ready", (event: Event, args: BlockReadyEventParams) => {
+            if (args.id === this.parent.id) {
                 sliderReady = true;
             }
         });
@@ -95,15 +95,15 @@ export default class Slider extends PreviewBlock {
         this.parent.stage.store.subscribe(this.buildSlick);
 
         // Set the active slide to the new position of the sorted slide
-        EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
-            if (params.instance.id === this.parent.id) {
-                $(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
-                this.setActiveSlide(params.newPosition);
+        events.on("previewSortable:sortupdate", (event: Event, args: PreviewSortableSortUpdateEventParams) => {
+            if (args.instance.id === this.parent.id) {
+                $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
+                this.setActiveSlide(args.newPosition);
             }
         });
         // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
-        EventBus.on("slide:block:removed", (event: Event, params: BlockRemovedParams) => {
-            if (params.block.parent.id === this.parent.id) {
+        events.on("slide:block:removed", (event: Event, args: BlockRemovedParams) => {
+            if (args.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
                 const data = this.parent.children().slice(0);
                 this.parent.children([]);
@@ -111,8 +111,8 @@ export default class Slider extends PreviewBlock {
             }
         });
         // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
-        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParams) => {
-            if (this.element && sliderReady && params.block.parent.id === this.parent.id) {
+        events.on("slide:block:create", (event: Event, args: BlockCreateEventParams) => {
+            if (this.element && sliderReady && args.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
         });

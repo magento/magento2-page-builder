@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/block/preview/block", "Magento_PageBuilder/js/component/block/preview/column-group/dragdrop", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _underscore, _config, _eventBus, _block, _block2, _dragdrop, _registry, _resizing) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/block/preview/block", "Magento_PageBuilder/js/component/block/preview/column-group/dragdrop", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _block, _block2, _dragdrop, _registry, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -118,7 +118,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
         _this2.resizeLastPosition = null;
         _this2.resizeMouseDown = true;
 
-        _eventBus.trigger("interaction:start", {
+        _uiEvents.trigger("interaction:start", {
           stage: _this2.parent.stage
         });
       });
@@ -155,12 +155,12 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
           (0, _registry.setDragColumn)(columnInstance);
           _this3.dropPositions = (0, _dragdrop.calculateDropPositions)(_this3.parent);
 
-          _eventBus.trigger("column:drag:start", {
+          _uiEvents.trigger("column:drag:start", {
             column: columnInstance,
             stage: _this3.parent.stage
           });
 
-          _eventBus.trigger("interaction:start", {
+          _uiEvents.trigger("interaction:start", {
             stage: _this3.parent.stage
           });
         },
@@ -183,12 +183,12 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
 
           _this3.movePlaceholder.removeClass("active");
 
-          _eventBus.trigger("column:drag:stop", {
+          _uiEvents.trigger("column:drag:stop", {
             column: draggedColumn,
             stage: _this3.parent.stage
           });
 
-          _eventBus.trigger("interaction:stop", {
+          _uiEvents.trigger("interaction:stop", {
             stage: _this3.parent.stage
           });
         }
@@ -227,7 +227,7 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/co
 
     _proto.endAllInteractions = function endAllInteractions() {
       if (this.resizing() === true) {
-        _eventBus.trigger("interaction:stop", {
+        _uiEvents.trigger("interaction:stop", {
           stage: this.parent.stage
         });
       }

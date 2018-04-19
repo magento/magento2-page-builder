@@ -110,9 +110,9 @@ export function handleEvents(stage: Stage) {
     });
 
     // Block being removed from container
-    events.on("block:removed", (event, params: BlockRemovedParams) => {
-        if (params.parent.stage.id === stage.id) {
-            onBlockRemoved(event, params);
+    events.on("block:removed", (event, args: BlockRemovedParams) => {
+        if (args.parent.stage.id === stage.id) {
+            onBlockRemoved(event, args);
         }
     });
 

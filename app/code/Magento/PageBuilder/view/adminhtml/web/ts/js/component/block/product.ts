@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
+import events from "uiEvents";
 import Config from "../config";
-import EventBus from "../event-bus";
 import Block from "./block";
 
 export default class Product extends Block {
@@ -15,8 +15,8 @@ export default class Product extends Block {
     protected bindEvents() {
         super.bindEvents();
 
-        EventBus.on("previewObservables:updated", (event, params) => {
-            if (params.preview.id === this.id) {
+        events.on("previewObservables:updated", (event, args) => {
+            if (args.preview.id === this.id) {
                 const attributes = this.data.main.attributes();
                 if (attributes["data-sku"] === "") {
                     return;

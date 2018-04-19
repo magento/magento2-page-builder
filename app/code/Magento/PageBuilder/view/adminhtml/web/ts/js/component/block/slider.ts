@@ -4,10 +4,10 @@
  */
 
 import $t from "mage/translate";
+import events from "uiEvents";
 import _ from "underscore";
 import createBlock, {BlockReadyEventParams} from "../block/factory";
 import Config from "../config";
-import EventBus from "../event-bus";
 import {BlockRemovedParams} from "../stage/event-handling-delegate";
 import {BlockDuplicateEventParams, BlockMountEventParams} from "../stage/structural/editable-area";
 import {Option} from "../stage/structural/options/option";
@@ -55,10 +55,10 @@ export default class Slider extends Block {
                         _.delay(() => {
                             slide.edit.open();
                         }, 500);
-                        EventBus.off("slide:block:mount", mountFn);
+                        events.off("slide:block:mount:tab");
                     }
                 };
-                EventBus.on("slide:block:mount", mountFn);
+                events.on("slide:block:mount", mountFn, "slide:block:mount:tab");
                 this.addChild(slide, this.children().length);
             });
         });
@@ -70,17 +70,17 @@ export default class Slider extends Block {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
-            if (params.id === this.id && this.children().length === 0) {
+        argsevents.on("slider:block:ready", (event: Event, args: BlockReadyEventParams) => {
+            if (args.id === this.id && this.children().length === 0) {
                 this.addSlide();
             }
         });
 
         // Block being removed from container
-        EventBus.on("slide:block:removed", (event, params: BlockRemovedParams) => {
-            if (params.parent.id === this.id) {
+        events.on("slide:block:removed", (event, args: BlockRemovedParams) => {
+            if (args.parent.id === this.id) {
                 // Mark the previous slide as active
-                const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
+                const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
                 (this.preview as SliderPreview).setActiveSlide(newIndex);
                 (this.preview as SliderPreview).setFocusedSlide(newIndex, true);
             }
@@ -89,14 +89,14 @@ export default class Slider extends Block {
         // Capture when a block is duplicated within the container
         let duplicatedSlide: Slide;
         let duplicatedSlideIndex: number;
-        EventBus.on("slide:block:duplicate", (event, params: BlockDuplicateEventParams) => {
-            if (params.duplicate.parent.id === this.id) {
-                duplicatedSlide = (params.duplicate as Slide);
-                duplicatedSlideIndex = params.index;
+        events.on("slide:block:duplicate", (event, args: BlockDuplicateEventParams) => {
+            if (args.duplicate.parent.id === this.id) {
+                duplicatedSlide = (args.duplicate as Slide);
+                duplicatedSlideIndex = args.index;
             }
         });
-        EventBus.on("slide:block:mount", (event: Event, params: BlockMountEventParams) => {
-            if (duplicatedSlide && params.id === duplicatedSlide.id) {
+        events.on("slide:block:mount", (event: Event, args: BlockMountEventParams) => {
+            if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 // Mark the new duplicate slide as active
                 (this.preview as SliderPreview).navigateToSlide(duplicatedSlideIndex);
                 // Force the focus of the slide, as the previous slide will have focus

@@ -6,8 +6,8 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "uiEvents";
 import Config from "../config";
-import EventBus from "../event-bus";
 import {BlockMountEventParams} from "../stage/structural/editable-area";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
@@ -25,8 +25,8 @@ export default class Column extends Block {
         super.bindEvents();
 
         if (Config.getContentType("column-group")) {
-            EventBus.on("column:block:mount", (event: Event, params: BlockMountEventParams) => {
-                if (params.id === this.id) {
+            events.on("column:block:mount", (event: Event, args: BlockMountEventParams) => {
+                if (args.id === this.id) {
                     this.createColumnGroup();
                 }
             });
@@ -40,7 +40,7 @@ export default class Column extends Block {
      */
     public initColumn(element: Element) {
         this.element = $(element);
-        EventBus.trigger("column:initElement", {
+        events.trigger("column:initElement", {
             column: this,
             element: $(element),
             parent: this.parent,
@@ -77,7 +77,7 @@ export default class Column extends Block {
      * @param handle
      */
     public bindResizeHandle(handle: Element) {
-        EventBus.trigger("column:bindResizeHandle", {
+        events.trigger("column:bindResizeHandle", {
             column: this,
             handle: $(handle),
             parent: this.parent,
@@ -123,8 +123,8 @@ export default class Column extends Block {
      */
     private fireMountEvent(...blocks: Block[]) {
         blocks.forEach((block) => {
-            EventBus.trigger("block:mount", {id: block.id, block});
-            EventBus.trigger(block.config.name + ":block:mount", {id: block.id, block});
+            events.trigger("block:mount", {id: block.id, block});
+            events.trigger(block.config.name + ":block:mount", {id: block.id, block});
         });
     }
 }

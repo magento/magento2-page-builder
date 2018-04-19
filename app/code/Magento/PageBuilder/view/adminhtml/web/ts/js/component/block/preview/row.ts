@@ -6,9 +6,9 @@
 import $ from "jquery";
 import ko from "knockout";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
+import events from "uiEvents";
 import _ from "underscore";
 import {ConfigContentBlock} from "../../config";
-import EventBus from "../../event-bus";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import {BlockMountEventParams} from "../../stage/structural/editable-area";
 import Block from "../block";
@@ -57,13 +57,13 @@ export default class Row extends PreviewBlock {
         super(parent, config);
 
         this.parent.stage.store.subscribe(this.buildJarallax);
-        EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParams) => {
-            if (params.id === this.parent.id) {
+        events.on("row:block:ready", (event: Event, args: BlockReadyEventParams) => {
+            if (args.id === this.parent.id) {
                 this.buildJarallax();
             }
         });
-        EventBus.on("block:mount", (event: Event, params: BlockMountEventParams) => {
-            if (params.block.parent.id === this.parent.id) {
+        events.on("block:mount", (event: Event, args: BlockMountEventParams) => {
+            if (args.block.parent.id === this.parent.id) {
                 this.buildJarallax();
             }
         });

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/block"], function (_config, _eventBus, _block) {
+define(["uiEvents", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/block"], function (_uiEvents, _config, _block) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ContentBlock =
@@ -27,8 +27,8 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/compo
 
       _Block.prototype.bindEvents.call(this);
 
-      _eventBus.on("previewObservables:updated", function (event, params) {
-        if (params.preview.id === _this2.id) {
+      _uiEvents.on("previewObservables:updated", function (event, args) {
+        if (args.preview.id === _this2.id) {
           var attributes = _this2.data.main.attributes();
 
           if (attributes["data-identifier"] === "") {

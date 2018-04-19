@@ -44,18 +44,18 @@ export default class Tabs extends PreviewBlock {
     constructor(parent: Block, config: ConfigContentBlock) {
         super(parent, config);
 
-        events.on("tabs:block:ready", (event: Event, params: BlockReadyEventParams) => {
-            if (params.id === this.parent.id && this.element) {
+        events.on("tabs:block:ready", (event: Event, args: BlockReadyEventParams) => {
+            if (args.id === this.parent.id && this.element) {
                 this.buildTabs();
             }
         });
-        events.on("tab-item:block:create", (event: Event, params: BlockCreateEventParams) => {
-            if (this.element && params.block.parent.id === this.parent.id) {
+        events.on("tab-item:block:create", (event: Event, args: BlockCreateEventParams) => {
+            if (this.element && args.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }
         });
-        events.on("tab-item:block:removed", (event: Event, params: BlockCreateEventParams) => {
-            if (this.element && params.block.parent.id === this.parent.id) {
+        events.on("tab-item:block:removed", (event: Event, args: BlockCreateEventParams) => {
+            if (this.element && args.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }
         });

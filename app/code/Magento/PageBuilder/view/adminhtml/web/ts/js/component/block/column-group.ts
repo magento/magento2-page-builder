@@ -5,10 +5,10 @@
 
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
+import events from "uiEvents";
 import _ from "underscore";
 import {moveArrayItem} from "../../utils/array";
 import {ConfigContentBlock} from "../config";
-import EventBus from "../event-bus";
 import Stage from "../stage";
 import Structural from "../stage/structural/abstract";
 import EditableArea from "../stage/structural/editable-area";
@@ -35,23 +35,23 @@ export default class ColumnGroup extends Block {
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
         super(parent, stage, config, formData);
 
-        EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
-            if (params.parent.id === this.id) {
-                this.spreadWidth(event, params);
+        events.on("block:removed", (event, args: BlockRemovedParams) => {
+            if (args.parent.id === this.id) {
+                this.spreadWidth(event, args);
             }
         });
 
         // Listen for resizing events from child columns
-        EventBus.on("column:bindResizeHandle", (event, params) => {
+        events.on("column:bindResizeHandle", (event, args) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (params.parent.id === this.id) {
-                (this.preview as ColumnGroupPreview).registerResizeHandle(params.column, params.handle);
+                (this.preview as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
             }
         });
-        EventBus.on("column:initElement", (event, params) => {
+        events.on("column:initElement", (event, args) => {
             // Does the events parent match the previews parent? (e.g. column group)
-            if (params.parent.id === this.id) {
-                (this.preview as ColumnGroupPreview).bindDraggable(params.column);
+            if (args.parent.id === this.id) {
+                (this.preview as ColumnGroupPreview).bindDraggable(args.column);
             }
         });
 
@@ -175,7 +175,7 @@ export default class ColumnGroup extends Block {
         updateColumnWidth(column, getSmallestColumnWidth());
 
         column.parent.removeChild(column);
-        EventBus.trigger("block:instanceDropped", {
+        events.trigger("block:instanceDropped", {
             blockInstance: column,
             index: movePosition.insertIndex,
             parent: this,

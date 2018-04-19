@@ -4,9 +4,9 @@
  */
 import $ from "jquery";
 import ko from "knockout";
+import events from "uiEvents";
 import _ from "underscore";
 import Config, {ConfigContentBlock} from "../../config";
-import EventBus from "../../event-bus";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
 import Block from "../block";
 import Column from "../column";
@@ -126,7 +126,7 @@ export default class ColumnGroup extends PreviewBlock {
             this.resizeLastPosition = null;
             this.resizeMouseDown = true;
 
-            EventBus.trigger("interaction:start", {stage: this.parent.stage});
+            events.trigger("interaction:start", {stage: this.parent.stage});
         });
     }
 
@@ -157,11 +157,11 @@ export default class ColumnGroup extends PreviewBlock {
                 setDragColumn(columnInstance);
                 this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
 
-                EventBus.trigger("column:drag:start", {
+                events.trigger("column:drag:start", {
                     column: columnInstance,
                     stage: this.parent.stage,
                 });
-                EventBus.trigger("interaction:start", {stage: this.parent.stage});
+                events.trigger("interaction:start", {stage: this.parent.stage});
             },
             stop: () => {
                 const draggedColumn: Column = getDragColumn();
@@ -179,11 +179,11 @@ export default class ColumnGroup extends PreviewBlock {
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
 
-                EventBus.trigger("column:drag:stop", {
+                events.trigger("column:drag:stop", {
                     column: draggedColumn,
                     stage: this.parent.stage,
                 });
-                EventBus.trigger("interaction:stop", {stage: this.parent.stage});
+                events.trigger("interaction:stop", {stage: this.parent.stage});
             },
         });
     }
@@ -213,7 +213,7 @@ export default class ColumnGroup extends PreviewBlock {
      */
     private endAllInteractions() {
         if (this.resizing() === true) {
-            EventBus.trigger("interaction:stop", {stage: this.parent.stage});
+            events.trigger("interaction:stop", {stage: this.parent.stage});
         }
 
         this.resizing(false);

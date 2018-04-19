@@ -118,9 +118,9 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/utils/array", "Magento_P
     }); // Block being removed from container
 
 
-    _uiEvents.on("block:removed", function (event, params) {
-      if (params.parent.stage.id === stage.id) {
-        onBlockRemoved(event, params);
+    _uiEvents.on("block:removed", function (event, args) {
+      if (args.parent.stage.id === stage.id) {
+        onBlockRemoved(event, args);
       }
     }); // Block sorted within the same structural element
 

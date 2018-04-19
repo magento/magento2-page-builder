@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus"], function (_knockout, _translate, _mageUtils, _underscore, _array, _eventBus) {
+define(["knockout", "mage/translate", "mageUtils", "uiEvents", "underscore", "Magento_PageBuilder/js/utils/array"], function (_knockout, _translate, _mageUtils, _uiEvents, _underscore, _array) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -74,23 +74,23 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBu
       } // As a new block is being created, we need to fire that event as well
 
 
-      _eventBus.trigger("block:create", {
+      _uiEvents.trigger("block:create", {
         id: duplicate.id,
         block: duplicate
       });
 
-      _eventBus.trigger(child.config.name + ":block:create", {
+      _uiEvents.trigger(child.config.name + ":block:create", {
         id: duplicate.id,
         block: duplicate
       });
 
-      _eventBus.trigger("block:duplicate", {
+      _uiEvents.trigger("block:duplicate", {
         original: child,
         duplicate: duplicate,
         index: index
       });
 
-      _eventBus.trigger(child.config.name + ":block:duplicate", {
+      _uiEvents.trigger(child.config.name + ":block:duplicate", {
         original: child,
         duplicate: duplicate,
         index: index
@@ -133,12 +133,12 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBu
 
 
       _underscore.defer(function () {
-        _eventBus.trigger("block:mount", {
+        _uiEvents.trigger("block:mount", {
           id: child.id,
           block: child
         });
 
-        _eventBus.trigger(child.config.name + ":block:mount", {
+        _uiEvents.trigger(child.config.name + ":block:mount", {
           id: child.id,
           block: child
         });
@@ -184,7 +184,7 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBu
 
       // Attach a subscription to the children of every editable area to fire the stageUpdated event
       this.children.subscribe(function () {
-        return _eventBus.trigger("stage:updated", {
+        return _uiEvents.trigger("stage:updated", {
           stage: _this.stage
         });
       });
@@ -195,7 +195,7 @@ define(["knockout", "mage/translate", "mageUtils", "underscore", "Magento_PageBu
 
 
     _proto.bindEvents = function bindEvents() {
-      _eventBus.on("block:sortStart", this.onSortStart.bind(this));
+      _uiEvents.on("block:sortStart", this.onSortStart.bind(this));
     };
 
     _createClass(EditableArea, [{
