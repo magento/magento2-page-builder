@@ -30,6 +30,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       this.edit = void 0;
       this.observableUpdater = void 0;
       this.mouseover = false;
+      this.mouseoverContext = void 0;
       this.parent = parent;
       this.config = config;
       this.edit = new _edit(this.parent, this.parent.store);
@@ -92,6 +93,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       }
 
       this.mouseover = true;
+      this.mouseoverContext = context;
       var currentTarget = event.currentTarget;
       var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 
@@ -116,7 +118,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       this.mouseover = false;
 
       _underscore.delay(function () {
-        if (!_this.mouseover) {
+        if (!_this.mouseover && _this.mouseoverContext === context) {
           var currentTarget = event.currentTarget;
           var optionsMenu = (0, _jquery)(currentTarget).find(".pagebuilder-options-wrapper");
 

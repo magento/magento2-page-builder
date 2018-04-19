@@ -66,19 +66,25 @@ export default class Content {
     public getCss(element: string) {
         const result: object = {};
         let css: string = "";
-        const data = this.parent.store.get(this.parent.id);
+        let data: DataObject = _.extend({}, this.parent.store.get(this.id));
         if (element === undefined) {
             if ("css_classes" in data && data.css_classes !== "") {
-                css = data.css_classes;
+                css = data.css_classes.toString();
             }
         } else {
-            const config = appearanceConfig(this.parent.config.name, data.appearance).data_mapping.elements[element];
-            if (config.css && config.css.var !== undefined && config.css.var in data) {
-                css = data[config.css.var];
+            const appearanceConfiguration = appearanceConfig(
+                this.config.name,
+                data.appearance.toString(),
+            );
+            const config = appearanceConfiguration.data_mapping.elements[element];
+
+            if (config.css && config.css.var !== undefined && config.css.var in data ) {
+                data = this.observableUpdater.convertData(data, appearanceConfiguration.data_mapping.converters);
+                css = data[config.css.var].toString();
             }
         }
         if (css) {
-            css.toString().split(" ").map(
+            css.split(" ").map(
                 (value: any, index: number) => result[value] = true,
             );
         }

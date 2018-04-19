@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 
 use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
@@ -24,6 +27,11 @@ class TabsItem implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * TabsItem constructor.
+     * @param StyleExtractorInterface $styleExtractor
+     * @param EavAttributeLoaderInterface $eavAttributeLoader
+     */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader
@@ -43,10 +51,12 @@ class TabsItem implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $cssClasses = $eavData['css_classes'] ?? '';
-        $cssClasses .= isset($eavData['css_classes']) ? ' data item title' : 'data item title';
 
         $rootElementAttributes = [
-            'class' => $cssClasses
+            'data-role' => 'tab-item',
+            'class' => $cssClasses,
+            'data-tab-name' => $eavData['title'],
+            'id' => 'tab' . $additionalData['parentChildIndex'] . '-' . $additionalData['childIndex']
         ];
 
         if (isset($itemData['formData'])) {
@@ -56,23 +66,11 @@ class TabsItem implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<div data-collapsible="true"';
+        $rootElementHtml = '<div';
         foreach ($rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
-
-        $tabIndex = 'pagebuilder_tab' . ($additionalData['childIndex'] ?? '');
-
-        $rootElementHtml .= '><a class="data switch" tabindex="-1" data-toggle="switch" href="#'
-            . $tabIndex
-            . '">'
-            . $eavData['title']
-            . '</a></div>'
-            . '<div class="data item content" data-content="true" id="'
-            . $tabIndex
-            . '">'
-            . $eavData['textarea']
-            . '</div>';
+        $rootElementHtml .= '><div data-role="text">' . $eavData['textarea'] . '</div></div>';
 
         return $rootElementHtml;
     }

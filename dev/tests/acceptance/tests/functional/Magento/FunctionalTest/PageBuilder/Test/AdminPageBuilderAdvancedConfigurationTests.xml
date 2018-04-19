@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AdvancedConfigurationEditPanelVisual">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Edit Panel Visual"/>
             <description value="Tests the following for each attribute under Advanced Configuration: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
@@ -156,8 +156,8 @@
     </test>
     <test name="AdvancedConfigurationFunctionalAlignment">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Alignment"/>
             <description value="Tests that the Alignment attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -328,7 +328,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="text"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <!-- Storefront: Check Alignment: Default -->
         <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
@@ -360,8 +360,8 @@
     </test>
     <test name="AdvancedConfigurationFunctionalBorder">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Border"/>
             <description value="Tests that the Border attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -755,7 +755,7 @@
             <argument name="index" value="10"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="text"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <!-- Storefront: Check Border: None -->
         <comment userInput="Storefront: Check Border: None" stepKey="commentStorefrontCheckNone2"/>
@@ -830,8 +830,8 @@
     </test>
     <test name="AdvancedConfigurationFunctionalBorderColor">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Border Color"/>
             <description value="Tests that the Border Color attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -1062,7 +1062,7 @@
             <argument name="index" value="5"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="text"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <!-- Storefront: Check Border Color: Empty -->
         <comment userInput="Storefront: Check Border Color: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -1105,8 +1105,8 @@
     </test>
     <test name="AdvancedConfigurationFunctionalBorderWidth">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Border Width"/>
             <description value="Tests that the Border Width attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -1337,7 +1337,7 @@
             <argument name="index" value="5"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="text"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <!-- Storefront: Check Border Width: Empty -->
         <comment userInput="Storefront: Check Border Width: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -1380,8 +1380,8 @@
     </test>
     <test name="AdvancedConfigurationFunctionalBorderRadius">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Border Radius"/>
             <description value="Tests that the Border Radius attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -1519,7 +1519,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Stage: Check Border Radius: Empty -->
         <comment userInput="Stage: Check Border Radius: Empty" stepKey="commentStageCheckEmpty"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty">
+        <actionGroup ref="validateAdvancedStyleWithNoAlignmentEmptyBorderRadius" stepKey="validateStageEmpty">
             <argument name="page" value="TextOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -1587,7 +1587,7 @@
             <argument name="index" value="5"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="text"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <!-- Storefront: Check Border Radius: Empty -->
         <comment userInput="Storefront: Check Border Radius: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -1625,8 +1625,8 @@
     </test>
     <test name="AdvancedConfigurationFunctionalCSSClasses">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - CSS Classes"/>
             <description value="Tests that the CSS Classes attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -1760,7 +1760,7 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="text"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <!-- Storefront: Check CSS Classes: Empty -->
         <comment userInput="Storefront: Check CSS Classes: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -1785,8 +1785,8 @@
     </test>
     <test name="AdvancedConfigurationFunctionalMargins">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Margins"/>
             <description value="Tests that the Margin attributes functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -2029,7 +2029,7 @@
             <argument name="index" value="6"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="text"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <!-- Storefront: Check Margins: Empty -->
         <comment userInput="Storefront: Check Margins: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -2074,8 +2074,8 @@
     </test>
     <test name="AdvancedConfigurationFunctionalPadding">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Padding"/>
             <description value="Tests that the Padding attributes functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -2318,7 +2318,7 @@
             <argument name="index" value="6"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="text"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <!-- Storefront: Check Padding: Empty -->
         <comment userInput="Storefront: Check Padding: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -2363,8 +2363,8 @@
     </test>
     <test name="AdvancedConfigurationFunctionalAllAttributes">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Advanced Configuration"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - All Attributes"/>
             <description value="Tests that all attributes function as expected together on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -2457,7 +2457,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="text"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
         <!-- Storefront: Check All Attributes -->
         <comment userInput="Storefront: Check All Attributes" stepKey="commentStorefrontCheck"/>

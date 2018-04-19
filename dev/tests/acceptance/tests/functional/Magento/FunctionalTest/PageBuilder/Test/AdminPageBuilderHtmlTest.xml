@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="HtmlAddToCMSPage">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-83924"/>
+            <features value="Pagebuilder: HTML"/>
+            <stories value="MAGETWO-83924: HTML"/>
             <title value="Html - Update General Values"/>
             <description value="Validate that updating every attribute in the General form for Html will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -34,7 +34,7 @@
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupOther"/>
+            <argument name="group" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHtmlIntoStage">
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
@@ -65,7 +65,7 @@
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="html"/>
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -74,8 +74,8 @@
     </test>
     <test name="HtmlDelete">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-83924"/>
+            <features value="Pagebuilder: HTML"/>
+            <stories value="MAGETWO-83924: HTML"/>
             <title value="Html - Delete Html"/>
             <description value="A user should be able to delete a Html content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
@@ -95,7 +95,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupOther"/>
+            <argument name="group" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
@@ -107,8 +107,8 @@
     </test>
     <test name="HtmlValidateGeneralDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89190"/>
+            <features value="Pagebuilder: HTML"/>
+            <stories value="MAGETWO-89190: [Tech Debt] PageBuilder data separation for text, divider, video, anchor and html"/>
             <title value="Html - Validate General Default Values"/>
             <description value="Validate the default values for every attribute in the General section on the Edit Form, Stage, and Storefront for Html."/>
             <severity value="CRITICAL"/>
@@ -131,7 +131,7 @@
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupOther"/>
+            <argument name="group" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
@@ -164,7 +164,7 @@
             <argument name="property" value="PageBuilderHtmlPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="html"/>
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -173,8 +173,8 @@
     </test>
     <test name="HtmlValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: HTML"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Html - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Html."/>
             <severity value="CRITICAL"/>
@@ -197,7 +197,7 @@
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupOther"/>
+            <argument name="group" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHtmlIntoStage">
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
@@ -284,7 +284,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="html"/>
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -300,8 +300,8 @@
     </test>
     <test name="HtmlUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89190"/>
+            <features value="Pagebuilder: HTML"/>
+            <stories value="MAGETWO-89190: [Tech Debt] PageBuilder data separation for text, divider, video, anchor and html"/>
             <title value="Html - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Html will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -324,7 +324,7 @@
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupOther"/>
+            <argument name="group" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
@@ -452,7 +452,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="html"/>
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

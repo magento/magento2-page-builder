@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="DividerAddToCMSPage">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-83931"/>
+            <features value="Pagebuilder: Divider"/>
+            <stories value="MAGETWO-83931: Divider"/>
             <title value="Divider - Update General Values"/>
             <description value="Validate that updating every attribute in the General form for Divider will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -82,7 +82,7 @@
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="divider"/>
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -95,8 +95,8 @@
     </test>
     <test name="DividerDelete">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-83931"/>
+            <features value="Pagebuilder: Divider"/>
+            <stories value="MAGETWO-83931: Divider"/>
             <title value="Divider - Delete Divider"/>
             <description value="A user should be able to delete a Divider content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
@@ -125,8 +125,8 @@
     </test>
     <test name="DividerValidateGeneralDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89190"/>
+            <features value="Pagebuilder: Divider"/>
+            <stories value="MAGETWO-89190: [Tech Debt] PageBuilder data separation for text, divider, video, anchor and html"/>
             <title value="Divider - Validate General Default Values"/>
             <description value="Validate the default values for every attribute in the General section on the Edit Form, Stage, and Storefront for Divider."/>
             <severity value="CRITICAL"/>
@@ -199,7 +199,7 @@
             <argument name="property" value="PageBuilderDividerLineWidth_Default"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="divider"/>
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -212,8 +212,8 @@
     </test>
     <test name="DividerValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Divider"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Divider - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration section on the Edit Form, Stage, and Storefront for Divider."/>
             <severity value="CRITICAL"/>
@@ -320,7 +320,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="divider"/>
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -336,8 +336,8 @@
     </test>
     <test name="DividerUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89190"/>
+            <features value="Pagebuilder: Divider"/>
+            <stories value="MAGETWO-89190: [Tech Debt] PageBuilder data separation for text, divider, video, anchor and html"/>
             <title value="Divider - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Divider will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -485,7 +485,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="divider"/>
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

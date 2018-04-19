@@ -43,6 +43,7 @@ export default class Preview {
     private edit: Edit;
     private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;
+    private mouseoverContext: Preview;
 
     /**
      * @param {ContentTypeInterface} parent
@@ -117,6 +118,7 @@ export default class Preview {
         }
 
         this.mouseover = true;
+        this.mouseoverContext = context;
         const currentTarget = event.currentTarget;
         let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 
@@ -137,7 +139,7 @@ export default class Preview {
     public onMouseOut(context: Preview, event: Event) {
         this.mouseover = false;
         _.delay(() => {
-            if (!this.mouseover) {
+            if (!this.mouseover && this.mouseoverContext === context) {
                 const currentTarget = event.currentTarget;
                 let optionsMenu = $(currentTarget).find(".pagebuilder-options-wrapper");
 

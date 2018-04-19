@@ -71,7 +71,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/component/block/appear
             var css = data[config[elementName].css.var];
             var newClasses = {};
 
-            if (css.length > 0) {
+            if (css && css.length > 0) {
               css.toString().split(" ").map(function (value, index) {
                 return newClasses[value] = true;
               });

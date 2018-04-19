@@ -74,7 +74,7 @@ export default class ObservableUpdater {
                 const css = data[config[elementName].css.var];
                 const newClasses = {};
 
-                if (css.length > 0) {
+                if (css && css.length > 0) {
                     css.toString().split(" ").map(
                         (value: any, index: number) => newClasses[value] = true,
                     );

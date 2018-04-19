@@ -20,9 +20,11 @@ define([], function () {
       this.parent = void 0;
       this.name = void 0;
       this.sort = void 0;
+      this.code = void 0;
       this.parent = parent;
       this.name = name;
       this.sort = sort;
+      this.code = "title";
     }
 
     _createClass(TitleOption, [{

@@ -97,7 +97,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentBlockNameInEditFormTitle" />
-        <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <see userInput="Edit {{contentBlockType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToContainer">
         <arguments>
@@ -525,17 +525,17 @@
     </actionGroup>
     <actionGroup name="expandPageBuilderPanelGroup">
         <arguments>
-            <argument name="group" defaultValue="PageBuilderPanelGroupGeneral"/>
+            <argument name="group" defaultValue=""/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroup(group.name)}}" stepKey="waitForGroupVisible"/>
-        <conditionalClick selector="{{PageBuilderActionsSection.panelGroup(group.name)}}" dependentSelector="{{PageBuilderActionsSection.panelGroupActive(group.name)}}" visible="false" stepKey="expandGroup"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroupActive(group.name)}}" stepKey="waitForGroupExpanded"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroup(group.section)}}" stepKey="waitForGroupVisible"/>
+        <conditionalClick selector="{{PageBuilderActionsSection.panelGroup(group.section)}}" dependentSelector="{{PageBuilderActionsSection.panelGroupActive(group.name)}}" visible="false" stepKey="expandGroup"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroupActive(group.section)}}" stepKey="waitForGroupExpanded"/>
     </actionGroup>
     <actionGroup name="navigateToStoreFront">
         <arguments>
-            <argument name="prefix" defaultValue="" type="string"/>
+            <argument name="contentBlockType" defaultValue=""/>
         </arguments>
-        <amOnPage url="{{prefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
+        <amOnPage url="{{contentBlockType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="validateOnHoverOptionMenu">

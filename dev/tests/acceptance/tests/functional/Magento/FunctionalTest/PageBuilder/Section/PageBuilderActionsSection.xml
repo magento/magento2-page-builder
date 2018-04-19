@@ -19,8 +19,8 @@
         <element name="searchField" type="input" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
         <element name="clearSearch" type="button" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
         <element name="firstSection" type="button" selector='//*[@id="pagebuilder-panel-groups"]/li[1]' timeout="30"/>
-        <element name="panelGroup" type="button" selector="//*[@id='group-{{arg1}}']" parameterized="true"/>
-        <element name="panelGroupActive" type="button" selector="//*[@id='group-{{arg1}}' and @class='active']" parameterized="true"/>
+        <element name="panelGroup" type="button" selector="//div[@id='pagebuilder-panel']//h4[.='{{arg1}}']" parameterized="true"/>
+        <element name="panelGroupActive" type="button" selector="//div[@id='pagebuilder-panel']//li[@class='active']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="generalGroup" type="button" selector='//*[@id="group-general"]'/>
         <element name="generalGroupBlock" type="button" selector='//*[@id="group-general"]/div/div/ul/li/a/span[2]'/>
         <element name="mediaGroup" type="button" selector='//*[@id="group-media"]'/>
@@ -49,6 +49,7 @@
         <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options' parameterized="true"/>
         <element name="contentBlockOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
         <element name="contentBlockMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]' parameterized="true"/>
+        <element name="contentBlockAdd" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.add-child"  parameterized="true"/>
         <element name="contentBlockEdit" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.edit-block"  parameterized="true"/>
         <element name="contentBlockEditByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-block"]' parameterized="true"/>
         <element name="contentBlockDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Duplicate"]' parameterized="true"/>
