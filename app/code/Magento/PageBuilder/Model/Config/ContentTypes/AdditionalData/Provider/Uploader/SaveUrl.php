@@ -29,8 +29,8 @@ class SaveUrl implements ProviderInterface
     /**
      * @inheritdoc
      */
-    public function getData()
+    public function getData(string $itemName) : array
     {
-        return $this->context->getUrl('pagebuilder/contenttype/image_upload', ['_secure' => true]);
+        return [$itemName => $this->context->getUrl('pagebuilder/contenttype/image_upload', ['_secure' => true])];
     }
 }

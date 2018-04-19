@@ -29,8 +29,8 @@ class OpenDialogUrl implements ProviderInterface
     /**
      * @inheritdoc
      */
-    public function getData()
+    public function getData(string $itemName) : array
     {
-        return $this->context->getUrl('cms/wysiwyg_images/index');
+        return [$itemName => $this->context->getUrl('cms/wysiwyg_images/index')];
     }
 }

@@ -10,7 +10,7 @@ namespace Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData;
 
 use Magento\Framework\ObjectManagerInterface;
 
-class ProviderFactory implements ProviderFactoryInterface
+class ProviderFactory
 {
     /**
      * @var ObjectManagerInterface
@@ -28,7 +28,7 @@ class ProviderFactory implements ProviderFactoryInterface
     /**
      * @inheritdoc
      */
-    public function createInstance($instanceName): ProviderInterface
+    public function createInstance(string $instanceName): ProviderInterface
     {
         return $this->objectManager->get($instanceName);
     }

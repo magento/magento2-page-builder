@@ -29,8 +29,8 @@ class StoreId implements ProviderInterface
     /**
      * @inheritdoc
      */
-    public function getData()
+    public function getData(string $itemName) : array
     {
-        return $this->storeManager->getStore()->getId();
+        return [$itemName => $this->storeManager->getStore()->getId()];
     }
 }

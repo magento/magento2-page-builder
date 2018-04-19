@@ -29,8 +29,8 @@ class MaxFileSize implements ProviderInterface
     /**
      * @inheritdoc
      */
-    public function getData()
+    public function getData(string $itemName) : array
     {
-        return $this->fileSize->getMaxFileSize();
+        return [$itemName => $this->fileSize->getMaxFileSize()];
     }
 }

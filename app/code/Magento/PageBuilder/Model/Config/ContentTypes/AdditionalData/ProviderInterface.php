@@ -12,8 +12,8 @@ interface ProviderInterface
 {
     /**
      * Get data from the provider
-     *
-     * @return mixed
+     * @param string $itemName - the name of the item to use as key in returned array
+     * @return array
      */
-    public function getData();
+    public function getData(string $itemName) : array;
 }
