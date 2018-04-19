@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/component/block/preview/sortable/binding", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/stage/edit", "Magento_PageBuilder/js/component/stage/structural/options", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/stage/structural/options/title"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _underscore, _liveEdit, _appearanceConfig, _binding, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _edit, _options, _option, _title) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/block/preview/sortable/binding", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/stage/edit", "Magento_PageBuilder/js/component/stage/structural/options", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/stage/structural/options/title"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _underscore, _liveEdit, _appearanceConfig, _factory, _binding, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _edit, _options, _option, _title) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -196,57 +196,29 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
      */
 
 
-    _proto.clone = function clone(child, autoAppend) {
+    _proto.clone = function clone(contentBlock, autoAppend) {
       if (autoAppend === void 0) {
         autoAppend = true;
       }
 
-      var store = child.store;
-      var instance = child.constructor;
-      var duplicate = new instance(child.parent, child.config, child.stageId);
-      duplicate.preview = child.preview;
-      duplicate.content = child.content;
-      var index = child.parent.collection.children.indexOf(child) + 1 || null;
-      store.update(duplicate.id, Object.assign({}, store.get(child.id)));
-      this.dispatchContentTypeCloneEvents(child, duplicate, index);
+      var contentBlockData = contentBlock.store.get(contentBlock.id);
+      var index = contentBlock.parent.collection.children.indexOf(contentBlock) + 1 || null;
+      (0, _factory)(contentBlock.config, contentBlock.parent, contentBlock.stageId, contentBlockData).then(function (duplicateBlock) {
+        var duplicateEventParams = {
+          original: contentBlock,
+          duplicateBlock: duplicateBlock,
+          index: index
+        };
 
-      if (autoAppend) {
-        child.parent.addChild(duplicate, index);
-      }
+        if (autoAppend) {
+          contentBlock.parent.addChild(duplicateBlock, index);
+        }
 
-      return duplicate;
-    };
-    /**
-     * Dispatch content type clone events
-     *
-     * @param {ContentTypeInterface} child
-     * @param {ContentTypeInterface} duplicate
-     * @param {number} index
-     */
+        _eventBus.trigger("block:duplicate", duplicateEventParams);
 
+        _eventBus.trigger(contentBlock.config.name + ":block:duplicate", duplicateEventParams);
 
-    _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(child, duplicate, index) {
-      // As a new block is being created, we need to fire that event as well
-      _eventBus.trigger("block:create", {
-        id: duplicate.id,
-        block: duplicate
-      });
-
-      _eventBus.trigger(child.parent.config.name + ":block:create", {
-        id: duplicate.id,
-        block: duplicate
-      });
-
-      _eventBus.trigger("block:duplicate", {
-        original: child,
-        duplicate: duplicate,
-        index: index
-      });
-
-      _eventBus.trigger(child.parent.config.name + ":block:duplicate", {
-        original: child,
-        duplicate: duplicate,
-        index: index
+        return duplicateBlock;
       });
     };
     /**
