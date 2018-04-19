@@ -1,4 +1,4 @@
-# Adding New Content Type 
+# How to Add New Content Type 
 
 ## Configuration
 
@@ -284,6 +284,17 @@ Please also notice that we specified in configuration the following, to allow ou
 | `content_component` | Magento_PageBuilder/js/content-collection      |
 
 You can also specify `content_component` if you want to do modifications to observables used in master format templates.
+
+
+## component, preview_component and content_component
+
+`component` is structure element. If your content type can contain children use `Magento_PageBuilder/js/content-type-collection`, otherwise use `Magento_PageBuilder/js/content-type`. You may extend default `component` if you want to dispatch additional or subscribe to existing events.
+
+`preview_component` contains preview logic that is generic for all appearances. If `preview_component` not specified, the default one `Magento_PageBuilder/js/preview` will be used. If your content type can have other components as children, you need to specify `Magento_PageBuilder/js/preview-collection`.
+
+You can also do modifications to observables used in preview template if you override `afterObservablesUpdated` method. 
+
+`content_component` contains master format rendering logic that is generic for all appearances. If `content_component` not specified, the default one `Magento_PageBuilder/js/content` will be used. If your content type can have other components as children, you need to specify `Magento_PageBuilder/js/content-collection`. If you need to do modifications to observables used in preview template if you override `afterObservablesUpdated` method.
 
 ## Config
 
