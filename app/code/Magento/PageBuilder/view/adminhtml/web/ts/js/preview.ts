@@ -10,6 +10,7 @@ import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm
 import _ from "underscore";
 import "./binding/live-edit";
 import appearanceConfig from "./component/block/appearance-config";
+import createBlock from "./component/block/factory";
 import "./component/block/preview/sortable/binding";
 import {DataObject} from "./component/data-store";
 import EventBus from "./component/event-bus";
@@ -245,48 +246,46 @@ export default class Preview {
      * @param {boolean} autoAppend
      * @returns {ContentTypeInterface}
      */
-    public clone(child: ContentTypeInterface, autoAppend: boolean = true): ContentTypeInterface {
-        const store = child.store;
-        const instance = child.constructor as typeof ContentTypeInterface;
-        const duplicate = new instance(
-            child.parent,
-            child.config,
-            child.stageId,
-        );
-        duplicate.preview = child.preview;
-        duplicate.content = child.content;
-        const index = child.parent.collection.children.indexOf(child) + 1 || null;
-        store.update(
-            duplicate.id,
-            Object.assign({}, store.get(child.id)),
-        );
+    public clone(contentBlock: ContentTypeInterface, autoAppend: boolean = true): ContentTypeInterface {
+        const contentBlockData = contentBlock.store.get(contentBlock.id);
+        const index = contentBlock.parent.collection.children.indexOf(contentBlock) + 1 || null;
 
-        this.dispatchContentTypeCloneEvents(child, duplicate, index);
+        createBlock(
+            contentBlock.config,
+            contentBlock.parent,
+            contentBlock.stageId,
+            contentBlockData
+        ).then((duplicateBlock: ContentTypeInterface) => {
+            if (autoAppend) {
+                contentBlock.parent.addChild(duplicateBlock, index);
+            }
 
-        if (autoAppend) {
-            child.parent.addChild(duplicate, index);
-        }
-        return duplicate;
+            this.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
+
+            return duplicateBlock;
+        });
     }
 
     /**
      * Dispatch content type clone events
      *
-     * @param {ContentTypeInterface} child
-     * @param {ContentTypeInterface} duplicate
+     * @param {ContentTypeInterface} originalBlock
+     * @param {ContentTypeInterface} duplicateBlock
      * @param {number} index
      */
     protected dispatchContentTypeCloneEvents(
-        child: ContentTypeInterface,
-        duplicate: ContentTypeInterface,
+        originalBlock: ContentTypeInterface,
+        duplicateBlock: ContentTypeInterface,
         index: number,
     ) {
-        // As a new block is being created, we need to fire that event as well
-        EventBus.trigger("block:create", {id: duplicate.id, block: duplicate});
-        EventBus.trigger(child.parent.config.name + ":block:create", {id: duplicate.id, block: duplicate});
+        const duplicateEventParams = {
+            original: originalBlock,
+            duplicateBlock,
+            index,
+        };
 
-        EventBus.trigger("block:duplicate", {original: child, duplicate, index});
-        EventBus.trigger(child.parent.config.name + ":block:duplicate", {original: child, duplicate, index});
+        EventBus.trigger("block:duplicate", duplicateEventParams);
+        EventBus.trigger(originalBlock.parent.config.name + ":block:duplicate", duplicateEventParams);
     }
 
     /**
