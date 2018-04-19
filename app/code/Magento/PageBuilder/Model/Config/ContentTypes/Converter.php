@@ -458,11 +458,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 case 'array':
                     $item = $parsedArray['item'];
 
-                    foreach ($item as $subitem) {
-                        if (!isset($convertedArray[$name])) {
-                            $convertedArray[$name] = [];
-                        }
+                    if (!isset($convertedArray[$name])) {
+                        $convertedArray[$name] = [];
+                    }
 
+                    foreach ($item as $subitem) {
                         $convertedArray[$name] = $convertAdditionalData($subitem, $convertedArray[$name]);
                     }
 
