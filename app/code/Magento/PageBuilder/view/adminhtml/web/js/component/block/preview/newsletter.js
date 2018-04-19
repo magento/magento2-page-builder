@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus"], function (_preview, _config, _eventBus) {
+define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/preview"], function (_config, _eventBus, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Newsletter =
@@ -14,7 +14,7 @@ define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/conf
     var _proto = Newsletter.prototype;
 
     /**
-     * Bind events for the current instance
+     * @inheritDoc
      */
     _proto.bindEvents = function bindEvents() {
       var _this = this;
@@ -22,7 +22,7 @@ define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/conf
       _Preview.prototype.bindEvents.call(this);
 
       _eventBus.on("previewObservables:updated", function (event, params) {
-        if (params.preview.id === _this.id) {
+        if (params.preview.parent.id === _this.parent.id) {
           var attributes = _this.data.main.attributes();
 
           if (attributes["data-title"] === "") {
