@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _tabs, _underscore, _eventBus, _block) {
+define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/preview-collection"], function (_jquery, _knockout, _tabs, _underscore, _eventBus, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Tabs, _PreviewBlock);
+  function (_PreviewCollection) {
+    _inheritsLoose(Tabs, _PreviewCollection);
 
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
@@ -14,13 +14,14 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
      */
 
     /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    function Tabs(parent, config) {
+    function Tabs(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.focusedTab = _knockout.observable();
       _this.element = void 0;
       _this.buildTabs = _underscore.debounce(function () {
@@ -32,7 +33,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
           (0, _jquery)(_this.element).tabs({
             create: function create(event, ui) {
-              _this.setActiveTab(_this.data.default_active() || 0);
+              _this.setActiveTab(_this.data.default_active !== undefined ? _this.data.default_active() : 0);
             }
           });
         }
@@ -63,8 +64,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         focusTabValue = value; // If we're stopping the interaction we need to wait, to ensure any other actions can complete
 
         _underscore.delay(function () {
-          if (focusTabValue === value) {
-            _this.parent.stage.interacting(value !== null);
+          if (focusTabValue === value) {//this.parent.stage.interacting(value !== null);
           }
         }, value === null ? 200 : 0);
       });
@@ -92,8 +92,6 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
 
     _proto.setFocusedTab = function setFocusedTab(index, force) {
-      var _this2 = this;
-
       if (force === void 0) {
         force = false;
       }
@@ -110,9 +108,8 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         _underscore.defer(function () {
           if ((0, _jquery)(":focus").hasClass("tab-title") && (0, _jquery)(":focus").prop("contenteditable")) {
             document.execCommand("selectAll", false, null);
-          } else {
-            // If the active element isn't the tab title, we're not interacting with the stage
-            _this2.parent.stage.interacting(false);
+          } else {// If the active element isn't the tab title, we're not interacting with the stage
+            //this.parent.stage.interacting(false);
           }
         });
       }
@@ -152,7 +149,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
 
     _proto.getTabHeaderStyles = function getTabHeaderStyles() {
-      var headerStyles = this.parent.data.headers.style();
+      var headerStyles = this.data.headers.style();
       return { ...headerStyles,
         marginBottom: "-" + headerStyles.borderWidth,
         marginLeft: "-" + headerStyles.borderWidth
@@ -160,7 +157,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
     };
 
     return Tabs;
-  }(_block); // Resolve issue with jQuery UI tabs blocking events on content editable areas
+  }(_previewCollection); // Resolve issue with jQuery UI tabs blocking events on content editable areas
 
 
   var originalTabKeyDown = _jquery.ui.tabs.prototype._tabKeydown;

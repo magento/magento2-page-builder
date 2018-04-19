@@ -6,10 +6,10 @@
 -->
 
 <div data-bind="attr: getAttributes('main'), style: getStyle('main'), css: getCss('main')">
-    <ul role="tablist" class="tabs-navigation" data-bind="foreach: getChildren(), attr: getAttributes('navigation'), style: getStyle('navigation'), css: getCss('navigation')">
+    <ul role="tablist" class="tabs-navigation" data-bind="foreach: parent.getChildren(), attr: getAttributes('navigation'), style: getStyle('navigation'), css: getCss('navigation')">
         <li role="tab" class="tab-header" data-bind="attr: { active: getData().default_active_tab }, attr: $parent.getAttributes('headers'), style: $parent.getStyle('headers'), css: $parent.getCss('headers')">
             <a href="#no-tab" class="tab-title" data-bind="attr: { href: '#' + id }">
-                <span class="tab-title" data-bind="text: getData().tab_name"></span>
+                <!--<span class="tab-title" data-bind="text: getData().tab_name"></span>-->
             </a>
         </li>
     </ul>

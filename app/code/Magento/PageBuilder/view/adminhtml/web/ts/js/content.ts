@@ -73,8 +73,8 @@ export default class Content {
             }
         } else {
             const appearanceConfiguration = appearanceConfig(
-                this.config.name,
-                data.appearance.toString(),
+                this.parent.config.name,
+                data.appearance,
             );
             const config = appearanceConfiguration.data_mapping.elements[element];
 

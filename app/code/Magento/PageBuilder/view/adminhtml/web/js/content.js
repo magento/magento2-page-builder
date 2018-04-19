@@ -65,7 +65,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
           css = data.css_classes.toString();
         }
       } else {
-        var appearanceConfiguration = (0, _appearanceConfig)(this.config.name, data.appearance.toString());
+        var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
         var config = appearanceConfiguration.data_mapping.elements[element];
 
         if (config.css && config.css.var !== undefined && config.css.var in data) {

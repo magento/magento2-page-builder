@@ -5,18 +5,15 @@
 
 import $t from "mage/translate";
 import _ from "underscore";
-import createBlock from "../block/factory";
+import createContentType from "../../content-type-factory";
 import Config from "../config";
 import EventBus from "../event-bus";
-import {BlockRemovedParams} from "../stage/event-handling-delegate";
-import {BlockDuplicateEventParams, BlockMountEventParams} from "../stage/structural/editable-area";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
-import Block from "./block";
-import {BlockReadyEventParams} from "./factory";
+import ContentTypeCollection from "../../content-type-collection";
 import TabsPreview from "./preview/tabs";
 
-export default class Tabs extends Block {
+export default class Tabs extends ContentTypeCollection {
 
     /**
      * Return an array of options
@@ -44,10 +41,10 @@ export default class Tabs extends Block {
      */
     public addTab() {
         (this.preview as TabsPreview).setActiveTab(this.children().length - 1);
-        createBlock(
-            Config.getInitConfig("content_types")["tab-item"],
+        createContentType(
+            Config.getContentTypeConfig("tab-item"),
             this,
-            this.stage,
+            this.stageId,
         ).then((tab) => {
             _.defer(() => {
                 const mountFunction = (event: Event, params: BlockMountEventParams) => {
@@ -60,7 +57,7 @@ export default class Tabs extends Block {
                 this.addChild(tab, this.children().length);
 
                 // Update the default tab title when adding a new tab
-                this.parent.stage.store.updateKey(
+                this.parent.store.updateKey(
                     tab.id,
                     $t("Tab") + " " + (this.children.indexOf(tab) + 1),
                     "tab_name",
@@ -106,7 +103,7 @@ export default class Tabs extends Block {
             }
             if (this.id === params.block.parent.id) {
                 this.updateTabNamesInDataStore();
-                this.parent.stage.store.subscribe(() => {
+                this.parent.store.subscribe(() => {
                     this.updateTabNamesInDataStore();
                 }, params.block.id);
             }
@@ -119,14 +116,14 @@ export default class Tabs extends Block {
     private updateTabNamesInDataStore() {
         const activeOptions: ActiveOptions[] = [];
         this.children().forEach((tab: Block, index: number) => {
-            const tabData = tab.stage.store.get(tab.id);
+            const tabData = tab.store.get(tab.id);
             activeOptions.push({
                 label: tabData.tab_name.toString(),
                 labeltitle: tabData.tab_name.toString(),
                 value: index,
             });
         });
-        this.parent.stage.store.updateKey(
+        this.parent.store.updateKey(
             this.id,
             activeOptions,
             "_default_active_options",

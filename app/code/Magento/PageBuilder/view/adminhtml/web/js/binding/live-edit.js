@@ -121,7 +121,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       };
 
       element.setAttribute("data-placeholder", placeholder);
-      element.innerText = viewModel.data[field]();
+      element.innerText = viewModel.data[field] !== undefined ? viewModel.data[field]() : "";
       element.contentEditable = true;
       element.addEventListener("focus", onFocus);
       element.addEventListener("blur", onBlur);
@@ -132,7 +132,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
 
       viewModel.data[field].subscribe(function (value) {
-        element.innerText = viewModel.data[field]();
+        element.innerText = viewModel.data[field] !== undefined ? viewModel.data[field]() : "";
         handlePlaceholderClass(element);
       });
     },
@@ -150,7 +150,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       var _valueAccessor2 = valueAccessor(),
           field = _valueAccessor2.field;
 
-      element.innerText = viewModel.data[field]();
+      element.innerText = viewModel.data[field] !== undefined ? viewModel.data[field]() : "";
       handlePlaceholderClass(element);
     }
   };

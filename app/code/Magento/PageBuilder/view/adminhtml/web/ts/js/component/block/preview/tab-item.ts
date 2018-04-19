@@ -3,13 +3,10 @@
  * See COPYING.txt for license details.
  */
 
-import $t from "mage/translate";
-import EventBus from "../event-bus";
-import {Options} from "../stage/structural/options";
-import Block from "./block";
-import {BlockReadyEventParams} from "./factory";
+import {Options} from "../../stage/structural/options";
+import PreviewCollection from "../../../preview-collection";
 
-export default class TabItem extends Block {
+export default class TabItem extends PreviewCollection {
 
     /**
      * Get the options instance

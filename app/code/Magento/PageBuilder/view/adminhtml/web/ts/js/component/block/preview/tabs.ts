@@ -7,13 +7,10 @@ import $ from "jquery";
 import ko from "knockout";
 import "tabs";
 import _ from "underscore";
-import {ConfigContentBlock} from "../../config";
 import EventBus from "../../event-bus";
-import Block from "../block";
-import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
-import PreviewBlock from "./block";
+import PreviewCollection from "../../../preview-collection";
 
-export default class Tabs extends PreviewBlock {
+export default class Tabs extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable();
     private element: Element;
 
@@ -31,18 +28,24 @@ export default class Tabs extends PreviewBlock {
             }
             $(this.element).tabs({
                 create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
-                    this.setActiveTab(this.data.default_active() || 0);
+                    this.setActiveTab(this.data.default_active !== undefined ? this.data.default_active() : 0);
                 },
             });
         }
     }, 10);
 
+
     /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    constructor(parent: Block, config: ConfigContentBlock) {
-        super(parent, config);
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(parent, config, observableUpdater);
 
         EventBus.on("tabs:block:ready", (event: Event, params: BlockReadyEventParams) => {
             if (params.id === this.parent.id && this.element) {
@@ -66,7 +69,7 @@ export default class Tabs extends PreviewBlock {
             // If we're stopping the interaction we need to wait, to ensure any other actions can complete
             _.delay(() => {
                 if (focusTabValue === value) {
-                    this.parent.stage.interacting(value !== null);
+                    //this.parent.stage.interacting(value !== null);
                 }
             }, (value === null ? 200 : 0));
         });
@@ -100,7 +103,7 @@ export default class Tabs extends PreviewBlock {
                     document.execCommand("selectAll", false, null);
                 } else {
                     // If the active element isn't the tab title, we're not interacting with the stage
-                    this.parent.stage.interacting(false);
+                    //this.parent.stage.interacting(false);
                 }
             });
         }
@@ -136,7 +139,7 @@ export default class Tabs extends PreviewBlock {
      * @returns {any}
      */
     public getTabHeaderStyles() {
-        const headerStyles = this.parent.data.headers.style();
+        const headerStyles = this.data.headers.style();
         return {
             ...headerStyles,
             marginBottom: "-" + headerStyles.borderWidth,
