@@ -199,6 +199,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     }
 
     /**
+     * Convert additional data
+     *
      * @param \DOMElement $elementNode
      * @return array
      */
