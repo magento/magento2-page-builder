@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
-use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderFactoryInterface;
+use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderFactory;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
@@ -19,15 +19,15 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private $parser;
 
     /**
-     * @var ProviderFactoryInterface
+     * @var ProviderFactory
      */
     private $providerFactory;
 
     /**
      * @param ArgumentParser $parser
-     * @param ProviderFactoryInterface $providerFactory
+     * @param ProviderFactory $providerFactory
      */
-    public function __construct(ArgumentParser $parser, ProviderFactoryInterface $providerFactory)
+    public function __construct(ArgumentParser $parser, ProviderFactory $providerFactory)
     {
         $this->parser = $parser;
         $this->providerFactory = $providerFactory;
