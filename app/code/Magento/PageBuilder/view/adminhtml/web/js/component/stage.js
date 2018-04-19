@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/master-format-renderer"], function (_knockout, _translate, _alert, _underscore, _collection, _array, _factory, _dataStore, _eventBus, _stageBuilder, _masterFormatRenderer) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/master-format-renderer"], function (_knockout, _translate, _alert, _underscore, _collection, _array, _contentTypeFactory, _dataStore, _eventBus, _stageBuilder, _masterFormatRenderer) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -231,7 +231,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       var index = params.index || 0;
       new Promise(function (resolve, reject) {
         if (params.block) {
-          return (0, _factory)(params.block.config, params.parent, params.stageId).then(function (block) {
+          return (0, _contentTypeFactory)(params.block.config, params.parent, params.stageId).then(function (block) {
             params.parent.addChild(block, index);
 
             _eventBus.trigger("block:dropped:create", {

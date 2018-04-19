@@ -1,8 +1,8 @@
 import $ from "jquery";
 import ko from "knockout";
+import ContentTypeInterface from "../../../../content-type.d";
 import {moveArrayItem} from "../../../../utils/array";
 import EventBus from "../../../event-bus";
-import ContentTypeInterface from "../../../../content-type.d";
 
 // Create a new sortable Knockout binding
 ko.bindingHandlers.previewSortable = {

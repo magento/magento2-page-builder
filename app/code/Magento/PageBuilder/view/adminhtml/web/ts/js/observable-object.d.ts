@@ -3,6 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-export interface ObservableObject {
+export default interface ObservableObject {
     [key: string]: KnockoutObservable<any>;
 }

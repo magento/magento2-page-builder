@@ -5,11 +5,11 @@
 
 import ko from "knockout";
 import PreviewCollection from "../../../preview-collection";
-import createBlock from "../../block/factory";
+import createContentType from "../../../content-type-factory";
 import Config from "../../config";
 import EventBus from "../../event-bus";
 import BlockMountEventParamsInterface from "../block-mount-event-params.d";
-import ButtonItem from "../button-item"
+import ButtonItem from "../button-item";
 
 export default class Buttons extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
@@ -28,14 +28,14 @@ export default class Buttons extends PreviewCollection {
      * Add button-item to buttons children array
      */
     public addButton() {
-        const createBlockPromise: Promise<ButtonItem> = createBlock(
+        const createButtonItemPromise: Promise<ButtonItem> = createContentType(
             Config.getContentTypeConfig("button-item"),
             this.parent.parent,
             this.parent.stageId,
             {},
         );
 
-        createBlockPromise.then((button: ButtonItem) => {
+        createButtonItemPromise.then((button: ButtonItem) => {
             this.parent.addChild(button);
             this.isLiveEditing(this.parent.children().indexOf(button));
             return button;

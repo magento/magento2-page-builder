@@ -14,18 +14,18 @@ import BlockDroppedParamsInterface from "./block-dropped-params.d.ts";
 import BlockInstanceDroppedParamsInterface from "./block-instance-dropped-params.d.ts";
 import BlockRemovedParamsInterface from "./block-removed-params.d";
 import BlockSortedParamsInterface from "./block-sorted-params.d";
-import createBlock from "./block/factory";
+import createContentType from "../content-type-factory";
 import DataStore from "./data-store";
 import EventBus from "./event-bus";
+import PageBuilderInterface from "./page-builder.d";
 import SortParamsInterface from "./sort-params.d.ts";
 import buildStage from "./stage-builder";
 import MasterFormatRenderer from "./stage/master-format-renderer";
-import PageBuilderInterface from "./page-builder.d"
 
 export default class Stage {
     public parent: PageBuilderInterface;
     public id: string;
-    public config: {} = {name: "stage",};
+    public config: {} = {name: "stage"};
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public showBorders: KnockoutObservable<boolean> = ko.observable(false);
     public interacting: KnockoutObservable<boolean> = ko.observable(false);
@@ -223,12 +223,13 @@ export default class Stage {
 
         new Promise<ContentTypeInterface>((resolve, reject) => {
             if (params.block) {
-                return createBlock(params.block.config, params.parent, params.stageId).then((block: ContentTypeInterface) => {
-                    params.parent.addChild(block, index);
-                    EventBus.trigger("block:dropped:create", {id: block.id, block});
-                    EventBus.trigger(params.block.config.name + ":block:dropped:create", {id: block.id, block});
-                    return block;
-                });
+                return createContentType(params.block.config, params.parent, params.stageId)
+                    .then((block: ContentTypeInterface) => {
+                        params.parent.addChild(block, index);
+                        EventBus.trigger("block:dropped:create", {id: block.id, block});
+                        EventBus.trigger(params.block.config.name + ":block:dropped:create", {id: block.id, block});
+                        return block;
+                    });
             } else {
                 reject("Parameter block missing from event.");
             }

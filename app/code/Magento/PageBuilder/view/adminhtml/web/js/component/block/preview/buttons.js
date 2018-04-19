@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus"], function (_knockout, _previewCollection, _factory, _config, _eventBus) {
+define(["knockout", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus"], function (_knockout, _previewCollection, _contentTypeFactory, _config, _eventBus) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Buttons =
@@ -38,8 +38,8 @@ define(["knockout", "Magento_PageBuilder/js/preview-collection", "Magento_PageBu
     _proto.addButton = function addButton() {
       var _this3 = this;
 
-      var createBlockPromise = (0, _factory)(_config.getContentTypeConfig("button-item"), this.parent.parent, this.parent.stageId, {});
-      createBlockPromise.then(function (button) {
+      var createButtonItemPromise = (0, _contentTypeFactory)(_config.getContentTypeConfig("button-item"), this.parent.parent, this.parent.stageId, {});
+      createButtonItemPromise.then(function (button) {
         _this3.parent.addChild(button);
 
         _this3.isLiveEditing(_this3.parent.children().indexOf(button));

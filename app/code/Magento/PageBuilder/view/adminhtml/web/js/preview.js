@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/block/preview/sortable/binding", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/stage/edit", "Magento_PageBuilder/js/component/stage/structural/options", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/stage/structural/options/title"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _underscore, _liveEdit, _appearanceConfig, _factory, _binding, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _edit, _options, _option, _title) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/component/block/appearance-config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/component/block/preview/sortable/binding", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/style-attribute-filter", "Magento_PageBuilder/js/component/format/style-attribute-mapper", "Magento_PageBuilder/js/component/stage/edit", "Magento_PageBuilder/js/component/stage/structural/options", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/stage/structural/options/title"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _underscore, _liveEdit, _appearanceConfig, _contentTypeFactory, _binding, _eventBus, _styleAttributeFilter, _styleAttributeMapper, _edit, _options, _option, _title) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -162,16 +162,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       return new _options.Options(this, this.retrieveOptions());
     };
     /**
-     * Return an array of options
-     *
-     * @returns {Array<OptionInterface>}
-     */
-
-
-    _proto.retrieveOptions = function retrieveOptions() {
-      return [new _option.Option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title.TitleOption(this, this.config.label, 20), new _option.Option(this, "edit", "<i class='icon-admin-pagebuilder-systems'></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 30), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 40), new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 50)];
-    };
-    /**
      * Handle user editing an instance
      */
 
@@ -205,7 +195,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
       var contentBlockData = contentBlock.store.get(contentBlock.id);
       var index = contentBlock.parent.collection.children.indexOf(contentBlock) + 1 || null;
-      (0, _factory)(contentBlock.config, contentBlock.parent, contentBlock.stageId, contentBlockData).then(function (duplicateBlock) {
+      (0, _contentTypeFactory)(contentBlock.config, contentBlock.parent, contentBlock.stageId, contentBlockData).then(function (duplicateBlock) {
         if (autoAppend) {
           contentBlock.parent.addChild(duplicateBlock, index);
         }
@@ -214,26 +204,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
         return duplicateBlock;
       });
-    };
-    /**
-     * Dispatch content type clone events
-     *
-     * @param {ContentTypeInterface} originalBlock
-     * @param {ContentTypeInterface} duplicateBlock
-     * @param {number} index
-     */
-
-
-    _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(originalBlock, duplicateBlock, index) {
-      var duplicateEventParams = {
-        original: originalBlock,
-        duplicateBlock: duplicateBlock,
-        index: index
-      };
-
-      _eventBus.trigger("block:duplicate", duplicateEventParams);
-
-      _eventBus.trigger(originalBlock.parent.config.name + ":block:duplicate", duplicateEventParams);
     };
     /**
      * Handle block removal
@@ -273,6 +243,36 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       } else {
         removeBlock();
       }
+    };
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<OptionInterface>}
+     */
+
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      return [new _option.Option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title.TitleOption(this, this.config.label, 20), new _option.Option(this, "edit", "<i class='icon-admin-pagebuilder-systems'></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 30), new _option.Option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 40), new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 50)];
+    };
+    /**
+     * Dispatch content type clone events
+     *
+     * @param {ContentTypeInterface} originalBlock
+     * @param {ContentTypeInterface} duplicateBlock
+     * @param {number} index
+     */
+
+
+    _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(originalBlock, duplicateBlock, index) {
+      var duplicateEventParams = {
+        original: originalBlock,
+        duplicateBlock: duplicateBlock,
+        index: index
+      };
+
+      _eventBus.trigger("block:duplicate", duplicateEventParams);
+
+      _eventBus.trigger(originalBlock.parent.config.name + ":block:duplicate", duplicateEventParams);
     };
     /**
      * Bind events for the current instance

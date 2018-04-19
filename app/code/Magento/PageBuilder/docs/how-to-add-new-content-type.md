@@ -52,7 +52,7 @@ In this example, content type has only one element in the template.
 Let's create templates specified in the configuration. Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/simple.html`.
 
 ``` HTML
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" data-bind="event: {mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false" style="padding: 5px;">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" data-bind="event: {mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
     <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, html: data.main.html"></div>
     <!-- ko template: getOptions().template --><!-- /ko -->
 </div>

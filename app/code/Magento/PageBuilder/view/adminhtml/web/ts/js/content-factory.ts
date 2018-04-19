@@ -4,9 +4,9 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import ContentTypeConfigInterface from "../../content-type-config.d";
-import ContentTypeInterface from "../../content-type.d";
-import converterResolver from "../../converter-resolver";
+import ContentTypeConfigInterface from "./content-type-config.d";
+import ContentTypeInterface from "./content-type.d";
+import converterResolver from "./converter-resolver";
 import observableUpdaterFactory from "./observable-updater-factory";
 
 /**

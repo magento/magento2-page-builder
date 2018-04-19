@@ -1,12 +1,12 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/content-factory", "Magento_PageBuilder/js/component/block/preview-factory"], function (_loader, _eventBus, _contentFactory, _previewFactory) {
+define(["underscore", "Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/content-factory", "Magento_PageBuilder/js/preview-factory", "Magento_PageBuilder/js/component/event-bus"], function (_underscore, _loader, _contentFactory, _previewFactory, _eventBus) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
 
   /**
-   * Create new content type instance
+   * Create new content type
    *
    * @param {ContentTypeConfigInterface} config
    * @param {ContentTypeInterface} parent
@@ -15,7 +15,7 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
    * @param {number} childrenLength
    * @returns {Promise<ContentTypeInterface>}
    */
-  function createBlock(config, parent, stageId, data, childrenLength) {
+  function createContentType(config, parent, stageId, data, childrenLength) {
     if (data === void 0) {
       data = {};
     }
@@ -66,12 +66,12 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
     var defaults = {};
 
     if (config.fields) {
-      _.each(config.fields, function (field, key) {
+      _underscore.each(config.fields, function (field, key) {
         defaults[key] = field.default;
       });
     }
 
-    return _.extend(defaults, data);
+    return _underscore.extend(defaults, data);
   }
   /**
    * A block is ready once all of its children have mounted
@@ -115,6 +115,6 @@ define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/compo
     }
   }
 
-  return createBlock;
+  return createContentType;
 });
-//# sourceMappingURL=factory.js.map
+//# sourceMappingURL=content-type-factory.js.map

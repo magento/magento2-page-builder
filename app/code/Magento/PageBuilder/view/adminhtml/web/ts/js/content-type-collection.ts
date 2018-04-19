@@ -7,8 +7,8 @@ import Collection from "./collection";
 import EventBus from "./component/event-bus";
 import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
-import ContentTypeInterface from "./content-type.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
+import ContentTypeInterface from "./content-type.d";
 
 export default class ContentTypeCollection extends ContentType implements ContentTypeCollectionInterface {
     private collection: Collection = new Collection();

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/format-validator", "Magento_PageBuilder/js/component/format/read/composite"], function (_translate, _alert, _, _directives, _factory, _config, _eventBus, _formatValidator, _composite) {
+define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/format-validator", "Magento_PageBuilder/js/component/format/read/composite"], function (_translate, _alert, _, _directives, _contentTypeFactory, _config, _eventBus, _formatValidator, _composite) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -67,7 +67,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
     var config = _config.getContentTypeConfig(role);
 
     return getElementData(element, config).then(function (data) {
-      return (0, _factory)(config, parent, stage.id, data, getElementChildren(element).length);
+      return (0, _contentTypeFactory)(config, parent, stage.id, data, getElementChildren(element).length);
     });
   }
   /**
@@ -136,11 +136,11 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
     var htmlDisplayContentTypeConfig = _config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-      return (0, _factory)(rootContentTypeConfig, stage, stage.id, {}).then(function (row) {
+      return (0, _contentTypeFactory)(rootContentTypeConfig, stage, stage.id, {}).then(function (row) {
         stage.addChild(row);
 
         if (htmlDisplayContentTypeConfig && initialValue) {
-          return (0, _factory)(htmlDisplayContentTypeConfig, stage, stage.id, {
+          return (0, _contentTypeFactory)(htmlDisplayContentTypeConfig, stage, stage.id, {
             html: initialValue
           }).then(function (text) {
             row.addChild(text);

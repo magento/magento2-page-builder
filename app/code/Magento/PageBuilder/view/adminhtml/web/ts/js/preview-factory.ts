@@ -4,10 +4,10 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import ContentTypeConfigInterface from "../../content-type-config.d";
-import ContentTypeInterface from "../../content-type.d";
-import previewConverterResolver from "../../preview-converter-resolver";
+import ContentTypeConfigInterface from "./content-type-config.d";
+import ContentTypeInterface from "./content-type.d";
 import observableUpdaterFactory from "./observable-updater-factory";
+import previewConverterResolver from "./preview-converter-resolver";
 
 /**
  * Create new preview instance

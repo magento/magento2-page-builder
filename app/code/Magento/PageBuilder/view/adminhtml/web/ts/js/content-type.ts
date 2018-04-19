@@ -8,8 +8,8 @@ import mageUtils from "mageUtils";
 import DataStore from "./component/data-store";
 import EventBus from "./component/event-bus";
 import Content from "./content";
-import ContentTypeInterface from "./content-type.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
+import ContentTypeInterface from "./content-type.d";
 import Preview from "./preview";
 
 export default class ContentType implements ContentTypeInterface {

@@ -16,7 +16,7 @@ import EventBus from "../../event-bus";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
-import createBlock from "../factory";
+import createContentType from "../../../content-type-factory";
 import ColumnGroup from "./column-group";
 import {getMaxColumns} from "./column-group/resizing";
 
@@ -122,14 +122,14 @@ export default class Column extends PreviewCollection {
             // Remove child instantly to stop content jumping around
             this.parent.parent.removeChild(this.parent);
             // Create a new instance of column group to wrap our columns with
-            return createBlock(
+            return createContentType(
                 Config.getContentTypeConfig("column-group"),
                 this.parent.parent,
                 this.parent.stageId,
             ).then((columnGroup: ColumnGroup) => {
                 return Promise.all([
-                    createBlock(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
-                    createBlock(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
+                    createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
+                    createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
                 ]).then((columns: [Column, Column]) => {
                     columnGroup.addChild(columns[0], 0);
                     columnGroup.addChild(columns[1], 1);

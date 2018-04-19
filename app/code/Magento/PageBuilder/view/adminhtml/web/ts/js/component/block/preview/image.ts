@@ -4,9 +4,9 @@
  */
 
 import events from "uiEvents";
+import Preview from "../../../preview";
 import EventBus from "../../event-bus";
 import Uploader from "../../uploader";
-import Preview from "../../../preview";
 
 export default class Image extends Preview {
     /**

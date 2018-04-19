@@ -2,7 +2,6 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import $t from "mage/translate";
 import Preview from "../../../../preview";
 import {OptionInterface} from "./option.d";
 
@@ -13,6 +12,7 @@ export class TitleOption implements OptionInterface {
 
     /**
      * @param {Preview} parent
+     * @param {string} name
      * @param {number} sort
      */
     constructor(
@@ -21,7 +21,7 @@ export class TitleOption implements OptionInterface {
         sort: number,
     ) {
         this.parent = parent;
-        this.name = name || $t("Block");
+        this.name = name;
         this.sort = sort;
     }
 

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _previewCollection, _config, _eventBus, _option, _factory, _resizing) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _previewCollection, _config, _eventBus, _option, _contentTypeFactory, _resizing) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -113,10 +113,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/preview-
 
         this.parent.parent.removeChild(this.parent); // Create a new instance of column group to wrap our columns with
 
-        return (0, _factory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId).then(function (columnGroup) {
-          return Promise.all([(0, _factory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
+        return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId).then(function (columnGroup) {
+          return Promise.all([(0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
             width: "50%"
-          }), (0, _factory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
+          }), (0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
             width: "50%"
           })]).then(function (columns) {
             columnGroup.addChild(columns[0], 0);

@@ -10,12 +10,13 @@ import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm
 import _ from "underscore";
 import "./binding/live-edit";
 import appearanceConfig from "./component/block/appearance-config";
-import createBlock from "./component/block/factory";
+import createContentType from "./content-type-factory";
 import "./component/block/preview/sortable/binding";
 import {DataObject} from "./component/data-store";
 import EventBus from "./component/event-bus";
 import StyleAttributeFilter from "./component/format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "./component/format/style-attribute-mapper";
+import SortParamsInterface from "./component/sort-params.d";
 import Edit from "./component/stage/edit";
 import {Options} from "./component/stage/structural/options";
 import {Option} from "./component/stage/structural/options/option";
@@ -25,7 +26,6 @@ import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
-import SortParamsInterface from "./component/sort-params.d";
 
 export default class Preview {
     public parent: ContentTypeInterface;
@@ -179,6 +179,80 @@ export default class Preview {
     }
 
     /**
+     * Handle user editing an instance
+     */
+    public onOptionEdit(): void {
+        this.edit.open();
+    }
+
+    /**
+     * Handle duplicate of items
+     */
+    public onOptionDuplicate(): void {
+        this.clone(this.parent);
+    }
+
+    /**
+     * Duplicate content type
+     *
+     * @param {ContentTypeInterface} child
+     * @param {boolean} autoAppend
+     * @returns {ContentTypeInterface}
+     */
+    public clone(contentBlock: ContentTypeInterface, autoAppend: boolean = true): ContentTypeInterface {
+        const contentBlockData = contentBlock.store.get(contentBlock.id);
+        const index = contentBlock.parent.collection.children.indexOf(contentBlock) + 1 || null;
+
+        createContentType(
+            contentBlock.config,
+            contentBlock.parent,
+            contentBlock.stageId,
+            contentBlockData,
+        ).then((duplicateBlock: ContentTypeInterface) => {
+            if (autoAppend) {
+                contentBlock.parent.addChild(duplicateBlock, index);
+            }
+
+            this.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
+
+            return duplicateBlock;
+        });
+    }
+
+    /**
+     * Handle block removal
+     */
+    public onOptionRemove(): void {
+        const removeBlock = () => {
+            const params = {
+                block: this.parent,
+                index: this.parent.parent.getChildren().indexOf(this.parent),
+                parent: this.parent.parent,
+                stageId: this.parent.stageId,
+            };
+            EventBus.trigger("block:removed", params);
+            EventBus.trigger(this.parent.config.name + ":block:removed", params);
+        };
+
+        if (this.isConfigured()) {
+            confirmationDialog({
+                actions: {
+                    confirm: () => {
+                        // Call the parent to remove the child element
+                        removeBlock();
+                    },
+                },
+                content: $t("Are you sure you want to remove this item? The data within this item is not recoverable once removed."), // tslint:disable-line:max-line-length
+                dismissKey: "pagebuilder_modal_dismissed",
+                dismissible: true,
+                title: $t("Confirm Item Removal"),
+            });
+        } else {
+            removeBlock();
+        }
+    }
+
+    /**
      * Return an array of options
      *
      * @returns {Array<OptionInterface>}
@@ -226,47 +300,6 @@ export default class Preview {
     }
 
     /**
-     * Handle user editing an instance
-     */
-    public onOptionEdit(): void {
-        this.edit.open();
-    }
-
-    /**
-     * Handle duplicate of items
-     */
-    public onOptionDuplicate(): void {
-        this.clone(this.parent);
-    }
-
-    /**
-     * Duplicate content type
-     *
-     * @param {ContentTypeInterface} child
-     * @param {boolean} autoAppend
-     * @returns {ContentTypeInterface}
-     */
-    public clone(contentBlock: ContentTypeInterface, autoAppend: boolean = true): ContentTypeInterface {
-        const contentBlockData = contentBlock.store.get(contentBlock.id);
-        const index = contentBlock.parent.collection.children.indexOf(contentBlock) + 1 || null;
-
-        createBlock(
-            contentBlock.config,
-            contentBlock.parent,
-            contentBlock.stageId,
-            contentBlockData
-        ).then((duplicateBlock: ContentTypeInterface) => {
-            if (autoAppend) {
-                contentBlock.parent.addChild(duplicateBlock, index);
-            }
-
-            this.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
-
-            return duplicateBlock;
-        });
-    }
-
-    /**
      * Dispatch content type clone events
      *
      * @param {ContentTypeInterface} originalBlock
@@ -286,39 +319,6 @@ export default class Preview {
 
         EventBus.trigger("block:duplicate", duplicateEventParams);
         EventBus.trigger(originalBlock.parent.config.name + ":block:duplicate", duplicateEventParams);
-    }
-
-    /**
-     * Handle block removal
-     */
-    public onOptionRemove(): void {
-        const removeBlock = () => {
-            const params = {
-                block: this.parent,
-                index: this.parent.parent.getChildren().indexOf(this.parent),
-                parent: this.parent.parent,
-                stageId: this.parent.stageId,
-            };
-            EventBus.trigger("block:removed", params);
-            EventBus.trigger(this.parent.config.name + ":block:removed", params);
-        };
-
-        if (this.isConfigured()) {
-            confirmationDialog({
-                actions: {
-                    confirm: () => {
-                        // Call the parent to remove the child element
-                        removeBlock();
-                    },
-                },
-                content: $t("Are you sure you want to remove this item? The data within this item is not recoverable once removed."), // tslint:disable-line:max-line-length
-                dismissKey: "pagebuilder_modal_dismissed",
-                dismissible: true,
-                title: $t("Confirm Item Removal"),
-            });
-        } else {
-            removeBlock();
-        }
     }
 
     /**

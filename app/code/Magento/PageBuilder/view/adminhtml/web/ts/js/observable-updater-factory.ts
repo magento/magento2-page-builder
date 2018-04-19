@@ -3,10 +3,10 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeConfigInterface from "../../content-type-config.d";
-import ObservableUpdater from "../../observable-updater";
-import dataConverterPoolFactory from "./data-converter-pool-factory";
-import elementConverterPoolFactory from "./element-converter-pool-factory";
+import dataConverterPoolFactory from "./component/block/data-converter-pool-factory";
+import elementConverterPoolFactory from "./component/block/element-converter-pool-factory";
+import ContentTypeConfigInterface from "./content-type-config.d";
+import ObservableUpdater from "./observable-updater";
 
 /**
  * Create new observable updater instance

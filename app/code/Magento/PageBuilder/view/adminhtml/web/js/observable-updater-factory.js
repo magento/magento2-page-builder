@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/observable-updater", "Magento_PageBuilder/js/component/block/data-converter-pool-factory", "Magento_PageBuilder/js/component/block/element-converter-pool-factory"], function (_observableUpdater, _dataConverterPoolFactory, _elementConverterPoolFactory) {
+define(["Magento_PageBuilder/js/component/block/data-converter-pool-factory", "Magento_PageBuilder/js/component/block/element-converter-pool-factory", "Magento_PageBuilder/js/observable-updater"], function (_dataConverterPoolFactory, _elementConverterPoolFactory, _observableUpdater) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

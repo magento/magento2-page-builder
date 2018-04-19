@@ -6,15 +6,15 @@
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
+import ContentTypeConfigInterface from "../content-type-config.d";
 import {removeQuotesInMediaDirectives} from "../utils/directives";
 import Block from "./block/block";
-import createBlock from "./block/factory";
+import createContentType from "../content-type-factory";
 import Config from "./config";
 import EventBus from "./event-bus";
 import validateFormat from "./format/format-validator";
 import AttributeReaderComposite from "./format/read/composite";
 import Stage from "./stage";
-import ContentTypeConfigInterface from "../content-type-config.d";
 
 /**
  * Build the stage with the provided value
@@ -77,7 +77,7 @@ function createElementBlock(element: HTMLElement, stage: Stage, parent?: Content
     const config = Config.getContentTypeConfig(role);
 
     return getElementData(element, config).then(
-        (data: object) => createBlock(
+        (data: object) => createContentType(
             config,
             parent,
             stage.id,
@@ -147,10 +147,10 @@ function buildEmpty(stage: Stage, initialValue: string) {
     const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-        return createBlock(rootContentTypeConfig, stage, stage.id, {}).then((row: Block) => {
+        return createContentType(rootContentTypeConfig, stage, stage.id, {}).then((row: Block) => {
             stage.addChild(row);
             if (htmlDisplayContentTypeConfig && initialValue) {
-                return createBlock(
+                return createContentType(
                     htmlDisplayContentTypeConfig,
                     stage,
                     stage.id,

@@ -5,21 +5,21 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
+import Content from "../../content";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
 import ObservableUpdater from "../../observable-updater";
 import Preview from "../../preview";
 import {fromHex} from "../../utils/color-converter";
+import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
 import {StyleAttributeMapperResult} from "../format/style-attribute-mapper";
-import {getImageUrl} from "../../utils/directives";
 import {Options} from "../stage/structural/options";
 import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
-import Content from "../../content";
 
 export default class Slide extends Content {
-    
+
     /**
      * Get the slide wrapper styles for the storefront
      *

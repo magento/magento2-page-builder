@@ -13,7 +13,7 @@ import ContentTypeConfigInterface from "../../../content-type-config.d";
 import ContentTypeInterface from "../../../content-type.d";
 import ObservableUpdater from "../../../observable-updater";
 import PreviewCollection from "../../../preview-collection";
-import createBlock from "../../block/factory";
+import createContentType from "../../../content-type-factory";
 import Config from "../../config";
 import EventBus from "../../event-bus";
 import {Option} from "../../stage/structural/options/option";
@@ -238,7 +238,7 @@ export default class Slider extends PreviewCollection {
      * Add a slide into the slider
      */
     public addSlide() {
-        createBlock(
+        createContentType(
             Config.getConfig("content_types").slide,
             this.parent,
             this.parent.stageId,

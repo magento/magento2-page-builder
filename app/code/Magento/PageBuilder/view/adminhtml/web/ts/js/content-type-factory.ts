@@ -3,18 +3,19 @@
  * See COPYING.txt for license details.
  */
 
+import _ from "underscore";
 import loadModule from "Magento_PageBuilder/js/component/loader";
-import ContentTypeConfigInterface from "../../content-type-config.d";
-import ContentTypeInterface from "../../content-type.d";
-import EventBus from "../event-bus";
-import BlockMountEventParamsInterface from "./block-mount-event-params.d";
-import ConfigFieldInterface from "./config-field.d";
 import contentFactory from "./content-factory";
-import FieldDefaultsInterface from "./field-defaults.d";
+import ContentTypeConfigInterface from "./content-type-config.d";
+import ContentTypeInterface from "./content-type.d";
 import previewFactory from "./preview-factory";
+import EventBus from "./component/event-bus";
+import BlockMountEventParamsInterface from "./component/block/block-mount-event-params.d";
+import ConfigFieldInterface from "./component/block/config-field.d";
+import FieldDefaultsInterface from "./component/block/field-defaults.d";
 
 /**
- * Create new content type instance
+ * Create new content type
  *
  * @param {ContentTypeConfigInterface} config
  * @param {ContentTypeInterface} parent
@@ -23,7 +24,7 @@ import previewFactory from "./preview-factory";
  * @param {number} childrenLength
  * @returns {Promise<ContentTypeInterface>}
  */
-export default function createBlock(
+export default function createContentType(
     config: ContentTypeConfigInterface,
     parent: ContentTypeInterface,
     stageId,
