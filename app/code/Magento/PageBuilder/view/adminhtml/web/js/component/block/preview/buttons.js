@@ -38,7 +38,7 @@ define(["knockout", "Magento_PageBuilder/js/preview-collection", "Magento_PageBu
     _proto.addButton = function addButton() {
       var _this3 = this;
 
-      var createBlockPromise = (0, _factory)(_config.getConfig("content_types")["button-item"], this.parent, this.parent.stageId, {});
+      var createBlockPromise = (0, _factory)(_config.getContentTypeConfig("button-item"), this.parent.parent, this.parent.stageId, {});
       createBlockPromise.then(function (button) {
         _this3.parent.addChild(button);
 

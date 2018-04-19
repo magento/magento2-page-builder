@@ -67,6 +67,8 @@
         <!--Open Slider settings -->
         <comment userInput="Open Slider settings" stepKey="EditSlider"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <moveMouseOver selector="{{SliderInAdmin.slideWrapper}}" stepKey="onMouseOverSliderStage"/>
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openSliderEditPanel">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
@@ -321,7 +323,7 @@
         <annotations>
             <features value="PageBuilder Slider MAGETWO-83767"/>
             <stories value=""/>
-            <title value="Can add slides and see tooltip and slide title when hovering over navigation dots"/>
+            <title value="Can add slides and see tooltip and slide title when click navigation dots"/>
             <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87949"/>
@@ -368,6 +370,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
 
         <comment userInput="Slide is not focused, Option panel is not displayed" stepKey="AC6"/>
+        <click stepKey="unFocusSlide" selector="{{SliderInAdmin.sliderContainer}}"/>
+        <wait time="0.5" stepKey="waitSlideOptionFadeAnimation" />
         <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="dontSeeSlideOptionsAfterSaveSlide"/>
 
         <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
@@ -415,6 +419,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation3" />
 
         <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide title" stepKey="AC15"/>
+        <click stepKey="focusOutsideOfSliderNavDot" selector="{{PageBuilderActionsSection.searchPanel}}"/>
         <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
         <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2InTooltip"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>

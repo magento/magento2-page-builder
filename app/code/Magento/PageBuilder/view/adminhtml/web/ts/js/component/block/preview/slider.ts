@@ -16,7 +16,6 @@ import PreviewCollection from "../../../preview-collection";
 import createBlock from "../../block/factory";
 import Config from "../../config";
 import EventBus from "../../event-bus";
-import {BlockRemovedParams} from "../../stage/event-handling-delegate";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
 import BlockCreateEventParamsInterface from "../block-create-event-params.d";
@@ -244,19 +243,17 @@ export default class Slider extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((slide) => {
-            _.delay(() => {
-                const mountFn = (event: Event, params: BlockMountEventParamsInterface) => {
-                    if (params.id === slide.id) {
-                        (this as SliderPreview).navigateToSlide(this.parent.children().length - 1);
-                        _.delay(() => {
-                            slide.preview.onOptionEdit();
-                        }, 500);
-                        EventBus.off("slide:block:mount", mountFn);
-                    }
-                };
-                EventBus.on("slide:block:mount", mountFn);
-                this.parent.addChild(slide, this.parent.children().length);
-            });
+            const mountFn = (event: Event, params: BlockMountEventParamsInterface) => {
+                if (params.id === slide.id) {
+                    _.delay(() => {
+                        this.navigateToSlide(this.parent.children().length - 1);
+                        slide.preview.onOptionEdit();
+                    }, 500);
+                    EventBus.off("slide:block:mount", mountFn);
+                }
+            };
+            EventBus.on("slide:block:mount", mountFn);
+            this.parent.addChild(slide, this.parent.children().length);
         });
     }
 
@@ -274,7 +271,7 @@ export default class Slider extends PreviewCollection {
 
         // Block being removed from container
         EventBus.on("slide:block:removed", (event, params: BlockRemovedParams) => {
-            if (params.parent.id === this.id) {
+            if (params.parent.id === this.parent.id) {
                 // Mark the previous slide as active
                 const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
                 (this as SliderPreview).setActiveSlide(newIndex);

@@ -71,6 +71,7 @@
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0"/>
         <!-- Slide order in option panel -->
         <comment userInput="User sees Slide order number in slide option panel" stepKey="AC7"/>
+        <click selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="clickNavigationDot"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <waitForElementVisible time="10" selector="{{SlideOnBackend.optionTitle}}" stepKey="waitForOptionTitle" />
         <grabTextFrom selector="{{SlideOnBackend.optionTitle}}" stepKey="grabSlide1OptionTitle"/>

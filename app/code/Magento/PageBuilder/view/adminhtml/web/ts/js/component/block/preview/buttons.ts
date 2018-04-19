@@ -29,8 +29,8 @@ export default class Buttons extends PreviewCollection {
      */
     public addButton() {
         const createBlockPromise: Promise<ButtonItem> = createBlock(
-            Config.getConfig("content_types")["button-item"],
-            this.parent,
+            Config.getContentTypeConfig("button-item"),
+            this.parent.parent,
             this.parent.stageId,
             {},
         );
