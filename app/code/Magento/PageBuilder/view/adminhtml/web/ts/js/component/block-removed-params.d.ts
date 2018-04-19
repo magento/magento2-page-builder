@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeInterface from "../content-type.d"
+import ContentTypeInterface from "../content-type.d";
 
 export default interface BlockRemovedParamsInterface {
     parent: ContentTypeInterface;
