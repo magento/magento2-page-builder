@@ -12,9 +12,9 @@ define(["Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/component/e
     _inheritsLoose(ContentTypeCollection, _ContentType);
 
     /**
-     * @param parent
-     * @param config
-     * @param stageId
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {string} stageId
      */
     function ContentTypeCollection(parent, config, stageId) {
       var _this;

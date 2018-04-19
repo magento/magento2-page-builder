@@ -22,7 +22,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
    * Build an element and it's children into the stage
    *
    * @param {Element} element
-   * @param {EditableArea} parent
+   * @param {ContentTypeInterface} parent
    * @param {stage} stage
    * @returns {Promise<void>}
    */
@@ -54,9 +54,9 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
    * Parse an element in the structure and build the required element
    *
    * @param {Element} element
-   * @param {EditableArea} parent
+   * @param {ContentTypeInterface} parent
    * @param {stage} stage
-   * @returns {Promise<EditableAreaInterface>}
+   * @returns {Promise<ContentTypeInterface>}
    */
 
 
@@ -74,7 +74,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
    * Retrieve the elements data
    *
    * @param {HTMLElement} element
-   * @param {ConfigContentBlock} config
+   * @param {ContentTypeConfigInterface} config
    * @returns {Promise<any>}
    */
 

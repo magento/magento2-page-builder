@@ -16,7 +16,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
     /**
      * Render a tree of content types instances stored in knockout
      *
-     * @param {KnockoutObservableArray<Structural>} tree
+     * @param {KnockoutObservableArray<ContentTypeInterface>} tree
      * @returns {Promise<string>}
      */
     _proto.applyBindings = function applyBindings(tree) {

@@ -12,7 +12,7 @@ export class TitleOption implements OptionInterface {
     public sort: number;
 
     /**
-     * @param {Structural} parent
+     * @param {Preview} parent
      * @param {number} sort
      */
     constructor(

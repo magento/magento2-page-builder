@@ -47,7 +47,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
      *
      * @param {Column} child
      * @param {boolean} autoAppend
-     * @returns {Structural|Undefined}
+     * @returns {ContentTypeInterface|Undefined}
      */
 
 

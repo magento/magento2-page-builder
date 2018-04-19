@@ -50,30 +50,3 @@ export default class Config {
         dataRoleAttributeName: "data-role",
     };
 }
-
-export interface ConfigFieldConfig {
-    [key: string]: {
-        default: null | string | number;
-    };
-}
-export interface ConfigContentBlock {
-    name: string;
-    label: string;
-    icon: string;
-    form: string;
-    contentType: string;
-    group: string;
-    fields: ConfigFieldConfig;
-    preview_template: string;
-    render_template: string;
-    preview_component: string;
-    content_component: string;
-    component: string;
-    appearances: string[];
-    readers: string[];
-    allowed_parents: string[];
-    is_visible: boolean;
-}
-export interface ConfigContentBlocks {
-    [key: string]: ConfigContentBlock;
-}

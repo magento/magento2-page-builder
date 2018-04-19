@@ -10,7 +10,6 @@ import ContentTypeCollection from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
 import {moveArrayItem} from "../../utils/array";
-import {ConfigContentBlock} from "../config";
 import EventBus from "../event-bus";
 import Column from "./column";
 import {createColumn} from "./column-group/factory";
@@ -31,8 +30,8 @@ export default class ColumnGroup extends ContentTypeCollection {
      * @param {number} stageId
      */
     constructor(
-        parent: EditableArea,
-        config: ConfigContentBlock,
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
         stageId,
     ) {
         super(parent, config, stageId);
@@ -70,9 +69,9 @@ export default class ColumnGroup extends ContentTypeCollection {
      *
      * @param {Column} child
      * @param {boolean} autoAppend
-     * @returns {Structural|Undefined}
+     * @returns {ContentTypeInterface|Undefined}
      */
-    public duplicateChild(child: Column, autoAppend: boolean = true): Structural | void {
+    public duplicateChild(child: Column, autoAppend: boolean = true): ContentTypeInterface | void {
         // Are we duplicating from a parent?
         if (this.children().length === 0
             || (this.children().length > 0 && getColumnsWidth(this) < 100)

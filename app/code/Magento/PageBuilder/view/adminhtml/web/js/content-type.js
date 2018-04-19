@@ -8,12 +8,13 @@ define(["knockout", "mageUtils", "Magento_PageBuilder/js/component/data-store", 
   /*#__PURE__*/
   function () {
     /**
-     * @param parent
-     * @param config
-     * @param stageId
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {string} stageId
      */
     function ContentType(parent, config, stageId) {
       this.id = _mageUtils.uniqueid();
+      this.parent = void 0;
       this.stageId = void 0;
       this.config = void 0;
       this.data = {};

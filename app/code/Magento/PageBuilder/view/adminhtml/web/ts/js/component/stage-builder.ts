@@ -9,13 +9,12 @@ import * as _ from "underscore";
 import {removeQuotesInMediaDirectives} from "../utils/directives";
 import Block from "./block/block";
 import createBlock from "./block/factory";
-import Config, {ConfigContentBlock} from "./config";
+import Config from "./config";
 import EventBus from "./event-bus";
 import validateFormat from "./format/format-validator";
 import AttributeReaderComposite from "./format/read/composite";
 import Stage from "./stage";
-import EditableArea from "./stage/structural/editable-area";
-import {EditableAreaInterface} from "./stage/structural/editable-area.d";
+import ContentTypeConfigInterface from "../content-type-config.d";
 
 /**
  * Build the stage with the provided value
@@ -35,15 +34,15 @@ function buildFromContent(stage: Stage, value: string) {
  * Build an element and it's children into the stage
  *
  * @param {Element} element
- * @param {EditableArea} parent
+ * @param {ContentTypeInterface} parent
  * @param {stage} stage
  * @returns {Promise<void>}
  */
-function buildElementIntoStage(element: Element, parent: EditableArea, stage: Stage): Promise<any> {
+function buildElementIntoStage(element: Element, parent: ContentTypeInterface, stage: Stage): Promise<any> {
     if (element instanceof HTMLElement
         && element.getAttribute(Config.getConfig("dataRoleAttributeName"))
     ) {
-        const childPromises: Array<Promise<EditableArea>> = [];
+        const childPromises: Array<Promise<ContentTypeInterface>> = [];
         const childElements: Element[] = [];
         const children = getElementChildren(element);
 
@@ -68,11 +67,11 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
  * Parse an element in the structure and build the required element
  *
  * @param {Element} element
- * @param {EditableArea} parent
+ * @param {ContentTypeInterface} parent
  * @param {stage} stage
- * @returns {Promise<EditableAreaInterface>}
+ * @returns {Promise<ContentTypeInterface>}
  */
-function createElementBlock(element: HTMLElement, stage: Stage, parent?: EditableArea): Promise<EditableArea> {
+function createElementBlock(element: HTMLElement, stage: Stage, parent?: ContentTypeInterface): Promise<ContentTypeInterface> {
     parent = parent || stage;
     const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
     const config = Config.getContentTypeConfig(role);
@@ -92,10 +91,10 @@ function createElementBlock(element: HTMLElement, stage: Stage, parent?: Editabl
  * Retrieve the elements data
  *
  * @param {HTMLElement} element
- * @param {ConfigContentBlock} config
+ * @param {ContentTypeConfigInterface} config
  * @returns {Promise<any>}
  */
-function getElementData(element: HTMLElement, config: ConfigContentBlock) {
+function getElementData(element: HTMLElement, config: ContentTypeConfigInterface) {
     // Create an object with all fields for the content type with an empty value
     const result = _.mapObject(config.fields, () => {
         return "";

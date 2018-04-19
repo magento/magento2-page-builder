@@ -5,17 +5,18 @@
 
 import ko from "knockout";
 import mageUtils from "mageUtils";
-import {ConfigContentBlock} from "./component/config";
 import DataStore from "./component/data-store";
 import EventBus from "./component/event-bus";
 import Content from "./content";
 import ContentTypeInterface from "./content-type.d";
+import ContentTypeConfigInterface from "./content-type-config.d";
 import Preview from "./preview";
 
 export default class ContentType implements ContentTypeInterface {
     public id: string = mageUtils.uniqueid();
+    public parent: ContentTypeInterface;
     public stageId: string;
-    public config: ConfigContentBlock;
+    public config: ContentTypeConfigInterface;
     public data = {};
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
     public element: JQuery<HTMLElement>;
@@ -24,13 +25,13 @@ export default class ContentType implements ContentTypeInterface {
     public content: Content;
 
     /**
-     * @param parent
-     * @param config
-     * @param stageId
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {string} stageId
      */
     constructor(
         parent: ContentTypeInterface,
-        config: ConfigContentBlock,
+        config: ContentTypeConfigInterface,
         stageId: string,
     ) {
         this.parent = parent;

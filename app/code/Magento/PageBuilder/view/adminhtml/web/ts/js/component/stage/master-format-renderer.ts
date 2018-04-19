@@ -16,7 +16,7 @@ export default class MasterFormatRenderer {
     /**
      * Render a tree of content types instances stored in knockout
      *
-     * @param {KnockoutObservableArray<Structural>} tree
+     * @param {KnockoutObservableArray<ContentTypeInterface>} tree
      * @returns {Promise<string>}
      */
     public applyBindings(tree: KnockoutObservableArray<ContentTypeInterface>): Promise<string> {

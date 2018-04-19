@@ -8,7 +8,7 @@ define(["mage/translate"], function (_translate) {
   /*#__PURE__*/
   function () {
     /**
-     * @param {Structural} parent
+     * @param {Preview} parent
      * @param {number} sort
      */
     function TitleOption(parent, name, sort) {

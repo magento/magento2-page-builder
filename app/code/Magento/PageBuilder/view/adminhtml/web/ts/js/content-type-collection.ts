@@ -8,18 +8,19 @@ import EventBus from "./component/event-bus";
 import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeInterface from "./content-type.d";
+import ContentTypeConfigInterface from "./content-type-config.d";
 
 export default class ContentTypeCollection extends ContentType implements ContentTypeCollectionInterface {
     private collection: Collection = new Collection();
 
     /**
-     * @param parent
-     * @param config
-     * @param stageId
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {string} stageId
      */
     constructor(
         parent: ContentTypeInterface,
-        config: ConfigContentBlock,
+        config: ContentTypeConfigInterface,
         stageId: string,
     ) {
         super(parent, config, stageId);

@@ -8,12 +8,13 @@ import "ko-draggable";
 import "ko-sortable";
 import $t from "mage/translate";
 import _ from "underscore";
-import Config, {ConfigContentBlock} from "../config";
+import Config from "../config";
 import EventBus from "../event-bus";
 import PageBuilder from "../page-builder";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
 import { Block as GroupBlock } from "./panel/group/block";
+import ContentTypeConfigInterface from "../../content-type-config.d";
 
 export default class Panel implements PanelInterface {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
@@ -71,7 +72,7 @@ export default class Panel implements PanelInterface {
             this.searchResults(_.map(
                 _.filter(
                     Config.getConfig("content_types"),
-                    (contentBlock: ConfigContentBlock) => {
+                    (contentBlock: ContentTypeConfigInterface) => {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
                         const matches = !!contentBlock.label.toLowerCase().match(regEx);
                         return matches &&
@@ -106,7 +107,7 @@ export default class Panel implements PanelInterface {
                             group: id,
                             is_visible: true,
                         }), /* Retrieve content blocks with group id */
-                        (contentBlock: ConfigContentBlock, identifier: string) => {
+                        (contentBlock: ContentTypeConfigInterface, identifier: string) => {
                             const groupBlock = new GroupBlock(identifier, contentBlock);
                             return groupBlock;
                         },
