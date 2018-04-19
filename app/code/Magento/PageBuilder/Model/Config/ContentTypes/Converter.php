@@ -428,6 +428,12 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             : null;
     }
 
+    /**
+     * Convert arguments node from additional data to array
+     *
+     * @param \DOMElement $argumentsNode
+     * @return array
+     */
     private function toArray(\DOMElement $argumentsNode)
     {
         $parsedArgumentsData = $this->parser->parse($argumentsNode);
