@@ -49,7 +49,7 @@ To add configuration for a new content type, create a file under the following l
 
 In this example, content type has only one element in the template.
 
-Let's create templates specified in the configuration `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/simple.html`
+Let's create templates specified in the configuration. Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/simple.html`.
 
 ``` HTML
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" data-bind="event: {mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false" style="padding: 5px;">
@@ -58,13 +58,13 @@ Let's create templates specified in the configuration `app/code/Vendor/ModuleNam
 </div>
 ```
 
-and `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/master/simple.html`
+And master template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/master/simple.html`.
 
 ``` HTML
 <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css(), html: data.main.html"></div>
 ```
 
-In the `simple.xml` above we defined border attributes and form for component. Let's create form `Vendor/ModuleName/view/adminhtml/ui_component/modulename_simple_form.xml`.
+In the `simple.xml` above we defined border attributes and form for component. Let's create form `Vendor/ModuleName/view/adminhtml/ui_component/modulename_simple_form.xml` that would allow us edit these attributes.
 
 ``` XML
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form">
@@ -141,6 +141,8 @@ In the `simple.xml` above we defined border attributes and form for component. L
 </form>
 ```
 
+Attributes that we want to edit part of advanced section that defined in `pagebuilder_base_form`, so we can just extend it.
+
 And to allow this form to be loaded in PageBuilder, let's create layout `Vendoe/ModuleName/view/adminhtml/layout/pagebuildercustom_simple_form.xml`.
 
 ``` XML
@@ -185,17 +187,107 @@ define(["Magento_PageBuilder/js/preview"], function (Preview) {
 });
 ```
 
-Let's add button to a template.
+And the last part is to add button to a template.
+
 ``` HTML
 <!-- ko template: getOptions().template --><!-- /ko -->
 <button type="button" data-bind="click: helloWorld, i18n: 'Display Hello World'"/>
 ```
 
+Now, let's add content type that can contain other content types. Create configuration `Vendor\ModuleName\etc\content_types\complex.xml`.
+
+``` XML
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
+    <content_types>
+        <type name="complex" sortOrder="35" translate="label">
+            <label>Complex</label>
+            <icon>icon-vendorname-complex</icon>
+            <component>Magento_PageBuilder/js/content-type-collection</component>
+            <preview_component>Magento_PageBuilder/js/preview-collection</preview_component>
+            <content_component>Magento_PageBuilder/js/content-collection</content_component>
+            <form>vendorname_complex_form</form>
+            <group>general</group>
+            <allowed_parents>
+                <parent name="row"/>
+                <parent name="column"/>
+            </allowed_parents>
+            <appearances>
+                <appearance default="true" name="default">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property name="text_align" var="text_align"/>
+                                    <property name="border_style" var="border"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" var="margins_and_padding"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute name="data-role" var="name"/>
+                                </attributes>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
+                    <preview_template>Vendor_ModuleName/content-type/preview/complex.html</preview_template>
+                    <render_template>Vendor_ModuleName/content-type/master/complex.html</render_template>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                </appearance>
+            </appearances>
+        </type>
+    </content_types>
+</config>
+```
+
+Now we need to specify which content types can be inserted into our new content type. To allow default content type Heading be inserted into our Complex content type, add the following configuration.
+
+`Vendor\ModuleName\etc\content_types\heading.xml`
+
+``` XML
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
+    <content_types>
+        <type name="heading" sortOrder="30" translate="label">
+            <allowed_parents>
+                <parent name="complex"/>
+            </allowed_parents>
+        </type>
+    </content_types>
+</config>
+```
+
+Now need to create preview and render templates.
+
+`Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/complex.html`
+
+``` HTML
+<div class="pagebuilder-content-type type-container pagebuilder-complex children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css(), event: {mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <!-- ko template: getOptions().template --><!-- /ko -->
+    <!-- ko template: previewChildTemplate --><!-- /ko -->
+</div>
+```
+
+`Vendor/ModuleName/view/adminhtml/web/template/content-type/master/complex.html`
+``` HTML
+<div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css">
+    <!-- ko template: renderChildTemplate --><!-- /ko -->
+</div>
+```
+
+Please also notice that we specified in configuration the following, to allow our content type accept other content types as children.
+
+| Setting             | Value                                          |
+| ------------------- | ---------------------------------------------- |
+| `component`         | Magento_PageBuilder/js/content-type-collection |
+| `preview_component` | Magento_PageBuilder/js/preview-collection      |
+| `content_component` | Magento_PageBuilder/js/content-collection      |
+
 You can also specify `content_component` if you want to do modifications to observables used in master format templates.
 
 ## Config
 
-Backend configuration available in PageBuilder via `Magento_PageBuilder/js/component/config`.
+Sometimes you need to have access to other content types configuration in your component or stage configuration. This configuration available via `Magento_PageBuilder/js/component/config`.
 
 Config have the following methods
 
