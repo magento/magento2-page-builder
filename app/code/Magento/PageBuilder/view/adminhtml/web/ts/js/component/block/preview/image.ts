@@ -35,7 +35,7 @@ export default class Image extends Preview {
             events.trigger(`image:assigned:${this.parent.id}`, imageObject);
         });
 
-        EventBus.on("image:block:ready", (event, params) => {
+        EventBus.once("image:block:ready", (event, params) => {
             const imageDataStore = this.parent.store.get(this.parent.id);
             const initialImageValue = imageDataStore.image || "";
 

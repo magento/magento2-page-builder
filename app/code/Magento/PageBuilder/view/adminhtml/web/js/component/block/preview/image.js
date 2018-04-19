@@ -45,7 +45,7 @@ define(["uiEvents", "Magento_PageBuilder/js/component/event-bus", "Magento_PageB
         _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
       });
 
-      _eventBus.on("image:block:ready", function (event, params) {
+      _eventBus.once("image:block:ready", function (event, params) {
         var imageDataStore = _this2.parent.store.get(_this2.parent.id);
 
         var initialImageValue = imageDataStore.image || ""; // Create uploader
