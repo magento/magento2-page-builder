@@ -141,9 +141,9 @@ In the `simple.xml` above we defined border attributes and form for component. L
 </form>
 ```
 
-Attributes that we want to edit part of advanced section that defined in `pagebuilder_base_form`, so we can just extend it.
+Attributes that we want to edit as part of the advanced section are defined in `pagebuilder_base_form`, so we can just extend it.
 
-And to allow this form to be loaded in PageBuilder, let's create layout `Vendoe/ModuleName/view/adminhtml/layout/pagebuildercustom_simple_form.xml`.
+And to allow this form to be loaded in PageBuilder, let's create layout `Vendor/ModuleName/view/adminhtml/layout/pagebuildercustom_simple_form.xml`.
 
 ``` XML
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
