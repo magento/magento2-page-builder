@@ -263,7 +263,7 @@ export default class Slider extends PreviewCollection {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
+        EventBus.on("slider:block:dropped:create", (event: Event, params: BlockReadyEventParamsInterface) => {
             if (params.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
             }

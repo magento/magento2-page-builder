@@ -24,7 +24,7 @@ define(["knockout", "Magento_PageBuilder/js/preview-collection", "Magento_PageBu
 
       _PreviewCollection.prototype.bindEvents.call(this);
 
-      _eventBus.on("buttons:block:ready", function (event, params) {
+      _eventBus.on("buttons:block:dropped:create", function (event, params) {
         if (params.id === _this2.parent.id && _this2.parent.children().length === 0) {
           _this2.addButton();
         }
