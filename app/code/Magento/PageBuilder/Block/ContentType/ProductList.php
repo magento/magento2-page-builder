@@ -9,6 +9,11 @@ use Magento\Catalog\Api\CategoryRepositoryInterface;
 
 class ProductList extends \Magento\Catalog\Block\Product\ListProduct
 {
+    /*
+     * Default value set in pagebuilder_products_list_form.xml
+     */
+    const DEFAULT_NUMBER_OF_PRODUCTS_DISPLAYED = 4;
+
     /**
      * Product collection factory
      *
@@ -55,15 +60,15 @@ class ProductList extends \Magento\Catalog\Block\Product\ListProduct
             /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $collection */
             $collection = $this->productCollectionFactory->create();
             $this->_catalogLayer->prepareProductCollection($collection);
-            $collection->getSelect()->order('rand()');
+            $collection->getSelect()->orderRand();
             $collection->addCategoryFilter($this->getCategory());
             $collection->addStoreFilter();
-            $numProducts = $this->getProductCount() ? $this->getProductCount() : 4;
-            $collection->setPage(1, $numProducts);
-            $this->_productCollection = $collection;
+            $numProductsToDisplay = $this->getData('product_count') ?? self::DEFAULT_NUMBER_OF_PRODUCTS_DISPLAYED;
+            $collection->setPage(1, $numProductsToDisplay);
+            $this->setCollection($collection);
         }
 
-        return $this->_productCollection;
+        return $this->_getProductCollection();
     }
 
     /**
@@ -72,9 +77,9 @@ class ProductList extends \Magento\Catalog\Block\Product\ListProduct
     public function getToolbarBlock()
     {
         $toolbar = parent::getToolbarBlock();
-        $pageSize = $this->getProductCount() ? $this->getProductCount() : 4;
-        if ($pageSize) {
-            $toolbar->setData('_current_limit', $pageSize);
+        $numProductsToDisplay = $this->getData('product_count') ?? self::DEFAULT_NUMBER_OF_PRODUCTS_DISPLAYED;
+        if ($numProductsToDisplay) {
+            $toolbar->setData('_current_limit', $numProductsToDisplay);
         }
         return $toolbar;
     }
@@ -94,12 +99,11 @@ class ProductList extends \Magento\Catalog\Block\Product\ListProduct
      */
     private function getCategory()
     {
-        $category = '';
+        $category = null;
         if ($this->getCategoryId()) {
             try {
                 $category = $this->categoryRepository->get($this->getCategoryId());
             } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
-                $category = null;
             }
         }
 
