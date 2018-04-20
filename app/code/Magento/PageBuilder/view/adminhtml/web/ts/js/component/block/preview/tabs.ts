@@ -44,7 +44,7 @@ export default class Tabs extends PreviewCollection {
                 },
             });
         }
-    }, 50);
+    }, 10);
 
     /**
      * @param {ContentTypeInterface} parent
@@ -155,10 +155,10 @@ export default class Tabs extends PreviewCollection {
                 const mountFunction = (event: Event, params: BlockMountEventParamsInterface) => {
                     if (params.id === tab.id) {
                         this.setFocusedTab(this.parent.children().length - 1);
-                        EventBus.off("tab-item:block:dropped:create", mountFunction);
+                        EventBus.off("tab-item:block:mount", mountFunction);
                     }
                 };
-                EventBus.on("tab-item:block:dropped:create", mountFunction);
+                EventBus.on("tab-item:block:mount", mountFunction);
                 this.parent.addChild(tab, this.parent.children().length);
 
                 // Update the default tab title when adding a new tab

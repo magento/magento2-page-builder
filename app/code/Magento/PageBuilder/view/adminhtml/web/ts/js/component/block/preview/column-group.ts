@@ -376,7 +376,7 @@ export default class ColumnGroup extends PreviewCollection {
                     // Check if we're moving within the same group, even though this function will
                     // only ever run on the group that bound the draggable event
                     if (draggedColumn.parent === this.parent) {
-                        (this.parent as ColumnGroupBlock).onColumnSort(draggedColumn, this.movePosition.insertIndex);
+                        this.onColumnSort(draggedColumn, this.movePosition.insertIndex);
                         this.movePosition = null;
                     }
                 }
@@ -560,7 +560,7 @@ export default class ColumnGroup extends PreviewCollection {
 
                         this.resizeLastColumnInPair = modifyColumnInPair;
 
-                        (this.parent as ColumnGroupBlock).onColumnResize(
+                        this.onColumnResize(
                             mainColumn,
                             newColumnWidth.width,
                             adjustedColumn,

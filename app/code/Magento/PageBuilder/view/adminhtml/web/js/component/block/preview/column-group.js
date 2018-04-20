@@ -353,7 +353,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "un
             // Check if we're moving within the same group, even though this function will
             // only ever run on the group that bound the draggable event
             if (draggedColumn.parent === _this3.parent) {
-              _this3.parent.onColumnSort(draggedColumn, _this3.movePosition.insertIndex);
+              _this3.onColumnSort(draggedColumn, _this3.movePosition.insertIndex);
 
               _this3.movePosition = null;
             }
@@ -535,7 +535,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "un
               this.recordResizeHistory(usedHistory, direction, _adjustedColumn, _modifyColumnInPair);
               this.resizeLastPosition = newColumnWidth.position;
               this.resizeLastColumnInPair = _modifyColumnInPair;
-              this.parent.onColumnResize(mainColumn, newColumnWidth.width, _adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
+              this.onColumnResize(mainColumn, newColumnWidth.width, _adjustedColumn); // Wait for the render cycle to finish from the above resize before re-calculating
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
