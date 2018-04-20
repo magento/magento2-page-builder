@@ -44,8 +44,18 @@ export default class ContentType implements ContentTypeInterface {
         const eventName: string = this.id + ":updated";
         const paramObj: any = {};
         paramObj[this.id] = this;
-        this.store.subscribe(() => EventBus.trigger(eventName, paramObj));
+        this.store.subscribe(
+            () => EventBus.trigger(
+                eventName,
+                paramObj
+            )
+        );
 
-        this.store.subscribe(() => EventBus.trigger("stage:updated", {stageId: this.stageId}));
+        this.store.subscribe(
+            () => EventBus.trigger(
+                "stage:updated",
+                {stageId: this.stageId}
+            )
+        );
     }
 }

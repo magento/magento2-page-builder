@@ -11,7 +11,7 @@ import DataStore from "./component/data-store";
 export default interface ContentTypeInterface {
     id: string;
     stageId: string;
-    parent: this;
+    parent: ContentTypeInterface;
     config: ContentTypeConfigInterface,
     preview: Preview
     content: Content
