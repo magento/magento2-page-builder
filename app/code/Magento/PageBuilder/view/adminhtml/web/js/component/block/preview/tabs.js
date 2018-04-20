@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/preview-collection"], function (_jquery, _knockout, _tabs, _underscore, _eventBus, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_jquery, _knockout, _translate, _tabs, _underscore, _contentTypeFactory, _previewCollection, _config, _eventBus, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
@@ -64,7 +64,7 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         focusTabValue = value; // If we're stopping the interaction we need to wait, to ensure any other actions can complete
 
         _underscore.delay(function () {
-          if (focusTabValue === value) {//this.parent.stage.interacting(value !== null);
+          if (focusTabValue === value) {// this.parent.stage.interacting(value !== null);
           }
         }, value === null ? 200 : 0);
       });
@@ -109,10 +109,51 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
           if ((0, _jquery)(":focus").hasClass("tab-title") && (0, _jquery)(":focus").prop("contenteditable")) {
             document.execCommand("selectAll", false, null);
           } else {// If the active element isn't the tab title, we're not interacting with the stage
-            //this.parent.stage.interacting(false);
+            // this.parent.stage.interacting(false);
           }
         });
       }
+    };
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<OptionInterface>}
+     */
+
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+
+      options.push(new _option.Option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add"), this.addTab, ["add-child"], 10));
+      return options;
+    };
+    /**
+     * Add a tab
+     */
+
+
+    _proto.addTab = function addTab() {
+      var _this2 = this;
+
+      this.setActiveTab(this.parent.children().length - 1);
+      (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.parent, this.parent.stageId).then(function (tab) {
+        _underscore.defer(function () {
+          var mountFunction = function mountFunction(event, params) {
+            if (params.id === tab.id) {
+              _this2.setFocusedTab(_this2.parent.children().length - 1);
+
+              _eventBus.off("tab-item:block:dropped:create", mountFunction);
+            }
+          };
+
+          _eventBus.on("tab-item:block:dropped:create", mountFunction);
+
+          _this2.parent.addChild(tab, _this2.parent.children().length); // Update the default tab title when adding a new tab
+
+
+          tab.store.updateKey(tab.id, (0, _translate)("Tab") + " " + (_this2.parent.children.indexOf(tab) + 1), "tab_name");
+        });
+      });
     };
     /**
      * On render init the tabs widget
@@ -154,6 +195,77 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
         marginBottom: "-" + headerStyles.borderWidth,
         marginLeft: "-" + headerStyles.borderWidth
       };
+    };
+    /**
+     * Bind events for the current instance
+     */
+
+
+    _proto.bindEvents = function bindEvents() {
+      var _this3 = this;
+
+      _PreviewCollection.prototype.bindEvents.call(this); // Block being mounted onto container
+
+
+      _eventBus.on("tabs:block:ready", function (event, params) {
+        if (params.id === _this3.parent.id && _this3.parent.children().length === 0) {
+          _this3.addTab();
+        }
+      }); // Block being removed from container
+
+
+      _eventBus.on("tab-item:block:removed", function (event, params) {
+        if (params.parent.id === _this3.parent.id) {
+          // Mark the previous slide as active
+          var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
+
+          _this3.setFocusedTab(newIndex);
+        }
+      }); // Capture when a block is duplicated within the container
+
+
+      var duplicatedTab;
+      var duplicatedTabIndex;
+
+      _eventBus.on("tab-item:block:duplicate", function (event, params) {
+        if (params.duplicate.parent.id === _this3.parent.id) {
+          duplicatedTab = params.duplicate;
+          duplicatedTabIndex = params.index;
+        }
+      });
+
+      _eventBus.on("tab-item:block:mount", function (event, params) {
+        if (duplicatedTab && params.id === duplicatedTab.id) {
+          _this3.setFocusedTab(duplicatedTabIndex, true);
+
+          duplicatedTab = duplicatedTabIndex = null;
+        }
+
+        if (_this3.parent.id === params.block.parent.id) {
+          _this3.updateTabNamesInDataStore();
+
+          _this3.parent.store.subscribe(function () {
+            _this3.updateTabNamesInDataStore();
+          }, params.block.id);
+        }
+      });
+    };
+    /**
+     * Update data store with active options
+     */
+
+
+    _proto.updateTabNamesInDataStore = function updateTabNamesInDataStore() {
+      var activeOptions = [];
+      this.parent.children().forEach(function (tab, index) {
+        var tabData = tab.store.get(tab.id);
+        activeOptions.push({
+          label: tabData.tab_name.toString(),
+          labeltitle: tabData.tab_name.toString(),
+          value: index
+        });
+      });
+      this.parent.parent.store.updateKey(this.parent.id, activeOptions, "_default_active_options");
     };
 
     return Tabs;

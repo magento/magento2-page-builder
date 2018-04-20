@@ -22,8 +22,6 @@ define(["Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/component/e
       _this = _ContentType.call(this, parent, config, stageId) || this;
       _this.collection = new _collection();
 
-      _this.bindEvents();
-
       _this.collection.getChildren().subscribe(function () {
         return _eventBus.trigger("stage:updated", {
           stageId: _this.stageId

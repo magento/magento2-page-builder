@@ -5,10 +5,22 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 import "tabs";
 import _ from "underscore";
-import EventBus from "../../event-bus";
+import ContentTypeConfigInterface from "../../../content-type-config.d";
+import createContentType from "../../../content-type-factory";
+import ContentTypeInterface from "../../../content-type.d";
+import ObservableUpdater from "../../../observable-updater";
 import PreviewCollection from "../../../preview-collection";
+import BlockRemovedParamsInterface from "../../block-removed-params";
+import Config from "../../config";
+import EventBus from "../../event-bus";
+import {Option} from "../../stage/structural/options/option";
+import {OptionInterface} from "../../stage/structural/options/option.d";
+import {BlockCreateEventParamsInterface} from "../block-create-event-params.d";
+import {BlockMountEventParamsInterface} from "../block-mount-event-params.d";
+import {BlockReadyEventParamsInterface} from "../block-ready-event-params.d";
 
 export default class Tabs extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable();
@@ -34,7 +46,6 @@ export default class Tabs extends PreviewCollection {
         }
     }, 50);
 
-
     /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
@@ -47,17 +58,17 @@ export default class Tabs extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        EventBus.on("tabs:block:ready", (event: Event, params: BlockReadyEventParams) => {
+        EventBus.on("tabs:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
             if (params.id === this.parent.id && this.element) {
                 this.buildTabs();
             }
         });
-        EventBus.on("tab-item:block:create", (event: Event, params: BlockCreateEventParams) => {
+        EventBus.on("tab-item:block:create", (event: Event, params: BlockCreateEventParamsInterface) => {
             if (this.element && params.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }
         });
-        EventBus.on("tab-item:block:removed", (event: Event, params: BlockCreateEventParams) => {
+        EventBus.on("tab-item:block:removed", (event: Event, params: BlockCreateEventParamsInterface) => {
             if (this.element && params.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }
@@ -69,7 +80,7 @@ export default class Tabs extends PreviewCollection {
             // If we're stopping the interaction we need to wait, to ensure any other actions can complete
             _.delay(() => {
                 if (focusTabValue === value) {
-                    //this.parent.stage.interacting(value !== null);
+                    // this.parent.stage.interacting(value !== null);
                 }
             }, (value === null ? 200 : 0));
         });
@@ -103,10 +114,61 @@ export default class Tabs extends PreviewCollection {
                     document.execCommand("selectAll", false, null);
                 } else {
                     // If the active element isn't the tab title, we're not interacting with the stage
-                    //this.parent.stage.interacting(false);
+                    // this.parent.stage.interacting(false);
                 }
             });
         }
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<OptionInterface>}
+     */
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
+        options.push(
+            new Option(
+                this,
+                "add",
+                "<i class='icon-pagebuilder-add'></i>",
+                $t("Add"),
+                this.addTab,
+                ["add-child"],
+                10,
+            ),
+        );
+        return options;
+    }
+
+    /**
+     * Add a tab
+     */
+    public addTab() {
+        this.setActiveTab(this.parent.children().length - 1);
+        createContentType(
+            Config.getContentTypeConfig("tab-item"),
+            this.parent,
+            this.parent.stageId,
+        ).then((tab) => {
+            _.defer(() => {
+                const mountFunction = (event: Event, params: BlockMountEventParamsInterface) => {
+                    if (params.id === tab.id) {
+                        this.setFocusedTab(this.parent.children().length - 1);
+                        EventBus.off("tab-item:block:dropped:create", mountFunction);
+                    }
+                };
+                EventBus.on("tab-item:block:dropped:create", mountFunction);
+                this.parent.addChild(tab, this.parent.children().length);
+
+                // Update the default tab title when adding a new tab
+                tab.store.updateKey(
+                    tab.id,
+                    $t("Tab") + " " + (this.parent.children.indexOf(tab) + 1),
+                    "tab_name",
+                );
+            });
+        });
     }
 
     /**
@@ -146,6 +208,70 @@ export default class Tabs extends PreviewCollection {
             marginLeft: "-" + headerStyles.borderWidth,
         };
     }
+
+    /**
+     * Bind events for the current instance
+     */
+    protected bindEvents() {
+        super.bindEvents();
+        // Block being mounted onto container
+        EventBus.on("tabs:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
+            if (params.id === this.parent.id && this.parent.children().length === 0) {
+                this.addTab();
+            }
+        });
+
+        // Block being removed from container
+        EventBus.on("tab-item:block:removed", (event, params: BlockRemovedParamsInterface) => {
+            if (params.parent.id === this.parent.id) {
+                // Mark the previous slide as active
+                const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
+                this.setFocusedTab(newIndex);
+            }
+        });
+
+        // Capture when a block is duplicated within the container
+        let duplicatedTab: Block;
+        let duplicatedTabIndex: number;
+        EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
+            if (params.duplicate.parent.id === this.parent.id) {
+                duplicatedTab = params.duplicate;
+                duplicatedTabIndex = params.index;
+            }
+        });
+        EventBus.on("tab-item:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
+            if (duplicatedTab && params.id === duplicatedTab.id) {
+                this.setFocusedTab(duplicatedTabIndex, true);
+                duplicatedTab = duplicatedTabIndex = null;
+            }
+            if (this.parent.id === params.block.parent.id) {
+                this.updateTabNamesInDataStore();
+                this.parent.store.subscribe(() => {
+                    this.updateTabNamesInDataStore();
+                }, params.block.id);
+            }
+        });
+    }
+
+    /**
+     * Update data store with active options
+     */
+    private updateTabNamesInDataStore() {
+        const activeOptions: ActiveOptions[] = [];
+        this.parent.children().forEach((tab: Block, index: number) => {
+            const tabData = tab.store.get(tab.id);
+            activeOptions.push({
+                label: tabData.tab_name.toString(),
+                labeltitle: tabData.tab_name.toString(),
+                value: index,
+            });
+        });
+        this.parent.parent.store.updateKey(
+            this.parent.id,
+            activeOptions,
+            "_default_active_options",
+        );
+    }
 }
 
 // Resolve issue with jQuery UI tabs blocking events on content editable areas
@@ -157,3 +283,9 @@ $.ui.tabs.prototype._tabKeydown = function(event: Event) {
     }
     originalTabKeyDown.call(this, event);
 };
+
+export interface ActiveOptions {
+    label: string;
+    labeltitle: string;
+    value: number;
+}

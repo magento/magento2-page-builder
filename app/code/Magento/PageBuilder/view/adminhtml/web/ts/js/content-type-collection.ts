@@ -24,7 +24,6 @@ export default class ContentTypeCollection extends ContentType implements Conten
         stageId: string,
     ) {
         super(parent, config, stageId);
-        this.bindEvents();
         this.collection.getChildren()
             .subscribe(
                 () => EventBus.trigger("stage:updated", {stageId: this.stageId}),
