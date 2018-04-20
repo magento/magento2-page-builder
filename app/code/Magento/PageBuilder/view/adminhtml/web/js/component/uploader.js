@@ -25,10 +25,6 @@ define(["uiEvents", "uiLayout", "uiRegistry"], function (_uiEvents, _uiLayout, _
      * @param {Object} config
      */
     function Uploader(id, name, config) {
-      if (config === void 0) {
-        config = Uploader.getDefaultConfig();
-      }
-
       this.id = void 0;
       this.name = void 0;
       this.config = void 0;

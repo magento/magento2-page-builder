@@ -29,7 +29,7 @@ export default class Uploader {
      * @param {String} name - Name to use for lookup reference in registry
      * @param {Object} config
      */
-    constructor(id: string, name: string, config: object = Uploader.getDefaultConfig()) {
+    constructor(id: string, name: string, config: object) {
         config.id = this.id = id;
         config.name = this.name = name;
 
