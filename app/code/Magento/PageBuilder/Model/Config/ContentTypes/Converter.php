@@ -451,8 +451,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
 
             switch ($xsiType) {
                 case 'object':
-                    $value = $parsedArray['value'];
-                    $providerInstance = $this->providerFactory->createInstance($value);
+                    $providerInstance = $this->providerFactory->createInstance($parsedArray['value']);
                     $convertedArray[$name] = $providerInstance->getData($name)[$name];
                     break;
                 case 'array':
@@ -467,9 +466,15 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                     }
 
                     break;
+                case 'number':
+                case 'int':
+                    $convertedArray[$name] = filter_var($parsedArray['value'], FILTER_VALIDATE_INT);
+                    break;
+                case 'boolean':
+                    $convertedArray[$name] = filter_var($parsedArray['value'], FILTER_VALIDATE_BOOLEAN);
+                    break;
                 default:
-                    $value = $parsedArray['value'];
-                    $convertedArray[$name] = $value;
+                    $convertedArray[$name] = $parsedArray['value'];
                     break;
             }
 
