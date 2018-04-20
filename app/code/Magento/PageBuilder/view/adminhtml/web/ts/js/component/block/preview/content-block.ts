@@ -9,7 +9,7 @@ import EventBus from "../../event-bus";
 
 export default class ContentBlock extends Preview {
     /**
-     * Bind events for the current instance
+     * Bind events
      */
     protected bindEvents() {
         super.bindEvents();

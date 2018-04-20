@@ -106,6 +106,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/component/block/appear
      * @param {object} config
      * @param {DataObject} data
      * @returns {object}
+     * @deprecated
      */
 
 
@@ -148,6 +149,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/component/block/appear
      * @param {object}config
      * @param {object}data
      * @returns {object}
+     * @deprecated
      */
 
 
@@ -202,6 +204,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/component/block/appear
      * @param {object} config
      * @param {DataObject} data
      * @returns {string}
+     * @deprecated
      */
 
 
@@ -221,6 +224,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/component/block/appear
      * @param {Object} data
      * @param {Object} convertersConfig
      * @returns {Object}
+     * @deprecated
      */
 
 

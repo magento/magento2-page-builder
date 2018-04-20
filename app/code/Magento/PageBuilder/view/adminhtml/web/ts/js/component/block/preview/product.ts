@@ -10,7 +10,7 @@ import EventBus from "../../event-bus";
 export default class Product extends Preview {
 
     /**
-     * Bind events for the current instance
+     * Bind events
      */
     protected bindEvents() {
         super.bindEvents();

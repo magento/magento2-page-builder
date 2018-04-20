@@ -33,7 +33,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/content-
       return _this;
     }
     /**
-     * Bind events for the current instance
+     * Bind events
      */
 
 

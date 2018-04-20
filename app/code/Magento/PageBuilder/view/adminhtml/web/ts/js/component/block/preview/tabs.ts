@@ -215,7 +215,7 @@ export default class Tabs extends PreviewCollection {
     }
 
     /**
-     * Bind events for the current instance
+     * Bind events
      */
     protected bindEvents() {
         super.bindEvents();

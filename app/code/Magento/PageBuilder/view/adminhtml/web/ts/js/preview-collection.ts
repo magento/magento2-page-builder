@@ -52,7 +52,6 @@ export default class PreviewCollection extends Preview {
                 child.parent.addChild(duplicate, index);
             }
             this.dispatchContentTypeCloneEvents(child, duplicate, index);
-
         });
     }
 

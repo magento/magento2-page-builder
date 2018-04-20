@@ -205,7 +205,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       };
     };
     /**
-     * Bind events for the current instance
+     * Bind events
      */
 
 

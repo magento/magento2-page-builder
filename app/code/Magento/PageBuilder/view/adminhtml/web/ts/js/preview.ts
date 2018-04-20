@@ -324,7 +324,7 @@ export default class Preview {
     }
 
     /**
-     * Bind events for the current instance
+     * Bind events
      */
     protected bindEvents() {
         EventBus.on("block:sortStart", this.onSortStart.bind(this.parent));

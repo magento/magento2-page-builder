@@ -262,7 +262,7 @@ export default class Slider extends PreviewCollection {
     }
 
     /**
-     * Bind events for the current instance
+     * Bind events
      */
     protected bindEvents() {
         super.bindEvents();

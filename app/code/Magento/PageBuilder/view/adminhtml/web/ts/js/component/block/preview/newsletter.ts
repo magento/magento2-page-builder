@@ -9,7 +9,7 @@ import EventBus from "../../event-bus";
 
 export default class Newsletter extends Preview {
     /**
-     * @inheritDoc
+     * Bind events
      */
     protected bindEvents() {
         super.bindEvents();

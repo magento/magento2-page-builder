@@ -260,7 +260,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       });
     };
     /**
-     * Bind events for the current instance
+     * Bind events
      */
 
 

@@ -46,7 +46,7 @@ export default class Column extends PreviewCollection {
     }
 
     /**
-     * Bind events for the current instance
+     * Bind events
      */
     public bindEvents() {
         super.bindEvents();

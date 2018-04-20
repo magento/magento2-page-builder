@@ -14,7 +14,7 @@ define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/conf
     var _proto = ContentBlock.prototype;
 
     /**
-     * Bind events for the current instance
+     * Bind events
      */
     _proto.bindEvents = function bindEvents() {
       var _this = this;

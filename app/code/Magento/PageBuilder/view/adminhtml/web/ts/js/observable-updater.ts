@@ -101,6 +101,7 @@ export default class ObservableUpdater {
      * @param {object} config
      * @param {DataObject} data
      * @returns {object}
+     * @deprecated
      */
     public convertAttributes(config: any, data: DataObject) {
         const result = {};
@@ -127,6 +128,7 @@ export default class ObservableUpdater {
      * @param {object}config
      * @param {object}data
      * @returns {object}
+     * @deprecated
      */
     public convertStyle(config: any, data: any) {
         const result = {};
@@ -164,6 +166,7 @@ export default class ObservableUpdater {
      * @param {object} config
      * @param {DataObject} data
      * @returns {string}
+     * @deprecated
      */
     public convertHtml(config: any, data: DataObject) {
         let value = data[config.html.var] || config.html.placeholder;
@@ -181,6 +184,7 @@ export default class ObservableUpdater {
      * @param {Object} data
      * @param {Object} convertersConfig
      * @returns {Object}
+     * @deprecated
      */
     public convertData(data: object, convertersConfig: object) {
         for (const converterConfig of convertersConfig) {
