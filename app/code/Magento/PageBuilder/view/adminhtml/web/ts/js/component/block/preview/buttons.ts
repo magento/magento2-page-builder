@@ -17,7 +17,7 @@ export default class Buttons extends PreviewCollection {
     public bindEvents() {
         super.bindEvents();
 
-        EventBus.on("buttons:block:ready", (event: Event, params: BlockMountEventParamsInterface) => {
+        EventBus.on("buttons:block:dropped:create", (event: Event, params: BlockMountEventParamsInterface) => {
             if (params.id === this.parent.id && this.parent.children().length === 0) {
                 this.addButton();
             }
