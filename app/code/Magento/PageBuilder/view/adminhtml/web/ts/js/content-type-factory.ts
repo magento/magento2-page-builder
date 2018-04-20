@@ -3,16 +3,16 @@
  * See COPYING.txt for license details.
  */
 
-import _ from "underscore";
 import loadModule from "Magento_PageBuilder/js/component/loader";
+import _ from "underscore";
+import BlockMountEventParamsInterface from "./component/block/block-mount-event-params.d";
+import ConfigFieldInterface from "./component/block/config-field.d";
+import FieldDefaultsInterface from "./component/block/field-defaults.d";
+import EventBus from "./component/event-bus";
 import contentFactory from "./content-factory";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 import previewFactory from "./preview-factory";
-import EventBus from "./component/event-bus";
-import BlockMountEventParamsInterface from "./component/block/block-mount-event-params.d";
-import ConfigFieldInterface from "./component/block/config-field.d";
-import FieldDefaultsInterface from "./component/block/field-defaults.d";
 
 /**
  * Create new content type

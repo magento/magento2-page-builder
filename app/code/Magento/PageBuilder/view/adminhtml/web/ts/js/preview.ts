@@ -10,7 +10,6 @@ import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm
 import _ from "underscore";
 import "./binding/live-edit";
 import appearanceConfig from "./component/block/appearance-config";
-import createContentType from "./content-type-factory";
 import "./component/block/preview/sortable/binding";
 import {DataObject} from "./component/data-store";
 import EventBus from "./component/event-bus";
@@ -23,6 +22,7 @@ import {Option} from "./component/stage/structural/options/option";
 import {OptionInterface} from "./component/stage/structural/options/option.d";
 import {TitleOption} from "./component/stage/structural/options/title";
 import ContentTypeConfigInterface from "./content-type-config.d";
+import createContentType from "./content-type-factory";
 import ContentTypeInterface from "./content-type.d";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";

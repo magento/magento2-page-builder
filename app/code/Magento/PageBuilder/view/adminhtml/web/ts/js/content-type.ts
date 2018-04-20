@@ -47,15 +47,15 @@ export default class ContentType implements ContentTypeInterface {
         this.store.subscribe(
             () => EventBus.trigger(
                 eventName,
-                paramObj
-            )
+                paramObj,
+            ),
         );
 
         this.store.subscribe(
             () => EventBus.trigger(
                 "stage:updated",
-                {stageId: this.stageId}
-            )
+                {stageId: this.stageId},
+            ),
         );
     }
 }

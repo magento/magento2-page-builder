@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["underscore", "Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/content-factory", "Magento_PageBuilder/js/preview-factory", "Magento_PageBuilder/js/component/event-bus"], function (_underscore, _loader, _contentFactory, _previewFactory, _eventBus) {
+define(["Magento_PageBuilder/js/component/loader", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/content-factory", "Magento_PageBuilder/js/preview-factory"], function (_loader, _underscore, _eventBus, _contentFactory, _previewFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

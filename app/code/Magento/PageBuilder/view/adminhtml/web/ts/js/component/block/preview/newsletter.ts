@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import Preview from "../../../preview";
 import Config from "../../config";
 import EventBus from "../../event-bus";
-import Preview from "../../../preview";
 
 export default class Newsletter extends Preview {
     /**

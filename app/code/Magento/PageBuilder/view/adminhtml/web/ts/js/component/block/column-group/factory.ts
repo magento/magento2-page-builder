@@ -2,10 +2,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+import createContentType from "../../../content-type-factory";
 import Config from "../../config";
 import Column from "../column";
 import ColumnGroup from "../column-group";
-import createContentType from "../../../content-type-factory";
 
 /**
  * Create a column and add it to it's parent
