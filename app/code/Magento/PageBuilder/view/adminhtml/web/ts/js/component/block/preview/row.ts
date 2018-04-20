@@ -57,12 +57,12 @@ export default class Row extends PreviewBlock {
         super(parent, config);
 
         this.parent.stage.store.subscribe(this.buildJarallax);
-        events.on("row:block:ready", (event: Event, args: BlockReadyEventParams) => {
+        events.on("row:block:ready", (args: BlockReadyEventParams) => {
             if (args.id === this.parent.id) {
                 this.buildJarallax();
             }
         });
-        events.on("block:mount", (event: Event, args: BlockMountEventParams) => {
+        events.on("block:mount", (args: BlockMountEventParams) => {
             if (args.block.parent.id === this.parent.id) {
                 this.buildJarallax();
             }

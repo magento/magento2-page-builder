@@ -68,7 +68,7 @@ export default class Stage extends EditableArea implements StageInterface {
 
         // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
         // can occur concurrently.
-        events.on("stage:updated", (event, args) => {
+        events.on("stage:updated", (args: {[key: string]: any}) => {
             if (args.stage.id === this.id) {
                 this.saveRenderTree.call(this);
             }

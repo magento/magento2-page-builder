@@ -18,21 +18,21 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore",
 
       _this = _Block.call(this, parent, stage, config, formData) || this;
 
-      _uiEvents.on("block:removed", function (event, args) {
+      _uiEvents.on("block:removed", function (args) {
         if (args.parent.id === _this.id) {
           _this.spreadWidth(event, args);
         }
       }); // Listen for resizing events from child columns
 
 
-      _uiEvents.on("column:bindResizeHandle", function (event, args) {
+      _uiEvents.on("column:bindResizeHandle", function (args) {
         // Does the events parent match the previews parent? (e.g. column group)
-        if (params.parent.id === _this.id) {
+        if (args.parent.id === _this.id) {
           _this.preview.registerResizeHandle(args.column, args.handle);
         }
       });
 
-      _uiEvents.on("column:initElement", function (event, args) {
+      _uiEvents.on("column:initElement", function (args) {
         // Does the events parent match the previews parent? (e.g. column group)
         if (args.parent.id === _this.id) {
           _this.preview.bindDraggable(args.column);

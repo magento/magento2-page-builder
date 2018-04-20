@@ -85,7 +85,7 @@ export default class Slider extends PreviewBlock {
 
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
-        events.on("slider:block:ready", (event: Event, args: BlockReadyEventParams) => {
+        events.on("slider:block:ready", (args: BlockReadyEventParams) => {
             if (args.id === this.parent.id) {
                 sliderReady = true;
             }
@@ -95,14 +95,14 @@ export default class Slider extends PreviewBlock {
         this.parent.stage.store.subscribe(this.buildSlick);
 
         // Set the active slide to the new position of the sorted slide
-        events.on("previewSortable:sortupdate", (event: Event, args: PreviewSortableSortUpdateEventParams) => {
+        events.on("previewSortable:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
             if (args.instance.id === this.parent.id) {
                 $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(args.newPosition);
             }
         });
         // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
-        events.on("slide:block:removed", (event: Event, args: BlockRemovedParams) => {
+        events.on("slide:block:removed", (args: BlockRemovedParams) => {
             if (args.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
                 const data = this.parent.children().slice(0);
@@ -111,7 +111,7 @@ export default class Slider extends PreviewBlock {
             }
         });
         // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
-        events.on("slide:block:create", (event: Event, args: BlockCreateEventParams) => {
+        events.on("slide:block:create", (args: BlockCreateEventParams) => {
             if (this.element && sliderReady && args.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }

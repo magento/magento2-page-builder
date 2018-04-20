@@ -68,7 +68,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
       }, 10);
       var sliderReady = false;
 
-      _uiEvents.on("slider:block:ready", function (event, args) {
+      _uiEvents.on("slider:block:ready", function (args) {
         if (args.id === _this.parent.id) {
           sliderReady = true;
         }
@@ -79,7 +79,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
       _this.parent.stage.store.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
 
 
-      _uiEvents.on("previewSortable:sortupdate", function (event, args) {
+      _uiEvents.on("previewSortable:sortupdate", function (args) {
         if (args.instance.id === _this.parent.id) {
           (0, _jquery)(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
 
@@ -88,7 +88,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
       }); // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
 
 
-      _uiEvents.on("slide:block:removed", function (event, args) {
+      _uiEvents.on("slide:block:removed", function (args) {
         if (args.block.parent.id === _this.parent.id) {
           _this.forceContainerHeight();
 
@@ -101,7 +101,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
       }); // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
 
 
-      _uiEvents.on("slide:block:create", function (event, args) {
+      _uiEvents.on("slide:block:create", function (args) {
         if (_this.element && sliderReady && args.block.parent.id === _this.parent.id) {
           _this.forceContainerHeight();
         }

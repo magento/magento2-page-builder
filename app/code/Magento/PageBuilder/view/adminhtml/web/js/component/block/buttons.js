@@ -18,7 +18,7 @@ define(["uiEvents", "Magento_PageBuilder/js/component/block/factory", "Magento_P
 
       _Block.prototype.bindEvents.call(this);
 
-      _uiEvents.on("buttons:block:ready", function (event, args) {
+      _uiEvents.on("buttons:block:ready", function (args) {
         if (args.id === _this.id && _this.children().length === 0) {
           _this.addButton();
         }

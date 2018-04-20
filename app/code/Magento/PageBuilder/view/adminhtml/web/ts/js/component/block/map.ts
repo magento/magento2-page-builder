@@ -16,7 +16,7 @@ export default class Map extends Block {
         super.bindEvents();
 
         // When a map is dropped for the first time open the edit panel
-        events.on("map:block:dropped:create", (event: Event, args: {[key: string]: any}) => {
+        events.on("map:block:dropped:create", (args: {[key: string]: any}) => {
             if (args.id === this.id) {
                 setTimeout(() => {
                     this.edit.open();

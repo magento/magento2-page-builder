@@ -50,7 +50,7 @@ export default class Tabs extends Block {
             this.stage,
         ).then((tab) => {
             _.defer(() => {
-                const mountFunction = (event: Event, args: BlockMountEventParams) => {
+                const mountFunction = (args: BlockMountEventParams) => {
                     if (args.id === tab.id) {
                         (this.preview as TabsPreview).setFocusedTab(this.children().length - 1);
                         events.off("tab-item:block:mount:add");
@@ -75,14 +75,14 @@ export default class Tabs extends Block {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        events.on("tabs:block:ready", (event: Event, args: BlockReadyEventParams) => {
+        events.on("tabs:block:ready", (args: BlockReadyEventParams) => {
             if (args.id === this.id && this.children().length === 0) {
                 this.addTab();
             }
         });
 
         // Block being removed from container
-        events.on("tab-item:block:removed", (event, args: BlockRemovedParams) => {
+        events.on("tab-item:block:removed", (args: BlockRemovedParams) => {
             if (args.parent.id === this.id) {
                 // Mark the previous slide as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
@@ -93,13 +93,13 @@ export default class Tabs extends Block {
         // Capture when a block is duplicated within the container
         let duplicatedTab: Block;
         let duplicatedTabIndex: number;
-        events.on("tab-item:block:duplicate", (event, args: BlockDuplicateEventParams) => {
+        events.on("tab-item:block:duplicate", (args: BlockDuplicateEventParams) => {
             if (args.duplicate.parent.id === this.id) {
                 duplicatedTab = args.duplicate;
                 duplicatedTabIndex = args.index;
             }
         });
-        events.on("tab-item:block:mount", (event: Event, args: BlockMountEventParams) => {
+        events.on("tab-item:block:mount", (args: BlockMountEventParams) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {
                 (this.preview as TabsPreview).setFocusedTab(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;

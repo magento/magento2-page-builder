@@ -35,20 +35,20 @@ export default class ColumnGroup extends Block {
     constructor(parent: EditableArea, stage: Stage, config: ConfigContentBlock, formData: any) {
         super(parent, stage, config, formData);
 
-        events.on("block:removed", (event, args: BlockRemovedParams) => {
+        events.on("block:removed", (args: BlockRemovedParams) => {
             if (args.parent.id === this.id) {
                 this.spreadWidth(event, args);
             }
         });
 
         // Listen for resizing events from child columns
-        events.on("column:bindResizeHandle", (event, args) => {
+        events.on("column:bindResizeHandle", (args) => {
             // Does the events parent match the previews parent? (e.g. column group)
-            if (params.parent.id === this.id) {
+            if (args.parent.id === this.id) {
                 (this.preview as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
             }
         });
-        events.on("column:initElement", (event, args) => {
+        events.on("column:initElement", (args) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.id) {
                 (this.preview as ColumnGroupPreview).bindDraggable(args.column);

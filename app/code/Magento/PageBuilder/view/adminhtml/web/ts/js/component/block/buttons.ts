@@ -15,7 +15,7 @@ export default class Buttons extends Block {
     public bindEvents() {
         super.bindEvents();
 
-        events.on("buttons:block:ready", (event: Event, args: BlockMountEventParams) => {
+        events.on("buttons:block:ready", (args: BlockMountEventParams) => {
             if (args.id === this.id && this.children().length === 0) {
                 this.addButton();
             }

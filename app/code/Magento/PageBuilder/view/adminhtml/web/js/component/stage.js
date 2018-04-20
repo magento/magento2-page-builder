@@ -71,7 +71,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
       // can occur concurrently.
 
-      _uiEvents.on("stage:updated", function (event, args) {
+      _uiEvents.on("stage:updated", function (args) {
         if (args.stage.id === _this2.id) {
           _this2.saveRenderTree.call(_this2);
         }

@@ -35,7 +35,7 @@ define(["mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/comp
       this.preview.setActiveTab(this.children().length - 1);
       (0, _factory)(_config.getInitConfig("content_types")["tab-item"], this, this.stage).then(function (tab) {
         _underscore.defer(function () {
-          var mountFunction = function mountFunction(event, args) {
+          var mountFunction = function mountFunction(args) {
             if (args.id === tab.id) {
               _this.preview.setFocusedTab(_this.children().length - 1);
 
@@ -63,14 +63,14 @@ define(["mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/comp
       _Block.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
-      _uiEvents.on("tabs:block:ready", function (event, args) {
+      _uiEvents.on("tabs:block:ready", function (args) {
         if (args.id === _this2.id && _this2.children().length === 0) {
           _this2.addTab();
         }
       }); // Block being removed from container
 
 
-      _uiEvents.on("tab-item:block:removed", function (event, args) {
+      _uiEvents.on("tab-item:block:removed", function (args) {
         if (args.parent.id === _this2.id) {
           // Mark the previous slide as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
@@ -83,14 +83,14 @@ define(["mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/comp
       var duplicatedTab;
       var duplicatedTabIndex;
 
-      _uiEvents.on("tab-item:block:duplicate", function (event, args) {
+      _uiEvents.on("tab-item:block:duplicate", function (args) {
         if (args.duplicate.parent.id === _this2.id) {
           duplicatedTab = args.duplicate;
           duplicatedTabIndex = args.index;
         }
       });
 
-      _uiEvents.on("tab-item:block:mount", function (event, args) {
+      _uiEvents.on("tab-item:block:mount", function (args) {
         if (duplicatedTab && args.id === duplicatedTab.id) {
           _this2.preview.setFocusedTab(duplicatedTabIndex, true);
 

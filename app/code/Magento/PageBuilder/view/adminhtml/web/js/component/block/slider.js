@@ -34,8 +34,8 @@ define(["mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/comp
 
       (0, _factory)(_config.getInitConfig("content_types").slide, this, this.stage).then(function (slide) {
         _underscore.delay(function () {
-          var mountFn = function mountFn(event, params) {
-            if (params.id === slide.id) {
+          var mountFn = function mountFn(args) {
+            if (args.id === slide.id) {
               _this.preview.navigateToSlide(_this.children().length - 1);
 
               _underscore.delay(function () {
@@ -63,13 +63,14 @@ define(["mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/comp
       _Block.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
-      argsevents.on("slider:block:ready", function (event, args) {
+      _uiEvents.on("slider:block:ready", function (args) {
         if (args.id === _this2.id && _this2.children().length === 0) {
           _this2.addSlide();
         }
       }); // Block being removed from container
 
-      _uiEvents.on("slide:block:removed", function (event, args) {
+
+      _uiEvents.on("slide:block:removed", function (args) {
         if (args.parent.id === _this2.id) {
           // Mark the previous slide as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
@@ -84,14 +85,14 @@ define(["mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/comp
       var duplicatedSlide;
       var duplicatedSlideIndex;
 
-      _uiEvents.on("slide:block:duplicate", function (event, args) {
+      _uiEvents.on("slide:block:duplicate", function (args) {
         if (args.duplicate.parent.id === _this2.id) {
           duplicatedSlide = args.duplicate;
           duplicatedSlideIndex = args.index;
         }
       });
 
-      _uiEvents.on("slide:block:mount", function (event, args) {
+      _uiEvents.on("slide:block:mount", function (args) {
         if (duplicatedSlide && args.id === duplicatedSlide.id) {
           // Mark the new duplicate slide as active
           _this2.preview.navigateToSlide(duplicatedSlideIndex); // Force the focus of the slide, as the previous slide will have focus

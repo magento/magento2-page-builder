@@ -38,7 +38,7 @@ function fireBlockReadyEvent(block: Block, childrenLength: number) {
         fire();
     } else {
         let mountCounter = 0;
-        const eventCallback = (event: Event, args: BlockMountEventParams) => {
+        const eventCallback = (args: BlockMountEventParams) => {
             if (args.block.parent.id === block.id) {
                 mountCounter++;
 

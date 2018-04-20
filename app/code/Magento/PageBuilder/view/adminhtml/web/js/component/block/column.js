@@ -28,7 +28,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       _Block.prototype.bindEvents.call(this);
 
       if (_config.getContentType("column-group")) {
-        _uiEvents.on("column:block:mount", function (event, args) {
+        _uiEvents.on("column:block:mount", function (args) {
           if (args.id === _this2.id) {
             _this2.createColumnGroup();
           }

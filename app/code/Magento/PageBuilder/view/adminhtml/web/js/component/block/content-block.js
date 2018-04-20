@@ -27,7 +27,7 @@ define(["uiEvents", "Magento_PageBuilder/js/component/config", "Magento_PageBuil
 
       _Block.prototype.bindEvents.call(this);
 
-      _uiEvents.on("previewObservables:updated", function (event, args) {
+      _uiEvents.on("previewObservables:updated", function (args) {
         if (args.preview.id === _this2.id) {
           var attributes = _this2.data.main.attributes();
 

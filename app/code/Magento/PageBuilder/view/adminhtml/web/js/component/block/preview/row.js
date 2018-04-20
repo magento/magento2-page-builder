@@ -49,13 +49,13 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/jarallax/jarallax
 
       _this.parent.stage.store.subscribe(_this.buildJarallax);
 
-      _uiEvents.on("row:block:ready", function (event, args) {
+      _uiEvents.on("row:block:ready", function (args) {
         if (args.id === _this.parent.id) {
           _this.buildJarallax();
         }
       });
 
-      _uiEvents.on("block:mount", function (event, args) {
+      _uiEvents.on("block:mount", function (args) {
         if (args.block.parent.id === _this.parent.id) {
           _this.buildJarallax();
         }

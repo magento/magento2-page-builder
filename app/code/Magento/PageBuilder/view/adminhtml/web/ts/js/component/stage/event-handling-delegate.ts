@@ -12,7 +12,7 @@ import Stage from "../stage";
  * @param event
  * @param args
  */
-function onBlockRemoved(event: Event, args: BlockRemovedParams): void {
+function onBlockRemoved(args: BlockRemovedParams): void {
     args.parent.removeChild(args.block);
 
     // Remove the instance from the data store
@@ -25,7 +25,7 @@ function onBlockRemoved(event: Event, args: BlockRemovedParams): void {
  * @param {Event} event
  * @param {BlockInstanceDroppedParams} args
  */
-function onBlockInstanceDropped(event: Event, args: BlockInstanceDroppedParams): void {
+function onBlockInstanceDropped(args: BlockInstanceDroppedParams): void {
     const originalParent = args.blockInstance.parent;
     args.blockInstance.parent = args.parent;
     args.parent.addChild(args.blockInstance, args.index);
@@ -44,7 +44,7 @@ function onBlockInstanceDropped(event: Event, args: BlockInstanceDroppedParams):
  * @param {Event} event
  * @param {BlockDroppedParams} args
  */
-function onBlockDropped(event: Event, args: BlockDroppedParams) {
+function onBlockDropped(args: BlockDroppedParams) {
     const index = args.index || 0;
 
     new Promise<Block>((resolve, reject) => {
@@ -69,7 +69,7 @@ function onBlockDropped(event: Event, args: BlockDroppedParams) {
  * @param {Event} event
  * @param {BlockSortedParams} args
  */
-function onBlockSorted(event: Event, args: BlockSortedParams): void {
+function onBlockSorted(args: BlockSortedParams): void {
     const originalIndex = ko.utils.arrayIndexOf(args.parent.children(), args.block);
     if (originalIndex !== args.index) {
         moveArrayItem(args.parent.children, originalIndex, args.index);
@@ -82,10 +82,10 @@ function onBlockSorted(event: Event, args: BlockSortedParams): void {
  * @param {Event} event
  * @param {SortParams} args
  */
-function onSortingStart(event: Event, args: SortParams): void {
+function onSortingStart(args: SortParams): void {
     args.block.stage.showBorders(true);
 }
-function onSortingStop(event: Event, args: SortParams): void {
+function onSortingStop(args: SortParams): void {
     args.block.stage.showBorders(false);
 }
 
@@ -96,42 +96,42 @@ function onSortingStop(event: Event, args: SortParams): void {
  */
 export function handleEvents(stage: Stage) {
     // Block dropped from left hand panel
-    events.on("block:dropped", (event, args: BlockDroppedParams) => {
+    events.on("block:dropped", (args: BlockDroppedParams) => {
         if (args.parent.stage.id === stage.id) {
-            onBlockDropped(event, args);
+            onBlockDropped(args);
         }
     });
 
     // Block instance being moved between structural elements
-    events.on("block:instanceDropped", (event, args: BlockInstanceDroppedParams) => {
+    events.on("block:instanceDropped", (args: BlockInstanceDroppedParams) => {
         if (args.parent.stage.id === stage.id) {
-            onBlockInstanceDropped(event, args);
+            onBlockInstanceDropped(args);
         }
     });
 
     // Block being removed from container
-    events.on("block:removed", (event, args: BlockRemovedParams) => {
+    events.on("block:removed", (args: BlockRemovedParams) => {
         if (args.parent.stage.id === stage.id) {
-            onBlockRemoved(event, args);
+            onBlockRemoved(args);
         }
     });
 
     // Block sorted within the same structural element
-    events.on("block:sorted", (event, args: BlockSortedParams) => {
+    events.on("block:sorted", (args: BlockSortedParams) => {
         if (args.parent.stage.id === stage.id) {
-            onBlockSorted(event, args);
+            onBlockSorted(args);
         }
     });
 
     // Observe sorting actions
-    events.on("block:sortStart", (event, args: SortParams) => {
+    events.on("block:sortStart", (args: SortParams) => {
         if (args.block.stage.id === stage.id) {
-            onSortingStart(event, args);
+            onSortingStart(args);
         }
     });
-    events.on("block:sortStop", (event, args: SortParams) => {
+    events.on("block:sortStop", (args: SortParams) => {
         if (args.block.stage.id === stage.id) {
-            onSortingStop(event, args);
+            onSortingStop(args);
         }
     });
 }

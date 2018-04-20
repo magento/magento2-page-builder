@@ -6,7 +6,7 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/utils/array", "Magento_P
    * @param event
    * @param args
    */
-  function onBlockRemoved(event, args) {
+  function onBlockRemoved(args) {
     args.parent.removeChild(args.block); // Remove the instance from the data store
 
     args.parent.stage.store.remove(args.block.id);
@@ -19,7 +19,7 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/utils/array", "Magento_P
    */
 
 
-  function onBlockInstanceDropped(event, args) {
+  function onBlockInstanceDropped(args) {
     var originalParent = args.blockInstance.parent;
     args.blockInstance.parent = args.parent;
     args.parent.addChild(args.blockInstance, args.index);
@@ -39,7 +39,7 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/utils/array", "Magento_P
    */
 
 
-  function onBlockDropped(event, args) {
+  function onBlockDropped(args) {
     var index = args.index || 0;
     new Promise(function (resolve, reject) {
       if (args.block) {
@@ -73,7 +73,7 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/utils/array", "Magento_P
    */
 
 
-  function onBlockSorted(event, args) {
+  function onBlockSorted(args) {
     var originalIndex = _knockout.utils.arrayIndexOf(args.parent.children(), args.block);
 
     if (originalIndex !== args.index) {
@@ -88,11 +88,11 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/utils/array", "Magento_P
    */
 
 
-  function onSortingStart(event, args) {
+  function onSortingStart(args) {
     args.block.stage.showBorders(true);
   }
 
-  function onSortingStop(event, args) {
+  function onSortingStop(args) {
     args.block.stage.showBorders(false);
   }
   /**
@@ -104,43 +104,43 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/utils/array", "Magento_P
 
   function handleEvents(stage) {
     // Block dropped from left hand panel
-    _uiEvents.on("block:dropped", function (event, args) {
+    _uiEvents.on("block:dropped", function (args) {
       if (args.parent.stage.id === stage.id) {
-        onBlockDropped(event, args);
+        onBlockDropped(args);
       }
     }); // Block instance being moved between structural elements
 
 
-    _uiEvents.on("block:instanceDropped", function (event, args) {
+    _uiEvents.on("block:instanceDropped", function (args) {
       if (args.parent.stage.id === stage.id) {
-        onBlockInstanceDropped(event, args);
+        onBlockInstanceDropped(args);
       }
     }); // Block being removed from container
 
 
-    _uiEvents.on("block:removed", function (event, args) {
+    _uiEvents.on("block:removed", function (args) {
       if (args.parent.stage.id === stage.id) {
-        onBlockRemoved(event, args);
+        onBlockRemoved(args);
       }
     }); // Block sorted within the same structural element
 
 
-    _uiEvents.on("block:sorted", function (event, args) {
+    _uiEvents.on("block:sorted", function (args) {
       if (args.parent.stage.id === stage.id) {
-        onBlockSorted(event, args);
+        onBlockSorted(args);
       }
     }); // Observe sorting actions
 
 
-    _uiEvents.on("block:sortStart", function (event, args) {
+    _uiEvents.on("block:sortStart", function (args) {
       if (args.block.stage.id === stage.id) {
-        onSortingStart(event, args);
+        onSortingStart(args);
       }
     });
 
-    _uiEvents.on("block:sortStop", function (event, args) {
+    _uiEvents.on("block:sortStop", function (args) {
       if (args.block.stage.id === stage.id) {
-        onSortingStop(event, args);
+        onSortingStop(args);
       }
     });
   }

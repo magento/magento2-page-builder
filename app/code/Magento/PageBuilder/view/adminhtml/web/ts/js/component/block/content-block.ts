@@ -16,7 +16,7 @@ export default class ContentBlock extends Block {
     protected bindEvents() {
         super.bindEvents();
 
-        events.on("previewObservables:updated", (event, args) => {
+        events.on("previewObservables:updated", (args) => {
             if (args.preview.id === this.id) {
                 const attributes = this.data.main.attributes();
                 if (attributes["data-identifier"] === "") {

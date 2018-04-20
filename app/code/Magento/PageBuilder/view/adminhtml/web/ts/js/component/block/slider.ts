@@ -49,8 +49,8 @@ export default class Slider extends Block {
             this.stage,
         ).then((slide) => {
             _.delay(() => {
-                const mountFn = (event: Event, params: BlockMountEventParams) => {
-                    if (params.id === slide.id) {
+                const mountFn = (args: BlockMountEventParams) => {
+                    if (args.id === slide.id) {
                         (this.preview as SliderPreview).navigateToSlide(this.children().length - 1);
                         _.delay(() => {
                             slide.edit.open();
@@ -70,14 +70,14 @@ export default class Slider extends Block {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        argsevents.on("slider:block:ready", (event: Event, args: BlockReadyEventParams) => {
+        events.on("slider:block:ready", (args: BlockReadyEventParams) => {
             if (args.id === this.id && this.children().length === 0) {
                 this.addSlide();
             }
         });
 
         // Block being removed from container
-        events.on("slide:block:removed", (event, args: BlockRemovedParams) => {
+        events.on("slide:block:removed", (args: BlockRemovedParams) => {
             if (args.parent.id === this.id) {
                 // Mark the previous slide as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
@@ -89,13 +89,13 @@ export default class Slider extends Block {
         // Capture when a block is duplicated within the container
         let duplicatedSlide: Slide;
         let duplicatedSlideIndex: number;
-        events.on("slide:block:duplicate", (event, args: BlockDuplicateEventParams) => {
+        events.on("slide:block:duplicate", (args: BlockDuplicateEventParams) => {
             if (args.duplicate.parent.id === this.id) {
                 duplicatedSlide = (args.duplicate as Slide);
                 duplicatedSlideIndex = args.index;
             }
         });
-        events.on("slide:block:mount", (event: Event, args: BlockMountEventParams) => {
+        events.on("slide:block:mount", (args: BlockMountEventParams) => {
             if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 // Mark the new duplicate slide as active
                 (this.preview as SliderPreview).navigateToSlide(duplicatedSlideIndex);

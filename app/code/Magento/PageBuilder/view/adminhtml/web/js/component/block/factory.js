@@ -40,7 +40,7 @@ define(["Magento_PageBuilder/js/component/loader", "uiEvents", "Magento_PageBuil
     } else {
       var mountCounter = 0;
 
-      var eventCallback = function eventCallback(event, args) {
+      var eventCallback = function eventCallback(args) {
         if (args.block.parent.id === block.id) {
           mountCounter++;
 

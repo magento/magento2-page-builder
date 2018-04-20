@@ -25,7 +25,7 @@ export default class Column extends Block {
         super.bindEvents();
 
         if (Config.getContentType("column-group")) {
-            events.on("column:block:mount", (event: Event, args: BlockMountEventParams) => {
+            events.on("column:block:mount", (args: BlockMountEventParams) => {
                 if (args.id === this.id) {
                     this.createColumnGroup();
                 }

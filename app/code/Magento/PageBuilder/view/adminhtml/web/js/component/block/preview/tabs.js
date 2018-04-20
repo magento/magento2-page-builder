@@ -38,19 +38,19 @@ define(["jquery", "knockout", "tabs", "uiEvents", "underscore", "Magento_PageBui
         }
       }, 10);
 
-      _uiEvents.on("tabs:block:ready", function (event, args) {
+      _uiEvents.on("tabs:block:ready", function (args) {
         if (args.id === _this.parent.id && _this.element) {
           _this.buildTabs();
         }
       });
 
-      _uiEvents.on("tab-item:block:create", function (event, args) {
+      _uiEvents.on("tab-item:block:create", function (args) {
         if (_this.element && args.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
       });
 
-      _uiEvents.on("tab-item:block:removed", function (event, args) {
+      _uiEvents.on("tab-item:block:removed", function (args) {
         if (_this.element && args.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
