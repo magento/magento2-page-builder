@@ -70,6 +70,8 @@ export default class Content {
         if (element === undefined) {
             if ("css_classes" in data && data.css_classes !== "") {
                 css = data.css_classes.toString();
+            } else {
+                css = this.parent.preview.previewData.css_classes();
             }
         } else {
             const appearanceConfiguration = appearanceConfig(

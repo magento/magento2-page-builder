@@ -63,6 +63,8 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
       if (element === undefined) {
         if ("css_classes" in data && data.css_classes !== "") {
           css = data.css_classes.toString();
+        } else {
+          css = this.parent.preview.previewData.css_classes();
         }
       } else {
         var appearanceConfiguration = (0, _appearanceConfig)(this.parent.config.name, data.appearance);
