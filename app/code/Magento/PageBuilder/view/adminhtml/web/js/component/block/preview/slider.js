@@ -110,7 +110,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
 
       _this.focusedSlide.subscribe(function (value) {
-        _this.parent.parent.parent.interacting(value !== null);
+        if (value !== null) {
+          _eventBus.trigger("interaction:start", {});
+        } else {
+          _eventBus.trigger("interaction:stop", {});
+        }
       });
 
       return _this;

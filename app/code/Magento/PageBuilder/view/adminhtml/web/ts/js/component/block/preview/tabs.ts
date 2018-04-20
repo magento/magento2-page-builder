@@ -80,7 +80,11 @@ export default class Tabs extends PreviewCollection {
             // If we're stopping the interaction we need to wait, to ensure any other actions can complete
             _.delay(() => {
                 if (focusTabValue === value) {
-                    // this.parent.stage.interacting(value !== null);
+                    if (value !== null) {
+                        EventBus.trigger("interaction:start", {});
+                    } else {
+                        EventBus.trigger("interaction:stop", {});
+                    }
                 }
             }, (value === null ? 200 : 0));
         });
@@ -109,12 +113,13 @@ export default class Tabs extends PreviewCollection {
         this.focusedTab(index);
 
         if (this.element) {
+            this.element.getElementsByTagName("span")[index].focus();
             _.defer(() => {
-                if ($(":focus").hasClass("tab-title") && $(":focus").prop("contenteditable")) {
+                if ($(":focus").hasClass("tab-name") && $(":focus").prop("contenteditable")) {
                     document.execCommand("selectAll", false, null);
                 } else {
                     // If the active element isn't the tab title, we're not interacting with the stage
-                    // this.parent.stage.interacting(false);
+                    EventBus.trigger("interaction:stop", {});
                 }
             });
         }
@@ -266,7 +271,8 @@ export default class Tabs extends PreviewCollection {
                 value: index,
             });
         });
-        this.parent.parent.store.updateKey(
+
+        this.parent.store.updateKey(
             this.parent.id,
             activeOptions,
             "_default_active_options",

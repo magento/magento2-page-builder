@@ -132,7 +132,11 @@ export default class Slider extends PreviewCollection {
 
         // Set the stage to interacting when a slide is focused
         this.focusedSlide.subscribe((value: number) => {
-            this.parent.parent.parent.interacting(value !== null);
+            if (value !== null) {
+                EventBus.trigger("interaction:start", {});
+            } else {
+                EventBus.trigger("interaction:stop", {});
+            }
         });
     }
 

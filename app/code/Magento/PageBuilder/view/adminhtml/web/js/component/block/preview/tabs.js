@@ -64,7 +64,12 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
         focusTabValue = value; // If we're stopping the interaction we need to wait, to ensure any other actions can complete
 
         _underscore.delay(function () {
-          if (focusTabValue === value) {// this.parent.stage.interacting(value !== null);
+          if (focusTabValue === value) {
+            if (value !== null) {
+              _eventBus.trigger("interaction:start", {});
+            } else {
+              _eventBus.trigger("interaction:stop", {});
+            }
           }
         }, value === null ? 200 : 0);
       });
@@ -105,11 +110,14 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       this.focusedTab(index);
 
       if (this.element) {
+        this.element.getElementsByTagName("span")[index].focus();
+
         _underscore.defer(function () {
-          if ((0, _jquery)(":focus").hasClass("tab-title") && (0, _jquery)(":focus").prop("contenteditable")) {
+          if ((0, _jquery)(":focus").hasClass("tab-name") && (0, _jquery)(":focus").prop("contenteditable")) {
             document.execCommand("selectAll", false, null);
-          } else {// If the active element isn't the tab title, we're not interacting with the stage
-            // this.parent.stage.interacting(false);
+          } else {
+            // If the active element isn't the tab title, we're not interacting with the stage
+            _eventBus.trigger("interaction:stop", {});
           }
         });
       }
@@ -265,7 +273,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
           value: index
         });
       });
-      this.parent.parent.store.updateKey(this.parent.id, activeOptions, "_default_active_options");
+      this.parent.store.updateKey(this.parent.id, activeOptions, "_default_active_options");
     };
 
     return Tabs;
