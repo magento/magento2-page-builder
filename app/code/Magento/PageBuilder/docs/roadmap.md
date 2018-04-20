@@ -3,33 +3,42 @@
 This page lists the upcoming functionality and known issues for the PageBuilder project.
 
 ## Planned features and functionality
+* Overal experience on the stage
+  * Fliexible grid allows content builders to choose grid system to use: from 2 to 40 per each colulmns group. That alllows to build highly customized store pages. <!-- MAGETWO-87048 -->
+  * Ability to select color in ColorPicker <!-- MAGETWO-90240 -->
+  * Ability to set content vertical alignment inside a container <!-- MAGETWO-90242 -->
+  * Ability to use SVG file in the content <!-- MAGETWO-53778 -->
+* Text Block
+  * Text block enhancement to make it easier to see the content block on the stage and access its settings. <!-- MAGETWO-87070 -->
+  * Edit Text fcontent from Stage <!--MAGETWO-86724-->
+ * Accordion
+   * Ability to add content inside Accordion items <!-- MAGETWO-66514 -->
+   * Ability to add additional items to Accordion content and configure it within the stage <!-- MAGETWO-87046 -->
+   * Ability to configure Accordion behavior <!-- MAGETWO-87098 -->
+   * Ability to see a newly-dragged Accordion content block on the stage <!-- MAGETWO-87089 -->
+   * Ability to delete AccordionSection from the Stage <!-- MAGETWO-87053 -->
+   * Ability to rearrange AccordionSection containers inside an Accordion on the stage <!-- MAGETWO-87051 -->
+   * Ability to duplicate AccordionSection containers <!-- MAGETWO-88857 -->
+* Map
+  * Google Map API integration with the Map content block <!-- MAGETWO-88225 -->
+* Better Developer Experience
+  * Tutorial with code examples that shows how to Custom content blocks that meet the specific needs of a merchant. <!-- MAGETWO-72564 -->
+  * Improved exception handling <!-- MAGETWO-88348 -->
+  * Improved validation of `content_types.xml` <!-- MAGETWO-88379 -->
+  * Documentation on how to create custom appearances for PageBuilder blocks and containers <!-- MAGETWO-86522 -->
+  * Static test - investigate why existing test for LESS coding styles doesn't work for PageBuilder code <!-- MAGETWO-87592 -->
+  * Remove dependency on Column from Row migration renderer <!-- MAGETWO-88772 -->
+  * PageBuilder data separation for accordion <!--MAGETWO-89188-->
+  * Cleanup master format for accordion <!--MAGETWO-89226-->
+  * Stabilize PageBuilder tests related to EE functionality <!--MAGETWO-87898-->
+  * Generate translation for PageBuilder module <!--MAGETWO-88456-->
+  * TinyMCE v3.5.8 WYSIWYG as a deprecated module <!--MAGETWO-89695-->
+  * PageBuilder data separation, config improvements <!--MAGETWO-88351-->
+  * Unskip Tests Under Banner & Staging Directories <!--MAGETWO-90239-->
+  * Unskip unstable MFTF tests for env with Page Builder Part 2 <!-- MAGETWO-89829-->
+  * Add Tests to Update Advanced Configuration For Each Content Type 3 <!--MAGETWO-90175-->
 
-* *Text Block*
-** Text block enhancement to make it easier to see the content block on the stage and access its settings. <!-- MAGETWO-87070 -->
-** Edit Text fcontent from Stage <!--MAGETWO-86724-->
-* *Accordion*
-** Ability to add content inside Accordion items <!-- MAGETWO-66514 -->
-** Ability to add additional items to Accordion content and configure it within the stage <!-- MAGETWO-87046 -->
-** Ability to configure Accordion behavior <!-- MAGETWO-87098 -->
-** Ability to see a newly-dragged Accordion content block on the stage <!-- MAGETWO-87089 -->
-** Ability to delete AccordionSection from the Stage <!-- MAGETWO-87053 -->
-* Fliexible grid allows content builders to choose grid system to use: from 2 to 40. That alllows to build highly customized store pages. <!-- MAGETWO-87048 -->
-* Ability to select color in ColorPicker <!-- MAGETWO-90240 -->
-* Ability to set content vertical alignment inside a container <!-- MAGETWO-90242 -->
-* *Better Developer Experience*
-** Tutorial with code examples that shows how to Custom content blocks that meet the specific needs of a merchant. <!-- MAGETWO-72564 -->
-** Improved exception handling <!-- MAGETWO-88348 -->
 
-
-
-* Ability to cancel changes on the stage and revert to the previously saved state <!-- MAGETWO-87987 -->
-* Ability to rearrange AccordionSection containers inside an Accordion on the stage <!-- MAGETWO-87051 -->
-* Ability to duplicate AccordionSection containers <!-- MAGETWO-88857 -->
-* Google Map API integration with the Map content block <!-- MAGETWO-88225 -->
-* Custom appearances for PageBuilder blocks and containers <!-- MAGETWO-86522 -->
-* SVG file upload support <!-- MAGETWO-53778 -->
-* PageBuilder will be available as a marketplace extension <!-- MAGETWO-71246 -->
-* Improved validation of `content_types.xml` <!-- MAGETWO-88379 -->
 
 ## Known Issues
 
@@ -60,16 +69,4 @@ This page lists the upcoming functionality and known issues for the PageBuilder 
 * Disabled products still show up on the stage and storefront <!-- MAGETWO-90431 -->
 * Editing/Deleting a product that is tied to a page does not update a page on the storefront until the page is saved or the cache is flushed <!-- MAGETWO-90432 -->
 
-## Misc Issues
 
-* MAGETWO-87592 - Static test - investigate why existing test for LESS coding styles doesn't work for PageBuilder code
-* MAGETWO-88772 - Remove dependency on Column from Row migration renderer
-* MAGETWO-89188 - PageBuilder data separation for accordion
-* MAGETWO-89226 - Cleanup master format for accordion
-* MAGETWO-87898 - Stabilize PageBuilder tests related to EE functionality
-* MAGETWO-88456 - Generate translation for PageBuilder module
-* MAGETWO-89695 - TinyMCE v3.5.8 WYSIWYG as a deprecated module
-* MAGETWO-88351 - PageBuilder data separation, config improvements
-* MAGETWO-90239 - Unskip Tests Under Banner & Staging Directories
-* MAGETWO-89829 - Unskip unstable MFTF tests for env with Page Builder Part 2
-* MAGETWO-90175 - Add Tests to Update Advanced Configuration For Each Content Type 3
