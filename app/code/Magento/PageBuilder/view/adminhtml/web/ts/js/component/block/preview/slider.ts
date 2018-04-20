@@ -22,7 +22,7 @@ import BlockCreateEventParamsInterface from "../block-create-event-params.d";
 import BlockMountEventParamsInterface from "../block-mount-event-params.d";
 import BlockReadyEventParamsInterface from "../block-ready-event-params.d";
 import {default as SliderPreview} from "../preview/slider";
-import Slide from "../slide";
+import Slide from "./slide";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Slider extends PreviewCollection {
