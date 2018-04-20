@@ -8,6 +8,7 @@ import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
+import ContentTypeInterface from "../content-type.d";
 import {removeQuotesInMediaDirectives} from "../utils/directives";
 import Block from "./block/block";
 import Config from "./config";
@@ -71,7 +72,11 @@ function buildElementIntoStage(element: Element, parent: ContentTypeInterface, s
  * @param {stage} stage
  * @returns {Promise<ContentTypeInterface>}
  */
-function createElementBlock(element: HTMLElement, stage: Stage, parent?: ContentTypeInterface): Promise<ContentTypeInterface> {
+function createElementBlock(
+    element: HTMLElement,
+    stage: Stage,
+    parent?: ContentTypeInterface,
+): Promise<ContentTypeInterface> {
     parent = parent || stage;
     const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
     const config = Config.getContentTypeConfig(role);

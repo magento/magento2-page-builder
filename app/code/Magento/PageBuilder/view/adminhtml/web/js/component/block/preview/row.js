@@ -8,6 +8,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
     _inheritsLoose(Row, _PreviewCollection);
 
     /**
+     * Debounce and defer the init of Jarallax
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+
+    /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -96,12 +102,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       this.element = element;
       this.buildJarallax();
     };
-    /**
-     * Debounce and defer the init of Jarallax
-     *
-     * @type {(() => void) & _.Cancelable}
-     */
-
 
     return Row;
   }(_previewCollection);

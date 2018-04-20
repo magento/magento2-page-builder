@@ -340,6 +340,7 @@ export default class Preview {
      * After observables updated, allows to modify observables
      */
     protected afterObservablesUpdated(): void {
+        return;
     }
 
     /**

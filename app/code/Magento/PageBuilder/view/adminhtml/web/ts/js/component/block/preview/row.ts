@@ -24,6 +24,35 @@ export default class Row extends PreviewCollection {
     private element: Element;
 
     /**
+     * Debounce and defer the init of Jarallax
+     *
+     * @type {(() => void) & _.Cancelable}
+     */
+    private buildJarallax = _.debounce(() => {
+        // Destroy all instances of the plugin prior
+        try {
+            jarallax(this.element, "destroy");
+        } catch (e) {
+            // Failure of destroying is acceptable
+        }
+        if (this.element && $(this.element).hasClass("jarallax")) {
+            _.defer(() => {
+                // Build Parallax on elements with the correct class
+                jarallax(
+                    this.element,
+                    {
+                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
+                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
+                        imgSize: this.data.main.style().backgroundSize || "cover",
+                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
+                    },
+                );
+                jarallax(this.element, "onResize");
+            });
+        }
+    }, 50);
+
+    /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -85,33 +114,4 @@ export default class Row extends PreviewCollection {
         this.element = element;
         this.buildJarallax();
     }
-
-    /**
-     * Debounce and defer the init of Jarallax
-     *
-     * @type {(() => void) & _.Cancelable}
-     */
-    private buildJarallax = _.debounce(() => {
-        // Destroy all instances of the plugin prior
-        try {
-            jarallax(this.element, "destroy");
-        } catch (e) {
-            // Failure of destroying is acceptable
-        }
-        if (this.element && $(this.element).hasClass("jarallax")) {
-            _.defer(() => {
-                // Build Parallax on elements with the correct class
-                jarallax(
-                    this.element,
-                    {
-                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
-                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.main.style().backgroundSize || "cover",
-                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
-                    },
-                );
-                jarallax(this.element, "onResize");
-            });
-        }
-    }, 50);
 }

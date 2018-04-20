@@ -209,6 +209,7 @@ export default class Content {
      * After observables updated, allows to modify observables
      */
     protected afterObservablesUpdated(): void {
+        return;
     }
 
     /**

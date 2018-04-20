@@ -295,7 +295,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
      */
 
 
-    _proto.afterObservablesUpdated = function afterObservablesUpdated() {};
+    _proto.afterObservablesUpdated = function afterObservablesUpdated() {
+      return;
+    };
     /**
      * Setup fields observables within the data class property
      *

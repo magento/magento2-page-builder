@@ -206,7 +206,9 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
      */
 
 
-    _proto.afterObservablesUpdated = function afterObservablesUpdated() {};
+    _proto.afterObservablesUpdated = function afterObservablesUpdated() {
+      return;
+    };
     /**
      * Update observables
      */
