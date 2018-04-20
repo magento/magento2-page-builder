@@ -4,19 +4,24 @@ This page lists the upcoming functionality and known issues for the PageBuilder 
 
 ## Planned features and functionality
 
-* Text block enhancement to make it easier to see the content block on the stage and access its settings. <!-- MAGETWO-87070 -->
-* Extensible grid feature allows content builders to use an extensible grid system to build highly customized store pages. <!-- MAGETWO-87048 -->
-* The PageBuilder module will be available as a bundled extension. <!-- MAGETWO-70499 -->
-* Custom content blocks that allow developers to build content blocks that meet the specific needs of a merchant. <!-- MAGETWO-72564 -->
-* Improved exception handling <!-- MAGETWO-88348 -->
-* Color selector for the ColorPicker <!-- MAGETWO-90240 -->
+* *Text Block*
+** Text block enhancement to make it easier to see the content block on the stage and access its settings. <!-- MAGETWO-87070 -->
+** Edit Text fcontent from Stage <!--MAGETWO-86724-->
+* *Accordion*
+** Ability to add content inside Accordion items <!-- MAGETWO-66514 -->
+** Ability to add additional items to Accordion content and configure it within the stage <!-- MAGETWO-87046 -->
+** Ability to configure Accordion behavior <!-- MAGETWO-87098 -->
+** Ability to see a newly-dragged Accordion content block on the stage <!-- MAGETWO-87089 -->
+** Ability to delete AccordionSection from the Stage <!-- MAGETWO-87053 -->
+* Fliexible grid allows content builders to choose grid system to use: from 2 to 40. That alllows to build highly customized store pages. <!-- MAGETWO-87048 -->
+* Ability to select color in ColorPicker <!-- MAGETWO-90240 -->
 * Ability to set content vertical alignment inside a container <!-- MAGETWO-90242 -->
-* Ability to add content inside Accordion items <!-- MAGETWO-66514 -->
-* Ability to add additional items to Accordion content and configure it within the stage <!-- MAGETWO-87046 -->
-* Ability to configure Accordion behavior <!-- MAGETWO-87098 -->
-* New Anchor Content blocks to add anchor links on a page <!-- MAGETWO-87098 -->
-* Ability to see a newly-dragged Accordion content block on the stage <!-- MAGETWO-87089 -->
-* Ability to delete AccordianSection containers <!-- MAGETWO-87053 -->
+* *Better Developer Experience*
+** Tutorial with code examples that shows how to Custom content blocks that meet the specific needs of a merchant. <!-- MAGETWO-72564 -->
+** Improved exception handling <!-- MAGETWO-88348 -->
+
+
+
 * Ability to cancel changes on the stage and revert to the previously saved state <!-- MAGETWO-87987 -->
 * Ability to rearrange AccordionSection containers inside an Accordion on the stage <!-- MAGETWO-87051 -->
 * Ability to duplicate AccordionSection containers <!-- MAGETWO-88857 -->
