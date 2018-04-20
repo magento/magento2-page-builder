@@ -26,6 +26,7 @@
         <element name="tabsContentAdvancedStyles" type="button" selector="//div[@class='tabs-content' and @style='border-style: solid; text-align: center; border-color: rgb(0, 0, 0); border-width: 10px; border-radius: 12px; min-height: 300px;']"/>
     </section>
     <section name="TabOnStage">
+        <element name="tabDefaultDuplicate" type="button" selector="//span[contains(text(), 'Tab 1 copy')]"/>
         <element name="tabHeader" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]" parameterized="true"/>
         <element name="tabHeaderEditableTitle" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//a[contains(@class, 'tab-title')])[{{arg1}}]//span[contains(@contenteditable, 'true')]" parameterized="true"/>
         <element name="tabHeaderItemDefault" type="button" selector="//ul[contains(@class, 'tabs-navigation')]/li[contains(@style, 'border-radius: {{arg1}}px;') and contains(@style, 'border-width: 1px;')]" parameterized="true"/>
@@ -35,6 +36,7 @@
         <element name="tab2ContentAdvancedStyles" type="button" selector="(//div[contains(@class,'pagebuilder-tabs')]//div[contains(@class,'ui-tabs-panel')])[2]//div[contains(@class, 'pagebuilder-tab') and contains(@style, 'text-align: right;') and contains(@style, 'border-style: dotted;') and contains(@style, 'border-color: rgb(255, 0, 0);') and contains(@style, 'border-width: 500px;') and contains(@style, 'border-radius: 500px;') and contains(@style, 'margin: 1px 2px 3px 4px;') and contains(@style, 'padding: 1px 2px 3px 4px;')]"/>
         <element name="empty" type="button" selector="(//div[contains(@class, 'pagebuilder-tabs')]//div[contains(@class, 'pagebuilder-tab') and contains(@class, 'empty-container')])"/>
         <element name="tabOptionsByIndex" type="button" selector="(//ul[contains(@class, 'tabs-navigation')]//div[contains(@class, 'pagebuilder-options-wrapper')])[{{arg1}}]" parameterized="true"/>
+        <element name="tabOptionsDuplicate" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'duplicate-structural')]"/>
         <element name="tabOptionsEdit" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'edit-block')]"/>
         <element name="tabOptionsRemove" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'remove-structural')]"/>
         <element name="tabOptionsRemoveDisabled" type="button" selector="//ul[contains(@class, 'tabs-navigation')]//li[contains(@class, 'ui-state-active')]//a[contains(@class, 'disabled')]"/>

@@ -37,6 +37,15 @@
         <waitForPageLoad stepKey="waitForAnimation" />
         <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
+    <actionGroup name="duplicateTabByIndex">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentBlockInStageVisible" />
+        <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader(index)}}"/>
+        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
+        <click selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="clickEditContentBlock"/>
+    </actionGroup>
     <actionGroup name="openTabOptionsByIndex">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
