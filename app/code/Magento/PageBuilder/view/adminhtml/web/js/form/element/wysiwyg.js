@@ -6,9 +6,9 @@
 define([
     'Magento_Ui/js/form/element/wysiwyg',
     'mage/translate',
-    'Magento_PageBuilder/js/component/event-bus',
+    'Magento_Ui/js/lib/core/events',
     'Magento_PageBuilder/js/component/page-builder'
-], function (Wysiwyg, $t, EventBus, PageBuilder) {
+], function (Wysiwyg, $t, events, PageBuilder) {
     'use strict';
 
     /**
@@ -63,21 +63,21 @@ define([
 
         /** Toggle PageBuilder full screen. */
         toggleFullScreen: function () {
-            EventBus.trigger('pagebuilder:toggleFullScreen:' + this.pageBuilder.id, {});
+            events.trigger('pagebuilder:toggleFullScreen:' + this.pageBuilder.id, {});
         },
 
         /** Init listeners of stage. */
         initPageBuilderListeners: function () {
             var id = this.pageBuilder.id;
 
-            EventBus.on('stage:ready:' + id, function () {
+            events.on('stage:ready:' + id, function () {
                 this.isComponentInitialized = true;
                 this.loading(false);
             }.bind(this));
-            EventBus.on('stage:renderTree:' + id, function (e, data) {
+            events.on('stage:renderTree:' + id, function (e, data) {
                 this.value(data.value);
             }.bind(this));
-            EventBus.on('pagebuilder:fullScreen:' + id, function (e, data) {
+            events.on('pagebuilder:fullScreen:' + id, function (e, data) {
                 if (!data.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(false);
                 } else if (data.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {

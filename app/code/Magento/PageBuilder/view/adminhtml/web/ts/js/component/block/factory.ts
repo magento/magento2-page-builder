@@ -38,17 +38,16 @@ function fireBlockReadyEvent(block: Block, childrenLength: number) {
         fire();
     } else {
         let mountCounter = 0;
-        const eventCallback = (args: BlockMountEventParams) => {
+        events.on("block:mount", (args: BlockMountEventParams) => {
             if (args.block.parent.id === block.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
                     fire();
-                    events.off("block:mount:fire:ready");
+                    events.off(`block:mount:${block.id}`);
                 }
             }
-        };
-        events.on("block:mount", eventCallback, "block:mount:fire:ready");
+        }, `block:mount:${block.id}`);
     }
 }
 

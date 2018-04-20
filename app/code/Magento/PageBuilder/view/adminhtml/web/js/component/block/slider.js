@@ -34,7 +34,7 @@ define(["mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/comp
 
       (0, _factory)(_config.getInitConfig("content_types").slide, this, this.stage).then(function (slide) {
         _underscore.delay(function () {
-          var mountFn = function mountFn(args) {
+          _uiEvents.on("slide:block:mount", function (args) {
             if (args.id === slide.id) {
               _this.preview.navigateToSlide(_this.children().length - 1);
 
@@ -42,11 +42,9 @@ define(["mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/comp
                 slide.edit.open();
               }, 500);
 
-              _uiEvents.off("slide:block:mount:tab");
+              _uiEvents.off("slide:block:mount:" + slide.id);
             }
-          };
-
-          _uiEvents.on("slide:block:mount", mountFn, "slide:block:mount:tab");
+          }, "slide:block:mount:" + slide.id);
 
           _this.addChild(slide, _this.children().length);
         });

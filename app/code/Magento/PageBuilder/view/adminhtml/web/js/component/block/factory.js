@@ -40,19 +40,17 @@ define(["Magento_PageBuilder/js/component/loader", "uiEvents", "Magento_PageBuil
     } else {
       var mountCounter = 0;
 
-      var eventCallback = function eventCallback(args) {
+      _uiEvents.on("block:mount", function (args) {
         if (args.block.parent.id === block.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
             fire();
 
-            _uiEvents.off("block:mount:fire:ready");
+            _uiEvents.off("block:mount:" + block.id);
           }
         }
-      };
-
-      _uiEvents.on("block:mount", eventCallback, "block:mount:fire:ready");
+      }, "block:mount:" + block.id);
     }
   }
   /**
