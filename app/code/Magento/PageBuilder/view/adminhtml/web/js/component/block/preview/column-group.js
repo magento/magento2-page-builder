@@ -176,7 +176,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "un
       _eventBus.trigger("block:instanceDropped", {
         blockInstance: column,
         index: movePosition.insertIndex,
-        parent: this,
+        parent: this.parent,
         stageId: this.parent.stageId
       }); // Modify the old neighbour
 

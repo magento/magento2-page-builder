@@ -212,7 +212,7 @@ export default class ColumnGroup extends PreviewCollection {
         EventBus.trigger("block:instanceDropped", {
             blockInstance: column,
             index: movePosition.insertIndex,
-            parent: this,
+            parent: this.parent,
             stageId: this.parent.stageId,
         });
 
