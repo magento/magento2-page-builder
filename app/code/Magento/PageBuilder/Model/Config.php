@@ -53,11 +53,11 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     /**
      * Returns config setting if page builder enabled
      *
-     * @return int
+     * @return bool
      */
     public function isEnabled()
     {
-        return (int)$this->scopeConfig->getValue(
+        return (bool)$this->scopeConfig->getValue(
             \Magento\PageBuilder\Model\Config::IS_PAGEBUILDER_ENABLED
         );
     }

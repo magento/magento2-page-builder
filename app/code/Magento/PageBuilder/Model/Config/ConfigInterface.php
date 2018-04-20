@@ -18,7 +18,7 @@ interface ConfigInterface
     public function getContentTypes();
 
     /**
-     * @return int
+     * @return bool
      */
     public function isEnabled();
 }
