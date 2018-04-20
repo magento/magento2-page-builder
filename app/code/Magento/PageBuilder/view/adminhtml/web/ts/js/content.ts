@@ -66,12 +66,10 @@ export default class Content {
     public getCss(element: string) {
         const result: object = {};
         let css: string = "";
-        let data: DataObject = _.extend({}, this.parent.store.get(this.id));
+        let data: DataObject = _.extend({}, this.parent.store.get(this.parent.id));
         if (element === undefined) {
             if ("css_classes" in data && data.css_classes !== "") {
                 css = data.css_classes.toString();
-            } else {
-                css = this.parent.preview.previewData.css_classes();
             }
         } else {
             const appearanceConfiguration = appearanceConfig(
