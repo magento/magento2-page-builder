@@ -266,7 +266,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       _PreviewCollection.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
-      _eventBus.on("slider:block:ready", function (event, params) {
+      _eventBus.on("slider:block:dropped:create", function (event, params) {
         if (params.id === _this3.parent.id && _this3.parent.children().length === 0) {
           _this3.addSlide();
         }
