@@ -196,14 +196,10 @@ export default class Content {
     /**
      * Attach event to updating data in data store to update observables
      */
-    private bindEvents(): void {
+    protected bindEvents(): void {
         this.parent.store.subscribe(
             (data: DataObject) => {
-                this.observableUpdater.update(
-                    this,
-                    _.extend({name: this.parent.config.name}, this.parent.store.get(this.parent.id)),
-                );
-                this.afterObservablesUpdated();
+                this.updateObservables();
             },
             this.parent.id,
         );
@@ -213,5 +209,16 @@ export default class Content {
      * After observables updated, allows to modify observables
      */
     protected afterObservablesUpdated(): void {
+    }
+
+    /**
+     * Update observables
+     */
+    private updateObservables(): void {
+        this.observableUpdater.update(
+            this,
+            _.extend({name: this.parent.config.name}, this.parent.store.get(this.parent.id)),
+        );
+        this.afterObservablesUpdated();
     }
 }

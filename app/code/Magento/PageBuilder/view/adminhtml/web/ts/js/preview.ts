@@ -330,12 +330,7 @@ export default class Preview {
         EventBus.on("block:sortStart", this.onSortStart.bind(this.parent));
         this.parent.store.subscribe(
             (data: DataObject) => {
-                this.observableUpdater.update(
-                    this,
-                    _.extend({}, this.parent.store.get(this.parent.id)),
-                );
-                this.afterObservablesUpdated();
-                EventBus.trigger("previewObservables:updated", {preview: this});
+                this.updateObservables();
             },
             this.parent.id,
         );
@@ -448,6 +443,18 @@ export default class Preview {
             return;
         });
         return hasDataChanges;
+    }
+
+    /**
+     * Update observables
+     */
+    private updateObservables(): void {
+        this.observableUpdater.update(
+            this,
+            _.extend({}, this.parent.store.get(this.parent.id)),
+        );
+        this.afterObservablesUpdated();
+        EventBus.trigger("previewObservables:updated", {preview: this});
     }
 
     /**

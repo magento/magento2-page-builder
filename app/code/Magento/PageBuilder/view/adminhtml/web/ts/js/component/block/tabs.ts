@@ -50,10 +50,10 @@ export default class Tabs extends ContentTypeCollection {
                 const mountFunction = (event: Event, params: BlockMountEventParams) => {
                     if (params.id === tab.id) {
                         (this.preview as TabsPreview).setFocusedTab(this.children().length - 1);
-                        EventBus.off("tab-item:block:mount", mountFunction);
+                        EventBus.off("tab-item:block:dropped:create", mountFunction);
                     }
                 };
-                EventBus.on("tab-item:block:mount", mountFunction);
+                EventBus.on("tab-item:block:dropped:create", mountFunction);
                 this.addChild(tab, this.children().length);
 
                 // Update the default tab title when adding a new tab

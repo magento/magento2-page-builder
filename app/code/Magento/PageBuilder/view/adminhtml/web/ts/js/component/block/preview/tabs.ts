@@ -28,11 +28,11 @@ export default class Tabs extends PreviewCollection {
             }
             $(this.element).tabs({
                 create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
-                    this.setActiveTab(this.data.default_active !== undefined ? this.data.default_active() : 0);
+                    this.setActiveTab(this.previewData.default_active() || 0);
                 },
             });
         }
-    }, 10);
+    }, 50);
 
 
     /**

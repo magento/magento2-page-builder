@@ -198,11 +198,7 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
       var _this = this;
 
       this.parent.store.subscribe(function (data) {
-        _this.observableUpdater.update(_this, _underscore.extend({
-          name: _this.parent.config.name
-        }, _this.parent.store.get(_this.parent.id)));
-
-        _this.afterObservablesUpdated();
+        _this.updateObservables();
       }, this.parent.id);
     };
     /**
@@ -211,6 +207,17 @@ define(["underscore", "Magento_PageBuilder/js/component/block/appearance-config"
 
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {};
+    /**
+     * Update observables
+     */
+
+
+    _proto.updateObservables = function updateObservables() {
+      this.observableUpdater.update(this, _underscore.extend({
+        name: this.parent.config.name
+      }, this.parent.store.get(this.parent.id)));
+      this.afterObservablesUpdated();
+    };
 
     _createClass(Content, [{
       key: "renderTemplate",

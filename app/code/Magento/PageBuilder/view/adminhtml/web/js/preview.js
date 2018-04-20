@@ -287,13 +287,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       _eventBus.on("block:sortStart", this.onSortStart.bind(this.parent));
 
       this.parent.store.subscribe(function (data) {
-        _this4.observableUpdater.update(_this4, _underscore.extend({}, _this4.parent.store.get(_this4.parent.id)));
-
-        _this4.afterObservablesUpdated();
-
-        _eventBus.trigger("previewObservables:updated", {
-          preview: _this4
-        });
+        _this4.updateObservables();
       }, this.parent.id);
     };
     /**
@@ -404,6 +398,19 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       });
 
       return hasDataChanges;
+    };
+    /**
+     * Update observables
+     */
+
+
+    _proto.updateObservables = function updateObservables() {
+      this.observableUpdater.update(this, _underscore.extend({}, this.parent.store.get(this.parent.id)));
+      this.afterObservablesUpdated();
+
+      _eventBus.trigger("previewObservables:updated", {
+        preview: this
+      });
     };
     /**
      * Event called when starting starts on this element

@@ -39,11 +39,11 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/content-type-fac
             if (params.id === tab.id) {
               _this.preview.setFocusedTab(_this.children().length - 1);
 
-              _eventBus.off("tab-item:block:mount", mountFunction);
+              _eventBus.off("tab-item:block:dropped:create", mountFunction);
             }
           };
 
-          _eventBus.on("tab-item:block:mount", mountFunction);
+          _eventBus.on("tab-item:block:dropped:create", mountFunction);
 
           _this.addChild(tab, _this.children().length); // Update the default tab title when adding a new tab
 

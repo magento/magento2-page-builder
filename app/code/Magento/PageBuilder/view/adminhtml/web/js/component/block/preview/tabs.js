@@ -33,11 +33,11 @@ define(["jquery", "knockout", "tabs", "underscore", "Magento_PageBuilder/js/comp
 
           (0, _jquery)(_this.element).tabs({
             create: function create(event, ui) {
-              _this.setActiveTab(_this.data.default_active !== undefined ? _this.data.default_active() : 0);
+              _this.setActiveTab(_this.previewData.default_active() || 0);
             }
           });
         }
-      }, 10);
+      }, 50);
 
       _eventBus.on("tabs:block:ready", function (event, params) {
         if (params.id === _this.parent.id && _this.element) {
