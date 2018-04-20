@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="PanelActivatePageBuilderFullScreen">
+    <test name="ActivatePageBuilderFullScreen">
         <annotations>
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71798: Bluefoot in full screen mode"/>
@@ -41,7 +41,7 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStage2"/>
         <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageWrapperFullScreen}}" stepKey="verifyStageNotFullScreen2"/>
     </test>
-    <test name="PanelShowPanelGroups">
+    <test name="ShowPanelGroups">
         <annotations>
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
@@ -66,7 +66,7 @@
         <seeElement selector='{{PageBuilderActionsSection.firstSection}}' parameterArray="['class' => 'active']" stepKey="firstSectionOfPanelIsOpen"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypes"/>
     </test>
-    <test name="PanelSearchOneCharInPanel">
+    <test name="SearchOneCharInPanel">
         <annotations>
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
@@ -93,7 +93,7 @@
         <see userInput="Banner" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockBanner"/>
         <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockStaticBlock"/>
     </test>
-    <test name="PanelSearchRemovedContentBlock">
+    <test name="SearchRemovedContentBlock">
         <annotations>
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-66517: Bluefoot Search Blocks removal"/>
@@ -120,7 +120,7 @@
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="Code" stepKey="fillCode"/>
         <dontSee userInput="Code" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateCodeButtons"/>
     </test>
-    <test name="PanelSearchThreeCharInPanel">
+    <test name="SearchThreeCharInPanel">
         <annotations>
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
@@ -145,7 +145,7 @@
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="blo" stepKey="fillSearch"/>
         <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockButtons"/>
     </test>
-    <test name="PanelSearchNoMatchesInPanel">
+    <test name="SearchNoMatchesInPanel">
         <annotations>
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
@@ -170,7 +170,7 @@
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="abcdef" stepKey="fillSearch"/>
         <see userInput="Nothing found" selector="{{PageBuilderActionsSection.nothingFound}}" stepKey="validateNothingFound"/>
     </test>
-    <test name="PanelClearSearchInPanel">
+    <test name="ClearSearchInPanel">
         <annotations>
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>

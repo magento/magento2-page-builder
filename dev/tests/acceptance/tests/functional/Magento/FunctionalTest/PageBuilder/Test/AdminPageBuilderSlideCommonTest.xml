@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="SliderAddToCMSPage">
+    <test name="AddSliderContentBlockToCMSPage">
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-83933: Advanced Slider"/>
@@ -207,7 +207,7 @@
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2Background"/>
         <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearanceOnStorefront"/>
     </test>
-    <test name="SlideEmptyAdminPreviewAndStorefront">
+    <test name="RemoveSliderFromStage">
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-87085: Empty Slider Admin Preview"/>
@@ -321,7 +321,7 @@
         <comment userInput="Verify slide content defaults on storefront: Show Overlay defaults to Never Show" stepKey="storefrontDefaultOverlay"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-overlay" expectedValue="never_show" stepKey="slideStorefrontShowOverlay"/>
     </test>
-    <test name="SlideCanManageSlides">
+    <test name="CanManageSlides">
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-83933: Advanced Slider"/>
@@ -648,7 +648,7 @@
         <!-- Validate Style On Stage. Currently Not Implemented -->
         <comment userInput="Validate Style On Stage. Currently Not Implemented" stepKey="CommentValidateStage"/>
     </test>
-    <test name="SlideHasButtonStyled">
+    <test name="CanAddImageToSlide">
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-75774: Bluefoot Slide Configuration (without 1 appearance)"/>

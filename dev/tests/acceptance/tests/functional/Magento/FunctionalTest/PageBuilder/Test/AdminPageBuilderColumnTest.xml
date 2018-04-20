@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="ColumnAddToCMSPage">
+    <test name="AddColumnContentBlockToCMSPage">
         <annotations>
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
@@ -36,7 +36,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
     </test>
-    <test name="ColumnDelete">
+    <test name="RemoveColumnFromStage">
         <annotations>
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
@@ -76,7 +76,7 @@
         <dontSeeElement selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
         <dontSeeElement selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="dontSeeColumnGroup"/>
     </test>
-    <test name="ColumnSlideOutPanelWithSettingsContainRequiredFields">
+    <test name="SlideOutPanelWithSettingsContainRequiredFields">
         <annotations>
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
@@ -553,7 +553,7 @@
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
     </test>
-    <test name="ColumnPreviewBackgroundImage">
+    <test name="PreviewBackgroundImage">
         <annotations>
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
@@ -588,7 +588,7 @@
             <argument name="property" value="PageBuilderBackgroundImageProperty"/>
         </actionGroup>
     </test>
-    <test name="ColumnValidateBackgroundImageUrl">
+    <test name="ValidateBackgroundImageUrl">
         <annotations>
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
@@ -888,7 +888,7 @@
         <seeElement selector="{{ColumnsOnFrontend.columnPadding}}" stepKey="seeColumnPaddingStyle"/>
         <seeElement selector="{{ColumnsOnFrontend.columnClass}}" stepKey="seeColumnClass"/>
     </test>
-    <test name="ColumnRemovingDistributesWidth">
+    <test name="RemovingColumnDistributesWidth">
         <annotations>
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-83556: Delete Columns from Container"/>
@@ -988,7 +988,7 @@
         <seeElement selector="{{ColumnsOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.column2HeightFull}}" stepKey="seeColumn2FullHeightApplied"/>
     </test>
-    <test name="ColumnCanAddImage">
+    <test name="CanAddImageToColumn">
         <annotations>
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
