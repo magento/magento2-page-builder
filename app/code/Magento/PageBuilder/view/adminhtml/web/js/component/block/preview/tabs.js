@@ -37,7 +37,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
             }
           });
         }
-      }, 50);
+      }, 10);
 
       _eventBus.on("tabs:block:ready", function (event, params) {
         if (params.id === _this.parent.id && _this.element) {
@@ -142,11 +142,11 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
             if (params.id === tab.id) {
               _this2.setFocusedTab(_this2.parent.children().length - 1);
 
-              _eventBus.off("tab-item:block:dropped:create", mountFunction);
+              _eventBus.off("tab-item:block:mount", mountFunction);
             }
           };
 
-          _eventBus.on("tab-item:block:dropped:create", mountFunction);
+          _eventBus.on("tab-item:block:mount", mountFunction);
 
           _this2.parent.addChild(tab, _this2.parent.children().length); // Update the default tab title when adding a new tab
 
