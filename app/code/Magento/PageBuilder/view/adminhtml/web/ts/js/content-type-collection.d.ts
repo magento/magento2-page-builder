@@ -10,8 +10,6 @@ export default interface ContentTypeCollectionInterface extends ContentTypeColle
 
     addChild(child: ContentTypeInterface, index?: number);
 
-    duplicateChild(child: ContentTypeInterface, autoAppend: boolean = true);
-
     setChildren(children: KnockoutObservableArray<ContentTypeInterface>);
 
     removeChild(child: any): void;
