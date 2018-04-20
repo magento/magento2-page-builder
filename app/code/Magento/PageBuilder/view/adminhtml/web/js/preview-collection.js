@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/preview"], function (_preview) {
+define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview"], function (_contentTypeFactory, _preview) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -18,52 +18,49 @@ define(["Magento_PageBuilder/js/preview"], function (_preview) {
     var _proto = PreviewCollection.prototype;
 
     /**
-     * Does the current instance have any children or values different from the default for it's type?
-     *
-     * @returns {boolean}
-     */
-    _proto.isConfigured = function isConfigured() {
-      if (this.parent.children().length > 0) {
-        return true;
-      }
-    };
-    /**
      * Duplicate content type
      *
      * @param {ContentTypeInterface} child
      * @param {boolean} autoAppend
      * @returns {ContentTypeInterface}
      */
-
-
     _proto.clone = function clone(child, autoAppend) {
+      var _this = this;
+
       if (autoAppend === void 0) {
         autoAppend = true;
       }
 
-      var store = child.store;
-      var instance = child.constructor;
-      var duplicate = new instance(child.parent, child.config, child.stageId);
-      duplicate.preview = child.preview;
-      duplicate.content = child.content;
       var index = child.parent.getChildren().indexOf(child) + 1 || null;
-      store.update(duplicate.id, Object.assign({}, store.get(child.id)));
-      child.getChildren()().forEach(function (subChild, childIndex) {
-        var createDuplicate = subChild.preview.clone(subChild, false);
-        createDuplicate.preview = subChild.preview;
-        createDuplicate.content = subChild.content;
+      (0, _contentTypeFactory)(child.config, child.parent, child.stageId, child.store.get(child.id)).then(function (duplicate) {
+        child.getChildren()().forEach(function (subChild, childIndex) {
+          (0, _contentTypeFactory)(subChild.config, duplicate.parent, duplicate.stageId, subChild.store.get(subChild.id)).then(function (duplicateBlock) {
+            duplicate.addChild(duplicateBlock, childIndex);
 
-        if (createDuplicate) {
-          duplicate.addChild(createDuplicate, childIndex);
+            _this.dispatchContentTypeCloneEvents(subChild, duplicateBlock, childIndex);
+          });
+        });
+
+        if (autoAppend) {
+          child.parent.addChild(duplicate, index);
         }
-      });
-      this.dispatchContentTypeCloneEvents(child, duplicate, index);
 
-      if (autoAppend) {
-        child.parent.addChild(duplicate, index);
+        _this.dispatchContentTypeCloneEvents(child, duplicate, index);
+      });
+    };
+    /**
+     * Does the current instance have any children or values different from the default for it's type?
+     *
+     * @returns {boolean}
+     */
+
+
+    _proto.isConfigured = function isConfigured() {
+      if (this.parent.children().length > 0) {
+        return true;
       }
 
-      return duplicate;
+      return _Preview.prototype.isConfigured.call(this);
     };
 
     _createClass(PreviewCollection, [{

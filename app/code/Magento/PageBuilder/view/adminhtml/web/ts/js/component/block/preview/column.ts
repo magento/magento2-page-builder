@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import {ContentTypeConfigInterface} from "../../../content-type-config.d";
+import createContentType from "../../../content-type-factory";
 import {ContentTypeInterface} from "../../../content-type.d";
 import ObservableUpdater from "../../../observable-updater";
 import PreviewCollection from "../../../preview-collection";
@@ -16,7 +17,6 @@ import EventBus from "../../event-bus";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
-import createContentType from "../../../content-type-factory";
 import ColumnGroup from "./column-group";
 import {getMaxColumns} from "./column-group/resizing";
 
