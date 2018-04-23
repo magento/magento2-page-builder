@@ -10,7 +10,8 @@ namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
 use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderFactory;
-use Magento\Framework\ObjectManager\Config\Reader\Dom;
+use Magento\Framework\Data\Argument\InterpreterInterface;
+use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderInterface;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
@@ -20,18 +21,21 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private $parser;
 
     /**
-     * @var ProviderFactory
+     * @var InterpreterInterface
      */
-    private $providerFactory;
+    private $argumentInterpreter;
 
     /**
+     * Converter constructor.
      * @param ArgumentParser $parser
-     * @param ProviderFactory $providerFactory
+     * @param InterpreterInterface $argumentInterpreter
      */
-    public function __construct(ArgumentParser $parser, ProviderFactory $providerFactory)
-    {
+    public function __construct(
+        ArgumentParser $parser,
+        InterpreterInterface $argumentInterpreter
+    ) {
         $this->parser = $parser;
-        $this->providerFactory = $providerFactory;
+        $this->argumentInterpreter = $argumentInterpreter;
     }
 
     /**
@@ -213,10 +217,16 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         if (!$xmlArgumentsNodes->length) {
             return $additionalData;
         }
-
+        $typeArguments = [];
         /** @var $xmlArgumentsNode \DOMElement */
         foreach ($xmlArgumentsNodes as $xmlArgumentsNode) {
-            $additionalData += $this->toArray($xmlArgumentsNode);
+
+            $parsedArgumentsData = $this->parser->parse($xmlArgumentsNode);
+            $argumentName = $xmlArgumentsNode->attributes->getNamedItem('name')->nodeValue;
+            $typeArguments[$argumentName] = $this->argumentInterpreter->evaluate(
+                $parsedArgumentsData
+            );
+            $additionalData += $this->toArray($typeArguments);
         }
 
         return $additionalData;
@@ -430,59 +440,22 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
 
     /**
      * Convert arguments node from additional data to array
-     *
-     * @param \DOMElement $argumentsNode
+     * @param array $typeArguments
      * @return array
      */
-    private function toArray(\DOMElement $argumentsNode)
+    private function toArray(array $typeArguments)
     {
-        $parsedArgumentsData = $this->parser->parse($argumentsNode);
+        $processedData = [];
+       foreach ($typeArguments as $key => $value) {
+           if (is_array($value)) {
+               $processedData[$key] = $this->toArray($typeArguments[$key]);
+           } elseif (is_object($value) && $value instanceof ProviderInterface) {
+               $processedData[$key] = $value->getData($key)[$key];
+           } else {
+               $processedData[$key] = $value;
+           }
+       }
 
-        /**
-         * Recursively flatten parsed data and use provider converter classes on parsed arguments data
-         *
-         * @param array $parsedArray - array of parsed data from XML node
-         * @param array $convertedArray - pointer to location of subset of array to populate
-         * @return array
-         */
-        $convertAdditionalData = function (array $parsedArray, &$convertedArray = []) use (&$convertAdditionalData) {
-            $name = $parsedArray['name'];
-            $xsiType = $parsedArray[Dom::TYPE_ATTRIBUTE];
-
-            switch ($xsiType) {
-                case 'object':
-                    $providerInstance = $this->providerFactory->createInstance($parsedArray['value']);
-                    $convertedArray[$name] = $providerInstance->getData($name)[$name];
-                    break;
-                case 'array':
-                    $item = $parsedArray['item'];
-
-                    if (!isset($convertedArray[$name])) {
-                        $convertedArray[$name] = [];
-                    }
-
-                    foreach ($item as $subitem) {
-                        $convertedArray[$name] = $convertAdditionalData($subitem, $convertedArray[$name]);
-                    }
-
-                    break;
-                case 'number':
-                case 'int':
-                    $convertedArray[$name] = filter_var($parsedArray['value'], FILTER_VALIDATE_INT);
-                    break;
-                case 'boolean':
-                    $convertedArray[$name] = filter_var($parsedArray['value'], FILTER_VALIDATE_BOOLEAN);
-                    break;
-                default:
-                    $convertedArray[$name] = $parsedArray['value'];
-                    break;
-            }
-
-            return $convertedArray;
-        };
-
-        $array = $convertAdditionalData($parsedArgumentsData);
-
-        return $array;
+        return $processedData;
     }
 }

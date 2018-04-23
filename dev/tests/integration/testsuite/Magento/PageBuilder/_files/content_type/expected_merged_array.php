@@ -82,7 +82,36 @@ return [
                     ],
                     'default' => 'true'
                 ]
-            ]
+            ],
+            'additional_data' => [
+                'config1' => [
+                    'settingWithTypeString' => 'string',
+                    'settingWithTypeObject' => 'test data',
+                    'settingWithTypeNull' => null,
+                    'settingWithTypeInteger' => '20',
+                    'settingWithTypeBooleanTrue' => true,
+                    'settingWithTypeBooleanFalse' => false,
+                    'settingWithTypeNumber2' => '-90'
+                ],
+                'config2' => [
+                    'arrayConfig' => [
+                        'settingWithTypeString' => 'string',
+                        'settingWithTypeObject' => 'test data',
+                        'settingWithTypeNull' => null,
+                        'settingWithTypeInteger' => '20',
+                        'settingWithTypeBooleanTrue' => true,
+                        'settingWithTypeBooleanFalse' => false,
+                        'settingWithTypeNumber2' => '-90'
+                    ]
+                ],
+                'settingWithTypeString' => 'string',
+                'settingWithTypeObject' => 'test data',
+                'settingWithTypeNull' => null,
+                'settingWithTypeInteger' => '20',
+                'settingWithTypeBooleanTrue' => true,
+                'settingWithTypeBooleanFalse' => false,
+                'settingWithTypeNumber2' => '-90'
+            ],
         ],
         'type2' => [
             'sortOrder' => '2',
