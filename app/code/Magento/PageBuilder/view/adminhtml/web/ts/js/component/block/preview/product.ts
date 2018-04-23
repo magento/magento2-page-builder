@@ -15,7 +15,7 @@ export default class Product extends Preview {
     protected bindEvents() {
         super.bindEvents();
         EventBus.on("previewObservables:updated", (event, params) => {
-            if (params.preview.id === this.id) {
+            if (params.preview.parent.id === this.parent.id) {
                 const attributes = this.data.main.attributes();
                 if (attributes["data-sku"] === "") {
                     return;

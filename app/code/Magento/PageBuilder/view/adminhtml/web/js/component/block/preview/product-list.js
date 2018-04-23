@@ -22,7 +22,7 @@ define(["Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/conf
       _Preview.prototype.bindEvents.call(this);
 
       _eventBus.on("previewObservables:updated", function (event, params) {
-        if (params.preview.id === _this.id) {
+        if (params.preview.parent.id === _this.parent.id) {
           var attributes = _this.data.main.attributes();
 
           if (attributes["data-category-id"] === "") {
