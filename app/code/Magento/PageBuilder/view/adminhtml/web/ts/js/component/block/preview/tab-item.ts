@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {Options} from "../../stage/structural/options";
 import PreviewCollection from "../../../preview-collection";
+import {Options} from "../../stage/structural/options";
 
 export default class TabItem extends PreviewCollection {
 
