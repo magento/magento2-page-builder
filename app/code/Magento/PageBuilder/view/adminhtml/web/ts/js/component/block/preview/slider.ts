@@ -287,8 +287,8 @@ export default class Slider extends PreviewCollection {
         let duplicatedSlide: Slide;
         let duplicatedSlideIndex: number;
         EventBus.on("slide:block:duplicate", (event, params: BlockDuplicateEventParams) => {
-            if (params.duplicate.parent.id === this.id) {
-                duplicatedSlide = (params.duplicate as Slide);
+            if (params.duplicateBlock.parent.id === this.parent.id) {
+                duplicatedSlide = (params.duplicateBlock as Slide);
                 duplicatedSlideIndex = params.index;
             }
         });

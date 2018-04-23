@@ -293,8 +293,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       var duplicatedSlideIndex;
 
       _eventBus.on("slide:block:duplicate", function (event, params) {
-        if (params.duplicate.parent.id === _this3.id) {
-          duplicatedSlide = params.duplicate;
+        if (params.duplicateBlock.parent.id === _this3.parent.id) {
+          duplicatedSlide = params.duplicateBlock;
           duplicatedSlideIndex = params.index;
         }
       });
