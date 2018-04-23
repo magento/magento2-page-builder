@@ -222,12 +222,12 @@ export default class Tabs extends PreviewCollection {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        EventBus.on("tabs:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
+
+        EventBus.on("tabs:block:dropped:create", (event: Event, params: BlockReadyEventParamsInterface) => {
             if (params.id === this.parent.id && this.parent.children().length === 0) {
                 this.addTab();
             }
         });
-
         // Block being removed from container
         EventBus.on("tab-item:block:removed", (event, params: BlockRemovedParamsInterface) => {
             if (params.parent.id === this.parent.id) {
@@ -241,8 +241,8 @@ export default class Tabs extends PreviewCollection {
         let duplicatedTab: Block;
         let duplicatedTabIndex: number;
         EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
-            if (params.duplicate.parent.id === this.parent.id) {
-                duplicatedTab = params.duplicate;
+            if (params.duplicateBlock.parent.id === this.parent.id) {
+                duplicatedTab = params.duplicateBlock;
                 duplicatedTabIndex = params.index;
             }
         });

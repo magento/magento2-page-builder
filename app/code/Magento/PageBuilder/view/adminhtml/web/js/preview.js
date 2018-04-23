@@ -274,7 +274,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
       _eventBus.trigger("block:duplicate", duplicateEventParams);
 
-      _eventBus.trigger(originalBlock.parent.config.name + ":block:duplicate", duplicateEventParams);
+      _eventBus.trigger(originalBlock.config.name + ":block:duplicate", duplicateEventParams);
     };
     /**
      * Bind events

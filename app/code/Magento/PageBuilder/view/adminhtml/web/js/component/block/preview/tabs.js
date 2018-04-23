@@ -217,7 +217,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       _PreviewCollection.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
-      _eventBus.on("tabs:block:ready", function (event, params) {
+      _eventBus.on("tabs:block:dropped:create", function (event, params) {
         if (params.id === _this3.parent.id && _this3.parent.children().length === 0) {
           _this3.addTab();
         }
@@ -238,8 +238,8 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       var duplicatedTabIndex;
 
       _eventBus.on("tab-item:block:duplicate", function (event, params) {
-        if (params.duplicate.parent.id === _this3.parent.id) {
-          duplicatedTab = params.duplicate;
+        if (params.duplicateBlock.parent.id === _this3.parent.id) {
+          duplicatedTab = params.duplicateBlock;
           duplicatedTabIndex = params.index;
         }
       });

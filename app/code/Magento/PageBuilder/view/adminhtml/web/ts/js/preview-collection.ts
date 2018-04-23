@@ -26,7 +26,6 @@ export default class PreviewCollection extends Preview {
      */
     public clone(child: ContentTypeInterface, autoAppend: boolean = true): ContentTypeInterface {
         const index = child.parent.getChildren().indexOf(child) + 1 || null;
-
         createContentType(
             child.config,
             child.parent,
@@ -36,7 +35,7 @@ export default class PreviewCollection extends Preview {
             child.getChildren()().forEach((subChild: ContentTypeInterface, childIndex: number) => {
                 createContentType(
                     subChild.config,
-                    duplicate.parent,
+                    duplicate,
                     duplicate.stageId,
                     subChild.store.get(subChild.id),
                 ).then((duplicateBlock: ContentTypeInterface) => {

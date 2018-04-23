@@ -34,7 +34,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/p
       var index = child.parent.getChildren().indexOf(child) + 1 || null;
       (0, _contentTypeFactory)(child.config, child.parent, child.stageId, child.store.get(child.id)).then(function (duplicate) {
         child.getChildren()().forEach(function (subChild, childIndex) {
-          (0, _contentTypeFactory)(subChild.config, duplicate.parent, duplicate.stageId, subChild.store.get(subChild.id)).then(function (duplicateBlock) {
+          (0, _contentTypeFactory)(subChild.config, duplicate, duplicate.stageId, subChild.store.get(subChild.id)).then(function (duplicateBlock) {
             duplicate.addChild(duplicateBlock, childIndex);
 
             _this.dispatchContentTypeCloneEvents(subChild, duplicateBlock, childIndex);

@@ -320,7 +320,7 @@ export default class Preview {
         };
 
         EventBus.trigger("block:duplicate", duplicateEventParams);
-        EventBus.trigger(originalBlock.parent.config.name + ":block:duplicate", duplicateEventParams);
+        EventBus.trigger(originalBlock.config.name + ":block:duplicate", duplicateEventParams);
     }
 
     /**
