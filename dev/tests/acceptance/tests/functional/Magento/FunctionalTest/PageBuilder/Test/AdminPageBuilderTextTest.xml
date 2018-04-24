@@ -76,13 +76,13 @@
         <see userInput="Important" stepKey="seeImportantStyle"/>
         <click selector="//span[text()='Important']" stepKey="selectFormatStyle" />
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <see selector="//div/div[@class='cms-content-important' and text()='Hello World!']" stepKey="seeTextInImportantStyleOnPreview" />
+        <seeElement selector="//div/div[contains(normalize-space(@class), 'cms-content-important') and text()='Hello World!']" stepKey="seeTextInImportantStyleOnPreview" />
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
 
         <!--Verify FontStyle on Storeview-->
         <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
         <waitForPageLoad  stepKey="waitForPageLoad3"/>
-        <seeElement selector="//div[@class='cms-content-important' and text()='Hello World!']" stepKey="seeTextInImportantStyleOnStorefront" />
+        <seeElement selector="//div[contains(normalize-space(@class), 'cms-content-important') and text()='Hello World!']" stepKey="seeTextInImportantStyleOnStorefront" />
     </test>
     <test name="TextAddTextWithTinyMCE">
         <annotations>
