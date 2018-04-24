@@ -512,10 +512,13 @@
         <seeElement selector="{{TabOnStage.tabTextContent}}" stepKey="validateTextInDuplicatedTab"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeaderInStorefront"/>
-        <click selector="{{TabOnStorefront.tabHeader('4')}}" stepKey="navigateToLastTab"/>
-        <waitForElementVisible selector="{{TabsOnFrontend.tabsContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>
-        <seeElement selector="TabOnStorefront.tabContentBackgroundColor('rgb(204, 204, 204)')" stepKey="validateBackgroundColor"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+            <argument name="from" value="1"/>
+            <argument name="to" value="4"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{TabOnStorefront.tabContentBackgroundColor('4', 'rgb(204, 204, 204)')}}" stepKey="validateBackgroundColor"/>
+        <seeElement selector="{{TabOnStorefront.tabContentText('4')}}" stepKey="seeTextElementInTabContent"/>
     </test>
 </tests>
