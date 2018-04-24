@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/block/column-group/factory", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/dragdrop", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _alert, _underscore, _previewCollection, _array, _config, _eventBus, _block, _factory, _resizing, _dragdrop, _registry, _resizing2) {
+define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/block/column-group/factory", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/dragdrop", "Magento_PageBuilder/js/component/block/preview/column-group/registry", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _underscore, _previewCollection, _array, _config, _eventBus, _block, _factory, _resizing, _dragdrop, _registry, _resizing2) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var ColumnGroup =
@@ -64,71 +64,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "un
       return _this;
     }
     /**
-     * Duplicate a child of the current instance
-     *
-     * @param {Column} child
-     * @param {boolean} autoAppend
-     * @returns {Structural|Undefined}
-     */
-
-
-    var _proto = ColumnGroup.prototype;
-
-    _proto.duplicateChild = function duplicateChild(child, autoAppend) {
-      if (autoAppend === void 0) {
-        autoAppend = true;
-      }
-
-      // Are we duplicating from a parent?
-      if (this.parent.children().length === 0 || this.parent.children().length > 0 && (0, _resizing2.getColumnsWidth)(this.parent) < 100) {
-        return _PreviewCollection.prototype.duplicateChild.call(this, child, autoAppend);
-      }
-
-      var duplicate; // Attempt to split the current column into parts
-
-      var splitTimes = Math.round((0, _resizing2.getColumnWidth)(child) / (0, _resizing2.getSmallestColumnWidth)());
-
-      if (splitTimes > 1) {
-        duplicate = _PreviewCollection.prototype.duplicateChild.call(this, child, autoAppend);
-        var originalWidth = 0;
-        var duplicateWidth = 0;
-
-        for (var i = 0; i <= splitTimes; i++) {
-          if (splitTimes > 0) {
-            originalWidth += (0, _resizing2.getSmallestColumnWidth)();
-            --splitTimes;
-          }
-
-          if (splitTimes > 0) {
-            duplicateWidth += (0, _resizing2.getSmallestColumnWidth)();
-            --splitTimes;
-          }
-        }
-
-        (0, _resizing.updateColumnWidth)(child, (0, _resizing2.getAcceptedColumnWidth)(originalWidth.toString()));
-        (0, _resizing.updateColumnWidth)(duplicate, (0, _resizing2.getAcceptedColumnWidth)(duplicateWidth.toString()));
-      } else {
-        // Conduct an outward search on the children to locate a suitable shrinkable column
-        var shrinkableColumn = (0, _resizing2.findShrinkableColumn)(child);
-
-        if (shrinkableColumn) {
-          duplicate = _PreviewCollection.prototype.duplicateChild.call(this, child, autoAppend);
-          (0, _resizing.updateColumnWidth)(shrinkableColumn, (0, _resizing2.getAcceptedColumnWidth)(((0, _resizing2.getColumnWidth)(shrinkableColumn) - (0, _resizing2.getSmallestColumnWidth)()).toString()));
-          (0, _resizing.updateColumnWidth)(duplicate, (0, _resizing2.getSmallestColumnWidth)());
-        }
-      } // If we aren't able to duplicate inform the user why
-
-
-      if (!duplicate) {
-        (0, _alert)({
-          content: (0, _translate)("There is no free space within the column group to perform this action."),
-          title: (0, _translate)("Unable to duplicate column")
-        });
-      } else {
-        return duplicate;
-      }
-    };
-    /**
      * Handle a new column being dropped into the group
      *
      * @param {Event} event
@@ -137,7 +72,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "un
      */
 
 
+    var _proto = ColumnGroup.prototype;
+
     _proto.onNewColumnDrop = function onNewColumnDrop(event, ui, dropPosition) {
+      debugger;
       event.preventDefault();
       event.stopImmediatePropagation(); // Create our new column
 
@@ -172,11 +110,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "un
 
       (0, _resizing.updateColumnWidth)(column, (0, _resizing2.getSmallestColumnWidth)());
       column.parent.removeChild(column);
+      debugger;
 
       _eventBus.trigger("block:instanceDropped", {
         blockInstance: column,
         index: movePosition.insertIndex,
-        parent: this.parent,
+        parent: this,
         stageId: this.parent.stageId
       }); // Modify the old neighbour
 

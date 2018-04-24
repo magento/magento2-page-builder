@@ -12,11 +12,10 @@ import ContentTypeInterface from "../../../content-type.d";
 import PreviewCollection from "../../../preview-collection";
 import {moveArrayItem} from "../../../utils/array";
 import Config from "../../config";
-import {ConfigContentBlock} from "../../config";
+import ConfigContentBlock from "../../config";
 import EventBus from "../../event-bus";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
-import Column from "../column";
-import {default as ColumnGroupBlock} from "../column-group";
+import Column from "./column";
 import {createColumn} from "../column-group/factory";
 import {resizeColumn, updateColumnWidth} from "../column-group/resizing";
 import {default as ColumnGroupPreview} from "../preview/column-group";
@@ -98,67 +97,6 @@ export default class ColumnGroup extends PreviewCollection {
     }
 
     /**
-     * Duplicate a child of the current instance
-     *
-     * @param {Column} child
-     * @param {boolean} autoAppend
-     * @returns {Structural|Undefined}
-     */
-    public duplicateChild(child: Column, autoAppend: boolean = true): Structural | void {
-        // Are we duplicating from a parent?
-        if (this.parent.children().length === 0
-            || (this.parent.children().length > 0 && getColumnsWidth(this.parent) < 100)
-        ) {
-            return super.duplicateChild(child, autoAppend);
-        }
-
-        let duplicate;
-        // Attempt to split the current column into parts
-        let splitTimes = Math.round(getColumnWidth(child) / getSmallestColumnWidth());
-        if (splitTimes > 1) {
-            duplicate = super.duplicateChild(child, autoAppend) as Column;
-            let originalWidth = 0;
-            let duplicateWidth = 0;
-
-            for (let i = 0; i <= splitTimes; i++) {
-                if (splitTimes > 0) {
-                    originalWidth += getSmallestColumnWidth();
-                    --splitTimes;
-                }
-                if (splitTimes > 0) {
-                    duplicateWidth += getSmallestColumnWidth();
-                    --splitTimes;
-                }
-            }
-            updateColumnWidth(child, getAcceptedColumnWidth(originalWidth.toString()));
-            updateColumnWidth(duplicate, getAcceptedColumnWidth(duplicateWidth.toString()));
-        } else {
-            // Conduct an outward search on the children to locate a suitable shrinkable column
-            const shrinkableColumn = findShrinkableColumn(child);
-            if (shrinkableColumn) {
-                duplicate = super.duplicateChild(child, autoAppend) as Column;
-                updateColumnWidth(
-                    shrinkableColumn,
-                    getAcceptedColumnWidth(
-                        (getColumnWidth(shrinkableColumn) - getSmallestColumnWidth()).toString(),
-                    ),
-                );
-                updateColumnWidth(duplicate, getSmallestColumnWidth());
-            }
-        }
-
-        // If we aren't able to duplicate inform the user why
-        if (!duplicate) {
-            alertDialog({
-                content: $t("There is no free space within the column group to perform this action."),
-                title: $t("Unable to duplicate column"),
-            });
-        } else {
-            return duplicate;
-        }
-    }
-
-    /**
      * Handle a new column being dropped into the group
      *
      * @param {Event} event
@@ -166,6 +104,7 @@ export default class ColumnGroup extends PreviewCollection {
      * @param {DropPosition} dropPosition
      */
     public onNewColumnDrop(event: Event, ui: JQueryUI.DroppableEventUIParam, dropPosition: DropPosition) {
+        debugger;
         event.preventDefault();
         event.stopImmediatePropagation();
 
@@ -209,10 +148,12 @@ export default class ColumnGroup extends PreviewCollection {
         updateColumnWidth(column, getSmallestColumnWidth());
 
         column.parent.removeChild(column);
+        debugger;
+
         EventBus.trigger("block:instanceDropped", {
             blockInstance: column,
             index: movePosition.insertIndex,
-            parent: this.parent,
+            parent: this,
             stageId: this.parent.stageId,
         });
 

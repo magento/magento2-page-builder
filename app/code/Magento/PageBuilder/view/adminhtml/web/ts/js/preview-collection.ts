@@ -32,20 +32,14 @@ export default class PreviewCollection extends Preview {
             child.stageId,
             child.store.get(child.id),
         ).then((duplicate: ContentTypeInterface) => {
-            child.getChildren()().forEach((subChild: ContentTypeInterface, childIndex: number) => {
-                createContentType(
-                    subChild.config,
-                    duplicate,
-                    duplicate.stageId,
-                    subChild.store.get(subChild.id),
-                ).then((duplicateBlock: ContentTypeInterface) => {
-                    duplicate.addChild(
-                        duplicateBlock,
-                        childIndex,
-                    );
-                    this.dispatchContentTypeCloneEvents(subChild, duplicateBlock, childIndex);
+            if(child.children && child.children().length > 0) {
+                // Duplicate the instances children into the new duplicate
+                child.children().forEach((subChild: ContentTypeInterface) => {
+                    subChild.parent = duplicate;
+                    duplicate.preview.clone(subChild, true);
                 });
-            });
+
+            }
 
             if (autoAppend) {
                 child.parent.addChild(duplicate, index);

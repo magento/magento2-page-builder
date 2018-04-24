@@ -6,6 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import alertDialog from "Magento_Ui/js/modal/alert";
 import {ContentTypeConfigInterface} from "../../../content-type-config.d";
 import createContentType from "../../../content-type-factory";
 import {ContentTypeInterface} from "../../../content-type.d";
@@ -18,7 +19,11 @@ import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
 import ColumnGroup from "./column-group";
-import {getMaxColumns} from "./column-group/resizing";
+import {
+    findShrinkableColumn, getAcceptedColumnWidth, getColumnsWidth,
+    getColumnWidth, getMaxColumns, getSmallestColumnWidth,
+} from "./column-group/resizing";
+import {updateColumnWidth} from "../column-group/resizing";
 
 export default class Column extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
@@ -136,12 +141,76 @@ export default class Column extends PreviewCollection {
                     this.parent.parent.addChild(columnGroup, index);
 
                     this.fireMountEvent(columnGroup, columns[0], columns[1]);
-
                     return columnGroup;
                 });
             });
         }
     }
+
+
+    /**
+     * Duplicate a child of the current instance
+     *
+     * @param {Column} child
+     * @param {boolean} autoAppend
+     * @returns {Structural|Undefined}
+     */
+    public clone(child: Column, autoAppend: boolean = true): Structural | void {
+        // Are we duplicating from a parent?
+        if (child.config.name !== "column"
+            || this.parent.parent.children().length === 0
+            || (this.parent.parent.children().length > 0 && getColumnsWidth(this.parent.parent) < 100)
+        ) {
+            super.clone(child, autoAppend);
+            return;
+        }
+
+        let duplicate;
+        // Attempt to split the current column into parts
+        let splitTimes = Math.round(getColumnWidth(child) / getSmallestColumnWidth());
+        if (splitTimes > 1) {
+            super.clone(child, autoAppend) as Column;
+            EventBus.once("column:block:duplicate", (event, params) => {
+                let originalWidth = 0;
+                let duplicateWidth = 0;
+
+                for (let i = 0; i <= splitTimes; i++) {
+                    if (splitTimes > 0) {
+                        originalWidth += getSmallestColumnWidth();
+                        --splitTimes;
+                    }
+                    if (splitTimes > 0) {
+                        duplicateWidth += getSmallestColumnWidth();
+                        --splitTimes;
+                    }
+                }
+                updateColumnWidth(child, getAcceptedColumnWidth(originalWidth.toString()));
+                updateColumnWidth(params.duplicateBlock, getAcceptedColumnWidth(duplicateWidth.toString()));
+            });
+        } else {
+            // Conduct an outward search on the children to locate a suitable shrinkable column
+            const shrinkableColumn = findShrinkableColumn(child);
+            if (shrinkableColumn) {
+                super.clone(child, autoAppend) as Column;
+                EventBus.once("column:block:duplicate", (event, params) => {
+                    updateColumnWidth(
+                        shrinkableColumn,
+                        getAcceptedColumnWidth(
+                            (getColumnWidth(shrinkableColumn) - getSmallestColumnWidth()).toString(),
+                        ),
+                    );
+                    updateColumnWidth(params.duplicateBlock, getSmallestColumnWidth());
+                });
+            } else {
+                // If we aren't able to duplicate inform the user why
+                alertDialog({
+                    content: $t("There is no free space within the column group to perform this action."),
+                    title: $t("Unable to duplicate column"),
+                });
+            }
+        }
+    }
+
 
     /**
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
