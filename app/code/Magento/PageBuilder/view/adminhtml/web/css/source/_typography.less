@@ -31,10 +31,6 @@
     @font-weight: @font-weight__bold
 );
 
-html {
-    font-size: 62.5%;
-}
-
 body {
     .lib-typography(
         @_color: @text__color,
@@ -46,83 +42,124 @@ body {
   );
 }
 
-//
-//  Headings
-//  ---------------------------------------------
+.pagebuilder-stage {
+    //
+    //  Headings
+    //  ---------------------------------------------
 
-h1 {
-    margin: 0 0 2rem;
+    h1 {
+        margin: 0 0 40px;
 
-    .lib-typography(
-        @_color: @color-brown-darkie,
-        @_font-family: false,
-        @_font-size: 2.8rem,
-        @_font-style: false,
-        @_font-weight: @font-weight__regular,
-        @_line-height: @line-height__s
-    );
-}
+        .lib-typography(
+            @_color: #333,
+            @_font-family: false,
+            @_font-size: 40px,
+            @_font-style: false,
+            @_font-weight: @font-weight__light,
+            @_line-height: 44px
+        );
+    }
 
-h2 {
-    margin: 0 0 2rem;
+    h2 {
+        margin: 25px 0 20px;
 
-    .lib-typography(
-        @_color: @color-brown-darkie,
-        @_font-family: false,
-        @_font-size: 2rem,
-        @_font-style: false,
-        @_font-weight: @font-weight__regular,
-        @_line-height: @line-height__s
-    );
-}
+        .lib-typography(
+            @_color: #333,
+            @_font-family: false,
+            @_font-size: 26px,
+            @_font-style: false,
+            @_font-weight: @font-weight__light,
+            @_line-height: 1.1
+        );
+    }
 
-h3 {
-    margin: 0 0 2rem;
+    h3 {
+        margin: 20px 0 10px;
 
-    .lib-typography(
-        @_color: @color-brown-darkie,
-        @_font-family: false,
-        @_font-size: 1.7rem,
-        @_font-style: false,
-        @_font-weight: @font-weight__semibold,
-        @_line-height: @line-height__s
-    );
-}
+        .lib-typography(
+            @_color: #333,
+            @_font-family: false,
+            @_font-size: 18px,
+            @_font-style: false,
+            @_font-weight: @font-weight__semibold,
+            @_line-height: 1.1
+        );
+    }
 
-h4,
-h5,
-h6 {
-    font-weight: @font-weight__semibold;
-    margin-top: 0;
-}
+    h4 {
+        margin: 20px 0 20px;
 
-//
-//  Text
-//
+        .lib-typography(
+            @_color: #333,
+            @_font-family: false,
+            @_font-size: 14px,
+            @_font-style: false,
+            @_font-weight: @font-weight__bold,
+            @_line-height: 1.1
+        );
+    }
 
-p {
-    margin: 0 0 @paragraph__indent-bottom;
-}
+    h5 {
+        margin: 20px 0 20px;
 
-.cms-content-important {
-    background-color: @color-gray-light0;
-    color: @color-brown-darkie;
-    font-size: 2.2rem;
-    font-style: normal;
-    font-weight: 300;
-    line-height: @line-height__s;
-    margin: 0 0 35px -20px;
-    padding: @indent__base;
-}
+        .lib-typography(
+            @_color: #333,
+            @_font-family: false,
+            @_font-size: 12px,
+            @_font-style: false,
+            @_font-weight: @font-weight__bold,
+            @_line-height: 1.1
+        );
+    }
 
-pre {
-    background-color: @pre__background-color;
-    border: @pre__border-width solid @pre__border-color;
-    color: @color-brown-darkie;
-    font-family: @font-family__monospace;
-    font-size: @code__font-size;
-    font-style: normal;
-    font-weight: @font-weight__heavier;
-    line-height: @line-height__base;
-    padding: @indent__s;
+    h6 {
+        margin: 20px 0 20px;
+
+        .lib-typography(
+            @_color: #333,
+            @_font-family: false,
+            @_font-size: 10px,
+            @_font-style: false,
+            @_font-weight: @font-weight__bold,
+            @_line-height: 1.1
+        );
+    }
+
+    //
+    //  Text
+    //
+    p {
+        color: #333;
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: @font-weight__regular;
+        line-height: 20px;
+        margin: 0 0 10px;
+    }
+
+    pre {
+        background-color: #f6f6f6;
+        border: @pre__border-width solid #ccc;
+        color: #111;
+        font-family: @font-family__monospace;
+        font-size: @code__font-size;
+        font-style: normal;
+        font-weight: @font-weight__regular;
+        line-height: 1.1;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+
+    .cms-content-important {
+        background-color: #f5f5f5;
+        color: #333;
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: 1.1;
+        margin: 0 0 35px -20px;
+        padding: 20px;
+    }
 }

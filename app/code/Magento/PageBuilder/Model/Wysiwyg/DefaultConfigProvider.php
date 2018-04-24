@@ -61,7 +61,8 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
                         'help',
                         'table',
                         'textcolor',
-                        'image'
+                        'image',
+                        'colorpicker'
                     ]
                 ),
                 'content_css' => [
