@@ -197,27 +197,29 @@ export default class Preview {
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface} child
+     * @param {ContentTypeInterface} contentBlock
      * @param {boolean} autoAppend
-     * @returns {ContentTypeInterface}
+     * @returns {Promise<ContentTypeInterface>}
      */
-    public clone(contentBlock: ContentTypeInterface, autoAppend: boolean = true): ContentTypeInterface {
+    public clone(contentBlock: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
         const contentBlockData = contentBlock.store.get(contentBlock.id);
         const index = contentBlock.parent.collection.children.indexOf(contentBlock) + 1 || null;
 
-        createContentType(
-            contentBlock.config,
-            contentBlock.parent,
-            contentBlock.stageId,
-            contentBlockData,
-        ).then((duplicateBlock: ContentTypeInterface) => {
-            if (autoAppend) {
-                contentBlock.parent.addChild(duplicateBlock, index);
-            }
+        return new Promise((resolve, reject) => {
+            createContentType(
+                contentBlock.config,
+                contentBlock.parent,
+                contentBlock.stageId,
+                contentBlockData,
+            ).then((duplicateBlock: ContentTypeInterface) => {
+                if (autoAppend) {
+                    contentBlock.parent.addChild(duplicateBlock, index);
+                }
 
-            this.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
+                this.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
 
-            return duplicateBlock;
+                resolve(duplicateBlock);
+            });
         });
     }
 

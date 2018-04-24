@@ -20,32 +20,38 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/p
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface} child
+     * @param {ContentTypeInterface} contentBlock
      * @param {boolean} autoAppend
-     * @returns {ContentTypeInterface}
+     * @returns {Promise<ContentTypeInterface>}
      */
-    _proto.clone = function clone(child, autoAppend) {
+    _proto.clone = function clone(contentBlock, autoAppend) {
       var _this = this;
 
       if (autoAppend === void 0) {
         autoAppend = true;
       }
 
-      var index = child.parent.getChildren().indexOf(child) + 1 || null;
-      (0, _contentTypeFactory)(child.config, child.parent, child.stageId, child.store.get(child.id)).then(function (duplicate) {
-        if (child.children && child.children().length > 0) {
-          // Duplicate the instances children into the new duplicate
-          child.children().forEach(function (subChild) {
-            subChild.parent = duplicate;
-            duplicate.preview.clone(subChild, true);
-          });
-        }
+      var index = contentBlock.parent.getChildren().indexOf(contentBlock) + 1 || null;
+      return new Promise(function (resolve, reject) {
+        (0, _contentTypeFactory)(contentBlock.config, contentBlock.parent, contentBlock.stageId, contentBlock.store.get(contentBlock.id)).then(function (duplicate) {
+          if (contentBlock.children && contentBlock.children().length > 0) {
+            // Duplicate the instances children into the new duplicate
+            contentBlock.children().forEach(function (subChild) {
+              duplicate.preview.clone(subChild, false).then(function (duplicateSubChild) {
+                duplicateSubChild.parent = duplicate;
+                duplicate.addChild(duplicateSubChild);
+              });
+            });
+          }
 
-        if (autoAppend) {
-          child.parent.addChild(duplicate, index);
-        }
+          if (autoAppend) {
+            contentBlock.parent.addChild(duplicate, index);
+          }
 
-        _this.dispatchContentTypeCloneEvents(child, duplicate, index);
+          _this.dispatchContentTypeCloneEvents(contentBlock, duplicate, index);
+
+          resolve(duplicate);
+        });
       });
     };
     /**

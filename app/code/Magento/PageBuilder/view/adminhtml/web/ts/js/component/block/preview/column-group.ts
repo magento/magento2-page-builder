@@ -15,10 +15,10 @@ import Config from "../../config";
 import ConfigContentBlock from "../../config";
 import EventBus from "../../event-bus";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
-import Column from "./column";
 import {createColumn} from "../column-group/factory";
 import {resizeColumn, updateColumnWidth} from "../column-group/resizing";
 import {default as ColumnGroupPreview} from "../preview/column-group";
+import Column from "./column";
 import {calculateDropPositions, DropPosition} from "./column-group/dragdrop";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./column-group/registry";
 import {
@@ -104,7 +104,6 @@ export default class ColumnGroup extends PreviewCollection {
      * @param {DropPosition} dropPosition
      */
     public onNewColumnDrop(event: Event, ui: JQueryUI.DroppableEventUIParam, dropPosition: DropPosition) {
-        debugger;
         event.preventDefault();
         event.stopImmediatePropagation();
 
@@ -148,7 +147,6 @@ export default class ColumnGroup extends PreviewCollection {
         updateColumnWidth(column, getSmallestColumnWidth());
 
         column.parent.removeChild(column);
-        debugger;
 
         EventBus.trigger("block:instanceDropped", {
             blockInstance: column,

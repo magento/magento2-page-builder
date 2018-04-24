@@ -75,7 +75,6 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview-coll
     var _proto = ColumnGroup.prototype;
 
     _proto.onNewColumnDrop = function onNewColumnDrop(event, ui, dropPosition) {
-      debugger;
       event.preventDefault();
       event.stopImmediatePropagation(); // Create our new column
 
@@ -110,7 +109,6 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/preview-coll
 
       (0, _resizing.updateColumnWidth)(column, (0, _resizing2.getSmallestColumnWidth)());
       column.parent.removeChild(column);
-      debugger;
 
       _eventBus.trigger("block:instanceDropped", {
         blockInstance: column,

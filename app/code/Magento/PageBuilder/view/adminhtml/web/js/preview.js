@@ -182,9 +182,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface} child
+     * @param {ContentTypeInterface} contentBlock
      * @param {boolean} autoAppend
-     * @returns {ContentTypeInterface}
+     * @returns {Promise<ContentTypeInterface>}
      */
 
 
@@ -197,14 +197,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
       var contentBlockData = contentBlock.store.get(contentBlock.id);
       var index = contentBlock.parent.collection.children.indexOf(contentBlock) + 1 || null;
-      (0, _contentTypeFactory)(contentBlock.config, contentBlock.parent, contentBlock.stageId, contentBlockData).then(function (duplicateBlock) {
-        if (autoAppend) {
-          contentBlock.parent.addChild(duplicateBlock, index);
-        }
+      return new Promise(function (resolve, reject) {
+        (0, _contentTypeFactory)(contentBlock.config, contentBlock.parent, contentBlock.stageId, contentBlockData).then(function (duplicateBlock) {
+          if (autoAppend) {
+            contentBlock.parent.addChild(duplicateBlock, index);
+          }
 
-        _this2.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
+          _this2.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
 
-        return duplicateBlock;
+          resolve(duplicateBlock);
+        });
       });
     };
     /**

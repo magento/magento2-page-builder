@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/preview/column-group/resizing", "Magento_PageBuilder/js/component/block/column-group/resizing"], function (_jquery, _knockout, _translate, _alert, _contentTypeFactory, _previewCollection, _config, _eventBus, _option, _resizing, _resizing2) {
+define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _alert, _contentTypeFactory, _previewCollection, _config, _eventBus, _option, _resizing, _resizing2) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -21,7 +21,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Ma
       _this.resizing = _knockout.observable(false);
 
       _this.previewData.width.subscribe(function (newWidth) {
-        var maxColumns = (0, _resizing.getMaxColumns)();
+        var maxColumns = (0, _resizing2.getMaxColumns)();
         newWidth = parseFloat(newWidth);
         newWidth = Math.round(newWidth / (100 / maxColumns));
         var newLabel = newWidth + "/" + maxColumns;
@@ -136,7 +136,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Ma
      *
      * @param {Column} child
      * @param {boolean} autoAppend
-     * @returns {Structural|Undefined}
+     * @returns {any|Undefined}
      */
 
 
@@ -146,48 +146,43 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Ma
       }
 
       // Are we duplicating from a parent?
-      if (child.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && (0, _resizing.getColumnsWidth)(this.parent.parent) < 100) {
-        _PreviewCollection.prototype.clone.call(this, child, autoAppend);
+      if (child.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && (0, _resizing2.getColumnsWidth)(this.parent.parent) < 100) {
+        return _PreviewCollection.prototype.clone.call(this, child, autoAppend);
+      } // Attempt to split the current column into parts
 
-        return;
-      }
 
-      var duplicate; // Attempt to split the current column into parts
-
-      var splitTimes = Math.round((0, _resizing.getColumnWidth)(child) / (0, _resizing.getSmallestColumnWidth)());
+      var splitTimes = Math.round((0, _resizing2.getColumnWidth)(child) / (0, _resizing2.getSmallestColumnWidth)());
 
       if (splitTimes > 1) {
-        _PreviewCollection.prototype.clone.call(this, child, autoAppend);
-
-        _eventBus.once("column:block:duplicate", function (event, params) {
+        _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateBlock) {
           var originalWidth = 0;
           var duplicateWidth = 0;
 
           for (var i = 0; i <= splitTimes; i++) {
             if (splitTimes > 0) {
-              originalWidth += (0, _resizing.getSmallestColumnWidth)();
+              originalWidth += (0, _resizing2.getSmallestColumnWidth)();
               --splitTimes;
             }
 
             if (splitTimes > 0) {
-              duplicateWidth += (0, _resizing.getSmallestColumnWidth)();
+              duplicateWidth += (0, _resizing2.getSmallestColumnWidth)();
               --splitTimes;
             }
           }
 
-          (0, _resizing2.updateColumnWidth)(child, (0, _resizing.getAcceptedColumnWidth)(originalWidth.toString()));
-          (0, _resizing2.updateColumnWidth)(params.duplicateBlock, (0, _resizing.getAcceptedColumnWidth)(duplicateWidth.toString()));
+          (0, _resizing.updateColumnWidth)(child, (0, _resizing2.getAcceptedColumnWidth)(originalWidth.toString()));
+          (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing2.getAcceptedColumnWidth)(duplicateWidth.toString()));
+          return duplicateBlock;
         });
       } else {
         // Conduct an outward search on the children to locate a suitable shrinkable column
-        var shrinkableColumn = (0, _resizing.findShrinkableColumn)(child);
+        var shrinkableColumn = (0, _resizing2.findShrinkableColumn)(child);
 
         if (shrinkableColumn) {
-          _PreviewCollection.prototype.clone.call(this, child, autoAppend);
-
-          _eventBus.once("column:block:duplicate", function (event, params) {
-            (0, _resizing2.updateColumnWidth)(shrinkableColumn, (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(shrinkableColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()));
-            (0, _resizing2.updateColumnWidth)(params.duplicateBlock, (0, _resizing.getSmallestColumnWidth)());
+          _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateBlock) {
+            (0, _resizing.updateColumnWidth)(shrinkableColumn, (0, _resizing2.getAcceptedColumnWidth)(((0, _resizing2.getColumnWidth)(shrinkableColumn) - (0, _resizing2.getSmallestColumnWidth)()).toString()));
+            (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing2.getSmallestColumnWidth)());
+            return duplicateBlock;
           });
         } else {
           // If we aren't able to duplicate inform the user why

@@ -20,31 +20,37 @@ export default class PreviewCollection extends Preview {
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface} child
+     * @param {ContentTypeInterface} contentBlock
      * @param {boolean} autoAppend
-     * @returns {ContentTypeInterface}
+     * @returns {Promise<ContentTypeInterface>}
      */
-    public clone(child: ContentTypeInterface, autoAppend: boolean = true): ContentTypeInterface {
-        const index = child.parent.getChildren().indexOf(child) + 1 || null;
-        createContentType(
-            child.config,
-            child.parent,
-            child.stageId,
-            child.store.get(child.id),
-        ).then((duplicate: ContentTypeInterface) => {
-            if(child.children && child.children().length > 0) {
-                // Duplicate the instances children into the new duplicate
-                child.children().forEach((subChild: ContentTypeInterface) => {
-                    subChild.parent = duplicate;
-                    duplicate.preview.clone(subChild, true);
-                });
+    public clone(contentBlock: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
+        const index = contentBlock.parent.getChildren().indexOf(contentBlock) + 1 || null;
 
-            }
+        return new Promise((resolve, reject) => {
+            createContentType(
+                contentBlock.config,
+                contentBlock.parent,
+                contentBlock.stageId,
+                contentBlock.store.get(contentBlock.id),
+            ).then((duplicate: ContentTypeInterface) => {
+                if (contentBlock.children && contentBlock.children().length > 0) {
+                    // Duplicate the instances children into the new duplicate
+                    contentBlock.children().forEach((subChild: ContentTypeInterface) => {
+                        duplicate.preview.clone(subChild, false).then((duplicateSubChild) => {
+                            duplicateSubChild.parent = duplicate;
+                            duplicate.addChild(duplicateSubChild);
+                        });
+                    });
+                }
 
-            if (autoAppend) {
-                child.parent.addChild(duplicate, index);
-            }
-            this.dispatchContentTypeCloneEvents(child, duplicate, index);
+                if (autoAppend) {
+                    contentBlock.parent.addChild(duplicate, index);
+                }
+                this.dispatchContentTypeCloneEvents(contentBlock, duplicate, index);
+
+                resolve(duplicate);
+            });
         });
     }
 
