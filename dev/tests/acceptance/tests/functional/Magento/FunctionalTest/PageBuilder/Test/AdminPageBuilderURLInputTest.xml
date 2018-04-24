@@ -97,8 +97,6 @@
             <testCaseId value="MAGETWO-89771"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-urlInput"/>
-            <!-- Skipped - see MAGETWO-90506 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -143,8 +141,7 @@
         <dontSee userInput="$createSubCategoryX.name$" stepKey="dontSeeLevel3Category"/>
 
         <!--Type 2 first letters into Search box-->
-        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" stepKey="focusOnField"/>
-        <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="su" stepKey="fill2FirstLetters"/>
+        <pressKey selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.SearchResult($createSubCategoryX.name$)}}" stepKey="waitForSearchResult" />
         <see userInput="$createSubCategoryX.name$" stepKey="seeSubCategoryOnSearchResult"/>
         <click selector="{{PageBuilderButtonLinkSection.SearchResult($createSubCategoryX.name$)}}" stepKey="clickSubCategoryXOnSearchResult"/>
@@ -206,8 +203,6 @@
             <testCaseId value="MAGETWO-89771"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-urlInput"/>
-            <!-- Skipped - see MAGETWO-90506 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
@@ -250,8 +245,7 @@
         <dontSee userInput="$createPreReqProduct2.name$" stepKey="dontSeeProduct2"/>
 
         <!--Type 2 first letters into Search box-->
-        <click selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" stepKey="focusOnField"/>
-        <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" userInput="te" stepKey="fill2FirstLetters"/>
+        <pressKey selector="{{PageBuilderButtonLinkSection.ButtonLinkSearch}}" parameterArray="['te',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="waitForSearchResult" />
         <see userInput="$createPreReqProduct1.name$" stepKey="seeProduct1OnSearchResult"/>
         <click selector="{{PageBuilderButtonLinkSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="clickProduct1XOnSearchResult"/>
@@ -295,6 +289,7 @@
         <waitForElementVisible selector="//div[@class='element-children buttons-container ui-sortable']//a[@title='Edit']" stepKey="waitForSettingBtn" />
         <click selector="//div[@class='element-children buttons-container ui-sortable']//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
         <waitForElementVisible selector="{{PageBuilderButtonLinkSection.ButtonLinkSelect}}" stepKey="waitForButtonLinkSelect2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
         <grabTextFrom selector="{{PageBuilderButtonLinkSection.DropdownInput}}" stepKey="textFromDropDown3"/>
         <assertRegExp stepKey="assertEquals3" message="pass">
             <expectedResult type="string">/^Product with ID: [0-9]+ doesn't exist$/</expectedResult>
