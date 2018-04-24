@@ -71,14 +71,14 @@ export default class Slide extends Preview {
      * @returns {any}
      */
     public getOverlayStyles() {
-        const data = this.previewData.margins_and_padding();
-        const paddingTop = data.padding.top || "0";
-        const paddingRight = data.padding.right || "0";
-        const paddingBottom = data.padding.bottom || "0";
-        const paddingLeft = data.padding.left || "0";
+        const data = this.previewData;
+        const paddingTop = data.margins_and_padding().padding.top || "0";
+        const paddingRight = data.margins_and_padding().padding.right || "0";
+        const paddingBottom = data.margins_and_padding().padding.bottom || "0";
+        const paddingLeft = data.margins_and_padding().padding.left || "0";
         return {
             backgroundColor: this.getOverlayColorStyle().backgroundColor,
-            minHeight: data.min_height ? data.min_height + "px" : "300px",
+            minHeight: data.min_height ? data.min_height() + "px" : "300px",
             paddingBottom: paddingBottom + "px",
             paddingLeft: paddingLeft + "px",
             paddingRight: paddingRight + "px",

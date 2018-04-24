@@ -68,14 +68,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
 
 
     _proto.getOverlayStyles = function getOverlayStyles() {
-      var data = this.previewData.margins_and_padding();
-      var paddingTop = data.padding.top || "0";
-      var paddingRight = data.padding.right || "0";
-      var paddingBottom = data.padding.bottom || "0";
-      var paddingLeft = data.padding.left || "0";
+      var data = this.previewData;
+      var paddingTop = data.margins_and_padding().padding.top || "0";
+      var paddingRight = data.margins_and_padding().padding.right || "0";
+      var paddingBottom = data.margins_and_padding().padding.bottom || "0";
+      var paddingLeft = data.margins_and_padding().padding.left || "0";
       return {
         backgroundColor: this.getOverlayColorStyle().backgroundColor,
-        minHeight: data.min_height ? data.min_height + "px" : "300px",
+        minHeight: data.min_height ? data.min_height() + "px" : "300px",
         paddingBottom: paddingBottom + "px",
         paddingLeft: paddingLeft + "px",
         paddingRight: paddingRight + "px",
