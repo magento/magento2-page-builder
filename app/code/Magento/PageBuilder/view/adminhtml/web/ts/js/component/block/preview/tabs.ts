@@ -31,7 +31,7 @@ export default class Tabs extends PreviewCollection {
      *
      * @type {(() => any) & _.Cancelable}
      */
-    private buildTabs = _.debounce(() => {
+    private buildTabs = _.debounce((activeTabIndex = this.previewData.default_active()) => {
         if (this.element && this.element.children.length > 0) {
             try {
                 $(this.element).tabs("destroy");
@@ -40,7 +40,7 @@ export default class Tabs extends PreviewCollection {
             }
             $(this.element).tabs({
                 create: (event: Event, ui: JQueryUI.TabsCreateOrLoadUIParams) => {
-                    this.setActiveTab(this.previewData.default_active() || 0);
+                    this.setFocusedTab(activeTabIndex || 0);
                 },
             });
         }
@@ -236,21 +236,10 @@ export default class Tabs extends PreviewCollection {
                 this.setFocusedTab(newIndex);
             }
         });
-
-        // Capture when a block is duplicated within the container
-        let duplicatedTab: Block;
-        let duplicatedTabIndex: number;
         EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
-            if (params.duplicateBlock.parent.id === this.parent.id) {
-                duplicatedTab = params.duplicateBlock;
-                duplicatedTabIndex = params.index;
-            }
+            this.buildTabs(params.index);
         });
         EventBus.on("tab-item:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
-            if (duplicatedTab && params.id === duplicatedTab.id) {
-                this.setFocusedTab(duplicatedTabIndex, true);
-                duplicatedTab = duplicatedTabIndex = null;
-            }
             if (this.parent.id === params.block.parent.id) {
                 this.updateTabNamesInDataStore();
                 this.parent.store.subscribe(() => {

@@ -24,7 +24,11 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.focusedTab = _knockout.observable();
       _this.element = void 0;
-      _this.buildTabs = _underscore.debounce(function () {
+      _this.buildTabs = _underscore.debounce(function (activeTabIndex) {
+        if (activeTabIndex === void 0) {
+          activeTabIndex = _this.previewData.default_active();
+        }
+
         if (_this.element && _this.element.children.length > 0) {
           try {
             (0, _jquery)(_this.element).tabs("destroy");
@@ -33,7 +37,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
 
           (0, _jquery)(_this.element).tabs({
             create: function create(event, ui) {
-              _this.setActiveTab(_this.previewData.default_active() || 0);
+              _this.setFocusedTab(activeTabIndex || 0);
             }
           });
         }
@@ -231,26 +235,13 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
 
           _this3.setFocusedTab(newIndex);
         }
-      }); // Capture when a block is duplicated within the container
-
-
-      var duplicatedTab;
-      var duplicatedTabIndex;
+      });
 
       _eventBus.on("tab-item:block:duplicate", function (event, params) {
-        if (params.duplicateBlock.parent.id === _this3.parent.id) {
-          duplicatedTab = params.duplicateBlock;
-          duplicatedTabIndex = params.index;
-        }
+        _this3.buildTabs(params.index);
       });
 
       _eventBus.on("tab-item:block:mount", function (event, params) {
-        if (duplicatedTab && params.id === duplicatedTab.id) {
-          _this3.setFocusedTab(duplicatedTabIndex, true);
-
-          duplicatedTab = duplicatedTabIndex = null;
-        }
-
         if (_this3.parent.id === params.block.parent.id) {
           _this3.updateTabNamesInDataStore();
 
