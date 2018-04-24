@@ -136,7 +136,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Ma
      *
      * @param {Column} child
      * @param {boolean} autoAppend
-     * @returns {any|Undefined}
+     * @returns {Promise<ContentTypeInterface>|void}
      */
 
 
