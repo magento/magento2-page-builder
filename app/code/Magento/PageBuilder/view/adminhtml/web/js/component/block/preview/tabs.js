@@ -149,7 +149,6 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
     _proto.addTab = function addTab() {
       var _this2 = this;
 
-      this.setActiveTab(this.parent.children().length - 1);
       (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.parent, this.parent.stageId).then(function (tab) {
         _underscore.defer(function () {
           var mountFunction = function mountFunction(event, params) {

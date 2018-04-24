@@ -152,7 +152,6 @@ export default class Tabs extends PreviewCollection {
      * Add a tab
      */
     public addTab() {
-        this.setActiveTab(this.parent.children().length - 1);
         createContentType(
             Config.getContentTypeConfig("tab-item"),
             this.parent,
