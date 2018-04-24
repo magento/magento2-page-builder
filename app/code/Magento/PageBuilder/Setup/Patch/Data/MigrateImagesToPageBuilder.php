@@ -8,8 +8,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Setup\Patch\Data;
 
-use Magento\Framework\Setup\Patch\DataPatchInterface;;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Filesystem\Directory\ReadInterface;
 
 /**
  * Migrates images from old bluefoot directory to new pagebuilder directory
@@ -83,8 +84,14 @@ class MigrateImagesToPageBuilder implements DataPatchInterface
                         $bluefootImagesPath . DIRECTORY_SEPARATOR . $file,
                         $pagebuilderImagesPath . DIRECTORY_SEPARATOR . basename($file)
                     );
+                } catch (\Magento\Framework\Exception\LocalizedException $e) {
+                    $this->logger->error($e);
                 } catch (\Exception $e) {
-                    $this->logger->critical($e);
+                    $message = __(
+                        'An error has occurred during image migration for PageBuilder. The error message was: %1',
+                        $e->getMessage()
+                    );
+                    $this->logger->critcal($message);
                 }
             }
         }
@@ -94,10 +101,10 @@ class MigrateImagesToPageBuilder implements DataPatchInterface
      * Create exception and log
      *
      * @param string $message
-     * @param array $path
+     * @param ReadInterface $path
      * @return void
      */
-    private function createAndLogException(string $message, array $path): void
+    private function createAndLogException(string $message, ReadInterface $path): void
     {
         $e = new \Magento\Framework\Exception\FileSystemException(new \Magento\Framework\Phrase($message, [$path]));
         $this->logger->critical($e);
