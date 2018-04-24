@@ -457,6 +457,9 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
@@ -508,11 +511,12 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <seeElement selector="{{TabOnStage.tabTextContent}}" stepKey="validateTextInDuplicatedTab"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeaderInStorefront"/>
-        <click selector="{{TabOnStorefront.tabHeader('4')}}"/>
+        <click selector="{{TabOnStorefront.tabHeader('4')}}" stepKey="navigateToLastTab"/>
         <waitForElementVisible selector="{{TabsOnFrontend.tabsContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>
-        <seeElement selector="TabOnStorefront.tabContentBackgroundColor('rgb(204, 204, 204)')"/>
+        <seeElement selector="TabOnStorefront.tabContentBackgroundColor('rgb(204, 204, 204)')" stepKey="validateBackgroundColor"/>
     </test>
 </tests>
