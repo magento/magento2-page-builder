@@ -40,7 +40,7 @@ define([], function () {
         result.marginLeft = value.margin.left + "px";
         result.marginTop = value.margin.top + "px";
         result.marginRight = value.margin.right + "px";
-        result.marginBottom = (value.margin.bottom !== "0" ? value.margin.bottom : 1) + "px";
+        result.marginBottom = value.margin.bottom + "px";
       }
 
       if (undefined !== value && undefined !== value.padding) {
