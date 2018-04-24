@@ -20,23 +20,23 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/p
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface} contentBlock
+     * @param {ContentTypeInterface} contentType
      * @param {boolean} autoAppend
      * @returns {Promise<ContentTypeInterface>}
      */
-    _proto.clone = function clone(contentBlock, autoAppend) {
+    _proto.clone = function clone(contentType, autoAppend) {
       var _this = this;
 
       if (autoAppend === void 0) {
         autoAppend = true;
       }
 
-      var index = contentBlock.parent.getChildren().indexOf(contentBlock) + 1 || null;
+      var index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
       return new Promise(function (resolve, reject) {
-        (0, _contentTypeFactory)(contentBlock.config, contentBlock.parent, contentBlock.stageId, contentBlock.store.get(contentBlock.id)).then(function (duplicate) {
-          if (contentBlock.children && contentBlock.children().length > 0) {
+        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentType.store.get(contentType.id)).then(function (duplicate) {
+          if (contentType.children && contentType.children().length > 0) {
             // Duplicate the instances children into the new duplicate
-            contentBlock.children().forEach(function (subChild) {
+            contentType.children().forEach(function (subChild) {
               duplicate.preview.clone(subChild, false).then(function (duplicateSubChild) {
                 duplicateSubChild.parent = duplicate;
                 duplicate.addChild(duplicateSubChild);
@@ -45,10 +45,10 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/p
           }
 
           if (autoAppend) {
-            contentBlock.parent.addChild(duplicate, index);
+            contentType.parent.addChild(duplicate, index);
           }
 
-          _this.dispatchContentTypeCloneEvents(contentBlock, duplicate, index);
+          _this.dispatchContentTypeCloneEvents(contentType, duplicate, index);
 
           resolve(duplicate);
         });

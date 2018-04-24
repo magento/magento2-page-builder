@@ -182,28 +182,28 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface} contentBlock
+     * @param {ContentTypeInterface} contentType
      * @param {boolean} autoAppend
      * @returns {Promise<ContentTypeInterface>}
      */
 
 
-    _proto.clone = function clone(contentBlock, autoAppend) {
+    _proto.clone = function clone(contentType, autoAppend) {
       var _this2 = this;
 
       if (autoAppend === void 0) {
         autoAppend = true;
       }
 
-      var contentBlockData = contentBlock.store.get(contentBlock.id);
-      var index = contentBlock.parent.collection.children.indexOf(contentBlock) + 1 || null;
+      var contentBlockData = contentType.store.get(contentType.id);
+      var index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
       return new Promise(function (resolve, reject) {
-        (0, _contentTypeFactory)(contentBlock.config, contentBlock.parent, contentBlock.stageId, contentBlockData).then(function (duplicateBlock) {
+        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentBlockData).then(function (duplicateBlock) {
           if (autoAppend) {
-            contentBlock.parent.addChild(duplicateBlock, index);
+            contentType.parent.addChild(duplicateBlock, index);
           }
 
-          _this2.dispatchContentTypeCloneEvents(contentBlock, duplicateBlock, index);
+          _this2.dispatchContentTypeCloneEvents(contentType, duplicateBlock, index);
 
           resolve(duplicateBlock);
         });

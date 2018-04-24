@@ -20,23 +20,23 @@ export default class PreviewCollection extends Preview {
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface} contentBlock
+     * @param {ContentTypeInterface} contentType
      * @param {boolean} autoAppend
      * @returns {Promise<ContentTypeInterface>}
      */
-    public clone(contentBlock: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
-        const index = contentBlock.parent.getChildren().indexOf(contentBlock) + 1 || null;
+    public clone(contentType: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
+        const index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
 
         return new Promise((resolve, reject) => {
             createContentType(
-                contentBlock.config,
-                contentBlock.parent,
-                contentBlock.stageId,
-                contentBlock.store.get(contentBlock.id),
+                contentType.config,
+                contentType.parent,
+                contentType.stageId,
+                contentType.store.get(contentType.id),
             ).then((duplicate: ContentTypeInterface) => {
-                if (contentBlock.children && contentBlock.children().length > 0) {
+                if (contentType.children && contentType.children().length > 0) {
                     // Duplicate the instances children into the new duplicate
-                    contentBlock.children().forEach((subChild: ContentTypeInterface) => {
+                    contentType.children().forEach((subChild: ContentTypeInterface) => {
                         duplicate.preview.clone(subChild, false).then((duplicateSubChild) => {
                             duplicateSubChild.parent = duplicate;
                             duplicate.addChild(duplicateSubChild);
@@ -45,9 +45,9 @@ export default class PreviewCollection extends Preview {
                 }
 
                 if (autoAppend) {
-                    contentBlock.parent.addChild(duplicate, index);
+                    contentType.parent.addChild(duplicate, index);
                 }
-                this.dispatchContentTypeCloneEvents(contentBlock, duplicate, index);
+                this.dispatchContentTypeCloneEvents(contentType, duplicate, index);
 
                 resolve(duplicate);
             });

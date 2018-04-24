@@ -154,7 +154,9 @@ export default class Column extends PreviewCollection {
      * @param {boolean} autoAppend
      * @returns {any|Undefined}
      */
-    public clone(child: Column, autoAppend: boolean = true): Promise<ContentTypeInterface> | void {
+    public clone(child: Column, autoAppend: boolean = true): Promise<ContentTypeInterface>
+        | ContentTypeInterface
+        | void {
         // Are we duplicating from a parent?
         if ( child.config.name !== "column"
             || this.parent.parent.children().length === 0
