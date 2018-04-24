@@ -10,7 +10,6 @@ namespace Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider\
 
 use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\Framework\App\RequestInterface;
 
 /**
  * Provides open dialog URL for media gallery slideout
@@ -23,18 +22,11 @@ class OpenDialogUrl implements ProviderInterface
     private $context;
 
     /**
-     * @var RequestInterface
-     */
-    private $request;
-
-    /**
      * @param ContextInterface $context
-     * @param RequestInterface $request
      */
-    public function __construct(ContextInterface $context, RequestInterface $request)
+    public function __construct(ContextInterface $context)
     {
         $this->context = $context;
-        $this->request = $request;
     }
 
     /**
@@ -45,7 +37,7 @@ class OpenDialogUrl implements ProviderInterface
         return [
             $itemName => $this->context->getUrl(
                 'cms/wysiwyg_images/index',
-                ['_secure' => $this->request->isSecure()]
+                ['_secure' => true]
             )
         ];
     }
