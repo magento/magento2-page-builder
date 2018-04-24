@@ -22,9 +22,8 @@
         <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.firstSlideNavigationDot}}"/>
         <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
         <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <wait time="0.5" stepKey="waitForAnimation" />
         <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="openSlideOptionsByIndex">
@@ -36,9 +35,8 @@
         <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.slideNavigationDot(index)}}"/>
         <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
         <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <wait time="0.5" stepKey="waitForAnimation" />
         <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="removeSlide">

@@ -10,14 +10,14 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AddButtonsContentBlockToCMSPage">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Buttons MAGETWO-83922"/>
+            <features value="Pagebuilder: Buttons"/>
+            <stories value="MAGETWO-83922: Buttons"/>
             <title value="Add Buttons in PageBuilder for new CMS page and view on Storefront"/>
             <description value="A user should be able to add a button into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84273"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-button"/>
+            <group value="pagebuilder-buttons"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -154,16 +154,16 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
     </test>
-    <test name="RemoveButtonFromStage">
+    <test name="ButtonDelete">
         <annotations>
-            <features value="PageBuilder base functionality MAGETWO-83921"/>
-            <stories value="Buttons MAGETWO-83922"/>
+            <features value="Pagebuilder: Buttons"/>
+            <stories value="MAGETWO-83922: Buttons"/>
             <title value="Remove button content block from stage"/>
             <description value="A user should be able to remove a button from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-button"/>
+            <group value="pagebuilder-buttons"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -186,14 +186,14 @@
     </test>
     <test name="ButtonValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Buttons"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Button - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Button."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89419"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-button"/>
+            <group value="pagebuilder-buttons"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -255,8 +255,8 @@
     </test>
     <test name="ButtonsValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Buttons"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Buttons - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Buttons."/>
             <severity value="CRITICAL"/>
@@ -311,16 +311,16 @@
         <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
         <waitForElementVisible selector="{{ButtonsBackendSection.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyButtons.value)}}" stepKey="waitForStyle"/>
     </test>
-    <test name="ButtonsHaveFields">
+    <test name="ButtonHaveFields">
         <annotations>
-            <features value="PageBuilder Buttons MAGETWO-83841"/>
-            <stories value="Add new button to Buttons from Stage and Button Configuration MAGETWO-86971"/>
+            <features value="Pagebuilder: Buttons"/>
+            <stories value="MAGETWO-86971: Add new button to Buttons from Stage and Button Configuration"/>
             <title value="Check if buttons and button have the required fields"/>
             <description value="Check if buttons and button have the required fields"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87235"/>
             <group value="pagebuilder"/>
-            <group value="pagebuilder-button"/>
+            <group value="pagebuilder-buttons"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -357,13 +357,14 @@
     </test>
     <test name="ButtonsCanBeEditedInline">
         <annotations>
-            <features value="[CMS] DragandDrop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
-            <stories value="Editing text inputs from the Stage MAGETWO-87988"/>
+            <features value="Pagebuilder: Buttons"/>
+            <stories value="MAGETWO-87988: Editing text inputs from the Stage"/>
             <title value="Ability to edit button inline on the stage"/>
             <description value="A user should be able to edit a button inline on the stage"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89563"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
