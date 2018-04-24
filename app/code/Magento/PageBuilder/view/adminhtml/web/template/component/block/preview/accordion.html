@@ -11,7 +11,7 @@
     <i class="icon-pagebuilder-accordian"></i> <span data-bind="text: $t('Accordion');"></span>
     <!-- /ko -->
     <!-- ko if: previewData.items().length > 0 -->
-    <div class="pagebuilder-accordion" data-bind="style: previewStyle(), foreach: previewData.items(), afterRender: onContainerRender">
+    <div class="pagebuilder-accordion" data-bind="style: previewStyle, foreach: previewData.items, afterRender: onContainerRender">
         <div data-role="collapsible" class="accordion-collapsible">
             <div data-role="trigger">
                 <span data-bind="text: title"></span>
