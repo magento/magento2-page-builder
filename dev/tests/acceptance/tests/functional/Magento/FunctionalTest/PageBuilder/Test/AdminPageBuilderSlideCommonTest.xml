@@ -372,8 +372,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
 
-        <comment userInput="Slide is not focused, Option panel is not displayed" stepKey="AC6"/>
-        <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="dontSeeSlideOptionsAfterSaveSlide"/>
+        <comment userInput="Slide option panel is displayed" stepKey="AC6"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="SeeSlideOptionsAfterSaveSlide"/>
 
         <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.content}}" stepKey="scrollToContent"/>
@@ -385,6 +385,7 @@
         <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
 
         <comment userInput="User doesn't see Slide Option panel, both option panels not displayed at once." stepKey="AC8"/>
+        <waitForElementNotVisible time="5" selector="{{SliderInAdmin.slideOptions}}" stepKey="waitForSlideOptionsPanelNotVisible" />
         <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanelStillHidden"/>
 
         <comment userInput="User sees button (+) inside the Slider Option Panel. Tooltip shows Add New Slide" stepKey="AC9"/>
@@ -419,6 +420,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
 
         <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide title" stepKey="AC15"/>
+        <click stepKey="unfocusNavigation" selector="{{SliderInAdmin.sliderContainer}}"/>
         <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
         <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2InTooltip"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
