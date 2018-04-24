@@ -443,7 +443,6 @@
             <title value="Can duplicate tab in tabs"/>
             <description value="A user should be able to duplicate a tab with all of its configuration."/>
             <severity value="CRITICAL"/>
-            <group value="run"/>
             <group value="pagebuilder-tabs"/>
         </annotations>
         <before>
@@ -472,7 +471,7 @@
         <actionGroup ref="duplicateTabByIndex" stepKey="duplicateTabByIndex1">
             <argument name="index" value="1"/>
         </actionGroup>
-        <seeElement selector="{{TabOnStage.tabDefaultDuplicate}}" stepKey="seeDefaultDuplicatedTab"/>
+        <see userInput="Tab 1 copy" selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeDefaultDuplicatedTab"/>
         <comment userInput="Tabs duplicate configured tab" stepKey="AC2"/>
         <!-- Fill tab config enter settings for second tab -->
         <actionGroup ref="openTabOptionsByIndex" stepKey="openTab2Options">
