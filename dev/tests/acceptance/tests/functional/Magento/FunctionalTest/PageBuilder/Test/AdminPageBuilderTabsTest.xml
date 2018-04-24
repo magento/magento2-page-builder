@@ -462,16 +462,57 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <!-- Fill tab config-->
+        <!-- Fill tab config -->
         <comment userInput="Tabs duplicate default empty state tab" stepKey="AC1"/>
         <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="seeTabOptionsDuplicate"/>
-        <!--<actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillBackgroundColor">-->
-            <!--<argument name="property" value="PageBuilderTabFirst"/>-->
-        <!--</actionGroup>-->
         <actionGroup ref="duplicateTabByIndex" stepKey="duplicateTabByIndex1">
             <argument name="index" value="1"/>
         </actionGroup>
         <seeElement selector="{{TabOnStage.tabDefaultDuplicate}}" stepKey="seeDefaultDuplicatedTab"/>
+        <comment userInput="Tabs duplicate configured tab" stepKey="AC2"/>
+        <!-- Fill tab config enter settings for second tab -->
+        <actionGroup ref="openTabOptionsByIndex" stepKey="openTab2Options">
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderTabBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
+            <argument name="property" value="PageBuilderTabNameRandom1"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabMinHeight">
+            <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="duplicateTabByIndex" stepKey="duplicateTabByIndex2">
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openTabOptionsByIndex" stepKey="openTab3Options">
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColorProperty">
+            <argument name="property" value="PageBuilderTabBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateMinimumHeightProperty">
+            <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextOntoTab">
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <comment userInput="Tabs duplicate with custom content" stepKey="AC3"/>
+        <actionGroup ref="duplicateTabByIndex" stepKey="duplicateTabByIndex3">
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <seeElement selector="{{TabOnStage.tabTextContent}}" stepKey="validateTextInDuplicatedTab"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
+        <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeaderInStorefront"/>
+        <click selector="{{TabOnStorefront.tabHeader('4')}}"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>
+        <seeElement selector="TabOnStorefront.tabContentBackgroundColor('rgb(204, 204, 204)')"/>
     </test>
 </tests>
