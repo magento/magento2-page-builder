@@ -86,14 +86,29 @@ class MigrateImagesToPageBuilder implements DataPatchInterface
                     );
                 } catch (\Magento\Framework\Exception\LocalizedException $e) {
                     $this->logger->error($e);
+                    return;
                 } catch (\Exception $e) {
                     $message = __(
                         'An error has occurred during image migration for PageBuilder. The error message was: %1',
                         $e->getMessage()
                     );
                     $this->logger->critcal($message);
+                    return;
                 }
             }
+        }
+
+        // remove gene-cms folder
+        try {
+            $this->fileDriver->deleteDirectory($bluefootImagesPath);
+        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            $this->logger->error($e);
+        } catch (\Exception $e) {
+            $message = __(
+                'An error has occurred during image migration for PageBuilder. The error message was: %1',
+                $e->getMessage()
+            );
+            $this->logger->critcal($message);
         }
     }
 
@@ -107,7 +122,7 @@ class MigrateImagesToPageBuilder implements DataPatchInterface
     private function createAndLogException(string $message, ReadInterface $path): void
     {
         $e = new \Magento\Framework\Exception\FileSystemException(new \Magento\Framework\Phrase($message, [$path]));
-        $this->logger->critical($e);
+        $this->logger->error($e);
     }
 
     /**
