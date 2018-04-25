@@ -70,7 +70,7 @@ define(["Magento_PageBuilder/js/component/config"], function (_config) {
 
   function getImageUrl(image) {
     var imageUrl = image[0].url;
-    var mediaPath = imageUrl.split(_config.getInitConfig("media_url"));
+    var mediaPath = imageUrl.split(_config.getConfig("media_url"));
     return "{{media url=" + mediaPath[1] + "}}";
   }
   /**

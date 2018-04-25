@@ -69,7 +69,7 @@ export default function decodeAllDataUrlsInString(str: string) {
  */
 export function getImageUrl(image: any[]) {
     const imageUrl = image[0].url;
-    const mediaPath = imageUrl.split(Config.getInitConfig("media_url"));
+    const mediaPath = imageUrl.split(Config.getConfig("media_url"));
     return "{{media url=" + mediaPath[1] + "}}";
 }
 
