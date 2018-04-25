@@ -472,6 +472,15 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <see userInput="Tab 1 copy" selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeDefaultDuplicatedTab"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
+        <actionGroup ref="switchTabsStorefront" stepKey="switchTabsStorefront">
+            <argument name="from" value="1"/>
+            <argument name="to" value="2"/>
+        </actionGroup>
+        <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="Tab 1 copy" stepKey="validateDefaultTabInStorefront"/>
     </test>
     <test name="tabsDuplicateTabWithCustomizedTabSettings">
         <annotations>
@@ -538,6 +547,7 @@
             <argument name="to" value="2"/>
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStorefront.tabContentBackgroundColor('2', 'rgb(204, 204, 204)')}}" stepKey="validateBackgroundColor"/>
+        <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('2', '200')}}" stepKey="validateMinHeightInStorefront"/>
     </test>
     <test name="tabsDuplicateTabWithCustomizedTabContent">
         <annotations>
@@ -587,5 +597,4 @@
         </actionGroup>
         <seeElement selector="{{TabOnStorefront.tabContentText('2')}}" stepKey="seeTextElementInTabContent"/>
     </test>
-
 </tests>
