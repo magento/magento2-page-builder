@@ -38,8 +38,7 @@ class ProductList extends \Magento\Catalog\Block\Product\ListProduct
         \Magento\Framework\Url\Helper\Data $urlHelper,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
         array $data = []
-    )
-    {
+    ) {
         $this->productCollectionFactory = $productCollectionFactory;
         parent::__construct(
             $context,
