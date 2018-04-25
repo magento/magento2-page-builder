@@ -54,7 +54,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
 
   function getColumnWidth(column) {
-    return getAcceptedColumnWidth(column.stage.store.get(column.id).width.toString());
+    return getAcceptedColumnWidth(column.store.get(column.id).width.toString());
   }
   /**
    * Retrieve the index of the column within it's group

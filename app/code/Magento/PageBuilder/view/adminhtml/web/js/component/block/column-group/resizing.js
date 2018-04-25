@@ -47,7 +47,7 @@ define(["Magento_PageBuilder/js/component/block/preview/column-group/resizing"],
 
 
   function updateColumnWidth(column, width) {
-    column.stage.store.updateKey(column.id, parseFloat(width.toString()) + "%", "width");
+    column.store.updateKey(column.id, parseFloat(width.toString()) + "%", "width");
   }
 
   return {

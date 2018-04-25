@@ -36,7 +36,7 @@ export default class Src implements ElementConverterInterface {
             return "";
         }
         const imageUrl = value[0].url;
-        const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getInitConfig("media_url"), imageUrl);
+        const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getConfig("media_url"), imageUrl);
 
         const mediaPath = imageUrl.split(mediaUrl);
         return "{{media url=" + mediaPath[1] + "}}";

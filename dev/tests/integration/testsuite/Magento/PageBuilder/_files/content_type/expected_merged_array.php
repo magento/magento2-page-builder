@@ -27,6 +27,7 @@ return [
             'group' => 'group2',
             'component' => 'Path/to/component',
             'preview_component' => 'Path/to/preview/component',
+            'content_component' => 'Path/to/content/component',
             'allowed_parents' => [
                 0 => 'stage'
             ],
@@ -511,6 +512,7 @@ return [
             'sortOrder' => '3',
             'label' => 'Type 3',
             'icon' => 'pagebuilder-type3-icon',
+            'component' => 'Path/to/custom/component',
             'form' => 'pagebuilder_type3_form',
             'group' => 'group1'
         ],

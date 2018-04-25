@@ -70,7 +70,7 @@ define(["Magento_PageBuilder/js/component/config"], function (_config) {
 
   function getImageUrl(image) {
     var imageUrl = image[0].url;
-    var mediaPath = imageUrl.split(_config.getInitConfig("media_url"));
+    var mediaPath = imageUrl.split(_config.getConfig("media_url"));
     return "{{media url=" + mediaPath[1] + "}}";
   }
   /**
@@ -117,7 +117,7 @@ define(["Magento_PageBuilder/js/component/config"], function (_config) {
         var urlMatches = mediaDirective.match(urlRegExp);
 
         if (urlMatches && urlMatches[1] !== "undefined") {
-          html = html.replace(mediaDirective, _config.getInitConfig("media_url") + urlMatches[1]);
+          html = html.replace(mediaDirective, _config.getConfig("media_url") + urlMatches[1]);
         }
       });
     }

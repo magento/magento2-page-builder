@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/component/block/factory", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/format-validator", "Magento_PageBuilder/js/component/format/read/composite"], function (_translate, _alert, _, _directives, _factory, _config, _eventBus, _formatValidator, _composite) {
+define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/format/format-validator", "Magento_PageBuilder/js/component/format/read/composite"], function (_translate, _alert, _, _contentTypeFactory, _directives, _config, _eventBus, _formatValidator, _composite) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -14,7 +14,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
    */
   function buildFromContent(stage, value) {
     var stageDocument = document.createElement("div");
-    stageDocument.setAttribute(_config.getValueAsString("dataRoleAttributeName"), "stage");
+    stageDocument.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = value;
     return buildElementIntoStage(stageDocument, stage, stage);
   }
@@ -22,14 +22,14 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
    * Build an element and it's children into the stage
    *
    * @param {Element} element
-   * @param {EditableArea} parent
+   * @param {ContentTypeInterface} parent
    * @param {stage} stage
    * @returns {Promise<void>}
    */
 
 
   function buildElementIntoStage(element, parent, stage) {
-    if (element instanceof HTMLElement && element.getAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
+    if (element instanceof HTMLElement && element.getAttribute(_config.getConfig("dataRoleAttributeName"))) {
       var childPromises = [];
       var childElements = [];
       var children = getElementChildren(element);
@@ -54,27 +54,27 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
    * Parse an element in the structure and build the required element
    *
    * @param {Element} element
-   * @param {EditableArea} parent
+   * @param {ContentTypeInterface} parent
    * @param {stage} stage
-   * @returns {Promise<EditableAreaInterface>}
+   * @returns {Promise<ContentTypeInterface>}
    */
 
 
   function createElementBlock(element, stage, parent) {
     parent = parent || stage;
-    var role = element.getAttribute(_config.getValueAsString("dataRoleAttributeName"));
+    var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
 
-    var config = _config.getInitConfig("content_types")[role];
+    var config = _config.getContentTypeConfig(role);
 
     return getElementData(element, config).then(function (data) {
-      return (0, _factory)(config, parent, stage, data, getElementChildren(element).length);
+      return (0, _contentTypeFactory)(config, parent, stage.id, data, getElementChildren(element).length);
     });
   }
   /**
    * Retrieve the elements data
    *
    * @param {HTMLElement} element
-   * @param {ConfigContentBlock} config
+   * @param {ContentTypeConfigInterface} config
    * @returns {Promise<any>}
    */
 
@@ -106,7 +106,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
       _.forEach(element.childNodes, function (child) {
         // Only search elements which tagName's and not script tags
         if (child.tagName && child.tagName !== "SCRIPT") {
-          if (child.hasAttribute(_config.getValueAsString("dataRoleAttributeName"))) {
+          if (child.hasAttribute(_config.getConfig("dataRoleAttributeName"))) {
             children.push(child);
           } else {
             children = getElementChildren(child);
@@ -129,18 +129,18 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_Pa
 
 
   function buildEmpty(stage, initialValue) {
-    var stageConfig = _config.getInitConfig("stage_config");
+    var stageConfig = _config.getConfig("stage_config");
 
-    var rootContentTypeConfig = _config.getContentType(stageConfig.root_content_type);
+    var rootContentTypeConfig = _config.getContentTypeConfig(stageConfig.root_content_type);
 
-    var htmlDisplayContentTypeConfig = _config.getContentType(stageConfig.html_display_content_type);
+    var htmlDisplayContentTypeConfig = _config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-      return (0, _factory)(rootContentTypeConfig, stage, stage, {}).then(function (row) {
+      return (0, _contentTypeFactory)(rootContentTypeConfig, stage, stage.id, {}).then(function (row) {
         stage.addChild(row);
 
         if (htmlDisplayContentTypeConfig && initialValue) {
-          return (0, _factory)(htmlDisplayContentTypeConfig, stage, stage, {
+          return (0, _contentTypeFactory)(htmlDisplayContentTypeConfig, stage, stage.id, {
             html: initialValue
           }).then(function (text) {
             row.addChild(text);

@@ -66,7 +66,7 @@ export default class StyleAttributeMapper {
                     || (key === "mobile_image" && Array.isArray(value) && value[0] !== undefined)) {
                     // convert to media directive
                     const imageUrl = value[0].url;
-                    const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getInitConfig("media_url"), imageUrl);
+                    const mediaUrl = convertUrlToPathIfOtherUrlIsOnlyAPath(Config.getConfig("media_url"), imageUrl);
 
                     const mediaPath = imageUrl.split(mediaUrl);
                     const directive = "{{media url=" + mediaPath[1] + "}}";

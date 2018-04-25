@@ -5,24 +5,32 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/slick/slick.min";
 import _ from "underscore";
 import "../../../binding/focus";
-import {ConfigContentBlock} from "../../config";
+import ContentTypeConfigInterface from "../../../content-type-config.d";
+import createContentType from "../../../content-type-factory";
+import ContentTypeInterface from "../../../content-type.d";
+import ObservableUpdater from "../../../observable-updater";
+import PreviewCollection from "../../../preview-collection";
+import Config from "../../config";
 import EventBus from "../../event-bus";
-import {BlockRemovedParams} from "../../stage/event-handling-delegate";
-import Block from "../block";
-import {BlockCreateEventParams, BlockReadyEventParams} from "../factory";
-import PreviewBlock from "./block";
+import {Option} from "../../stage/structural/options/option";
+import {OptionInterface} from "../../stage/structural/options/option.d";
+import BlockCreateEventParamsInterface from "../block-create-event-params.d";
+import BlockMountEventParamsInterface from "../block-mount-event-params.d";
+import BlockReadyEventParamsInterface from "../block-ready-event-params.d";
+import {default as SliderPreview} from "../preview/slider";
+import Slide from "./slide";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
-export default class Slider extends PreviewBlock {
+export default class Slider extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
     private element: Element;
     private childSubscribe: KnockoutSubscription;
     private blockHeightReset: boolean;
-
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
      *
@@ -77,22 +85,27 @@ export default class Slider extends PreviewBlock {
     }, 10);
 
     /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    constructor(parent: Block, config: ConfigContentBlock) {
-        super(parent, config);
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(parent, config, observableUpdater);
 
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
-        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParams) => {
+        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
             if (params.id === this.parent.id) {
                 sliderReady = true;
             }
         });
 
         this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-        this.parent.stage.store.subscribe(this.buildSlick);
+        this.parent.store.subscribe(this.buildSlick);
 
         // Set the active slide to the new position of the sorted slide
         EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
@@ -111,7 +124,7 @@ export default class Slider extends PreviewBlock {
             }
         });
         // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
-        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParams) => {
+        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParamsInterface) => {
             if (this.element && sliderReady && params.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
@@ -119,8 +132,33 @@ export default class Slider extends PreviewBlock {
 
         // Set the stage to interacting when a slide is focused
         this.focusedSlide.subscribe((value: number) => {
-            this.parent.stage.interacting(value !== null);
+            if (value !== null) {
+                EventBus.trigger("interaction:start", {});
+            } else {
+                EventBus.trigger("interaction:stop", {});
+            }
         });
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<OptionInterface>}
+     */
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
+        options.push(
+            new Option(
+                this,
+                "add",
+                "<i class='icon-pagebuilder-add'></i>",
+                $t("Add"),
+                this.addSlide,
+                ["add-child"],
+                10,
+            ),
+        );
+        return options;
     }
 
     /**
@@ -201,6 +239,71 @@ export default class Slider extends PreviewBlock {
     }
 
     /**
+     * Add a slide into the slider
+     */
+    public addSlide() {
+        createContentType(
+            Config.getConfig("content_types").slide,
+            this.parent,
+            this.parent.stageId,
+        ).then((slide) => {
+            const mountFn = (event: Event, params: BlockMountEventParamsInterface) => {
+                if (params.id === slide.id) {
+                    _.delay(() => {
+                        this.navigateToSlide(this.parent.children().length - 1);
+                        slide.preview.onOptionEdit();
+                    }, 500);
+                    EventBus.off("slide:block:mount", mountFn);
+                }
+            };
+            EventBus.on("slide:block:mount", mountFn);
+            this.parent.addChild(slide, this.parent.children().length);
+        });
+    }
+
+    /**
+     * Bind events
+     */
+    protected bindEvents() {
+        super.bindEvents();
+        // Block being mounted onto container
+        EventBus.on("slider:block:dropped:create", (event: Event, params: BlockReadyEventParamsInterface) => {
+            if (params.id === this.parent.id && this.parent.children().length === 0) {
+                this.addSlide();
+            }
+        });
+
+        // Block being removed from container
+        EventBus.on("slide:block:removed", (event, params: BlockRemovedParams) => {
+            if (params.parent.id === this.parent.id) {
+                // Mark the previous slide as active
+                const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
+                (this as SliderPreview).setActiveSlide(newIndex);
+                (this as SliderPreview).setFocusedSlide(newIndex, true);
+            }
+        });
+
+        // Capture when a block is duplicated within the container
+        let duplicatedSlide: Slide;
+        let duplicatedSlideIndex: number;
+        EventBus.on("slide:block:duplicate", (event, params: BlockDuplicateEventParams) => {
+            if (params.duplicateBlock.parent.id === this.parent.id) {
+                duplicatedSlide = (params.duplicateBlock as Slide);
+                duplicatedSlideIndex = params.index;
+            }
+        });
+        EventBus.on("slide:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
+            if (duplicatedSlide && params.id === duplicatedSlide.id) {
+                // Mark the new duplicate slide as active
+                (this as SliderPreview).navigateToSlide(duplicatedSlideIndex);
+                // Force the focus of the slide, as the previous slide will have focus
+                (this as SliderPreview).setFocusedSlide(duplicatedSlideIndex, true);
+                duplicatedSlide = duplicatedSlideIndex = null;
+            }
+        });
+    }
+
+    /**
      * To ensure smooth animations we need to lock the container height
      */
     private forceContainerHeight(): void {
@@ -217,13 +320,14 @@ export default class Slider extends PreviewBlock {
      * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
      */
     private buildSlickConfig() {
+        const data = this.parent.store.get(this.parent.id);
         return {
-            arrows: this.data.show_arrows() === "1",
-            autoplay: this.data.autoplay() === "1",
-            autoplaySpeed: this.data.autoplay_speed(),
+            arrows: data.show_arrows === "1",
+            autoplay: data.autoplay === "1",
+            autoplaySpeed: data.autoplay_speed,
             dots: false, // We have our own dots implemented
-            fade: this.data.fade() === "1",
-            infinite: this.data.is_infinite() === "1",
+            fade: data.fade === "1",
+            infinite: data.is_infinite === "1",
         };
     }
 }

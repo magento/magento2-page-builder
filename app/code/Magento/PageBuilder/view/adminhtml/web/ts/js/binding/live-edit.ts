@@ -61,7 +61,7 @@ ko.bindingHandlers.liveEdit = {
          */
         const onBlur = () => {
             if (focusedValue !== stripHtml(element.innerHTML)) {
-                viewModel.preview.updateData(field, stripHtml(element.innerHTML));
+                viewModel.updateData(field, stripHtml(element.innerHTML));
             }
         };
 
@@ -107,7 +107,7 @@ ko.bindingHandlers.liveEdit = {
             handlePlaceholderClass(element);
         };
         element.setAttribute("data-placeholder", placeholder);
-        element.innerText = viewModel.preview.data[field]();
+        element.innerText = viewModel.previewData[field]();
         element.contentEditable = true;
         element.addEventListener("focus", onFocus);
         element.addEventListener("blur", onBlur);
@@ -119,8 +119,8 @@ ko.bindingHandlers.liveEdit = {
         handlePlaceholderClass(element);
 
         // Create a subscription onto the original data to update the internal value
-        viewModel.preview.data[field].subscribe((value: string) => {
-            element.innerText = viewModel.preview.data[field]();
+        viewModel.previewData[field].subscribe((value: string) => {
+            element.innerText = viewModel.previewData[field]();
             handlePlaceholderClass(element);
         });
     },
@@ -137,7 +137,7 @@ ko.bindingHandlers.liveEdit = {
     update(element, valueAccessor, allBindings, viewModel, bindingContext) {
         const {field} = valueAccessor();
 
-        element.innerText = viewModel.preview.data[field]();
+        element.innerText = viewModel.previewData[field]();
         handlePlaceholderClass(element);
     },
 };

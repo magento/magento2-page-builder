@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/factory"], function (_config, _factory) {
+define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/component/config"], function (_contentTypeFactory, _config) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -14,7 +14,7 @@ define(["Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/compo
    * @returns {Promise<Column>}
    */
   function createColumn(parent, width, index) {
-    return (0, _factory)(_config.getContentType("column"), parent, parent.stage, {
+    return (0, _contentTypeFactory)(_config.getContentTypeConfig("column"), parent, parent.stageId, {
       width: parseFloat(width.toString()) + "%"
     }).then(function (column) {
       parent.addChild(column, index);
