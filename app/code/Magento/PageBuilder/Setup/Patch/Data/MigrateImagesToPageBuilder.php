@@ -80,10 +80,11 @@ class MigrateImagesToPageBuilder implements DataPatchInterface
             // move images
             foreach ($allFiles as $file) {
                 if ($bluefootDir->isFile($file)) {
-                    $this->fileDriver->rename(
-                        $bluefootImagesPath . DIRECTORY_SEPARATOR . $file,
-                        $pagebuilderImagesPath . DIRECTORY_SEPARATOR . basename($file)
-                    );
+                    $newImagePath = $pagebuilderImagesPath . DIRECTORY_SEPARATOR . $file;
+                    if (!$this->fileDriver->isExists(dirname($newImagePath))) {
+                        $this->fileDriver->createDirectory(dirname($newImagePath));
+                    }
+                    $this->fileDriver->rename($bluefootImagesPath . DIRECTORY_SEPARATOR . $file, $newImagePath);
                 }
             }
 
