@@ -5,8 +5,8 @@
  */
 -->
 
-<div data-bind="attr: getAttributes(), style: {display: 'inline-block'}, css: getCss()">
-    <a data-bind="attr: getLinkAttributes(), style: getStyle(), css: getData().button_type">
-        <span data-bind="text: getData().button_text"></span>
+<div data-bind="attr: getAttributes('main'), style: getStyle('main'), css: getCss('main')">
+    <a data-bind="attr: getAttributes('link'), style: getStyle('link'), css: getData().button_type">
+        <span data-bind="html: getHtml('link_text')"></span>
     </a>
 </div>
