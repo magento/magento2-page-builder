@@ -236,7 +236,8 @@
         <fillField selector="{{MediaGallerySection.FolderName}}" userInput="{{ImageFolder.name}}" stepKey="fillFolderName" />
         <click selector="{{MediaGallerySection.AcceptFolderName}}" stepKey="acceptFolderName" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear2" />
-        <conditionalClick selector="{{MediaGallerySection.StorageRootArrow}}" dependentSelector="{{MediaGallerySection.checkIfArrowExpand}}" stepKey="clickArrowIfCloses" visible="true"/>
+        <conditionalClick selector="{{MediaGallerySection.StorageRootArrow}}" dependentSelector="{{MediaGallerySection.checkIfArrowExpand}}" stepKey="clickStorageRootArrowIfClosed" visible="true"/>
+        <conditionalClick selector="{{MediaGallerySection.WysiwygArrow}}" dependentSelector="{{MediaGallerySection.checkIfWysiwygArrowExpand}}" stepKey="clickWysiwygArrowIfClosed" visible="true"/>
         <waitForText userInput="{{ImageFolder.name}}" stepKey="waitForNewFolder" />
         <click userInput="{{ImageFolder.name}}" stepKey="clickOnCreatedFolder" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear3" />
