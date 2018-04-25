@@ -74,13 +74,13 @@ define([
                 this.isComponentInitialized = true;
                 this.loading(false);
             }.bind(this));
-            events.on('stage:renderTree:' + id, function (e, data) {
-                this.value(data.value);
+            events.on('stage:renderTree:' + id, function (args) {
+                this.value(args.value);
             }.bind(this));
-            events.on('pagebuilder:fullScreen:' + id, function (e, data) {
-                if (!data.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
+            events.on('pagebuilder:fullScreen:' + id, function (args) {
+                if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(false);
-                } else if (data.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
+                } else if (args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(true);
                 }
             }.bind(this));

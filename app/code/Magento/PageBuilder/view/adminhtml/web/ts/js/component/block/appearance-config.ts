@@ -13,7 +13,7 @@ import Config from "../config";
  * @returns {Object}
  */
 export default function getAppearanceConfig(contentType: string, appearance: string): object {
-    const contentTypeConfig = Config.getContentType(contentType);
+    const contentTypeConfig = Config.getContentTypeConfig(contentType);
     let config = {};
     if (contentTypeConfig.appearances !== undefined) {
         if (!appearance) {

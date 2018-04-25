@@ -12,14 +12,17 @@ define([], function () {
   /*#__PURE__*/
   function () {
     /**
-     * @param {Structural} parent
+     * @param {Preview} parent
+     * @param {string} name
      * @param {number} sort
      */
-    function TitleOption(parent, sort) {
+    function TitleOption(parent, name, sort) {
+      this.parent = void 0;
+      this.name = void 0;
       this.sort = void 0;
       this.code = void 0;
-      this.parent = void 0;
       this.parent = parent;
+      this.name = name;
       this.sort = sort;
       this.code = "title";
     }

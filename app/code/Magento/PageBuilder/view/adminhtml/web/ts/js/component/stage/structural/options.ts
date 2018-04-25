@@ -4,11 +4,11 @@
  */
 
 import ko from "knockout";
-import { Structural } from "./abstract.d";
-import { OptionInterface } from "./options/option.d";
+import Preview from "../../../preview";
+import {OptionInterface} from "./options/option.d";
 
 export class Options {
-    private parent: Structural;
+    private parent: Preview;
     private options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
 
     /**
@@ -17,7 +17,7 @@ export class Options {
      * @param parent
      * @param options
      */
-    constructor(parent: Structural, options: OptionInterface[]) {
+    constructor(parent: Preview, options: OptionInterface[]) {
         this.parent = parent;
         this.options(options);
         this.sort();

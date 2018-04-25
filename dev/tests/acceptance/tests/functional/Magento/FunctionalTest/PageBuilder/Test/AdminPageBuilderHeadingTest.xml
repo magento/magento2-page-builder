@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="HeadingDefaultState">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Heading - Default Heading State"/>
             <description value="Tests default state of a Heading content block in the stage and storefront"/>
             <severity value="CRITICAL"/>
@@ -45,7 +45,7 @@
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType2"/>
         <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Default Heading in Storefront -->
         <waitForElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeadingType"/>
@@ -54,8 +54,8 @@
     </test>
     <test name="HeadingEditPanelGeneralSectionVisual">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Heading - Edit Panel General Section Visual"/>
             <description value="Tests the following for each attribute under General Section: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
@@ -128,8 +128,8 @@
     </test>
     <test name="HeadingValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Heading - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Heading."/>
             <severity value="CRITICAL"/>
@@ -252,7 +252,7 @@
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getPaddingBottom2"/>
         <assertEmpty actual="getPaddingBottom2" actualType="variable" message="Text field has text: $getPaddingBottom2" stepKey="assertPaddingBottom2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -266,8 +266,8 @@
     </test>
     <test name="HeadingUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89915"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-89915: [Tech Debt] Add Tests to Update Advanced Configuration For Each Content Type"/>
             <title value="Heading - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Heading will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -415,7 +415,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -434,8 +434,8 @@
     </test>
     <test name="HeadingVerifyOnHoverOptionMenu">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Verify Heading On Hover Option Menu"/>
             <description value="Test verifies that on hover option menu for Heading content block contains all buttons"/>
             <severity value="CRITICAL"/>
@@ -471,8 +471,8 @@
     </test>
     <test name="HeadingEditText">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Edit Heading Text"/>
             <description value="Edit Heading Text field in PageBuilder and view the rendered content block in stage and storefront"/>
             <severity value="CRITICAL"/>
@@ -508,15 +508,15 @@
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront"/>
     </test>
     <test name="HeadingEditTypeH1">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Edit Heading Type H1"/>
             <description value="Edit Heading Type field to value H1 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -557,7 +557,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -566,13 +566,12 @@
     </test>
     <test name="HeadingEditTypeH2">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Edit Heading Type H2"/>
             <description value="Edit Heading Type field to value H2 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88784"/>
-            <group value="pagebuilder"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-heading"/>
         </annotations>
@@ -609,7 +608,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -618,8 +617,8 @@
     </test>
     <test name="HeadingEditTypeH3">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Edit Heading Type H3"/>
             <description value="Edit Heading Type field to value H3 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -660,7 +659,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -669,8 +668,8 @@
     </test>
     <test name="HeadingEditTypeH4">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Edit Heading Type H4"/>
             <description value="Edit Heading Type field to value H4 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -711,7 +710,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -720,8 +719,8 @@
     </test>
     <test name="HeadingEditTypeH5">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Edit Heading Type H5"/>
             <description value="Edit Heading Type field to value H5 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -762,7 +761,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -771,8 +770,8 @@
     </test>
     <test name="HeadingEditTypeH6">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Edit Heading Type H6"/>
             <description value="Edit Heading Type field to value H6 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -813,7 +812,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -822,8 +821,8 @@
     </test>
     <test name="HeadingVerifyNoRequiredAttributes">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="No Required Attributes For Heading"/>
             <description value="Verify that no attributes are required by clearing all fields and verifying user can save."/>
             <severity value="CRITICAL"/>
@@ -869,15 +868,15 @@
         <waitForElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForHeading"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <waitForElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeading"/>
     </test>
     <test name="HeadingDuplicate">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Duplicate a heading content block in stage"/>
             <description value="A user should be able to duplicate a heading block in a row."/>
             <severity value="CRITICAL"/>
@@ -1000,7 +999,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -1024,8 +1023,8 @@
     </test>
     <test name="HeadingDelete">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-87072"/>
+            <features value="Pagebuilder: Heading"/>
+            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
             <title value="Delete Heading Content Block"/>
             <description value="A user should be able to delete a heading block from a row. Verify on Stage amd Storefront"/>
             <severity value="CRITICAL"/>
@@ -1060,7 +1059,7 @@
         <!-- Verify Not In Stage -->
         <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderHeadingContentBlock.role, '1')}}" stepKey="dontSeeContentBlockInStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="heading"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Verify Not In Storefront -->
         <dontSeeElementInDOM selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeContentBlockInStorefront"/>

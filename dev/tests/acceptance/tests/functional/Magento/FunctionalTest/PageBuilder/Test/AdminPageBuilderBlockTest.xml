@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="BlockAddToCMSPage">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-83941"/>
+            <features value="Pagebuilder: Block"/>
+            <stories value="MAGETWO-83941: Static Block"/>
             <title value="Block - Update General Values"/>
             <description value="Validate that updating every attribute in the General form for Block will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -37,7 +37,7 @@
             <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+            <argument name="group" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
@@ -54,14 +54,14 @@
         <waitForElementVisible selector="{{BlockOnStage.hr('1')}}" stepKey="waitForHrElementVisible" />
         <waitForElementVisible selector="{{BlockOnStage.identifier('1', PageBuilderBlockIdentifierProperty.value)}}" stepKey="waitForIdentifier" />
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="block"/>
+            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <seeElement selector="{{BlockOnStorefront.hr('1')}}" stepKey="seeBlockContentFrontend"/>
     </test>
     <test name="BlockDelete">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-83941"/>
+            <features value="Pagebuilder: Block"/>
+            <stories value="MAGETWO-83941: Static Block"/>
             <title value="Block - Delete Block"/>
             <description value="A user should be able to delete an Block content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
@@ -84,7 +84,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+            <argument name="group" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
@@ -96,8 +96,8 @@
     </test>
     <test name="BlockValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Block"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Block - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Block."/>
             <severity value="CRITICAL"/>
@@ -120,7 +120,7 @@
             <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+            <argument name="group" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
@@ -207,7 +207,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="block"/>
+            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -223,8 +223,8 @@
     </test>
     <test name="BlockUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89915"/>
+            <features value="Pagebuilder: Block"/>
+            <stories value="MAGETWO-89915: [Tech Debt] Add Tests to Update Advanced Configuration For Each Content Type"/>
             <title value="Block - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Block will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -250,7 +250,7 @@
             <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMagento"/>
+            <argument name="group" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
@@ -381,7 +381,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="block"/>
+            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

@@ -9,12 +9,12 @@ import "ko-sortable";
 import $t from "mage/translate";
 import events from "uiEvents";
 import _ from "underscore";
-import Config, {ConfigContentBlock} from "../config";
+import ContentTypeConfigInterface from "../../content-type-config.d";
+import Config from "../config";
 import PageBuilder from "../page-builder";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
 import { Block as GroupBlock } from "./panel/group/block";
-import { load as loadPreviews } from "./previews";
 
 export default class Panel implements PanelInterface {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
@@ -35,7 +35,6 @@ export default class Panel implements PanelInterface {
         this.parent = parent;
         this.id = this.parent.id;
         this.initListeners();
-        loadPreviews();
     }
 
     /**
@@ -72,8 +71,8 @@ export default class Panel implements PanelInterface {
             this.searching(true);
             this.searchResults(_.map(
                 _.filter(
-                    Config.getInitConfig("content_types"),
-                    (contentBlock: ConfigContentBlock) => {
+                    Config.getConfig("content_types"),
+                    (contentBlock: ContentTypeConfigInterface) => {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
                         const matches = !!contentBlock.label.toLowerCase().match(regEx);
                         return matches &&
@@ -85,47 +84,6 @@ export default class Panel implements PanelInterface {
                     return new GroupBlock(identifier, contentBlock);
                 }),
             );
-        }
-    }
-
-    /**
-     * Populate the panel with the content blocks
-     */
-    private populateContentBlocks(): void {
-        const groups = Config.getInitConfig("groups");
-        const contentBlocks = Config.getInitConfig("content_types");
-
-        // Verify the configuration contains the required information
-        if (groups && contentBlocks) {
-            // Iterate through the groups creating new instances with their associated content blocks
-            _.each(groups, (group, id) => {
-                // Push the group instance into the observable array to update the UI
-                this.groups.push(new Group(
-                    id,
-                    group,
-                    _.map(
-                        _.where(contentBlocks, {
-                            group: id,
-                            is_visible: true,
-                        }), /* Retrieve content blocks with group id */
-                        (contentBlock: ConfigContentBlock, identifier: string) => {
-                            const groupBlock = new GroupBlock(identifier, contentBlock);
-                            return groupBlock;
-                        },
-                    ),
-                ));
-            });
-
-            // Display the panel
-            this.isVisible(true);
-            // Open first group
-            const hasGroups = 0 in this.groups();
-            if (hasGroups) {
-                this.groups()[0].active(true);
-            }
-
-        } else {
-            console.warn( "Configuration is not properly initialized, please check the Ajax response." );
         }
     }
 
@@ -149,5 +107,46 @@ export default class Panel implements PanelInterface {
     public clearSearch(): void {
         this.searchValue("");
         this.searching(false);
+    }
+
+    /**
+     * Populate the panel with the content blocks
+     */
+    private populateContentBlocks(): void {
+        const groups = Config.getConfig("groups");
+        const contentBlocks = Config.getConfig("content_types");
+
+        // Verify the configuration contains the required information
+        if (groups && contentBlocks) {
+            // Iterate through the groups creating new instances with their associated content blocks
+            _.each(groups, (group, id) => {
+                // Push the group instance into the observable array to update the UI
+                this.groups.push(new Group(
+                    id,
+                    group,
+                    _.map(
+                        _.where(contentBlocks, {
+                            group: id,
+                            is_visible: true,
+                        }), /* Retrieve content blocks with group id */
+                        (contentBlock: ContentTypeConfigInterface, identifier: string) => {
+                            const groupBlock = new GroupBlock(identifier, contentBlock);
+                            return groupBlock;
+                        },
+                    ),
+                ));
+            });
+
+            // Display the panel
+            this.isVisible(true);
+            // Open first group
+            const hasGroups = 0 in this.groups();
+            if (hasGroups) {
+                this.groups()[0].active(true);
+            }
+
+        } else {
+            console.warn( "Configuration is not properly initialized, please check the Ajax response." );
+        }
     }
 }

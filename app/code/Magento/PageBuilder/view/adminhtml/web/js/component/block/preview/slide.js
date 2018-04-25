@@ -1,24 +1,23 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/block/preview/block"], function (_knockout, _translate, _colorConverter, _numberConverter, _block) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_knockout, _translate, _preview, _colorConverter, _numberConverter, _option) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slide =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Slide, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Slide, _Preview);
 
     /**
-     * Slide constructor
-     *
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    function Slide(parent, config) {
+    function Slide(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
+      _this = _Preview.call(this, parent, config, observableUpdater) || this;
       _this.showOverlayHover = _knockout.observable(false);
       _this.showButtonHover = _knockout.observable(false);
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
@@ -43,16 +42,17 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
     var _proto = Slide.prototype;
 
     _proto.getBackgroundStyles = function getBackgroundStyles() {
+      var data = this.previewData;
       var backgroundImage = "none";
 
-      if (this.data.background_image && this.data.background_image() !== "" && this.data.background_image() !== undefined && this.data.background_image()[0] !== undefined) {
-        backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+      if (data.background_image() && data.background_image() !== "" && data.background_image() !== undefined && data.background_image()[0] !== undefined) {
+        backgroundImage = "url(" + data.background_image()[0].url + ")";
       }
 
       return {
         backgroundImage: backgroundImage,
-        backgroundSize: this.data.background_size(),
-        minHeight: this.data.min_height() ? this.data.min_height() + "px" : "300px",
+        backgroundSize: data.background_size(),
+        minHeight: data.min_height() ? data.min_height() + "px" : "300px",
         overflow: "hidden",
         paddingBottom: "",
         paddingLeft: "",
@@ -68,13 +68,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
 
     _proto.getOverlayStyles = function getOverlayStyles() {
-      var paddingTop = this.data.margins_and_padding().padding.top || "0";
-      var paddingRight = this.data.margins_and_padding().padding.right || "0";
-      var paddingBottom = this.data.margins_and_padding().padding.bottom || "0";
-      var paddingLeft = this.data.margins_and_padding().padding.left || "0";
+      var data = this.previewData;
+      var paddingTop = data.margins_and_padding().padding.top || "0";
+      var paddingRight = data.margins_and_padding().padding.right || "0";
+      var paddingBottom = data.margins_and_padding().padding.bottom || "0";
+      var paddingLeft = data.margins_and_padding().padding.left || "0";
       return {
         backgroundColor: this.getOverlayColorStyle().backgroundColor,
-        minHeight: this.data.min_height() ? this.data.min_height() + "px" : "300px",
+        minHeight: data.min_height ? data.min_height() + "px" : "300px",
         paddingBottom: paddingBottom + "px",
         paddingLeft: paddingLeft + "px",
         paddingRight: paddingRight + "px",
@@ -89,12 +90,13 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
 
     _proto.getOverlayColorStyle = function getOverlayColorStyle() {
+      var data = this.previewData;
       var overlayColor = "transparent";
 
-      if (this.data.show_overlay() === "always" || this.showOverlayHover()) {
-        if (this.data.overlay_color() !== "" && this.data.overlay_color() !== undefined) {
-          var colors = this.data.overlay_color();
-          var alpha = (0, _numberConverter.percentToDecimal)(this.data.overlay_transparency());
+      if (data.show_overlay() === "always" || this.showOverlayHover()) {
+        if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
+          var colors = data.overlay_color();
+          var alpha = (0, _numberConverter.percentToDecimal)(data.overlay_transparency());
           overlayColor = (0, _colorConverter.fromHex)(colors, alpha);
         } else {
           overlayColor = "transparent";
@@ -113,7 +115,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
 
     _proto.isContentEmpty = function isContentEmpty() {
-      return this.data.content() === "" || this.data.content() === undefined;
+      var data = this.previewData.content();
+      return data === "" || data === undefined;
     };
     /**
      * Get the content for the preview
@@ -126,7 +129,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
       if (this.isContentEmpty()) {
         return (0, _translate)("Edit slide text");
       } else {
-        return (0, _translate)(this.data.content());
+        return (0, _translate)(this.previewData.content());
       }
     };
     /**
@@ -142,7 +145,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
         visibility: "hidden"
       };
 
-      if (this.data.show_button() === "always" || this.showButtonHover()) {
+      if (this.previewData.show_button() === "always" || this.showButtonHover()) {
         buttonStyle.opacity = "1";
         buttonStyle.visibility = "visible";
       }
@@ -155,12 +158,12 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
 
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
-      if (this.preview.data.show_overlay() === "on_hover") {
-        this.preview.showOverlayHover(true);
+      if (this.previewData.show_overlay() === "on_hover") {
+        this.showOverlayHover(true);
       }
 
-      if (this.preview.data.show_button() === "on_hover") {
-        this.preview.showButtonHover(true);
+      if (this.previewData.show_button() === "on_hover") {
+        this.showButtonHover(true);
       }
     };
     /**
@@ -169,12 +172,12 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
 
 
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
-      if (this.preview.data.show_overlay() === "on_hover") {
-        this.preview.showOverlayHover(false);
+      if (this.previewData.show_overlay() === "on_hover") {
+        this.showOverlayHover(false);
       }
 
-      if (this.preview.data.show_button() === "on_hover") {
-        this.preview.showButtonHover(false);
+      if (this.previewData.show_button() === "on_hover") {
+        this.showButtonHover(false);
       }
     };
     /**
@@ -185,23 +188,133 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/utils/color-conver
      * @returns {StyleAttributeMapperResult}
      */
 
+    /**
+     * Get the options instance
+     *
+     * @returns {Options}
+     */
+
+
+    _proto.getOptions = function getOptions() {
+      var options = _Preview.prototype.getOptions.call(this);
+
+      options.removeOption("move");
+      return options;
+    };
+    /**
+     * Get the slide wrapper styles for the storefront
+     *
+     * @returns {object}
+     */
+
+
+    _proto.getSlideStyles = function getSlideStyles(type) {
+      var data = this.previewData;
+
+      var style = _.clone(this.getStyle());
+
+      var backgroundImage = "";
+
+      if (type === "image") {
+        backgroundImage = this.getImage() ? this.getStyle().backgroundImage : "none";
+      }
+
+      if (type === "mobileImage") {
+        if (this.getMobileImage()) {
+          backgroundImage = this.getStyle().mobileImage;
+        } else {
+          if (this.getImage()) {
+            backgroundImage = this.getStyle().backgroundImage;
+          } else {
+            backgroundImage = "none";
+          }
+        }
+      }
+
+      return Object.assign(style, {
+        backgroundImage: backgroundImage,
+        backgroundSize: data.background_size(),
+        border: "",
+        borderColor: "",
+        borderRadius: "",
+        borderWidth: "",
+        marginBottom: "",
+        marginLeft: "",
+        marginRight: "",
+        marginTop: "",
+        paddingBottom: "",
+        paddingLeft: "",
+        paddingRight: "",
+        paddingTop: ""
+      });
+    };
+    /**
+     * Get the slide overlay attributes for the storefront
+     *
+     * @returns {object}
+     */
+
+
+    _proto.getOverlayAttributes = function getOverlayAttributes() {
+      var data = this.previewData;
+      var overlayColorAttr = "transparent";
+
+      if (data.show_overlay() !== "never_show") {
+        if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
+          overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color(), (0, _numberConverter.percentToDecimal)(data.overlay_transparency()));
+        }
+      }
+
+      return {
+        "data-overlay-color": overlayColorAttr
+      };
+    };
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _Preview.prototype.retrieveOptions.call(this);
+
+      var newOptions = options.filter(function (option) {
+        return option.code !== "remove";
+      });
+      var removeClasses = ["remove-structural"];
+      var removeFn = this.onOptionRemove;
+
+      if (this.parent.parent.children().length <= 1) {
+        removeFn = function removeFn() {
+          return;
+        };
+
+        removeClasses.push("disabled");
+      }
+
+      newOptions.push(new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
+      return newOptions;
+    };
 
     _proto.afterStyleMapped = function afterStyleMapped(styles) {
       // Extract data values our of observable functions
       // The style attribute mapper converts images to directives, override it to include the correct URL
-      if (this.data.background_image && _typeof(this.data.background_image()[0]) === "object") {
-        styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
+      var data = this.previewData;
+
+      if (data.background_image() && _typeof(data.background_image()[0]) === "object") {
+        styles.backgroundImage = "url(" + data.background_image()[0].url + ")";
       }
 
-      if (_typeof(this.data.mobile_image) && this.data.mobile_image() !== "" && _typeof(this.data.mobile_image()[0]) === "object") {
-        styles.mobileImage = "url(" + this.data.mobile_image()[0].url + ")";
+      if (data.mobile_image() && data.mobile_image() !== "" && _typeof(data.mobile_image()[0]) === "object") {
+        styles.mobileImage = "url(" + data.mobile_image()[0].url + ")";
       }
 
       return styles;
     };
 
     return Slide;
-  }(_block);
+  }(_preview);
 
   return Slide;
 });

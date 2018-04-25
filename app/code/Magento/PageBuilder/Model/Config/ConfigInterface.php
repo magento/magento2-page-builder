@@ -13,21 +13,12 @@ interface ConfigInterface
     public function getGroups();
 
     /**
-     * @param string $name
-     *
-     * @return array
-     */
-    public function getGroup($name);
-
-    /**
      * @return array
      */
     public function getContentTypes();
 
     /**
-     * @param string $name
-     *
-     * @return array
+     * @return bool
      */
-    public function getContentType($name);
+    public function isEnabled();
 }

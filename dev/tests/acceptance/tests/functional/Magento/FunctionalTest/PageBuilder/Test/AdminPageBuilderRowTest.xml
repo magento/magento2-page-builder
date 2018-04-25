@@ -10,13 +10,14 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AddBackgroundColorForRow">
         <annotations>
-            <features value="[Pagebuilder] Bluefoot Column MAGETWO-83768"/>
-            <stories value="[UI Component] Color Picker MAGETWO-71622"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-71622: [UI Component] Color Picker"/>
             <title value="Add background color to PageBuilder using Color Picker UI component"/>
             <description value="Color picker extends input field in the form and allows user conveniently specify color value."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89768 MAGETWO-89770 "/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -121,8 +122,8 @@
     </test>
     <test name="RowInitializeWithRow">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-72398"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-72398: Bluefoot Row Interaction"/>
             <title value="Row exists on initialise"/>
             <description value="The stage should contain a row on initialise."/>
             <severity value="CRITICAL"/>
@@ -145,8 +146,8 @@
     </test>
     <test name="RowCanAddAdditionalRow">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-72398"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-72398: Bluefoot Row Interaction"/>
             <title value="Can add an additional row"/>
             <description value="The user should be able to add additional rows."/>
             <severity value="CRITICAL"/>
@@ -172,8 +173,8 @@
     </test>
     <test name="RowRemoveRowFromStage">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-72398"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-72398: Bluefoot Row Interaction"/>
             <title value="Can remove a row"/>
             <description value="A user should be able to remove a row from the stage"/>
             <severity value="CRITICAL"/>
@@ -202,8 +203,8 @@
     </test>
     <test name="RowCantRemoveLastRow">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-72398"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-72398: Bluefoot Row Interaction"/>
             <title value="Can't remove last row"/>
             <description value="A user shouldn't be able to remove the final row from the stage"/>
             <severity value="CRITICAL"/>
@@ -237,8 +238,8 @@
     </test>
     <test name="RowPlaceholderAndDisplayLabelInAdminPreview">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-75136"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-75136: Empty Row Preview on Stage"/>
             <title value="Row placeholder and display label in admin preview"/>
             <description value="A user should see the row display label and preview with a placeholder that suggests any content blocks can be dragged there"/>
             <severity value="CRITICAL"/>
@@ -267,8 +268,8 @@
     </test>
     <test name="RowHeightAdjustsToContent">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-75136"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-75136: Empty Row Preview on Stage"/>
             <title value="Row height adjusts to content"/>
             <description value="A user should see the row height adjust when content is added to the row"/>
             <severity value="CRITICAL"/>
@@ -324,8 +325,8 @@
     </test>
     <test name="RowUpdateBackgroundFormSection">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-66349"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-66349: Bluefoot Row Configuration "/>
             <title value="Row - Update All Background Form Attributes"/>
             <description value="See that the background tab in row form works"/>
             <severity value="CRITICAL"/>
@@ -404,7 +405,7 @@
             <argument name="property" value="PageBuilderRowBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="row"/>
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -417,8 +418,8 @@
     </test>
     <test name="RowCanAddParallaxBackground">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-66349"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-66349: Bluefoot Row Configuration "/>
             <title value="Add parallax to background image"/>
             <description value="A user should be able to apply parallax to a background image"/>
             <severity value="CRITICAL"/>
@@ -460,15 +461,15 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="row"/>
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <seeElementInDOM selector="{{RowOnStorefront.parallaxClass('1')}}" stepKey="seeParallaxBackgroundSet"/>
         <seeElementInDOM selector="{{RowOnStorefront.parallaxSpeed('1', PageBuilderRowParallaxSpeed_2.value)}}" stepKey="seeParallaxSpeedSet"/>
     </test>
     <test name="RowHasParallaxDefaultSettings">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-88247"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-88247: Row parallax background is broken when background position is set"/>
             <title value="Row has parallax default settings"/>
             <description value="A user should see the default settings for parallax row"/>
             <severity value="CRITICAL"/>
@@ -520,8 +521,8 @@
     </test>
     <test name="RowValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Row - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Row."/>
             <severity value="CRITICAL"/>
@@ -625,7 +626,7 @@
             <argument name="property" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="row"/>
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -641,8 +642,8 @@
     </test>
     <test name="RowUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89190"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-89190: [Tech Debt] PageBuilder data separation for text, divider, video, anchor and html"/>
             <title value="Row - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Row will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -787,7 +788,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="row"/>
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -806,8 +807,8 @@
     </test>
     <test name="RowCanAddUnlimitedRows">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="MAGETWO-72398"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-72398: Bluefoot Row Interaction"/>
             <title value="Can add unlimited rows"/>
             <description value="The user should be able to unlimited rows. For testing we use 20 rows"/>
             <severity value="CRITICAL"/>
@@ -890,8 +891,8 @@
     </test>
     <test name="RowCanAddImageToRow">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-86533"/>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
             <title value="Add an image content block into row"/>
             <description value="A user should be able to add an image into slideout of row."/>
             <severity value="CRITICAL"/>

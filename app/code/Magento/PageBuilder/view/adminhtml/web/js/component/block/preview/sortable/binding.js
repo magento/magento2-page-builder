@@ -20,7 +20,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"],
      * @param context
      */
     init: function init(element, valueAccessor, allBindingsAccessor, data, context) {
-      var instance = context.$data;
+      var instance = context.$data.parent;
 
       var options = _knockout.default.unwrap(valueAccessor());
 

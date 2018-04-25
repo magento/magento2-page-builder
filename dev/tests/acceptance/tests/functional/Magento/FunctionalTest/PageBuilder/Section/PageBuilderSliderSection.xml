@@ -135,7 +135,7 @@
         <element name="slideAppearanceCollageLeft" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [style*='40px calc(50% + 40px) 40px 40px']" parameterized="true"/>
         <element name="slideAppearanceCollageCenter" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [style*='40px calc(25% + 40px)']" parameterized="true"/>
         <element name="slideAppearanceCollageRight" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [style*='40px 40px 40px calc(50% + 40px)']" parameterized="true"/>
-        <element name="slideTitle" type="button" selector="[data-slick-index='{{arg1}}'] [data-bind='text: preview.data.title']" parameterized="true"/>
+        <element name="slideTitle" type="button" selector="[data-slick-index='{{arg1}}'] [data-bind='text: previewData.title()']" parameterized="true"/>
         <element name="slideContent" type="text" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide div p" parameterized="true"/>
         <element name="slideButtonText" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide-button span" parameterized="true"/>
         <element name="slideLinkURL1" type="button" selector="[data-slick-index='0'] .pagebuilder-slide-button[data-link-url='{{arg1}}']" parameterized="true"/>
@@ -184,5 +184,9 @@
         <element name="slideBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="editFormBackgroundImagePreview" type="button" selector="//input[@name='background_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
         <element name="editFormBackgroundMobileImagePreview" type="button" selector="//input[@name='mobile_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
+    </section>
+    <section name="SlideOnConfigurationPanel">
+        <element name="tinyMCEIFrame" type="text" selector="pagebuilder_slide_form_content_ifr"/>
+        <element name="textInIFrame" type="text" selector="//body//p[.='{{arg1}}']" parameterized="true"/>
     </section>
 </sections>

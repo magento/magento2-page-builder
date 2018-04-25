@@ -8,10 +8,8 @@ define(["knockout"], function (_knockout) {
   /*#__PURE__*/
   function () {
     /**
-     * Block Constructor
-     *
      * @param {string} identifier
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeConfigInterface} config
      */
     function Block(identifier, config) {
       this.droppable = true;
@@ -27,7 +25,7 @@ define(["knockout"], function (_knockout) {
     /**
      * Retrieve the config object
      *
-     * @returns {ConfigContentBlock}
+     * @returns {ContentTypeConfigInterface}
      */
 
 

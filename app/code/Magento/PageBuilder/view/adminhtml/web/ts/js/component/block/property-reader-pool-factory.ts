@@ -11,7 +11,7 @@ import PropertyReaderPool from "./property-reader-pool";
  * Create a new instance of property reader pool
  */
 export default function create(contentType: string): Promise<> {
-    const config = Config.getContentType(contentType);
+    const config = Config.getContentTypeConfig(contentType);
     const propertyReaders = [];
     for (const appearanceName: string of Object.keys(config.appearances)) {
         const dataMapping = config.appearances[appearanceName].data_mapping;

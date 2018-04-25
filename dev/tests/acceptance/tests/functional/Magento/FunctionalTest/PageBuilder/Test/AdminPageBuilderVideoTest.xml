@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="VideoAddToCMSPage">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83929"/>
+            <features value="Pagebuilder: Video"/>
+            <stories value="MAGETWO-83929: Video"/>
             <title value="Video - Update General Values"/>
             <description value="Validate that updating every attribute in the General form for Video will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -34,7 +34,7 @@
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragVideoIntoStage">
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
@@ -83,7 +83,7 @@
             <argument name="property" value="PageBuilderVideoHeight_200"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="video"/>
+            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -96,8 +96,8 @@
     </test>
     <test name="VideoNonEmbeddedUrl">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-85972"/>
+            <features value="Pagebuilder: Video"/>
+            <stories value="MAGETWO-85972: PageBuilder Video content block does not render properly in admin"/>
             <title value="Video - Add Video With Non Embedded Url"/>
             <description value="A user should be able to add an video into a row with standard url."/>
             <severity value="CRITICAL"/>
@@ -120,7 +120,7 @@
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragVideoIntoStage">
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
@@ -140,7 +140,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="video"/>
+            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -151,8 +151,8 @@
     </test>
     <test name="VideoDelete">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83929"/>
+            <features value="Pagebuilder: Video"/>
+            <stories value="MAGETWO-83929: Video"/>
             <title value="Video - Delete Video"/>
             <description value="A user should be able to delete a Video content block. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
@@ -172,7 +172,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
@@ -184,8 +184,8 @@
     </test>
     <test name="VideoValidateGeneralDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89190"/>
+            <features value="Pagebuilder: Video"/>
+            <stories value="MAGETWO-89190: [Tech Debt] PageBuilder data separation for text, divider, video, anchor and html"/>
             <title value="Video - Validate General Default Values"/>
             <description value="Validate the default values for every attribute in the General section on the Edit Form, Stage, and Storefront for Video."/>
             <severity value="CRITICAL"/>
@@ -208,7 +208,7 @@
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
@@ -245,7 +245,7 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getHeight2"/>
         <assertEmpty actual="getHeight2" actualType="variable" message="Text field was not empty. Had text: $getHeight2" stepKey="assertHeight2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="video"/>
+            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -254,8 +254,8 @@
     </test>
     <test name="VideoValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-83415"/>
+            <features value="Pagebuilder: Video"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
             <title value="Video - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Video."/>
             <severity value="CRITICAL"/>
@@ -278,7 +278,7 @@
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragVideoIntoStage">
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
@@ -368,7 +368,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="video"/>
+            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -384,8 +384,8 @@
     </test>
     <test name="VideoUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-89190"/>
+            <features value="Pagebuilder: Video"/>
+            <stories value="MAGETWO-89190: [Tech Debt] PageBuilder data separation for text, divider, video, anchor and html"/>
             <title value="Video - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Video will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -408,7 +408,7 @@
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderPanelGroupMedia"/>
+            <argument name="group" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
@@ -539,7 +539,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="prefix" value="video"/>
+            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
