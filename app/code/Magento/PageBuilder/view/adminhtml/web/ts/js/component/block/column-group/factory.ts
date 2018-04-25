@@ -2,10 +2,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+import createContentType from "../../../content-type-factory";
 import Config from "../../config";
 import Column from "../column";
 import ColumnGroup from "../column-group";
-import createBlock from "../factory";
 
 /**
  * Create a column and add it to it's parent
@@ -16,10 +16,10 @@ import createBlock from "../factory";
  * @returns {Promise<Column>}
  */
 export function createColumn(parent: ColumnGroup, width: number, index?: number): Promise<Column> {
-    return createBlock(
-        Config.getContentType("column"),
+    return createContentType(
+        Config.getContentTypeConfig("column"),
         parent,
-        parent.stage,
+        parent.stageId,
         {width: parseFloat(width.toString()) + "%"},
     ).then((column) => {
         parent.addChild(column, index);

@@ -6,16 +6,17 @@
 import loadComponent from "Magento_PageBuilder/js/component/loader";
 import _ from "underscore";
 import appearanceConfig from "../../../component/block/appearance-config";
-import Config, {ConfigContentBlocks} from "../../config";
+import ContentTypeConfigInterface from "../../../content-type-config.d";
+import Config from "../../config";
 import {DataObject} from "../../data-store";
 import {ReadInterface} from "../read-interface";
 
 export default class AttributeReaderComposite implements ReadInterface {
     // Configuration for content types
-    private contentTypeConfig: ConfigContentBlocks;
+    private contentTypeConfig: {[key: string]: ContentTypeConfigInterface};
 
     constructor() {
-        this.contentTypeConfig = Config.getInitConfig("content_types");
+        this.contentTypeConfig = Config.getConfig("content_types");
     }
 
     /**
@@ -45,7 +46,7 @@ export default class AttributeReaderComposite implements ReadInterface {
                             });
                             resolve(result);
                         }).catch((error) => {
-                            console.error( error );
+                            console.error(error);
                         });
                     });
                 } catch (e) {

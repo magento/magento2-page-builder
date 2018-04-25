@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group", "Magento_PageBuilder/js/component/stage/panel/group/block", "Magento_PageBuilder/js/component/stage/previews"], function (_knockout, _koDraggable, _koSortable, _translate, _underscore, _config, _eventBus, _group, _block, _previews) {
+define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group", "Magento_PageBuilder/js/component/stage/panel/group/block"], function (_knockout, _koDraggable, _koSortable, _translate, _underscore, _config, _eventBus, _group, _block) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -24,7 +24,6 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
       this.parent = parent;
       this.id = this.parent.id;
       this.initListeners();
-      (0, _previews.load)();
     }
     /**
      * Init listeners
@@ -68,7 +67,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
         this.searching(false);
       } else {
         this.searching(true);
-        this.searchResults(_underscore.map(_underscore.filter(_config.getInitConfig("content_types"), function (contentBlock) {
+        this.searchResults(_underscore.map(_underscore.filter(_config.getConfig("content_types"), function (contentBlock) {
           var regEx = new RegExp("\\b" + self.searchValue(), "gi");
           var matches = !!contentBlock.label.toLowerCase().match(regEx);
           return matches && contentBlock.is_visible === true;
@@ -86,9 +85,9 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
     _proto.populateContentBlocks = function populateContentBlocks() {
       var _this2 = this;
 
-      var groups = _config.getInitConfig("groups");
+      var groups = _config.getConfig("groups");
 
-      var contentBlocks = _config.getInitConfig("content_types"); // Verify the configuration contains the required information
+      var contentBlocks = _config.getConfig("content_types"); // Verify the configuration contains the required information
 
 
       if (groups && contentBlocks) {

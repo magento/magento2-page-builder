@@ -4,20 +4,18 @@
  */
 
 import events from "uiEvents";
+import ContentTypeInterface from "../../content-type";
 import DataStore from "../data-store";
-import Structural from "./structural/abstract";
 
 export default class Edit {
-    private instance: Structural;
+    private instance: ContentTypeInterface;
     private store: DataStore;
 
     /**
-     * Initiate the edit class with an instance of structural
-     *
-     * @param {Structural} instance
+     * @param {ContentTypeInterface} instance
      * @param {DataStore} store
      */
-    constructor(instance: Structural, store: DataStore) {
+    constructor(instance: ContentTypeInterface, store: DataStore) {
         this.instance = instance;
         this.store = store;
         events.on("form:save:" + this.instance.id, (data: any) => {

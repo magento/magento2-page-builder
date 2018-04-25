@@ -25,7 +25,7 @@ define(["Magento_PageBuilder/js/component/config"], function (_config) {
         name: url.split("/").pop(),
         size: 0,
         type: "image/" + type,
-        url: _config.getInitConfig("media_url") + url
+        url: _config.getConfig("media_url") + url
       };
       result = [image];
     }

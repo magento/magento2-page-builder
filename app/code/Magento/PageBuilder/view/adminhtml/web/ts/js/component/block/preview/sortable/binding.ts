@@ -1,8 +1,8 @@
 import $ from "jquery";
 import ko from "knockout";
+import ContentTypeInterface from "../../../../content-type.d";
 import {moveArrayItem} from "../../../../utils/array";
 import EventBus from "../../../event-bus";
-import Structural from "../../../stage/structural/abstract";
 
 // Create a new sortable Knockout binding
 ko.bindingHandlers.previewSortable = {
@@ -17,7 +17,7 @@ ko.bindingHandlers.previewSortable = {
      * @param context
      */
     init(element, valueAccessor, allBindingsAccessor, data, context: KnockoutBindingContext) {
-        const instance: Structural = context.$data;
+        const instance: ContentTypeInterface = context.$data.parent;
         const options: JQueryUI.SortableOptions = ko.unwrap(valueAccessor());
         let originalPosition: number;
         $(element).sortable(options)
@@ -46,13 +46,13 @@ ko.bindingHandlers.previewSortable = {
 };
 
 export interface PreviewSortableSortStartEventParams {
-    instance: Structural;
+    instance: ContentTypeInterface;
     originalPosition: number;
     ui: JQueryUI.SortableUIParams;
 }
 
 export interface PreviewSortableSortUpdateEventParams {
-    instance: Structural;
+    instance: ContentTypeInterface;
     newPosition: number;
     originalPosition: number;
     ui: JQueryUI.SortableUIParams;

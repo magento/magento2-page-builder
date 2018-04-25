@@ -6,27 +6,12 @@
 import $ from "jquery";
 import ko from "knockout";
 import _ from "underscore";
-import AccordionBlock from "../accordion";
-import PreviewBlock from "./block";
+import ObservableObject from "../../../observable-object.d";
+import Preview from "../../../preview";
 
-export default class Accordion extends PreviewBlock {
+export default class Accordion extends Preview {
     private element: Element;
     private renderCounter: number = 0;
-
-    /**
-     * @param {Accordion} parent
-     * @param {object} config
-     */
-    constructor(parent: AccordionBlock, config: object) {
-        super(parent, config);
-
-        // Declare our tabs, they'll get populated later
-        this.data.items = ko.observableArray([]);
-        this.data.items.subscribe((data) => {
-            this.renderCounter = 0;
-            $(this.element).accordion("destroy");
-        });
-    }
 
     /**
      * On render init the tabs widget
@@ -42,16 +27,28 @@ export default class Accordion extends PreviewBlock {
      */
     public onItemRender() {
         ++this.renderCounter;
-        if (this.data.items().length === this.renderCounter) {
+        if (this.previewData.items().length === this.renderCounter) {
             require(["accordion"], () => {
                 _.delay(
                     () => $(this.element).accordion({
-                        active: (this.parent as AccordionBlock).getActive(),
+                        active: this.parent.content.getActive(),
                     }),
                     50,
                 );
             });
             this.renderCounter = 0;
         }
+    }
+
+    /**
+     * Setup fields observables within the data class property
+     */
+    protected setupDataFields() {
+        super.setupDataFields();
+        this.updateDataValue("items", []);
+        this.previewData.items.subscribe((data) => {
+            this.renderCounter = 0;
+            $(this.element).accordion("destroy");
+        });
     }
 }
