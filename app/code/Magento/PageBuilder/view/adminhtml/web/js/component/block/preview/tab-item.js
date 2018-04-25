@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/preview-collection"], function (_previewCollection) {
+define(["Magento_PageBuilder/js/preview-collection", "mage/translate", "Magento_PageBuilder/js/component/block/stage/structural/options/option"], function (_previewCollection, _translate, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var TabItem =
@@ -8,7 +8,13 @@ define(["Magento_PageBuilder/js/preview-collection"], function (_previewCollecti
     _inheritsLoose(TabItem, _PreviewCollection);
 
     function TabItem() {
-      return _PreviewCollection.apply(this, arguments) || this;
+      var _temp, _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _PreviewCollection.call.apply(_PreviewCollection, [this].concat(args)) || this, _this.fieldsToIgnoreOnRemove = ["tab_name"], _temp) || _this;
     }
 
     var _proto = TabItem.prototype;
@@ -24,6 +30,33 @@ define(["Magento_PageBuilder/js/preview-collection"], function (_previewCollecti
       options.removeOption("move");
       options.removeOption("title");
       return options;
+    };
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+
+      var newOptions = options.filter(function (option) {
+        return option.code !== "remove";
+      });
+      var removeClasses = ["remove-structural"];
+      var removeFn = this.onOptionRemove;
+
+      if (this.parent.children().length <= 1) {
+        removeFn = function removeFn() {
+          return;
+        };
+
+        removeClasses.push("disabled");
+      }
+
+      newOptions.push(new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
+      return newOptions;
     };
 
     return TabItem;
