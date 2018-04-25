@@ -24,7 +24,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public loading: KnockoutObservable<boolean> = ko.observable(true);
 
     constructor(config: any, initialValue: string) {
-        Config.setInitConfig(config);
+        Config.setConfig(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
         this.config = config;

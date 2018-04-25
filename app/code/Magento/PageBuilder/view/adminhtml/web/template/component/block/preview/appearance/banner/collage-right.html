@@ -5,14 +5,14 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" data-bind="event: {mouseover: preview.onMouseOver, mouseout: preview.onMouseOut}, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
-    <div data-bind="attr: data.main.attributes, style: Object.assign({}, data.main.style(), data.overlay.style(), data.desktop_image.style(), {paddingLeft: 'calc(50% + ' + data.desktop_image.style().paddingLeft + ')'}), css: data.main.css, event: {mouseover: preview.onMouseOverWrapper, mouseout: preview.onMouseOutWrapper}">
+    <div data-bind="attr: data.main.attributes, style: Object.assign({}, data.main.style(), data.overlay.style(), data.desktop_image.style(), {paddingLeft: 'calc(50% + ' + data.desktop_image.style().paddingLeft + ')'}), css: data.main.css, event: {mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
         <div class="pagebuilder-collage-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style, css: data.overlay.css">
             <div data-bind="attr: data.content.attributes, style: data.content.style, css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': data.content.html}), html: data.content.html"></div>
-            <!-- ko if: data.main.attributes()["data-show-button"] !== 'never_show' -->
+            <!-- ko if: data.main.attributes()["data-show-button"] !== "never_show" -->
                 <a type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css">
-                    <span data-bind="liveEdit: { field: 'button_text', placeholder: preview.buttonPlaceholder }"></span>
+                    <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
                 </a>
             <!-- /ko -->
         </div>

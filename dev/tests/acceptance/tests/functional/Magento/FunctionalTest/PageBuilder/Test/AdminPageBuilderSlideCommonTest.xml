@@ -68,6 +68,7 @@
         <!--Open Slider settings -->
         <comment userInput="Open Slider settings" stepKey="EditSlider"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openSliderEditPanel">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
@@ -325,7 +326,7 @@
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-83933: Advanced Slider"/>
-            <title value="Can add slides and see tooltip and slide title when hovering over navigation dots"/>
+            <title value="Can add slides and see tooltip and slide title when clicking navigation dots"/>
             <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87949"/>
@@ -371,8 +372,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
 
-        <comment userInput="Slide is not focused, Option panel is not displayed" stepKey="AC6"/>
-        <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="dontSeeSlideOptionsAfterSaveSlide"/>
+        <comment userInput="Slide option panel is displayed" stepKey="AC6"/>
+        <waitForElementVisible time="5" selector="{{SliderInAdmin.slideOptions}}" stepKey="SeeSlideOptionsAfterSaveSlide"/>
 
         <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.content}}" stepKey="scrollToContent"/>
@@ -384,6 +385,7 @@
         <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
 
         <comment userInput="User doesn't see Slide Option panel, both option panels not displayed at once." stepKey="AC8"/>
+        <waitForElementNotVisible time="5" selector="{{SliderInAdmin.slideOptions}}" stepKey="waitForSlideOptionsPanelNotVisible" />
         <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanelStillHidden"/>
 
         <comment userInput="User sees button (+) inside the Slider Option Panel. Tooltip shows Add New Slide" stepKey="AC9"/>
@@ -418,6 +420,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
 
         <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide title" stepKey="AC15"/>
+        <click stepKey="unfocusNavigation" selector="{{SliderInAdmin.sliderContainer}}"/>
         <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
         <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2InTooltip"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
