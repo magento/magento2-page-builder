@@ -91,7 +91,7 @@ export default class Panel implements PanelInterface {
     /**
      * Populate the panel with the content blocks
      */
-    public populateContentBlocks(): void {
+    private populateContentBlocks(): void {
         const groups = Config.getInitConfig("groups");
         const contentBlocks = Config.getInitConfig("content_types");
 
