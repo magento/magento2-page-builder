@@ -6,53 +6,53 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-heading pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <!-- ko if: data.main.heading_type() == 'h1' -->
-    <!-- ko if: data.main.html() -->
-    <h1 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h1>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h1 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h1>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h2' -->
-    <!-- ko if: data.main.html() -->
-    <h2 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h2>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h2 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h2>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h3' -->
-    <!-- ko if: data.main.html() -->
-    <h3 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h3>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h3 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h3>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h4' -->
-    <!-- ko if: data.main.html() -->
-    <h4 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h4>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h4 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h4>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h5' -->
-    <!-- ko if: data.main.html() -->
-    <h5 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h5>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h5 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h5>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h6' -->
-    <!-- ko if: data.main.html() -->
-    <h6 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h6>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h6 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h6>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko template: getOptions().template --><!-- /ko -->
+    <if args ="data.main.heading_type() == 'h1'">
+        <if args="data.main.html()">
+            <h1 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" html="data.main.html"></h1>
+        </if>
+        <ifnot args="data.main.html()">
+            <h1 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" i18n="Edit Heading Text"></h1>
+        </ifnot>
+    </if>
+    <if args ="data.main.heading_type() == 'h2'">
+        <if args="data.main.html()">
+            <h2 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" html="data.main.html"></h2>
+        </if>
+        <ifnot args="data.main.html()">
+            <h2 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" i18n="Edit Heading Text"></h2>
+        </ifnot>
+    </if>
+    <if args ="data.main.heading_type() == 'h3'">
+        <if args="data.main.html()">
+            <h3 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" html="data.main.html"></h3>
+        </if>
+        <ifnot args="data.main.html()">
+            <h3 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" i18n="Edit Heading Text"></h3>
+        </ifnot>
+    </if>
+    <if args ="data.main.heading_type() == 'h4'">
+        <if args="data.main.html()">
+            <h4 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" html="data.main.html"></h4>
+        </if>
+        <ifnot args="data.main.html()">
+            <h4 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" i18n="Edit Heading Text"></h4>
+        </ifnot>
+    </if>
+    <if args ="data.main.heading_type() == 'h5'">
+        <if args="data.main.html()">
+            <h5 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" html="data.main.html"></h5>
+        </if>
+        <ifnot args="data.main.html()">
+            <h5 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" i18n="Edit Heading Text"></h5>
+        </ifnot>
+    </if>
+    <if args ="data.main.heading_type() == 'h6'">
+        <if args="data.main.html()">
+            <h6 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" html="data.main.html"></h6>
+        </if>
+        <ifnot args="data.main.html()">
+            <h6 attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" i18n="Edit Heading Text"></h6>
+        </ifnot>
+    </if>
+    <render args="getOptions().template" />
 </div>
