@@ -75,31 +75,19 @@ class MigrateImagesToPageBuilder implements DataPatchInterface
             return;
         }
 
-        // move images
         $allFiles = $bluefootDir->readRecursively();
-        foreach ($allFiles as $file) {
-            if ($bluefootDir->isFile($file)) {
-                try {
+        try {
+            // move images
+            foreach ($allFiles as $file) {
+                if ($bluefootDir->isFile($file)) {
                     $this->fileDriver->rename(
                         $bluefootImagesPath . DIRECTORY_SEPARATOR . $file,
                         $pagebuilderImagesPath . DIRECTORY_SEPARATOR . basename($file)
                     );
-                } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                    $this->logger->error($e);
-                    return;
-                } catch (\Exception $e) {
-                    $message = __(
-                        'An error has occurred during image migration for PageBuilder. The error message was: %1',
-                        $e->getMessage()
-                    );
-                    $this->logger->critcal($message);
-                    return;
                 }
             }
-        }
 
-        // remove gene-cms folder
-        try {
+            // remove gene-cms folder
             $this->fileDriver->deleteDirectory($bluefootImagesPath);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $this->logger->error($e);
