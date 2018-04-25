@@ -17,7 +17,6 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     private $scopeConfig;
 
     /**
-     * Config constructor.
      * @param \Magento\PageBuilder\Model\Config\CompositeReader $reader
      * @param \Magento\Framework\Config\CacheInterface $cache
      * @param ScopeConfigInterface $scopeConfig
@@ -27,7 +26,7 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
         \Magento\PageBuilder\Model\Config\CompositeReader $reader,
         \Magento\Framework\Config\CacheInterface $cache,
         ScopeConfigInterface $scopeConfig,
-        $cacheId = 'gene_bluefoot_content_types'
+        $cacheId = 'pagebuilder_config'
     ) {
         $this->scopeConfig = $scopeConfig;
         parent::__construct($reader, $cache, $cacheId);
@@ -42,15 +41,6 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     }
 
     /**
-     * @param string $name
-     * @return array
-     */
-    public function getGroup($name)
-    {
-        return $this->get('groups/' . $name);
-    }
-
-    /**
      * Return all content blocks
      *
      * @return array|mixed|null
@@ -61,24 +51,13 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     }
 
     /**
-     * Return a specific content block by it's identifier
-     *
-     * @param $name
-     * @return array|mixed|null
-     */
-    public function getContentType($name)
-    {
-        return $this->get('types/' . $name);
-    }
-
-    /**
      * Returns config setting if page builder enabled
      *
-     * @return int
+     * @return bool
      */
     public function isEnabled()
     {
-        return (int)$this->scopeConfig->getValue(
+        return (bool)$this->scopeConfig->getValue(
             \Magento\PageBuilder\Model\Config::IS_PAGEBUILDER_ENABLED
         );
     }

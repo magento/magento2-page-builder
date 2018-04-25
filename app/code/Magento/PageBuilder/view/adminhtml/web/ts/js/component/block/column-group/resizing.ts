@@ -52,7 +52,7 @@ export function resizeColumn(column: Column, width: number, shrinkableColumn: Co
  * @param {number} width
  */
 export function updateColumnWidth(column: Column, width: number): void {
-    column.stage.store.updateKey(
+    column.store.updateKey(
         column.id,
         parseFloat(width.toString()) + "%",
         "width",

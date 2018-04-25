@@ -6,16 +6,16 @@
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
+import ContentTypeConfigInterface from "../content-type-config.d";
+import createContentType from "../content-type-factory";
+import ContentTypeInterface from "../content-type.d";
 import {removeQuotesInMediaDirectives} from "../utils/directives";
 import Block from "./block/block";
-import createBlock from "./block/factory";
-import Config, {ConfigContentBlock} from "./config";
+import Config from "./config";
 import EventBus from "./event-bus";
 import validateFormat from "./format/format-validator";
 import AttributeReaderComposite from "./format/read/composite";
 import Stage from "./stage";
-import EditableArea from "./stage/structural/editable-area";
-import {EditableAreaInterface} from "./stage/structural/editable-area.d";
 
 /**
  * Build the stage with the provided value
@@ -26,7 +26,7 @@ import {EditableAreaInterface} from "./stage/structural/editable-area.d";
  */
 function buildFromContent(stage: Stage, value: string) {
     const stageDocument = document.createElement("div");
-    stageDocument.setAttribute(Config.getValueAsString("dataRoleAttributeName"), "stage");
+    stageDocument.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = value;
     return buildElementIntoStage(stageDocument, stage, stage);
 }
@@ -35,15 +35,15 @@ function buildFromContent(stage: Stage, value: string) {
  * Build an element and it's children into the stage
  *
  * @param {Element} element
- * @param {EditableArea} parent
+ * @param {ContentTypeInterface} parent
  * @param {stage} stage
  * @returns {Promise<void>}
  */
-function buildElementIntoStage(element: Element, parent: EditableArea, stage: Stage): Promise<any> {
+function buildElementIntoStage(element: Element, parent: ContentTypeInterface, stage: Stage): Promise<any> {
     if (element instanceof HTMLElement
-        && element.getAttribute(Config.getValueAsString("dataRoleAttributeName"))
+        && element.getAttribute(Config.getConfig("dataRoleAttributeName"))
     ) {
-        const childPromises: Array<Promise<EditableArea>> = [];
+        const childPromises: Array<Promise<ContentTypeInterface>> = [];
         const childElements: Element[] = [];
         const children = getElementChildren(element);
 
@@ -68,20 +68,24 @@ function buildElementIntoStage(element: Element, parent: EditableArea, stage: St
  * Parse an element in the structure and build the required element
  *
  * @param {Element} element
- * @param {EditableArea} parent
+ * @param {ContentTypeInterface} parent
  * @param {stage} stage
- * @returns {Promise<EditableAreaInterface>}
+ * @returns {Promise<ContentTypeInterface>}
  */
-function createElementBlock(element: HTMLElement, stage: Stage, parent?: EditableArea): Promise<EditableArea> {
+function createElementBlock(
+    element: HTMLElement,
+    stage: Stage,
+    parent?: ContentTypeInterface,
+): Promise<ContentTypeInterface> {
     parent = parent || stage;
-    const role = element.getAttribute(Config.getValueAsString("dataRoleAttributeName"));
-    const config = Config.getInitConfig("content_types")[role];
+    const role = element.getAttribute(Config.getConfig("dataRoleAttributeName"));
+    const config = Config.getContentTypeConfig(role);
 
     return getElementData(element, config).then(
-        (data: object) => createBlock(
+        (data: object) => createContentType(
             config,
             parent,
-            stage,
+            stage.id,
             data,
             getElementChildren(element).length,
         ),
@@ -92,10 +96,10 @@ function createElementBlock(element: HTMLElement, stage: Stage, parent?: Editabl
  * Retrieve the elements data
  *
  * @param {HTMLElement} element
- * @param {ConfigContentBlock} config
+ * @param {ContentTypeConfigInterface} config
  * @returns {Promise<any>}
  */
-function getElementData(element: HTMLElement, config: ConfigContentBlock) {
+function getElementData(element: HTMLElement, config: ContentTypeConfigInterface) {
     // Create an object with all fields for the content type with an empty value
     const result = _.mapObject(config.fields, () => {
         return "";
@@ -120,7 +124,7 @@ function getElementChildren(element: Element) {
         _.forEach(element.childNodes, (child: HTMLElement) => {
             // Only search elements which tagName's and not script tags
             if (child.tagName && child.tagName !== "SCRIPT") {
-                if (child.hasAttribute(Config.getValueAsString("dataRoleAttributeName"))) {
+                if (child.hasAttribute(Config.getConfig("dataRoleAttributeName"))) {
                     children.push(child);
                 } else {
                     children = getElementChildren(child);
@@ -143,18 +147,18 @@ function getElementChildren(element: Element) {
  */
 
 function buildEmpty(stage: Stage, initialValue: string) {
-    const stageConfig = Config.getInitConfig("stage_config");
-    const rootContentTypeConfig = Config.getContentType(stageConfig.root_content_type);
-    const htmlDisplayContentTypeConfig = Config.getContentType(stageConfig.html_display_content_type);
+    const stageConfig = Config.getConfig("stage_config");
+    const rootContentTypeConfig = Config.getContentTypeConfig(stageConfig.root_content_type);
+    const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-        return createBlock(rootContentTypeConfig, stage, stage, {}).then((row: Block) => {
+        return createContentType(rootContentTypeConfig, stage, stage.id, {}).then((row: Block) => {
             stage.addChild(row);
             if (htmlDisplayContentTypeConfig && initialValue) {
-                return createBlock(
+                return createContentType(
                     htmlDisplayContentTypeConfig,
                     stage,
-                    stage,
+                    stage.id,
                     {
                         html: initialValue,
                     },
@@ -200,6 +204,6 @@ export default function build(
             title: $t("Advanced CMS Error"),
         });
         EventBus.trigger("stage:error", error);
-        console.error( error );
+        console.error(error);
     });
 }

@@ -4,22 +4,20 @@
  */
 
 import ko from "knockout";
-import {ConfigContentBlock} from "../../../config";
+import ContentTypeConfigInterface from "../../../../content-type-config.d";
 
 export class Block {
     public droppable: boolean = true;
-    private config: ConfigContentBlock;
+    private config: ContentTypeConfigInterface;
     private icon: KnockoutObservable<string> = ko.observable("");
     private identifier: KnockoutObservable<string> = ko.observable("");
     private label: KnockoutObservable<string> = ko.observable("");
 
     /**
-     * Block Constructor
-     *
      * @param {string} identifier
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeConfigInterface} config
      */
-    constructor(identifier: string, config: ConfigContentBlock) {
+    constructor(identifier: string, config: ContentTypeConfigInterface) {
         this.config = config;
         this.identifier(identifier);
         this.label(config.label);
@@ -29,7 +27,7 @@ export class Block {
     /**
      * Retrieve the config object
      *
-     * @returns {ConfigContentBlock}
+     * @returns {ContentTypeConfigInterface}
      */
     public getConfig() {
         return this.config;

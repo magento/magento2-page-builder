@@ -5,4 +5,4 @@
  */
 -->
 
-<div data-bind="attr: getAttributes('main'), style: Object.assign(getStyle('main'), { display: getAttributes('main')['data-markers'] !== '[]' ? 'inline-block' : 'none' }), css: getCss('main')"></div>
+<div data-bind="attr: data.main.attributes, style: Object.assign(data.main.style(), { display: data.main.attributes()['data-markers'] !== '[]' ? 'inline-block' : 'none' }), css: data.main.css"></div>

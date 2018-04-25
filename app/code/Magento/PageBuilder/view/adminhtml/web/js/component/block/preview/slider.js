@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _slick, _underscore, _focus, _eventBus, _block) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_jquery, _knockout, _translate, _slick, _underscore, _focus, _contentTypeFactory, _previewCollection, _config, _eventBus, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Slider =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Slider, _PreviewBlock);
+  function (_PreviewCollection) {
+    _inheritsLoose(Slider, _PreviewCollection);
 
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
@@ -14,13 +14,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
      */
 
     /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    function Slider(parent, config) {
+    function Slider(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this; // We only start forcing the containers height once the slider is ready
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // We only start forcing the containers height once the slider is ready
 
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);
@@ -76,7 +77,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
 
       _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
 
-      _this.parent.stage.store.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
+      _this.parent.store.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
 
 
       _eventBus.on("previewSortable:sortupdate", function (event, params) {
@@ -109,17 +110,34 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
 
 
       _this.focusedSlide.subscribe(function (value) {
-        _this.parent.stage.interacting(value !== null);
+        if (value !== null) {
+          _eventBus.trigger("interaction:start", {});
+        } else {
+          _eventBus.trigger("interaction:stop", {});
+        }
       });
 
       return _this;
     }
     /**
-     * Capture an after render event
+     * Return an array of options
+     *
+     * @returns {Array<OptionInterface>}
      */
 
 
     var _proto = Slider.prototype;
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+
+      options.push(new _option.Option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add"), this.addSlide, ["add-child"], 10));
+      return options;
+    };
+    /**
+     * Capture an after render event
+     */
+
 
     _proto.onAfterRender = function onAfterRender() {
       this.buildSlick();
@@ -183,7 +201,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
-      _PreviewBlock.prototype.afterChildrenRender.call(this, element);
+      _PreviewCollection.prototype.afterChildrenRender.call(this, element);
 
       this.element = element;
     };
@@ -216,6 +234,84 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
       }
     };
     /**
+     * Add a slide into the slider
+     */
+
+
+    _proto.addSlide = function addSlide() {
+      var _this2 = this;
+
+      (0, _contentTypeFactory)(_config.getConfig("content_types").slide, this.parent, this.parent.stageId).then(function (slide) {
+        var mountFn = function mountFn(event, params) {
+          if (params.id === slide.id) {
+            _underscore.delay(function () {
+              _this2.navigateToSlide(_this2.parent.children().length - 1);
+
+              slide.preview.onOptionEdit();
+            }, 500);
+
+            _eventBus.off("slide:block:mount", mountFn);
+          }
+        };
+
+        _eventBus.on("slide:block:mount", mountFn);
+
+        _this2.parent.addChild(slide, _this2.parent.children().length);
+      });
+    };
+    /**
+     * Bind events
+     */
+
+
+    _proto.bindEvents = function bindEvents() {
+      var _this3 = this;
+
+      _PreviewCollection.prototype.bindEvents.call(this); // Block being mounted onto container
+
+
+      _eventBus.on("slider:block:dropped:create", function (event, params) {
+        if (params.id === _this3.parent.id && _this3.parent.children().length === 0) {
+          _this3.addSlide();
+        }
+      }); // Block being removed from container
+
+
+      _eventBus.on("slide:block:removed", function (event, params) {
+        if (params.parent.id === _this3.parent.id) {
+          // Mark the previous slide as active
+          var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
+
+          _this3.setActiveSlide(newIndex);
+
+          _this3.setFocusedSlide(newIndex, true);
+        }
+      }); // Capture when a block is duplicated within the container
+
+
+      var duplicatedSlide;
+      var duplicatedSlideIndex;
+
+      _eventBus.on("slide:block:duplicate", function (event, params) {
+        if (params.duplicateBlock.parent.id === _this3.parent.id) {
+          duplicatedSlide = params.duplicateBlock;
+          duplicatedSlideIndex = params.index;
+        }
+      });
+
+      _eventBus.on("slide:block:mount", function (event, params) {
+        if (duplicatedSlide && params.id === duplicatedSlide.id) {
+          // Mark the new duplicate slide as active
+          _this3.navigateToSlide(duplicatedSlideIndex); // Force the focus of the slide, as the previous slide will have focus
+
+
+          _this3.setFocusedSlide(duplicatedSlideIndex, true);
+
+          duplicatedSlide = duplicatedSlideIndex = null;
+        }
+      });
+    };
+    /**
      * To ensure smooth animations we need to lock the container height
      */
 
@@ -235,19 +331,20 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/resource/slick/slick.min",
 
 
     _proto.buildSlickConfig = function buildSlickConfig() {
+      var data = this.parent.store.get(this.parent.id);
       return {
-        arrows: this.data.show_arrows() === "1",
-        autoplay: this.data.autoplay() === "1",
-        autoplaySpeed: this.data.autoplay_speed(),
+        arrows: data.show_arrows === "1",
+        autoplay: data.autoplay === "1",
+        autoplaySpeed: data.autoplay_speed,
         dots: false,
         // We have our own dots implemented
-        fade: this.data.fade() === "1",
-        infinite: this.data.is_infinite() === "1"
+        fade: data.fade === "1",
+        infinite: data.is_infinite === "1"
       };
     };
 
     return Slider;
-  }(_block);
+  }(_previewCollection);
 
   return Slider;
 });

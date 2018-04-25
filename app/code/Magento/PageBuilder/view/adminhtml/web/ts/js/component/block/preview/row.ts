@@ -5,17 +5,20 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import _ from "underscore";
-import {ConfigContentBlock} from "../../config";
+import {ContentTypeConfigInterface} from "../../../content-type-config.d";
+import {ContentTypeInterface} from "../../../content-type.d";
+import ObservableUpdater from "../../../observable-updater";
+import PreviewCollection from "../../../preview-collection";
+import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
+import BlockReadyEventParamsInterface from "../../block/block-ready-event-params.d";
 import EventBus from "../../event-bus";
-import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
-import {BlockMountEventParams} from "../../stage/structural/editable-area";
-import Block from "../block";
-import {BlockReadyEventParams} from "../factory";
-import PreviewBlock from "./block";
+import {Option} from "../../stage/structural/options/option";
+import {OptionInterface} from "../../stage/structural/options/option.d";
 
-export default class Row extends PreviewBlock {
+export default class Row extends PreviewCollection {
     public getChildren: KnockoutComputed<{}>;
     public wrapClass: KnockoutObservable<boolean> = ko.observable(false);
     private element: Element;
@@ -38,10 +41,10 @@ export default class Row extends PreviewBlock {
                 jarallax(
                     this.element,
                     {
-                        imgPosition: this.data.background_position() || "50% 50%",
-                        imgRepeat: this.data.background_repeat() === "0" ? "no-repeat" : "repeat",
-                        imgSize: this.data.background_size() || "cover",
-                        speed: this.data.parallax_speed() || 0.5,
+                        imgPosition: this.data.main.style().backgroundPosition || "50% 50%",
+                        imgRepeat: this.data.main.style().backgroundRepeat === "0" ? "no-repeat" : "repeat",
+                        imgSize: this.data.main.style().backgroundSize || "cover",
+                        speed: this.data.main.attributes()["data-parallax-speed"] || 0.5,
                     },
                 );
                 jarallax(this.element, "onResize");
@@ -50,23 +53,56 @@ export default class Row extends PreviewBlock {
     }, 50);
 
     /**
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
      */
-    constructor(parent: Block, config: ConfigContentBlock) {
-        super(parent, config);
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(parent, config, observableUpdater);
 
-        this.parent.stage.store.subscribe(this.buildJarallax);
-        EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParams) => {
+        this.parent.store.subscribe(this.buildJarallax);
+        EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
             if (params.id === this.parent.id) {
                 this.buildJarallax();
             }
         });
-        EventBus.on("block:mount", (event: Event, params: BlockMountEventParams) => {
+        EventBus.on("block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
             if (params.block.parent.id === this.parent.id) {
                 this.buildJarallax();
             }
         });
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
+        const newOptions = options.filter((option) => {
+            return (option.code !== "remove");
+        });
+        const removeClasses = ["remove-structural"];
+        let removeFn = this.onOptionRemove;
+        if (this.parent.parent.children().length < 2) {
+            removeFn = () => { return; };
+            removeClasses.push("disabled");
+        }
+        newOptions.push(new Option(
+            this,
+            "remove",
+            "<i class='icon-admin-pagebuilder-remove'></i>",
+            $t("Remove"),
+            removeFn,
+            removeClasses,
+            100,
+        ));
+        return newOptions;
     }
 
     /**
@@ -77,29 +113,5 @@ export default class Row extends PreviewBlock {
     public initParallax(element: Element) {
         this.element = element;
         this.buildJarallax();
-    }
-
-    /**
-     * Update the style attribute mapper converts images to directives, override it to include the correct URL
-     *
-     * @returns styles
-     */
-    protected afterStyleMapped(styles: StyleAttributeMapperResult) {
-        // The style attribute mapper converts images to directives, override it to include the correct URL
-        if (this.data.background_image && typeof this.data.background_image()[0] === "object") {
-            styles.backgroundImage = "url(" + this.data.background_image()[0].url + ")";
-        }
-
-        // If the bottom margin is 0, we set it to 1px to overlap the rows to create a single border
-        if (styles.marginBottom === "0px") {
-            styles.marginBottom = "1px";
-        }
-
-        // If the border is set to default we show no border in the admin preview, as we're unaware of the themes styles
-        if (this.data.border && this.data.border() === "_default") {
-            styles.border = "none";
-        }
-
-        return styles;
     }
 }
