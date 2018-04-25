@@ -8,161 +8,11 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="DefaultTabStateOnAddingNewTab">
-        <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-87087: Empty Tabs Admin Preview"/>
-            <title value="Empty Tabs Default State on Admin Preview and Storefront"/>
-            <description value="As a Content Manager I want to see empty tab preview on the stage so that I see its position and can access settings"/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-90008"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-tabs"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <comment userInput="User adds tabs and sees 1st default tab item created by default" stepKey="AC1"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-        <!-- Open Tabs Panel -->
-        <comment userInput="Tab option panel displayed on top of the new tab after adding it." stepKey="AC2"/>
-        <waitForElement selector="{{TabOnStage.tabOptionsByIndex('1')}}" stepKey="seeTabOptionsPanel" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEditVisible"/>
-        <comment userInput="A placeholder indicates that content can be added inside the tab" stepKey="AC3"/>
-        <see selector="{{TabOnStage.empty}}" userInput="Drag content blocks or columns here" stepKey="seeTabPlaceholder"/>
-        <comment userInput="User sees the first tab to be active and focused." stepKey="AC4"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocused"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisible"/>
-
-        <comment userInput="User doesn't see the Tabs option panel" stepKey="AC5"/>
-        <dontSeeElement selector="{{TabsOnStage.tabsOptionsTitle}}" stepKey="dontSeeTabsOptionsAfterAddTabs"/>
-
-        <comment userInput="Add second tab and view on stage" stepKey="AC6"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeTabHeader1"/>
-        <actionGroup ref="addTab" stepKey="addTab"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
-        <see selector="{{TabOnStage.tabHeader('2')}}" userInput="Tab 2" stepKey="seeTab2DefaultTitleAdmin"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentDefault.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
-            <argument name="from" value="2"/>
-            <argument name="to" value="1"/>
-        </actionGroup>
-        <comment userInput="View default Tabs with empty first Tab on stage" stepKey="AC7"/>
-        <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentDefault.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
-        <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
-        <comment userInput="User sees tab default min height to be 300 px on stage" stepKey="AC8"/>
-        <seeElement selector="{{TabsOnStage.tabsContentMinHeight(PageBuilderTabsDefaultMinHeight.value)}}" stepKey="seeTabMinHeightAdmin1"/>
-        <comment userInput="User sees tab preview takes 100% container width" stepKey="AC9"/>
-        <!--assert computed styles matching expected depends on MQE-818 -->
-
-        <comment userInput="User sees tabs border settings to be default as documented (defined by the theme style)" stepKey="AC10"/>
-        <seeElement selector="{{TabOnStage.tabContentBorderWidth('1', PageBuilderAdvancedBorderWidthPropertyDefault.value)}}" stepKey="seeTab1BorderWidth"/>
-        <seeElement selector="{{TabOnStage.tabContentBorderRadius('1', PageBuilderAdvancedBorderRadiusDefaultProperty.value)}}" stepKey="seeTab1BorderRadius"/>
-        <seeElement selector="{{TabOnStage.tabContentMargin('1', PageBuilderMarginsPropertyTabDefault.value)}}" stepKey="seeTab1Margins"/>
-        <seeElement selector="{{TabOnStage.tabContentPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeTab1Padding"/>
-
-        <!-- Validate Default Values on Edit Tab for initial tab -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
-
-        <comment userInput="Tab has default value Tab 1 for Tab Name" stepKey="AC11"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultTabName">
-            <argument name="property" value="PageBuilderTabName1Default"/>
-        </actionGroup>
-        <comment userInput="Tab has default value empty for Background Image" stepKey="AC12"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnBackgroundImage"/>
-        <comment userInput="Tab has default value empty for Background Mobile image - This feature is not yet available" stepKey="AC13"/>
-        <comment userInput="Tab has default value empty for Background Color" stepKey="commentDefaultBackgroundColor"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderTabBackgroundColorProperty.section, PageBuilderTabBackgroundColorProperty.fieldName)}}" stepKey="getBackgroundColor"/>
-        <assertEmpty actual="getBackgroundColor" actualType="variable" message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor"/>
-
-        <comment userInput="Tab has default value Top Aligned for Background Position" stepKey="commentDefaultBackgroundPosition"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundPosition">
-            <argument name="property" value="PageBuilderTabBackgroundPositionTop"/>
-        </actionGroup>
-        <comment userInput="Background Position has expected dropdown values" stepKey="commentDefaultBackgroundPositionValues"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundPositionDefault.section, PageBuilderTabBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
-        <assertEquals expected="{{PageBuilderTabBackgroundPositionDefault.optionsList}}" expectedType="array" actual="grabBackgroundPositionOptions" actualType="variable" message="Verify Background Position dropdown options" stepKey="assertBackgroundPositionOptions"/>
-
-        <comment userInput="Tab has default value Cover for Background Size" stepKey="commentDefaultBackgroundSize"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultBackgroundSize">
-            <argument name="property" value="PageBuilderTabBackgroundSizeCover"/>
-        </actionGroup>
-        <comment userInput="Background Size has expected dropdown values" stepKey="commentDefaultBackgroundSizeValues"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundSizeDefault.section, PageBuilderTabBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeOptions"/>
-        <assertEquals expected="{{PageBuilderTabBackgroundSizeDefault.optionsList}}" expectedType="array" actual="grabBackgroundSizeOptions" actualType="variable" message="Verify Background Size dropdown options" stepKey="assertBackgroundSizeOptions"/>
-
-        <comment userInput="Tab has default value No for Background Repeat" stepKey="commentDefaultBackgroundRepeat"/>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty">
-            <argument name="property" value="PageBuilderTabBackgroundRepeatNo"/>
-        </actionGroup>
-
-        <comment userInput="Tab has default value Scroll for Background Attachment" stepKey="commentDefaultBackgroundAttachment"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
-            <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
-        </actionGroup>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundAttachmentDefault.section, PageBuilderTabBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
-        <assertEquals expected="{{PageBuilderTabBackgroundAttachmentDefault.optionsList}}" expectedType="array" actual="grabBackgroundAttachmentOptions" actualType="variable" message="Verify Background Attachment dropdown options" stepKey="assertBackgroundAttachmentOptions"/>
-
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsForTab1"/>
-        <!-- Validate Default Values in Edit Tabs -->
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openTabsEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-        </actionGroup>
-
-        <comment userInput="Tabs has default value Tab 1 for Default Active Tab" stepKey="commentDefaultActiveTab"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultActiveTab">
-            <argument name="property" value="PageBuilderTabsDefaultActiveTab"/>
-        </actionGroup>
-
-        <comment userInput="Tabs has default value 300 for Minimum Height" stepKey="commentDefaultMinimumHeight"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultMinimumHeight">
-            <argument name="property" value="PageBuilderTabsDefaultMinHeight"/>
-        </actionGroup>
-
-        <comment userInput="Tabs has default value Left for Tab Navigation Alignment" stepKey="commentDefaultTabNavigationAlignment"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateDefaultTabNavigationAlignment">
-            <argument name="property" value="PageBuilderTabsAlignmentLeft"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <!-- Verify Default Values for Tabs on storefront -->
-        <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <reloadPage stepKey="reloadPage"/>
-        <waitForPageLoad stepKey="waitForTabsToLoadStorefront" time="30"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
-        <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabName1Default.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionDefault.style)}}" stepKey="seeTabBackgroundPositionStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTabBackgroundRepeatNoStorefront"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentStorefront"/>
-    </test>
     <test name="EditTabNameByClickingOnHeaderInStage">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Ability to edit Tab Name inline on the stage by clicking on tab header"/>
             <description value="Ability to edit Tab Name inline on the stage by clicking on tab header"/>
             <severity value="CRITICAL"/>
@@ -172,8 +22,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -218,8 +67,9 @@
     </test>
     <test name="AddTabsWithBackgroundColorAndMinHeight">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add new tabs from the stage with customized background color and min height then view on admin and storefront"/>
             <description value="Customize Tab background color and min height and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
@@ -229,8 +79,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -350,8 +199,9 @@
     </test>
     <test name="AddTabsWithBackgroundJpgTopCoverScrollFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background jpg, position top, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <description value="Add tabs with background jpg, position top, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
@@ -361,8 +211,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -473,8 +322,9 @@
     </test>
     <test name="AddTabsWithBackgroundJpgTopCoverScrollFixedYesBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background jpg, position top, size cover, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
             <description value="Add tabs with background jpg, position top, size cover, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
@@ -485,8 +335,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -587,8 +436,9 @@
     </test>
     <test name="AddTabsWithBackgroundJpgCenterCoverScrollFixedYesBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background jpg, position center, size cover, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
             <description value="Add tabs with background jpg, position center, size cover, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
@@ -598,8 +448,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -706,8 +555,9 @@
     </test>
     <test name="AddTabsWithBackgroundJpgCenterAutoContainScrollFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background jpg, position center, size auto and contain, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <description value="Add tabs with background jpg, position center, size auto and contain, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
@@ -717,8 +567,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -835,8 +684,9 @@
     </test>
     <test name="AddTabsWithBackgroundJpgCenterCoverScrollFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background jpg, position center, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <description value="Add tabs with background jpg, position center, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
@@ -846,8 +696,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -974,8 +823,9 @@
     </test>
     <test name="AddTabsWithBackgroundJpgBottomCoverScrollFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background jpg, position bottom, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <description value="Add tabs with background jpg, position bottom, size cover, attachment scroll and fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
@@ -985,8 +835,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -1094,8 +943,9 @@
     </test>
     <test name="AddTabsWithBackgroundGifBottomAutoContainScrollFixedYesBackgroundRepeatAfterSave">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background gif, position bottom, size auto and contain, attachment scroll and fixed, yes repeat, view on admin before and after save, view storefront"/>
             <description value="Add tabs with background gif, position bottom, size auto and contain, attachment scroll and fixed, yes repeat, view on admin before and after save, view storefront"/>
             <severity value="CRITICAL"/>
@@ -1105,8 +955,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -1248,8 +1097,9 @@
     </test>
     <test name="AddTabsWithBackgroundGifCenterAutoContainFixedNoBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background gif, position center, size auto and contain, attachment fixed, no background repeat, then view on admin and storefront"/>
             <description value="Add tabs with background gif, position center, size auto and contain, attachment fixed, no background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
@@ -1259,8 +1109,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -1374,8 +1223,9 @@
     </test>
     <test name="AddTabsWithBackgroundPngBottomAutoContainScrollNoBackgroundRepeatAfterSave">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background png, position bottom, size auto and contain, scroll, no repeat, view on admin before and after save, view storefront"/>
             <description value="Add tabs with background png, position bottom, size auto and contain, scroll, no repeat, view on admin before and after save, view storefront"/>
             <severity value="CRITICAL"/>
@@ -1385,8 +1235,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -1523,8 +1372,9 @@
     </test>
     <test name="AddTabsWithBackgroundPngTopAutoContainScrollFixedYesBackgroundRepeat">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Add tabs with background png, position top, size auto and contain, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
             <description value="Add tabs with background png, position top, size auto and contain, attachment scroll and fixed, yes background repeat, then view on admin and storefront"/>
             <severity value="CRITICAL"/>
@@ -1534,8 +1384,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
@@ -1653,8 +1502,9 @@
     </test>
     <test name="TabCustomizedAdvancedSettingsApplyInAdminPreviewAndStorefront">
         <annotations>
-            <features value="PageBuilder - Tabs"/>
-            <stories value="MAGETWO-71593: Add new Tab to Tabs from the Stage and Tab configuration"/>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Tab configuration"/>
+            <useCaseId value="MAGETWO-71593"/>
             <title value="Tabs - Customized Tabs Advanced Settings apply to admin preview storefront"/>
             <description value="Configure Tab advanced settings and apply to admin preview and storefront"/>
             <severity value="CRITICAL"/>
@@ -1664,8 +1514,7 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
