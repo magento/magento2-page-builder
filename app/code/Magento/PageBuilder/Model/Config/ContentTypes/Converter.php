@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
 use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
-use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderFactory;
 use Magento\Framework\Data\Argument\InterpreterInterface;
 use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderInterface;
 
@@ -220,7 +219,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $typeArguments = [];
         /** @var $xmlArgumentsNode \DOMElement */
         foreach ($xmlArgumentsNodes as $xmlArgumentsNode) {
-
             $parsedArgumentsData = $this->parser->parse($xmlArgumentsNode);
             $argumentName = $xmlArgumentsNode->attributes->getNamedItem('name')->nodeValue;
             $typeArguments[$argumentName] = $this->argumentInterpreter->evaluate(
@@ -446,15 +444,15 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private function toArray(array $typeArguments)
     {
         $processedData = [];
-       foreach ($typeArguments as $key => $value) {
-           if (is_array($value)) {
-               $processedData[$key] = $this->toArray($typeArguments[$key]);
-           } elseif (is_object($value) && $value instanceof ProviderInterface) {
-               $processedData[$key] = $value->getData($key)[$key];
-           } else {
-               $processedData[$key] = $value;
-           }
-       }
+        foreach ($typeArguments as $key => $value) {
+            if (is_array($value)) {
+                $processedData[$key] = $this->toArray($typeArguments[$key]);
+            } elseif (is_object($value) && $value instanceof ProviderInterface) {
+                $processedData[$key] = $value->getData($key)[$key];
+            } else {
+                $processedData[$key] = $value;
+            }
+        }
 
         return $processedData;
     }
