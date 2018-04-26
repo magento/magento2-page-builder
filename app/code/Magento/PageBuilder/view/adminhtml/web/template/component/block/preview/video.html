@@ -10,9 +10,7 @@
         <ifnot args="data.video.attributes().src">
             <i class="icon-pagebuilder-video"></i> <span translate="'Video'"></span>
         </ifnot>
-        <if args="data.video.attributes().src">
-            <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen attr="data.video.attributes" ko-style="data.video.style" css="data.video.css"></iframe>
-        </if>
+        <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen if="data.video.attributes().src" attr="data.video.attributes" ko-style="data.video.style" css="data.video.css"></iframe>
     </div>
     <render args="getOptions().template" />
 </div>
