@@ -6,43 +6,36 @@
 -->
 
 <figure attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <if args="data.link.attributes().href">
-        <a attr="data.link.attributes" ko-style="data.link.style" css="data.link.css">
-            <if args="data.desktop_image.attributes().src">
-                <img attr="data.desktop_image.attributes"
-                     class="pagebuilder-mobile-hidden"
-                     css="data.desktop_image.css"
-                     ko-style="data.desktop_image.style" />
-            </if>
-            <if args="data.mobile_image.attributes().src">
-                <img attr="data.mobile_image.attributes"
-                     class="pagebuilder-mobile-only"
-                     css="data.mobile_image.css"
-                     ko-style="data.mobile_image.style" />
-            </if>
-        </a>
-    </if>
+    <a if="data.link.attributes().href" attr="data.link.attributes" ko-style="data.link.style" css="data.link.css">
+        <img if="data.desktop_image.attributes().src"
+             attr="data.desktop_image.attributes"
+             class="pagebuilder-mobile-hidden"
+             css="data.desktop_image.css"
+             ko-style="data.desktop_image.style" />
+        <img if="data.mobile_image.attributes().src"
+             attr="data.mobile_image.attributes"
+             class="pagebuilder-mobile-only"
+             css="data.mobile_image.css"
+             ko-style="data.mobile_image.style" />
+    </a>
 
     <ifnot args="data.link.attributes().href">
-        <if args="data.desktop_image.attributes().src">
-            <img attr="data.desktop_image.attributes"
-                 class="pagebuilder-mobile-hidden"
-                 css="data.desktop_image.css"
-                 ko-style="data.desktop_image.style" />
-        </if>
-        <if args="data.mobile_image.attributes().src">
-            <img attr="data.mobile_image.attributes"
-                 class="pagebuilder-mobile-only"
-                 css="data.mobile_image.css"
-                 ko-style="data.mobile_image.style" />
-        </if>
+        <img if="data.desktop_image.attributes().src"
+             attr="data.desktop_image.attributes"
+             class="pagebuilder-mobile-hidden"
+             css="data.desktop_image.css"
+             ko-style="data.desktop_image.style"/>
+        <img if="data.mobile_image.attributes().src"
+             attr="data.mobile_image.attributes"
+             class="pagebuilder-mobile-only"
+             css="data.mobile_image.css"
+             ko-style="data.mobile_image.style" />
     </ifnot>
 
-    <if args="data.caption.html()">
-        <figcaption attr="data.caption.attributes"
-                    css="data.caption.css"
-                    ko-style="data.caption.style"
-                    text="data.caption.html">
-        </figcaption>
-    </if>
+    <figcaption if="data.caption.html()"
+                attr="data.caption.attributes"
+                css="data.caption.css"
+                ko-style="data.caption.style"
+                text="data.caption.html">
+    </figcaption>
 </figure>
