@@ -101,7 +101,7 @@ const uploaderConfiguration = Object.assign(
 this.uploader = new Uploader(
 	this.id,
 	"imageuploader_" + this.id,
-	Object.assign({}, Uploader.getDefaultConfig(), {
+	Object.assign({}, uploaderConfiguration, {
 		value: this.stage.store.get(this.id).image,
 	}),
 	uploaderConfiguration,
