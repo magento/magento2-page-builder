@@ -5,16 +5,19 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <!-- ko template: getOptions().template --><!-- /ko -->
-    <div data-bind="css: data.main.css, attr: data.main.attributes, style: Object.assign({}, data.main.style(), data.overlay.style(), data.desktop_image.style(), {paddingRight: 'calc(50% + ' + data.desktop_image.style().paddingRight + ')'}), event: { mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper }">
-        <div class="pagebuilder-collage-overlay" data-bind="css: data.overlay.css, attr: data.overlay.attributes, style: data.overlay.style">
-            <div data-bind="css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': data.content.html}), html: data.content.html, attr: data.content.attributes, style: data.content.style"></div>
-            <!-- ko if: data.main.attributes()["data-show-button"] !== "never_show" -->
-                <a type="button" class="pagebuilder-banner-button" data-bind="css: data.button.css, attr: data.button.attributes, style: data.button.style">
-                    <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
-                </a>
-            <!-- /ko -->
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <render args="getOptions().template" />
+    <div css="data.main.css" attr="data.main.attributes" ko-style="Object.assign({}, data.main.style(), data.overlay.style(), data.desktop_image.style(), {paddingRight: 'calc(50% + ' + data.desktop_image.style().paddingRight + ')'})" event="{ mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper }">
+        <div class="pagebuilder-collage-overlay" css="data.overlay.css" attr="data.overlay.attributes" ko-style="data.overlay.style">
+            <div css="Object.assign(data.content.css(), {'pagebuilder-empty-banner': data.content.html})" html="data.content.html" attr="data.content.attributes" ko-style="data.content.style"></div>
+            <a if="data.main.attributes()['data-show-button'] !== 'never_show'"
+               type="button"
+               class="pagebuilder-banner-button"
+               css="data.button.css"
+               attr="data.button.attributes"
+               ko-style="data.button.style">
+                <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
+            </a>
         </div>
     </div>
 </div>
