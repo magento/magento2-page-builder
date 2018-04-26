@@ -293,46 +293,14 @@
                 </wysiwyg>
             </formElements>
         </field>
-        <field name="link_url" sortOrder="20" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="disabledValues" xsi:type="array">
-                        <item name="none" xsi:type="string">never_show</item>
-                    </item>
-                </item>
-            </argument>
+        <urlInput name="link_url" sortOrder="20">
             <settings>
-                <label translate="true">Link</label>
                 <dataType>text</dataType>
+                <label translate="true">Link</label>
                 <dataScope>link_url</dataScope>
+                <urlTypes class="Magento\Ui\Model\UrlInput\LinksConfigProvider"/>
             </settings>
-        </field>
-        <field name="open_in_new_tab" sortOrder="30" formElement="checkbox">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">false</item>
-                    <item name="disabledValues" xsi:type="array">
-                        <item name="none" xsi:type="string">never_show</item>
-                    </item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>boolean</dataType>
-                <label translate="true">Open in new tab</label>
-                <dataScope>open_in_new_tab</dataScope>
-            </settings>
-            <formElements>
-                <checkbox>
-                    <settings>
-                        <valueMap>
-                            <map name="false" xsi:type="number">0</map>
-                            <map name="true" xsi:type="number">1</map>
-                        </valueMap>
-                        <prefer>toggle</prefer>
-                    </settings>
-                </checkbox>
-            </formElements>
-        </field>
+        </urlInput>
         <field name="show_button" sortOrder="40" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
