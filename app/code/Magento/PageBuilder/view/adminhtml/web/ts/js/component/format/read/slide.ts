@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import Link from "../../../converter/default/attribute/link";
 import {toHex} from "../../../utils/color-converter";
 import extractAlphaFromRgba from "../../../utils/extract-alpha-from-rgba";
 import {decodeUrl} from "../../../utils/image";
@@ -11,6 +12,7 @@ import Default from "./default";
 
 export default class Slide implements ReadInterface {
     private defaultReader: Default = new Default();
+    private linkConverter: Link = new Link();
 
     /**
      * Read heading type and title from the element
@@ -20,8 +22,7 @@ export default class Slide implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<object> {
         let bgMobileImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[0].style.backgroundImage;
-        const linkUrl = element.querySelector("a").getAttribute("href");
-        const target = element.querySelector("a").getAttribute("target");
+        const linkUrl = element.querySelector("a");
         const bgImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[1].style.backgroundImage;
         const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
         const paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
@@ -37,7 +38,7 @@ export default class Slide implements ReadInterface {
             background_size: element.style.backgroundSize,
             button_text: buttonText,
             button_type: buttonType,
-            link_url: linkUrl ? linkUrl : "",
+            link_url: this.linkConverter.read(linkUrl),
             margins_and_padding: {
                 margin: {
                     bottom: marginSrc.marginBottom.replace("px", ""),
@@ -55,7 +56,6 @@ export default class Slide implements ReadInterface {
             content: element.querySelector(".pagebuilder-poster-content div").innerHTML,
             min_height: element.querySelector(".pagebuilder-poster-overlay").style.minHeight.split("px")[0],
             mobile_image: bgMobileImage ? decodeUrl(bgMobileImage) : "",
-            open_in_new_tab: target && target === "_blank" ? "1" : "0",
             overlay_color: this.getOverlayColor(overlayColor),
             overlay_transparency: this.getOverlayTransparency(overlayColor),
             show_button: element.getAttribute("data-show-button"),

@@ -14,7 +14,7 @@
                 <!-- /ko -->
                 <div data-bind="html: getContentHtml(), css: {'pagebuilder-empty-slide': isContentEmpty()}"></div>
                 <!-- ko if: previewData.show_button() !== "never_show" -->
-                <a type="button" class="pagebuilder-slide-button" data-bind="css: previewData.button_type(), attr: {'data-link-url': previewData.link_url()}, style: getButtonStyles()">
+                <a type="button" class="pagebuilder-slide-button" data-bind="css: previewData.button_type(), attr: {'data-link-url': previewData.link_url.href()}, style: getButtonStyles()">
                     <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
                 </a>
                 <!-- /ko -->
