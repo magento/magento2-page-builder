@@ -150,20 +150,18 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       var _this2 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.parent, this.parent.stageId).then(function (tab) {
-        _underscore.defer(function () {
-          _uiEvents.on("tab-item:block:mount:add", function (params) {
-            if (params.id === tab.id) {
-              _this2.setFocusedTab(_this2.parent.children().length - 1);
+        _uiEvents.on("tab-item:block:mount", function (args) {
+          if (args.id === tab.id) {
+            _this2.setFocusedTab(_this2.parent.children().length - 1);
 
-              _uiEvents.off("tab-item:block:mount:add");
-            }
-          });
+            _uiEvents.off("tab-item:block:mount:" + tab.id);
+          }
+        }, "tab-item:block:mount:" + tab.id);
 
-          _this2.parent.addChild(tab, _this2.parent.children().length); // Update the default tab title when adding a new tab
+        _this2.parent.addChild(tab, _this2.parent.children().length); // Update the default tab title when adding a new tab
 
 
-          tab.store.updateKey(tab.id, (0, _translate)("Tab") + " " + (_this2.parent.children.indexOf(tab) + 1), "tab_name");
-        });
+        tab.store.updateKey(tab.id, (0, _translate)("Tab") + " " + (_this2.parent.children.indexOf(tab) + 1), "tab_name");
       });
     };
     /**

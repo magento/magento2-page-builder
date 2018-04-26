@@ -157,22 +157,20 @@ export default class Tabs extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((tab) => {
-            _.defer(() => {
-                events.on("tab-item:block:mount:add", (params: BlockMountEventParamsInterface) => {
-                    if (params.id === tab.id) {
-                        this.setFocusedTab(this.parent.children().length - 1);
-                        events.off("tab-item:block:mount:add");
-                    }
-                });
-                this.parent.addChild(tab, this.parent.children().length);
+            events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
+                if (args.id === tab.id) {
+                    this.setFocusedTab(this.parent.children().length - 1);
+                    events.off(`tab-item:block:mount:${tab.id}`);
+                }
+            }, `tab-item:block:mount:${tab.id}`);
+            this.parent.addChild(tab, this.parent.children().length);
 
-                // Update the default tab title when adding a new tab
-                tab.store.updateKey(
-                    tab.id,
-                    $t("Tab") + " " + (this.parent.children.indexOf(tab) + 1),
-                    "tab_name",
-                );
-            });
+            // Update the default tab title when adding a new tab
+            tab.store.updateKey(
+                tab.id,
+                $t("Tab") + " " + (this.parent.children.indexOf(tab) + 1),
+                "tab_name",
+            );
         });
     }
 
