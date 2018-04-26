@@ -99,19 +99,17 @@ define(["Magento_PageBuilder/js/component/loader", "uiEvents", "underscore", "Ma
     } else {
       var mountCounter = 0;
 
-      var eventCallback = function eventCallback(event, params) {
-        if (params.block.parent.id === block.id) {
+      _uiEvents.on("block:mount", function (args) {
+        if (args.block.parent.id === block.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
             fire();
 
-            _uiEvents.off("block:mount", eventCallback);
+            _uiEvents.off("block:mount:" + block.id);
           }
         }
-      };
-
-      _uiEvents.on("block:mount", eventCallback);
+      }, "block:mount:" + block.id);
     }
   }
 

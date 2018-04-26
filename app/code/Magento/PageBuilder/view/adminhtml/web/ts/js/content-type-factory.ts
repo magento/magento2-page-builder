@@ -97,16 +97,15 @@ function fireBlockReadyEvent(block: ContentTypeInterface, childrenLength: number
         fire();
     } else {
         let mountCounter = 0;
-        const eventCallback = (event: Event, params: BlockMountEventParamsInterface) => {
-            if (params.block.parent.id === block.id) {
+        events.on("block:mount", (args: BlockMountEventParamsInterface) => {
+            if (args.block.parent.id === block.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
                     fire();
-                    events.off("block:mount", eventCallback);
+                    events.off(`block:mount:${block.id}`);
                 }
             }
-        };
-        events.on("block:mount", eventCallback);
+        }, `block:mount:${block.id}` );
     }
 }
