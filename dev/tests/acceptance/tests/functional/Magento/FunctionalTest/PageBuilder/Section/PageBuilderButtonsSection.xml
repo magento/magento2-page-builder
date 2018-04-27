@@ -11,7 +11,7 @@
     <section name="ButtonsBackendSection">
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px;']" parameterized="true"/>
         <element name="buttonsContainer" type="button" selector="//div[contains(@class,'pagebuilder-buttons')]"/>
-        <element name="buttonsOptions" type="button" selector="//div[contains(@class, 'pagebuilder-buttons')]//div[@data-bind='text: parent.preview.displayLabel']"/>
+        <element name="buttonsOptions" type="button" selector="//div[contains(@class, 'pagebuilder-buttons')]//div[contains(text(), '{{arg1}}')]" parameterized="true"/>
         <element name="addNewButtonItemOption" type="button" selector="//div[contains(@class, 'pagebuilder-buttons')]//a[contains(@title, 'Add Button')]"/>
         <element name="oldAddNewButtonItem" type="button" selector="//button[contains(text(), 'Add Button')]"/>
         <element name="buttonItemElement" type="button" selector="//div[contains(@class, 'pagebuilder-button-item')]/a[contains(@class, '{{arg1}}')]/span[contains(text(), '{{arg2}}')]" parameterized="true"/>
