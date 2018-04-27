@@ -139,6 +139,9 @@ export default class Tabs extends PreviewCollection {
         this.focusedTab(index);
 
         if (this.element) {
+            if (this.element.getElementsByClassName("tab-name")[index]) {
+                this.element.getElementsByClassName("tab-name")[index].focus();
+            }
             _.defer(() => {
                 if ($(":focus").hasClass("tab-name") && $(":focus").prop("contenteditable")) {
                     document.execCommand("selectAll", false, null);

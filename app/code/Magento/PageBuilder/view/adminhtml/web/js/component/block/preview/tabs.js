@@ -141,6 +141,10 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       this.focusedTab(index);
 
       if (this.element) {
+        if (this.element.getElementsByClassName("tab-name")[index]) {
+          this.element.getElementsByClassName("tab-name")[index].focus();
+        }
+
         _underscore.defer(function () {
           if ((0, _jquery)(":focus").hasClass("tab-name") && (0, _jquery)(":focus").prop("contenteditable")) {
             document.execCommand("selectAll", false, null);
