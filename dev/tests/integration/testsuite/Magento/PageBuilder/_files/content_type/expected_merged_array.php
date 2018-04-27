@@ -388,7 +388,8 @@ return [
                             ]
                         ]
                     ],
-                    'default' => 'true'
+                    'default' => 'true',
+                    'form' => 'Path/to/custom/form'
                 ],
                 'appearance1' => [
                     'preview_template' => 'Path/to/preview/template',
@@ -439,7 +440,8 @@ return [
                         ],
                         'converters' => []
                     ],
-                    'default' => 'false'
+                    'default' => 'false',
+                    'form' => 'Path/to/form'
                 ],
                 'appearance2' => [
                     'preview_template' => 'Path/to/preview/template',
@@ -504,7 +506,8 @@ return [
                         ],
                         'converters' => []
                     ],
-                    'default' => null
+                    'default' => null,
+                    'form' => 'Path/to/custom/form'
                 ]
             ]
         ],
