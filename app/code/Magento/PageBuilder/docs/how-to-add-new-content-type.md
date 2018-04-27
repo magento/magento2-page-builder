@@ -57,7 +57,7 @@ Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content
 
 ``` HTML
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
-    <div attr="data.main.attributes" style="data.main.style" css="data.main.css" html="data.main.html"></div>
+    <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
     <render args="getOptions().template" />
 </div>
 ```
@@ -65,7 +65,7 @@ Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content
 And master template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/master/simple.html`.
 
 ``` HTML
-<div attr="data.main.attributes" style="data.main.style" css="data.main.css" html="data.main.html"></div>
+<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
 ```
 
 In the `simple.xml` above we defined border attributes and form for component. Let's create form `Vendor/ModuleName/view/adminhtml/ui_component/modulename_simple_form.xml` which enables the user to modify these attributes from the admin.
@@ -266,7 +266,7 @@ Now need to create preview and render templates.
 `Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/complex.html`
 
 ``` HTML
-<div class="pagebuilder-content-type type-container pagebuilder-complex children-min-height" attr="data.main.attributes" style="data.main.style" css="data.main.css" event="{mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type type-container pagebuilder-complex children-min-height" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
     <render args="previewChildTemplate" />
 </div>
@@ -274,7 +274,7 @@ Now need to create preview and render templates.
 
 `Vendor/ModuleName/view/adminhtml/web/template/content-type/master/complex.html`
 ``` HTML
-<div attr="data.main.attributes" style="data.main.style" css="data.main.css">
+<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
     <render args="renderChildTemplate" />
 </div>
 ```
