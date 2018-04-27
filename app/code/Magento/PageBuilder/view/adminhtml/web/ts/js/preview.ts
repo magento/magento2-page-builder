@@ -32,6 +32,7 @@ export default class Preview {
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
+    public fieldsToIgnoreOnRemove: string[] = [];
     /**
      * @deprecated
      */
@@ -423,6 +424,9 @@ export default class Preview {
         const data = this.parent.store.get(this.parent.id);
         let hasDataChanges = false;
         _.each(this.parent.config.fields, (field, key: string) => {
+            if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
+                return;
+            }
             let fieldValue = data[key];
             if (!fieldValue) {
                 fieldValue = "";

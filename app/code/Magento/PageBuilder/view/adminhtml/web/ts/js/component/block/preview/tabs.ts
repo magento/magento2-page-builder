@@ -285,7 +285,7 @@ export default class Tabs extends PreviewCollection {
                 }
 
                 ui.helper.css("width", "");
-                self.parent.stage.interacting(true);
+                EventBus.trigger("interaction:start", {});
                 self.lockInteracting = true;
             },
 
@@ -297,7 +297,7 @@ export default class Tabs extends PreviewCollection {
              */
             stop(event: Event, ui: JQueryUI.SortableUIParams) {
                 $(this).css("paddingLeft", "");
-                self.parent.stage.interacting(false);
+                EventBus.trigger("interaction:stop", {});
                 self.lockInteracting = false;
             },
 
@@ -343,13 +343,19 @@ export default class Tabs extends PreviewCollection {
         // Block being removed from container
         EventBus.on("tab-item:block:removed", (event, params: BlockRemovedParamsInterface) => {
             if (params.parent.id === this.parent.id) {
-                // Mark the previous slide as active
+                // Mark the previous tab as active
                 const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
-                this.setFocusedTab(newIndex);
+                this.refreshTabs(newIndex, true);
             }
         });
         EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
-            this.buildTabs(params.index);
+            // this.buildTabs(params.index);
+            const tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
+            this.parent.store.updateKey(
+                params.duplicateBlock.id,
+                tabData.tab_name.toString() + " copy",
+                "tab_name",
+            );
         });
         EventBus.on("tab-item:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
             if (this.parent.id === params.block.parent.id) {

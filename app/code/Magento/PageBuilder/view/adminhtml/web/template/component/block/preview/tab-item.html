@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container pagebuilder-tab-item" data-bind="attr: Object.assign({id: parent.id}, data.main.attr), style: Object.assign({}, data.main.style(), {borderRadius: preview.data.border_radius() ? preview.data.border_radius() + 'px' : $parent.preview.data.border_radius() + 'px'}), css: Object.assign({'empty-container': parent.children().length == 0}, data.main.css)">
+<div class="pagebuilder-content-type type-container pagebuilder-tab-item" data-bind="attr: Object.assign({id: parent.id}, data.main.attr), style: Object.assign({}, data.main.style(), {borderRadius: data.main.style()['border-radius'] ? data.main.style()['border-radius'] + 'px' : parent.data.headers.style()['border-radius'] + 'px'}), css: Object.assign({'empty-container': parent.children().length == 0}, data.main.css)">
     <!-- ko template: previewChildTemplate --><!-- /ko -->
     <div class="pagebuilder-empty-container empty-placeholder" data-bind="css: {visible: parent.children().length == 0}, text: $t('Drag content blocks or columns here')"></div>
 </div>

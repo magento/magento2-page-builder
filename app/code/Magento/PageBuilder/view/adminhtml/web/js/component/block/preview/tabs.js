@@ -285,7 +285,9 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
           }
 
           ui.helper.css("width", "");
-          self.parent.stage.interacting(true);
+
+          _eventBus.trigger("interaction:start", {});
+
           self.lockInteracting = true;
         },
 
@@ -297,7 +299,9 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
          */
         stop: function stop(event, ui) {
           (0, _jquery)(this).css("paddingLeft", "");
-          self.parent.stage.interacting(false);
+
+          _eventBus.trigger("interaction:stop", {});
+
           self.lockInteracting = false;
         },
         placeholder: {
@@ -341,15 +345,18 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
 
       _eventBus.on("tab-item:block:removed", function (event, params) {
         if (params.parent.id === _this3.parent.id) {
-          // Mark the previous slide as active
+          // Mark the previous tab as active
           var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
 
-          _this3.setFocusedTab(newIndex);
+          _this3.refreshTabs(newIndex, true);
         }
       });
 
       _eventBus.on("tab-item:block:duplicate", function (event, params) {
-        _this3.buildTabs(params.index);
+        // this.buildTabs(params.index);
+        var tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
+
+        _this3.parent.store.updateKey(params.duplicateBlock.id, tabData.tab_name.toString() + " copy", "tab_name");
       });
 
       _eventBus.on("tab-item:block:mount", function (event, params) {

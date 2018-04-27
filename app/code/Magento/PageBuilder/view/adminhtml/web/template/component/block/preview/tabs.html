@@ -8,7 +8,7 @@
 <div class="pagebuilder-content-type pagebuilder-tabs children-min-height" data-bind="attr: data.main.attr, style: data.main.style, css: data.main.css, event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <!-- ko template: getOptions().template --><!-- /ko -->
     <div class="tabs-container" data-bind="afterRender: function (element) { onContainerRender.call($data, element); }">
-        <ul role="tablist" class="tabs-navigation" data-bind="foreach: parent.getChildren(), attr: data.navigation.attr, style: data.navigation.style, css: data.navigation.css, previewSortable: preview.getSortableOptions(), foreach: getChildren()">
+        <ul role="tablist" class="tabs-navigation" data-bind="foreach: parent.getChildren(), attr: data.navigation.attr, style: data.navigation.style, css: data.navigation.css, previewSortable: getSortableOptions()">
             <!-- ko with: preview -->
             <li role="tab" class="tab-header" data-bind="css: {focused: parent.parent.preview.focusedTab() === $index()}, click: function (context, event) { parent.parent.preview.onTabClick($index(), event); }, style: parent.parent.preview.getTabHeaderStyles()">
                 <a href="#no-tab" class="tab-title focus-options" data-bind="attr: { href: '#' + parent.id }">

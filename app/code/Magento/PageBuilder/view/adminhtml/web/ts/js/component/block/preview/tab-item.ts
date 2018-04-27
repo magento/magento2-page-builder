@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import PreviewCollection from "../../../preview-collection";
 import $t from "mage/translate";
-import {Options} from "../stage/structural/options";
-import {Option} from "../stage/structural/options/option";
-import {OptionInterface} from "../stage/structural/options/option.d";
+import PreviewCollection from "../../../preview-collection";
+import {Options} from "../../stage/structural/options";
+import {Option} from "../../stage/structural/options/option";
+import {OptionInterface} from "../../stage/structural/options/option.d";
 
 export default class TabItem extends PreviewCollection {
 
@@ -38,6 +38,7 @@ export default class TabItem extends PreviewCollection {
         const removeClasses = ["remove-structural"];
         let removeFn = this.onOptionRemove;
         if (this.parent.children().length <= 1) {
+//        if (this.parent.parent.children().length <= 1) {
             removeFn = () => { return; };
             removeClasses.push("disabled");
         }

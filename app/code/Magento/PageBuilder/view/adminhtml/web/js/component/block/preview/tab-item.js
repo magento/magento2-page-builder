@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/preview-collection", "mage/translate", "Magento_PageBuilder/js/component/block/stage/structural/options/option"], function (_previewCollection, _translate, _option) {
+define(["mage/translate", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_translate, _previewCollection, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var TabItem =
@@ -48,6 +48,7 @@ define(["Magento_PageBuilder/js/preview-collection", "mage/translate", "Magento_
       var removeFn = this.onOptionRemove;
 
       if (this.parent.children().length <= 1) {
+        //        if (this.parent.parent.children().length <= 1) {
         removeFn = function removeFn() {
           return;
         };
