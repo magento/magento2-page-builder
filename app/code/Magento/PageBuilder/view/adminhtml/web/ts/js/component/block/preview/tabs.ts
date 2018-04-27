@@ -139,9 +139,6 @@ export default class Tabs extends PreviewCollection {
         this.focusedTab(index);
 
         if (this.element) {
-            if (this.element.getElementsByTagName("span")[index]) {
-                this.element.getElementsByTagName("span")[index].focus();
-            }
             _.defer(() => {
                 if ($(":focus").hasClass("tab-name") && $(":focus").prop("contenteditable")) {
                     document.execCommand("selectAll", false, null);
@@ -351,7 +348,7 @@ export default class Tabs extends PreviewCollection {
         EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
             // this.buildTabs(params.index);
             const tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
-            this.parent.store.updateKey(
+            params.duplicateBlock.store.updateKey(
                 params.duplicateBlock.id,
                 tabData.tab_name.toString() + " copy",
                 "tab_name",

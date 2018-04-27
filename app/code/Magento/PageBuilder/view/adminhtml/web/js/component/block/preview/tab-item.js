@@ -47,8 +47,7 @@ define(["mage/translate", "Magento_PageBuilder/js/preview-collection", "Magento_
       var removeClasses = ["remove-structural"];
       var removeFn = this.onOptionRemove;
 
-      if (this.parent.children().length <= 1) {
-        //        if (this.parent.parent.children().length <= 1) {
+      if (this.parent.parent.children().length <= 1) {
         removeFn = function removeFn() {
           return;
         };

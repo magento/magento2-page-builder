@@ -141,10 +141,6 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       this.focusedTab(index);
 
       if (this.element) {
-        if (this.element.getElementsByTagName("span")[index]) {
-          this.element.getElementsByTagName("span")[index].focus();
-        }
-
         _underscore.defer(function () {
           if ((0, _jquery)(":focus").hasClass("tab-name") && (0, _jquery)(":focus").prop("contenteditable")) {
             document.execCommand("selectAll", false, null);
@@ -355,8 +351,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       _eventBus.on("tab-item:block:duplicate", function (event, params) {
         // this.buildTabs(params.index);
         var tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
-
-        _this3.parent.store.updateKey(params.duplicateBlock.id, tabData.tab_name.toString() + " copy", "tab_name");
+        params.duplicateBlock.store.updateKey(params.duplicateBlock.id, tabData.tab_name.toString() + " copy", "tab_name");
       });
 
       _eventBus.on("tab-item:block:mount", function (event, params) {

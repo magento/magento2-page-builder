@@ -37,8 +37,7 @@ export default class TabItem extends PreviewCollection {
         });
         const removeClasses = ["remove-structural"];
         let removeFn = this.onOptionRemove;
-        if (this.parent.children().length <= 1) {
-//        if (this.parent.parent.children().length <= 1) {
+        if (this.parent.parent.children().length <= 1) {
             removeFn = () => { return; };
             removeClasses.push("disabled");
         }
