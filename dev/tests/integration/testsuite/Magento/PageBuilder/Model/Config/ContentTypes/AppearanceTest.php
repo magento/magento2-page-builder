@@ -39,7 +39,7 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
                 );
                 $formData = $uiReader->read();
 
-                $fieldSet = $formData['children']['appearance'];
+                $fieldSet = $formData['children']['appearance_fieldset'];
                 $field = $fieldSet['children']['appearance'];
                 $appearanceOptions = $field['arguments']['data']['item']['config']['item']['options']['item'];
 

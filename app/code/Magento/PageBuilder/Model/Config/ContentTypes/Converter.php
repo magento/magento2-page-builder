@@ -149,6 +149,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             $appearanceData['data_mapping'] = $this->convertDataMapping($dataMappingNode);
         }
         $appearanceData['default'] = $this->getAttributeValue($appearanceNode, 'default');
+        $formNode = $appearanceNode->getElementsByTagName('form')->item(0);
+        if ($formNode && $formNode->nodeValue) {
+            $appearanceData['form'] = $formNode->nodeValue;
+        }
         return $appearanceData;
     }
 
