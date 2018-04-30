@@ -11,10 +11,10 @@
         <div class="pagebuilder-poster-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style, css: data.overlay.css">
             <div class="pagebuilder-poster-content">
                 <!-- ko if: data.content.html() -->
-                    <div data-bind="attr: data.content.attributes, style: data.content.style, css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': !data.content.html()}), html: data.content.html"></div>
+                    <div data-bind="attr: data.content.attributes, style: data.content.style, css: data.content.css, html: data.content.html"></div>
                 <!-- /ko -->
                 <!-- ko ifnot: data.content.html() -->
-                    <div data-bind="attr: data.content.attributes, style: data.content.style, css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': !data.content.html()}), i18n: 'Edit Banner Text'"></div>
+                    <div class="pagebuilder-empty-banner" data-bind="attr: data.content.attributes, style: data.content.style, css: data.content.css, i18n: 'Edit Banner Text'"></div>
                 <!-- /ko -->
                 <!-- ko if: data.main.attributes()["data-show-button"] !== "never_show" -->
                     <a type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css">
