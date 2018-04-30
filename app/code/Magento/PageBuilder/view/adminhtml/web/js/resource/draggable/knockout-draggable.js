@@ -5,8 +5,23 @@
 
 /*eslint-disable vars-on-top, strict*/
 
-define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"],
-    function(ko, jQuery, EventBus) {
+/**
+ * The draggable binding is an adapter for the jQuery UI draggable widget.
+ * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/knockout-draggable. See on Github.
+ * Value type: Object.
+ * Configuration for the draggable widget.
+ * Aliases: [pagebuilder-ko-draggable]
+ * Usage example:
+ * <div pagebuilder-ko-draggable="{ connectToSortable: getDraggableConfig() }"></div>
+ */
+
+
+define(["knockout",
+        "jquery",
+        "Magento_PageBuilder/js/component/event-bus",
+        'Magento_Ui/js/lib/knockout/template/renderer',
+        "jquery/ui"],
+    function(ko, jQuery, EventBus, renderer) {
 
     /**
      * Retrieve the view model for an element
@@ -102,6 +117,9 @@ define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "jqu
                 });
             }
         }
-
     };
+
+    renderer.addAttribute('draggable', {
+        name: 'pagebuilder-ko-draggable'
+    });
 });

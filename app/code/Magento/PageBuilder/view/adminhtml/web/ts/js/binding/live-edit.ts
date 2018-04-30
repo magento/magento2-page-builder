@@ -6,6 +6,17 @@
 import $ from "jquery";
 import ko from "knockout";
 import keyCodes from "Magento_Ui/js/lib/key-codes";
+import renderer from 'Magento_Ui/js/lib/knockout/template/renderer';
+
+/**
+ * The liveEdit binding allows inline editing.
+ * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/binding/live-edit. See on Github.
+ * Value type: Object.
+ * Configuration for the liveEdit widget.
+ * Aliases: [pagebuilder-ko-liveEdit]
+ * Usage example:
+ * <div pagebuilder-ko-liveEdit="{ field: 'button_text', placeholder: buttonPlaceholder }"></div>
+ */
 
 /**
  * Add or remove the placeholder-text class from the element based on its content
@@ -141,3 +152,7 @@ ko.bindingHandlers.liveEdit = {
         handlePlaceholderClass(element);
     },
 };
+
+renderer.addAttribute('liveEdit', {
+    name: 'pagebuilder-ko-liveEdit'
+});

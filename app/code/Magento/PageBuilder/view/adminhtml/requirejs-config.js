@@ -17,7 +17,6 @@ var config = {
         /* Include our Knockout Sortable wrapper */
         'ko-sortable': 'Magento_PageBuilder/js/resource/sortable/knockout-sortable',
         'ko-draggable': 'Magento_PageBuilder/js/resource/draggable/knockout-draggable',
-        'ko-resizable': 'Magento_PageBuilder/js/resource/resizable/knockout-resizable',
         'pagebuilder/ko-dropzone': 'Magento_PageBuilder/js/resource/dropzone/knockout-dropzone',
         'pagebuilder/ko-redactor': 'Magento_PageBuilder/js/resource/redactor/knockout-redactor',
         'pagebuilder/ko-liveedit': 'Magento_PageBuilder/js/resource/live-edit/knockout-liveedit'

@@ -1,16 +1,27 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery, _knockout, _keyCodes) {
+define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "Magento_Ui/js/lib/knockout/template/renderer"], function (_jquery, _knockout, _keyCodes, _renderer) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
   _keyCodes = _interopRequireDefault(_keyCodes);
+  _renderer = _interopRequireDefault(_renderer);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
+   */
+
+  /**
+   * The liveEdit binding allows inline editing.
+   * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/binding/live-edit. See on Github.
+   * Value type: Object.
+   * Configuration for the liveEdit widget.
+   * Aliases: [pagebuilder-ko-liveEdit]
+   * Usage example:
+   * <div pagebuilder-ko-liveEdit="{ field: 'button_text', placeholder: buttonPlaceholder }"></div>
    */
 
   /**
@@ -154,5 +165,9 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       handlePlaceholderClass(element);
     }
   };
+
+  _renderer.default.addAttribute('liveEdit', {
+    name: 'pagebuilder-ko-liveEdit'
+  });
 });
 //# sourceMappingURL=live-edit.js.map

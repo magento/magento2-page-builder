@@ -5,9 +5,25 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
+/**
+ * The sortable binding is an adapter for the jQuery UI Sortable widget.
+ * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/knockout-sortable. See on Github.
+ * Value type: Object.
+ * Configuration for the sortable widget.
+ * Aliases: [pagebuilder-ko-sortable]
+ * Usage example:
+ * <div  pagebuilder-ko-sortable="{ sortableClass: 'stage-container', handle: '.move-structural', items: '.pagebuilder-row-wrapper', connectWith: '.pagebuilder-canvas' }"></div>
+ */
+
 define([
-    "knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/content-type", "jquery/ui"],
-    function(ko, jQuery, _, EventBus, ContentType) {
+    'knockout',
+    'jquery',
+    'underscore',
+    'Magento_PageBuilder/js/component/event-bus',
+    'Magento_PageBuilder/js/content-type',
+    'Magento_Ui/js/lib/knockout/template/renderer',
+    'jquery/ui'
+], function(ko, jQuery, _, EventBus, ContentType, renderer) {
 
     /**
      * Retrieve the view model for an element
@@ -22,10 +38,10 @@ define([
     // Listen for the dragged component from the event bus
     var draggedComponent;
 
-    EventBus.on("drag:start", function (event, params) {
+    EventBus.on('drag:start', function (event, params) {
         draggedComponent = params.component;
     });
-    EventBus.on("drag:stop", function () {
+    EventBus.on('drag:stop', function () {
         draggedComponent = false;
     });
 
@@ -119,7 +135,7 @@ define([
                 };
 
                 // ui.position to ensure we're only reacting to sorting events
-                EventBus.trigger("block:sortStart", eventData);
+                EventBus.trigger('block:sortStart', eventData);
             }
         },
 
@@ -147,7 +163,7 @@ define([
                 };
 
                 // ui.position to ensure we're only reacting to sorting events
-                EventBus.trigger("block:sortStop", eventData);
+                EventBus.trigger('block:sortStop', eventData);
             }
 
             ui.item.css('opacity', 1);
@@ -180,7 +196,7 @@ define([
 
                 if (parentContainerName && Array.isArray(allowedParents)) {
                     if (allowedParents.indexOf(parentContainerName) === -1) {
-                        jQuery(this).sortable("cancel");
+                        jQuery(this).sortable('cancel');
                         jQuery(ui.item).remove();
 
                         // Force refresh of the parent
@@ -201,7 +217,7 @@ define([
                 if (block !== newParent) {
                     ui.item.remove();
                     if (block.originalParent === newParent) {
-                        EventBus.trigger("block:sorted", {
+                        EventBus.trigger('block:sorted', {
                             parent: newParent,
                             block: block,
                             index: newIndex,
@@ -209,7 +225,7 @@ define([
                         });
                     } else {
                         block.originalParent.removeChild(block);
-                        EventBus.trigger("block:instanceDropped", {
+                        EventBus.trigger('block:instanceDropped', {
                             parent: newParent,
                             blockInstance: block,
                             index: newIndex,
@@ -274,7 +290,7 @@ define([
 
                 // Don't run sortable when dropping on a placeholder
                 // @todo to be refactored under MAGETWO-86953
-                if (block.config.name === "column" &&
+                if (block.config.name === 'column' &&
                     jQuery(event.srcElement).parents('.ui-droppable').length > 0
                 ) {
                     return;
@@ -284,9 +300,9 @@ define([
                     event.stopPropagation();
                     // Emit the blockDropped event upon the target
                     // Detect if the target is the parent UI component, if so swap the target to the stage
-                    var stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.id;
-                    target = typeof target.parent.preview !== "undefined" ? target.parent : target;
-                    EventBus.trigger("block:dropped", {
+                    var stageId = typeof target.parent.preview !== 'undefined' ? target.parent.stageId : target.id;
+                    target = typeof target.parent.preview !== 'undefined' ? target.parent : target;
+                    EventBus.trigger('block:dropped', {
                         parent: target,
                         stageId: stageId,
                         block: block,
@@ -318,6 +334,9 @@ define([
             // Initialize draggable on all children of the element
             Sortable.init(jQuery(element), valueAccessor);
         }
-
     };
+
+    renderer.addAttribute('sortable', {
+        name: 'pagebuilder-ko-sortable'
+    });
 });
