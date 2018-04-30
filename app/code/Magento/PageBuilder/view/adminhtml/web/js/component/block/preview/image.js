@@ -50,7 +50,7 @@ define(["uiEvents", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/co
 
         var initialImageValue = imageDataStore.image || ""; // Create uploader
 
-        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _uploader.getDefaultConfig(), {
+        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
           value: initialImageValue
         })); // Register listener when image gets uploaded from uploader UI component
 
