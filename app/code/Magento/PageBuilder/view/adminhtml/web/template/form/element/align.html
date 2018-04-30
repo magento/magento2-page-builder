@@ -12,18 +12,12 @@
 
     <ol data-bind="foreach: options">
         <li data-bind="click: function() { $parent.value(value) }, css: {active: $parent.value() == value, 'admin__field-align-small': $data.selectSize == 'small', 'admin__field-align-large': $data.selectSize == 'large'}">
-            <!-- ko if: $data.selectIcon -->
-            <img data-bind="attr:{src: $data.selectIcon}" aria-hidden="true"/>
-            <!-- /ko -->
+            <img if="$data.selectIcon" data-bind="attr:{src: $data.selectIcon}" aria-hidden="true"/>
             <!-- ko if: $data.selectSize == 'large' -->
-                <!-- ko if: $data.selectIcon -->
-                <br>
-                <!-- /ko -->
-                <!-- ko ifnot: $data.selectIcon -->
-                <div class="admin__field-align-spacer"></div>
-                <!-- /ko -->
+                <br if="$data.selectIcon">
+                <div ifnot="$data.selectIcon" class="admin__field-align-spacer"></div>
             <!-- /ko -->
-            <span data-bind="text: $t($data.selectTitle)"></span>
+            <span translate="$data.selectTitle"/>
         </li>
     </ol>
 </div>

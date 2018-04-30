@@ -6,11 +6,11 @@
 
 declare(strict_types=1);
 
+namespace Magento\PageBuilder\Model\Source;
+
 /**
  * TextAlignment options class used for system configuration
  */
-namespace Magento\PageBuilder\Model\Source;
-
 class TextAlignment extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype
 {
     /**
@@ -39,7 +39,7 @@ class TextAlignment extends \Magento\Eav\Model\Adminhtml\System\Config\Source\In
     /**
      * {@inheritdoc}
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         if ($this->optionsData) {
             foreach ($this->optionsData as $optionKey => $optionValue) {
