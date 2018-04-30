@@ -54,10 +54,10 @@
             <expectedResult type="string">Advanced Content</expectedResult>
             <actualResult type="variable">grabAppearanceDropdownValues</actualResult>
         </assertNotContains>
-        <comment userInput="User sees Title: input defaults to empty" stepKey="AC3"/>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideItemTitle1.section, PageBuilderSlideItemTitle1.fieldName)}}" stepKey="grabTitleDefaultValue"/>
-        <assertEmpty stepKey="assertEmptyTitle" message="Title has text: $grabTitleDefaultValue">
-            <actualResult type="variable">grabTitleDefaultValue</actualResult>
+        <comment userInput="User sees Name: input defaults to empty" stepKey="AC3"/>
+        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideItemName1.section, PageBuilderSlideItemName1.fieldName)}}" stepKey="grabNameDefaultValue"/>
+        <assertEmpty stepKey="assertEmptyName" message="Name has text: $grabNameDefaultValue">
+            <actualResult type="variable">grabNameDefaultValue</actualResult>
         </assertEmpty>
         <comment userInput="Minimum Height: input defaults to 300" stepKey="AC4"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMinHeightDefault300">
