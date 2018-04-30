@@ -9,7 +9,12 @@
     <!-- ko template: getOptions().template --><!-- /ko -->
     <div data-bind="attr: data.main.attributes, style: Object.assign({}, data.main.style(), data.overlay.style(), data.desktop_image.style(), {paddingLeft: 'calc(50% + ' + data.desktop_image.style().paddingLeft + ')'}), css: data.main.css, event: {mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
         <div class="pagebuilder-collage-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style, css: data.overlay.css">
-            <div data-bind="attr: data.content.attributes, style: data.content.style, css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': data.content.html}), html: data.content.html"></div>
+            <!-- ko if: data.content.html() -->
+                <div data-bind="attr: data.content.attributes, style: data.content.style, css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': !data.content.html()}), html: data.content.html"></div>
+            <!-- /ko -->
+            <!-- ko ifnot: data.content.html() -->
+                <div data-bind="attr: data.content.attributes, style: data.content.style, css: Object.assign(data.content.css(), {'pagebuilder-empty-banner': !data.content.html()}), i18n: 'Edit Banner Text'"></div>
+            <!-- /ko -->
             <!-- ko if: data.main.attributes()["data-show-button"] !== "never_show" -->
                 <a type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css">
                     <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
