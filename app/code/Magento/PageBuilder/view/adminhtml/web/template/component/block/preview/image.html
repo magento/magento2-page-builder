@@ -5,19 +5,24 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image type-nested" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <!-- ko template: getOptions().template --><!-- /ko -->
-    <figure data-bind="style: data.main.style, attr: data.main.attributes, css: data.main.css">
-        <div data-bind="scope: getUploader().getUiComponent()">
-            <!-- ko template: getTemplate() --><!-- /ko -->
-        </div>
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-image type-nested" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <render args="getOptions().template" />
+    <figure ko-style="data.main.style" attr="data.main.attributes" css="data.main.css">
+        <scope args="getUploader().getUiComponent()">
+            <render />
+        </scope>
         <div class="preview-image-container">
-            <!-- ko if: data.desktop_image.attributes().src -->
-                <img class="preview-image" data-bind="attr: data.desktop_image.attributes, style: data.desktop_image.style, css: data.desktop_image.css" />
-            <!-- /ko -->
+            <img if="data.desktop_image.attributes().src"
+                 attr="data.desktop_image.attributes"
+                 class="preview-image"
+                 css="data.desktop_image.css"
+                 ko-style="data.desktop_image.style" />
         </div>
-        <!-- ko if: data.caption.html() -->
-            <figcaption data-bind="attr: data.caption.attributes, style: data.caption.style, css: data.caption.css, html: data.caption.html"></figcaption>
-        <!-- /ko -->
+        <figcaption if="data.caption.html()"
+                    attr="data.caption.attributes"
+                    css="data.caption.css"
+                    html="data.caption.html"
+                    ko-style="data.caption.style">
+        </figcaption>
     </figure>
 </div>
