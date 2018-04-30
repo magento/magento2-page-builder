@@ -243,8 +243,13 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
+            <argument name="linkId" value="link_url" />
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
             <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
@@ -332,8 +337,13 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
+            <argument name="linkId" value="link_url" />
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
@@ -609,7 +619,7 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonLinkProperty">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOpenInNewTabProperty">
+        <actionGroup ref="seeSlideOutPanelFieldNotOpenInNewTab" stepKey="seeOpenInNewTabProperty">
             <argument name="property" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTypeProperty">
@@ -786,8 +796,13 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
+            <argument name="linkId" value="link_url" />
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
@@ -908,13 +923,18 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
+            <argument name="linkId" value="link_url" />
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+        <actionGroup ref="clickSlideOutPanelFieldOpenInNewTab" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -976,8 +996,13 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
+            <argument name="linkId" value="link_url" />
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>

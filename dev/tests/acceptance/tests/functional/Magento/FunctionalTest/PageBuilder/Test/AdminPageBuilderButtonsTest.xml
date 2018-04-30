@@ -77,7 +77,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelDropdownField" stepKey="fillButton1LinkField">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
             <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
             <argument name="selection" value="ExternalLink"/>
         </actionGroup>
@@ -93,7 +93,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton2TextField">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelDropdownField" stepKey="fillButton1Link2Field">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1Link2Field">
             <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
             <argument name="selection" value="ExternalLink"/>
         </actionGroup>
@@ -132,8 +132,8 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemTextProperty">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
-        <waitForElement time="2" selector="{{PageBuilderButtonLinkSection.ButtonLinkInput}}" stepKey="waitForElementVisible" />
-        <seeInField selector="{{PageBuilderButtonLinkSection.ButtonLinkInput}}" userInput="{{PageBuilderButtonItemLinkProperty.value}}"  stepKey="seeInFieldProperty"/>
+        <waitForElement time="2" selector="{{PageBuilderSection.LinkInput('button_link')}}" stepKey="waitForElementVisible" />
+        <seeInField selector="{{PageBuilderSection.LinkInput('button_link')}}" userInput="{{PageBuilderButtonItemLinkProperty.value}}"  stepKey="seeInFieldProperty"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab5" />

@@ -3,13 +3,14 @@
  * See COPYING.txt for license details.
  */
 
+import Link from "../../../../../converter/default/attribute/link";
 import {toHex} from "../../../../../utils/color-converter";
 import extractAlphaFromRgba from "../../../../../utils/extract-alpha-from-rgba";
 import {decodeUrl} from "../../../../../utils/image";
-import {DataObject} from "../../../../data-store";
 import {ReadInterface} from "../../../read-interface";
 
 export default class Collage implements ReadInterface {
+    private linkConverter: Link = new Link();
 
     /**
      * Read background from the element
@@ -23,6 +24,7 @@ export default class Collage implements ReadInterface {
         const target = element.querySelector("a").getAttribute("target");
         const backgroundImage = element.querySelector(".pagebuilder-mobile-hidden").style.backgroundImage;
         const backgroundMobileImageElement = element.querySelector(".pagebuilder-mobile-only");
+        const linkUrl = element.querySelector("a");
         if (backgroundMobileImageElement !== undefined
             && backgroundMobileImageElement.style.backgroundImage !== ""
             && backgroundImage !== backgroundMobileImageElement.style.backgroundImage
@@ -40,7 +42,7 @@ export default class Collage implements ReadInterface {
             background_size: element.style.backgroundSize,
             button_text: buttonText,
             button_type: buttonType,
-            link_url: element.querySelector("a").getAttribute("href"),
+            link_url: this.linkConverter.read(linkUrl),
             margins_and_padding: {
                 margin: {
                     bottom: marginSrc.marginBottom.replace("px", ""),

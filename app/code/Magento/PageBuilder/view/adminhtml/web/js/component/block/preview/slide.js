@@ -153,6 +153,24 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/preview", "Magento
       return buttonStyle;
     };
     /**
+     * Get the link href for preview
+     *
+     * @returns {String}
+     */
+
+
+    _proto.getHref = function getHref() {
+      var href = "";
+      var linkType = "";
+
+      if (!!this.previewData.link_url && _typeof(this.previewData.link_url()) === "object") {
+        linkType = this.previewData.link_url().type;
+        href = this.previewData.link_url()[linkType];
+      }
+
+      return href;
+    };
+    /**
      * Set state based on overlay mouseover event for the preview
      */
 
