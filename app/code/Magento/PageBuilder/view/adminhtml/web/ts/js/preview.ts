@@ -32,7 +32,6 @@ export default class Preview {
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
-    public fieldsToIgnoreOnRemove: string[] = [];
     /**
      * @deprecated
      */
@@ -41,6 +40,7 @@ export default class Preview {
      * @deprecated
      */
     public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
+    protected fieldsToIgnoreOnRemove: string[] = [];
     private edit: Edit;
     private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;

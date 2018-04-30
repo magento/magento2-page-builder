@@ -21,6 +21,8 @@ import {OptionInterface} from "../../stage/structural/options/option.d";
 import {BlockCreateEventParamsInterface} from "../block-create-event-params.d";
 import {BlockMountEventParamsInterface} from "../block-mount-event-params.d";
 import {BlockReadyEventParamsInterface} from "../block-ready-event-params.d";
+import {ActiveOptionsInterface} from "./options/active-options.d";
+import {SortableOptionsInterface} from "./options/sortable-options.d";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Tabs extends PreviewCollection {
@@ -246,7 +248,7 @@ export default class Tabs extends PreviewCollection {
      *
      * @returns {JQueryUI.SortableOptions}
      */
-    public getSortableOptions(): SortableOptions {
+    public getSortableOptions(): SortableOptionsInterface {
         const self = this;
         let borderWidth: number;
         return {
@@ -349,7 +351,6 @@ export default class Tabs extends PreviewCollection {
             }
         });
         EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
-            // this.buildTabs(params.index);
             const tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
             params.duplicateBlock.store.updateKey(
                 params.duplicateBlock.id,
@@ -371,7 +372,7 @@ export default class Tabs extends PreviewCollection {
      * Update data store with active options
      */
     private updateTabNamesInDataStore() {
-        const activeOptions: ActiveOptions[] = [];
+        const activeOptions: ActiveOptionsInterface[] = [];
         this.parent.children().forEach((tab: Block, index: number) => {
             const tabData = tab.store.get(tab.id);
             activeOptions.push({
@@ -389,14 +390,6 @@ export default class Tabs extends PreviewCollection {
     }
 }
 
-interface PlaceholderOptions {
-    element: (clone: JQuery<Element>) => JQuery<Element>;
-    update: () => boolean;
-}
-interface SortableOptions extends JQueryUI.SortableOptions {
-    placeholder?: any | string | PlaceholderOptions;
-}
-
 // Resolve issue with jQuery UI tabs blocking events on content editable areas
 const originalTabKeyDown = $.ui.tabs.prototype._tabKeydown;
 $.ui.tabs.prototype._tabKeydown = function(event: Event) {
@@ -406,9 +399,3 @@ $.ui.tabs.prototype._tabKeydown = function(event: Event) {
     }
     originalTabKeyDown.call(this, event);
 };
-
-export interface ActiveOptions {
-    label: string;
-    labeltitle: string;
-    value: number;
-}

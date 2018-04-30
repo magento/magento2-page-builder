@@ -11,7 +11,7 @@ import {OptionInterface} from "../../stage/structural/options/option.d";
 
 export default class TabItem extends PreviewCollection {
 
-    public fieldsToIgnoreOnRemove: string[] = ["tab_name"];
+    protected fieldsToIgnoreOnRemove: string[] = ["tab_name"];
 
     /**
      * Get the options instance
