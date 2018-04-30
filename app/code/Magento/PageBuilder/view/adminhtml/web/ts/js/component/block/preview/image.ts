@@ -43,7 +43,7 @@ export default class Image extends Preview {
             this.uploader = new Uploader(
                 this.parent.id,
                 "imageuploader_" + this.parent.id,
-                Object.assign({}, Uploader.getDefaultConfig(), {
+                Object.assign({}, this.config.additional_data.uploaderConfig, {
                     value: initialImageValue,
                 }),
             );
