@@ -10,21 +10,20 @@
            ko-value="value"
            attr="id: uid, name: inputName"/>
 
-    <ol>
-        <li data-bind="click: function() { value(''); }, css: {active: value() == ''}">
-            <span data-bind="text: $t('Default')"></span>
-        </li>
-        <li data-bind="click: function() { value('left'); }, css: {active: value() == 'left'}">
-            <i class="fa fa-align-left" aria-hidden="true"></i>
-            <span data-bind="text: $t('Left')"></span>
-        </li>
-        <li data-bind="click: function() { value('center'); }, css: {active: value() == 'center'}">
-            <i class="fa fa-align-center" aria-hidden="true"></i>
-            <span data-bind="text: $t('Center')"></span>
-        </li>
-        <li data-bind="click: function() { value('right'); }, css: {active: value() == 'right'}">
-            <i class="fa fa-align-right" aria-hidden="true"></i>
-            <span data-bind="text: $t('Right')"></span>
+    <ol data-bind="foreach: options">
+        <li data-bind="click: function() { $parent.value(value) }, css: {active: $parent.value() == value, 'admin__field-align-small': $data.selectSize == 'small', 'admin__field-align-large': $data.selectSize == 'large'}">
+            <!-- ko if: $data.selectIcon -->
+            <img data-bind="attr:{src: $data.selectIcon}" aria-hidden="true"/>
+            <!-- /ko -->
+            <!-- ko if: $data.selectSize == 'large' -->
+                <!-- ko if: $data.selectIcon -->
+                <br>
+                <!-- /ko -->
+                <!-- ko ifnot: $data.selectIcon -->
+                <div class="admin__field-align-spacer"></div>
+                <!-- /ko -->
+            <!-- /ko -->
+            <span data-bind="text: $t($data.selectTitle)"></span>
         </li>
     </ol>
 </div>
