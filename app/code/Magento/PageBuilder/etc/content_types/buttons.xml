@@ -22,11 +22,24 @@
             </allowed_parents>
             <appearances>
                 <appearance default="true" name="default">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property name="text_align" var="text_align"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-style" var="border" name="border_style"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" var="margins_and_padding"/>
+                                </style_properties>
+                                <css var="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/component/block/preview/buttons.html</preview_template>
                     <render_template>Magento_PageBuilder/component/block/render/buttons.html</render_template>
-                    <readers>
-                        <reader component="Magento_PageBuilder/js/component/format/read/default" name="default"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
