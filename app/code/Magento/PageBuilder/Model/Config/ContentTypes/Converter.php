@@ -154,7 +154,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      *
      * @param \DOMElement $elementNode
      * @return array
-     * @deprecated
      */
     private function convertAppearanceProperties(\DOMElement $elementNode): array
     {
@@ -171,7 +170,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
      *
      * @param \DOMElement $elementNode
      * @return array
-     * @deprecated
      */
     private function convertAppearanceReaders(\DOMElement $elementNode): array
     {
