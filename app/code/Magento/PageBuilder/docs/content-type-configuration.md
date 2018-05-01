@@ -363,17 +363,17 @@ Element converter and data converter are the two types of converters.
 
 The elemement converter converts data for the property or attribute.
 
-The `fromDom()` method is called after data is read from the master format.
+The `fromDom()` method is called after data is read from the master format. It expects a param of an string of the value. It should then return either a string or an object.
 
-The `toDom()` method is called before observables are updated in the cycle rendering preview or master format. 
+The `toDom()` method is called before observables are updated in the cycle rendering preview or master format It expects params of a string for the name and an object for the data. It should then return a string or an object. 
 
 ### Data Converter
 
 The data converter works on the data for all elements.
 
-The `fromDom()` method is called after data is read for all element and converted by element converters.
+The `fromDom()` method is called after data is read for all element and converted by element converters. It expect params of an object for the data and an object for the config. It should then return either a string or an object.
 
-The `toDom()` method is called before data is converted by element converters to update observables.
+The `toDom()` method is called before data is converted by element converters to update observables. It expect params of an object for the data and an object for the config. It should then return either a string or an object.
 
 **Example:** Data converter configuration
 ``` xml
@@ -386,48 +386,43 @@ The `toDom()` method is called before data is converted by element converters to
             </config>
         </converter>
     </converters>
-</data_mapping> 
+</data_mapping> ****
 ```
 
 Some element converters can produce a value based on multiple properties in data.
 
-``` JS
-define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (colorConverter, numberConverter) {
-  var OverlayBackgroundColor =
-  function () {
-    function OverlayBackgroundColor() {};
+Let's create a converter that stores a string to the master format as all upper case string and returns from the internal format as all lower case string.
 
-    var _proto = OverlayBackgroundColor.prototype;
-
+``` JS  
+define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (_colorConverter, _numberConverter) {
+    var OverlayBackgroundColor = function () {};
+    
     /**
      * Convert value to internal format
      *
-     * @param value string
+     * @param {string} value
      * @returns {string | object}
      */
-    _proto.fromDom = function fromDom(value) {
-      return value;
+    OverlayBackgroundColor.prototype.fromDom = function fromDom(value) {
+        return value;
     };
     
     /**
      * Convert value to knockout format
      *
-     * @param name string
-     * @param data Object
+     * @param {string} name
+     * @param {Object} data
      * @returns {string | object}
      */
-    _proto.toDom = function toDom(name, data) {
-      var overlayColor = "transparent";
-
-      if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-        overlayColor = colorConverter.fromHex(data.overlay_color, numberConverter.percentToDecimal(data.overlay_transparency));
-      }
-
-      return overlayColor;
+    OverlayBackgroundColor.prototype.toDom = function toDom(name, data) {
+          var overlayColor = "transparent";
+        
+          if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+                overlayColor = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
+          }
+        
+          return overlayColor;
     };
-
     return OverlayBackgroundColor;
-  }();
-
-  return OverlayBackgroundColor;
+});
 ```
