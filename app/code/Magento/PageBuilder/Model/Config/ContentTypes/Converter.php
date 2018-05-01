@@ -119,10 +119,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private function convertAppearanceData(\DOMElement $appearanceNode): array
     {
         $appearanceData = [];
-        foreach ($appearanceNode->getElementsByTagName('data') as $dataNode) {
-            $dataName = $dataNode->attributes->getNamedItem('name')->nodeValue;
-            $appearanceData[$dataName] = $dataNode->nodeValue;
-        }
+        $appearanceData = array_merge(
+            $appearanceData,
+            $this->convertAppearanceProperties($appearanceNode)
+        );
         $previewTemplateNode = $appearanceNode->getElementsByTagName('preview_template')->item(0);
         if ($previewTemplateNode) {
             $appearanceData['preview_template'] = $previewTemplateNode->nodeValue;
@@ -135,14 +135,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         if ($readerNode && $readerNode->nodeValue) {
             $appearanceData['readers'] = [$readerNode->nodeValue];
         } else {
-            $readersNode = $appearanceNode->getElementsByTagName('readers')->item(0);
-            $readers = [];
-            if ($readersNode) {
-                foreach ($readersNode->getElementsByTagName('reader') as $readerNode) {
-                    $readers[] = $this->getAttributeValue($readerNode, 'component');
-                }
-            }
-            $appearanceData['readers'] = $readers;
+            $appearanceData['readers'] = $this->convertAppearanceReaders($appearanceNode);
         }
         $dataMappingNode = $appearanceNode->getElementsByTagName('data_mapping')->item(0);
         if ($dataMappingNode) {
@@ -154,6 +147,42 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             $appearanceData['form'] = $formNode->nodeValue;
         }
         return $appearanceData;
+    }
+
+    /**
+     * Convert appearance properties
+     *
+     * @param \DOMElement $elementNode
+     * @return array
+     * @deprecated
+     */
+    private function convertAppearanceProperties(\DOMElement $elementNode): array
+    {
+        $data = [];
+        foreach ($elementNode->getElementsByTagName('data') as $dataNode) {
+            $dataName = $dataNode->attributes->getNamedItem('name')->nodeValue;
+            $data[$dataName] = $dataNode->nodeValue;
+        }
+        return $data;
+    }
+
+    /**
+     * Convert appearance readers
+     *
+     * @param \DOMElement $elementNode
+     * @return array
+     * @deprecated
+     */
+    private function convertAppearanceReaders(\DOMElement $elementNode): array
+    {
+        $readersNode = $elementNode->getElementsByTagName('readers')->item(0);
+        $readers = [];
+        if ($readersNode) {
+            foreach ($readersNode->getElementsByTagName('reader') as $readerNode) {
+                $readers[] = $this->getAttributeValue($readerNode, 'component');
+            }
+        }
+        return $readers;
     }
 
     /**
