@@ -367,23 +367,6 @@ The `fromDom()` method is called after data is read from the master format.
 
 The `toDom()` method is called before observables are updated in the cycle rendering preview or master format. 
 
-``` JS
-export interface ElementConverterInterface {
-    /**
-     * @param {object} value
-     * @returns {string | object}
-     */
-    fromDom(value: string): string | Object;
-
-    /**
-     * @param {object} name
-     * @param {object} data
-     * @returns {string | Object}
-     */
-    toDom(name: string, data: object): string | object;
-}
-```
-
 ### Data Converter
 
 The data converter works on the data for all elements.
@@ -391,24 +374,6 @@ The data converter works on the data for all elements.
 The `fromDom()` method is called after data is read for all element and converted by element converters.
 
 The `toDom()` method is called before data is converted by element converters to update observables.
-
-``` JS
-export interface DataConverterInterface {
-    /**
-     * @param {object} data
-     * @param {object} config
-     * @returns {object}
-     */
-    fromDom(data: object, config: object): object;
-
-    /**
-     * @param {object} data
-     * @param {object} config
-     * @returns {object}
-     */
-    toDom(data: object, config: object): object;
-}
-```
 
 **Example:** Data converter configuration
 ``` xml
@@ -427,26 +392,42 @@ export interface DataConverterInterface {
 Some element converters can produce a value based on multiple properties in data.
 
 ``` JS
-export default class OverlayBackgroundColor implements ElementConverterInterface {
-    /**
-     * @param {string} value
-     * @returns {object | string}
-     */
-    public fromDom(value: string): string | object {
-        return value;
-    }
+define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (colorConverter, numberConverter) {
+  var OverlayBackgroundColor =
+  function () {
+    function OverlayBackgroundColor() {};
+
+    var _proto = OverlayBackgroundColor.prototype;
 
     /**
-     * @param {string} name
-     * @param {object} data
-     * @returns {object | string}
+     * Convert value to internal format
+     *
+     * @param value string
+     * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
-        let overlayColor: string = "transparent";
-        if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-            overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
-        }
-        return overlayColor;
-    }
-}
+    _proto.fromDom = function fromDom(value) {
+      return value;
+    };
+    
+    /**
+     * Convert value to knockout format
+     *
+     * @param name string
+     * @param data Object
+     * @returns {string | object}
+     */
+    _proto.toDom = function toDom(name, data) {
+      var overlayColor = "transparent";
+
+      if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+        overlayColor = colorConverter.fromHex(data.overlay_color, numberConverter.percentToDecimal(data.overlay_transparency));
+      }
+
+      return overlayColor;
+    };
+
+    return OverlayBackgroundColor;
+  }();
+
+  return OverlayBackgroundColor;
 ```
