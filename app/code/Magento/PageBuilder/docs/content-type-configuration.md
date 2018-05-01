@@ -365,7 +365,7 @@ The elemement converter converts data for the property or attribute.
 
 The `fromDom()` method is called after data is read from the master format. It expects a param of an string of the value. It should then return either a string or an object.
 
-The `toDom()` method is called before observables are updated in the cycle rendering preview or master format It expects params of a string for the name and an object for the data. It should then return a string or an object. 
+The `toDom()` method is called before observables are updated in the cycle rendering preview or master format. It expects params of a string for the name and an object for the data. It should then return a string or an object. 
 
 ### Data Converter
 
@@ -386,12 +386,10 @@ The `toDom()` method is called before data is converted by element converters to
             </config>
         </converter>
     </converters>
-</data_mapping> ****
+</data_mapping>
 ```
 
 Some element converters can produce a value based on multiple properties in data.
-
-Let's create a converter that stores a string to the master format as all upper case string and returns from the internal format as all lower case string.
 
 ``` JS  
 define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (_colorConverter, _numberConverter) {
