@@ -99,14 +99,14 @@ The following is an example of a content type configuration in `etc/content_type
                             </style_properties>
                         </element>
                         <element name="content" path=".//a/div[2]/div/div/div[1]">
-                            <html var="message" placeholder="Edit banner text"/>
+                            <html var="message"/>
                         </element>
                         <element name="button" path=".//a/div[2]/div/div/button">
                             <style_properties>
                                 <property var="opacity" name="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
                                 <property var="visibility" name="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
                             </style_properties>
-                            <html var="button_text" placeholder="Edit Button Text"/>
+                            <html var="button_text"/>
                             <css var="button_type">
                                 <filter>
                                     <class name="pagebuilder-banner-button"/>
@@ -257,14 +257,14 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
         </style_properties>
     </element>
     <element name="content" path=".//a/div[2]/div/div/div[1]">
-        <html var="message" placeholder="Edit banner text"/>
+        <html var="message"/>
     </element>
     <element name="button" path=".//a/div[2]/div/div/button">
         <style_properties>
             <property var="opacity" name="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
             <property var="visibility" name="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
         </style_properties>
-        <html var="button_text" placeholder="Edit Button Text"/>
+        <html var="button_text"/>
         <css var="button_type">
             <filter>
                 <class name="pagebuilder-banner-button"/>
@@ -326,10 +326,8 @@ These style properties and attributes are applied in the preview and persisted i
 
 The `html` element allows you to read the value of the element in a property and map it back to the master format.
 
-Use the `placeholder` when you need to specify a label for preview and there is no input provided.
-
 ``` xml
-<html var="message" placeholder="Edit banner text"/>
+<html var="message"/>
 ```
 
 ### Css element
