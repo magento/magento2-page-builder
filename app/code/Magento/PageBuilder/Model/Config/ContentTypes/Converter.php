@@ -8,8 +8,35 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Config\ContentTypes;
 
+use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
+use Magento\Framework\Data\Argument\InterpreterInterface;
+use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderInterface;
+
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
+    /**
+     * @var ArgumentParser
+     */
+    private $parser;
+
+    /**
+     * @var InterpreterInterface
+     */
+    private $argumentInterpreter;
+
+    /**
+     * Converter constructor.
+     * @param ArgumentParser $parser
+     * @param InterpreterInterface $argumentInterpreter
+     */
+    public function __construct(
+        ArgumentParser $parser,
+        InterpreterInterface $argumentInterpreter
+    ) {
+        $this->parser = $parser;
+        $this->argumentInterpreter = $argumentInterpreter;
+    }
+
     /**
      * Convert XML structure into output array
      *
@@ -43,6 +70,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 if ($this->isConfigNode($childNode)) {
                     if ('appearances' === $childNode->nodeName) {
                         $typesData[$name][$childNode->nodeName] = $this->convertAppearancesData($childNode);
+                    } elseif ('additional_data' === $childNode->nodeName) {
+                        $typesData[$name][$childNode->nodeName] = $this->convertAdditionalData($childNode);
                     } elseif ('allowed_parents' === $childNode->nodeName) {
                         $parents = [];
                         foreach ($childNode->getElementsByTagName('parent') as $parentNode) {
@@ -171,6 +200,34 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             'elements' => $elementData,
             'converters' => $converters
         ];
+    }
+
+    /**
+     * Convert additional data
+     *
+     * @param \DOMElement $elementNode
+     * @return array
+     */
+    private function convertAdditionalData(\DOMElement $elementNode): array
+    {
+        $additionalData = [];
+        $xmlArgumentsNodes = $elementNode->getElementsByTagName('arguments');
+
+        if (!$xmlArgumentsNodes->length) {
+            return $additionalData;
+        }
+        $typeArguments = [];
+        /** @var $xmlArgumentsNode \DOMElement */
+        foreach ($xmlArgumentsNodes as $xmlArgumentsNode) {
+            $parsedArgumentsData = $this->parser->parse($xmlArgumentsNode);
+            $argumentName = $xmlArgumentsNode->attributes->getNamedItem('name')->nodeValue;
+            $typeArguments[$argumentName] = $this->argumentInterpreter->evaluate(
+                $parsedArgumentsData
+            );
+            $additionalData += $this->toArray($typeArguments);
+        }
+
+        return $additionalData;
     }
 
     /**
@@ -346,6 +403,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                 ];
             }
         }
+
         return $converters;
     }
 
@@ -375,5 +433,26 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         return $attributeNode->hasAttribute($attributeName)
             ? $attributeNode->attributes->getNamedItem($attributeName)->nodeValue
             : null;
+    }
+
+    /**
+     * Convert arguments node from additional data to array
+     * @param array $typeArguments
+     * @return array
+     */
+    private function toArray(array $typeArguments)
+    {
+        $processedData = [];
+        foreach ($typeArguments as $key => $value) {
+            if (is_array($value)) {
+                $processedData[$key] = $this->toArray($typeArguments[$key]);
+            } elseif (is_object($value) && $value instanceof ProviderInterface) {
+                $processedData[$key] = $value->getData($key)[$key];
+            } else {
+                $processedData[$key] = $value;
+            }
+        }
+
+        return $processedData;
     }
 }

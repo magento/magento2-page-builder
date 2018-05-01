@@ -20,7 +20,7 @@
         <click selector="#{{section.tinyMCEIFrame}}" stepKey="clickIFrame"/>
         <switchToIFrame selector="{{section.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{section.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
-        <switchToIFrame selector="" stepKey="exitIFrame"/>
+        <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
     <actionGroup name="addVariableToTinyMCE">
         <arguments>
@@ -37,7 +37,7 @@
         <waitForElementNotVisible selector="{{VariableSection.InsertWidget}}" stepKey="waitForVariableModalToClose"/>
         <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEVariable(variable.editPanelValue, '1')}}" stepKey="waitForVariable2"/>
-        <switchToIFrame selector="" stepKey="exitIFrame"/>
+        <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
     <actionGroup name="addPageLinkWidgetToTinyMCE">
         <arguments>
@@ -69,6 +69,6 @@
         <waitForElementNotVisible selector="{{WidgetSection.InsertWidget}}" stepKey="waitForInsertWidgetModalToClose"/>
         <switchToIFrame selector="{{TextOnConfiguration.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(widget.editPanelValue, '1')}}" stepKey="waitForWidget"/>
-        <switchToIFrame selector="" stepKey="exitIFrame"/>
+        <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
 </actionGroups>
