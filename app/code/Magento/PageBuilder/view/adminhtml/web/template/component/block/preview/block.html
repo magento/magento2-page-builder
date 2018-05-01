@@ -6,7 +6,11 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-block pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, html: data.main.html">
-    </div>
+    <!-- ko if: data.main.html() -->
+        <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, html: data.main.html"></div>
+    <!-- /ko -->
+    <!-- ko ifnot: data.main.html() -->
+        <div class="placeholder-text" data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, i18n: 'Block'"></div>
+    <!-- /ko -->
     <!-- ko template: getOptions().template --><!-- /ko -->
 </div>
