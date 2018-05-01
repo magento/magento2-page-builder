@@ -13,9 +13,9 @@ import renderer from 'Magento_Ui/js/lib/knockout/template/renderer';
  * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/binding/live-edit. See on Github.
  * Value type: Object.
  * Configuration for the liveEdit widget.
- * Aliases: [pagebuilder-ko-liveEdit]
+ * Aliases: [ko-pagebuilder-liveedit]
  * Usage example:
- * <div pagebuilder-ko-liveEdit="{ field: 'button_text', placeholder: buttonPlaceholder }"></div>
+ * <div ko-pagebuilder-liveedit="{ field: 'button_text', placeholder: buttonPlaceholder }"></div>
  */
 
 /**
@@ -154,5 +154,5 @@ ko.bindingHandlers.liveEdit = {
 };
 
 renderer.addAttribute('liveEdit', {
-    name: 'pagebuilder-ko-liveEdit'
+    name: 'ko-pagebuilder-liveedit'
 });

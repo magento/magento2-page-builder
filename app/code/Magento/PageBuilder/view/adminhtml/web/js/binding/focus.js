@@ -17,9 +17,9 @@ define(["knockout", "Magento_Ui/js/lib/knockout/template/renderer"], function (_
    * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/binding/focus. See on Github.
    * Value type: Object.
    * Configuration for the hasFocusNoScroll widget.
-   * Aliases: [pagebuilder-ko-hasFocusNoScroll]
+   * Aliases: [ko-pagebuilder-noscrollonfocus]
    * Usage example:
-   * <div pagebuilder-ko-hasFocusNoScroll="parent.parent.preview.focusedTab() === $index()"></div>
+   * <div ko-pagebuilder-noscrollonfocus="parent.parent.preview.focusedTab() === $index()"></div>
    */
   _knockout.default.bindingHandlers.hasFocusNoScroll = {
     init: _knockout.default.bindingHandlers.hasFocus.init,
@@ -32,7 +32,7 @@ define(["knockout", "Magento_Ui/js/lib/knockout/template/renderer"], function (_
   };
 
   _renderer.default.addAttribute('hasFocusNoScroll', {
-    name: 'pagebuilder-ko-hasFocusNoScroll'
+    name: 'ko-pagebuilder-noscrollonfocus'
   });
 });
 //# sourceMappingURL=focus.js.map
