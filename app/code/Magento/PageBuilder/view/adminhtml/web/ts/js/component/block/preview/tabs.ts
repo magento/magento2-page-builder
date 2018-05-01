@@ -350,6 +350,10 @@ export default class Tabs extends PreviewCollection {
                 this.refreshTabs(newIndex, true);
             }
         });
+
+        // Capture when a block is duplicated within the container
+        let duplicatedTab: Block;
+        let duplicatedTabIndex: number;
         EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
             const tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
             params.duplicateBlock.store.updateKey(
@@ -357,8 +361,14 @@ export default class Tabs extends PreviewCollection {
                 tabData.tab_name.toString() + " copy",
                 "tab_name",
             );
+            duplicatedTab = params.duplicate;
+            duplicatedTabIndex = params.index;
         });
         EventBus.on("tab-item:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
+            if (duplicatedTab && params.id === duplicatedTab.id) {
+                this.setFocusedTab(duplicatedTabIndex, true);
+                duplicatedTab = duplicatedTabIndex = null;
+            }
             if (this.parent.id === params.block.parent.id) {
                 this.updateTabNamesInDataStore();
                 this.parent.store.subscribe(() => {
