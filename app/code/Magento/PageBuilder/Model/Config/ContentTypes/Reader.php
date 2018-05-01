@@ -29,6 +29,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
             => 'var',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/style_properties/static_property'
             => 'name',
+        self::TYPE_PATH . '/additional_data/arguments' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attributes/attribute' => 'var',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attributes/complex_attribute'
             => 'var',

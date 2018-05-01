@@ -141,6 +141,7 @@ class Config
             'allowed_parents' => isset($contentType['allowed_parents']) ? $contentType['allowed_parents'] : [],
             'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
             'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
+            'additional_data' => isset($contentType['additional_data']) ? $contentType['additional_data'] : [],
             'data_mapping' => isset($contentType['data_mapping']) ? $contentType['data_mapping'] : [],
             'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
         ];

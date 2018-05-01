@@ -174,7 +174,10 @@ export default class ObservableUpdater {
         if (this.elementConverterPool.get(converter)) {
             value = this.elementConverterPool.get(converter).toDom(config.html.var, data);
         }
-
+        // if value is empty, use placeholder
+        if (typeof value === "string" && !value.length && config.html.placeholder) {
+            value = config.html.placeholder;
+        }
         return value;
     }
 
