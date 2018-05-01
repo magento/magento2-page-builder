@@ -97,7 +97,7 @@ In the `simple.xml` above we defined border attributes and form for component. L
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="appearance" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
+    <fieldset name="appearance_fieldset" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
             <label translate="true">Appearance</label>
             <collapsible>true</collapsible>
