@@ -392,14 +392,14 @@ The `toDom()` method is called before data is converted by element converters to
 Some element converters can produce a value based on multiple properties in data.
 
 ``` JS  
-define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (_colorConverter, _numberConverter) {
+define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (colorConverter, numberConverter) {
     var OverlayBackgroundColor = function () {};
     
     /**
      * Convert value to internal format
      *
      * @param {string} value
-     * @returns {string | object}
+     * @returns {string | Object}
      */
     OverlayBackgroundColor.prototype.fromDom = function fromDom(value) {
         return value;
@@ -410,13 +410,13 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
      *
      * @param {string} name
      * @param {Object} data
-     * @returns {string | object}
+     * @returns {string | Object}
      */
     OverlayBackgroundColor.prototype.toDom = function toDom(name, data) {
           var overlayColor = "transparent";
         
           if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-                overlayColor = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
+                overlayColor = colorConverter.fromHex(data.overlay_color, numberConverter.percentToDecimal(data.overlay_transparency));
           }
         
           return overlayColor;
