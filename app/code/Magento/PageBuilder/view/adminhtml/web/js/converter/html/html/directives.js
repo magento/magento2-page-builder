@@ -30,7 +30,7 @@ define(["Magento_PageBuilder/js/utils/directives"], function (_directives) {
 
 
     _proto.toDom = function toDom(name, data) {
-      return (0, _directives.convertMediaDirectivesToUrls)(data[name]);
+      return (0, _directives.convertMediaDirectivesToUrls)((0, _directives.removeQuotesInMediaDirectives)(data[name]));
     };
 
     return Directives;

@@ -106,12 +106,12 @@ export function convertMediaDirectivesToUrls(html: string): string {
     const mediaDirectiveMatches = html.match(mediaDirectiveRegExp);
     if (mediaDirectiveMatches) {
         mediaDirectiveMatches.forEach((mediaDirective: string) => {
-            const urlRegExp = /\{\{\s*media\s+url\s*=\s*"?([^"\s\}]+)"?\s*\}\}/;
+            const urlRegExp = /\{\{\s*media\s+url\s*=\s*(?:"|&quot;)?(.+)(?=}})\s*\}\}/;
             const urlMatches = mediaDirective.match(urlRegExp);
-            if (urlMatches && urlMatches[1] !== "undefined") {
+            if (urlMatches && typeof urlMatches[1] !== "undefined") {
                 html = html.replace(
                     mediaDirective,
-                    Config.getConfig("media_url") + urlMatches[1],
+                    Config.getConfig("media_url") + urlMatches[1].replace(/"$/, "").replace(/&quot;$/, ""),
                 );
             }
         });
