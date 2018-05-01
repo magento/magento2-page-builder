@@ -361,7 +361,7 @@ export default class Tabs extends PreviewCollection {
                 tabData.tab_name.toString() + " copy",
                 "tab_name",
             );
-            duplicatedTab = params.duplicate;
+            duplicatedTab = params.duplicateBlock;
             duplicatedTabIndex = params.index;
         });
         EventBus.on("tab-item:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {

@@ -359,7 +359,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       _eventBus.on("tab-item:block:duplicate", function (event, params) {
         var tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
         params.duplicateBlock.store.updateKey(params.duplicateBlock.id, tabData.tab_name.toString() + " copy", "tab_name");
-        duplicatedTab = params.duplicate;
+        duplicatedTab = params.duplicateBlock;
         duplicatedTabIndex = params.index;
       });
 
