@@ -399,7 +399,7 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
      * Convert value to internal format
      *
      * @param {string} value
-     * @returns {string | Object}
+     * @returns {string | object}
      */
     OverlayBackgroundColor.prototype.fromDom = function fromDom(value) {
         return value;
@@ -409,8 +409,8 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
      * Convert value to knockout format
      *
      * @param {string} name
-     * @param {Object} data
-     * @returns {string | Object}
+     * @param {object} data
+     * @returns {string | object}
      */
     OverlayBackgroundColor.prototype.toDom = function toDom(name, data) {
           var overlayColor = "transparent";
