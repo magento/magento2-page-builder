@@ -113,6 +113,13 @@
             </formElements>
         </field>
         <field name="border_color" sortOrder="30" formElement="colorPicker">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="disabledValues" xsi:type="array">
+                        <item name="none" xsi:type="string">none</item>
+                    </item>
+                </item>
+            </argument>
             <settings>
                 <label translate="true">Border Color</label>
                 <componentType>colorPicker</componentType>
@@ -124,6 +131,9 @@
                 <additionalClasses>
                     <class name="admin__field-medium">true</class>
                 </additionalClasses>
+                <imports>
+                    <link name="setDisabled">ns = ${ $.ns }, index = border:value</link>
+                </imports>
             </settings>
             <formElements>
                 <colorPicker>
