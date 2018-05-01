@@ -350,15 +350,26 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
 
           _this3.refreshTabs(newIndex, true);
         }
-      });
+      }); // Capture when a block is duplicated within the container
+
+
+      var duplicatedTab;
+      var duplicatedTabIndex;
 
       _eventBus.on("tab-item:block:duplicate", function (event, params) {
-        // this.buildTabs(params.index);
         var tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
         params.duplicateBlock.store.updateKey(params.duplicateBlock.id, tabData.tab_name.toString() + " copy", "tab_name");
+        duplicatedTab = params.duplicate;
+        duplicatedTabIndex = params.index;
       });
 
       _eventBus.on("tab-item:block:mount", function (event, params) {
+        if (duplicatedTab && params.id === duplicatedTab.id) {
+          _this3.setFocusedTab(duplicatedTabIndex, true);
+
+          duplicatedTab = duplicatedTabIndex = null;
+        }
+
         if (_this3.parent.id === params.block.parent.id) {
           _this3.updateTabNamesInDataStore();
 
@@ -387,9 +398,9 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
     };
 
     return Tabs;
-  }(_previewCollection);
+  }(_previewCollection); // Resolve issue with jQuery UI tabs blocking events on content editable areas
 
-  // Resolve issue with jQuery UI tabs blocking events on content editable areas
+
   var originalTabKeyDown = _jquery.ui.tabs.prototype._tabKeydown;
 
   _jquery.ui.tabs.prototype._tabKeydown = function (event) {

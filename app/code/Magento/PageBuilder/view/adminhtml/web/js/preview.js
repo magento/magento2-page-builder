@@ -25,9 +25,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       this.config = void 0;
       this.data = {};
       this.displayLabel = void 0;
-      this.fieldsToIgnoreOnRemove = [];
       this.previewData = {};
       this.previewStyle = void 0;
+      this.fieldsToIgnoreOnRemove = [];
       this.edit = void 0;
       this.observableUpdater = void 0;
       this.mouseover = false;
