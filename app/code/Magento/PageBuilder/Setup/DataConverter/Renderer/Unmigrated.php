@@ -31,7 +31,7 @@ class Unmigrated implements RendererInterface
     public function render(array $itemData, array $additionalData = [])
     {
 
-        return '<div data-role="html">'
+        return '<div data-role="html" data-appearance="default">'
             . '<!--'
             . Format::UNMIGRATED_KEY
             . '="'

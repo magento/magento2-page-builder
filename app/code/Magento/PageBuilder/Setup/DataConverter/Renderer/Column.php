@@ -40,6 +40,7 @@ class Column implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'column',
+            'data-appearance' => 'full-height',
             'class' => $itemData['formData']['css_classes'] ?? '',
             'style' => '',
         ];

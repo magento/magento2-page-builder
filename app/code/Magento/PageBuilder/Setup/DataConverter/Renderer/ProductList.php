@@ -46,6 +46,7 @@ class ProductList implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'products-list',
+            'data-appearance' => 'default',
             'class' => $itemData['formData']['css_classes'] ?? '',
             'data-category-id' => $eavData['category_id'] ?? '',
             'data-product-count' => $eavData['product_count'] ?? 4,

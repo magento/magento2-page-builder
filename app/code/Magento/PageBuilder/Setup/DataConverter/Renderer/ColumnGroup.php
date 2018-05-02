@@ -22,6 +22,7 @@ class ColumnGroup implements RendererInterface
             'class' => 'pagebuilder-column-group',
             'style' => 'display: flex;',
             'data-role' => 'column-group',
+            'data-appearance' => 'default',
         ];
 
         $rootElementHtml = '<div';
