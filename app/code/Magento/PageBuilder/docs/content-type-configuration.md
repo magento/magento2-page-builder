@@ -357,39 +357,17 @@ The `tag` element allows you to read the tag value of the element and map back t
 
 ## Converter Interfaces
 
-Element converter and data converter are the two types of converters.
+Element converter and data converter are the two types of converters. Both converters expect `fromDom` and `toDom` methods, with usage examples described below.
 
 ### Element Converter
 
 The elemement converter converts data for the property or attribute.
 
-The `fromDom()` method is called after data is read from the master format. It expects a param of an string of the value. It should then return either a string or an object.
+The `fromDom` method is called after data is read from the master format.
 
-The `toDom()` method is called before observables are updated in the cycle rendering preview or master format. It expects params of a string for the name and an object for the data. It should then return a string or an object. 
+The `toDom` method is called before observables are updated in the cycle rendering preview or master format.
 
-### Data Converter
-
-The data converter works on the data for all elements.
-
-The `fromDom()` method is called after data is read for all element and converted by element converters. It expect params of an object for the data and an object for the config. It should then return either a string or an object.
-
-The `toDom()` method is called before data is converted by element converters to update observables. It expect params of an object for the data and an object for the config. It should then return either a string or an object.
-
-**Example:** Data converter configuration
-``` xml
-<data_mapping>
-    <converters>
-        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/default/empty-mobile-image">
-            <config>
-                <item name="desktop_image_variable" value="background_image"/>
-                <item name="mobile_image_variable" value="mobile_image"/>
-            </config>
-        </converter>
-    </converters>
-</data_mapping>
-```
-
-Some element converters can produce a value based on multiple properties in data.
+**Example:** Element converter that determines the output for an overlay background color
 
 ``` JS  
 define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (colorConverter, numberConverter) {
@@ -422,5 +400,68 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
           return overlayColor;
     };
     return OverlayBackgroundColor;
+});
+```
+
+### Data Converter
+
+The data converter works on the data for all elements.
+
+The `fromDom` method is called after data is read for all elements and converted by element converters.
+
+The `toDom` method is called before data is converted by element converters to update observables.
+
+**Example:** Data converter that defaults mobile image value to desktop image value if not configured 
+``` xml
+<data_mapping>
+    <converters>
+        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/default/empty-mobile-image">
+            <config>
+                <item name="desktop_image_variable" value="background_image"/>
+                <item name="mobile_image_variable" value="mobile_image"/>
+            </config>
+        </converter>
+    </converters>
+</data_mapping>
+```
+
+``` JS  
+define([], function () {
+    var EmptyMobileImage = function () {};
+    
+    /**
+     * Process data after it's read and converted by element converters
+     *
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
+     */
+    EmptyMobileImage.prototype.fromDom = function fromDom(data, config) {
+      var desktopImage = data[config.desktop_image_variable];
+      var mobileImage = data[config.mobile_image_variable];
+
+      if (mobileImage && desktopImage && mobileImage[0] !== undefined && desktopImage[0] !== undefined && mobileImage[0].url === desktopImage[0].url) {
+        delete data[config.mobile_image_variable];
+      }
+
+      return data;
+    };
+    
+    /**
+     * Process data before it's converted by element converters
+     *
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
+     */
+    EmptyMobileImage.prototype.toDom = function toDom(data, config) {
+      if (data[config.mobile_image_variable] === undefined || data[config.mobile_image_variable][0] === undefined) {
+        data[config.mobile_image_variable] = data[config.desktop_image_variable];
+      }
+
+      return data;
+    };
+    
+    return EmptyMobileImage;
 });
 ```
