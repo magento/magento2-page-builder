@@ -355,14 +355,16 @@ export default class Tabs extends PreviewCollection {
         let duplicatedTab: Block;
         let duplicatedTabIndex: number;
         EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
-            const tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
-            params.duplicateBlock.store.updateKey(
-                params.duplicateBlock.id,
-                tabData.tab_name.toString() + " copy",
-                "tab_name",
-            );
-            duplicatedTab = params.duplicateBlock;
-            duplicatedTabIndex = params.index;
+            if (this.parent.id === params.duplicateBlock.parent.id) {
+                const tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
+                params.duplicateBlock.store.updateKey(
+                    params.duplicateBlock.id,
+                    tabData.tab_name.toString() + " copy",
+                    "tab_name",
+                );
+                duplicatedTab = params.duplicateBlock;
+                duplicatedTabIndex = params.index;
+            }
         });
         EventBus.on("tab-item:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
             if (duplicatedTab && params.id === duplicatedTab.id) {
