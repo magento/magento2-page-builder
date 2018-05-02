@@ -49,9 +49,10 @@
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab1" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderRowContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{CmsNewPagePageActionsSection.savePage}}" stepKey="onMouseOverRowContentBlockStage"/>
-        <dontSeeElement selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="dontSeeAddButton"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage1"/>
-        <seeElement selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="seeAddButton1"/>
+        <waitForPageLoad stepKey="waitForMouseOverAnimation" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderButtonsContentBlock.role)}}" stepKey="waitForOptions" />
+        <seeElement selector="{{ButtonsBackendSection.addNewButtonItemOption}}" stepKey="seeAddButton1"/>
         <seeElement selector="{{ButtonsBackendSection.emptyButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeEmptyButton"/>
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage1"/>
         <seeElementInDOM selector="{{ButtonsFrontendSection.emptyButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeEmptyButtonOnStorefront"/>
@@ -83,8 +84,10 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage2"/>
-        <seeElement selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="seeAddButton2"/>
-        <click selector="{{ButtonsBackendSection.addNewButtonItem}}" stepKey="clickAddButton"/>
+        <waitForPageLoad stepKey="waitForMouseOverAnimation2" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderButtonsContentBlock.role)}}" stepKey="waitForOptions2" />
+        <seeElement selector="{{ButtonsBackendSection.addNewButtonItemOption}}" stepKey="seeAddButton2"/>
+        <click selector="{{ButtonsBackendSection.addNewButtonItemOption}}" stepKey="clickAddButton"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
             <argument name="contentBlockIndex" value="PageBuilderButtonIndex2"/>
@@ -402,5 +405,41 @@
         <amOnPage url="buttons{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <seeElement selector="{{ButtonsFrontendSection.buttonItemText(PageBuilderButtonItemTypePrimaryProperty.value, PageBuilderButtonItemTextProperty2.value)}}" stepKey="seeButtonTextOnStorefront"/>
+    </test>
+
+    <test name="ButtonsNoMoreOldAddButtonButton">
+        <annotations>
+            <features value="Pagebuilder: Buttons"/>
+            <stories value="MAGETWO-83922: Buttons"/>
+            <title value="Make sure the old add button button is gone"/>
+            <description value="On button group hover the old add button button should be gone"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90800"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <waitForPageLoad stepKey="waitForGridReload"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add button -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderRowContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage1"/>
+        <dontSeeElement selector="{{ButtonsBackendSection.oldAddNewButtonItem}}" stepKey="dontSeeOldAddButton"/>
+        <seeElement selector="{{ButtonsBackendSection.emptyButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeEmptyButton"/>
     </test>
 </tests>

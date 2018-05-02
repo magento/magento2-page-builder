@@ -27,10 +27,20 @@ export default class Edit {
      * Open the modal
      */
     public open(): void {
+        const contentTypeData = this.store.get(this.instance.id);
+        let formNamespace = this.instance.config.form;
+
+        // Use the default form unless a custom one is defined
+        if (undefined !== this.instance.config.appearances[contentTypeData.appearance].form) {
+            formNamespace = this.instance.config.appearances[contentTypeData.appearance].form;
+        }
+
         events.trigger("form:render", {
-            data: this.store.get(this.instance.id),
+            data: contentTypeData,
+            appearances: this.instance.config.appearances,
+            defaultNamespace: this.instance.config.form,
             id: this.instance.id,
-            namespace: this.instance.config.form,
+            namespace: formNamespace,
             title: this.instance.config.label,
         });
     }

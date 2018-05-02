@@ -47,6 +47,7 @@ class SliderItem implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'slide',
+            'data-appearance' => 'poster',
             'class' => $eavData['css_classes'] ?? ''
         ];
 

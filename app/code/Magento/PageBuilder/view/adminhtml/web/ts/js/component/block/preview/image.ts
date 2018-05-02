@@ -5,7 +5,6 @@
 
 import events from "uiEvents";
 import Preview from "../../../preview";
-import EventBus from "../../event-bus";
 import Uploader from "../../uploader";
 
 export default class Image extends Preview {
@@ -29,13 +28,13 @@ export default class Image extends Preview {
     protected bindEvents() {
         super.bindEvents();
 
-        EventBus.on(`${this.parent.id}:updated`, (event, params) => {
+        events.on(`${this.parent.id}:updated`, () => {
             const imageDataStore = this.parent.store.get(this.parent.id);
             const imageObject = imageDataStore.image[0] || {};
             events.trigger(`image:assigned:${this.parent.id}`, imageObject);
         });
 
-        EventBus.once("image:block:ready", (event, params) => {
+        events.on("image:block:ready", () => {
             const imageDataStore = this.parent.store.get(this.parent.id);
             const initialImageValue = imageDataStore.image || "";
 

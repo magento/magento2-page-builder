@@ -361,60 +361,61 @@ The `tag` element allows you to read the tag value of the element and map back t
 
 ## Converter Interfaces
 
-Element converter and data converter are the two types of converters.
+Element converter and data converter are the two types of converters. Both converters expect `fromDom` and `toDom` methods, with usage examples described below.
 
 ### Element Converter
 
 The elemement converter converts data for the property or attribute.
 
-The `fromDom()` method is called after data is read from the master format.
+The `fromDom` method is called after data is read from the master format.
 
-The `toDom()` method is called before observables are updated in the cycle rendering preview or master format. 
+The `toDom` method is called before observables are updated in the cycle rendering preview or master format.
 
-``` JS
-export interface ElementConverterInterface {
+**Example:** Element converter that determines the output for an overlay background color
+
+``` JS  
+define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (colorConverter, numberConverter) {
+    var OverlayBackgroundColor = function () {};
+    
     /**
-     * @param {object} value
+     * Convert value to internal format
+     *
+     * @param {string} value
      * @returns {string | object}
      */
-    fromDom(value: string): string | Object;
-
+    OverlayBackgroundColor.prototype.fromDom = function fromDom(value) {
+        return value;
+    };
+    
     /**
-     * @param {object} name
+     * Convert value to knockout format
+     *
+     * @param {string} name
      * @param {object} data
-     * @returns {string | Object}
+     * @returns {string | object}
      */
-    toDom(name: string, data: object): string | object;
-}
+    OverlayBackgroundColor.prototype.toDom = function toDom(name, data) {
+          var overlayColor = "transparent";
+        
+          if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+                overlayColor = colorConverter.fromHex(data.overlay_color, numberConverter.percentToDecimal(data.overlay_transparency));
+          }
+        
+          return overlayColor;
+    };
+    return OverlayBackgroundColor;
+});
 ```
 
 ### Data Converter
 
 The data converter works on the data for all elements.
 
-The `fromDom()` method is called after data is read for all element and converted by element converters.
+The `fromDom` method is called after data is read for all elements and converted by element converters.
 
-The `toDom()` method is called before data is converted by element converters to update observables.
+The `toDom` method is called before data is converted by element converters to update observables.
 
-``` JS
-export interface DataConverterInterface {
-    /**
-     * @param {object} data
-     * @param {object} config
-     * @returns {object}
-     */
-    fromDom(data: object, config: object): object;
-
-    /**
-     * @param {object} data
-     * @param {object} config
-     * @returns {object}
-     */
-    toDom(data: object, config: object): object;
-}
-```
-
-**Example:** Data converter configuration
+**Example:** Data converter that defaults mobile image value to desktop image value if not configured 
 ``` xml
 <data_mapping>
     <converters>
@@ -425,32 +426,46 @@ export interface DataConverterInterface {
             </config>
         </converter>
     </converters>
-</data_mapping> 
+</data_mapping>
 ```
 
-Some element converters can produce a value based on multiple properties in data.
-
-``` JS
-export default class OverlayBackgroundColor implements ElementConverterInterface {
+``` JS  
+define([], function () {
+    var EmptyMobileImage = function () {};
+    
     /**
-     * @param {string} value
-     * @returns {object | string}
-     */
-    public fromDom(value: string): string | object {
-        return value;
-    }
-
-    /**
-     * @param {string} name
+     * Process data after it's read and converted by element converters
+     *
      * @param {object} data
-     * @returns {object | string}
+     * @param {object} config
+     * @returns {object}
      */
-    public toDom(name: string, data: object): string | object {
-        let overlayColor: string = "transparent";
-        if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-            overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
-        }
-        return overlayColor;
-    }
-}
+    EmptyMobileImage.prototype.fromDom = function fromDom(data, config) {
+      var desktopImage = data[config.desktop_image_variable];
+      var mobileImage = data[config.mobile_image_variable];
+
+      if (mobileImage && desktopImage && mobileImage[0] !== undefined && desktopImage[0] !== undefined && mobileImage[0].url === desktopImage[0].url) {
+        delete data[config.mobile_image_variable];
+      }
+
+      return data;
+    };
+    
+    /**
+     * Process data before it's converted by element converters
+     *
+     * @param {object} data
+     * @param {object} config
+     * @returns {object}
+     */
+    EmptyMobileImage.prototype.toDom = function toDom(data, config) {
+      if (data[config.mobile_image_variable] === undefined || data[config.mobile_image_variable][0] === undefined) {
+        data[config.mobile_image_variable] = data[config.desktop_image_variable];
+      }
+
+      return data;
+    };
+    
+    return EmptyMobileImage;
+});
 ```

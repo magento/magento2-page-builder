@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus"], function (_knockout, _contentTypeFactory, _previewCollection, _config, _eventBus) {
+define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_knockout, _translate, _uiEvents, _contentTypeFactory, _previewCollection, _config, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Buttons =
@@ -24,11 +24,24 @@ define(["knockout", "Magento_PageBuilder/js/content-type-factory", "Magento_Page
 
       _PreviewCollection.prototype.bindEvents.call(this);
 
-      _eventBus.on("buttons:block:dropped:create", function (event, params) {
-        if (params.id === _this2.parent.id && _this2.parent.children().length === 0) {
+      _uiEvents.on("buttons:block:dropped:create", function (args) {
+        if (args.id === _this2.parent.id && _this2.parent.children().length === 0) {
           _this2.addButton();
         }
       });
+    };
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<OptionInterface>}
+     */
+
+
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _PreviewCollection.prototype.retrieveOptions.call(this);
+
+      options.push(new _option.Option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add Button"), this.addButton, ["add-child"], 20));
+      return options;
     };
     /**
      * Add button-item to buttons children array
