@@ -4,6 +4,20 @@
  */
 
 .magento-pagebuilder-stage-container {
+    button {
+        border: 1px solid #5284bd !important;
+        -webkit-border-radius: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    .magento-pagebuilder-stage {
+        background: white;
+
+        .magento-pagebuilder-stage-content {
+            background: white;
+        }
+    }
+
     &.full-screen {
         .magento-pagebuilder-stage {
             background: white;
@@ -12,25 +26,18 @@
     }
 }
 
-.magento-pagebuilder-stage-container {
-    button {
-        border-radius: 0 !important;
-        -webkit-border-radius: 0 !important;
-        border: 1px solid #5284bd !important;
-    }
-}
-
 .magento-pagebuilder-modal-buttons button {
-    border-radius: 0 !important;
-    -webkit-border-radius: 0 !important;
     border: 1px solid #262626 !important;
+    -webkit-border-radius: 0 !important;
+    border-radius: 0 !important;
 }
 
 .magento-pagebuilder-configure-sidebar .magento-pagebuilder-child-blocks-field .magento-pagebuilder-entity {
     min-height: 40px;
 }
 
-.magento-pagebuilder-stage-container button, .magento-pagebuilder-configure-sidebar button {
+.magento-pagebuilder-stage-container button,
+.magento-pagebuilder-configure-sidebar button {
     color: white;
     &:hover {
         color: darken(white, 10%);
@@ -38,7 +45,7 @@
 }
 
 .magento-pagebuilder-configure-sidebar {
-    z-index: 500;
+    z-index: 700;
 
     ul {
         list-style: none;
@@ -65,24 +72,14 @@
         a {
             transition: background .5s ease;
             &:hover {
-                color: white;
                 background: darken(#7e7e7e, 5%);
+                color: white;
                 text-decoration: none;
             }
             &:focus {
                 color: white;
                 text-decoration: none;
             }
-        }
-    }
-}
-
-.magento-pagebuilder-stage-container {
-    .magento-pagebuilder-stage {
-        background: white;
-
-        .magento-pagebuilder-stage-content {
-            background: white;
         }
     }
 }
@@ -96,9 +93,7 @@ a.magento-pagebuilder-draggable:hover {
     z-index: 699;
 }
 
-.magento-pagebuilder-configure-sidebar {
-    z-index: 700;
-}
+
 
 .admin__scope-old {
     .content-block-set {
@@ -120,22 +115,22 @@ a.magento-pagebuilder-draggable:hover {
 .admin__fieldset-wrapper-content {
     .magento-pagebuilder-admin__field.admin__field {
         .admin__field-label {
-            width: 100%;
-            margin: 0 0 20px !important;
-            text-align: left;
             box-sizing: border-box;
+            margin: 0 0 20px !important;
             padding: 0 30px;
+            text-align: left;
+            width: 100%;
             span:before {
-                right: auto;
                 left: 0;
+                right: auto;
             }
         }
         .admin__field-control {
-            width: 100%;
             margin: 0;
+            width: 100%;
             &:not(.admin__control-grouped) {
-                padding: 0 30px;
                 box-sizing: border-box;
+                padding: 0 30px;
             }
         }
     }
