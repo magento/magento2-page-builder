@@ -10,7 +10,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
      *
-     * @type {(() => any) & _.Cancelable}
+     * @type {(() => void) & _.Cancelable}
      */
 
     /**
@@ -23,6 +23,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.focusedTab = _knockout.observable();
+      _this.lockInteracting = void 0;
       _this.element = void 0;
       _this.buildTabs = _underscore.debounce(function (activeTabIndex) {
         if (activeTabIndex === void 0) {
@@ -49,15 +50,21 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         }
       });
 
-      _uiEvents.on("tab-item:block:create", function (args) {
+      _uiEvents.on("tab-item:block:mount", function (args) {
         if (_this.element && args.block.parent.id === _this.parent.id) {
-          _this.buildTabs();
+          _this.refreshTabs();
         }
-      });
+      }); // Set the active tab to the new position of the sorted tab
+
 
       _uiEvents.on("tab-item:block:removed", function (args) {
-        if (_this.element && args.block.parent.id === _this.parent.id) {
-          _this.buildTabs();
+        if (args.instance.id === _this.parent.id) {
+          _this.refreshTabs(); // We need to wait for the tabs to refresh before executing the focus
+
+
+          _underscore.defer(function () {
+            _this.setFocusedTab(args.newPosition, true);
+          });
         }
       }); // Set the stage to interacting when a tab is focused
 
@@ -68,7 +75,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         focusTabValue = value; // If we're stopping the interaction we need to wait, to ensure any other actions can complete
 
         _underscore.delay(function () {
-          if (focusTabValue === value) {
+          if (focusTabValue === value && !_this.lockInteracting) {
             if (value !== null) {
               _uiEvents.trigger("interaction:start");
             } else {
@@ -81,13 +88,33 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       return _this;
     }
     /**
+     * Refresh the tabs instance when new content appears
+     *
+     * @param {number} focusIndex
+     * @param {boolean} forceFocus
+     * @param {number} activeIndex
+     */
+
+
+    var _proto = Tabs.prototype;
+
+    _proto.refreshTabs = function refreshTabs(focusIndex, forceFocus, activeIndex) {
+      if (this.element) {
+        (0, _jquery)(this.element).tabs("refresh");
+
+        if (focusIndex >= 0) {
+          this.setFocusedTab(focusIndex, forceFocus);
+        } else if (activeIndex) {
+          this.setActiveTab(activeIndex);
+        }
+      }
+    };
+    /**
      * Set the active tab, we maintain a reference to it in an observable for when we rebuild the tab instance
      *
      * @param {number} index
      */
 
-
-    var _proto = Tabs.prototype;
 
     _proto.setActiveTab = function setActiveTab(index) {
       (0, _jquery)(this.element).tabs("option", "active", index);
@@ -114,8 +141,8 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       this.focusedTab(index);
 
       if (this.element) {
-        if (this.element.getElementsByTagName("span")[index]) {
-          this.element.getElementsByTagName("span")[index].focus();
+        if (this.element.getElementsByClassName("tab-name")[index]) {
+          this.element.getElementsByClassName("tab-name")[index].focus();
         }
 
         _underscore.defer(function () {
@@ -206,6 +233,95 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       };
     };
     /**
+     * Get the sortable options for the tab heading sorting
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+
+
+    _proto.getSortableOptions = function getSortableOptions() {
+      var self = this;
+      var borderWidth;
+      return {
+        handle: ".tab-drag-handle",
+        tolerance: "pointer",
+        cursor: "grabbing",
+        cursorAt: {
+          left: 8,
+          top: 25
+        },
+
+        /**
+         * Provide custom helper element
+         *
+         * @param {Event} event
+         * @param {JQueryUI.Sortable} element
+         * @returns {Element}
+         */
+        helper: function helper(event, element) {
+          var helper = (0, _jquery)(element).clone().css("opacity", "0.7");
+          helper[0].querySelector(".pagebuilder-options").remove();
+          return helper[0];
+        },
+
+        /**
+         * Add a padding to the navigation UL to resolve issues of negative margins when sorting
+         *
+         * @param {Event} event
+         * @param {JQueryUI.SortableUIParams} ui
+         */
+        start: function start(event, ui) {
+          /**
+           * Due to the way we use negative margins to overlap the borders we need to apply a padding to the
+           * container when we're moving the first item to ensure the tabs remain in the same place.
+           */
+          if (ui.item.index() === 0) {
+            borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
+            (0, _jquery)(this).css("paddingLeft", borderWidth);
+          }
+
+          ui.helper.css("width", "");
+
+          _uiEvents.trigger("interaction:start");
+
+          self.lockInteracting = true;
+        },
+
+        /**
+         * Remove the padding once the operation is completed
+         *
+         * @param {Event} event
+         * @param {JQueryUI.SortableUIParams} ui
+         */
+        stop: function stop(event, ui) {
+          (0, _jquery)(this).css("paddingLeft", "");
+
+          _uiEvents.trigger("interaction:stop");
+
+          self.lockInteracting = false;
+        },
+        placeholder: {
+          /**
+           * Provide custom placeholder element
+           *
+           * @param {JQuery<Element>} item
+           * @returns {JQuery<Element>}
+           */
+          element: function element(item) {
+            var placeholder = item.clone().show().css({
+              display: "inline-block",
+              opacity: "0.3"
+            }).removeClass("focused").addClass("sortable-placeholder");
+            placeholder[0].querySelector(".pagebuilder-options").remove();
+            return placeholder[0];
+          },
+          update: function update() {
+            return;
+          }
+        }
+      };
+    };
+    /**
      * Bind events
      */
 
@@ -225,18 +341,33 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
       _uiEvents.on("tab-item:block:removed", function (args) {
         if (args.parent.id === _this3.parent.id) {
-          // Mark the previous slide as active
+          // Mark the previous tab as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
-          _this3.setFocusedTab(newIndex);
+          _this3.refreshTabs(newIndex, true);
+        }
+      }); // Capture when a block is duplicated within the container
+
+
+      var duplicatedTab;
+      var duplicatedTabIndex;
+
+      _uiEvents.on("tab-item:block:duplicate", function (args) {
+        if (_this3.parent.id === args.duplicateBlock.parent.id) {
+          var tabData = args.duplicateBlock.store.get(args.duplicateBlock.id);
+          args.duplicateBlock.store.updateKey(args.duplicateBlock.id, tabData.tab_name.toString() + " copy", "tab_name");
+          duplicatedTab = args.duplicateBlock;
+          duplicatedTabIndex = args.index;
         }
       });
 
-      _uiEvents.on("tab-item:block:duplicate", function (args) {
-        _this3.buildTabs(args.index);
-      });
-
       _uiEvents.on("tab-item:block:mount", function (args) {
+        if (duplicatedTab && args.id === duplicatedTab.id) {
+          _this3.setFocusedTab(duplicatedTabIndex, true);
+
+          duplicatedTab = duplicatedTabIndex = null;
+        }
+
         if (_this3.parent.id === args.block.parent.id) {
           _this3.updateTabNamesInDataStore();
 

@@ -23,7 +23,6 @@ import {BlockMountEventParamsInterface} from "../block-mount-event-params.d";
 import {BlockReadyEventParamsInterface} from "../block-ready-event-params.d";
 import {ActiveOptionsInterface} from "./options/active-options.d";
 import {SortableOptionsInterface} from "./options/sortable-options.d";
-import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Tabs extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable();
@@ -284,7 +283,7 @@ export default class Tabs extends PreviewCollection {
                 }
 
                 ui.helper.css("width", "");
-                EventBus.trigger("interaction:start", {});
+                events.trigger("interaction:start");
                 self.lockInteracting = true;
             },
 
@@ -296,7 +295,7 @@ export default class Tabs extends PreviewCollection {
              */
             stop(event: Event, ui: JQueryUI.SortableUIParams) {
                 $(this).css("paddingLeft", "");
-                EventBus.trigger("interaction:stop", {});
+                events.trigger("interaction:stop");
                 self.lockInteracting = false;
             },
 
@@ -348,7 +347,7 @@ export default class Tabs extends PreviewCollection {
             }
         });
         // Capture when a block is duplicated within the container
-        let duplicatedTab: Block;
+        let duplicatedTab: ContentTypeInterface;
         let duplicatedTabIndex: number;
         events.on("tab-item:block:duplicate", (args: BlockDuplicateEventParams) => {
             if (this.parent.id === args.duplicateBlock.parent.id) {
