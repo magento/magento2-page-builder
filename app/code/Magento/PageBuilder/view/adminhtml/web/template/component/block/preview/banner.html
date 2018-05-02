@@ -5,22 +5,25 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <!-- ko template: getOptions().template --><!-- /ko -->
-    <div class="pagebuilder-banner-wrapper" data-bind="attr: data.main.attributes, style: Object.assign(data.main.style(), data.desktop_image.style()), css: data.main.css, event: {mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
-        <div class="pagebuilder-poster-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style, css: data.overlay.css">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-banner" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <render args="getOptions().template" />
+    <div class="pagebuilder-banner-wrapper" attr="data.main.attributes" ko-style="Object.assign(data.main.style(), data.desktop_image.style())" css="data.main.css" event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
+        <div class="pagebuilder-poster-overlay" attr="data.overlay.attributes" ko-style="data.overlay.style" css="data.overlay.css">
             <div class="pagebuilder-poster-content">
                 <!-- ko if: data.content.html() -->
-                    <div data-bind="attr: data.content.attributes, style: data.content.style, css: data.content.css, html: data.content.html"></div>
+                    <div attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" html="data.content.html"></div>
                 <!-- /ko -->
                 <!-- ko ifnot: data.content.html() -->
                     <div class="pagebuilder-empty-banner" data-bind="attr: data.content.attributes, style: data.content.style, css: data.content.css, i18n: 'Edit Banner Text'"></div>
                 <!-- /ko -->
-                <!-- ko if: data.main.attributes()["data-show-button"] !== "never_show" -->
-                    <a type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css">
-                        <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
-                    </a>
-                <!-- /ko -->
+                <a if="data.main.attributes()['data-show-button'] !== 'never_show'"
+                   type="button"
+                   class="pagebuilder-banner-button"
+                   attr="data.button.attributes"
+                   ko-style="data.button.style"
+                   css="data.button.css">
+                    <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
+                </a>
             </div>
         </div>
     </div>

@@ -5,54 +5,30 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-heading pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <!-- ko if: data.main.heading_type() == 'h1' -->
-    <!-- ko if: data.main.html() -->
-    <h1 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h1>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h1 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h1>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h2' -->
-    <!-- ko if: data.main.html() -->
-    <h2 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h2>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h2 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h2>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h3' -->
-    <!-- ko if: data.main.html() -->
-    <h3 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h3>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h3 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h3>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h4' -->
-    <!-- ko if: data.main.html() -->
-    <h4 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h4>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h4 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h4>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h5' -->
-    <!-- ko if: data.main.html() -->
-    <h5 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h5>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h5 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h5>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: data.main.heading_type() == 'h6' -->
-    <!-- ko if: data.main.html() -->
-    <h6 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), html: data.main.html"></h6>
-    <!-- /ko -->
-    <!-- ko ifnot: data.main.html() -->
-    <h6 data-bind="attr: data.main.attributes, style: data.main.style, css: Object.assign(data.main.css(), {'placeholder-text': !data.main.html()}), i18n: 'Edit Heading Text'"></h6>
-    <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko template: getOptions().template --><!-- /ko -->
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-heading pagebuilder-no-blur pagebuilder-live-edit" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <if args ="data.main.heading_type() == 'h1'">
+        <h1 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h1>
+        <h1 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h1>
+    </if>
+    <if args ="data.main.heading_type() == 'h2'">
+        <h2 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h2>
+        <h2 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h2>
+    </if>
+    <if args ="data.main.heading_type() == 'h3'">
+        <h3 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h3>
+        <h3 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h3>
+    </if>
+    <if args ="data.main.heading_type() == 'h4'">
+        <h4 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h4>
+        <h4 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h4>
+    </if>
+    <if args ="data.main.heading_type() == 'h5'">
+        <h5 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h5>
+        <h5 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h5>
+    </if>
+    <if args ="data.main.heading_type() == 'h6'">
+        <h6 if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></h6>
+        <h6 ifnot="data.main.html()" class="placeholder-text" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Edit Heading Text'"></h6>
+    </if>
+    <render args="getOptions().template" />
 </div>

@@ -43,7 +43,8 @@ class Video implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'video'
+            'data-role' => 'video',
+            'data-appearance' => 'default',
         ];
 
         $formData = $itemData['formData'] ?? [];

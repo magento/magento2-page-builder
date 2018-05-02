@@ -31,7 +31,7 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="appearance" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
+    <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
             <label translate="true">Appearance</label>
             <collapsible>true</collapsible>
@@ -41,39 +41,6 @@
             </imports>
         </settings>
         <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">default</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Appearance</label>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">default</item>
-                                <item name="label" xsi:type="string" translate="true">Default</item>
-                            </option>
-                        </options>
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-    </fieldset>
-    <fieldset name="appearance" sortOrder="20">
-        <settings>
-            <label translate="true">Appearance</label>
-            <collapsible>true</collapsible>
-            <opened>true</opened>
-        </settings>
-        <field name="appearance" sortOrder="10" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">poster</item>

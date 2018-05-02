@@ -5,12 +5,12 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-newsletter" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-newsletter" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <!-- ko if: data.main.html() -->
-        <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, html: data.main.html"></div>
+        <div attr="data.main.attributes" css="data.main.css" ko-style="data.main.style" html="data.main.html"></div>
     <!-- /ko -->
     <!-- ko ifnot: data.main.html() -->
         <div class="placeholder-text" data-bind="i18n: 'Newsletter'"></div>
     <!-- /ko -->
-    <!-- ko template: getOptions().template --><!-- /ko -->
+    <render args="getOptions().template" />
 </div>

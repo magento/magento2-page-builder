@@ -361,52 +361,17 @@ Element converter and data converter are the two types of converters.
 
 The elemement converter converts data for the property or attribute.
 
-The `fromDom()` method is called after data is read from the master format.
+The `fromDom()` method is called after data is read from the master format. It expects a param of an string of the value. It should then return either a string or an object.
 
-The `toDom()` method is called before observables are updated in the cycle rendering preview or master format. 
-
-``` JS
-export interface ElementConverterInterface {
-    /**
-     * @param {object} value
-     * @returns {string | object}
-     */
-    fromDom(value: string): string | Object;
-
-    /**
-     * @param {object} name
-     * @param {object} data
-     * @returns {string | Object}
-     */
-    toDom(name: string, data: object): string | object;
-}
-```
+The `toDom()` method is called before observables are updated in the cycle rendering preview or master format. It expects params of a string for the name and an object for the data. It should then return a string or an object. 
 
 ### Data Converter
 
 The data converter works on the data for all elements.
 
-The `fromDom()` method is called after data is read for all element and converted by element converters.
+The `fromDom()` method is called after data is read for all element and converted by element converters. It expect params of an object for the data and an object for the config. It should then return either a string or an object.
 
-The `toDom()` method is called before data is converted by element converters to update observables.
-
-``` JS
-export interface DataConverterInterface {
-    /**
-     * @param {object} data
-     * @param {object} config
-     * @returns {object}
-     */
-    fromDom(data: object, config: object): object;
-
-    /**
-     * @param {object} data
-     * @param {object} config
-     * @returns {object}
-     */
-    toDom(data: object, config: object): object;
-}
-```
+The `toDom()` method is called before data is converted by element converters to update observables. It expect params of an object for the data and an object for the config. It should then return either a string or an object.
 
 **Example:** Data converter configuration
 ``` xml
@@ -419,32 +384,41 @@ export interface DataConverterInterface {
             </config>
         </converter>
     </converters>
-</data_mapping> 
+</data_mapping>
 ```
 
 Some element converters can produce a value based on multiple properties in data.
 
-``` JS
-export default class OverlayBackgroundColor implements ElementConverterInterface {
+``` JS  
+define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (colorConverter, numberConverter) {
+    var OverlayBackgroundColor = function () {};
+    
     /**
+     * Convert value to internal format
+     *
      * @param {string} value
-     * @returns {object | string}
+     * @returns {string | object}
      */
-    public fromDom(value: string): string | object {
+    OverlayBackgroundColor.prototype.fromDom = function fromDom(value) {
         return value;
-    }
-
+    };
+    
     /**
+     * Convert value to knockout format
+     *
      * @param {string} name
      * @param {object} data
-     * @returns {object | string}
+     * @returns {string | object}
      */
-    public toDom(name: string, data: object): string | object {
-        let overlayColor: string = "transparent";
-        if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
-            overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
-        }
-        return overlayColor;
-    }
-}
+    OverlayBackgroundColor.prototype.toDom = function toDom(name, data) {
+          var overlayColor = "transparent";
+        
+          if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
+                overlayColor = colorConverter.fromHex(data.overlay_color, numberConverter.percentToDecimal(data.overlay_transparency));
+          }
+        
+          return overlayColor;
+    };
+    return OverlayBackgroundColor;
+});
 ```
