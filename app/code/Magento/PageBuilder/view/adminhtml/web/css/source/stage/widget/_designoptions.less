@@ -9,55 +9,55 @@
 @spacingY: 50px;
 
 .admin__field-design-options {
-    > input[type="text"] {
+    > input[type='text'] {
         display: none;
     }
 
     .layout-onion {
-        width: @metricsWidth;
-        height: @metricsHeight;
         display: inline-block;
+        height: @metricsHeight;
         vertical-align: top;
+        width: @metricsWidth;
 
-        input[type="text"] {
-            width: 8rem;
+        input[type='text'] {
             text-align: center;
+            width: 8rem;
         }
 
         .layout-onion-layer {
+            height: @metricsHeight;
             position: relative;
             width: @metricsWidth;
-            height: @metricsHeight;
 
             span.label {
-                position: absolute;
+                font-size: .9em;
                 left: 8px;
-                top: 4px;
+                position: absolute;
                 text-align: left;
-                font-size: 0.9em;
+                top: 4px;
             }
 
             .layout-onion-top {
+                left: 50%;
                 position: absolute;
                 top: 9px;
-                left: 50%;
                 transform: translateX(-50%);
             }
             .layout-onion-right {
                 position: absolute;
-                top: 50%;
                 right: 5px;
+                top: 50%;
                 transform: translateY(-50%);
             }
             .layout-onion-bottom {
-                position: absolute;
                 bottom: 9px;
                 left: 50%;
+                position: absolute;
                 transform: translateX(-50%);
             }
             .layout-onion-left {
-                position: absolute;
                 left: 5px;
+                position: absolute;
                 top: 50%;
                 transform: translateY(-50%);
             }
@@ -65,46 +65,48 @@
             &.layout-margin {
                 background: #f8f8f8;
 
-                > .layout-onion-bottom, > .layout-onion-top {
+                > .layout-onion-bottom,
+                > .layout-onion-top {
                     margin-left: 2px;
                 }
             }
             &.layout-border {
                 background: darken(#f8f8f8, 5%);
                 border: 1px solid darken(#e3e3e3, 5%);
+                bottom: @spacingY;
                 box-sizing: border-box;
-
-                > .layout-onion-right, > .layout-onion-left {
-                    margin-top: -1px;
-                }
-                > .layout-onion-bottom, > .layout-onion-top {
-                    margin-left: 1px;
-                }
-
-                position: absolute;
-                width: (@metricsWidth - (@spacingX * 2));
                 height: (@metricsHeight - (@spacingY * 2));
                 left: @spacingX;
-                top: @spacingY;
-                bottom: @spacingY;
+                position: absolute;
                 right: @spacingX;
+                top: @spacingY;
+                width: (@metricsWidth - (@spacingX * 2));
+
+                > .layout-onion-right,
+                > .layout-onion-left {
+                    margin-top: -1px;
+                }
+                > .layout-onion-bottom,
+                > .layout-onion-top {
+                    margin-left: 1px;
+                }
             }
             &.layout-padding {
                 background: darken(#f8f8f8, 10%);
                 border: 1px solid darken(#e3e3e3, 10%);
+                bottom: @spacingY;
                 box-sizing: border-box;
-
-                > .layout-onion-right, > .layout-onion-left {
-                    margin-top: -2px;
-                }
-
-                position: absolute;
-                width: (@metricsWidth - (@spacingX * 4));
                 height: (@metricsHeight - (@spacingY * 4));
                 left: @spacingX;
-                top: @spacingY;
-                bottom: @spacingY;
+                position: absolute;
                 right: @spacingX;
+                top: @spacingY;
+                width: (@metricsWidth - (@spacingX * 4));
+
+                > .layout-onion-right,
+                > .layout-onion-left {
+                    margin-top: -2px;
+                }
             }
         }
     }
@@ -134,8 +136,8 @@
                 margin-left: 12px;
 
                 input {
-                    width: 50px;
                     text-align: center;
+                    width: 50px;
                 }
             }
             .border-radius-slider-slider {
