@@ -5,9 +5,9 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-divider pagebuilder-no-blur pagebuilder-live-edit" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css">
-        <hr data-bind="attr: data.line.attributes, style: data.line.style, css: data.line.css"/>
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-divider pagebuilder-no-blur pagebuilder-live-edit" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <div attr="data.main.attributes" css="data.main.css" ko-style="data.main.style">
+        <hr attr="data.line.attributes" css="data.line.css" ko-style="data.line.style" />
     </div>
-    <!-- ko template: getOptions().template --><!-- /ko -->
+    <render args="getOptions().template" />
 </div>
