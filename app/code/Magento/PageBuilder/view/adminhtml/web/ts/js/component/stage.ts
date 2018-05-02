@@ -6,6 +6,7 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
+import events from "uiEvents";
 import _ from "underscore";
 import Collection from "../collection";
 import createContentType from "../content-type-factory";
@@ -16,7 +17,6 @@ import BlockInstanceDroppedParamsInterface from "./block-instance-dropped-params
 import BlockRemovedParamsInterface from "./block-removed-params.d";
 import BlockSortedParamsInterface from "./block-sorted-params.d";
 import DataStore from "./data-store";
-import EventBus from "./event-bus";
 import PageBuilderInterface from "./page-builder.d";
 import SortParamsInterface from "./sort-params.d.ts";
 import buildStage from "./stage-builder";
@@ -59,7 +59,7 @@ export default class Stage {
      * The stage has been initiated fully and is ready
      */
     public ready() {
-        EventBus.trigger(`stage:ready:${ this.id }`, {stage: this});
+        events.trigger(`stage:ready:${ this.id }`, {stage: this});
         this.collection.getChildren().valueHasMutated();
         this.loading(false);
     }
@@ -118,66 +118,66 @@ export default class Stage {
      */
     protected initListeners() {
         this.collection.getChildren().subscribe(
-            () => EventBus.trigger("stage:updated", {stageId: this.id}),
+            () => events.trigger("stage:updated", {stageId: this.id}),
         );
         // Block dropped from left hand panel
-        EventBus.on("block:dropped", (event, params: BlockDroppedParamsInterface) => {
-            if (params.stageId === this.id) {
-                this.onBlockDropped(event, params);
+        events.on("block:dropped", (args: BlockDroppedParamsInterface) => {
+            if (args.stageId === this.id) {
+                this.onBlockDropped(args);
             }
         });
 
         // Block instance being moved between structural elements
-        EventBus.on("block:instanceDropped", (event, params: BlockInstanceDroppedParamsInterface) => {
-            if (params.stageId === this.id) {
-                this.onBlockInstanceDropped(event, params);
+        events.on("block:instanceDropped", (args: BlockInstanceDroppedParamsInterface) => {
+            if (args.stageId === this.id) {
+                this.onBlockInstanceDropped(args);
             }
         });
 
         // Block being removed from container
-        EventBus.on("block:removed", (event, params: BlockRemovedParamsInterface) => {
-            if (params.stageId === this.id) {
-                this.onBlockRemoved(event, params);
+        events.on("block:removed", (args: BlockRemovedParamsInterface) => {
+            if (args.stageId === this.id) {
+                this.onBlockRemoved(args);
             }
         });
 
         // Block sorted within the same structural element
-        EventBus.on("block:sorted", (event, params: BlockSortedParamsInterface) => {
-            if (params.stageId === this.id) {
-                this.onBlockSorted(event, params);
+        events.on("block:sorted", (args: BlockSortedParamsInterface) => {
+            if (args.stageId === this.id) {
+                this.onBlockSorted(args);
             }
         });
 
         // Observe sorting actions
-        EventBus.on("block:sortStart", (event, params: SortParamsInterface) => {
-            if (params.stageId === this.id) {
-                this.onSortingStart(event, params);
+        events.on("block:sortStart", (args: SortParamsInterface) => {
+            if (args.stageId === this.id) {
+                this.onSortingStart(args);
             }
         });
-        EventBus.on("block:sortStop", (event, params: SortParamsInterface) => {
-            if (params.stageId === this.id) {
-                this.onSortingStop(event, params);
+        events.on("block:sortStop", (args: SortParamsInterface) => {
+            if (args.stageId === this.id) {
+                this.onSortingStop(args);
             }
         });
 
         // Any store state changes trigger a stage update event
-        this.store.subscribe(() => EventBus.trigger("stage:updated", {stageId: this.id}));
+        this.store.subscribe(() => events.trigger("stage:updated", {stageId: this.id}));
 
         // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
         // can occur concurrently.
-        EventBus.on("stage:updated", (event, params) => {
-            if (params.stageId === this.id) {
+        events.on("stage:updated", (args) => {
+            if (args.stageId === this.id) {
                 _.debounce(() => {
                     this.masterFormatRenderer.applyBindings(this.children)
-                        .then((renderedOutput) => EventBus.trigger(`stage:renderTree:${ this.id }`, {
+                        .then((renderedOutput) => events.trigger(`stage:renderTree:${ this.id }`, {
                             value: renderedOutput,
                         }));
                 }, 500).call(this);
             }
         });
 
-        EventBus.on("interaction:start", () => this.interacting(true));
-        EventBus.on("interaction:stop", () => this.interacting(false));
+        events.on("interaction:start", () => this.interacting(true));
+        events.on("interaction:stop", () => this.interacting(false));
     }
 
     /**
@@ -186,7 +186,7 @@ export default class Stage {
      * @param event
      * @param params
      */
-    private onBlockRemoved(event: Event, params: BlockRemovedParamsInterface): void {
+    private onBlockRemoved(params: BlockRemovedParamsInterface): void {
         params.parent.removeChild(params.block);
 
         // Remove the instance from the data store
@@ -199,12 +199,12 @@ export default class Stage {
      * @param {Event} event
      * @param {BlockInstanceDroppedParams} params
      */
-    private onBlockInstanceDropped(event: Event, params: BlockInstanceDroppedParamsInterface): void {
+    private onBlockInstanceDropped(params: BlockInstanceDroppedParamsInterface): void {
         const originalParent = params.blockInstance.parent;
         params.blockInstance.parent = params.parent;
         params.parent.parent.addChild(params.blockInstance, params.index);
 
-        EventBus.trigger("block:moved", {
+        events.trigger("block:moved", {
             block: params.blockInstance,
             index: params.index,
             newParent: params.parent,
@@ -215,10 +215,9 @@ export default class Stage {
     /**
      * On block dropped into container
      *
-     * @param {Event} event
      * @param {BlockDroppedParams} params
      */
-    private onBlockDropped(event: Event, params: BlockDroppedParamsInterface) {
+    private onBlockDropped(params: BlockDroppedParamsInterface) {
         const index = params.index || 0;
 
         new Promise<ContentTypeInterface>((resolve, reject) => {
@@ -226,8 +225,8 @@ export default class Stage {
                 return createContentType(params.block.config, params.parent, params.stageId)
                     .then((block: ContentTypeInterface) => {
                         params.parent.addChild(block, index);
-                        EventBus.trigger("block:dropped:create", {id: block.id, block});
-                        EventBus.trigger(params.block.config.name + ":block:dropped:create", {id: block.id, block});
+                        events.trigger("block:dropped:create", {id: block.id, block});
+                        events.trigger(params.block.config.name + ":block:dropped:create", {id: block.id, block});
                         return block;
                     });
             } else {
@@ -241,10 +240,9 @@ export default class Stage {
     /**
      * On block sorted within it's own container
      *
-     * @param {Event} event
      * @param {BlockSortedParams} params
      */
-    private onBlockSorted(event: Event, params: BlockSortedParamsInterface): void {
+    private onBlockSorted(params: BlockSortedParamsInterface): void {
         const originalIndex = ko.utils.arrayIndexOf(params.parent.children(), params.block);
         if (originalIndex !== params.index) {
             moveArrayItem(params.parent.children, originalIndex, params.index);
@@ -254,20 +252,18 @@ export default class Stage {
     /**
      * On sorting start
      *
-     * @param {Event} event
      * @param {SortParamsInterface} params
      */
-    private onSortingStart(event: Event, params: SortParamsInterface): void {
+    private onSortingStart(params: SortParamsInterface): void {
         this.showBorders(true);
     }
 
     /**
      * On sorting stop
      *
-     * @param {Event} event
      * @param {SortParamsInterface} params
      */
-    private onSortingStop(event: Event, params: SortParamsInterface): void {
+    private onSortingStop(params: SortParamsInterface): void {
         this.showBorders(false);
     }
 }

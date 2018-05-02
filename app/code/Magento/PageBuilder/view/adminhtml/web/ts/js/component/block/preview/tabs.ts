@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import "tabs";
+import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../../content-type-config.d";
 import createContentType from "../../../content-type-factory";
@@ -15,7 +16,6 @@ import ObservableUpdater from "../../../observable-updater";
 import PreviewCollection from "../../../preview-collection";
 import BlockRemovedParamsInterface from "../../block-removed-params";
 import Config from "../../config";
-import EventBus from "../../event-bus";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
 import {BlockCreateEventParamsInterface} from "../block-create-event-params.d";
@@ -62,24 +62,24 @@ export default class Tabs extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        EventBus.on("tabs:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
-            if (params.id === this.parent.id && this.element) {
+        events.on("tabs:block:ready", (args: BlockReadyEventParamsInterface) => {
+            if (args.id === this.parent.id && this.element) {
                 this.buildTabs();
             }
         });
-        EventBus.on("tab-item:block:mount", (event: Event, params: BlockCreateEventParamsInterface) => {
-            if (params.block.parent.id === this.parent.id) {
+        events.on("tab-item:block:mount", (args: BlockCreateEventParamsInterface) => {
+            if (this.element && args.block.parent.id === this.parent.id) {
                 this.refreshTabs();
             }
         });
         // Set the active tab to the new position of the sorted tab
-        EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
-            if (params.instance.id === this.parent.id) {
+        events.on("tab-item:block:removed", (args: BlockCreateEventParamsInterface) => {
+            if (args.instance.id === this.parent.id) {
                 this.refreshTabs();
 
                 // We need to wait for the tabs to refresh before executing the focus
                 _.defer(() => {
-                    this.setFocusedTab(params.newPosition, true);
+                    this.setFocusedTab(args.newPosition, true);
                 });
             }
         });
@@ -91,9 +91,9 @@ export default class Tabs extends PreviewCollection {
             _.delay(() => {
                 if (focusTabValue === value && !this.lockInteracting) {
                     if (value !== null) {
-                        EventBus.trigger("interaction:start", {});
+                        events.trigger("interaction:start");
                     } else {
-                        EventBus.trigger("interaction:stop", {});
+                        events.trigger("interaction:stop");
                     }
                 }
             }, (value === null ? 200 : 0));
@@ -149,7 +149,7 @@ export default class Tabs extends PreviewCollection {
                     document.execCommand("selectAll", false, null);
                 } else {
                     // If the active element isn't the tab title, we're not interacting with the stage
-                    EventBus.trigger("interaction:stop", {});
+                    events.trigger("interaction:stop");
                 }
             });
         }
@@ -185,23 +185,20 @@ export default class Tabs extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((tab) => {
-            _.defer(() => {
-                const mountFunction = (event: Event, params: BlockMountEventParamsInterface) => {
-                    if (params.id === tab.id) {
-                        this.setFocusedTab(this.parent.children().length - 1);
-                        EventBus.off("tab-item:block:mount", mountFunction);
-                    }
-                };
-                EventBus.on("tab-item:block:mount", mountFunction);
-                this.parent.addChild(tab, this.parent.children().length);
+            events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
+                if (args.id === tab.id) {
+                    this.setFocusedTab(this.parent.children().length - 1);
+                    events.off(`tab-item:block:mount:${tab.id}`);
+                }
+            }, `tab-item:block:mount:${tab.id}`);
+            this.parent.addChild(tab, this.parent.children().length);
 
-                // Update the default tab title when adding a new tab
-                tab.store.updateKey(
-                    tab.id,
-                    $t("Tab") + " " + (this.parent.children.indexOf(tab) + 1),
-                    "tab_name",
-                );
-            });
+            // Update the default tab title when adding a new tab
+            tab.store.updateKey(
+                tab.id,
+                $t("Tab") + " " + (this.parent.children.indexOf(tab) + 1),
+                "tab_name",
+            );
         });
     }
 
@@ -337,45 +334,44 @@ export default class Tabs extends PreviewCollection {
         super.bindEvents();
         // Block being mounted onto container
 
-        EventBus.on("tabs:block:dropped:create", (event: Event, params: BlockReadyEventParamsInterface) => {
-            if (params.id === this.parent.id && this.parent.children().length === 0) {
+        events.on("tabs:block:dropped:create", (args: BlockReadyEventParamsInterface) => {
+            if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addTab();
             }
         });
         // Block being removed from container
-        EventBus.on("tab-item:block:removed", (event, params: BlockRemovedParamsInterface) => {
-            if (params.parent.id === this.parent.id) {
+        events.on("tab-item:block:removed", (args: BlockRemovedParamsInterface) => {
+            if (args.parent.id === this.parent.id) {
                 // Mark the previous tab as active
-                const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
+                const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
                 this.refreshTabs(newIndex, true);
             }
         });
-
         // Capture when a block is duplicated within the container
         let duplicatedTab: Block;
         let duplicatedTabIndex: number;
-        EventBus.on("tab-item:block:duplicate", (event, params: BlockDuplicateEventParams) => {
-            if (this.parent.id === params.duplicateBlock.parent.id) {
-                const tabData = params.duplicateBlock.store.get(params.duplicateBlock.id);
-                params.duplicateBlock.store.updateKey(
-                    params.duplicateBlock.id,
+        events.on("tab-item:block:duplicate", (args: BlockDuplicateEventParams) => {
+            if (this.parent.id === args.duplicateBlock.parent.id) {
+                const tabData = args.duplicateBlock.store.get(args.duplicateBlock.id);
+                args.duplicateBlock.store.updateKey(
+                    args.duplicateBlock.id,
                     tabData.tab_name.toString() + " copy",
                     "tab_name",
                 );
-                duplicatedTab = params.duplicateBlock;
-                duplicatedTabIndex = params.index;
+                duplicatedTab = args.duplicateBlock;
+                duplicatedTabIndex = args.index;
             }
         });
-        EventBus.on("tab-item:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
-            if (duplicatedTab && params.id === duplicatedTab.id) {
+        events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
+            if (duplicatedTab && args.id === duplicatedTab.id) {
                 this.setFocusedTab(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;
             }
-            if (this.parent.id === params.block.parent.id) {
+            if (this.parent.id === args.block.parent.id) {
                 this.updateTabNamesInDataStore();
                 this.parent.store.subscribe(() => {
                     this.updateTabNamesInDataStore();
-                }, params.block.id);
+                }, args.block.id);
             }
         });
     }

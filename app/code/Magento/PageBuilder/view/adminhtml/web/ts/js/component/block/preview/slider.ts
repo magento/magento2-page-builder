@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/slick/slick.min";
+import events from "uiEvents";
 import _ from "underscore";
 import "../../../binding/focus";
 import ContentTypeConfigInterface from "../../../content-type-config.d";
@@ -15,7 +16,6 @@ import ContentTypeInterface from "../../../content-type.d";
 import ObservableUpdater from "../../../observable-updater";
 import PreviewCollection from "../../../preview-collection";
 import Config from "../../config";
-import EventBus from "../../event-bus";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
 import BlockCreateEventParamsInterface from "../block-create-event-params.d";
@@ -98,8 +98,8 @@ export default class Slider extends PreviewCollection {
 
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
-        EventBus.on("slider:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
-            if (params.id === this.parent.id) {
+        events.on("slider:block:ready", (args: BlockReadyEventParamsInterface) => {
+            if (args.id === this.parent.id) {
                 sliderReady = true;
             }
         });
@@ -108,15 +108,15 @@ export default class Slider extends PreviewCollection {
         this.parent.store.subscribe(this.buildSlick);
 
         // Set the active slide to the new position of the sorted slide
-        EventBus.on("previewSortable:sortupdate", (event: Event, params: PreviewSortableSortUpdateEventParams) => {
-            if (params.instance.id === this.parent.id) {
-                $(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
-                this.setActiveSlide(params.newPosition);
+        events.on("previewSortable:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
+            if (args.instance.id === this.parent.id) {
+                $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
+                this.setActiveSlide(args.newPosition);
             }
         });
         // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
-        EventBus.on("slide:block:removed", (event: Event, params: BlockRemovedParams) => {
-            if (params.block.parent.id === this.parent.id) {
+        events.on("slide:block:removed", (args: BlockRemovedParams) => {
+            if (args.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
                 const data = this.parent.children().slice(0);
                 this.parent.children([]);
@@ -124,8 +124,8 @@ export default class Slider extends PreviewCollection {
             }
         });
         // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
-        EventBus.on("slide:block:create", (event: Event, params: BlockCreateEventParamsInterface) => {
-            if (this.element && sliderReady && params.block.parent.id === this.parent.id) {
+        events.on("slide:block:create", (args: BlockCreateEventParamsInterface) => {
+            if (this.element && sliderReady && args.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
         });
@@ -133,9 +133,9 @@ export default class Slider extends PreviewCollection {
         // Set the stage to interacting when a slide is focused
         this.focusedSlide.subscribe((value: number) => {
             if (value !== null) {
-                EventBus.trigger("interaction:start", {});
+                events.trigger("interaction:start");
             } else {
-                EventBus.trigger("interaction:stop", {});
+                events.trigger("interaction:stop");
             }
         });
     }
@@ -247,16 +247,15 @@ export default class Slider extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((slide) => {
-            const mountFn = (event: Event, params: BlockMountEventParamsInterface) => {
-                if (params.id === slide.id) {
+            events.on("slide:block:mount", (args: BlockMountEventParamsInterface) => {
+                if (args.id === slide.id) {
                     _.delay(() => {
                         this.navigateToSlide(this.parent.children().length - 1);
                         slide.preview.onOptionEdit();
-                    }, 500);
-                    EventBus.off("slide:block:mount", mountFn);
+                    }, 500 );
+                    events.off(`slide:block:mount:${slide.id}`);
                 }
-            };
-            EventBus.on("slide:block:mount", mountFn);
+            }, `slide:block:mount:${slide.id}`);
             this.parent.addChild(slide, this.parent.children().length);
         });
     }
@@ -267,17 +266,17 @@ export default class Slider extends PreviewCollection {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        EventBus.on("slider:block:dropped:create", (event: Event, params: BlockReadyEventParamsInterface) => {
-            if (params.id === this.parent.id && this.parent.children().length === 0) {
+        events.on("slider:block:dropped:create", (args: BlockReadyEventParamsInterface) => {
+            if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
             }
         });
 
         // Block being removed from container
-        EventBus.on("slide:block:removed", (event, params: BlockRemovedParams) => {
-            if (params.parent.id === this.parent.id) {
+        events.on("slide:block:removed", (args: BlockRemovedParams) => {
+            if (args.parent.id === this.parent.id) {
                 // Mark the previous slide as active
-                const newIndex = (params.index - 1 >= 0 ? params.index - 1 : 0);
+                const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
                 (this as SliderPreview).setActiveSlide(newIndex);
                 (this as SliderPreview).setFocusedSlide(newIndex, true);
             }
@@ -286,14 +285,14 @@ export default class Slider extends PreviewCollection {
         // Capture when a block is duplicated within the container
         let duplicatedSlide: Slide;
         let duplicatedSlideIndex: number;
-        EventBus.on("slide:block:duplicate", (event, params: BlockDuplicateEventParams) => {
-            if (params.duplicateBlock.parent.id === this.parent.id) {
-                duplicatedSlide = (params.duplicateBlock as Slide);
-                duplicatedSlideIndex = params.index;
+        events.on("slide:block:duplicate", (args: BlockDuplicateEventParams) => {
+            if (args.duplicateBlock.parent.id === this.parent.id) {
+                duplicatedSlide = (args.duplicateBlock as Slide);
+                duplicatedSlideIndex = args.index;
             }
         });
-        EventBus.on("slide:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
-            if (duplicatedSlide && params.id === duplicatedSlide.id) {
+        events.on("slide:block:mount", (args: BlockMountEventParamsInterface) => {
+            if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 // Mark the new duplicate slide as active
                 (this as SliderPreview).navigateToSlide(duplicatedSlideIndex);
                 // Force the focus of the slide, as the previous slide will have focus

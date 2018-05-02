@@ -7,12 +7,12 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
+import events from "uiEvents";
 import _ from "underscore";
 import "./binding/live-edit";
 import appearanceConfig from "./component/block/appearance-config";
 import "./component/block/preview/sortable/binding";
 import {DataObject} from "./component/data-store";
-import EventBus from "./component/event-bus";
 import StyleAttributeFilter from "./component/format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "./component/format/style-attribute-mapper";
 import SortParamsInterface from "./component/sort-params.d";
@@ -161,8 +161,8 @@ export default class Preview {
      * @deprecated
      */
     public afterChildrenRender(element: Element): void {
-        EventBus.trigger("block:childrenRendered", {id: this.parent.id, block: this.parent, element});
-        EventBus.trigger(
+        events.trigger("block:childrenRendered", {id: this.parent.id, block: this.parent, element});
+        events.trigger(
             this.parent.config.name + ":block:childrenRendered",
             {
                 block: this.parent,
@@ -235,8 +235,8 @@ export default class Preview {
                 parent: this.parent.parent,
                 stageId: this.parent.stageId,
             };
-            EventBus.trigger("block:removed", params);
-            EventBus.trigger(this.parent.config.name + ":block:removed", params);
+            events.trigger("block:removed", params);
+            events.trigger(this.parent.config.name + ":block:removed", params);
         };
 
         if (this.isConfigured()) {
@@ -322,15 +322,15 @@ export default class Preview {
             index,
         };
 
-        EventBus.trigger("block:duplicate", duplicateEventParams);
-        EventBus.trigger(originalBlock.config.name + ":block:duplicate", duplicateEventParams);
+        events.trigger("block:duplicate", duplicateEventParams);
+        events.trigger(originalBlock.config.name + ":block:duplicate", duplicateEventParams);
     }
 
     /**
      * Bind events
      */
     protected bindEvents() {
-        EventBus.on("block:sortStart", this.onSortStart.bind(this.parent));
+        events.on("block:sortStart", this.onSortStart.bind(this.parent));
         this.parent.store.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
@@ -461,7 +461,7 @@ export default class Preview {
             _.extend({}, this.parent.store.get(this.parent.id)),
         );
         this.afterObservablesUpdated();
-        EventBus.trigger("previewObservables:updated", {preview: this});
+        events.trigger("previewObservables:updated", {preview: this});
     }
 
     /**
