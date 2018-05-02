@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/content-factory", "Magento_PageBuilder/js/preview-factory"], function (_loader, _underscore, _eventBus, _contentFactory, _previewFactory) {
+define(["Magento_PageBuilder/js/component/loader", "uiEvents", "underscore", "Magento_PageBuilder/js/content-factory", "Magento_PageBuilder/js/preview-factory"], function (_loader, _uiEvents, _underscore, _contentFactory, _previewFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -37,12 +37,12 @@ define(["Magento_PageBuilder/js/component/loader", "underscore", "Magento_PageBu
         });
       });
     }).then(function (block) {
-      _eventBus.trigger("block:create", {
+      _uiEvents.trigger("block:create", {
         id: block.id,
         block: block
       });
 
-      _eventBus.trigger(config.name + ":block:create", {
+      _uiEvents.trigger(config.name + ":block:create", {
         id: block.id,
         block: block
       });
@@ -83,12 +83,12 @@ define(["Magento_PageBuilder/js/component/loader", "underscore", "Magento_PageBu
 
   function fireBlockReadyEvent(block, childrenLength) {
     var fire = function fire() {
-      _eventBus.trigger("block:ready", {
+      _uiEvents.trigger("block:ready", {
         id: block.id,
         block: block
       });
 
-      _eventBus.trigger(block.config.name + ":block:ready", {
+      _uiEvents.trigger(block.config.name + ":block:ready", {
         id: block.id,
         block: block
       });
@@ -99,19 +99,17 @@ define(["Magento_PageBuilder/js/component/loader", "underscore", "Magento_PageBu
     } else {
       var mountCounter = 0;
 
-      var eventCallback = function eventCallback(event, params) {
-        if (params.block.parent.id === block.id) {
+      _uiEvents.on("block:mount", function (args) {
+        if (args.block.parent.id === block.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
             fire();
 
-            _eventBus.off("block:mount", eventCallback);
+            _uiEvents.off("block:mount:" + block.id);
           }
         }
-      };
-
-      _eventBus.on("block:mount", eventCallback);
+      }, "block:mount:" + block.id);
     }
   }
 

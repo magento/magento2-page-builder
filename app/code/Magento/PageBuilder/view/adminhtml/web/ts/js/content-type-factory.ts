@@ -4,11 +4,11 @@
  */
 
 import loadModule from "Magento_PageBuilder/js/component/loader";
+import events from "uiEvents";
 import _ from "underscore";
 import BlockMountEventParamsInterface from "./component/block/block-mount-event-params.d";
 import ConfigFieldInterface from "./component/block/config-field.d";
 import FieldDefaultsInterface from "./component/block/field-defaults.d";
-import EventBus from "./component/event-bus";
 import contentFactory from "./content-factory";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
@@ -55,8 +55,8 @@ export default function createContentType(
             });
         });
     }).then((block: ContentTypeInterface) => {
-        EventBus.trigger("block:create", {id: block.id, block});
-        EventBus.trigger(config.name + ":block:create", {id: block.id, block});
+        events.trigger("block:create", {id: block.id, block});
+        events.trigger(config.name + ":block:create", {id: block.id, block});
         fireBlockReadyEvent(block, childrenLength);
         return block;
     }).catch((error) => {
@@ -89,24 +89,23 @@ function prepareData(config, data: {}) {
  */
 function fireBlockReadyEvent(block: ContentTypeInterface, childrenLength: number) {
     const fire = () => {
-        EventBus.trigger("block:ready", {id: block.id, block});
-        EventBus.trigger(block.config.name + ":block:ready", {id: block.id, block});
+        events.trigger("block:ready", {id: block.id, block});
+        events.trigger(block.config.name + ":block:ready", {id: block.id, block});
     };
 
     if (childrenLength === 0) {
         fire();
     } else {
         let mountCounter = 0;
-        const eventCallback = (event: Event, params: BlockMountEventParamsInterface) => {
-            if (params.block.parent.id === block.id) {
+        events.on("block:mount", (args: BlockMountEventParamsInterface) => {
+            if (args.block.parent.id === block.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
                     fire();
-                    EventBus.off("block:mount", eventCallback);
+                    events.off(`block:mount:${block.id}`);
                 }
             }
-        };
-        EventBus.on("block:mount", eventCallback);
+        }, `block:mount:${block.id}` );
     }
 }
