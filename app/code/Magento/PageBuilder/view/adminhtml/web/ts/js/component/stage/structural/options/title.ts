@@ -28,6 +28,6 @@ export class TitleOption implements OptionInterface {
     }
 
     get template(): string {
-        return "Magento_PageBuilder/component/stage/structural/options/title.html";
+        return "Magento_PageBuilder/content-type/title";
     }
 }

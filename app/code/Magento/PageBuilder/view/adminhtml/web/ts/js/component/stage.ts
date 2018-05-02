@@ -32,7 +32,7 @@ export default class Stage {
     public userSelect: KnockoutObservable<boolean> = ko.observable(true);
     public stageLoadingMessage: string = $t("Please hold! we're just retrieving your content...");
     public store: DataStore = new DataStore();
-    private template: string = "Magento_PageBuilder/component/stage.html";
+    private template: string = "Magento_PageBuilder/content-type/preview";
     private masterFormatRenderer: MasterFormatRenderer = new MasterFormatRenderer();
     private collection: Collection = new Collection();
 

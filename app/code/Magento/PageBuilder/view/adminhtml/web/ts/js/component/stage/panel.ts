@@ -29,7 +29,7 @@ export default class Panel implements PanelInterface {
     public searchTitle: string = $t("Clear Search");
     public parent: PageBuilder;
     public id: string;
-    private template: string = "Magento_PageBuilder/component/stage/panel.html";
+    private template: string = "Magento_PageBuilder/panel";
 
     constructor(parent: PageBuilder) {
         this.parent = parent;

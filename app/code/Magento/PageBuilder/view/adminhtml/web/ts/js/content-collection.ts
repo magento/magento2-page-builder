@@ -12,6 +12,6 @@ export default class ContentCollection extends Content {
      * @returns {string}
      */
     get renderChildTemplate(): string {
-        return "Magento_PageBuilder/component/block/render/children.html";
+        return "Magento_PageBuilder/content-type/master-collection";
     }
 }

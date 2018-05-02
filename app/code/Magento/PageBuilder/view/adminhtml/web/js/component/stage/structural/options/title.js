@@ -30,7 +30,7 @@ define([], function () {
     _createClass(TitleOption, [{
       key: "template",
       get: function get() {
-        return "Magento_PageBuilder/component/stage/structural/options/title.html";
+        return "Magento_PageBuilder/content-type/title";
       }
     }]);
 

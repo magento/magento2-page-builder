@@ -72,7 +72,7 @@ define(["knockout"], function (_knockout) {
     _createClass(Options, [{
       key: "template",
       get: function get() {
-        return "Magento_PageBuilder/component/stage/structural/options.html";
+        return "Magento_PageBuilder/content-type/menu";
       }
     }]);
 

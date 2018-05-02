@@ -78,7 +78,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/p
        * @returns {string}
        */
       get: function get() {
-        return "Magento_PageBuilder/component/block/preview/children.html";
+        return "Magento_PageBuilder/content-type/preview-collection";
       }
     }]);
 

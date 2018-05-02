@@ -13,7 +13,7 @@
 define([
     'jquery',
     'underscore',
-    'text!Magento_PageBuilder/template/modal/dismissible-modal-content.html',
+    'text!Magento_PageBuilder/template/modal/dismissible-modal-content',
     'mage/translate',
     'Magento_Ui/js/modal/prompt',
     'mage/cookies'

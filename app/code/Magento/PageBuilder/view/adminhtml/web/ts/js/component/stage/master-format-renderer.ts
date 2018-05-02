@@ -11,7 +11,7 @@ import ContentTypeInterface from "../../content-type.d";
 import decodeAllDataUrlsInString from "../../utils/directives";
 
 export default class MasterFormatRenderer {
-    private rootTemplate: string = "Magento_PageBuilder/component/block/render/root.html";
+    private rootTemplate: string = "Magento_PageBuilder/content-type/master";
 
     /**
      * Render a tree of content types instances stored in knockout

@@ -13,7 +13,7 @@ import Stage from "./stage";
 import Panel from "./stage/panel";
 
 export default class PageBuilder implements PageBuilderInterface {
-    public template: string = "Magento_PageBuilder/component/page-builder.html";
+    public template: string = "Magento_PageBuilder/page-builder";
     public panel: Panel;
     public stage: Stage;
     public config: object;

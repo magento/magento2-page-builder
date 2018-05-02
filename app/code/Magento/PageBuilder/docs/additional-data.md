@@ -30,8 +30,8 @@ Use `additional_data` in your `/app/code/Magento/PageBuilder/etc/content_types/<
         <item name="uploaderConfig" xsi:type="array">
             <item name="url" xsi:type="object">Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider\Uploader\SaveUrl</item>
         </item>
-        <item name="previewTmpl" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview/image</item>
-        <item name="template" xsi:type="string">Magento_PageBuilder/form/element/stage/preview/uploader/image</item>
+        <item name="previewTmpl" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview</item>
+        <item name="template" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview/image</item>
         <item name="mediaGallery" xsi:type="array">
             <item name="openDialogUrl" xsi:type="object">Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider\Uploader\OpenDialogUrl</item>
             <item name="openDialogTitle" xsi:type="string" translate="true">Insert Images...</item>

@@ -24,7 +24,7 @@ export class Options {
     }
 
     get template(): string {
-         return "Magento_PageBuilder/component/stage/structural/options.html";
+         return "Magento_PageBuilder/content-type/menu";
     }
 
     /**

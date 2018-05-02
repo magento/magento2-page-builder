@@ -22,7 +22,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       this.userSelect = _knockout.observable(true);
       this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
       this.store = new _dataStore();
-      this.template = "Magento_PageBuilder/component/stage.html";
+      this.template = "Magento_PageBuilder/content-type/preview";
       this.masterFormatRenderer = new _masterFormatRenderer();
       this.collection = new _collection();
       this.parent = parent;

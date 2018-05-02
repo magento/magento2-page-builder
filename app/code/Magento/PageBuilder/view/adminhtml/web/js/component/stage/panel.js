@@ -20,7 +20,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
       this.searchTitle = (0, _translate)("Clear Search");
       this.parent = void 0;
       this.id = void 0;
-      this.template = "Magento_PageBuilder/component/stage/panel.html";
+      this.template = "Magento_PageBuilder/panel";
       this.parent = parent;
       this.id = this.parent.id;
       this.initListeners();

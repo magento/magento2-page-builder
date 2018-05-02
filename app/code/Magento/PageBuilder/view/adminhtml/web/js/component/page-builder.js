@@ -8,7 +8,7 @@ define(["knockout", "mageUtils", "underscore", "Magento_PageBuilder/js/component
   /*#__PURE__*/
   function () {
     function PageBuilder(config, initialValue) {
-      this.template = "Magento_PageBuilder/component/page-builder.html";
+      this.template = "Magento_PageBuilder/page-builder";
       this.panel = void 0;
       this.stage = void 0;
       this.config = void 0;

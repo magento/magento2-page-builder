@@ -24,7 +24,7 @@ define(["Magento_PageBuilder/js/content"], function (_content) {
        * @returns {string}
        */
       get: function get() {
-        return "Magento_PageBuilder/component/block/render/children.html";
+        return "Magento_PageBuilder/content-type/master-collection";
       }
     }]);
 
