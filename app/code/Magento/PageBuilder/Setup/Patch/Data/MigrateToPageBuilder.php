@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\PageBuilder\Setup\MigrateImagesToPageBuilder;
 
 class MigrateToPageBuilder implements DataPatchInterface
 {
@@ -24,17 +25,25 @@ class MigrateToPageBuilder implements DataPatchInterface
     private $moduleDataSetup;
 
     /**
+     * @var MigrateImagesToPageBuilder $imageMigration
+     */
+    private $imageMigration;
+
+    /**
      * Constructor
      *
      * @param \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
      * @param ModuleDataSetupInterface $moduleDataSetup
+     * @param MigrateImagesToPageBuilder $imageMigration
      */
     public function __construct(
         \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory,
-        ModuleDataSetupInterface $moduleDataSetup
+        ModuleDataSetupInterface $moduleDataSetup,
+        MigrateImagesToPageBuilder $imageMigration
     ) {
         $this->convertBlueFootToPageBuilderFactory = $convertBlueFootToPageBuilderFactory;
         $this->moduleDataSetup = $moduleDataSetup;
+        $this->imageMigration = $imageMigration;
     }
 
     /**
@@ -47,6 +56,7 @@ class MigrateToPageBuilder implements DataPatchInterface
         if ($this->moduleDataSetup->tableExists('gene_bluefoot_entity')) {
             $this->updateEavConfiguration();
             $this->convertBlueFootToPageBuilderFactory->create(['setup' => $this->moduleDataSetup])->convert();
+            $this->imageMigration->migrate();
         }
     }
 
