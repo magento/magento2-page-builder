@@ -44,6 +44,7 @@ class Html implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'html',
+            'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
         ];
 

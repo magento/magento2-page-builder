@@ -49,19 +49,23 @@ To add configuration for a new content type, create a file under the following l
 
 In this example, content type has only one element in the template.
 
-Let's create templates specified in the configuration. Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/simple.html`.
+Let's create templates specified in the configuration. 
+
+Optional: For template knockout bindings, you can use the original data-bind syntax, or utilize Magento custom Knockout.js bindings as seen in the template snippets below. `http://devdocs.magento.com/guides/v2.2/ui_comp_guide/concepts/knockout-bindings.html`
+
+Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/simple.html`.
 
 ``` HTML
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" data-bind="event: {mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
-    <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, html: data.main.html"></div>
-    <!-- ko template: getOptions().template --><!-- /ko -->
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
+    <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
+    <render args="getOptions().template" />
 </div>
 ```
 
 And master template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/master/simple.html`.
 
 ``` HTML
-<div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, html: data.main.html"></div>
+<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
 ```
 
 In the `simple.xml` above we defined border attributes and form for component. Let's create form `Vendor/ModuleName/view/adminhtml/ui_component/modulename_simple_form.xml` which enables the user to modify these attributes from the admin.
@@ -93,7 +97,7 @@ In the `simple.xml` above we defined border attributes and form for component. L
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="appearance" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
+    <fieldset name="appearance_fieldset" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
             <label translate="true">Appearance</label>
             <collapsible>true</collapsible>
@@ -190,7 +194,7 @@ define(["Magento_PageBuilder/js/preview"], function (Preview) {
 And the last part is to add button to a template.
 
 ``` HTML
-<!-- ko template: getOptions().template --><!-- /ko -->
+<render args="getOptions().template" />
 <button type="button" click="helloWorld" translate="'Display Hello World'"/>
 ```
 
@@ -262,16 +266,16 @@ Now need to create preview and render templates.
 `Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/complex.html`
 
 ``` HTML
-<div class="pagebuilder-content-type type-container pagebuilder-complex children-min-height" data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, event: {mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <!-- ko template: getOptions().template --><!-- /ko -->
-    <!-- ko template: previewChildTemplate --><!-- /ko -->
+<div class="pagebuilder-content-type type-container pagebuilder-complex children-min-height" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <render args="getOptions().template" />
+    <render args="previewChildTemplate" />
 </div>
 ```
 
 `Vendor/ModuleName/view/adminhtml/web/template/content-type/master/complex.html`
 ``` HTML
-<div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css">
-    <!-- ko template: renderChildTemplate --><!-- /ko -->
+<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
+    <render args="renderChildTemplate" />
 </div>
 ```
 

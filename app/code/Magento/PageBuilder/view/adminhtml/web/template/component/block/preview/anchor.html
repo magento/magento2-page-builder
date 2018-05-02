@@ -5,8 +5,8 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-anchor pagebuilder-no-blur pagebuilder-live-edit" data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css, event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-anchor pagebuilder-no-blur pagebuilder-live-edit" attr="data.main.attributes" css="data.main.css" ko-style="data.main.style" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
     <i class="icon-pagebuilder-anchor"></i>
-    <span data-bind="text: data.main.attributes().id ? '#' + data.main.attributes().id : $t('Anchor')"></span>
-    <!-- ko template: getOptions().template --><!-- /ko -->
+    <span text="data.main.attributes().id ? '#' + data.main.attributes().id \: $t('Anchor')"></span>
+    <render args="getOptions().template" />
 </div>
