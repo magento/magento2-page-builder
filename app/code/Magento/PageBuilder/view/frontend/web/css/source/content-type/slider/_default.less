@@ -1,0 +1,37 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+//
+//  Default appearance styles
+//  _____________________________________________
+
+div[data-role='slider'] {
+    display: none;
+
+    &.slick-initialized {
+        display: block;
+        margin-bottom: 35px!important; // required due to inline styles added by Slick
+    }
+
+    .slick-list,
+    .slick-track,
+    .slick-slide {
+        min-height: inherit;
+
+        > div {
+            overflow: hidden;
+            width: 100%;
+        }
+    }
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    color: initial;
+    padding: 10px;
+    text-decoration: none;
+}

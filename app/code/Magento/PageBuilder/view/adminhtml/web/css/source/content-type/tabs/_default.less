@@ -1,0 +1,117 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+//
+//  Default appearance styles
+//  _____________________________________________
+
+.pagebuilder-content-type.pagebuilder-tabs {
+    .tabs-navigation {
+        display: block;
+        font-size: 0;
+        margin: 0;
+        padding: 0;
+
+        & > :first-child  {
+            margin-left: 0 !important;
+        }
+
+        li.tab-header {
+            background: #f6f6f6;
+            border: 1px solid #ccc;
+            border-bottom: 0 !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+            display: inline-block;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+
+            a.tab-title {
+                border-right: 0;
+                color: black;
+                cursor: pointer !important;
+                display: block;
+                font-size: 14px;
+                font-weight: 600;
+                padding: 1.4rem 2rem;
+                position: relative;
+                transition: all .3s;
+                vertical-align: middle;
+                white-space: normal;
+
+                span.tab-title {
+                    display: block;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+
+            &:last-child {
+                border-right: 1px solid #ccc;
+            }
+
+            &.ui-state-active  {
+                background: #fff;
+                z-index: 19;
+
+                a.tab-title {
+                    position: relative;
+                    transition: all .3s;
+                }
+            }
+
+            &.focused {
+                .pagebuilder-options {
+                    .pagebuilder-options-visible;
+                }
+            }
+        }
+    }
+
+    .tabs-content {
+        border: 1px solid #ccc;
+        overflow: hidden;
+        position: relative;
+        z-index: 9;
+
+        > .element-children {
+            min-height: inherit;
+            padding: 0;
+        }
+
+        .pagebuilder-content-type.pagebuilder-tab {
+            min-height: inherit;
+
+            &.empty-container {
+                min-height: 220px;
+            }
+
+            > .element-children {
+                min-height: inherit;
+                padding: 0;
+            }
+        }
+    }
+
+    &.tab-align-left {
+        .tabs-content {
+            border-top-left-radius: 0 !important;
+        }
+    }
+    &.tab-align-right {
+        .tabs-content {
+            border-top-right-radius: 0 !important;
+        }
+    }
+}
+
+.pagebuilder-content-type-wrapper.ui-tabs-panel {
+    margin-top: 0;
+    min-height: inherit;
+    padding: 0;
+}
