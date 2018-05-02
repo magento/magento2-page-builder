@@ -13,7 +13,7 @@ use Magento\Framework\App\Filesystem\DirectoryList;
 /**
  * Moves images from old BlueFoot directory to new PageBuilder directory
  */
-class MoveImagesToPageBuilder
+class MoveImages
 {
     /**
      * @var \Magento\Framework\Filesystem

@@ -10,7 +10,7 @@ namespace Magento\PageBuilder\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\PageBuilder\Setup\MoveImagesToPageBuilder;
+use Magento\PageBuilder\Setup\MoveImages;
 
 class MigrateToPageBuilder implements DataPatchInterface
 {
@@ -25,7 +25,7 @@ class MigrateToPageBuilder implements DataPatchInterface
     private $moduleDataSetup;
 
     /**
-     * @var MoveImagesToPageBuilder $moveImages
+     * @var MoveImages $moveImages
      */
     private $moveImages;
 
@@ -34,12 +34,12 @@ class MigrateToPageBuilder implements DataPatchInterface
      *
      * @param \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
      * @param ModuleDataSetupInterface $moduleDataSetup
-     * @param MoveImagesToPageBuilder $moveImages
+     * @param MoveImages $moveImages
      */
     public function __construct(
         \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory,
         ModuleDataSetupInterface $moduleDataSetup,
-        MoveImagesToPageBuilder $moveImages
+        MoveImages $moveImages
     ) {
         $this->convertBlueFootToPageBuilderFactory = $convertBlueFootToPageBuilderFactory;
         $this->moduleDataSetup = $moduleDataSetup;
