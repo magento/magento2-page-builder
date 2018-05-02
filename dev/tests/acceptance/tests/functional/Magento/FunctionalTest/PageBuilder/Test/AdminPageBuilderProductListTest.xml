@@ -81,6 +81,85 @@
             <argument name="page" value="ProductListOnStorefront"/>
         </actionGroup>
     </test>
+    <test name="ProductListWithCountAddToCMSPage">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="MAGETWO-83938"/>
+            <title value="Product List - Add Count"/>
+            <description value="Validate that product count field works correctly. Verify on Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-84924"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-productList"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <createData entity="PageBuilderProductListSubCategory" stepKey="createPreReqCategory"/>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct1">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct2">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct3">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <createData entity="_defaultProduct" stepKey="createPreReqProduct4">
+                <requiredEntity createDataKey="createPreReqCategory"/>
+            </createData>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1"/>
+            <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2"/>
+            <deleteData createDataKey="createPreReqProduct3" stepKey="deletePreReqProduct3"/>
+            <deleteData createDataKey="createPreReqProduct4" stepKey="deletePreReqProduct4"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragProductIntoStage">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterProductListCategoryId">
+            <argument name="property" value="PageBuilderProductListProperty"/>
+            <argument name="input" value="$$createPreReqCategory.id$$"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterProductListCount">
+            <argument name="property" value="PageBuilderProductCountProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateProductCountInProductList" stepKey="validateProductCountStage">
+            <argument name="page" value="ProductListOnStage"/>
+            <argument name="count" value="3"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderProductListContentBlock"/>
+            <argument name="prefix" value="product-list"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateProductCountInProductList" stepKey="validateProductCountStorefront">
+            <argument name="page" value="ProductListOnStorefront"/>
+            <argument name="count" value="3"/>
+        </actionGroup>
+    </test>
     <test name="ProductListDelete">
         <annotations>
             <features value="Pagebuilder: Product List"/>
