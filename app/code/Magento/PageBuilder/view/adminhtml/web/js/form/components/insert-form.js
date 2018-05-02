@@ -12,9 +12,13 @@ define([
 
     return Insert.extend({
         defaults: {
+            appearanceIndex: '',
             configs: {},
             tracks: {
                 id: true
+            },
+            listens: {
+                appearance: 'onAppearanceChange'
             }
         },
 
@@ -31,6 +35,9 @@ define([
 
         /** @inheritdoc */
         render: function (params) {
+            this.availableAppearances = params.appearances;
+            this.title = params.title;
+            this.defaultNamespace = params.defaultNamespace;
             this.destroyInserted();
             this.setData(params);
 
@@ -54,6 +61,9 @@ define([
             this.externalForm = this.requestModule(formQuery);
             this.externalSource = this.requestModule(dataProviderQuery);
             this.setLinks({
+                appearance: 'ns = ' + params.namespace + ', index = ' + this.appearanceIndex + ':value'
+            }, 'imports');
+            this.setLinks({
                 providerData: dataProviderQuery + ':data',
                 prefix: formQuery + ':selectorPrefix',
                 id: dataProviderQuery + ':id'
@@ -72,6 +82,27 @@ define([
             return this._super().done(function (data) {
                 this.configs[params.namespace] = data;
             }.bind(this));
-        }
+        },
+
+        /**
+         * Re-render after appearance change
+         *
+         * @param {String} value
+         */
+        onAppearanceChange: function (value) {
+            var namespace = this.availableAppearances[value] && this.availableAppearances[value].form
+                || this.defaultNamespace;
+
+            if (namespace !== this.previousParams.namespace) {
+                this.render({
+                    namespace: namespace,
+                    id: this.id,
+                    data: this.externalSource().get('data'),
+                    appearances: this.availableAppearances,
+                    title: this.title,
+                    defaultNamespace: this.defaultNamespace
+                });
+            }
+        },
     });
 });

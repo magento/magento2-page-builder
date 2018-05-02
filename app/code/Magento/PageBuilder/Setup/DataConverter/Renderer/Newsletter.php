@@ -44,6 +44,7 @@ class Newsletter implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'newsletter',
+            'data-appearance' => 'default',
             'class' => $itemData['formData']['css_classes'] ?? '',
             'data-button-text' => $eavData['button_text'] ?? '',
             'data-label-text' => $eavData['label'] ?? '',

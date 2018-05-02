@@ -54,6 +54,7 @@ class Tabs implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'tabs',
+            'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
         ];
 

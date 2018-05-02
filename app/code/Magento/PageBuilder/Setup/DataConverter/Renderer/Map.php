@@ -44,6 +44,7 @@ class Map implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'map',
+            'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? '',
             'data-markers' => '[]',
         ];
