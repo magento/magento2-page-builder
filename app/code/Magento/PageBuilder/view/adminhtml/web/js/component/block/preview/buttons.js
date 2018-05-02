@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "uiEvents", "mage/translate", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_knockout, _uiEvents, _translate, _contentTypeFactory, _previewCollection, _config, _option) {
+define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_knockout, _translate, _uiEvents, _contentTypeFactory, _previewCollection, _config, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Buttons =

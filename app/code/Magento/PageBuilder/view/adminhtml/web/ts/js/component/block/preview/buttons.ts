@@ -4,8 +4,8 @@
  */
 
 import ko from "knockout";
-import events from "uiEvents";
 import $t from "mage/translate";
+import events from "uiEvents";
 import createContentType from "../../../content-type-factory";
 import PreviewCollection from "../../../preview-collection";
 import Config from "../../config";
