@@ -9,12 +9,11 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Setup;
 
 use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Framework\Filesystem\Directory\ReadInterface;
 
 /**
- * Migrates images from old BlueFoot directory to new PageBuilder directory
+ * Moves images from old BlueFoot directory to new PageBuilder directory
  */
-class MigrateImagesToPageBuilder
+class MoveImagesToPageBuilder
 {
     /**
      * @var \Magento\Framework\Filesystem
@@ -52,11 +51,11 @@ class MigrateImagesToPageBuilder
     }
 
     /**
-     * Perform image migration
+     * Move images from BlueFoot folder to PageBuilder folder
      *
      * @return void
      */
-    public function migrate(): void
+    public function move(): void
     {
         // check if /pub/media/gene-cms is readable
         $blueFootImagesPath = $this->directoryList->getPath('media') . DIRECTORY_SEPARATOR . 'gene-cms';
@@ -92,7 +91,7 @@ class MigrateImagesToPageBuilder
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $this->logger->error($e->getMessage());
         } catch (\Exception $e) {
-            $message = 'An error has occurred during image migration for PageBuilder. The error message was: ' .
+            $message = 'An error has occurred moving images for PageBuilder. The error message was: ' .
                 $e->getMessage();
             $this->logger->critical($message);
         }
