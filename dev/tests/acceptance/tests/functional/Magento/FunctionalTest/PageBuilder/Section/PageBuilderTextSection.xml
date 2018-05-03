@@ -10,6 +10,7 @@
     <section name="TextOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}]" parameterized="true"/>
         <element name="textAreaText" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}][.='{{arg2}}']" parameterized="true"/>
+        <element name="textAreaTextContains" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}][contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}]//p[contains(.,'{{arg2}}')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
@@ -30,15 +31,23 @@
         <element name="noPadding" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}][not(contains(@style,'padding:'))]" parameterized="true"/>
     </section>
     <section name="TextOnConfiguration">
-        <element name="textArea" type="text" selector="#pagebuilder_text_form_content"/>
+        <!-- WYSIWYG Enabled -->
         <element name="tinyMCEIFrame" type="text" selector="pagebuilder_text_form_content_ifr"/>
         <element name="textInIFrame" type="text" selector="//body//p[.='{{arg1}}']" parameterized="true"/>
         <element name="tinyMCEVariable" type="text" selector="(//body//span[contains(@class,'magento-variable') and .='{{arg1}}'])[{{arg2}}]" parameterized="true"/>
         <element name="tinyMCEWidget" type="text" selector="(//body//span[contains(@class,'magento-widget') and .='{{arg1}}'])[{{arg2}}]" parameterized="true"/>
+        <!-- WYSIWYG Disabled -->
+        <element name="textArea" type="text" selector="#pagebuilder_text_form_content"/>
+        <element name="textAreaId" type="text" selector="pagebuilder_text_form_content"/>
+        <element name="insertWidgetButton" type="text" selector="//button[contains(@class,'action-add-widget')][.='Insert Widget...']"/>
+        <element name="insertImageButton" type="text" selector="//button[contains(@class,'action-add-image')][.='Insert Image...']"/>
+        <element name="insertVariableButton" type="text" selector="//button[contains(@class,'add-variable')][.='Insert Variable...']"/>
     </section>
     <section name="TextOnStorefront">
         <element name="base" type="text" selector="(//div[@data-role='text'])[{{arg1}}]" parameterized="true"/>
         <element name="textAreaText" type="text" selector="(//div[@data-role='text'])[{{arg1}}][.='{{arg2}}']" parameterized="true"/>
+        <element name="textAreaWidget" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
+        <element name="textAreaVariable" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//a[contains(@href,'{{arg2}}{{arg3}}')]" parameterized="true"/>
         <element name="text" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//p[.='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
