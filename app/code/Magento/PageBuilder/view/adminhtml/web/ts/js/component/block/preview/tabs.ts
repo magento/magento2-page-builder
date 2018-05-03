@@ -360,6 +360,7 @@ export default class Tabs extends PreviewCollection {
                 duplicatedTab = args.duplicateBlock;
                 duplicatedTabIndex = args.index;
             }
+            this.buildTabs(args.index);
         });
         events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {
