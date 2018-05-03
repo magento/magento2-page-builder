@@ -8,10 +8,11 @@
 <div class="admin__field admin__field-align">
     <input type="text"
            ko-value="value"
+           ko-disabled="disabled"
            attr="id: uid, name: inputName"/>
 
-    <ol data-bind="foreach: options">
-        <li data-bind="click: function() { $parent.value(value) }, css: {active: $parent.value() == value, 'admin__field-align-small': $data.selectSize == 'small', 'admin__field-align-large': $data.selectSize == 'large'}">
+    <ol data-bind="foreach: options, css: {'_disabled': disabled}">
+        <li data-bind="click: function() { if(!$parent.disabled()) $parent.value(value) }, css: {active: $parent.value() == value, 'admin__field-align-small': $data.selectSize == 'small', 'admin__field-align-large': $data.selectSize == 'large'}, style: {'pointer-events': !$parent.disabled() ? 'auto' : 'none'}">
             <img if="$data.selectIcon" data-bind="attr:{src: $data.selectIcon}" aria-hidden="true"/>
             <!-- ko if: $data.selectSize == 'large' -->
                 <br if="$data.selectIcon">
