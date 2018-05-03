@@ -37,8 +37,8 @@ To add configuration for a new content type, create a file under the following l
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Vendor_ModuleNameCustom/content-type/preview/simple.html</preview_template>
-                    <render_template>Vendor_ModuleNameCustom/content-type/master/simple.html</render_template>
+                    <preview_template>Vendor_ModuleNameCustom/content-type/simple/default/preview</preview_template>
+                    <render_template>Vendor_ModuleNameCustom/content-type/simple/default/master</render_template>
                     <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
@@ -53,7 +53,7 @@ Let's create templates specified in the configuration.
 
 Optional: For template knockout bindings, you can use the original data-bind syntax, or utilize Magento custom Knockout.js bindings as seen in the template snippets below. `http://devdocs.magento.com/guides/v2.2/ui_comp_guide/concepts/knockout-bindings.html`
 
-Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/simple.html`.
+Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/simple/default/preview.html`.
 
 ``` HTML
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
@@ -62,7 +62,7 @@ Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content
 </div>
 ```
 
-And master template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/master/simple.html`.
+And master template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/simple/default/master.html`.
 
 ``` HTML
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
@@ -157,9 +157,10 @@ And to allow this form to be loaded in PageBuilder, let's create layout `Vendor/
             <uiComponent name="modulename_simple_form"/>
         </referenceContainer>
     </body>
-</page>```
+</page>
+```
 
-## Preview, PreviewCollection, Content and ContentCollection
+## Preview, PreviewCollection, Content, and ContentCollection
 
 If your content type has custom preview logic, you need to specify `preview_component`, otherwise the default one `Magento_PageBuilder/js/preview` will be used.
 
@@ -176,9 +177,7 @@ define(["Magento_PageBuilder/js/preview"], function (Preview) {
     };
 
     Simple.prototype = Object.create(Preview.prototype);
-    Simple.prototype.constructor = Custom;
-    
-    var super_ = Preview.prototype;
+    Simple.prototype.constructor = Simple;
 
     /**
      * Alert Hello World
@@ -235,8 +234,8 @@ Now, let's add content type that can contain other content types. Create configu
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Vendor_ModuleName/content-type/preview/complex.html</preview_template>
-                    <render_template>Vendor_ModuleName/content-type/master/complex.html</render_template>
+                    <preview_template>Vendor_ModuleName/content-type/complex/default/preview</preview_template>
+                    <render_template>Vendor_ModuleName/content-type/complex/default/master</render_template>
                     <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
@@ -252,7 +251,7 @@ Now we need to specify which content types can be inserted into our new content 
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
     <content_types>
-        <type name="heading" sortOrder="30" translate="label">
+        <type name="heading">
             <allowed_parents>
                 <parent name="complex"/>
             </allowed_parents>
@@ -263,7 +262,7 @@ Now we need to specify which content types can be inserted into our new content 
 
 Now need to create preview and render templates.
 
-`Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/complex.html`
+`Vendor/ModuleName/view/adminhtml/web/template/content-type/complex/default/preview.html`
 
 ``` HTML
 <div class="pagebuilder-content-type type-container pagebuilder-complex children-min-height" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
@@ -272,7 +271,7 @@ Now need to create preview and render templates.
 </div>
 ```
 
-`Vendor/ModuleName/view/adminhtml/web/template/content-type/master/complex.html`
+`Vendor/ModuleName/view/adminhtml/web/template/content-type/complex/default/master.html`
 ``` HTML
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
     <render args="renderChildTemplate" />

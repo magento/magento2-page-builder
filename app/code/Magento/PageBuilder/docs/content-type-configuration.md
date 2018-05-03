@@ -30,8 +30,9 @@ The following is an example of a content type configuration in `etc/content_type
     <type name="banner" translate="label" sortOrder="1">
         <label>Banner</label>
         <icon>icon-pagebuilder-image</icon>
-        <component>Magento_PageBuilder/js/component/block/banner</component>
-        <preview_component>Magento_PageBuilder/js/component/block/preview/banner</preview_component>
+        <component>Magento_PageBuilder/js/content-type</component>
+        <preview_component>Magento_PageBuilder/js/content-type/banner/preview</preview_component>
+        <content_component>Magento_PageBuilder/js/content</content_component>
         <form>pagebuilder_banner_form</form>
         <group>media</group>
         <allowed_parents>
@@ -123,8 +124,8 @@ The following is an example of a content type configuration in `etc/content_type
                         </converter>
                     </converters>
                 </data_mapping>
-                <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
-                <render_template>Magento_PageBuilder/component/block/render/banner.html</render_template>
+                <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
+                <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
                 <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
             </appearance>
             <appearance name="collage-left">
@@ -149,6 +150,7 @@ The following is an example of a content type configuration in `etc/content_type
 | `icon`              | Icon displayed on the menu.                                                                                                             |
 | `component`         | View model responsible for rendering the preview and master format.                                                                     |
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                    |
+| `content_component` | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                                    |
 | `form`              | UI component form used for editing the content type                                                                                     |
 | `group`             | Existing menu group that contains this content type.                                                                                    |
 | `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                      |
@@ -183,13 +185,13 @@ The `allowed_parents` element specifies which content types can accept this type
 The `appearances` element specifies how the content type renders in the admin preview and the master format.
 It controls the templates, how data is read from the master format, and how to apply style properties and attributes to the elements.
 
-| Element              | Description                                                                            |
-| -------------------- | -------------------------------------------------------------------------------------- |
-| `appearance`         | The name of the appearance. Every content type requires one default appearance.        |
-| ` data_mapping `     | Specifies how data is read from, saved to, and converted to and from the master format |
-| ` preview_template ` | Template used to display the element in the preview                                    |
-| ` render_template `  | Template used to render the content type to the master format                          |
-| ` reader `           | Reads data for the content type from the master format                                 |
+| Element             | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `appearance`        | The name of the appearance. Every content type requires one default appearance.        |
+| `data_mapping`      | Specifies how data is read from, saved to, and converted to and from the master format |
+| `preview_template`  | Template used to display the element in the preview                                    |
+| `render_template`   | Template used to render the content type to the master format                          |
+| `reader`            | Reads data for the content type from the master format                                 |
 
 The default reader is `Magento_PageBuilder/js/component/format/read/configurable`.
 It reads data based on the configuration specified in `data_mapping`.
@@ -198,8 +200,8 @@ It reads data based on the configuration specified in `data_mapping`.
 ``` xml
 <appearance name="poster" default="true">
     <data_mapping/>
-    <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
-    <render_template>Magento_PageBuilder/component/block/render/banner.html</render_template>
+    <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
+    <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
     <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
 </appearance>
 ```
