@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeInterface from "../content-type.d";
 import ContentTypeConfigInterface from "../content-type-config.d";
+import ContentTypeInterface from "../content-type.d";
 
 export default interface BlockDroppedParamsInterface {
     parent: ContentTypeInterface;

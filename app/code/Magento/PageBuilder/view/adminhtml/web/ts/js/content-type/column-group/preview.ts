@@ -2,8 +2,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 import $ from "jquery";
 import ko from "knockout";
+import events from "uiEvents";
 import _ from "underscore";
 import {createColumn} from "../../component/block/column-group/factory";
 import {resizeColumn, updateColumnWidth} from "../../component/block/column-group/resizing";
@@ -16,7 +18,6 @@ import {
 } from "../../component/block/preview/column-group/resizing";
 import ConfigContentBlock from "../../component/config";
 import Config from "../../component/config";
-import EventBus from "../../component/event-bus";
 import {Block as GroupBlock} from "../../component/stage/panel/group/block";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
@@ -66,23 +67,23 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, stageId);
 
-        EventBus.on("block:removed", (event, params: BlockRemovedParams) => {
-            if (params.parent.id === this.parent.id) {
-                this.spreadWidth(event, params);
+        events.on("block:removed", (args: BlockRemovedParams) => {
+            if (args.parent.id === this.parent.id) {
+                this.spreadWidth(event, args);
             }
         });
 
         // Listen for resizing events from child columns
-        EventBus.on("column:bindResizeHandle", (event, params) => {
+        events.on("column:bindResizeHandle", (args) => {
             // Does the events parent match the previews parent? (e.g. column group)
-            if (params.parent.id === this.parent.id) {
-                (this as ColumnGroupPreview).registerResizeHandle(params.column, params.handle);
+            if (args.parent.id === this.parent.id) {
+                (this as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
             }
         });
-        EventBus.on("column:initElement", (event, params) => {
+        events.on("column:initElement", (args) => {
             // Does the events parent match the previews parent? (e.g. column group)
-            if (params.parent.id === this.parent.id) {
-                (this as ColumnGroupPreview).bindDraggable(params.column);
+            if (args.parent.id === this.parent.id) {
+                (this as ColumnGroupPreview).bindDraggable(args.column);
             }
         });
 
@@ -146,7 +147,7 @@ export default class Preview extends PreviewCollection {
 
         column.parent.removeChild(column);
 
-        EventBus.trigger("block:instanceDropped", {
+        events.trigger("block:instanceDropped", {
             blockInstance: column,
             index: movePosition.insertIndex,
             parent: this,
@@ -270,7 +271,7 @@ export default class Preview extends PreviewCollection {
             this.resizeLastPosition = null;
             this.resizeMouseDown = true;
 
-            EventBus.trigger("interaction:start", {stageId: this.parent.stageId});
+            events.trigger("interaction:start", {stageId: this.parent.stageId});
         });
     }
 
@@ -301,11 +302,11 @@ export default class Preview extends PreviewCollection {
                 setDragColumn(columnInstance.parent);
                 this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
 
-                EventBus.trigger("column:drag:start", {
+                events.trigger("column:drag:start", {
                     column: columnInstance,
                     stageId: this.parent.stageId,
                 });
-                EventBus.trigger("interaction:start", {stageId: this.parent.stageId});
+                events.trigger("interaction:start", {stageId: this.parent.stageId});
             },
             stop: () => {
                 const draggedColumn: Column = getDragColumn();
@@ -323,11 +324,11 @@ export default class Preview extends PreviewCollection {
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
 
-                EventBus.trigger("column:drag:stop", {
+                events.trigger("column:drag:stop", {
                     column: draggedColumn,
                     stageId: this.parent.stageId,
                 });
-                EventBus.trigger("interaction:stop", {stageId: this.parent.stageId});
+                events.trigger("interaction:stop", {stageId: this.parent.stageId});
             },
         });
     }
@@ -357,7 +358,7 @@ export default class Preview extends PreviewCollection {
      */
     private endAllInteractions() {
         if (this.resizing() === true) {
-            EventBus.trigger("interaction:stop", {stageId: this.parent.stageId});
+            events.trigger("interaction:stop", {stageId: this.parent.stageId});
         }
 
         this.resizing(false);

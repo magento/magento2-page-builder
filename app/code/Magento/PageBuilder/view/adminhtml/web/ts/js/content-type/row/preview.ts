@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
+import events from "uiEvents";
 import _ from "underscore";
 import BlockMountEventParamsInterface from "../../component/block/block-mount-event-params.d";
 import BlockReadyEventParamsInterface from "../../component/block/block-ready-event-params.d";
@@ -65,13 +66,13 @@ export default class Preview extends PreviewCollection {
         super(parent, config, observableUpdater);
 
         this.parent.store.subscribe(this.buildJarallax);
-        EventBus.on("row:block:ready", (event: Event, params: BlockReadyEventParamsInterface) => {
-            if (params.id === this.parent.id) {
+        events.on("row:block:ready", (args: BlockReadyEventParamsInterface) => {
+            if (args.id === this.parent.id) {
                 this.buildJarallax();
             }
         });
-        EventBus.on("block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
-            if (params.block.parent.id === this.parent.id) {
+        events.on("block:mount", (args: BlockMountEventParamsInterface) => {
+            if (args.block.parent.id === this.parent.id) {
                 this.buildJarallax();
             }
         });

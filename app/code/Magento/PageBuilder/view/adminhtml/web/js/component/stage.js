@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/master-format-renderer"], function (_knockout, _translate, _alert, _underscore, _collection, _contentTypeFactory, _array, _dataStore, _eventBus, _stageBuilder, _masterFormatRenderer) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/data-store", "Magento_PageBuilder/js/component/stage-builder", "Magento_PageBuilder/js/component/stage/master-format-renderer"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _contentTypeFactory, _array, _dataStore, _stageBuilder, _masterFormatRenderer) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -48,7 +48,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
 
 
     _proto.ready = function ready() {
-      _eventBus.trigger("stage:ready:" + this.id, {
+      _uiEvents.trigger("stage:ready:" + this.id, {
         stage: this
       });
 
@@ -113,64 +113,64 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
       var _this = this;
 
       this.collection.getChildren().subscribe(function () {
-        return _eventBus.trigger("stage:updated", {
+        return _uiEvents.trigger("stage:updated", {
           stageId: _this.id
         });
       }); // Block dropped from left hand panel
 
-      _eventBus.on("block:dropped", function (event, params) {
-        if (params.stageId === _this.id) {
-          _this.onBlockDropped(event, params);
+      _uiEvents.on("block:dropped", function (args) {
+        if (args.stageId === _this.id) {
+          _this.onBlockDropped(args);
         }
       }); // Block instance being moved between structural elements
 
 
-      _eventBus.on("block:instanceDropped", function (event, params) {
-        if (params.stageId === _this.id) {
-          _this.onBlockInstanceDropped(event, params);
+      _uiEvents.on("block:instanceDropped", function (args) {
+        if (args.stageId === _this.id) {
+          _this.onBlockInstanceDropped(args);
         }
       }); // Block being removed from container
 
 
-      _eventBus.on("block:removed", function (event, params) {
-        if (params.stageId === _this.id) {
-          _this.onBlockRemoved(event, params);
+      _uiEvents.on("block:removed", function (args) {
+        if (args.stageId === _this.id) {
+          _this.onBlockRemoved(args);
         }
       }); // Block sorted within the same structural element
 
 
-      _eventBus.on("block:sorted", function (event, params) {
-        if (params.stageId === _this.id) {
-          _this.onBlockSorted(event, params);
+      _uiEvents.on("block:sorted", function (args) {
+        if (args.stageId === _this.id) {
+          _this.onBlockSorted(args);
         }
       }); // Observe sorting actions
 
 
-      _eventBus.on("block:sortStart", function (event, params) {
-        if (params.stageId === _this.id) {
-          _this.onSortingStart(event, params);
+      _uiEvents.on("block:sortStart", function (args) {
+        if (args.stageId === _this.id) {
+          _this.onSortingStart(args);
         }
       });
 
-      _eventBus.on("block:sortStop", function (event, params) {
-        if (params.stageId === _this.id) {
-          _this.onSortingStop(event, params);
+      _uiEvents.on("block:sortStop", function (args) {
+        if (args.stageId === _this.id) {
+          _this.onSortingStop(args);
         }
       }); // Any store state changes trigger a stage update event
 
 
       this.store.subscribe(function () {
-        return _eventBus.trigger("stage:updated", {
+        return _uiEvents.trigger("stage:updated", {
           stageId: _this.id
         });
       }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
       // can occur concurrently.
 
-      _eventBus.on("stage:updated", function (event, params) {
-        if (params.stageId === _this.id) {
+      _uiEvents.on("stage:updated", function (args) {
+        if (args.stageId === _this.id) {
           _underscore.debounce(function () {
             _this.masterFormatRenderer.applyBindings(_this.children).then(function (renderedOutput) {
-              return _eventBus.trigger("stage:renderTree:" + _this.id, {
+              return _uiEvents.trigger("stage:renderTree:" + _this.id, {
                 value: renderedOutput
               });
             });
@@ -178,11 +178,11 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
         }
       });
 
-      _eventBus.on("interaction:start", function () {
+      _uiEvents.on("interaction:start", function () {
         return _this.interacting(true);
       });
 
-      _eventBus.on("interaction:stop", function () {
+      _uiEvents.on("interaction:stop", function () {
         return _this.interacting(false);
       });
     };
@@ -194,7 +194,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
      */
 
 
-    _proto.onBlockRemoved = function onBlockRemoved(event, params) {
+    _proto.onBlockRemoved = function onBlockRemoved(params) {
       params.parent.removeChild(params.block); // Remove the instance from the data store
 
       params.parent.store.remove(params.block.id);
@@ -207,12 +207,12 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
      */
 
 
-    _proto.onBlockInstanceDropped = function onBlockInstanceDropped(event, params) {
+    _proto.onBlockInstanceDropped = function onBlockInstanceDropped(params) {
       var originalParent = params.blockInstance.parent;
       params.blockInstance.parent = params.parent;
       params.parent.parent.addChild(params.blockInstance, params.index);
 
-      _eventBus.trigger("block:moved", {
+      _uiEvents.trigger("block:moved", {
         block: params.blockInstance,
         index: params.index,
         newParent: params.parent,
@@ -222,24 +222,23 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
     /**
      * On block dropped into container
      *
-     * @param {Event} event
      * @param {BlockDroppedParams} params
      */
 
 
-    _proto.onBlockDropped = function onBlockDropped(event, params) {
+    _proto.onBlockDropped = function onBlockDropped(params) {
       var index = params.index || 0;
       new Promise(function (resolve, reject) {
         if (params.block) {
           return (0, _contentTypeFactory)(params.block.config, params.parent, params.stageId).then(function (block) {
             params.parent.addChild(block, index);
 
-            _eventBus.trigger("block:dropped:create", {
+            _uiEvents.trigger("block:dropped:create", {
               id: block.id,
               block: block
             });
 
-            _eventBus.trigger(params.block.config.name + ":block:dropped:create", {
+            _uiEvents.trigger(params.block.config.name + ":block:dropped:create", {
               id: block.id,
               block: block
             });
@@ -256,12 +255,11 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
     /**
      * On block sorted within it's own container
      *
-     * @param {Event} event
      * @param {BlockSortedParams} params
      */
 
 
-    _proto.onBlockSorted = function onBlockSorted(event, params) {
+    _proto.onBlockSorted = function onBlockSorted(params) {
       var originalIndex = _knockout.utils.arrayIndexOf(params.parent.children(), params.block);
 
       if (originalIndex !== params.index) {
@@ -271,23 +269,21 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "underscore",
     /**
      * On sorting start
      *
-     * @param {Event} event
      * @param {SortParamsInterface} params
      */
 
 
-    _proto.onSortingStart = function onSortingStart(event, params) {
+    _proto.onSortingStart = function onSortingStart(params) {
       this.showBorders(true);
     };
     /**
      * On sorting stop
      *
-     * @param {Event} event
      * @param {SortParamsInterface} params
      */
 
 
-    _proto.onSortingStop = function onSortingStop(event, params) {
+    _proto.onSortingStop = function onSortingStop(params) {
       this.showBorders(false);
     };
 

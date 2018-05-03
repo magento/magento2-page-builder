@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
+import events from "uiEvents";
 import Collection from "./collection";
-import EventBus from "./component/event-bus";
 import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
@@ -26,7 +26,7 @@ export default class ContentTypeCollection extends ContentType implements Conten
         super(parent, config, stageId);
         this.collection.getChildren()
             .subscribe(
-                () => EventBus.trigger("stage:updated", {stageId: this.stageId}),
+                () => events.trigger("stage:updated", {stageId: this.stageId}),
             );
     }
 
@@ -51,8 +51,8 @@ export default class ContentTypeCollection extends ContentType implements Conten
 
         // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
         _.defer(() => {
-            EventBus.trigger("block:mount", {id: child.id, block: child});
-            EventBus.trigger(child.config.name + ":block:mount", {id: child.id, block: child});
+            events.trigger("block:mount", {id: child.id, block: child});
+            events.trigger(child.config.name + ":block:mount", {id: child.id, block: child});
         });
     }
 

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/slick/slick.min", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection"], function (_jquery, _knockout, _translate, _slick, _underscore, _focus, _config, _eventBus, _option, _contentTypeFactory, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/slick/slick.min", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/focus", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection"], function (_jquery, _knockout, _translate, _slick, _uiEvents, _underscore, _focus, _config, _option, _contentTypeFactory, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -69,8 +69,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       }, 10);
       var sliderReady = false;
 
-      _eventBus.on("slider:block:ready", function (event, params) {
-        if (params.id === _this.parent.id) {
+      _uiEvents.on("slider:block:ready", function (args) {
+        if (args.id === _this.parent.id) {
           sliderReady = true;
         }
       });
@@ -80,17 +80,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       _this.parent.store.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
 
 
-      _eventBus.on("previewSortable:sortupdate", function (event, params) {
-        if (params.instance.id === _this.parent.id) {
-          (0, _jquery)(params.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
+      _uiEvents.on("previewSortable:sortupdate", function (args) {
+        if (args.instance.id === _this.parent.id) {
+          (0, _jquery)(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
 
-          _this.setActiveSlide(params.newPosition);
+          _this.setActiveSlide(args.newPosition);
         }
       }); // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
 
 
-      _eventBus.on("slide:block:removed", function (event, params) {
-        if (params.block.parent.id === _this.parent.id) {
+      _uiEvents.on("slide:block:removed", function (args) {
+        if (args.block.parent.id === _this.parent.id) {
           _this.forceContainerHeight();
 
           var data = _this.parent.children().slice(0);
@@ -102,8 +102,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       }); // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
 
 
-      _eventBus.on("slide:block:create", function (event, params) {
-        if (_this.element && sliderReady && params.block.parent.id === _this.parent.id) {
+      _uiEvents.on("slide:block:create", function (args) {
+        if (_this.element && sliderReady && args.block.parent.id === _this.parent.id) {
           _this.forceContainerHeight();
         }
       }); // Set the stage to interacting when a slide is focused
@@ -111,9 +111,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       _this.focusedSlide.subscribe(function (value) {
         if (value !== null) {
-          _eventBus.trigger("interaction:start", {});
+          _uiEvents.trigger("interaction:start");
         } else {
-          _eventBus.trigger("interaction:stop", {});
+          _uiEvents.trigger("interaction:stop");
         }
       });
 
@@ -242,19 +242,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       var _this2 = this;
 
       (0, _contentTypeFactory)(_config.getConfig("content_types").slide, this.parent, this.parent.stageId).then(function (slide) {
-        var mountFn = function mountFn(event, params) {
-          if (params.id === slide.id) {
+        _uiEvents.on("slide:block:mount", function (args) {
+          if (args.id === slide.id) {
             _underscore.delay(function () {
               _this2.navigateToSlide(_this2.parent.children().length - 1);
 
               slide.preview.onOptionEdit();
             }, 500);
 
-            _eventBus.off("slide:block:mount", mountFn);
+            _uiEvents.off("slide:block:mount:" + slide.id);
           }
-        };
-
-        _eventBus.on("slide:block:mount", mountFn);
+        }, "slide:block:mount:" + slide.id);
 
         _this2.parent.addChild(slide, _this2.parent.children().length);
       });
@@ -270,17 +268,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       _PreviewCollection.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
-      _eventBus.on("slider:block:dropped:create", function (event, params) {
-        if (params.id === _this3.parent.id && _this3.parent.children().length === 0) {
+      _uiEvents.on("slider:block:dropped:create", function (args) {
+        if (args.id === _this3.parent.id && _this3.parent.children().length === 0) {
           _this3.addSlide();
         }
       }); // Block being removed from container
 
 
-      _eventBus.on("slide:block:removed", function (event, params) {
-        if (params.parent.id === _this3.parent.id) {
+      _uiEvents.on("slide:block:removed", function (args) {
+        if (args.parent.id === _this3.parent.id) {
           // Mark the previous slide as active
-          var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
+          var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
           _this3.setActiveSlide(newIndex);
 
@@ -292,15 +290,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       var duplicatedSlide;
       var duplicatedSlideIndex;
 
-      _eventBus.on("slide:block:duplicate", function (event, params) {
-        if (params.duplicateBlock.parent.id === _this3.parent.id) {
-          duplicatedSlide = params.duplicateBlock;
-          duplicatedSlideIndex = params.index;
+      _uiEvents.on("slide:block:duplicate", function (args) {
+        if (args.duplicateBlock.parent.id === _this3.parent.id) {
+          duplicatedSlide = args.duplicateBlock;
+          duplicatedSlideIndex = args.index;
         }
       });
 
-      _eventBus.on("slide:block:mount", function (event, params) {
-        if (duplicatedSlide && params.id === duplicatedSlide.id) {
+      _uiEvents.on("slide:block:mount", function (args) {
+        if (duplicatedSlide && args.id === duplicatedSlide.id) {
           // Mark the new duplicate slide as active
           _this3.navigateToSlide(duplicatedSlideIndex); // Force the focus of the slide, as the previous slide will have focus
 

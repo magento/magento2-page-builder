@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/preview"], function (_map, _eventBus, _preview) {
+define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/preview"], function (_map, _uiEvents, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -22,8 +22,8 @@ define(["Magento_PageBuilder/js/utils/map", "Magento_PageBuilder/js/component/ev
       _BasePreview.prototype.bindEvents.call(this); // When a map is dropped for the first time open the edit panel
 
 
-      _eventBus.on("map:block:dropped:create", function (event, params) {
-        if (params.id === _this.parent.id) {
+      _uiEvents.on("map:block:dropped:create", function (args) {
+        if (args.id === _this.parent.id) {
           setTimeout(function () {
             _this.edit.open();
           }, 300);

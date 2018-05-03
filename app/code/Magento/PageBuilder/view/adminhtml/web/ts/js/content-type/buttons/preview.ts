@@ -5,9 +5,9 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "uiEvents";
 import BlockMountEventParamsInterface from "../../component/block/block-mount-event-params.d";
 import Config from "../../component/config";
-import EventBus from "../../component/event-bus";
 import {Option} from "../../component/stage/structural/options/option";
 import {OptionInterface} from "../../component/stage/structural/options/option.d";
 import createContentType from "../../content-type-factory";
@@ -20,8 +20,8 @@ export default class Preview extends PreviewCollection {
     public bindEvents() {
         super.bindEvents();
 
-        EventBus.on("buttons:block:dropped:create", (event: Event, params: BlockMountEventParamsInterface) => {
-            if (params.id === this.parent.id && this.parent.children().length === 0) {
+        events.on("buttons:block:dropped:create", (args: BlockMountEventParamsInterface) => {
+            if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addButton();
             }
         });

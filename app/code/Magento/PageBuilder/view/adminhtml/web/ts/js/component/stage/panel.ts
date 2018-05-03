@@ -7,10 +7,10 @@ import ko from "knockout";
 import "ko-draggable";
 import "ko-sortable";
 import $t from "mage/translate";
+import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Config from "../config";
-import EventBus from "../event-bus";
 import PageBuilder from "../page-builder";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
@@ -41,7 +41,7 @@ export default class Panel implements PanelInterface {
      * Init listeners
      */
     public initListeners(): void {
-        EventBus.on("stage:ready:" + this.id, () => {
+        events.on("stage:ready:" + this.id, () => {
             this.populateContentBlocks();
             this.isVisible(true);
         });
@@ -88,9 +88,31 @@ export default class Panel implements PanelInterface {
     }
 
     /**
+     * Traverse up to the WYSIWYG component and set as full screen
+     */
+    public fullScreen(): void {
+        events.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`);
+    }
+
+    /**
+     * Collapse the panel into the side of the UI
+     */
+    public collapse(): void {
+        this.isCollapsed(!this.isCollapsed());
+    }
+
+    /**
+     * Clear Search Results
+     */
+    public clearSearch(): void {
+        this.searchValue("");
+        this.searching(false);
+    }
+
+    /**
      * Populate the panel with the content blocks
      */
-    public populateContentBlocks(): void {
+    private populateContentBlocks(): void {
         const groups = Config.getConfig("groups");
         const contentBlocks = Config.getConfig("content_types");
 
@@ -126,27 +148,5 @@ export default class Panel implements PanelInterface {
         } else {
             console.warn( "Configuration is not properly initialized, please check the Ajax response." );
         }
-    }
-
-    /**
-     * Traverse up to the WYSIWYG component and set as full screen
-     */
-    public fullScreen(): void {
-        EventBus.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`, {});
-    }
-
-    /**
-     * Collapse the panel into the side of the UI
-     */
-    public collapse(): void {
-        this.isCollapsed(!this.isCollapsed());
-    }
-
-    /**
-     * Clear Search Results
-     */
-    public clearSearch(): void {
-        this.searchValue("");
-        this.searching(false);
     }
 }

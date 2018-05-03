@@ -4,7 +4,7 @@
  */
 
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
-import EventBus from "../../component/event-bus";
+import events from "uiEvents";
 import BasePreview from "../../preview";
 
 export default class Preview extends BasePreview {
@@ -16,8 +16,8 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         // When a map is dropped for the first time open the edit panel
-        EventBus.on("map:block:dropped:create", (event: Event, params: {[key: string]: any}) => {
-            if (params.id === this.parent.id) {
+        events.on("map:block:dropped:create", (args: {[key: string]: any}) => {
+            if (args.id === this.parent.id) {
                 setTimeout(() => {
                     this.edit.open();
                 }, 300);

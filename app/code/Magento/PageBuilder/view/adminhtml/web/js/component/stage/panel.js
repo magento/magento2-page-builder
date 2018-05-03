@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/panel/group", "Magento_PageBuilder/js/component/stage/panel/group/block"], function (_knockout, _koDraggable, _koSortable, _translate, _underscore, _config, _eventBus, _group, _block) {
+define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/panel/group", "Magento_PageBuilder/js/component/stage/panel/group/block"], function (_knockout, _koDraggable, _koSortable, _translate, _uiEvents, _underscore, _config, _group, _block) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -35,7 +35,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _eventBus.on("stage:ready:" + this.id, function () {
+      _uiEvents.on("stage:ready:" + this.id, function () {
         _this.populateContentBlocks();
 
         _this.isVisible(true);
@@ -78,6 +78,31 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
       }
     };
     /**
+     * Traverse up to the WYSIWYG component and set as full screen
+     */
+
+
+    _proto.fullScreen = function fullScreen() {
+      _uiEvents.trigger("pagebuilder:toggleFullScreen:" + this.parent.id);
+    };
+    /**
+     * Collapse the panel into the side of the UI
+     */
+
+
+    _proto.collapse = function collapse() {
+      this.isCollapsed(!this.isCollapsed());
+    };
+    /**
+     * Clear Search Results
+     */
+
+
+    _proto.clearSearch = function clearSearch() {
+      this.searchValue("");
+      this.searching(false);
+    };
+    /**
      * Populate the panel with the content blocks
      */
 
@@ -116,31 +141,6 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "underscore
       } else {
         console.warn("Configuration is not properly initialized, please check the Ajax response.");
       }
-    };
-    /**
-     * Traverse up to the WYSIWYG component and set as full screen
-     */
-
-
-    _proto.fullScreen = function fullScreen() {
-      _eventBus.trigger("pagebuilder:toggleFullScreen:" + this.parent.id, {});
-    };
-    /**
-     * Collapse the panel into the side of the UI
-     */
-
-
-    _proto.collapse = function collapse() {
-      this.isCollapsed(!this.isCollapsed());
-    };
-    /**
-     * Clear Search Results
-     */
-
-
-    _proto.clearSearch = function clearSearch() {
-      this.searchValue("");
-      this.searching(false);
     };
 
     return Panel;

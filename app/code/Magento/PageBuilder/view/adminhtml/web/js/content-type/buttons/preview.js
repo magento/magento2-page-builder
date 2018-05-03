@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection"], function (_knockout, _translate, _config, _eventBus, _option, _contentTypeFactory, _previewCollection) {
+define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection"], function (_knockout, _translate, _uiEvents, _config, _option, _contentTypeFactory, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -24,8 +24,8 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/component/config",
 
       _PreviewCollection.prototype.bindEvents.call(this);
 
-      _eventBus.on("buttons:block:dropped:create", function (event, params) {
-        if (params.id === _this2.parent.id && _this2.parent.children().length === 0) {
+      _uiEvents.on("buttons:block:dropped:create", function (args) {
+        if (args.id === _this2.parent.id && _this2.parent.children().length === 0) {
           _this2.addButton();
         }
       });
