@@ -53,16 +53,6 @@
         visibility: hidden;
     }
 }
-
-.slick-slider .slick-track,
-.slick-slider .slick-list {
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
-    -o-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-}
-
 .slick-slide {
     display: none;
     float: left;
@@ -96,6 +86,16 @@
         height: auto;
     }
 }
+
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
 .slick-arrow.slick-hidden {
     display: none;
 }
@@ -141,13 +141,6 @@
         opacity: .2;
     }
 
-    &:before,
-    &:after {
-        &:extend(.pagebuilder-icon all);
-        color: @color-gray-darken3;
-        font-size: 38px;
-        opacity: 1;
-    }
 
     &:hover {
         background: rgba(252, 252, 252, 1);
@@ -158,6 +151,14 @@
         &:before {
             color: @color-gray-darken4;
         }
+    }
+
+    &:before,
+    &:after {
+        &:extend(.pagebuilder-icon all);
+        color: @color-gray-darken3;
+        font-size: 38px;
+        opacity: 1;
     }
 
     // Reset luma styles applied to all buttons
