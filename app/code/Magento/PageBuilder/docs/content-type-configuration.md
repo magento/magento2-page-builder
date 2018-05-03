@@ -46,10 +46,10 @@ The following is an example of a content type configuration in `etc/content_type
                         <element name="main" path=".">
                             <style_properties>
                                 <property var="border" name="border_style"/>
-                                <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-                                <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
-                                <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
-                                <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins" converter="Magento_PageBuilder/js/converter/default/style/margins"/>
+                                <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                                <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                             </style_properties>
                             <attributes>
                                 <attribute var="name" name="data-role"/>
@@ -62,14 +62,14 @@ The following is an example of a content type configuration in `etc/content_type
                         <element name="link" path=".//a">
                             <attributes>
                                 <attribute var="link_url" name="href" />
-                                <attribute var="open_in_new_tab" name="target" converter="Magento_PageBuilder/js/converter/default/attribute/target"/>
+                                <attribute var="open_in_new_tab" name="target" converter="Magento_PageBuilder/js/converter/attribute/target"/>
                             </attributes>
                         </element>
                         <element name="overlay" path=".//a/div[2]/div">
                             <style_properties>
-                                <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                 <property var="background_color" name="background_color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color"/>
-                                <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/paddings" converter="Magento_PageBuilder/js/converter/default/style/paddings"/>
+                                <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                             </style_properties>
                             <attributes>
                                 <attribute var="overlay_color" name="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
@@ -80,22 +80,22 @@ The following is an example of a content type configuration in `etc/content_type
                         <element name="desktop_image" path=".//a/div[1]">
                             <style_properties>
                                 <property var="text_align" name="text_align"/>
-                                <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-                                <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
+                                <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
                                 <property var="background_position" name="background_position"/>
                                 <property var="background_size" name="background_size"/>
-                                <property var="background_repeat" name="background_repeat" converter="Magento_PageBuilder/js/converter/default/style/background-repeat"/>
+                                <property var="background_repeat" name="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
                                 <property var="background_attachment" name="background_attachment"/>
                             </style_properties>
                         </element>
                         <element name="mobile_image" path=".//a/div[2]">
                             <style_properties>
                                 <property var="text_align" name="text_align"/>
-                                <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-                                <property var="mobile_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
+                                <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                <property var="mobile_image" name="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
                                 <property var="background_position" name="background_position"/>
                                 <property var="background_size" name="background_size"/>
-                                <property var="background_repeat" name="background_repeat" converter="Magento_PageBuilder/js/converter/default/style/background-repeat"/>
+                                <property var="background_repeat" name="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
                                 <property var="background_attachment" name="background_attachment"/>
                             </style_properties>
                         </element>
@@ -116,7 +116,7 @@ The following is an example of a content type configuration in `etc/content_type
                         </element>
                     </elements>
                     <converters>
-                        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/default/empty-mobile-image">
+                        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/empty-mobile-image">
                             <config>
                                 <item name="desktop_image_variable" value="background_image"/>
                                 <item name="mobile_image_variable" value="mobile_image"/>
@@ -227,8 +227,8 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     <element name="main" path=".">
         <style_properties>
             <property var="border" name="border_style"/>
-            <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-            <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins" converter="Magento_PageBuilder/js/converter/default/style/margins"/>
+            <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+            <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
         </style_properties>
         <attributes>
             <attribute var="name" name="data-role"/>
@@ -238,7 +238,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     <element name="link" path=".//a">
         <attributes>
             <attribute var="link_url" name="href" />
-            <attribute var="open_in_new_tab" name="target" converter="Magento_PageBuilder/js/converter/default/attribute/target"/>
+            <attribute var="open_in_new_tab" name="target" converter="Magento_PageBuilder/js/converter/attribute/target"/>
         </attributes>
     </element>
     <element name="overlay" path=".//a/div[2]/div">
@@ -250,12 +250,12 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
     <element name="desktop_image" path=".//a/div[1]">
         <style_properties>
-            <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
+            <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
         </style_properties>
     </element>
     <element name="mobile_image" path=".//a/div[2]">
         <style_properties>
-            <property var="mobile_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
+            <property var="mobile_image" name="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
         </style_properties>
     </element>
     <element name="content" path=".//a/div[2]/div/div/div[1]">
@@ -275,7 +275,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
 </elements>
 <converters>
-    <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/default/empty-mobile-image">
+    <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/empty-mobile-image">
         <config>
             <item name="desktop_image_variable" value="background_image"/>
             <item name="mobile_image_variable" value="mobile_image"/>
@@ -301,7 +301,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 
 ``` xml
 <style_properties>
-    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins" converter="Magento_PageBuilder/js/converter/default/style/margins"/>
+    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
 </style_properties>
 ```
 
@@ -417,7 +417,7 @@ The `toDom` method is called before data is converted by element converters to u
 ``` xml
 <data_mapping>
     <converters>
-        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/default/empty-mobile-image">
+        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/empty-mobile-image">
             <config>
                 <item name="desktop_image_variable" value="background_image"/>
                 <item name="mobile_image_variable" value="mobile_image"/>
