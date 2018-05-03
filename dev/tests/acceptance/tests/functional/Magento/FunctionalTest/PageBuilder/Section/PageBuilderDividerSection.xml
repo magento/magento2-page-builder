@@ -11,8 +11,10 @@
     <section name="DividerOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]" parameterized="true"/>
         <element name="color" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noColor" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[not(contains(@style,'border-color:'))]" parameterized="true"/>
         <element name="thickness" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
         <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[contains(@style,'width: {{arg2}};')]" parameterized="true"/>
+        <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//div[not(contains(@style,'text-align:'))]" parameterized="true"/>
