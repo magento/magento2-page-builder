@@ -14,26 +14,34 @@ namespace Magento\PageBuilder\Model\Source;
 class TextAlignment extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype
 {
     /**
-     * @var array
-     */
-    private $optionsData;
-
-    /**
      * @var \Magento\Framework\View\Asset\Repository
      */
     private $assetRepo;
 
     /**
+     * @var array
+     */
+    private $optionsData;
+
+    /**
+     * @var string|null
+     */
+    private $optionsSize;
+
+    /**
      * TextAlignment constructor.
      * @param \Magento\Framework\View\Asset\Repository $assetRepo
      * @param array $optionsData
+     * @param string|null $optionsSize
      */
     public function __construct(
         \Magento\Framework\View\Asset\Repository $assetRepo,
-        array $optionsData = []
+        array $optionsData = [],
+        string $optionsSize = null
     ) {
         $this->assetRepo = $assetRepo;
         $this->optionsData = $optionsData;
+        $this->optionsSize  = $optionsSize;
     }
 
     /**
@@ -43,10 +51,11 @@ class TextAlignment extends \Magento\Eav\Model\Adminhtml\System\Config\Source\In
     {
         if ($this->optionsData) {
             foreach ($this->optionsData as $optionKey => $optionValue) {
-                if (isset($optionValue['selectIcon'])) {
-                    $optionValue['selectIcon'] = $this->assetRepo->getUrl($optionValue['selectIcon']);
-                    $this->optionsData[$optionKey] = $optionValue;
+                if (isset($optionValue['icon'])) {
+                    $optionValue['icon'] = $this->assetRepo->getUrl($optionValue['icon']);
                 }
+                $optionValue['size'] = $this->optionsSize ?? 'small';
+                $this->optionsData[$optionKey] = $optionValue;
             }
         }
         return $this->optionsData;

@@ -12,13 +12,13 @@
            attr="id: uid, name: inputName"/>
 
     <ol data-bind="foreach: options, css: {'_disabled': disabled}">
-        <li data-bind="click: function() { if(!$parent.disabled()) $parent.value(value) }, css: {active: $parent.value() == value, 'admin__field-align-small': $data.selectSize == 'small', 'admin__field-align-large': $data.selectSize == 'large', 'no-pointer-events': $parent.disabled()}">
-            <img if="$data.selectIcon" data-bind="attr:{src: $data.selectIcon}" aria-hidden="true"/>
-            <!-- ko if: $data.selectSize == 'large' -->
-                <br if="$data.selectIcon">
-                <div ifnot="$data.selectIcon" class="admin__field-align-spacer"></div>
+        <li data-bind="click: function() { if(!$parent.disabled()) $parent.value(value) }, css: {active: $parent.value() == value, 'admin__field-align-small': $data.size == 'small', 'admin__field-align-large': $data.size == 'large', 'no-pointer-events': $parent.disabled()}">
+            <img if="$data.icon" data-bind="attr:{src: $data.icon}" aria-hidden="true"/>
+            <!-- ko if: $data.size == 'large' -->
+                <br if="$data.icon">
+                <div ifnot="$data.icon" class="admin__field-align-spacer"></div>
             <!-- /ko -->
-            <span translate="$data.selectTitle"/>
+            <span translate="$data.title"/>
         </li>
     </ol>
 </div>
