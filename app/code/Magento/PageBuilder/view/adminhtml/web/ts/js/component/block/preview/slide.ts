@@ -155,10 +155,8 @@ export default class Slide extends Preview {
      */
     public getHref() {
         let href = "";
-        let linkType = "";
         if (!!this.previewData.link_url && typeof this.previewData.link_url() === "object") {
-            linkType = this.previewData.link_url().type;
-            href = this.previewData.link_url()[linkType];
+            href = this.previewData.link_url()[this.previewData.link_url().type];
         }
         return href;
     }

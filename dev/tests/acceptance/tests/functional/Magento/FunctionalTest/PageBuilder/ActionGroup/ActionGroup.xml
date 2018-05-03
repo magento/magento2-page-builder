@@ -318,17 +318,16 @@
         <arguments>
             <argument name="property" defaultValue=""/>
             <argument name="selection" defaultValue=""/>
-            <argument name="linkId" defaultValue="button_link" type="string"/>
             <argument name="linkType" defaultValue="URL" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect(linkId)}}" stepKey="waitForLinkSelect"/>
-        <seeElement selector="{{PageBuilderSection.LinkSelect(linkId)}}" stepKey="seeLinkSelect"/>
-        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect(linkId)}}" userInput="{{linkType}}" stepKey="seeLinkSelectedByDefault" />
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" userInput="{{linkType}}" stepKey="seeLinkSelectedByDefault" />
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElement time="5" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
         <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="selectOption" />
-        <fillField selector="{{PageBuilderSection.LinkInput(linkId)}}" userInput="{{property.value}}" stepKey="inputURLLink"/>
+        <fillField selector="{{PageBuilderSection.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="inputURLLink"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldGeneral">
