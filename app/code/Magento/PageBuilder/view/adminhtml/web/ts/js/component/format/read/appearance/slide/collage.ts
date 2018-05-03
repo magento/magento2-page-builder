@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import Link from "../../../../../converter/default/attribute/link";
+import Link from "../../../../../property/default/link";
 import {toHex} from "../../../../../utils/color-converter";
 import extractAlphaFromRgba from "../../../../../utils/extract-alpha-from-rgba";
 import {decodeUrl} from "../../../../../utils/image";

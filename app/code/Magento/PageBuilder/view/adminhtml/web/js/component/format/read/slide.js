@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/converter/default/attribute/link", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/extract-alpha-from-rgba", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/component/format/read/default"], function (_link, _colorConverter, _extractAlphaFromRgba, _image, _default) {
+define(["Magento_PageBuilder/js/property/default/link", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/extract-alpha-from-rgba", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/component/format/read/default"], function (_link, _colorConverter, _extractAlphaFromRgba, _image, _default) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
