@@ -12,19 +12,19 @@ define(["underscore"], function (_underscore) {
         category: {
           type: "Magento\\Catalog\\Block\\Category\\Widget\\Link",
           id_path: "category/:href",
-          template: "Magento_PageBuilder::pagebuilder/widget/link_href.phtml",
+          template: "Magento_PageBuilder::widget/link_href.phtml",
           type_name: "Catalog Category Link"
         },
         product: {
           type: "Magento\\Catalog\\Block\\Product\\Widget\\Link",
           id_path: "product/:href",
-          template: "Magento_PageBuilder::pagebuilder/widget/link_href.phtml",
+          template: "Magento_PageBuilder::widget/link_href.phtml",
           type_name: "Catalog Product Link"
         },
         page: {
           type: "Magento\\Cms\\Block\\Widget\\Page\\Link",
           page_id: ":href",
-          template: "Magento_PageBuilder::pagebuilder/widget/link_href.phtml",
+          template: "Magento_PageBuilder::widget/link_href.phtml",
           type_name: "CMS Page Link"
         }
       };
