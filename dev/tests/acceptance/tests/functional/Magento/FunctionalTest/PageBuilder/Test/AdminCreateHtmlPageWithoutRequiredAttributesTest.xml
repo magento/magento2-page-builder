@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="HtmlNoRequiredAttributes">
+        <annotations>
+            <features value="Pagebuilder: Html"/>
+            <stories value="MAGETWO-90489: Add Missing Tests For HTML"/>
+            <title value="Required Attributes"/>
+            <description value="Add HTML and validate save without required fields causes error"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90489 MAGETWO-91048"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-html"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- filter to html and add to block -->
+        <fillField stepKey="filterToHtmlBlock" selector="#search-blocks-input" userInput="HTML"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragHTMLOver">
+            <argument name="contentBlockType" value="PageBuilderHtmlProperty_invalid"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHtmlProperty_invalid"/>
+        </actionGroup>
+        <fillField stepKey="addHtmlToBlock" selector=".admin__control-textarea" userInput=""/>
+        <!-- attempt to save the panel and validate the error -->
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementVisible selector="{{HtmlOnStage.base('1')}}" stepKey="waitForErrorField"/>
+        <waitForElementVisible selector="{{HtmlOnStage.error}}" stepKey="waitForErrorMessage"/>
+    </test>
+</tests>
