@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {toHex} from "../../../utils/color-converter";
-import ElementConverterInterface from "../../element-converter-interface";
+import ElementConverterInterface from "../../../../converter/element-converter-interface";
+import {toHex} from "../../../../utils/color-converter";
 
 export default class OverlayColor implements ElementConverterInterface {
     /**

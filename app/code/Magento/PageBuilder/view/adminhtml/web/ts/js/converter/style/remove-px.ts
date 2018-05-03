@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {DataObject} from "../../../component/data-store";
-import {ElementConverterInterface} from "../../element-converter-interface";
+import {DataObject} from "../../component/data-store";
+import ElementConverterInterface from "../element-converter-interface";
 
 export default class RemovePx implements ElementConverterInterface {
     /**

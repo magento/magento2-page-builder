@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import PropertyReaderInterface from "../property-reader-interface";
 import Margins from "./margins";
 import Paddings from "./paddings";
+import PropertyReaderInterface from "./property-reader-interface";
 
 export default class MarginsAndPaddings implements PropertyReaderInterface {
     private margins: Margins;

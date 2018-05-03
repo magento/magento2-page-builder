@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import extractAlphaFromRgba from "../../../utils/extract-alpha-from-rgba";
-import ElementConverterInterface from "../../element-converter-interface";
+import ElementConverterInterface from "../../../../converter/element-converter-interface";
+import extractAlphaFromRgba from "../../../../utils/extract-alpha-from-rgba";
 
 export default class OverlayTransparency implements ElementConverterInterface {
     /**

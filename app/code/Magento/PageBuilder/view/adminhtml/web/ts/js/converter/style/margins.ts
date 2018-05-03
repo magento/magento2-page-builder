@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ElementConverterInterface from "../../element-converter-interface";
+import ElementConverterInterface from "../element-converter-interface";
 
 export default class Margins implements ElementConverterInterface {
     /**

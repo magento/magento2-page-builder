@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {DataObject} from "../../component/data-store";
-import {DataConverterInterface} from "../data-converter-interface";
+import {DataObject} from "../../../component/data-store";
+import {DataConverterInterface} from "../../../converter/data-converter-interface";
 
 export default class HeaderAlignmentClass implements DataConverterInterface {
 

@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import DataConverterInterface from "../data-converter-interface";
+import DataConverterInterface from "./data-converter-interface";
 
 export default class EmptyMobileImage implements DataConverterInterface {
     /**

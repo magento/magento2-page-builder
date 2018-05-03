@@ -3,10 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import {fromHex} from "../../../utils/color-converter";
-import extractAlphaFromRgba from "../../../utils/extract-alpha-from-rgba";
-import {percentToDecimal} from "../../../utils/number-converter";
-import ElementConverterInterface from "../../element-converter-interface";
+import ElementConverterInterface from "../../../../converter/element-converter-interface";
+import {fromHex} from "../../../../utils/color-converter";
+import {percentToDecimal} from "../../../../utils/number-converter";
 
 export default class OverlayColorTransparency implements ElementConverterInterface {
     /**

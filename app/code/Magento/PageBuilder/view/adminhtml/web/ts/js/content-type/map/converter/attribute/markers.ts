@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import {ElementConverterInterface} from "../../element-converter-interface";
+import {ElementConverterInterface} from "../../../../converter/element-converter-interface";
 
 export default class Markers implements ElementConverterInterface {
     /**

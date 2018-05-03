@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../../../component/config";
-import {toDataUrl} from "../../../utils/directives";
-import {decodeUrl} from "../../../utils/image";
-import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../../utils/url";
-import ElementConverterInterface from "../../element-converter-interface";
+import Config from "../../component/config";
+import {toDataUrl} from "../../utils/directives";
+import {decodeUrl} from "../../utils/image";
+import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
+import ElementConverterInterface from "../element-converter-interface";
 
 export default class BackgroundImage implements ElementConverterInterface {
     /**

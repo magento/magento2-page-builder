@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ElementConverterInterface from "../../element-converter-interface";
+import ElementConverterInterface from "../../../../converter/element-converter-interface";
 
 export default class ButtonVisibility implements ElementConverterInterface {
     /**
