@@ -334,6 +334,14 @@
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
+    <actionGroup name="selectAlignment">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector='//li[@name="{{property.value}}"]' stepKey="seeAlignment"/>
+        <click selector='//li[@name="{{property.value}}"]/img' stepKey="selectAlignment"/>
+    </actionGroup>
     <actionGroup name="pickColorSwatchCell">
         <arguments>
             <argument name="property" defaultValue=""/>
