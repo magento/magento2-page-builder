@@ -812,7 +812,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
             <group value="pagebuilder-divider-general"/>
-            <group value="tempi"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -866,5 +865,83 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementNotVisible selector="{{DividerOnStorefront.thickness('1', PageBuilderDividerLineThickness_0.value)}}" stepKey="waitForThicknessVisibleStorefront"/>
+    </test>
+    <test name="DividerNegativeLineThickness">
+        <annotations>
+            <features value="Pagebuilder: Divider"/>
+            <stories value="MAGETWO-90475: Add Missing Tests For Divider"/>
+            <title value="Divider - Negative Line Thickness"/>
+            <description value="Validate Zero Line Thickness For Divider"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-91044"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-divider"/>
+            <group value="pagebuilder-divider-general"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragDividerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_Negative"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateDivider" stepKey="validateStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="thickness" value="PageBuilderDividerLineThickness_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateDividerWithoutThickness" stepKey="validateStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
+        </actionGroup>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateColor">
+            <argument name="property" value="PageBuilderDividerLineColor_DefaultLower"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateThickness">
+            <argument name="property" value="PageBuilderDividerLineThickness_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateWidth">
+            <argument name="property" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateDividerWithoutThickness" stepKey="validateStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="color" value="PageBuilderDividerLineColor_Default"/>
+            <argument name="width" value="PageBuilderDividerLineWidth_Default"/>
+        </actionGroup>
     </test>
 </tests>
