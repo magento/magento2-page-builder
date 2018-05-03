@@ -365,7 +365,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
       _uiEvents.on("tab-item:block:mount", function (args) {
         if (duplicatedTab && args.id === duplicatedTab.id) {
-          _this3.setFocusedTab(duplicatedTabIndex, true);
+          _this3.refreshTabs(duplicatedTabIndex, true);
 
           duplicatedTab = duplicatedTabIndex = null;
         }

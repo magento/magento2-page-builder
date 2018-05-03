@@ -364,7 +364,7 @@ export default class Tabs extends PreviewCollection {
         });
         events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {
-                this.setFocusedTab(duplicatedTabIndex, true);
+                this.refreshTabs(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;
             }
             if (this.parent.id === args.block.parent.id) {
