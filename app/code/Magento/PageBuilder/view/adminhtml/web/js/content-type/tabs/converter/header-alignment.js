@@ -40,4 +40,4 @@ define([], function () {
 
   return HeaderAlignmentClass;
 });
-//# sourceMappingURL=header-alignment-class.js.map
+//# sourceMappingURL=header-alignment.js.map

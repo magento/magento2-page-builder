@@ -38,4 +38,4 @@ define(["Magento_PageBuilder/js/utils/directives"], function (_directives) {
 
   return Directives;
 });
-//# sourceMappingURL=directives.js.map
+//# sourceMappingURL=directive.js.map
