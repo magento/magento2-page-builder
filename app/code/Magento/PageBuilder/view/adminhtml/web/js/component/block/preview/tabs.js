@@ -66,6 +66,11 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
             _this.setFocusedTab(args.newPosition, true);
           });
         }
+      }); // Refresh tab contents and set the focus to the new position of the sorted tab
+
+
+      _uiEvents.on("previewSortable:sortupdate", function (args) {
+        _this.refreshTabs(args.newPosition, true);
       }); // Set the stage to interacting when a tab is focused
 
 

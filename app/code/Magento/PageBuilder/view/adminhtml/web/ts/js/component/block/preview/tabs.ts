@@ -23,6 +23,7 @@ import {BlockMountEventParamsInterface} from "../block-mount-event-params.d";
 import {BlockReadyEventParamsInterface} from "../block-ready-event-params.d";
 import {ActiveOptionsInterface} from "./options/active-options.d";
 import {SortableOptionsInterface} from "./options/sortable-options.d";
+import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Tabs extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable();
@@ -81,6 +82,10 @@ export default class Tabs extends PreviewCollection {
                     this.setFocusedTab(args.newPosition, true);
                 });
             }
+        });
+        // Refresh tab contents and set the focus to the new position of the sorted tab
+        events.on("previewSortable:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
+            this.refreshTabs(args.newPosition, true);
         });
         // Set the stage to interacting when a tab is focused
         let focusTabValue: number;
