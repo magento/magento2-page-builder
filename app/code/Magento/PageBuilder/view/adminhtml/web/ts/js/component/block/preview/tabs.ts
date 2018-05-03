@@ -73,7 +73,7 @@ export default class Tabs extends PreviewCollection {
         });
         // Set the active tab to the new position of the sorted tab
         events.on("tab-item:block:removed", (args: BlockCreateEventParamsInterface) => {
-            if (args.instance.id === this.parent.id) {
+            if (args.id === this.parent.id) {
                 this.refreshTabs();
 
                 // We need to wait for the tabs to refresh before executing the focus
