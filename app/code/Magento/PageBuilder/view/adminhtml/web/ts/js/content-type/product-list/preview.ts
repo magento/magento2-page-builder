@@ -4,7 +4,7 @@
  */
 
 import events from "uiEvents";
-import Config from "../../component/config";
+import Config from "../../config";
 import BasePreview from "../../preview";
 
 export default class Preview extends BasePreview {

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/block/element-converter-pool"], function (_loader, _config, _elementConverterPool) {
+define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/component/block/element-converter-pool"], function (_loader, _config, _elementConverterPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

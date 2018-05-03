@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import {DataObject} from "../../data-store";
+import {DataObject} from "../../../data-store";
 import AttributeMapper from "../attribute-mapper";
 import {ReadInterface} from "../read-interface";
 import StyleAttributeMapper from "../style-attribute-mapper";

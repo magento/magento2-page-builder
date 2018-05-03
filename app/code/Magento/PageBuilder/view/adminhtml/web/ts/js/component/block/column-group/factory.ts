@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 import createContentType from "../../../content-type-factory";
-import Config from "../../config";
+import Config from "../../../config";
 import Column from "../column";
 import ColumnGroup from "../column-group";
 

@@ -13,7 +13,7 @@ import BlockRemovedParamsInterface from "../../component/block-removed-params";
 import {BlockCreateEventParamsInterface} from "../../component/block/block-create-event-params.d";
 import {BlockMountEventParamsInterface} from "../../component/block/block-mount-event-params.d";
 import {BlockReadyEventParamsInterface} from "../../component/block/block-ready-event-params.d";
-import Config from "../../component/config";
+import Config from "../../config";
 import {Option} from "../../component/stage/structural/options/option";
 import {OptionInterface} from "../../component/stage/structural/options/option.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";

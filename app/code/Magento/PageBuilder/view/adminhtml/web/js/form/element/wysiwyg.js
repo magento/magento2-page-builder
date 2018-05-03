@@ -7,7 +7,7 @@ define([
     'Magento_Ui/js/form/element/wysiwyg',
     'mage/translate',
     'Magento_Ui/js/lib/core/events',
-    'Magento_PageBuilder/js/component/page-builder'
+    'Magento_PageBuilder/js/page-builder'
 ], function (Wysiwyg, $t, events, PageBuilder) {
     'use strict';
 

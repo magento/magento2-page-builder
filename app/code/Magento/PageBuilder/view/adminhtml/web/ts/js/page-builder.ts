@@ -10,7 +10,7 @@ import _ from "underscore";
 import Config from "./config";
 import { PageBuilderInterface } from "./page-builder.d";
 import Stage from "./stage";
-import Panel from "./stage/panel";
+import Panel from "./component/stage/panel";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";

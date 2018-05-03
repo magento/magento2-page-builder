@@ -16,8 +16,7 @@ import {
     findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
     getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth,
 } from "../../component/block/preview/column-group/resizing";
-import ConfigContentBlock from "../../component/config";
-import Config from "../../component/config";
+import Config from "../../config";
 import {Block as GroupBlock} from "../../component/stage/panel/group/block";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
@@ -62,7 +61,7 @@ export default class Preview extends PreviewCollection {
      */
     constructor(
         parent: EditableArea,
-        config: ConfigContentBlock,
+        config: Config,
         stageId,
     ) {
         super(parent, config, stageId);

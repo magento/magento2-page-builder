@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../../../component/config";
+import Config from "../../../config";
 import {toDataUrl} from "../../../utils/directives";
 import {decodeUrl} from "../../../utils/image";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../../utils/url";

@@ -7,7 +7,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import events from "uiEvents";
 import BlockMountEventParamsInterface from "../../component/block/block-mount-event-params.d";
-import Config from "../../component/config";
+import Config from "../../config";
 import {Option} from "../../component/stage/structural/options/option";
 import {OptionInterface} from "../../component/stage/structural/options/option.d";
 import createContentType from "../../content-type-factory";

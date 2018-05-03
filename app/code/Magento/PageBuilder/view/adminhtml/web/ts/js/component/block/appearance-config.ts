@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../config";
+import Config from "../../config";
 
 /**
  * Get config for appearance

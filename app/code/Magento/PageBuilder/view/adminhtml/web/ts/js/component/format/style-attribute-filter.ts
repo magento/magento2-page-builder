@@ -4,7 +4,7 @@
  */
 
 import _ from "underscore";
-import {DataObject} from "../data-store";
+import {DataObject} from "../../data-store";
 
 export default class StyleAttributeFilter {
     // Allowed style attributes

@@ -2,7 +2,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import {DataObject} from "../component/data-store";
+
+import {DataObject} from "../data-store";
 
 export interface ElementConverterInterface {
     /**

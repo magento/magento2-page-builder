@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeInterface from "../content-type.d";
+import ContentTypeInterface from "./content-type.d";
 
-export default interface BlockRemovedParamsInterface {
+export default interface BlockSortedParamsInterface {
     parent: ContentTypeInterface;
-    index: number;
     block: ContentTypeInterface;
+    index: number;
     stageId: string;
 }

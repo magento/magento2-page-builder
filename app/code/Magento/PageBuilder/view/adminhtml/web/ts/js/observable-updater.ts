@@ -8,7 +8,7 @@ import _ from "underscore";
 import appearanceConfig from "./component/block/appearance-config";
 import DataConverterPool from "./component/block/data-converter-pool";
 import ElementConverterPool from "./component/block/element-converter-pool";
-import {DataObject} from "./component/data-store";
+import {DataObject} from "./data-store";
 import {fromSnakeToCamelCase} from "./utils/string";
 
 export default class ObservableUpdater {

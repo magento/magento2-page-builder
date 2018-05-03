@@ -5,7 +5,7 @@
 
 import events from "uiEvents";
 import ContentTypeInterface from "../../content-type";
-import DataStore from "../data-store";
+import DataStore from "../../data-store";
 
 export default class Edit {
     private instance: ContentTypeInterface;

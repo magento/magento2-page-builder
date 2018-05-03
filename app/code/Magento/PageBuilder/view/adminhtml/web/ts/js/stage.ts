@@ -8,19 +8,19 @@ import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import _ from "underscore";
-import Collection from "../collection";
-import createContentType from "../content-type-factory";
-import ContentTypeInterface from "../content-type.d";
-import {moveArrayItem} from "../utils/array";
-import BlockDroppedParamsInterface from "./block-dropped-params.d.ts";
-import BlockInstanceDroppedParamsInterface from "./block-instance-dropped-params.d.ts";
+import Collection from "./collection";
+import createContentType from "./content-type-factory";
+import ContentTypeInterface from "./content-type.d";
+import {moveArrayItem} from "./utils/array";
+import BlockDroppedParamsInterface from "./block-dropped-params.d";
+import BlockInstanceDroppedParamsInterface from "./block-instance-dropped-params.d";
 import BlockRemovedParamsInterface from "./block-removed-params.d";
 import BlockSortedParamsInterface from "./block-sorted-params.d";
 import DataStore from "./data-store";
 import PageBuilderInterface from "./page-builder.d";
-import SortParamsInterface from "./sort-params.d.ts";
+import SortParamsInterface from "./sort-params.d";
 import buildStage from "./stage-builder";
-import MasterFormatRenderer from "./stage/master-format-renderer";
+import MasterFormatRenderer from "./component/stage/master-format-renderer";
 
 export default class Stage {
     public parent: PageBuilderInterface;

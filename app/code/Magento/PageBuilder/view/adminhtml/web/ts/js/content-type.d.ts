@@ -6,7 +6,7 @@
 import ContentTypeConfigInterface from "./content-type-config.d";
 import Preview from "./preview";
 import Content from "./content";
-import DataStore from "./component/data-store";
+import DataStore from "./data-store";
 
 export default interface ContentTypeInterface {
     id: string;

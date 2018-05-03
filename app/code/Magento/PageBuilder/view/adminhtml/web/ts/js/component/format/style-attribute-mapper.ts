@@ -4,8 +4,8 @@
  */
 
 import _ from "underscore";
-import Config from "../../component/config";
-import {DataObject} from "../../component/data-store";
+import Config from "../../config";
+import {DataObject} from "../../data-store";
 import {toDataUrl} from "../../utils/directives";
 import {decodeUrl} from "../../utils/image";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";

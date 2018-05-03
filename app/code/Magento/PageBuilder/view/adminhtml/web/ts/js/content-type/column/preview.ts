@@ -14,7 +14,7 @@ import {
     findShrinkableColumn, getAcceptedColumnWidth, getColumnsWidth,
     getColumnWidth, getMaxColumns, getSmallestColumnWidth,
 } from "../../component/block/preview/column-group/resizing";
-import Config from "../../component/config";
+import Config from "../../config";
 import {StyleAttributeMapperResult} from "../../component/format/style-attribute-mapper";
 import {Option} from "../../component/stage/structural/options/option";
 import {OptionInterface} from "../../component/stage/structural/options/option.d";

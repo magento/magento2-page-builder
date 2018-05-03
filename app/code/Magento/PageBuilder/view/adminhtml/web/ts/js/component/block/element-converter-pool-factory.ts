@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Magento_PageBuilder/js/component/loader";
-import Config from "../config";
+import loadModule from "Magento_PageBuilder/js/loader";
+import Config from "../../config";
 import ElementConverterPool from "./element-converter-pool";
 
 /**

@@ -3,12 +3,12 @@
  * See COPYING.txt for license details.
  */
 
-import loadComponent from "Magento_PageBuilder/js/component/loader";
+import loadComponent from "Magento_PageBuilder/js/loader";
 import _ from "underscore";
 import appearanceConfig from "../../../component/block/appearance-config";
 import ContentTypeConfigInterface from "../../../content-type-config.d";
-import Config from "../../config";
-import {DataObject} from "../../data-store";
+import Config from "../../../config";
+import {DataObject} from "../../../data-store";
 import {ReadInterface} from "../read-interface";
 
 export default class AttributeReaderComposite implements ReadInterface {

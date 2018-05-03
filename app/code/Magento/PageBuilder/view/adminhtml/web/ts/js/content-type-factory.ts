@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Magento_PageBuilder/js/component/loader";
+import loadModule from "Magento_PageBuilder/js/loader";
 import events from "uiEvents";
 import _ from "underscore";
 import BlockMountEventParamsInterface from "./component/block/block-mount-event-params.d";

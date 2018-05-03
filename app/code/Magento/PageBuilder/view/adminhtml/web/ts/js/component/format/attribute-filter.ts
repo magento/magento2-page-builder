@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import {DataObject} from "../data-store";
+import {DataObject} from "../../data-store";
 
 export default class AttributeFilter {
     // Allowed data attributes

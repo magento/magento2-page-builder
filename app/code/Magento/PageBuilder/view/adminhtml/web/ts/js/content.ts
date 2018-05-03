@@ -5,7 +5,7 @@
 
 import _ from "underscore";
 import appearanceConfig from "./component/block/appearance-config";
-import {DataObject} from "./component/data-store";
+import {DataObject} from "./data-store";
 import AttributeFilter from "./component/format/attribute-filter";
 import AttributeMapper from "./component/format/attribute-mapper";
 import StyleAttributeFilter from "./component/format/style-attribute-filter";
