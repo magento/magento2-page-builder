@@ -9,7 +9,7 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="TextOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}]" parameterized="true"/>
-        <element name="placeholderText" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}][.='Text']" parameterized="true"/>
+        <element name="textAreaText" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}][.='{{arg2}}']" parameterized="true"/>
         <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}]//p[contains(.,'{{arg2}}')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-textarea')]//div[contains(@class,'pagebuilder-text')])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
@@ -38,6 +38,7 @@
     </section>
     <section name="TextOnStorefront">
         <element name="base" type="text" selector="(//div[@data-role='text'])[{{arg1}}]" parameterized="true"/>
+        <element name="textAreaText" type="text" selector="(//div[@data-role='text'])[{{arg1}}][.='{{arg2}}']" parameterized="true"/>
         <element name="text" type="text" selector="(//div[@data-role='text'])[{{arg1}}]//p[.='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='text'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
