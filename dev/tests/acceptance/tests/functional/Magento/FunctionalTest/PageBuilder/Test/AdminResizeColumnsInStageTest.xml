@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="AdminResize1v6">
+        <annotations>
+            <features value="Pagebuilder: Column"/>
+            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
+            <title value="Remove a column from a row"/>
+            <description value="A user should be able to remove columns from rows."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-82861"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginActionGroup" stepKey="logIntoAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <!-- Create new Page, add column, delete second column -->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToPages"/>
+        <click selector="{{CmsPagesPageActionsSection.addNewPageButton}}" stepKey="addNewPage"/>
+        <fillField selector="{{CmsNewPagePageBasicFieldsSection.pageTitle}}" userInput="{{_newDefaultCmsPage.identifier}}" stepKey="fillTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="openSection"/>
+        <waitForPageLoad stepKey="wait1"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dragColumnToStage"/>
+        <waitForPageLoad stepKey="wait2"/>
+        <moveMouseOver selector="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnOptions}}" stepKey="mouseOverOptions"/>
+        <click selector="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnOptionsRemove}}" stepKey="removeSecondColumn"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('1')}}" stepKey="dragDividerToColumn"/>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="savePage"/>
+
+        <!-- Navigate to front end and verify -->
+        <amOnPage url="{{_newDefaultCmsPage.identifier}}" stepKey="NavigateToFrontEnd"/>
+        <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="1" stepKey="assertOnlyOneColumnRemains"/>
+        <seeNumberOfElements selector="{{DividerOnStorefront.base('1')}}" userInput="1" stepKey="assertDividerExists"/>
+    </test>
+    <test name="AdminResize1v5And1v1">
+        <annotations>
+            <group value="bananar"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginActionGroup" stepKey="logIntoAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <!-- Create new Page, add column, resize-->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToPages"/>
+        <click selector="{{CmsPagesPageActionsSection.addNewPageButton}}" stepKey="addNewPage"/>
+        <fillField selector="{{CmsNewPagePageBasicFieldsSection.pageTitle}}" userInput="{{_newDefaultCmsPage.identifier}}" stepKey="fillTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="openSection"/>
+        <waitForPageLoad stepKey="wait1"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dragColumnToStage"/>
+        <waitForPageLoad stepKey="wait2"/>
+        <!-- Grab grid guide width -->
+        <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(5)').clientWidth" stepKey="guideWidth"/>
+        <!-- Resize Columns 5:1-->
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="dragColumnOneToFive"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('1')}}" stepKey="dragDividerToColumn1"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('2')}}" stepKey="dragDividerToColumn2"/>
+        <!--Verify column size-->
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="savePage"/>
+        <!--Navigate to front end and verify -->
+        <amOnPage url="{{_newDefaultCmsPage.identifier}}" stepKey="NavigateToFrontEnd"/>
+        <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="2" stepKey="assertTwoColumnsExist"/>
+        <seeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="assertDivider1Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('2')}}" stepKey="assertDivider2Exists"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">5</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+    <test name="AdminResize1v4And2v1">
+        <annotations>
+            <group value="bananar"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginActionGroup" stepKey="logIntoAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <!-- Create new Page, add column, resize-->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToPages"/>
+        <click selector="{{CmsPagesPageActionsSection.addNewPageButton}}" stepKey="addNewPage"/>
+        <fillField selector="{{CmsNewPagePageBasicFieldsSection.pageTitle}}" userInput="{{_newDefaultCmsPage.identifier}}" stepKey="fillTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="openSection"/>
+        <waitForPageLoad stepKey="wait1"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dragColumnToStage"/>
+        <waitForPageLoad stepKey="wait2"/>
+        <!-- Grab grid guide width (-8 due to how picky the guide is)-->
+        <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(4)').clientWidth-8" stepKey="guideWidth"/>
+        <!-- Resize Columns 4:2, then add 1 column for 4:1:1, then add dividers to all-->
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumn1ToFour"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.columnX('2')}}" stepKey="dragColumnToColumn2"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('1')}}" stepKey="dragDividerToColumn1"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('2')}}" stepKey="dragDividerToColumn2"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('3')}}" stepKey="dragDividerToColumn3"/>
+        <!--Verify column ratio-->
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="savePage"/>
+        <!--Navigate to front end and verify -->
+        <amOnPage url="{{_newDefaultCmsPage.identifier}}" stepKey="NavigateToFrontEnd"/>
+        <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="3" stepKey="assertTwoColumnsExist"/>
+        <seeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="assertDivider1Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('2')}}" stepKey="assertDivider2Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('3')}}" stepKey="assertDivider3Exists"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">4</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+    <test name="AdminResizeColumn2v3">
+        <annotations>
+            <group value="bananar"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginActionGroup" stepKey="logIntoAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <!-- Create new Page, add column, resize-->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToPages"/>
+        <click selector="{{CmsPagesPageActionsSection.addNewPageButton}}" stepKey="addNewPage"/>
+        <fillField selector="{{CmsNewPagePageBasicFieldsSection.pageTitle}}" userInput="{{_newDefaultCmsPage.identifier}}" stepKey="fillTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="openSection"/>
+        <waitForPageLoad stepKey="wait1"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dragColumnToStage"/>
+        <waitForPageLoad stepKey="wait2"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('1')}}" stepKey="dragDividerToColumn1"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('2')}}" stepKey="dragDividerToColumn2"/>
+        <waitForPageLoad stepKey="wait3"/>
+        <!-- Do not resize, Verify column size-->
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="savePage"/>
+        <!--Navigate to front end and verify -->
+        <amOnPage url="{{_newDefaultCmsPage.identifier}}" stepKey="NavigateToFrontEnd"/>
+        <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="2" stepKey="assertTwoColumnsExist"/>
+        <seeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="assertDivider1Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('2')}}" stepKey="assertDivider2Exists"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+
+    <test name="AdminResize1v3And1v2And1v1">
+        <annotations>
+            <group value="bananar"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginActionGroup" stepKey="logIntoAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <!-- Create new Page, add column, resize-->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToPages"/>
+        <click selector="{{CmsPagesPageActionsSection.addNewPageButton}}" stepKey="addNewPage"/>
+        <fillField selector="{{CmsNewPagePageBasicFieldsSection.pageTitle}}" userInput="{{_newDefaultCmsPage.identifier}}" stepKey="fillTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="openSection"/>
+        <waitForPageLoad stepKey="wait1"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dragColumnToStage"/>
+        <waitForPageLoad stepKey="wait2"/>
+        <!-- Grab grid guide width at 5 -->
+        <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(5)').clientWidth" stepKey="guideWidth"/>
+        <!-- Add 1 column to column 2, resize column 2, then add dividers to all-->
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.columnX('2')}}" stepKey="dragColumnToColumn2"/>
+        <waitForPageLoad stepKey="wait3"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn2ToFive"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('1')}}" stepKey="dragDividerToColumn1"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('2')}}" stepKey="dragDividerToColumn2"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('3')}}" stepKey="dragDividerToColumn3"/>
+        <!--Verify column ratio (*10/10 to maintain one decimal point)-->
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth}*10)/10" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="float">1.5</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="savePage"/>
+        <!--Navigate to front end and verify -->
+        <amOnPage url="{{_newDefaultCmsPage.identifier}}" stepKey="NavigateToFrontEnd"/>
+        <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="3" stepKey="assertTwoColumnsExist"/>
+        <seeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="assertDivider1Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('2')}}" stepKey="assertDivider2Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('3')}}" stepKey="assertDivider3Exists"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend}*10)/10" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">1.5</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+
+    <test name="AdminResize1v3And3v1">
+        <annotations>
+            <group value="bananar"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginActionGroup" stepKey="logIntoAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <!-- Create new Page, add column, resize-->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToPages"/>
+        <click selector="{{CmsPagesPageActionsSection.addNewPageButton}}" stepKey="addNewPage"/>
+        <fillField selector="{{CmsNewPagePageBasicFieldsSection.pageTitle}}" userInput="{{_newDefaultCmsPage.identifier}}" stepKey="fillTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="openSection"/>
+        <waitForPageLoad stepKey="wait1"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dragColumnToStage"/>
+        <waitForPageLoad stepKey="wait2"/>
+        <!-- Add 3 column for 3:1:1:1, then add dividers to all-->
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.columnX('2')}}" stepKey="dragColumnToColumn2"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.columnX('3')}}" stepKey="dragColumnToColumn3"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('1')}}" stepKey="dragDividerToColumn1"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('2')}}" stepKey="dragDividerToColumn2"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('3')}}" stepKey="dragDividerToColumn3"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('4')}}" stepKey="dragDividerToColumn4"/>
+        <waitForPageLoad stepKey="wait3"/>
+        <!--Verify column ratio-->
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="savePage"/>
+        <!--Navigate to front end and verify -->
+        <amOnPage url="{{_newDefaultCmsPage.identifier}}" stepKey="NavigateToFrontEnd"/>
+        <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="4" stepKey="assertTwoColumnsExist"/>
+        <seeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="assertDivider1Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('2')}}" stepKey="assertDivider2Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('3')}}" stepKey="assertDivider3Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('4')}}" stepKey="assertDivider4Exists"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('4')}}').clientWidth" stepKey="columnFourWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">3</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+    <test name="AdminResize3v2">
+        <annotations>
+            <group value="banana"/>
+            <!-- SKIPPED: interaction with the second grid guide is incredibly flaky-->
+            <group value="skip"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginActionGroup" stepKey="logIntoAdmin"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <!-- Create new Page, add column, resize-->
+        <amOnPage url="{{CmsPagesPage.url}}" stepKey="navigateToPages"/>
+        <click selector="{{CmsPagesPageActionsSection.addNewPageButton}}" stepKey="addNewPage"/>
+        <fillField selector="{{CmsNewPagePageBasicFieldsSection.pageTitle}}" userInput="{{_newDefaultCmsPage.identifier}}" stepKey="fillTitle"/>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="openSection"/>
+        <waitForPageLoad stepKey="wait1"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.dropAreaInDefaultStage}}" stepKey="dragColumnToStage"/>
+        <waitForPageLoad stepKey="wait2"/>
+        <!-- Grab grid guide width-->
+        <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(2)').clientWidth" stepKey="guideWidth"/>
+        <!-- Add columns, resize to 2:2:2-->
+        <dragAndDrop selector1="{{PageBuilderColumnSection.draggableColumnInPanel}}" selector2="{{PageBuilderColumnSection.columnX('1')}}" stepKey="dragColumnToColumn1"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('2')}}" x="$guideWidth" stepKey="resizeColumn1ToTwo"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumn2ToTwo"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('1')}}" stepKey="dragDividerToColumn1"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('2')}}" stepKey="dragDividerToColumn2"/>
+        <dragAndDrop selector1="{{DividerOnStage.draggableDividerInPanel}}" selector2="{{PageBuilderColumnSection.columnX('3')}}" stepKey="dragDividerToColumn3"/>
+        <!--Verify column ratio-->
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <click selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="savePage"/>
+        <!--Navigate to front end and verify -->
+        <amOnPage url="{{_newDefaultCmsPage.identifier}}" stepKey="NavigateToFrontEnd"/>
+        <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="3" stepKey="assertTwoColumnsExist"/>
+        <seeElement selector="{{DividerOnStorefront.base('1')}}" stepKey="assertDivider1Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('2')}}" stepKey="assertDivider2Exists"/>
+        <seeElement selector="{{DividerOnStorefront.base('3')}}" stepKey="assertDivider3Exists"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('1')}}').clientWidth" stepKey="columnOneWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('2')}}').clientWidth" stepKey="columnTwoWidthFrontend"/>
+        <executeJS function="return document.querySelector('{{ColumnsOnFrontend.columnX('3')}}').clientWidth" stepKey="columnThreeWidthFrontend"/>
+        <executeJS function="return Math.round({$columnOneWidthFrontend}/{$columnTwoWidthFrontend})" stepKey="columnRatioFrontend"/>
+        <assertEquals stepKey="assertFrontendRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatioFrontend</actualResult>
+        </assertEquals>
+    </test>
+</tests>
