@@ -71,4 +71,15 @@
         <waitForElementVisible selector="{{TextOnConfiguration.tinyMCEWidget(widget.editPanelValue, '1')}}" stepKey="waitForWidget"/>
         <switchToIFrame stepKey="exitIFrame"/>
     </actionGroup>
+    <actionGroup name="validateTextInTinyMCE">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+            <argument name="section" defaultValue="TextOnConfiguration"/>
+        </arguments>
+        <comment userInput="Validating Text In Tiny MCE" stepKey="commentValidateTextTinyMCE"/>
+        <waitForElementVisible selector="#{{section.tinyMCEIFrame}}" stepKey="waitForIFrame"/>
+        <switchToIFrame selector="{{section.tinyMCEIFrame}}" stepKey="switchToIFrame"/>
+        <waitForElementVisible selector="{{section.textInIFrame(property.value)}}" stepKey="waitForTextVisible"/>
+        <switchToIFrame stepKey="exitIFrame"/>
+    </actionGroup>
 </actionGroups>
