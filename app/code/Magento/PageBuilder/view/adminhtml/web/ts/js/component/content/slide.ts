@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import _ from 'underscore';
 import ko from "knockout";
 import $t from "mage/translate";
 import Content from "../../content";
@@ -20,6 +21,19 @@ import {OptionInterface} from "../stage/structural/options/option.d";
 
 export default class Slide extends Content {
 
+    /**
+     * Get data for attr binding, example {"data-role": "element"}
+     *
+     * @returns {DataObject}
+     * @deprecated
+     */
+    public getAttributes(element: string): {} {
+        const attributes = _.clone(super.getAttributes(element));
+        return {
+            ...attributes,
+            "data-slide-name": this.getData(element).slide_name,
+        };
+    }
     /**
      * Get the slide wrapper styles for the storefront
      *

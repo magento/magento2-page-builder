@@ -21,6 +21,7 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
      */
     _proto.read = function read(element) {
       var bgMobileImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[0].style.backgroundImage;
+      var slideName = element.getAttribute("data-slide-name");
       var linkUrl = element.querySelector("a").getAttribute("href");
       var target = element.querySelector("a").getAttribute("target");
       var bgImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[1].style.backgroundImage;
@@ -36,6 +37,7 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
       var buttonText = button ? button.textContent : "";
       var buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
       var response = {
+        slide_name: slideName ? slideName : "",
         background_image: (0, _image.decodeUrl)(bgImage),
         background_size: element.style.backgroundSize,
         button_text: buttonText,
