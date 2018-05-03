@@ -23,7 +23,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.focusedTab = _knockout.observable();
-      _this.lockInteracting = void 0;
+      _this.disableInteracting = void 0;
       _this.element = void 0;
       _this.buildTabs = _underscore.debounce(function (activeTabIndex) {
         if (activeTabIndex === void 0) {
@@ -75,7 +75,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         focusTabValue = value; // If we're stopping the interaction we need to wait, to ensure any other actions can complete
 
         _underscore.delay(function () {
-          if (focusTabValue === value && !_this.lockInteracting) {
+          if (focusTabValue === value && !_this.disableInteracting) {
             if (value !== null) {
               _uiEvents.trigger("interaction:start");
             } else {
@@ -284,7 +284,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
           _uiEvents.trigger("interaction:start");
 
-          self.lockInteracting = true;
+          self.disableInteracting = true;
         },
 
         /**
@@ -298,7 +298,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
           _uiEvents.trigger("interaction:stop");
 
-          self.lockInteracting = false;
+          self.disableInteracting = false;
         },
         placeholder: {
           /**

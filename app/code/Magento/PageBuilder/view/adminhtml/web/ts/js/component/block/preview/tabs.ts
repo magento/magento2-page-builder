@@ -26,7 +26,7 @@ import {SortableOptionsInterface} from "./options/sortable-options.d";
 
 export default class Tabs extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable();
-    private lockInteracting: boolean;
+    private disableInteracting: boolean;
     private element: Element;
 
     /**
@@ -88,7 +88,7 @@ export default class Tabs extends PreviewCollection {
             focusTabValue = value;
             // If we're stopping the interaction we need to wait, to ensure any other actions can complete
             _.delay(() => {
-                if (focusTabValue === value && !this.lockInteracting) {
+                if (focusTabValue === value && !this.disableInteracting) {
                     if (value !== null) {
                         events.trigger("interaction:start");
                     } else {
@@ -284,7 +284,7 @@ export default class Tabs extends PreviewCollection {
 
                 ui.helper.css("width", "");
                 events.trigger("interaction:start");
-                self.lockInteracting = true;
+                self.disableInteracting = true;
             },
 
             /**
@@ -296,7 +296,7 @@ export default class Tabs extends PreviewCollection {
             stop(event: Event, ui: JQueryUI.SortableUIParams) {
                 $(this).css("paddingLeft", "");
                 events.trigger("interaction:stop");
-                self.lockInteracting = false;
+                self.disableInteracting = false;
             },
 
             placeholder: {
@@ -381,7 +381,7 @@ export default class Tabs extends PreviewCollection {
      */
     private updateTabNamesInDataStore() {
         const activeOptions: ActiveOptionsInterface[] = [];
-        this.parent.children().forEach((tab: Block, index: number) => {
+        this.parent.children().forEach((tab: ContentTypeInterface, index: number) => {
             const tabData = tab.store.get(tab.id);
             activeOptions.push({
                 label: tabData.tab_name.toString(),
