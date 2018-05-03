@@ -6,12 +6,12 @@
 
 /**
  * The sortable binding is an adapter for the jQuery UI Sortable widget.
- * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/knockout-sortable. See on Github.
+ * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/ko-pagebuilder-sortable. See on Github.
  * Value type: Object.
  * Configuration for the sortable widget.
- * Aliases: [pagebuilder-ko-sortable]
+ * Aliases: [ko-pagebuilder-sortable]
  * Usage example:
- * <div  pagebuilder-ko-sortable="{ sortableClass: 'stage-container', handle: '.move-structural', items: '.pagebuilder-row-wrapper', connectWith: '.pagebuilder-canvas' }"></div>
+ * <div  ko-pagebuilder-sortable="{ sortableClass: 'stage-container', handle: '.move-structural', items: '.pagebuilder-row-wrapper', connectWith: '.pagebuilder-canvas' }"></div>
  */
 
 import ko from "knockout";
@@ -330,6 +330,6 @@ ko.bindingHandlers.sortable = {
 };
 
 renderer.addAttribute('sortable', {
-    name: 'pagebuilder-ko-sortable'
+    name: 'ko-pagebuilder-sortable'
 });
 

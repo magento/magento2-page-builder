@@ -8,7 +8,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
 import _ from "underscore";
-import "./binding/live-edit";
+import "./binding/ko-pagebuilder-live-edit";
 import appearanceConfig from "./component/block/appearance-config";
 import "./component/block/preview/sortable/binding";
 import {DataObject} from "./component/data-store";

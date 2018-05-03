@@ -14,7 +14,7 @@ define(["knockout", "Magento_Ui/js/lib/knockout/template/renderer"], function (_
 
   /**
    * The hasFocusNoScroll binding allows inline editing.
-   * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/binding/focus. See on Github.
+   * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/binding/ko-pagebuilder-noscrollonfocus. See on Github.
    * Value type: Object.
    * Configuration for the hasFocusNoScroll widget.
    * Aliases: [ko-pagebuilder-noscrollonfocus]
@@ -35,4 +35,4 @@ define(["knockout", "Magento_Ui/js/lib/knockout/template/renderer"], function (_
     name: 'ko-pagebuilder-noscrollonfocus'
   });
 });
-//# sourceMappingURL=focus.js.map
+//# sourceMappingURL=ko-pagebuilder-noscrollonfocus.js.map

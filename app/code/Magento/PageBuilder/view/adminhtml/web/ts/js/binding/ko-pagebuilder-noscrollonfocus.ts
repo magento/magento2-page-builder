@@ -8,7 +8,7 @@ import renderer from 'Magento_Ui/js/lib/knockout/template/renderer';
 
 /**
  * The hasFocusNoScroll binding allows inline editing.
- * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/binding/focus. See on Github.
+ * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/binding/ko-pagebuilder-noscrollonfocus. See on Github.
  * Value type: Object.
  * Configuration for the hasFocusNoScroll widget.
  * Aliases: [ko-pagebuilder-noscrollonfocus]

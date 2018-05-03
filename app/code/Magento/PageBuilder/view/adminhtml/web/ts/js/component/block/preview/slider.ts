@@ -8,7 +8,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/slick/slick.min";
 import _ from "underscore";
-import "../../../binding/focus";
+import "../../../binding/ko-pagebuilder-noscrollonfocus";
 import ContentTypeConfigInterface from "../../../content-type-config.d";
 import createContentType from "../../../content-type-factory";
 import ContentTypeInterface from "../../../content-type.d";

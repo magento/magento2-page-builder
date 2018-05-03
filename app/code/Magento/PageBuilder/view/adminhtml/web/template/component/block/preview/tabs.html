@@ -13,7 +13,7 @@
                 <li role="tab" class="tab-header" css="{focused: parent.parent.preview.focusedTab() === $index()}" click="function (context, event) { parent.parent.preview.onTabClick($index(), event); }" ko-style="parent.parent.preview.getTabHeaderStyles()">
                     <a href="#no-tab" class="tab-title focus-options" attr="{ href: '#' + parent.id }">
                         <render args="getOptions().template" />
-                        <span class="tab-title tab-name" data-tab-title="true" ko-pagebuilder-liveedit="{ field: 'tab_name', placeholder: $t('...') }" ko-pagebuilder-noscrollonfocus="parent.parent.preview.focusedTab() === $index()" event="{ focusin: function () { parent.parent.preview.focusedTab($index()) }, focusout: function () { window.getSelection().removeAllRanges(); parent.parent.preview.focusedTab(null) } }"></span>
+                        <span class="tab-title tab-name" data-tab-title="true" ko-pagebuilder-live-edit="{ field: 'tab_name', placeholder: $t('...') }" ko-pagebuilder-noscrollonfocus="parent.parent.preview.focusedTab() === $index()" event="{ focusin: function () { parent.parent.preview.focusedTab($index()) }, focusout: function () { window.getSelection().removeAllRanges(); parent.parent.preview.focusedTab(null) } }"></span>
                     </a>
                 </li>
             </with>

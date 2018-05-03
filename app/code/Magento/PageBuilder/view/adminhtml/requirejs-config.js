@@ -10,9 +10,9 @@ var config = {
         'google-map': 'Magento_PageBuilder/js/utils/map',
 
         /* Include our Knockout Sortable wrapper */
-        'ko-sortable': 'Magento_PageBuilder/js/binding/knockout-sortable',
-        'ko-draggable': 'Magento_PageBuilder/js/binding/knockout-draggable',
-        'ko-liveedit': 'Magento_PageBuilder/js/binding/live-edit'
+        'ko-pagebuilder-sortable': 'Magento_PageBuilder/js/binding/ko-pagebuilder-sortable',
+        'ko-pagebuilder-draggable': 'Magento_PageBuilder/js/binding/ko-pagebuilder-draggable',
+        'ko-pagebuilder-live-edit': 'Magento_PageBuilder/js/binding/ko-pagebuilder-live-edit'
     },
     config: {
         mixins: {

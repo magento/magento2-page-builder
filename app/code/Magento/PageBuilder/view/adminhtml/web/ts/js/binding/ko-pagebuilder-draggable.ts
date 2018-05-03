@@ -5,12 +5,12 @@
 
 /**
  * The draggable binding is an adapter for the jQuery UI draggable widget.
- * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/knockout-draggable. See on Github.
+ * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/ko-pagebuilder-draggable. See on Github.
  * Value type: Object.
  * Configuration for the draggable widget.
- * Aliases: [pagebuilder-ko-draggable]
+ * Aliases: [ko-pagebuilder-draggable]
  * Usage example:
- * <div pagebuilder-ko-draggable="{ connectToSortable: getDraggableConfig() }"></div>
+ * <div ko-pagebuilder-draggable="{ connectToSortable: getDraggableConfig() }"></div>
  */
 
 import ko from "knockout";
@@ -114,5 +114,5 @@ ko.bindingHandlers.draggable = {
 };
 
 renderer.addAttribute('draggable', {
-    name: 'pagebuilder-ko-draggable'
+    name: 'ko-pagebuilder-draggable'
 });
