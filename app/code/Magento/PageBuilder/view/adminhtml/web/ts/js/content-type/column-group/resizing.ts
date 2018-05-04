@@ -56,7 +56,7 @@ export function getAcceptedColumnWidth(width: string) {
  * @returns {number}
  */
 export function getColumnWidth(column: Column): number {
-    return getAcceptedColumnWidth(column.store.get(column.id).width.toString());
+    return getAcceptedColumnWidth(column.dataStore.get().width.toString());
 }
 
 /**
@@ -382,8 +382,7 @@ export function resizeColumn(column: Column, width: number, shrinkableColumn: Co
  * @param {number} width
  */
 export function updateColumnWidth(column: Column, width: number): void {
-    column.store.updateKey(
-        column.id,
+    column.dataStore.update(
         parseFloat(width.toString()) + "%",
         "width",
     );

@@ -47,8 +47,7 @@ export default function createContentType(
                 const [previewComponent, contentComponent] = resolvedPromises;
                 contentType.preview = previewComponent;
                 contentType.content = contentComponent;
-                contentType.store.update(
-                    contentType.id,
+                contentType.dataStore.update(
                     prepareData(config, data),
                 );
                 resolve(contentType);

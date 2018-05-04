@@ -19,7 +19,7 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
      * @returns {object}
      */
     _proto.getSlideStyles = function getSlideStyles(type) {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
 
       var style = _.clone(this.getStyle());
 
@@ -66,7 +66,7 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
 
 
     _proto.getOverlayAttributes = function getOverlayAttributes() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
       var overlayColorAttr = "transparent";
 
       if (data.show_overlay !== "never_show") {
@@ -87,7 +87,7 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
 
 
     _proto.getOverlayStyles = function getOverlayStyles() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
       var _data$margins_and_pad = data.margins_and_padding.padding,
           _data$margins_and_pad2 = _data$margins_and_pad.top,
           top = _data$margins_and_pad2 === void 0 ? 0 : _data$margins_and_pad2,
@@ -114,7 +114,7 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
 
 
     _proto.getOverlayColorStyle = function getOverlayColorStyle() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
       var overlayColor = "transparent";
 
       if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
@@ -133,7 +133,7 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
 
 
     _proto.getContentHtml = function getContentHtml() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
 
       if (data.content === "" || data.content === undefined) {
         return;
@@ -149,7 +149,7 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
 
 
     _proto.getImage = function getImage() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
 
       if (data.background_image === "" || data.background_image === undefined) {
         return false;
@@ -169,7 +169,7 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
 
 
     _proto.getMobileImage = function getMobileImage() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
 
       if (data.mobile_image === "" || data.mobile_image === undefined) {
         return false;
@@ -189,7 +189,7 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
 
 
     _proto.getLinkAttribute = function getLinkAttribute() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
       var attribute = {};
 
       if (data.link_url !== "") {
@@ -210,7 +210,7 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
 
 
     _proto.getButtonStyle = function getButtonStyle() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
       return {
         opacity: data.show_button === "always" ? "1" : "0",
         visibility: data.show_button === "always" ? "visible" : "hidden"

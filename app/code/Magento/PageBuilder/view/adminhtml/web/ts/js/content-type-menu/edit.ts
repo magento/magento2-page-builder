@@ -9,17 +9,17 @@ import DataStore from "../data-store";
 
 export default class Edit {
     private instance: ContentTypeInterface;
-    private store: DataStore;
+    private dataStore: DataStore;
 
     /**
      * @param {ContentTypeInterface} instance
-     * @param {DataStore} store
+     * @param {DataStore} dataStore
      */
-    constructor(instance: ContentTypeInterface, store: DataStore) {
+    constructor(instance: ContentTypeInterface, dataStore: DataStore) {
         this.instance = instance;
-        this.store = store;
+        this.dataStore = dataStore;
         events.on("form:save:" + this.instance.id, (data: any) => {
-            this.store.update(this.instance.id, data);
+            this.dataStore.update(data);
         });
     }
 
@@ -27,7 +27,7 @@ export default class Edit {
      * Open the modal
      */
     public open(): void {
-        const contentTypeData = this.store.get(this.instance.id);
+        const contentTypeData = this.dataStore.get();
         let formNamespace = this.instance.config.form;
 
         // Use the default form unless a custom one is defined

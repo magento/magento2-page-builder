@@ -66,7 +66,7 @@ export default class Content {
     public getCss(element: string) {
         const result: object = {};
         let css: string = "";
-        let data: DataObject = _.extend({}, this.parent.store.get(this.parent.id));
+        let data: DataObject = _.extend({}, this.parent.dataStore.get());
         if (element === undefined) {
             if ("css_classes" in data && data.css_classes !== "") {
                 css = data.css_classes.toString();
@@ -98,7 +98,7 @@ export default class Content {
      * @deprecated
      */
     public getStyle(element: string) {
-        let data = _.extend({}, this.parent.store.get(this.parent.id), this.parent.config);
+        let data = _.extend({}, this.parent.dataStore.get(), this.parent.config);
         if (element === undefined) {
             if (typeof data.appearance !== "undefined" &&
                 typeof data.appearances !== "undefined" &&
@@ -127,7 +127,7 @@ export default class Content {
      * @deprecated
      */
     public getAttributes(element: string) {
-        let data = _.extend({}, this.parent.store.get(this.parent.id), this.parent.config);
+        let data = _.extend({}, this.parent.dataStore.get(), this.parent.config);
         if (element === undefined) {
             if (undefined === data.appearance || !data.appearance) {
                 data.appearance = undefined !== this.parent.config.fields.appearance
@@ -158,7 +158,7 @@ export default class Content {
      * @deprecated
      */
     public getHtml(element: string) {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         const config = appearanceConfig(this.parent.config.name, data.appearance).data_mapping.elements[element];
         let result = "";
         if (undefined !== config.html.var) {
@@ -175,7 +175,7 @@ export default class Content {
      * @deprecated
      */
     public getData(element: string) {
-        let data = _.extend({}, this.parent.store.get(this.parent.id));
+        let data = _.extend({}, this.parent.dataStore.get());
 
         if (undefined === element) {
             return data;
@@ -197,11 +197,10 @@ export default class Content {
      * Attach event to updating data in data store to update observables
      */
     protected bindEvents(): void {
-        this.parent.store.subscribe(
+        this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
             },
-            this.parent.id,
         );
     }
 
@@ -218,7 +217,7 @@ export default class Content {
     private updateObservables(): void {
         this.observableUpdater.update(
             this,
-            _.extend({name: this.parent.config.name}, this.parent.store.get(this.parent.id)),
+            _.extend({name: this.parent.config.name}, this.parent.dataStore.get()),
         );
         this.afterObservablesUpdated();
     }

@@ -77,7 +77,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
 
-      _this.parent.store.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
+      _this.parent.dataStore.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
 
 
       _uiEvents.on("previewSortable:sortupdate", function (args) {
@@ -329,7 +329,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
 
     _proto.buildSlickConfig = function buildSlickConfig() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
       return {
         arrows: data.show_arrows === "1",
         autoplay: data.autoplay === "1",
