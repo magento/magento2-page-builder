@@ -21,7 +21,7 @@
         <element name="firstSection" type="button" selector='//*[@id="pagebuilder-panel-groups"]/li[1]' timeout="30"/>
         <element name="panelGroup" type="button" selector="//div[@id='pagebuilder-panel']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="panelGroupActive" type="button" selector="//div[@id='pagebuilder-panel']//li[@class='active']//h4[.='{{arg1}}']" parameterized="true"/>
-        <element name="generalGroup" type="button" selector='//*[@id="group-general"]'/>
+        <element name="generalGroup" type="button" selector='//*[@id="group-general"]' timeout="10"/>
         <element name="generalGroupBlock" type="button" selector='//*[@id="group-general"]/div/div/ul/li/a/span[2]'/>
         <element name="mediaGroup" type="button" selector='//*[@id="group-media"]'/>
         <element name="mediaGroupBlock" type="button" selector='//*[@id="group-media"]/div/div/ul/li/a/span[2]'/>
@@ -70,7 +70,7 @@
         <element name="panelFieldControl" type="input" selector=".pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form [data-index='{{arg1}}'] .admin__field-control [name='{{arg2}}']" parameterized="true"/>
         <element name="panelFieldControlSwitch" type="input" selector="//*[@name='{{arg1}}']/parent::*/label" parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
-        <element name="panelFieldValidationError" type="input" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}']//div[contains(@class,'')]//input[@name='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldValidationError" type="input" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}' and contains(@class,'_error')]//div[contains(@class,'')]//input[@name='{{arg2}}']" parameterized="true"/>
         <element name="panelFieldValidationErrorMessage" type="button" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//../label[.='{{arg3}}']" parameterized="true"/>
         <element name="panelEmptyColorSwatch" type="button" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[contains(@class,'sp-clear-display')]" parameterized="true"/>
         <element name="panelColorSwatch" type="button" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[@class='sp-preview']" parameterized="true"/>
