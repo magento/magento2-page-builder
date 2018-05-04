@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/master-format/format-validator", "Magento_PageBuilder/js/master-format/read/composite", "Magento_PageBuilder/js/utils/directives"], function (_translate, _alert, _uiEvents, _, _config, _contentTypeFactory, _formatValidator, _composite, _directives) {
+define(["mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/master-format/read/composite", "Magento_PageBuilder/js/utils/directives"], function (_translate, _alert, _uiEvents, _, _config, _contentTypeFactory, _validator, _composite, _directives) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -164,7 +164,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore",
     var currentBuild;
     content = (0, _directives.removeQuotesInMediaDirectives)(content); // Determine if we're building from existing page builder content
 
-    if ((0, _formatValidator)(content)) {
+    if ((0, _validator)(content)) {
       currentBuild = buildFromContent(stage, content).catch(function () {
         stage.children([]);
         currentBuild = buildEmpty(stage, content);

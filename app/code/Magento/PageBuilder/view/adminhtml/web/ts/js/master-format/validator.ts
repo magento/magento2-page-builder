@@ -11,7 +11,7 @@ import Config from "../config";
  * @param {string} content
  * @returns {boolean}
  */
-export default function formatValidate(content: string) {
+export default function Validate(content: string) {
     const stageDocument = document.createElement("div");
 
     stageDocument.setAttribute(Config.getConfig("dataRoleAttributeName"), "stage");

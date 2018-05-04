@@ -8,7 +8,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
-import BlockMountEventParamsInterface from "../../component/block/block-mount-event-params.d";
+import BlockMountEventParamsInterface from "../block-mount-event-params.d";
 import {
     findShrinkableColumn, getAcceptedColumnWidth, getColumnsWidth,
     getColumnWidth, getMaxColumns, getSmallestColumnWidth, updateColumnWidth,

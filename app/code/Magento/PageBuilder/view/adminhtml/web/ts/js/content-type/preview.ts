@@ -10,7 +10,7 @@ import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm
 import events from "uiEvents";
 import _ from "underscore";
 import SortParamsInterface from "../sort-params.d";
-import Edit from "../component/stage/edit";
+import Edit from "../content-type-menu/edit";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
@@ -23,7 +23,7 @@ import StyleAttributeFilter from "../master-format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
 import appearanceConfig from "./appearance-config";
 import "../binding/live-edit";
-import "../component/block/preview/sortable/binding";
+import "../preview-sortable";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
 

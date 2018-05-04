@@ -11,13 +11,13 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
    * @param {string} content
    * @returns {boolean}
    */
-  function formatValidate(content) {
+  function Validate(content) {
     var stageDocument = document.createElement("div");
     stageDocument.setAttribute(_config.getConfig("dataRoleAttributeName"), "stage");
     stageDocument.innerHTML = content;
     return !!stageDocument.querySelector("[" + _config.getConfig("dataRoleAttributeName") + "=\"row\"]");
   }
 
-  return formatValidate;
+  return Validate;
 });
-//# sourceMappingURL=format-validator.js.map
+//# sourceMappingURL=validator.js.map

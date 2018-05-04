@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import $t from "mage/translate";
 import events from "uiEvents";
 import layout from "uiLayout";
 import registry from "uiRegistry";

@@ -8,6 +8,10 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"],
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
   // Create a new sortable Knockout binding
   _knockout.default.bindingHandlers.previewSortable = {
     /**
@@ -48,4 +52,4 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"],
     }
   };
 });
-//# sourceMappingURL=binding.js.map
+//# sourceMappingURL=preview-sortable.js.map
