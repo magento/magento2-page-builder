@@ -4,12 +4,12 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var HeaderAlignmentClass =
+  var HeaderAlignment =
   /*#__PURE__*/
   function () {
-    function HeaderAlignmentClass() {}
+    function HeaderAlignment() {}
 
-    var _proto = HeaderAlignmentClass.prototype;
+    var _proto = HeaderAlignment.prototype;
 
     /**
      * Process data after it's read and converted by element converters
@@ -35,9 +35,9 @@ define([], function () {
       return data;
     };
 
-    return HeaderAlignmentClass;
+    return HeaderAlignment;
   }();
 
-  return HeaderAlignmentClass;
+  return HeaderAlignment;
 });
 //# sourceMappingURL=header-alignment.js.map

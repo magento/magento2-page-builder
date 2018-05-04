@@ -6,7 +6,7 @@
 import {DataConverterInterface} from "../../../converter/data-converter-interface";
 import {DataObject} from "../../../data-store";
 
-export default class HeaderAlignmentClass implements DataConverterInterface {
+export default class HeaderAlignment implements DataConverterInterface {
 
     /**
      * Process data after it's read and converted by element converters
