@@ -23,7 +23,7 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <seeElement selector='//li[@name="{{property.value}}"]/span[text()="{{property.name}}"]' stepKey="seeAlignment"/>
+        <seeElement selector="//li[@name='{{property.value}}' and contains(@class,'active')]" stepKey="alignmentIsSelected" />
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldMargins">
         <arguments>
