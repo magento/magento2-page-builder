@@ -170,7 +170,7 @@ In the preview component you can add custom logic that will be available in the 
 
 Let's add a button in the preview that would display `Hello World` on click.
 
-``` JS
+``` js
 define(["Magento_PageBuilder/js/content-type/preview"], function (Preview) {
     var Simple = function() {
         Preview.apply(this, arguments);

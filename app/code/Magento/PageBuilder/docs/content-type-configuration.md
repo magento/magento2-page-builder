@@ -143,19 +143,20 @@ The following is an example of a content type configuration in `etc/content_type
 ```
 ### Configuration reference
 
-| Element             | Description                                                                                                                             |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.  |
-| `label`             | Label displayed on the menu and stage.                                                                                                  |
-| `icon`              | Icon displayed on the menu.                                                                                                             |
-| `component`         | View model responsible for rendering the preview and master format.                                                                     |
-| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                    |
-| `content_component` | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                                    |
-| `form`              | UI component form used for editing the content type                                                                                     |
-| `group`             | Existing menu group that contains this content type.                                                                                    |
-| `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                      |
-| `appearances`       | Appearance configuration.                                                                                                               |
-| `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.               |
+| Element             | Description                                                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.      |
+| `label`             | Label displayed on the menu and stage.                                                                                                      |
+| `icon`              | Icon displayed on the menu.                                                                                                                 |
+| `component`         | View model responsible for rendering the preview and master format.                                                                         |
+| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
+| `content_component` | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
+| `form`              | UI component form used for editing the content type                                                                                         |
+| `group`             | Existing menu group that contains this content type.                                                                                        |
+| `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                          |
+| `appearances`       | Appearance configuration.                                                                                                                   |
+| `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
+| `additional_data`   | Allows to specify additional data for component, see [custom configuration for content type](custom-configuration.md) for more information. |
 
 
 ### `form` configuration reference
@@ -357,19 +358,19 @@ The `tag` element allows you to read the tag value of the element and map back t
 
 ## Converter Interfaces
 
-Element converter and data converter are the two types of converters. Both converters expect `fromDom` and `toDom` methods, with usage examples described below.
+Converter and mass converter are the two types of converters. Both converters expect `fromDom` and `toDom` methods, with usage examples described below.
 
-### Element Converter
+### Converter
 
-The elemement converter converts data for the property or attribute.
+The converter converts data for the property or attribute.
 
 The `fromDom` method is called after data is read from the master format.
 
 The `toDom` method is called before observables are updated in the cycle rendering preview or master format.
 
-**Example:** Element converter that determines the output for an overlay background color
+**Example:** Converter that determines the output for an overlay background color
 
-``` JS  
+``` js
 define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (colorConverter, numberConverter) {
     var OverlayBackgroundColor = function () {};
     
@@ -403,15 +404,15 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
 });
 ```
 
-### Data Converter
+### Mass Converter
 
-The data converter works on the data for all elements.
+The mass converter works on the data for all elements.
 
 The `fromDom` method is called after data is read for all elements and converted by element converters.
 
 The `toDom` method is called before data is converted by element converters to update observables.
 
-**Example:** Data converter that defaults mobile image value to desktop image value if not configured 
+**Example:** Mass converter that defaults mobile image value to desktop image value if not configured 
 ``` xml
 <data_mapping>
     <converters>
@@ -425,7 +426,7 @@ The `toDom` method is called before data is converted by element converters to u
 </data_mapping>
 ```
 
-``` JS  
+``` js
 define([], function () {
     var EmptyMobileImage = function () {};
     

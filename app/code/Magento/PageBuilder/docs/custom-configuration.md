@@ -16,7 +16,7 @@ To add customization to a Page Builder content type, you must:
 
 ## Add additional data to the XML config {#additional-data}
 
-Use `additional_data` in your `/app/code/Magento/PageBuilder/etc/content_types/<your-content-type>.xml` XML config file to add custom configuration to a content type:
+Use `additional_data` in your `Vendor/ModuleName/etc/content_types/<your-content-type>.xml` XML config file to add custom configuration to a content type:
 
 ``` xml
 <additional_data>
@@ -86,7 +86,7 @@ In the `additional_data` XML config there is a `storeId` item with a `storeId` p
 <item name="storeId" xsi:type="object">\Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider\StoreId</item>
 ```
 
-Custom configuration is injected into relevant content type block constructors (JS), such as for the image block shown here, and accessed in `config.additional_data` within the content block type in `/app/code/Magento/PageBuilder/view/adminhtml/web/js/content-type/<your-content-type>/preview.js`:
+Custom configuration is injected into relevant content type block constructors, such as for the image block shown here, and accessed in `config.additional_data` within the content block type in `/app/code/Magento/PageBuilder/view/adminhtml/web/js/content-type/<your-content-type>/preview.js`:
 
 ``` js
 var uploaderConfiguration = Object.assign(
