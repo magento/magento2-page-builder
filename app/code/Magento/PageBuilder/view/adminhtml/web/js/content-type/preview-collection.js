@@ -33,7 +33,7 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
 
       var index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
       return new Promise(function (resolve, reject) {
-        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentType.store.get(contentType.id)).then(function (duplicate) {
+        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentType.dataStore.get()).then(function (duplicate) {
           if (contentType.children && contentType.children().length > 0) {
             // Duplicate the instances children into the new duplicate
             contentType.children().forEach(function (subChild) {

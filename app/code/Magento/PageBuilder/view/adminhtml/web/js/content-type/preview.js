@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/preview-sortable"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _uiEvents, _underscore, _edit, _contentTypeFactory, _contentTypeMenu, _option, _title, _styleAttributeFilter, _styleAttributeMapper, _appearanceConfig, _liveEdit, _previewSortable) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/preview-sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _uiEvents, _underscore, _liveEdit, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _styleAttributeFilter, _styleAttributeMapper, _previewSortable, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -33,7 +33,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       this.mouseoverContext = void 0;
       this.parent = parent;
       this.config = config;
-      this.edit = new _edit(this.parent, this.parent.store);
+      this.edit = new _edit(this.parent, this.parent.dataStore);
       this.observableUpdater = observableUpdater;
       this.displayLabel = _knockout.observable(this.config.label);
       this.setupDataFields();
@@ -55,9 +55,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
      * @param {string} value
      */
     _proto.updateData = function updateData(key, value) {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
       data[key] = value;
-      this.parent.store.update(this.parent.id, data);
+      this.parent.dataStore.update(data);
     };
     /**
      * Update the data value of a part of our internal Knockout data store
@@ -195,7 +195,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
         autoAppend = true;
       }
 
-      var contentBlockData = contentType.store.get(contentType.id);
+      var contentBlockData = contentType.dataStore.get();
       var index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
       return new Promise(function (resolve, reject) {
         (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentBlockData).then(function (duplicateBlock) {
@@ -288,9 +288,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
       _uiEvents.on("block:sortStart", this.onSortStart.bind(this.parent));
 
-      this.parent.store.subscribe(function (data) {
+      this.parent.dataStore.subscribe(function (data) {
         _this4.updateObservables();
-      }, this.parent.id);
+      });
     };
     /**
      * After observables updated, allows to modify observables
@@ -320,11 +320,11 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       } // Subscribe to this blocks data in the store
 
 
-      this.parent.store.subscribe(function (data) {
+      this.parent.dataStore.subscribe(function (data) {
         _underscore.forEach(data, function (value, key) {
           _this5.updateDataValue(key, value);
         });
-      }, this.parent.id); // Calculate the preview style utilising the style attribute mapper & appearance system
+      }); // Calculate the preview style utilising the style attribute mapper & appearance system
 
       this.previewStyle = _knockout.computed(function () {
         var data = _underscore.mapObject(_this5.previewData, function (value) {
@@ -370,7 +370,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.isConfigured = function isConfigured() {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
       var hasDataChanges = false;
 
       _underscore.each(this.parent.config.fields, function (field, key) {
@@ -409,7 +409,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.updateObservables = function updateObservables() {
-      this.observableUpdater.update(this, _underscore.extend({}, this.parent.store.get(this.parent.id)));
+      this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.get()));
       this.afterObservablesUpdated();
 
       _uiEvents.trigger("previewObservables:updated", {

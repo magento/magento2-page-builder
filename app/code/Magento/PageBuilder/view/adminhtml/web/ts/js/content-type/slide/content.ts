@@ -17,7 +17,7 @@ export default class Content extends BaseContent {
      * @returns {object}
      */
     public getSlideStyles(type: string): {} {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         const style = _.clone(this.getStyle());
 
         let backgroundImage: any = "";
@@ -64,7 +64,7 @@ export default class Content extends BaseContent {
      * @returns {object}
      */
     public getOverlayAttributes(): {} {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         let overlayColorAttr: string = "transparent";
         if (data.show_overlay !== "never_show") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
@@ -82,7 +82,7 @@ export default class Content extends BaseContent {
      * @returns {object}
      */
     public getOverlayStyles(): {} {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         const { top = 0, right = 0, bottom = 0, left = 0 } = data.margins_and_padding.padding;
         return {
             backgroundColor: this.getOverlayColorStyle().backgroundColor,
@@ -100,7 +100,7 @@ export default class Content extends BaseContent {
      * @returns {object}
      */
     public getOverlayColorStyle(): {} {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         let overlayColor: string = "transparent";
         if (data.show_overlay === "always" && data.overlay_color !== "" && data.overlay_color !== undefined) {
             overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
@@ -116,7 +116,7 @@ export default class Content extends BaseContent {
      * @returns {string}
      */
     public getContentHtml(): string {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         if (data.content === "" || data.content === undefined) {
             return;
         } else {
@@ -130,7 +130,7 @@ export default class Content extends BaseContent {
      * @returns {object}
      */
     public getImage(): {} {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         if (data.background_image === "" || data.background_image === undefined) {
             return false;
         }
@@ -146,7 +146,7 @@ export default class Content extends BaseContent {
      * @returns {object}
      */
     public getMobileImage(): {} {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         if (data.mobile_image === "" || data.mobile_image === undefined) {
             return false;
         }
@@ -162,7 +162,7 @@ export default class Content extends BaseContent {
      * @returns {object}
      */
     public getLinkAttribute(): {} {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         const attribute: any = {};
         if (data.link_url !== "") {
             attribute.href = data.link_url;
@@ -179,7 +179,7 @@ export default class Content extends BaseContent {
      * @returns {object}
      */
     public getButtonStyle(): {} {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         return {
             opacity: data.show_button === "always" ? "1" : "0",
             visibility: data.show_button === "always" ? "visible" : "hidden",

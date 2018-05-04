@@ -5,13 +5,13 @@
 
 import mageUtils from "mageUtils";
 import appearanceConfig from "../../content-type/appearance-config";
-import {fromSnakeToCamelCase} from "../../utils/string";
 import DataConverterPool from "../../converter/data-converter-pool";
 import dataConverterPoolFactory from "../../converter/data-converter-pool-factory";
 import PropertyReaderPool from "../../converter/element-converter-pool";
 import ElementConverterPool from "../../converter/element-converter-pool";
 import elementConverterPoolFactory from "../../converter/element-converter-pool-factory";
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
+import {fromSnakeToCamelCase} from "../../utils/string";
 import ReadInterface from "../read-interface";
 
 export default class Configurable implements ReadInterface {

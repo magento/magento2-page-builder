@@ -161,7 +161,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         _this2.parent.addChild(tab, _this2.parent.children().length); // Update the default tab title when adding a new tab
 
 
-        tab.store.updateKey(tab.id, (0, _translate)("Tab") + " " + (_this2.parent.children.indexOf(tab) + 1), "tab_name");
+        tab.dataStore.update((0, _translate)("Tab") + " " + (_this2.parent.children.indexOf(tab) + 1), "tab_name");
       });
     };
     /**
@@ -240,9 +240,9 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         if (_this3.parent.id === args.block.parent.id) {
           _this3.updateTabNamesInDataStore();
 
-          _this3.parent.store.subscribe(function () {
+          args.block.dataStore.subscribe(function () {
             _this3.updateTabNamesInDataStore();
-          }, args.block.id);
+          });
         }
       });
     };
@@ -254,14 +254,14 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
     _proto.updateTabNamesInDataStore = function updateTabNamesInDataStore() {
       var activeOptions = [];
       this.parent.children().forEach(function (tab, index) {
-        var tabData = tab.store.get(tab.id);
+        var tabData = tab.dataStore.get();
         activeOptions.push({
           label: tabData.tab_name.toString(),
           labeltitle: tabData.tab_name.toString(),
           value: index
         });
       });
-      this.parent.store.updateKey(this.parent.id, activeOptions, "_default_active_options");
+      this.parent.dataStore.update(activeOptions, "_default_active_options");
     };
 
     return Preview;

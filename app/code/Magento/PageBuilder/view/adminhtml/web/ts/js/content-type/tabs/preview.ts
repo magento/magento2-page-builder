@@ -9,16 +9,16 @@ import $t from "mage/translate";
 import "tabs";
 import events from "uiEvents";
 import _ from "underscore";
-import BlockRemovedParamsInterface from "../../content-type-removed-params.d";
-import {BlockCreateEventParamsInterface} from "../block-create-event-params.d";
-import {BlockMountEventParamsInterface} from "../block-mount-event-params.d";
-import {BlockReadyEventParamsInterface} from "../block-ready-event-params.d";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
+import BlockRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
+import {BlockCreateEventParamsInterface} from "../block-create-event-params.d";
+import {BlockMountEventParamsInterface} from "../block-mount-event-params.d";
+import {BlockReadyEventParamsInterface} from "../block-ready-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -166,8 +166,7 @@ export default class Preview extends PreviewCollection {
             this.parent.addChild(tab, this.parent.children().length);
 
             // Update the default tab title when adding a new tab
-            tab.store.updateKey(
-                tab.id,
+            tab.dataStore.update(
                 $t("Tab") + " " + (this.parent.children.indexOf(tab) + 1),
                 "tab_name",
             );
@@ -238,9 +237,9 @@ export default class Preview extends PreviewCollection {
         events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
             if (this.parent.id === args.block.parent.id) {
                 this.updateTabNamesInDataStore();
-                this.parent.store.subscribe(() => {
+                args.block.dataStore.subscribe(() => {
                     this.updateTabNamesInDataStore();
-                }, args.block.id);
+                });
             }
         });
     }
@@ -251,7 +250,7 @@ export default class Preview extends PreviewCollection {
     private updateTabNamesInDataStore() {
         const activeOptions: ActiveOptions[] = [];
         this.parent.children().forEach((tab: Block, index: number) => {
-            const tabData = tab.store.get(tab.id);
+            const tabData = tab.dataStore.get();
             activeOptions.push({
                 label: tabData.tab_name.toString(),
                 labeltitle: tabData.tab_name.toString(),
@@ -259,8 +258,7 @@ export default class Preview extends PreviewCollection {
             });
         });
 
-        this.parent.store.updateKey(
-            this.parent.id,
+        this.parent.dataStore.update(
             activeOptions,
             "_default_active_options",
         );

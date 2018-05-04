@@ -6,11 +6,11 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "uiEvents";
-import BlockMountEventParamsInterface from "../block-mount-event-params.d";
 import Config from "../../config";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
+import BlockMountEventParamsInterface from "../block-mount-event-params.d";
 import ButtonItem from "../button-item/preview";
 import PreviewCollection from "../preview-collection";
 

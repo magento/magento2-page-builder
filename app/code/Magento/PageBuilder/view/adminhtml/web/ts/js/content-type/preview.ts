@@ -9,11 +9,11 @@ import $t from "mage/translate";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
 import events from "uiEvents";
 import _ from "underscore";
-import SortParamsInterface from "../sort-params.d";
-import Edit from "../content-type-menu/edit";
+import "../binding/live-edit";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
+import Edit from "../content-type-menu/edit";
 import Option from "../content-type-menu/option";
 import OptionInterface from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title";
@@ -21,9 +21,9 @@ import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import StyleAttributeFilter from "../master-format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
-import appearanceConfig from "./appearance-config";
-import "../binding/live-edit";
 import "../preview-sortable";
+import SortParamsInterface from "../sort-params.d";
+import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
 
@@ -57,7 +57,7 @@ export default class Preview {
     ) {
         this.parent = parent;
         this.config = config;
-        this.edit = new Edit(this.parent, this.parent.store);
+        this.edit = new Edit(this.parent, this.parent.dataStore);
         this.observableUpdater = observableUpdater;
         this.displayLabel = ko.observable(this.config.label);
         this.setupDataFields();
@@ -81,10 +81,10 @@ export default class Preview {
      * @param {string} value
      */
     public updateData(key: string, value: string) {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
 
         data[key] = value;
-        this.parent.store.update(this.parent.id, data);
+        this.parent.dataStore.update(data);
     }
 
     /**
@@ -202,7 +202,7 @@ export default class Preview {
      * @returns {Promise<ContentTypeInterface>}
      */
     public clone(contentType: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
-        const contentBlockData = contentType.store.get(contentType.id);
+        const contentBlockData = contentType.dataStore.get();
         const index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
 
         return new Promise((resolve, reject) => {
@@ -330,11 +330,10 @@ export default class Preview {
      */
     protected bindEvents() {
         events.on("block:sortStart", this.onSortStart.bind(this.parent));
-        this.parent.store.subscribe(
+        this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
             },
-            this.parent.id,
         );
     }
 
@@ -362,13 +361,12 @@ export default class Preview {
         }
 
         // Subscribe to this blocks data in the store
-        this.parent.store.subscribe(
+        this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 _.forEach(data, (value, key) => {
                     this.updateDataValue(key, value);
                 });
             },
-            this.parent.id,
         );
 
         // Calculate the preview style utilising the style attribute mapper & appearance system
@@ -420,7 +418,7 @@ export default class Preview {
      * @returns {boolean}
      */
     protected isConfigured() {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         let hasDataChanges = false;
         _.each(this.parent.config.fields, (field, key: string) => {
             let fieldValue = data[key];
@@ -454,7 +452,7 @@ export default class Preview {
     private updateObservables(): void {
         this.observableUpdater.update(
             this,
-            _.extend({}, this.parent.store.get(this.parent.id)),
+            _.extend({}, this.parent.dataStore.get()),
         );
         this.afterObservablesUpdated();
         events.trigger("previewObservables:updated", {preview: this});

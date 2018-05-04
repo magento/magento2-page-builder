@@ -5,11 +5,11 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import appearanceConfig from "./appearance-config";
 import DataConverterPool from "../converter/data-converter-pool";
 import ElementConverterPool from "../converter/element-converter-pool";
 import {DataObject} from "../data-store";
 import {fromSnakeToCamelCase} from "../utils/string";
+import appearanceConfig from "./appearance-config";
 
 export default class ObservableUpdater {
     private elementConverterPool: ElementConverterPool;

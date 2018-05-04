@@ -32,7 +32,7 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
               contentComponent = resolvedPromises[1];
           contentType.preview = previewComponent;
           contentType.content = contentComponent;
-          contentType.store.update(contentType.id, prepareData(config, data));
+          contentType.dataStore.update(prepareData(config, data));
           resolve(contentType);
         });
       });

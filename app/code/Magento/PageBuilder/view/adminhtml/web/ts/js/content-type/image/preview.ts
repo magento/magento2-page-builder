@@ -4,8 +4,8 @@
  */
 
 import events from "uiEvents";
-import Uploader from "../uploader";
 import BasePreview from "../preview";
+import Uploader from "../uploader";
 
 export default class Preview extends BasePreview {
     /**
@@ -29,13 +29,13 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         events.on(`${this.parent.id}:updated`, () => {
-            const imageDataStore = this.parent.store.get(this.parent.id);
+            const imageDataStore = this.parent.dataStore.get();
             const imageObject = imageDataStore.image[0] || {};
             events.trigger(`image:assigned:${this.parent.id}`, imageObject);
         });
 
         events.on("image:block:ready", () => {
-            const imageDataStore = this.parent.store.get(this.parent.id);
+            const imageDataStore = this.parent.dataStore.get();
             const initialImageValue = imageDataStore.image || "";
 
             // Create uploader
@@ -58,8 +58,7 @@ export default class Preview extends BasePreview {
      * @param {Array} data - list of each files' data
      */
     private onImageUploaded(data: object[]) {
-        this.parent.store.updateKey(
-            this.parent.id,
+        this.parent.dataStore.update(
             data,
             "image",
         );

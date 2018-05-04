@@ -32,7 +32,7 @@ export default class PreviewCollection extends Preview {
                 contentType.config,
                 contentType.parent,
                 contentType.stageId,
-                contentType.store.get(contentType.id),
+                contentType.dataStore.get(),
             ).then((duplicate: ContentTypeInterface) => {
                 if (contentType.children && contentType.children().length > 0) {
                     // Duplicate the instances children into the new duplicate
