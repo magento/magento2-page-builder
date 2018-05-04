@@ -283,6 +283,17 @@
         <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
     </actionGroup>
+    <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <fillField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
+        <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionErrorIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldAlternate">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -641,5 +652,14 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlock.role, '1')}}" stepKey="seeOptionsDuplicate"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockRemove(contentBlock.role)}}" stepKey="seeOptionsRemove"/>
         <see selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlock.role)}}" userInput="{{contentBlock.name}}" stepKey="seeOptionMenuTitle"/>
+    </actionGroup>
+    <actionGroup name="fillOutColorPicker">
+        <arguments>
+            <argument name="colorCode" defaultValue=""/>
+        </arguments>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(colorCode.section, colorCode.fieldName)}}" stepKey="clickColorSwatch" />
+        <waitForElementVisible selector="{{ColorPicker.inputField}}" stepKey="waitForColorPicker"/>
+        <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHexCodeIntoInputField1" />
+        <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{colorCode.value}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
     </actionGroup>
 </actionGroups>

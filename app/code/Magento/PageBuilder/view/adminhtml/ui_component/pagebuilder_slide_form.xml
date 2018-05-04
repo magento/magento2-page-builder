@@ -109,16 +109,27 @@
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="background_color" sortOrder="10" formElement="input">
+        <field name="background_color" sortOrder="10" formElement="colorPicker">
             <settings>
                 <label translate="true">Background Color</label>
-                <additionalClasses>
-                    <class name="admin__field-small">true</class>
-                </additionalClasses>
-                <addAfter translate="true">hex color</addAfter>
-                <dataType>text</dataType>
+                <componentType>colorPicker</componentType>
+                <placeholder translate="true">No Color</placeholder>
+                <validation>
+                    <rule name="validate-color" xsi:type="boolean">true</rule>
+                </validation>
                 <dataScope>background_color</dataScope>
+                <additionalClasses>
+                    <class name="admin__field-medium">true</class>
+                </additionalClasses>
             </settings>
+            <formElements>
+                <colorPicker>
+                    <settings>
+                        <colorPickerMode>full</colorPickerMode>
+                        <colorFormat>hex</colorFormat>
+                    </settings>
+                </colorPicker>
+            </formElements>
         </field>
         <field name="background_image" sortOrder="20" formElement="imageUploader">
             <settings>

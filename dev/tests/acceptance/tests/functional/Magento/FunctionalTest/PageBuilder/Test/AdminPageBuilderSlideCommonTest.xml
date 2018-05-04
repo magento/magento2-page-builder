@@ -112,7 +112,11 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+        <comment userInput="I fill out color into Border Color using Color Picker" stepKey="comment2"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor2">
+            <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
@@ -191,6 +195,7 @@
         <seeElement selector="{{SliderOnFrontend.IsInfinite(PageBuilderSliderIsInfiniteProperty.value)}}" stepKey="seeSliderIsInfiniteSetting"/>
         <seeElement selector="{{SliderOnFrontend.ShowArrows(PageBuilderSliderShowArrowsYesProperty.value)}}" stepKey="seeSliderShowArrowsSetting"/>
         <seeElement selector="{{SliderOnFrontend.ShowDots(PageBuilderSliderShowDotsNoProperty.value)}}" stepKey="seeSliderShowDotsOffOnFrontendSetting"/>
+        <seeElement selector="{{SliderOnFrontend.sliderBorderColor}}" stepKey="seeSliderShowGreenColor"/>
         <seeElement selector="{{SliderOnFrontend.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnFrontEnd"/>
         <seeElement selector="{{SliderOnFrontend.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnFrontEnd"/>
         <seeElement selector="{{SlideOnFrontend.slide('1')}}" stepKey="seeSlide1InSlider"/>
@@ -1032,6 +1037,13 @@
             <argument name="property" value="PageBuilderSlideMessageLongProperty"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
+        <comment userInput="I fill out color into Background Color using Color Picker" stepKey="comment1"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor1">
+            <argument name="colorCode" value="PageBuilderBackgroundColorProperty_FFFFFF"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FFFFFF"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -1047,6 +1059,7 @@
         <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdminAfterSave"/>
         <grabTextFrom selector="{{SlideOnBackend.slideContent('0')}}" stepKey="grabSlideContent"/>
         <assertEquals expected="{{PageBuilderSlideMessageLongProperty.value}}" expectedType="string" actual="grabSlideContent" actualType="variable" message="actual=$grabSlideContent" stepKey="assertContentIsVisible"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColorOnStage(PageBuilderBackgroundColorProperty_FFFFFF.rgb)}}"  stepKey="seeSliderBackgroundColorApplied"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
@@ -1055,5 +1068,6 @@
         <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedOnStorefront"/>
         <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedOnStorefront"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.posterMobileBackgroundColor}}" stepKey="seeBackgroundColorOnFrontend" />
     </test>
 </tests>
