@@ -18,9 +18,9 @@ import BlockRemovedParamsInterface from "../../block-removed-params";
 import Config from "../../config";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
-import {BlockCreateEventParamsInterface} from "../block-create-event-params.d";
 import {BlockMountEventParamsInterface} from "../block-mount-event-params.d";
 import {BlockReadyEventParamsInterface} from "../block-ready-event-params.d";
+import {BlockRemovedEventParamsInterface} from "../block-removed-event-params.d";
 import {ActiveOptionsInterface} from "./options/active-options.d";
 import {SortableOptionsInterface} from "./options/sortable-options.d";
 import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
@@ -67,19 +67,20 @@ export default class Tabs extends PreviewCollection {
                 this.buildTabs();
             }
         });
-        events.on("tab-item:block:mount", (args: BlockCreateEventParamsInterface) => {
+        events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
             if (this.element && args.block.parent.id === this.parent.id) {
                 this.refreshTabs();
             }
         });
         // Set the active tab to the new position of the sorted tab
-        events.on("tab-item:block:removed", (args: BlockCreateEventParamsInterface) => {
-            if (args.id === this.parent.id) {
+        events.on("tab-item:block:removed", (args: BlockRemovedEventParamsInterface) => {
+            if (args.parent.id === this.parent.id) {
                 this.refreshTabs();
 
                 // We need to wait for the tabs to refresh before executing the focus
                 _.defer(() => {
-                    this.setFocusedTab(args.newPosition, true);
+                    const newPosition = args.index > 0 ? args.index - 1 : 0;
+                    this.setFocusedTab(newPosition, true);
                 });
             }
         });
