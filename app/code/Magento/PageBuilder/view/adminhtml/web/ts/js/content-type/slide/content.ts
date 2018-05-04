@@ -4,10 +4,10 @@
  */
 
 import $t from "mage/translate";
-import BaseContent from "../../content";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
+import BaseContent from "../content";
 
 export default class Content extends BaseContent {
 

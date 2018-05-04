@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (_knockout, _translate, _option, _preview, _colorConverter, _numberConverter) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _translate, _option, _colorConverter, _numberConverter, _preview) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -293,7 +293,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/component/stage/st
         removeClasses.push("disabled");
       }
 
-      newOptions.push(new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
+      newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
       return newOptions;
     };
 

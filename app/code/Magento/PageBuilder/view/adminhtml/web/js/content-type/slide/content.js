@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/content", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter"], function (_translate, _content, _colorConverter, _directives, _numberConverter) {
+define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/content"], function (_translate, _colorConverter, _directives, _numberConverter, _content) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Content =

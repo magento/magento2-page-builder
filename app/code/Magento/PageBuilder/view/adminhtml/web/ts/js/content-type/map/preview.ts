@@ -5,7 +5,7 @@
 
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
 import events from "uiEvents";
-import BasePreview from "../../preview";
+import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
 

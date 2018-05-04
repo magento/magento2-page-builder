@@ -15,13 +15,13 @@ import BlockMountEventParamsInterface from "../../component/block/block-mount-ev
 import BlockReadyEventParamsInterface from "../../component/block/block-ready-event-params.d";
 import {PreviewSortableSortUpdateEventParams} from "../../component/block/preview/sortable/binding";
 import Config from "../../config";
-import {Option} from "../../component/stage/structural/options/option";
-import {OptionInterface} from "../../component/stage/structural/options/option.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
+import Option from "../../content-type-menu/option";
+import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import ObservableUpdater from "../../observable-updater";
-import PreviewCollection from "../../preview-collection";
+import ObservableUpdater from "../observable-updater";
+import PreviewCollection from "../preview-collection";
 import Slide from "../slide/preview";
 import {default as SliderPreview} from "../slider/preview";
 

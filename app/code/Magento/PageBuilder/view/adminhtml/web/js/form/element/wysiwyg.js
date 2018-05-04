@@ -84,7 +84,6 @@ define([
                     this.visiblePageBuilder(true);
                 }
             }.bind(this));
-
         }
     });
 });

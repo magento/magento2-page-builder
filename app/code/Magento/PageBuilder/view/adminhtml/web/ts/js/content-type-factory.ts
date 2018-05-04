@@ -7,12 +7,12 @@ import loadModule from "Magento_PageBuilder/js/loader";
 import events from "uiEvents";
 import _ from "underscore";
 import BlockMountEventParamsInterface from "./component/block/block-mount-event-params.d";
-import ConfigFieldInterface from "./component/block/config-field.d";
-import FieldDefaultsInterface from "./component/block/field-defaults.d";
-import contentFactory from "./content-factory";
+import ConfigFieldInterface from "./config-field.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
-import previewFactory from "./preview-factory";
+import contentFactory from "./content-type/content-factory";
+import previewFactory from "./content-type/preview-factory";
+import FieldDefaultsInterface from "./field-defaults.d";
 
 /**
  * Create new content type

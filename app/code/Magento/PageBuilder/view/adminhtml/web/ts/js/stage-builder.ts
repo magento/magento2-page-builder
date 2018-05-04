@@ -7,15 +7,14 @@ import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import * as _ from "underscore";
+import Config from "./config";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import createContentType from "./content-type-factory";
 import ContentTypeInterface from "./content-type.d";
-import {removeQuotesInMediaDirectives} from "./utils/directives";
-import Block from "./component/block/block";
-import Config from "./config";
-import validateFormat from "./component/format/format-validator";
-import AttributeReaderComposite from "./component/format/read/composite";
+import validateFormat from "./master-format/format-validator";
+import AttributeReaderComposite from "./master-format/read/composite";
 import Stage from "./stage";
+import {removeQuotesInMediaDirectives} from "./utils/directives";
 
 /**
  * Build the stage with the provided value

@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import {Options} from "../../component/stage/structural/options";
-import PreviewCollection from "../../preview-collection";
+import Options from "../../content-type-menu";
+import PreviewCollection from "../preview-collection";
 
 export default class Preview extends PreviewCollection {
 

@@ -8,19 +8,19 @@ import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import _ from "underscore";
-import Collection from "./collection";
-import createContentType from "./content-type-factory";
-import ContentTypeInterface from "./content-type.d";
-import {moveArrayItem} from "./utils/array";
 import BlockDroppedParamsInterface from "./block-dropped-params.d";
 import BlockInstanceDroppedParamsInterface from "./block-instance-dropped-params.d";
 import BlockRemovedParamsInterface from "./block-removed-params.d";
 import BlockSortedParamsInterface from "./block-sorted-params.d";
+import Collection from "./collection";
+import createContentType from "./content-type-factory";
+import ContentTypeInterface from "./content-type.d";
 import DataStore from "./data-store";
+import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import SortParamsInterface from "./sort-params.d";
 import buildStage from "./stage-builder";
-import MasterFormatRenderer from "./component/stage/master-format-renderer";
+import {moveArrayItem} from "./utils/array";
 
 export default class Stage {
     public parent: PageBuilderInterface;
@@ -33,7 +33,7 @@ export default class Stage {
     public stageLoadingMessage: string = $t("Please hold! we're just retrieving your content...");
     public store: DataStore = new DataStore();
     private template: string = "Magento_PageBuilder/content-type/preview";
-    private masterFormatRenderer: MasterFormatRenderer = new MasterFormatRenderer();
+    private render: Render = new Render();
     private collection: Collection = new Collection();
 
     /**
@@ -168,7 +168,7 @@ export default class Stage {
         events.on("stage:updated", (args) => {
             if (args.stageId === this.id) {
                 _.debounce(() => {
-                    this.masterFormatRenderer.applyBindings(this.children)
+                    this.render.applyBindings(this.children)
                         .then((renderedOutput) => events.trigger(`stage:renderTree:${ this.id }`, {
                             value: renderedOutput,
                         }));

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/resizing", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _resizing, _resizing2, _config, _option, _contentTypeFactory, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/resizing", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _resizing, _resizing2, _config, _contentTypeFactory, _option, _previewCollection) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -81,7 +81,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       var newOptions = options.filter(function (option) {
         return option.code !== "move";
       });
-      newOptions.unshift(new _option.Option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-column"], 10));
+      newOptions.unshift(new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-column"], 10));
       return newOptions;
     };
     /**

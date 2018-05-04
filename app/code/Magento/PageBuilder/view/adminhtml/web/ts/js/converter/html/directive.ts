@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import ElementConverterInterface from "../element-converter-interface";
 import {convertMediaDirectivesToUrls, removeQuotesInMediaDirectives} from "../../utils/directives";
+import ElementConverterInterface from "../element-converter-interface";
 
 export default class Directives implements ElementConverterInterface {
     /**

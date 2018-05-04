@@ -9,18 +9,18 @@ import $t from "mage/translate";
 import "tabs";
 import events from "uiEvents";
 import _ from "underscore";
-import BlockRemovedParamsInterface from "../../component/block-removed-params";
+import BlockRemovedParamsInterface from "../../block-removed-params";
 import {BlockCreateEventParamsInterface} from "../../component/block/block-create-event-params.d";
 import {BlockMountEventParamsInterface} from "../../component/block/block-mount-event-params.d";
 import {BlockReadyEventParamsInterface} from "../../component/block/block-ready-event-params.d";
 import Config from "../../config";
-import {Option} from "../../component/stage/structural/options/option";
-import {OptionInterface} from "../../component/stage/structural/options/option.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
+import Option from "../../content-type-menu/option";
+import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import ObservableUpdater from "../../observable-updater";
-import PreviewCollection from "../../preview-collection";
+import ObservableUpdater from "../observable-updater";
+import PreviewCollection from "../preview-collection";
 
 export default class Preview extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable();

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mageUtils", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/stage", "Magento_PageBuilder/js/component/stage/panel"], function (_knockout, _mageUtils, _uiEvents, _underscore, _config, _stage, _panel) {
+define(["knockout", "mageUtils", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel", "Magento_PageBuilder/js/stage"], function (_knockout, _mageUtils, _uiEvents, _underscore, _config, _panel, _stage) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

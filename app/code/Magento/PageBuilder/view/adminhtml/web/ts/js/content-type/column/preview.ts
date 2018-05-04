@@ -15,15 +15,15 @@ import {
     getColumnWidth, getMaxColumns, getSmallestColumnWidth,
 } from "../../component/block/preview/column-group/resizing";
 import Config from "../../config";
-import {StyleAttributeMapperResult} from "../../component/format/style-attribute-mapper";
-import {Option} from "../../component/stage/structural/options/option";
-import {OptionInterface} from "../../component/stage/structural/options/option.d";
-import {ContentTypeConfigInterface} from "../../content-type-config.d";
+import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
-import {ContentTypeInterface} from "../../content-type.d";
-import ObservableUpdater from "../../observable-updater";
-import PreviewCollection from "../../preview-collection";
+import Option from "../../content-type-menu/option";
+import OptionInterface from "../../content-type-menu/option.d";
+import ContentTypeInterface from "../../content-type.d";
+import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import ColumnGroup from "../column-group/preview";
+import ObservableUpdater from "../observable-updater";
+import PreviewCollection from "../preview-collection";
 
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);

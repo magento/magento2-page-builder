@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents", "Magento_PageBuilder/js/component/uploader", "Magento_PageBuilder/js/preview"], function (_uiEvents, _uploader, _preview) {
+define(["uiEvents", "Magento_PageBuilder/js/component/uploader", "Magento_PageBuilder/js/content-type/preview"], function (_uiEvents, _uploader, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =

@@ -5,16 +5,16 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
-import {StyleAttributeMapperResult} from "../../component/format/style-attribute-mapper";
-import {Options} from "../../component/stage/structural/options";
-import {Option} from "../../component/stage/structural/options/option";
-import {OptionInterface} from "../../component/stage/structural/options/option.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
+import Options from "../../content-type-menu";
+import Option from "../../content-type-menu/option";
+import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import ObservableUpdater from "../../observable-updater";
-import BasePreview from "../../preview";
+import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import {fromHex} from "../../utils/color-converter";
 import {percentToDecimal} from "../../utils/number-converter";
+import ObservableUpdater from "../observable-updater";
+import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);

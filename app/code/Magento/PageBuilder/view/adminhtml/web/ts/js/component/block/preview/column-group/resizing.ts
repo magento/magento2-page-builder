@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 import {outwardSearch} from "../../../../utils/array";
-import Column from "../../column";
+import Column from "../../../../content-type/column/preview";
 import ColumnGroup from "../../column-group";
-import {ColumnWidth, MaxGhostWidth, ResizeHistory} from "../column-group";
+import {ColumnWidth, MaxGhostWidth, ResizeHistory} from "../../../../content-type/column-group/preview";
 
 /**
  * Get the maximum columns allowed

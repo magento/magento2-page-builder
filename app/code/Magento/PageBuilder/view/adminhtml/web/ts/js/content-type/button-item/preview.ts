@@ -4,7 +4,7 @@
  */
 
 import $t from "mage/translate";
-import BasePreview from "../../preview";
+import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
     private buttonPlaceholder: string = $t("Edit Button Text");

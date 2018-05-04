@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/component/stage/master-format-renderer"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _contentTypeFactory, _array, _dataStore, _stageBuilder, _masterFormatRenderer) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/array"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _contentTypeFactory, _dataStore, _render, _stageBuilder, _array) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -23,7 +23,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
       this.store = new _dataStore();
       this.template = "Magento_PageBuilder/content-type/preview";
-      this.masterFormatRenderer = new _masterFormatRenderer();
+      this.render = new _render();
       this.collection = new _collection();
       this.parent = parent;
       this.id = parent.id;
@@ -169,7 +169,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       _uiEvents.on("stage:updated", function (args) {
         if (args.stageId === _this.id) {
           _underscore.debounce(function () {
-            _this.masterFormatRenderer.applyBindings(_this.children).then(function (renderedOutput) {
+            _this.render.applyBindings(_this.children).then(function (renderedOutput) {
               return _uiEvents.trigger("stage:renderTree:" + _this.id, {
                 value: renderedOutput
               });

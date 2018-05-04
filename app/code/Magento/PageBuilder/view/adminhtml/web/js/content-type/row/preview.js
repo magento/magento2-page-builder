@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "uiEvents", "underscore", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/preview-collection"], function (_jquery, _knockout, _translate, _jarallax, _uiEvents, _underscore, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _jarallax, _uiEvents, _underscore, _option, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -88,7 +88,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
         removeClasses.push("disabled");
       }
 
-      newOptions.push(new _option.Option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
+      newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
       return newOptions;
     };
     /**

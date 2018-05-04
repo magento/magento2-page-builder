@@ -16,14 +16,15 @@ import {
     findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
     getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth,
 } from "../../component/block/preview/column-group/resizing";
+import ConfigContentBlock from "../../config";
 import Config from "../../config";
-import {Block as GroupBlock} from "../../component/stage/panel/group/block";
+import {Block as GroupBlock} from "../../panel/group/block";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
-import PreviewCollection from "../../preview-collection";
 import {moveArrayItem} from "../../utils/array";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
+import PreviewCollection from "../preview-collection";
 
 interface BlockRemovedParams {
     parent: ColumnGroup;
@@ -61,7 +62,7 @@ export default class Preview extends PreviewCollection {
      */
     constructor(
         parent: EditableArea,
-        config: Config,
+        config: ConfigContentBlock,
         stageId,
     ) {
         super(parent, config, stageId);

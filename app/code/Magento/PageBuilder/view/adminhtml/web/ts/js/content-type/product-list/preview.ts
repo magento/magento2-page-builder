@@ -5,7 +5,7 @@
 
 import events from "uiEvents";
 import Config from "../../config";
-import BasePreview from "../../preview";
+import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
 

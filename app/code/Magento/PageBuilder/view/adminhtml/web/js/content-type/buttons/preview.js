@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection"], function (_knockout, _translate, _uiEvents, _config, _option, _contentTypeFactory, _previewCollection) {
+define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_knockout, _translate, _uiEvents, _config, _contentTypeFactory, _option, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -40,7 +40,7 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config
     _proto.retrieveOptions = function retrieveOptions() {
       var options = _PreviewCollection.prototype.retrieveOptions.call(this);
 
-      options.push(new _option.Option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add Button"), this.addButton, ["add-child"], 20));
+      options.push(new _option(this, "add", "<i class='icon-pagebuilder-add'></i>", (0, _translate)("Add Button"), this.addButton, ["add-child"], 20));
       return options;
     };
     /**

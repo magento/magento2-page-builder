@@ -4,7 +4,7 @@
  */
 
 import tinycolor from "tinycolor";
-import DataConverterInterface from "../data-converter-interface";
+import DataConverterInterface from "./data-converter-interface";
 
 export default class PreferredColorFormat implements DataConverterInterface {
     /**

@@ -5,7 +5,7 @@
 
 import $ from "jquery";
 import _ from "underscore";
-import BasePreview from "../../preview";
+import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
     private element: Element;

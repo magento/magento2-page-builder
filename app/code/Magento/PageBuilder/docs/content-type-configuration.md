@@ -32,7 +32,7 @@ The following is an example of a content type configuration in `etc/content_type
         <icon>icon-pagebuilder-image</icon>
         <component>Magento_PageBuilder/js/content-type</component>
         <preview_component>Magento_PageBuilder/js/content-type/banner/preview</preview_component>
-        <content_component>Magento_PageBuilder/js/content</content_component>
+        <content_component>Magento_PageBuilder/js/content-type/content</content_component>
         <form>pagebuilder_banner_form</form>
         <group>media</group>
         <allowed_parents>

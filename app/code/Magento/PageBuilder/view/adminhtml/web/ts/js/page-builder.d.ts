@@ -3,6 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-export interface PageBuilderInterface {
+export default interface PageBuilderInterface  {
 
 }

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/preview"], function (_translate, _preview) {
+define(["mage/translate", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =

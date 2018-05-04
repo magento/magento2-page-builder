@@ -8,11 +8,11 @@ import $t from "mage/translate";
 import events from "uiEvents";
 import BlockMountEventParamsInterface from "../../component/block/block-mount-event-params.d";
 import Config from "../../config";
-import {Option} from "../../component/stage/structural/options/option";
-import {OptionInterface} from "../../component/stage/structural/options/option.d";
 import createContentType from "../../content-type-factory";
-import PreviewCollection from "../../preview-collection";
+import Option from "../../content-type-menu/option";
+import OptionInterface from "../../content-type-menu/option.d";
 import ButtonItem from "../button-item/preview";
+import PreviewCollection from "../preview-collection";
 
 export default class Preview extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);

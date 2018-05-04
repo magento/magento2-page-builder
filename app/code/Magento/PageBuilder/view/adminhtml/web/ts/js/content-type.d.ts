@@ -4,8 +4,8 @@
  */
 
 import ContentTypeConfigInterface from "./content-type-config.d";
-import Preview from "./preview";
-import Content from "./content";
+import Preview from "./content-type/preview";
+import Content from "./content-type/content";
 import DataStore from "./data-store";
 
 export default interface ContentTypeInterface {

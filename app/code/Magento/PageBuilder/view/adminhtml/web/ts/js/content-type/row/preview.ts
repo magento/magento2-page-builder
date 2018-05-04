@@ -11,13 +11,12 @@ import events from "uiEvents";
 import _ from "underscore";
 import BlockMountEventParamsInterface from "../../component/block/block-mount-event-params.d";
 import BlockReadyEventParamsInterface from "../../component/block/block-ready-event-params.d";
-import EventBus from "../../component/event-bus";
-import {Option} from "../../component/stage/structural/options/option";
-import {OptionInterface} from "../../component/stage/structural/options/option.d";
-import {ContentTypeConfigInterface} from "../../content-type-config.d";
-import {ContentTypeInterface} from "../../content-type.d";
-import ObservableUpdater from "../../observable-updater";
-import PreviewCollection from "../../preview-collection";
+import ContentTypeConfigInterface from "../../content-type-config.d";
+import Option from "../../content-type-menu/option";
+import OptionInterface from "../../content-type-menu/option.d";
+import ContentTypeInterface from "../../content-type.d";
+import ObservableUpdater from "../observable-updater";
+import PreviewCollection from "../preview-collection";
 
 export default class Preview extends PreviewCollection {
     public getChildren: KnockoutComputed<{}>;

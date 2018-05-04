@@ -1,14 +1,14 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/content-collection"], function (_contentCollection) {
+define(["Magento_PageBuilder/js/content-type/content-collection"], function (_contentCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Content =
   /*#__PURE__*/
-  function (_ContentCollection) {
-    _inheritsLoose(Content, _ContentCollection);
+  function (_ContentCollectionBas) {
+    _inheritsLoose(Content, _ContentCollectionBas);
 
     function Content() {
-      return _ContentCollection.apply(this, arguments) || this;
+      return _ContentCollectionBas.apply(this, arguments) || this;
     }
 
     var _proto = Content.prototype;

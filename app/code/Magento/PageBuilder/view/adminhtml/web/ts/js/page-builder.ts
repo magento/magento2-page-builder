@@ -8,9 +8,9 @@ import utils from "mageUtils";
 import events from "uiEvents";
 import _ from "underscore";
 import Config from "./config";
-import { PageBuilderInterface } from "./page-builder.d";
+import PageBuilderInterface from "./page-builder.d";
+import Panel from "./panel";
 import Stage from "./stage";
-import Panel from "./component/stage/panel";
 
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";
