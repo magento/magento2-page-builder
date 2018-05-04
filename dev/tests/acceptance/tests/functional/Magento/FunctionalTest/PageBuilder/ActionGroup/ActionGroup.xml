@@ -178,10 +178,12 @@
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
             <argument name="contentBlockNumber" defaultValue="2" type="string"/>
+            <argument name="x" defaultValue="" type="string"/>
+            <argument name="y" defaultValue="" type="string"/>
         </arguments>
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="seeContentTypeInStage" />
         <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentBlockStage"/>
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockRemoveByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="clickRemoveContentBlock"/>
