@@ -9,7 +9,7 @@
  * @param {String} url
  * @returns {Boolean}
  */
-export function isPathOnly(url: string): boolean {
+function isPathOnly(url: string): boolean {
     return url.indexOf("/") === 0;
 }
 
@@ -19,7 +19,7 @@ export function isPathOnly(url: string): boolean {
  * @param {String} url
  * @returns {String}
  */
-export function getPathFromUrl(url: string): string {
+function getPathFromUrl(url: string): string {
     const a = document.createElement("a");
 
     a.href = url;

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _alert, _contentTypeFactory, _previewCollection, _config, _eventBus, _option, _resizing, _resizing2) {
+define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/structural/options/option", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _contentTypeFactory, _previewCollection, _config, _option, _resizing, _resizing2) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -45,8 +45,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Ma
       _PreviewCollection.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
-        _eventBus.on("column:block:mount", function (event, params) {
-          if (params.id === _this2.parent.id) {
+        _uiEvents.on("column:block:mount", function (args) {
+          if (args.id === _this2.parent.id) {
             _this2.createColumnGroup();
           }
         });
@@ -62,7 +62,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Ma
     _proto.initColumn = function initColumn(element) {
       this.parent.element = (0, _jquery)(element);
 
-      _eventBus.trigger("column:initElement", {
+      _uiEvents.trigger("column:initElement", {
         column: this.parent,
         element: (0, _jquery)(element),
         parent: this.parent.parent
@@ -92,7 +92,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Ma
 
 
     _proto.bindResizeHandle = function bindResizeHandle(handle) {
-      _eventBus.trigger("column:bindResizeHandle", {
+      _uiEvents.trigger("column:bindResizeHandle", {
         column: this.parent,
         handle: (0, _jquery)(handle),
         parent: this.parent.parent
@@ -239,12 +239,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "Ma
       }
 
       blocks.forEach(function (block) {
-        _eventBus.trigger("block:mount", {
+        _uiEvents.trigger("block:mount", {
           id: block.id,
           block: block
         });
 
-        _eventBus.trigger(block.config.name + ":block:mount", {
+        _uiEvents.trigger(block.config.name + ":block:mount", {
           id: block.id,
           block: block
         });
