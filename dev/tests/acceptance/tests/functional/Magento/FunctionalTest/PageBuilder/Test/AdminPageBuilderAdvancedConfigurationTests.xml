@@ -42,7 +42,7 @@
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Check Field Labels -->
         <comment userInput="Check Field Labels" stepKey="commentFieldLabels"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelAlignment">
+        <actionGroup ref="validateTextAlignments" stepKey="checkLabelAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="checkLabelBorder">
@@ -88,12 +88,6 @@
         </actionGroup>
         <!-- Check Disabled -->
         <comment userInput="Check Disabled" stepKey="commentCheckDisabled"/>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="checkDisabledAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="checkDisabledBorder">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
-        </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="checkDisabledBorderColor">
             <argument name="property" value="PageBuilderAdvancedBorderColorDefaultProperty"/>
         </actionGroup>
@@ -109,7 +103,6 @@
         <!-- Check Drop Down Counts -->
         <comment userInput="Check Drop Down Counts" stepKey="commentCheckDropDownCounts"/>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountAlignment"/>
-        <assertCount actual="getDropDownCountAlignment" actualType="variable" expected="4" expectedType="int" stepKey="assertDropDownCountAlignment"/>
         <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountBorder"/>
         <assertCount actual="getDropDownCountBorder" actualType="variable" expected="10" expectedType="int" stepKey="assertDropDownCountBorder"/>
         <!-- Check Placeholder Text -->
