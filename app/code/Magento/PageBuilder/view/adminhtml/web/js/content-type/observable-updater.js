@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "underscore", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/utils/string"], function (_knockout, _underscore, _appearanceConfig, _string) {
+define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config"], function (_knockout, _underscore, _string, _appearanceConfig) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var ObservableUpdater =

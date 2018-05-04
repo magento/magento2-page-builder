@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/converter/data-converter-pool-factory", "Magento_PageBuilder/js/converter/element-converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_mageUtils, _appearanceConfig, _string, _dataConverterPoolFactory, _elementConverterPoolFactory, _propertyReaderPoolFactory) {
+define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/data-converter-pool-factory", "Magento_PageBuilder/js/converter/element-converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory", "Magento_PageBuilder/js/utils/string"], function (_mageUtils, _appearanceConfig, _dataConverterPoolFactory, _elementConverterPoolFactory, _propertyReaderPoolFactory, _string) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Configurable =

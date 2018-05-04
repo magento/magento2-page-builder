@@ -8,11 +8,6 @@ import ko from "knockout";
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
-import BlockMountEventParamsInterface from "../block-mount-event-params.d";
-import {
-    findShrinkableColumn, getAcceptedColumnWidth, getColumnsWidth,
-    getColumnWidth, getMaxColumns, getSmallestColumnWidth, updateColumnWidth,
-} from "../column-group/resizing";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
@@ -20,7 +15,12 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
+import BlockMountEventParamsInterface from "../block-mount-event-params.d";
 import ColumnGroup from "../column-group/preview";
+import {
+    findShrinkableColumn, getAcceptedColumnWidth, getColumnsWidth,
+    getColumnWidth, getMaxColumns, getSmallestColumnWidth, updateColumnWidth,
+} from "../column-group/resizing";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
