@@ -90,21 +90,21 @@ Custom configuration is injected into relevant content type block constructors, 
 
 ``` js
 var uploaderConfiguration = Object.assign(
-	{},
-	config.additional_data.uploaderConfig,
-	{
-		value: this.stage.dataStore.get(this.id).image,
-	},
+    {},
+    config.additional_data.uploaderConfig,
+    {
+        value: this.dataStore.get().image,
+    },
 );
 
 // Create uploader
 this.uploader = new Uploader(
-	this.id,
-	"imageuploader_" + this.id,
-	Object.assign({}, uploaderConfiguration, {
-		value: this.stage.dataStore.get(this.id).image,
-	}),
-	uploaderConfiguration,
+    this.id,
+    "imageuploader_" + this.id,
+    Object.assign({}, uploaderConfiguration, {
+        value: this.dataStore.get().image,
+    }),
+    uploaderConfiguration,
 );
 ```
 
