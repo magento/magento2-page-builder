@@ -1,10 +1,10 @@
 /*eslint-disable */
-define(["jquery", "knockout", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/component/event-bus"], function (_jquery, _knockout, _array, _eventBus) {
+define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"], function (_jquery, _knockout, _uiEvents, _array) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
-  _eventBus = _interopRequireDefault(_eventBus);
+  _uiEvents = _interopRequireDefault(_uiEvents);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29,7 +29,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/utils/array", "Magento_Pag
         event.stopPropagation();
         originalPosition = ui.item.index();
 
-        _eventBus.default.trigger("previewSortable:sortstart", {
+        _uiEvents.default.trigger("previewSortable:sortstart", {
           instance: instance,
           originalPosition: originalPosition,
           ui: ui
@@ -38,7 +38,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/utils/array", "Magento_Pag
         var index = ui.item.index();
         (0, _array.moveArrayItem)(instance.children, originalPosition, index);
 
-        _eventBus.default.trigger("previewSortable:sortupdate", {
+        _uiEvents.default.trigger("previewSortable:sortupdate", {
           instance: instance,
           newPosition: index,
           originalPosition: originalPosition,

@@ -9,6 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="DividerOnStage">
+        <element name="allDividers" type="text" selector="//div[contains(@class,'pagebuilder-divider')]"/>
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]" parameterized="true"/>
         <element name="color" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
         <element name="noColor" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//hr[not(contains(@style,'border-color:'))]" parameterized="true"/>
@@ -30,6 +31,7 @@
         <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-divider')])[{{arg1}}]//div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="DividerOnStorefront">
+        <element name="allDividers" type="text" selector="//div[@data-role='divider']"/>
         <element name="base" type="text" selector="(//div[@data-role='divider'])[{{arg1}}]" parameterized="true"/>
         <element name="color" type="text" selector="(//div[@data-role='divider'])[{{arg1}}]//hr[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
         <element name="noColor" type="text" selector="(//div[@data-role='divider'])[{{arg1}}]//hr[not(contains(@style,'border-color:'))]" parameterized="true"/>

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "underscore", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_jquery, _knockout, _translate, _jarallax, _underscore, _previewCollection, _eventBus, _option) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "uiEvents", "underscore", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_jquery, _knockout, _translate, _jarallax, _uiEvents, _underscore, _previewCollection, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Row =
@@ -48,14 +48,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       _this.parent.store.subscribe(_this.buildJarallax);
 
-      _eventBus.on("row:block:ready", function (event, params) {
-        if (params.id === _this.parent.id) {
+      _uiEvents.on("row:block:ready", function (args) {
+        if (args.id === _this.parent.id) {
           _this.buildJarallax();
         }
       });
 
-      _eventBus.on("block:mount", function (event, params) {
-        if (params.block.parent.id === _this.parent.id) {
+      _uiEvents.on("block:mount", function (args) {
+        if (args.block.parent.id === _this.parent.id) {
           _this.buildJarallax();
         }
       });

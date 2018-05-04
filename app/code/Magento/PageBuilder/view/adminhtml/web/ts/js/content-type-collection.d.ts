@@ -6,7 +6,7 @@
 import ContentTypeInterface from "./content-type.d";
 
 export default interface ContentTypeCollectionInterface extends ContentTypeCollectionInterface {
-    children: KnockoutObservableArray<any>,
+    children: KnockoutObservableArray<any>;
 
     addChild(child: ContentTypeInterface, index?: number);
 

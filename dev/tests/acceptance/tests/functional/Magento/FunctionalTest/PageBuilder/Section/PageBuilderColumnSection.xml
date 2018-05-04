@@ -15,6 +15,9 @@
         <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>
         <element name="column" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][1]"/>
         <element name="column2" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][2]"/>
+        <element name="columnX" type="text" selector=".pagebuilder-content-type.pagebuilder-column:nth-child({{arg1}})" parameterized="true"/>
+        <element name="columnResizeHandle" type="block" selector=".pagebuilder-column-resize-handle"/>
+        <element name="columnResizeGridLine" type="block" selector=".resize-grid .grid-line:nth-child({{arg}})" parameterized="true"/>
         <element name="columnStyle" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="allColumns" type="text" selector="//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>
         <element name="addRow" type="button" selector='//*[@class="pagebuilder-stage"]/div[3]/button'/>
@@ -56,6 +59,9 @@
         <element name="empty" type="button" selector="//div[contains(@class, 'empty-column')]"/>
     </section>
     <section name="ColumnsOnFrontend">
+        <element name="columnGroup" type="block" selector=".pagebuilder-column-group"/>
+        <element name="allColumns" type="block" selector=".pagebuilder-column-group .pagebuilder-column"/>
+        <element name="columnX" type="block" selector=".pagebuilder-column-group .pagebuilder-column:nth-child({{arg}})" parameterized="true"/>
         <element name="columnStyle" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="column1Height" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'min-height: 500px;')]"/>
         <element name="column1HeightFull" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'align-self: stretch;')]"/>
