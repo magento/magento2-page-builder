@@ -9,11 +9,10 @@ import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import BlockMountEventParamsInterface from "../../component/block/block-mount-event-params.d";
-import {updateColumnWidth} from "../../component/block/column-group/resizing";
 import {
     findShrinkableColumn, getAcceptedColumnWidth, getColumnsWidth,
-    getColumnWidth, getMaxColumns, getSmallestColumnWidth,
-} from "../../component/block/preview/column-group/resizing";
+    getColumnWidth, getMaxColumns, getSmallestColumnWidth, updateColumnWidth,
+} from "../column-group/resizing";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";

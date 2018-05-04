@@ -2,8 +2,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import Column from "../../../../content-type/column/preview";
-import ColumnGroup from "../../column-group";
+
+import Column from "../column/preview";
+import ColumnGroup from "../../content-type-collection";
 import {getAcceptedColumnWidth, getColumnWidth, getSmallestColumnWidth} from "./resizing";
 
 /**

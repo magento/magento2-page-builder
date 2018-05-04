@@ -3,14 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 
-export default interface BlockDroppedParamsInterface {
+export default interface ContentTypeSortedParamsInterface {
     parent: ContentTypeInterface;
+    block: ContentTypeInterface;
     index: number;
-    block: {
-        config: ContentTypeConfigInterface,
-    };
     stageId: string;
 }

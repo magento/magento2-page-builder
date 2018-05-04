@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/block/preview/column-group/resizing"], function (_resizing) {
+define(["Magento_PageBuilder/js/content-type/column-group/resizing"], function (_resizing) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -40,4 +40,4 @@ define(["Magento_PageBuilder/js/component/block/preview/column-group/resizing"],
     calculateDropPositions: calculateDropPositions
   };
 });
-//# sourceMappingURL=dragdrop.js.map
+//# sourceMappingURL=drag-n-drop.js.map

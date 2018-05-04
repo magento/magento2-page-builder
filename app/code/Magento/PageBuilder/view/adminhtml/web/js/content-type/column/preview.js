@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/component/block/column-group/resizing", "Magento_PageBuilder/js/component/block/preview/column-group/resizing", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _resizing, _resizing2, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/content-type/column-group/resizing", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _resizing, _config, _contentTypeFactory, _option, _previewCollection) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -21,7 +21,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       _this.resizing = _knockout.observable(false);
 
       _this.previewData.width.subscribe(function (newWidth) {
-        var maxColumns = (0, _resizing2.getMaxColumns)();
+        var maxColumns = (0, _resizing.getMaxColumns)();
         newWidth = parseFloat(newWidth);
         newWidth = Math.round(newWidth / (100 / maxColumns));
         var newLabel = newWidth + "/" + maxColumns;
@@ -146,12 +146,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       }
 
       // Are we duplicating from a parent?
-      if (child.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && (0, _resizing2.getColumnsWidth)(this.parent.parent) < 100) {
+      if (child.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && (0, _resizing.getColumnsWidth)(this.parent.parent) < 100) {
         return _PreviewCollection.prototype.clone.call(this, child, autoAppend);
       } // Attempt to split the current column into parts
 
 
-      var splitTimes = Math.round((0, _resizing2.getColumnWidth)(child) / (0, _resizing2.getSmallestColumnWidth)());
+      var splitTimes = Math.round((0, _resizing.getColumnWidth)(child) / (0, _resizing.getSmallestColumnWidth)());
 
       if (splitTimes > 1) {
         _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateBlock) {
@@ -160,28 +160,28 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
           for (var i = 0; i <= splitTimes; i++) {
             if (splitTimes > 0) {
-              originalWidth += (0, _resizing2.getSmallestColumnWidth)();
+              originalWidth += (0, _resizing.getSmallestColumnWidth)();
               --splitTimes;
             }
 
             if (splitTimes > 0) {
-              duplicateWidth += (0, _resizing2.getSmallestColumnWidth)();
+              duplicateWidth += (0, _resizing.getSmallestColumnWidth)();
               --splitTimes;
             }
           }
 
-          (0, _resizing.updateColumnWidth)(child, (0, _resizing2.getAcceptedColumnWidth)(originalWidth.toString()));
-          (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing2.getAcceptedColumnWidth)(duplicateWidth.toString()));
+          (0, _resizing.updateColumnWidth)(child, (0, _resizing.getAcceptedColumnWidth)(originalWidth.toString()));
+          (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing.getAcceptedColumnWidth)(duplicateWidth.toString()));
           return duplicateBlock;
         });
       } else {
         // Conduct an outward search on the children to locate a suitable shrinkable column
-        var shrinkableColumn = (0, _resizing2.findShrinkableColumn)(child);
+        var shrinkableColumn = (0, _resizing.findShrinkableColumn)(child);
 
         if (shrinkableColumn) {
           _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateBlock) {
-            (0, _resizing.updateColumnWidth)(shrinkableColumn, (0, _resizing2.getAcceptedColumnWidth)(((0, _resizing2.getColumnWidth)(shrinkableColumn) - (0, _resizing2.getSmallestColumnWidth)()).toString()));
-            (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing2.getSmallestColumnWidth)());
+            (0, _resizing.updateColumnWidth)(shrinkableColumn, (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(shrinkableColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()));
+            (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing.getSmallestColumnWidth)());
             return duplicateBlock;
           });
         } else {

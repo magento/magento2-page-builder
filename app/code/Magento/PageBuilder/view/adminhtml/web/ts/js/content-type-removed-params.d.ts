@@ -5,7 +5,7 @@
 
 import ContentTypeInterface from "./content-type.d";
 
-export default interface BlockRemovedParamsInterface {
+export default interface ContentTypeRemovedParamsInterface {
     parent: ContentTypeInterface;
     index: number;
     block: ContentTypeInterface;

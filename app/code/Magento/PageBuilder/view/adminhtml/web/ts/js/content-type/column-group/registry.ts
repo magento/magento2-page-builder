@@ -2,7 +2,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-import Column from "../../../../content-type/column/preview";
+
+import Column from "../column/preview";
 
 let dragColumn: Column;
 

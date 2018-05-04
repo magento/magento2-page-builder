@@ -7,15 +7,14 @@ import $ from "jquery";
 import ko from "knockout";
 import events from "uiEvents";
 import _ from "underscore";
-import {createColumn} from "../../component/block/column-group/factory";
-import {resizeColumn, updateColumnWidth} from "../../component/block/column-group/resizing";
-import {calculateDropPositions, DropPosition} from "../../component/block/preview/column-group/dragdrop";
-import {getDragColumn, removeDragColumn, setDragColumn} from "../../component/block/preview/column-group/registry";
+import {createColumn} from "./factory";
+import {calculateDropPositions, DropPosition} from "./drag-n-drop";
+import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import {
     calculateGhostWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth,
     findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
-    getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth,
-} from "../../component/block/preview/column-group/resizing";
+    getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
+} from "./resizing";
 import ConfigContentBlock from "../../config";
 import Config from "../../config";
 import {Block as GroupBlock} from "../../panel/group/block";

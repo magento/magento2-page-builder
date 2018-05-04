@@ -8,10 +8,10 @@ import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import _ from "underscore";
-import BlockDroppedParamsInterface from "./block-dropped-params.d";
-import BlockInstanceDroppedParamsInterface from "./block-instance-dropped-params.d";
-import BlockRemovedParamsInterface from "./block-removed-params.d";
-import BlockSortedParamsInterface from "./block-sorted-params.d";
+import ContentTypeDroppedParamsInterface from "./content-type-dropped-params.d";
+import ContentTypeInstanceDroppedParamsInterface from "./content-type-instance-dropped-params.d";
+import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
+import ContentTypeSortedParamsInterface from "./content-type-sorted-params.d";
 import Collection from "./collection";
 import createContentType from "./content-type-factory";
 import ContentTypeInterface from "./content-type.d";
@@ -121,28 +121,28 @@ export default class Stage {
             () => events.trigger("stage:updated", {stageId: this.id}),
         );
         // Block dropped from left hand panel
-        events.on("block:dropped", (args: BlockDroppedParamsInterface) => {
+        events.on("block:dropped", (args: ContentTypeDroppedParamsInterface) => {
             if (args.stageId === this.id) {
                 this.onBlockDropped(args);
             }
         });
 
         // Block instance being moved between structural elements
-        events.on("block:instanceDropped", (args: BlockInstanceDroppedParamsInterface) => {
+        events.on("block:instanceDropped", (args: ContentTypeInstanceDroppedParamsInterface) => {
             if (args.stageId === this.id) {
                 this.onBlockInstanceDropped(args);
             }
         });
 
         // Block being removed from container
-        events.on("block:removed", (args: BlockRemovedParamsInterface) => {
+        events.on("block:removed", (args: ContentTypeRemovedParamsInterface) => {
             if (args.stageId === this.id) {
                 this.onBlockRemoved(args);
             }
         });
 
         // Block sorted within the same structural element
-        events.on("block:sorted", (args: BlockSortedParamsInterface) => {
+        events.on("block:sorted", (args: ContentTypeSortedParamsInterface) => {
             if (args.stageId === this.id) {
                 this.onBlockSorted(args);
             }
@@ -186,7 +186,7 @@ export default class Stage {
      * @param event
      * @param params
      */
-    private onBlockRemoved(params: BlockRemovedParamsInterface): void {
+    private onBlockRemoved(params: ContentTypeRemovedParamsInterface): void {
         params.parent.removeChild(params.block);
 
         // Remove the instance from the data store
@@ -199,7 +199,7 @@ export default class Stage {
      * @param {Event} event
      * @param {BlockInstanceDroppedParams} params
      */
-    private onBlockInstanceDropped(params: BlockInstanceDroppedParamsInterface): void {
+    private onBlockInstanceDropped(params: ContentTypeInstanceDroppedParamsInterface): void {
         const originalParent = params.blockInstance.parent;
         params.blockInstance.parent = params.parent;
         params.parent.parent.addChild(params.blockInstance, params.index);
@@ -217,7 +217,7 @@ export default class Stage {
      *
      * @param {BlockDroppedParams} params
      */
-    private onBlockDropped(params: BlockDroppedParamsInterface) {
+    private onBlockDropped(params: ContentTypeDroppedParamsInterface) {
         const index = params.index || 0;
 
         new Promise<ContentTypeInterface>((resolve, reject) => {
@@ -242,7 +242,7 @@ export default class Stage {
      *
      * @param {BlockSortedParams} params
      */
-    private onBlockSorted(params: BlockSortedParamsInterface): void {
+    private onBlockSorted(params: ContentTypeSortedParamsInterface): void {
         const originalIndex = ko.utils.arrayIndexOf(params.parent.children(), params.block);
         if (originalIndex !== params.index) {
             moveArrayItem(params.parent.children, originalIndex, params.index);

@@ -332,6 +332,52 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   function comparator(num1, num2, threshold) {
     return num1 > num2 - threshold / 2 && num1 < num2 + threshold / 2;
   }
+  /**
+   * Resize a column to a specific width
+   *
+   * @param {Column} column
+   * @param {number} width
+   * @param {Column} shrinkableColumn
+   */
+
+
+  function resizeColumn(column, width, shrinkableColumn) {
+    var current = getColumnWidth(column);
+    var difference = (parseFloat(width.toString()) - current).toFixed(8); // Don't run the update if we've already modified the column
+
+    if (current === parseFloat(width.toString()) || parseFloat(width.toString()) < getSmallestColumnWidth()) {
+      return;
+    } // Also shrink the closest shrinkable column
+
+
+    var allowedToShrink = true;
+
+    if (difference && shrinkableColumn) {
+      var currentShrinkable = getColumnWidth(shrinkableColumn);
+      var shrinkableSize = getAcceptedColumnWidth((currentShrinkable + -difference).toString()); // Ensure the column we're crushing is not becoming the same size, and it's not less than the smallest width
+
+      if (currentShrinkable === parseFloat(shrinkableSize.toString()) || parseFloat(shrinkableSize.toString()) < getSmallestColumnWidth()) {
+        allowedToShrink = false;
+      } else {
+        updateColumnWidth(shrinkableColumn, shrinkableSize);
+      }
+    }
+
+    if (allowedToShrink) {
+      updateColumnWidth(column, width);
+    }
+  }
+  /**
+   * Update the width of a column
+   *
+   * @param {Column} column
+   * @param {number} width
+   */
+
+
+  function updateColumnWidth(column, width) {
+    column.store.updateKey(column.id, parseFloat(width.toString()) + "%", "width");
+  }
 
   return {
     getMaxColumns: getMaxColumns,
@@ -348,7 +394,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     getRoundedColumnWidth: getRoundedColumnWidth,
     calculateGhostWidth: calculateGhostWidth,
     determineAdjustedColumn: determineAdjustedColumn,
-    comparator: comparator
+    comparator: comparator,
+    resizeColumn: resizeColumn,
+    updateColumnWidth: updateColumnWidth
   };
 });
 //# sourceMappingURL=resizing.js.map
