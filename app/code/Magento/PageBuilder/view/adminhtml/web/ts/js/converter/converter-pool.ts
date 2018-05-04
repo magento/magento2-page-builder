@@ -5,7 +5,7 @@
 
 import ConverterInterface from "./converter-interface";
 
-class ElementConverterPool {
+class ConverterPool {
     private converters: object = {};
 
     public get(name: string): ConverterInterface {
@@ -17,4 +17,4 @@ class ElementConverterPool {
     }
 }
 
-export default new ElementConverterPool();
+export default new ConverterPool();

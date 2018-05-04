@@ -16,9 +16,9 @@ define(["Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_Page
     var promises = [(0, _converterPoolFactory)(config.name), (0, _converterPoolFactory2)(config.name)];
     return new Promise(function (resolve) {
       Promise.all(promises).then(function (resolvedPromises) {
-        var elementConverterPool = resolvedPromises[0],
+        var converterPool = resolvedPromises[0],
             massConverterPool = resolvedPromises[1];
-        resolve(new _observableUpdater(elementConverterPool, massConverterPool, converterResolver));
+        resolve(new _observableUpdater(converterPool, massConverterPool, converterResolver));
       }).catch(function (error) {
         console.error(error);
       });

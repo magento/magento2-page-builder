@@ -71,7 +71,7 @@ export default function create(contentType: string): Promise<> {
         }
     }
 
-    return new Promise((resolve: (elementConverterPool: object) => void) => {
+    return new Promise((resolve: (converterPool: object) => void) => {
         loadModule(converters, (...loadedConverters: any[]) => {
             for (let i = 0; i < converters.length; i++) {
                 ConverterPool.register(converters[i], new loadedConverters[i]());

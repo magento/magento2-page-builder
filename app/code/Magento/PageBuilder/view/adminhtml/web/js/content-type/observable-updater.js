@@ -6,15 +6,15 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
   /*#__PURE__*/
   function () {
     /**
-     * @param {ElementConverterPool} elementConverterPool
+     * @param {ConverterPool} converterPool
      * @param {MassConverterPool} massConverterPool
      * @param {(config: object) => string} converterResolver
      */
-    function ObservableUpdater(elementConverterPool, massConverterPool, converterResolver) {
-      this.elementConverterPool = void 0;
+    function ObservableUpdater(converterPool, massConverterPool, converterResolver) {
+      this.converterPool = void 0;
       this.massConverterPool = void 0;
       this.converterResolver = void 0;
-      this.elementConverterPool = elementConverterPool;
+      this.converterPool = converterPool;
       this.massConverterPool = massConverterPool;
       this.converterResolver = converterResolver;
     }
@@ -134,8 +134,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
         var value = data[_attributeConfig.var];
         var converter = this.converterResolver(_attributeConfig);
 
-        if (this.elementConverterPool.get(converter)) {
-          value = this.elementConverterPool.get(converter).toDom(_attributeConfig.var, data);
+        if (this.converterPool.get(converter)) {
+          value = this.converterPool.get(converter).toDom(_attributeConfig.var, data);
         }
 
         result[_attributeConfig.name] = value;
@@ -183,8 +183,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
             value = data[_propertyConfig.var];
             var converter = this.converterResolver(_propertyConfig);
 
-            if (this.elementConverterPool.get(converter)) {
-              value = this.elementConverterPool.get(converter).toDom(_propertyConfig.var, data);
+            if (this.converterPool.get(converter)) {
+              value = this.converterPool.get(converter).toDom(_propertyConfig.var, data);
             }
           }
 
@@ -212,8 +212,8 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magent
       var value = data[config.html.var] || config.html.placeholder;
       var converter = this.converterResolver(config.html);
 
-      if (this.elementConverterPool.get(converter)) {
-        value = this.elementConverterPool.get(converter).toDom(config.html.var, data);
+      if (this.converterPool.get(converter)) {
+        value = this.converterPool.get(converter).toDom(config.html.var, data);
       } // if value is empty, use placeholder
 
 

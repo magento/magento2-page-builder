@@ -24,7 +24,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
       return new Promise(function (resolve) {
         Promise.all(componentsPromise).then(function (loadedComponents) {
           var propertyReaderPool = loadedComponents[0],
-              elementConverterPool = loadedComponents[1],
+              converterPool = loadedComponents[1],
               massConverterPool = loadedComponents[2];
           var data = {};
 
@@ -41,15 +41,15 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
             }
 
             if (elementConfig.style.length) {
-              data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, elementConverterPool);
+              data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool);
             }
 
             if (elementConfig.attributes.length) {
-              data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, elementConverterPool);
+              data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
             }
 
             if (undefined !== elementConfig.html.var) {
-              data = _this.readHtml(elementConfig, currentElement, data, elementConverterPool);
+              data = _this.readHtml(elementConfig, currentElement, data, converterPool);
             }
 
             if (undefined !== elementConfig.tag.var) {
@@ -75,12 +75,12 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
      * @param {Node} element
      * @param {object} data
      * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ElementConverterPool} elementConverterPool
+     * @param {ConverterPool} converterPool
      * @returns {object}
      */
 
 
-    _proto.readAttributes = function readAttributes(config, element, data, propertyReaderPool, elementConverterPool) {
+    _proto.readAttributes = function readAttributes(config, element, data, propertyReaderPool, converterPool) {
       var result = {};
 
       for (var _iterator = config, _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
@@ -103,8 +103,8 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
         var value = !!_attributeConfig.complex ? propertyReaderPool.get(_attributeConfig.reader).read(element) : element.getAttribute(_attributeConfig.name);
 
-        if (elementConverterPool.get(_attributeConfig.converter)) {
-          value = elementConverterPool.get(_attributeConfig.converter).fromDom(value);
+        if (converterPool.get(_attributeConfig.converter)) {
+          value = converterPool.get(_attributeConfig.converter).fromDom(value);
         }
 
         if (data[_attributeConfig.var] === "object") {
@@ -123,12 +123,12 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
      * @param {Node} element
      * @param {object} data
      * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ElementConverterPool} elementConverterPool
+     * @param {ConverterPool} converterPool
      * @returns {object}
      */
 
 
-    _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, elementConverterPool) {
+    _proto.readStyle = function readStyle(config, element, data, propertyReaderPool, converterPool) {
       var result = _.extend({}, data);
 
       for (var _iterator2 = config, _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
@@ -151,8 +151,8 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
         var value = !!_propertyConfig.complex ? propertyReaderPool.get(_propertyConfig.reader).read(element) : element.style[(0, _string.fromSnakeToCamelCase)(_propertyConfig.name)];
 
-        if (elementConverterPool.get(_propertyConfig.converter)) {
-          value = elementConverterPool.get(_propertyConfig.converter).fromDom(value);
+        if (converterPool.get(_propertyConfig.converter)) {
+          value = converterPool.get(_propertyConfig.converter).fromDom(value);
         }
 
         if (_typeof(result[_propertyConfig.var]) === "object") {
@@ -224,12 +224,12 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
      */
 
 
-    _proto.readHtml = function readHtml(config, element, data, elementConverterPool) {
+    _proto.readHtml = function readHtml(config, element, data, converterPool) {
       var result = {};
       var value = element.innerHTML;
 
-      if (elementConverterPool.get(config.html.converter)) {
-        value = elementConverterPool.get(config.html.converter).fromDom(value);
+      if (converterPool.get(config.html.converter)) {
+        value = converterPool.get(config.html.converter).fromDom(value);
       }
 
       result[config.html.var] = value;
