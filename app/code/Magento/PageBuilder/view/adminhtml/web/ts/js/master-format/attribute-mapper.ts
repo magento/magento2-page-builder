@@ -5,6 +5,9 @@
 
 import {DataObject} from "../data-store";
 
+/**
+ * @deprecated
+ */
 export default class AttributeMapper {
     // Attribute name mapping
     private attributeNameMapping: AttributeNameMapping = {

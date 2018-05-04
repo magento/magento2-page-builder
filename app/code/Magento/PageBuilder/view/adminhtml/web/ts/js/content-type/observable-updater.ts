@@ -5,29 +5,29 @@
 
 import ko from "knockout";
 import _ from "underscore";
-import appearanceConfig from "./appearance-config";
-import DataConverterPool from "../converter/data-converter-pool";
-import ElementConverterPool from "../converter/element-converter-pool";
+import ElementConverterPool from "../converter/converter-pool";
 import {DataObject} from "../data-store";
+import MassConverterPool from "../mass-converter/converter-pool";
 import {fromSnakeToCamelCase} from "../utils/string";
+import appearanceConfig from "./appearance-config";
 
 export default class ObservableUpdater {
     private elementConverterPool: ElementConverterPool;
-    private dataConverterPool: DataConverterPool;
+    private massConverterPool: MassConverterPool;
     private converterResolver: (config: object) => string;
 
     /**
      * @param {ElementConverterPool} elementConverterPool
-     * @param {DataConverterPool} dataConverterPool
+     * @param {MassConverterPool} massConverterPool
      * @param {(config: object) => string} converterResolver
      */
     constructor(
         elementConverterPool: ElementConverterPool,
-        dataConverterPool: DataConverterPool,
+        massConverterPool: MassConverterPool,
         converterResolver: (config: object) => string,
     ) {
         this.elementConverterPool = elementConverterPool;
-        this.dataConverterPool = dataConverterPool;
+        this.massConverterPool = massConverterPool;
         this.converterResolver = converterResolver;
     }
 
@@ -191,7 +191,7 @@ export default class ObservableUpdater {
      */
     public convertData(data: object, convertersConfig: object) {
         for (const converterConfig of convertersConfig) {
-            data = this.dataConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
+            data = this.massConverterPool.get(converterConfig.component).toDom(data, converterConfig.config);
         }
         return data;
     }

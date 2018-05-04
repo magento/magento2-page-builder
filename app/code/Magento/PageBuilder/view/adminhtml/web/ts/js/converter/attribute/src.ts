@@ -7,9 +7,9 @@ import Config from "../../config";
 import {toDataUrl} from "../../utils/directives";
 import {decodeUrl} from "../../utils/image";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
-import ElementConverterInterface from "../element-converter-interface";
+import ConverterInterface from "../converter-interface";
 
-export default class Src implements ElementConverterInterface {
+export default class Src implements ConverterInterface {
     /**
      * Convert value to internal format
      *

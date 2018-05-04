@@ -4,6 +4,10 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-mapper", "
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @deprecated
+   */
   var Default =
   /*#__PURE__*/
   function () {

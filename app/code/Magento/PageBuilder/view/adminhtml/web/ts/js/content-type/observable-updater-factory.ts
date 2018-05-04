@@ -4,8 +4,8 @@
  */
 
 import ContentTypeConfigInterface from "../content-type-config.d";
-import dataConverterPoolFactory from "../converter/data-converter-pool-factory";
-import elementConverterPoolFactory from "../converter/element-converter-pool-factory";
+import elementConverterPoolFactory from "../converter/converter-pool-factory";
+import massConverterPoolFactory from "../mass-converter/converter-pool-factory";
 import ObservableUpdater from "./observable-updater";
 
 /**
@@ -21,15 +21,15 @@ export default function create(
 ): Promise<ObservableUpdater> {
     const promises: Array<Promise<any>> = [
         elementConverterPoolFactory(config.name),
-        dataConverterPoolFactory(config.name),
+        massConverterPoolFactory(config.name),
     ];
     return new Promise((resolve: (component: any) => void) => {
         Promise.all(promises).then((resolvedPromises) => {
-            const [elementConverterPool, dataConverterPool] = resolvedPromises;
+            const [elementConverterPool, massConverterPool] = resolvedPromises;
             resolve(
                 new ObservableUpdater(
                     elementConverterPool,
-                    dataConverterPool,
+                    massConverterPool,
                     converterResolver,
                 ),
             );

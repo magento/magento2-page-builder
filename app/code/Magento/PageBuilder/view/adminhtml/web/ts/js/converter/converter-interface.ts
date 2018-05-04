@@ -5,7 +5,7 @@
 
 import {DataObject} from "../data-store";
 
-export interface ElementConverterInterface {
+export interface ConverterInterface {
     /**
      * Convert value to internal format
      *

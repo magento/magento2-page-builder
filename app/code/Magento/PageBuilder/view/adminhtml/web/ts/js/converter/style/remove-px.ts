@@ -4,9 +4,9 @@
  */
 
 import {DataObject} from "../../data-store";
-import ElementConverterInterface from "../element-converter-interface";
+import ConverterInterface from "../converter-interface";
 
-export default class RemovePx implements ElementConverterInterface {
+export default class RemovePx implements ConverterInterface {
     /**
      * Convert value to internal format
      *

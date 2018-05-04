@@ -3,18 +3,18 @@
  * See COPYING.txt for license details.
  */
 
-import DataConverterInterface from "./data-converter-interface";
+import ConverterInterface from "./converter-interface";
 
-class DataConverterPool {
+class ElementConverterPool {
     private converters: object = {};
 
-    public get(name: string): DataConverterInterface {
+    public get(name: string): ConverterInterface {
         return this.converters[name] !== undefined ? this.converters[name] : false;
     }
 
-    public register(name: string, converter: DataConverterInterface) {
+    public register(name: string, converter: ConverterInterface) {
         this.converters[name] = converter;
     }
 }
 
-export default new DataConverterPool();
+export default new ElementConverterPool();

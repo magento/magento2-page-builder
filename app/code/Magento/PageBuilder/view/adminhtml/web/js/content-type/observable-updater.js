@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "underscore", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/utils/string"], function (_knockout, _underscore, _appearanceConfig, _string) {
+define(["knockout", "underscore", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/content-type/appearance-config"], function (_knockout, _underscore, _string, _appearanceConfig) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var ObservableUpdater =
@@ -7,15 +7,15 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/content-type/appearanc
   function () {
     /**
      * @param {ElementConverterPool} elementConverterPool
-     * @param {DataConverterPool} dataConverterPool
+     * @param {MassConverterPool} massConverterPool
      * @param {(config: object) => string} converterResolver
      */
-    function ObservableUpdater(elementConverterPool, dataConverterPool, converterResolver) {
+    function ObservableUpdater(elementConverterPool, massConverterPool, converterResolver) {
       this.elementConverterPool = void 0;
-      this.dataConverterPool = void 0;
+      this.massConverterPool = void 0;
       this.converterResolver = void 0;
       this.elementConverterPool = elementConverterPool;
-      this.dataConverterPool = dataConverterPool;
+      this.massConverterPool = massConverterPool;
       this.converterResolver = converterResolver;
     }
     /**
@@ -247,7 +247,7 @@ define(["knockout", "underscore", "Magento_PageBuilder/js/content-type/appearanc
         }
 
         var _converterConfig = _ref3;
-        data = this.dataConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
+        data = this.massConverterPool.get(_converterConfig.component).toDom(data, _converterConfig.config);
       }
 
       return data;

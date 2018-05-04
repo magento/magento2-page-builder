@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import ColumnGroup from "../../content-type-collection";
 import {outwardSearch} from "../../utils/array";
 import Column from "../column/preview";
-import ColumnGroup from "../../content-type-collection";
 import {ColumnWidth, MaxGhostWidth, ResizeHistory} from "./preview";
 
 /**

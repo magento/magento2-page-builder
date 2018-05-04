@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import Column from "../column/preview";
 import ColumnGroup from "../../content-type-collection";
+import Column from "../column/preview";
 import {getAcceptedColumnWidth, getColumnWidth, getSmallestColumnWidth} from "./resizing";
 
 /**

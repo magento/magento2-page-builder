@@ -4,8 +4,8 @@
  */
 
 import events from "uiEvents";
-import Uploader from "../uploader";
 import BasePreview from "../preview";
+import Uploader from "../uploader";
 
 export default class Preview extends BasePreview {
     /**

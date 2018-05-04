@@ -4,6 +4,10 @@ define(["underscore"], function (_underscore) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @deprecated
+   */
   var StyleAttributeFilter =
   /*#__PURE__*/
   function () {

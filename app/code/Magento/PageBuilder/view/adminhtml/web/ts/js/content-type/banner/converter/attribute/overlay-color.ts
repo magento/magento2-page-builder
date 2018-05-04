@@ -3,10 +3,10 @@
  * See COPYING.txt for license details.
  */
 
-import ElementConverterInterface from "../../../../converter/element-converter-interface";
+import ConverterInterface from "../../../../converter/converter-interface";
 import {toHex} from "../../../../utils/color-converter";
 
-export default class OverlayColor implements ElementConverterInterface {
+export default class OverlayColor implements ConverterInterface {
     /**
      * Convert value to internal format
      *

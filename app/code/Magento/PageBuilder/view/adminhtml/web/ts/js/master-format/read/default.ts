@@ -9,6 +9,9 @@ import AttributeMapper from "../attribute-mapper";
 import {ReadInterface} from "../read-interface";
 import StyleAttributeMapper from "../style-attribute-mapper";
 
+/**
+ * @deprecated
+ */
 export default class Default implements ReadInterface {
     private attributeMapper: AttributeMapper = new AttributeMapper();
     private styleAttributeMapper: StyleAttributeMapper = new StyleAttributeMapper();

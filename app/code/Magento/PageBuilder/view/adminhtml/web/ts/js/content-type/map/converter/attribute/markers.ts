@@ -4,9 +4,9 @@
  */
 
 import _ from "underscore";
-import {ElementConverterInterface} from "../../../../converter/element-converter-interface";
+import {ConverterInterface} from "../../../../converter/converter-interface";
 
-export default class Markers implements ElementConverterInterface {
+export default class Markers implements ConverterInterface {
     /**
      * Convert value to internal format
      *

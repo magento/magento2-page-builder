@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import ElementConverterInterface from "../../../../converter/element-converter-interface";
+import ConverterInterface from "../../../../converter/converter-interface";
 
-export default class MarginsAndPaddings implements ElementConverterInterface {
+export default class MarginsAndPaddings implements ConverterInterface {
     /**
      * @param {string} value
      * @returns {Object | string}

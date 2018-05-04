@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import loadComponent from "Magento_PageBuilder/js/loader";
+import loadComponent from "Magento_PageBuilder/js/utils/loader";
 import _ from "underscore";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
@@ -11,6 +11,9 @@ import appearanceConfig from "../../content-type/appearance-config";
 import {DataObject} from "../../data-store";
 import {ReadInterface} from "../read-interface";
 
+/**
+ * @deprecated
+ */
 export default class AttributeReaderComposite implements ReadInterface {
     // Configuration for content types
     private contentTypeConfig: {[key: string]: ContentTypeConfigInterface};

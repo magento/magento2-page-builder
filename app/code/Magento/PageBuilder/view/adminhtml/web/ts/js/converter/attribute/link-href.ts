@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 import _ from "underscore";
-import ElementConverterInterface from "../element-converter-interface";
+import ConverterInterface from "../converter-interface";
 
-export default class CreateValueForHref implements ElementConverterInterface {
+export default class CreateValueForHref implements ConverterInterface {
     /**
      * @type object
      */

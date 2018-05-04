@@ -9,12 +9,12 @@ import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
 import events from "uiEvents";
 import _ from "underscore";
-import BlockMountEventParamsInterface from "../block-mount-event-params.d";
-import BlockReadyEventParamsInterface from "../block-ready-event-params.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
+import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -65,12 +65,12 @@ export default class Preview extends PreviewCollection {
         super(parent, config, observableUpdater);
 
         this.parent.store.subscribe(this.buildJarallax);
-        events.on("row:block:ready", (args: BlockReadyEventParamsInterface) => {
+        events.on("row:block:ready", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 this.buildJarallax();
             }
         });
-        events.on("block:mount", (args: BlockMountEventParamsInterface) => {
+        events.on("block:mount", (args: ContentTypeMountEventParamsInterface) => {
             if (args.block.parent.id === this.parent.id) {
                 this.buildJarallax();
             }

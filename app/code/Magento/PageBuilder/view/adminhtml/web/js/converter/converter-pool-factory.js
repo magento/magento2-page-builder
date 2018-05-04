@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/converter/element-converter-pool"], function (_loader, _config, _elementConverterPool) {
+define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/converter/converter-pool"], function (_loader, _config, _converterPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -40,11 +40,11 @@ define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/js/config", "Magen
 
               var _propertyConfig = _ref;
 
-              if (!!_propertyConfig.converter && converters.indexOf(_propertyConfig.converter) === -1 && !_elementConverterPool.get(_propertyConfig.converter)) {
+              if (!!_propertyConfig.converter && converters.indexOf(_propertyConfig.converter) === -1 && !_converterPool.get(_propertyConfig.converter)) {
                 converters.push(_propertyConfig.converter);
               }
 
-              if (!!_propertyConfig.preview_converter && converters.indexOf(_propertyConfig.preview_converter) === -1 && !_elementConverterPool.get(_propertyConfig.preview_converter)) {
+              if (!!_propertyConfig.preview_converter && converters.indexOf(_propertyConfig.preview_converter) === -1 && !_converterPool.get(_propertyConfig.preview_converter)) {
                 converters.push(_propertyConfig.preview_converter);
               }
             }
@@ -65,11 +65,11 @@ define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/js/config", "Magen
 
               var _attributeConfig = _ref2;
 
-              if (!!_attributeConfig.converter && converters.indexOf(_attributeConfig.converter) === -1 && !_elementConverterPool.get(_attributeConfig.converter)) {
+              if (!!_attributeConfig.converter && converters.indexOf(_attributeConfig.converter) === -1 && !_converterPool.get(_attributeConfig.converter)) {
                 converters.push(_attributeConfig.converter);
               }
 
-              if (!!_attributeConfig.preview_converter && converters.indexOf(_attributeConfig.preview_converter) === -1 && !_elementConverterPool.get(_attributeConfig.preview_converter)) {
+              if (!!_attributeConfig.preview_converter && converters.indexOf(_attributeConfig.preview_converter) === -1 && !_converterPool.get(_attributeConfig.preview_converter)) {
                 converters.push(_attributeConfig.preview_converter);
               }
             }
@@ -78,11 +78,11 @@ define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/js/config", "Magen
           if (dataMapping.elements[elementName].html !== undefined) {
             var htmlConfig = dataMapping.elements[elementName].html;
 
-            if (!!htmlConfig.converter && converters.indexOf(htmlConfig.converter) === -1 && !_elementConverterPool.get(htmlConfig.converter)) {
+            if (!!htmlConfig.converter && converters.indexOf(htmlConfig.converter) === -1 && !_converterPool.get(htmlConfig.converter)) {
               converters.push(htmlConfig.converter);
             }
 
-            if (!!htmlConfig.preview_converter && converters.indexOf(htmlConfig.preview_converter) === -1 && !_elementConverterPool.get(htmlConfig.preview_converter)) {
+            if (!!htmlConfig.preview_converter && converters.indexOf(htmlConfig.preview_converter) === -1 && !_converterPool.get(htmlConfig.preview_converter)) {
               converters.push(htmlConfig.preview_converter);
             }
           }
@@ -97,14 +97,14 @@ define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/js/config", "Magen
         }
 
         for (var i = 0; i < converters.length; i++) {
-          _elementConverterPool.register(converters[i], new loadedConverters[i]());
+          _converterPool.register(converters[i], new loadedConverters[i]());
         }
 
-        resolve(_elementConverterPool);
+        resolve(_converterPool);
       });
     });
   }
 
   return create;
 });
-//# sourceMappingURL=element-converter-pool-factory.js.map
+//# sourceMappingURL=converter-pool-factory.js.map

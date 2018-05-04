@@ -116,7 +116,7 @@ The following is an example of a content type configuration in `etc/content_type
                         </element>
                     </elements>
                     <converters>
-                        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/empty-mobile-image">
+                        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
                             <config>
                                 <item name="desktop_image_variable" value="background_image"/>
                                 <item name="mobile_image_variable" value="mobile_image"/>
@@ -275,7 +275,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
 </elements>
 <converters>
-    <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/empty-mobile-image">
+    <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
         <config>
             <item name="desktop_image_variable" value="background_image"/>
             <item name="mobile_image_variable" value="mobile_image"/>
@@ -417,7 +417,7 @@ The `toDom` method is called before data is converted by element converters to u
 ``` xml
 <data_mapping>
     <converters>
-        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/empty-mobile-image">
+        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
             <config>
                 <item name="desktop_image_variable" value="background_image"/>
                 <item name="mobile_image_variable" value="mobile_image"/>

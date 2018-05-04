@@ -40,4 +40,4 @@ define(["Magento_PageBuilder/js/content-type/column-group/resizing"], function (
     calculateDropPositions: calculateDropPositions
   };
 });
-//# sourceMappingURL=drag-n-drop.js.map
+//# sourceMappingURL=drag-and-drop.js.map

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/utils/string", "Magento_PageBuilder/js/converter/data-converter-pool-factory", "Magento_PageBuilder/js/converter/element-converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory"], function (_mageUtils, _appearanceConfig, _string, _dataConverterPoolFactory, _elementConverterPoolFactory, _propertyReaderPoolFactory) {
+define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_PageBuilder/js/mass-converter/converter-pool-factory", "Magento_PageBuilder/js/property/property-reader-pool-factory", "Magento_PageBuilder/js/utils/string"], function (_mageUtils, _appearanceConfig, _converterPoolFactory, _converterPoolFactory2, _propertyReaderPoolFactory, _string) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   var Configurable =
@@ -20,12 +20,12 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
       var role = element.getAttribute("data-role");
       var config = (0, _appearanceConfig)(role, element.getAttribute("data-appearance")).data_mapping;
-      var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _elementConverterPoolFactory)(role), (0, _dataConverterPoolFactory)(role)];
+      var componentsPromise = [(0, _propertyReaderPoolFactory)(role), (0, _converterPoolFactory)(role), (0, _converterPoolFactory2)(role)];
       return new Promise(function (resolve) {
         Promise.all(componentsPromise).then(function (loadedComponents) {
           var propertyReaderPool = loadedComponents[0],
               elementConverterPool = loadedComponents[1],
-              dataConverterPool = loadedComponents[2];
+              massConverterPool = loadedComponents[2];
           var data = {};
 
           var _arr = Object.keys(config.elements);
@@ -61,7 +61,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
             }
           }
 
-          data = _this.convertData(config, data, dataConverterPool);
+          data = _this.convertData(config, data, massConverterPool);
           resolve(data);
         }).catch(function (error) {
           console.error(error);
@@ -240,12 +240,12 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
      *
      * @param {object} config
      * @param {object} data
-     * @param {DataConverterPool} dataConverterPool
+     * @param {MassConverterPool} massConverterPool
      * @returns {object}
      */
 
 
-    _proto.convertData = function convertData(config, data, dataConverterPool) {
+    _proto.convertData = function convertData(config, data, massConverterPool) {
       for (var _iterator4 = config.converters, _isArray4 = Array.isArray(_iterator4), _i5 = 0, _iterator4 = _isArray4 ? _iterator4 : _iterator4[Symbol.iterator]();;) {
         var _ref4;
 
@@ -260,8 +260,8 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
         var _converterConfig = _ref4;
 
-        if (dataConverterPool.get(_converterConfig.component)) {
-          data = dataConverterPool.get(_converterConfig.component).fromDom(data, _converterConfig.config);
+        if (massConverterPool.get(_converterConfig.component)) {
+          data = massConverterPool.get(_converterConfig.component).fromDom(data, _converterConfig.config);
         }
       }
 

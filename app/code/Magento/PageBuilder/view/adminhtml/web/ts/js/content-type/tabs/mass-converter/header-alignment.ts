@@ -3,10 +3,10 @@
  * See COPYING.txt for license details.
  */
 
-import {DataConverterInterface} from "../../../converter/data-converter-interface";
 import {DataObject} from "../../../data-store";
+import MassConverterInterface from "../../../mass-converter/converter-interface";
 
-export default class HeaderAlignment implements DataConverterInterface {
+export default class HeaderAlignment implements MassConverterInterface {
 
     /**
      * Process data after it's read and converted by element converters

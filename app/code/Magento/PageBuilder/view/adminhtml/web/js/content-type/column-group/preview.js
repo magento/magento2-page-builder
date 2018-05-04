@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/drag-n-drop", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group/block", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _uiEvents, _underscore, _factory, _dragNDrop, _registry, _resizing, _config, _block, _array, _previewCollection) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group/block", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _block, _array, _previewCollection, _dragAndDrop, _factory, _registry, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -272,7 +272,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
           (0, _registry.setDragColumn)(columnInstance.parent);
-          _this3.dropPositions = (0, _dragNDrop.calculateDropPositions)(_this3.parent);
+          _this3.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this3.parent);
 
           _uiEvents.trigger("column:drag:start", {
             column: columnInstance,
@@ -498,7 +498,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       if (dragColumn) {
         // If the drop positions haven't been calculated for this group do so now
         if (this.dropPositions.length === 0) {
-          this.dropPositions = (0, _dragNDrop.calculateDropPositions)(this.parent);
+          this.dropPositions = (0, _dragAndDrop.calculateDropPositions)(this.parent);
         }
 
         var columnInstance = dragColumn;
@@ -615,7 +615,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         },
         over: function over() {
           // Always calculate drop positions when an element is dragged over
-          _this6.dropPositions = (0, _dragNDrop.calculateDropPositions)(_this6.parent); // Is the element currently being dragged a column?
+          _this6.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this6.parent); // Is the element currently being dragged a column?
 
           if (currentDraggedBlock instanceof _block.Block && currentDraggedBlock.getConfig() === _config.getContentTypeConfig("column")) {
             _this6.dropOverElement = true;

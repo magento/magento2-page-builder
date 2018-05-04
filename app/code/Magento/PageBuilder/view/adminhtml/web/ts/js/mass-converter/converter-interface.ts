@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-export interface DataConverterInterface {
+export interface ConverterInterface {
     /**
      * Process data after it's read and converted by element converters
      *

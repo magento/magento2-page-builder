@@ -1,8 +1,12 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/loader", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/appearance-config"], function (_loader, _underscore, _config, _appearanceConfig) {
+define(["Magento_PageBuilder/js/utils/loader", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/appearance-config"], function (_loader, _underscore, _config, _appearanceConfig) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
+   */
+
+  /**
+   * @deprecated
    */
   var AttributeReaderComposite =
   /*#__PURE__*/

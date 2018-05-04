@@ -4,14 +4,14 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var ElementConverterPool =
+  var DataConverterPool =
   /*#__PURE__*/
   function () {
-    function ElementConverterPool() {
+    function DataConverterPool() {
       this.converters = {};
     }
 
-    var _proto = ElementConverterPool.prototype;
+    var _proto = DataConverterPool.prototype;
 
     _proto.get = function get(name) {
       return this.converters[name] !== undefined ? this.converters[name] : false;
@@ -21,11 +21,11 @@ define([], function () {
       this.converters[name] = converter;
     };
 
-    return ElementConverterPool;
+    return DataConverterPool;
   }();
 
-  var _default = new ElementConverterPool();
+  var _default = new DataConverterPool();
 
   return _default;
 });
-//# sourceMappingURL=element-converter-pool.js.map
+//# sourceMappingURL=converter-pool.js.map

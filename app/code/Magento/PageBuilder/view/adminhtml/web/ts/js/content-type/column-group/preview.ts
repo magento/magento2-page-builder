@@ -7,23 +7,23 @@ import $ from "jquery";
 import ko from "knockout";
 import events from "uiEvents";
 import _ from "underscore";
+import Config from "../../config";
+import ConfigContentBlock from "../../config";
+import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeInterface from "../../content-type.d";
+import {Block as GroupBlock} from "../../panel/group/block";
+import {moveArrayItem} from "../../utils/array";
+import {default as ColumnGroupPreview} from "../column-group/preview";
+import Column from "../column/preview";
+import PreviewCollection from "../preview-collection";
+import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
-import {calculateDropPositions, DropPosition} from "./drag-n-drop";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import {
     calculateGhostWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth,
     findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
     getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./resizing";
-import ConfigContentBlock from "../../config";
-import Config from "../../config";
-import {Block as GroupBlock} from "../../panel/group/block";
-import ContentTypeConfigInterface from "../../content-type-config.d";
-import ContentTypeInterface from "../../content-type.d";
-import {moveArrayItem} from "../../utils/array";
-import {default as ColumnGroupPreview} from "../column-group/preview";
-import Column from "../column/preview";
-import PreviewCollection from "../preview-collection";
 
 interface BlockRemovedParams {
     parent: ColumnGroup;
