@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Magento_PageBuilder/js/loader";
+import loadModule from "Magento_PageBuilder/js/utils/loader";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import ContentTypeInterface from "../content-type.d";
 import converterResolver from "./converter-resolver";

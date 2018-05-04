@@ -16,7 +16,7 @@ import ObservableUpdater from "./observable-updater";
 
 export default class Content {
     public data: ObservableObject = {};
-    private parent: ContentTypeInterface;
+    protected parent: ContentTypeInterface;
     private observableUpdater: ObservableUpdater;
     /**
      * @deprecated

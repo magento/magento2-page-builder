@@ -4,6 +4,10 @@ define(["underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/u
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @deprecated
+   */
   var StyleAttributeMapper =
   /*#__PURE__*/
   function () {

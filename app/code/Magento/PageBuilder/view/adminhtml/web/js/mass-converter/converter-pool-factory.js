@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/config", "Magento_PageBuilder/js/property/data-converter-pool"], function (_loader, _config, _dataConverterPool) {
+define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/mass-converter/converter-pool"], function (_loader, _config, _converterPool) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -34,7 +34,7 @@ define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/config", "Magento_
 
           var _converterConfig = _ref;
 
-          if (!!_converterConfig.component && !_dataConverterPool.get(_converterConfig.component)) {
+          if (!!_converterConfig.component && !_converterPool.get(_converterConfig.component)) {
             converters.push(_converterConfig.component);
           }
         }
@@ -48,14 +48,14 @@ define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/config", "Magento_
         }
 
         for (var i = 0; i < converters.length; i++) {
-          _dataConverterPool.register(converters[i], new loadedConverters[i]());
+          _converterPool.register(converters[i], new loadedConverters[i]());
         }
 
-        resolve(_dataConverterPool);
+        resolve(_converterPool);
       });
     });
   }
 
   return create;
 });
-//# sourceMappingURL=data-converter-pool-factory.js.map
+//# sourceMappingURL=converter-pool-factory.js.map

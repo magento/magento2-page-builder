@@ -5,11 +5,11 @@
 
 import mageUtils from "mageUtils";
 import appearanceConfig from "../../content-type/appearance-config";
-import DataConverterPool from "../../converter/data-converter-pool";
-import dataConverterPoolFactory from "../../converter/data-converter-pool-factory";
-import PropertyReaderPool from "../../converter/element-converter-pool";
-import ElementConverterPool from "../../converter/element-converter-pool";
-import elementConverterPoolFactory from "../../converter/element-converter-pool-factory";
+import PropertyReaderPool from "../../converter/converter-pool";
+import ConverterPool from "../../converter/converter-pool";
+import converterPoolFactory from "../../converter/converter-pool-factory";
+import MassConverterPool from "../../mass-converter/converter-pool";
+import massConverterPoolFactory from "../../mass-converter/converter-pool-factory";
 import propertyReaderPoolFactory from "../../property/property-reader-pool-factory";
 import {fromSnakeToCamelCase} from "../../utils/string";
 import ReadInterface from "../read-interface";
@@ -27,12 +27,12 @@ export default class Configurable implements ReadInterface {
         const config = appearanceConfig(role, element.getAttribute("data-appearance")).data_mapping;
         const componentsPromise: Array<Promise<any>> = [
             propertyReaderPoolFactory(role),
-            elementConverterPoolFactory(role),
-            dataConverterPoolFactory(role),
+            converterPoolFactory(role),
+            massConverterPoolFactory(role),
         ];
         return new Promise((resolve: (data: object) => void) => {
             Promise.all(componentsPromise).then((loadedComponents) => {
-                const [propertyReaderPool, elementConverterPool, dataConverterPool] = loadedComponents;
+                const [propertyReaderPool, converterPool, massConverterPool] = loadedComponents;
                 let data = {};
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
@@ -53,7 +53,7 @@ export default class Configurable implements ReadInterface {
                             currentElement,
                             data,
                             propertyReaderPool,
-                            elementConverterPool,
+                            converterPool,
                         );
                     }
                     if (elementConfig.attributes.length) {
@@ -62,11 +62,11 @@ export default class Configurable implements ReadInterface {
                             currentElement,
                             data,
                             propertyReaderPool,
-                            elementConverterPool,
+                            converterPool,
                         );
                     }
                     if (undefined !== elementConfig.html.var) {
-                        data = this.readHtml(elementConfig, currentElement, data, elementConverterPool);
+                        data = this.readHtml(elementConfig, currentElement, data, converterPool);
                     }
                     if (undefined !== elementConfig.tag.var) {
                         data = this.readHtmlTag(elementConfig, currentElement, data);
@@ -75,7 +75,7 @@ export default class Configurable implements ReadInterface {
                         data = this.readCss(elementConfig, currentElement, data);
                     }
                 }
-                data = this.convertData(config, data, dataConverterPool);
+                data = this.convertData(config, data, massConverterPool);
                 resolve(data);
             }).catch((error) => {
                 console.error(error);
@@ -90,7 +90,7 @@ export default class Configurable implements ReadInterface {
      * @param {Node} element
      * @param {object} data
      * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ElementConverterPool} elementConverterPool
+     * @param {ConverterPool} converterPool
      * @returns {object}
      */
     private readAttributes(
@@ -98,7 +98,7 @@ export default class Configurable implements ReadInterface {
         element: Node,
         data: object,
         propertyReaderPool: PropertyReaderPool,
-        elementConverterPool: ElementConverterPool,
+        converterPool: ConverterPool,
     ) {
         const result = {};
         for (const attributeConfig of config) {
@@ -108,8 +108,8 @@ export default class Configurable implements ReadInterface {
             let value = !!attributeConfig.complex
                 ? propertyReaderPool.get(attributeConfig.reader).read(element)
                 : element.getAttribute(attributeConfig.name);
-            if (elementConverterPool.get(attributeConfig.converter)) {
-                value = elementConverterPool.get(attributeConfig.converter).fromDom(value);
+            if (converterPool.get(attributeConfig.converter)) {
+                value = converterPool.get(attributeConfig.converter).fromDom(value);
             }
             if (data[attributeConfig.var] === "object") {
                 value = mageUtils.extend(value, data[attributeConfig.var]);
@@ -126,7 +126,7 @@ export default class Configurable implements ReadInterface {
      * @param {Node} element
      * @param {object} data
      * @param {PropertyReaderPool} propertyReaderPool
-     * @param {ElementConverterPool} elementConverterPool
+     * @param {ConverterPool} converterPool
      * @returns {object}
      */
     private readStyle(
@@ -134,7 +134,7 @@ export default class Configurable implements ReadInterface {
         element,
         data: object,
         propertyReaderPool: PropertyReaderPool,
-        elementConverterPool: ElementConverterPool,
+        converterPool: ConverterPool,
     ) {
         const result: object = _.extend({}, data);
         for (const propertyConfig of config) {
@@ -144,8 +144,8 @@ export default class Configurable implements ReadInterface {
             let value = !!propertyConfig.complex
                 ? propertyReaderPool.get(propertyConfig.reader).read(element)
                 : element.style[fromSnakeToCamelCase(propertyConfig.name)];
-            if (elementConverterPool.get(propertyConfig.converter)) {
-                value = elementConverterPool.get(propertyConfig.converter).fromDom(value);
+            if (converterPool.get(propertyConfig.converter)) {
+                value = converterPool.get(propertyConfig.converter).fromDom(value);
             }
             if (typeof result[propertyConfig.var] === "object") {
                 value = mageUtils.extend(result[propertyConfig.var], value);
@@ -202,12 +202,12 @@ export default class Configurable implements ReadInterface {
      * @param {object} data
      * @returns {object}
      */
-    private readHtml(config: any, element: Node, data: object, elementConverterPool: ElementConverterPool) {
+    private readHtml(config: any, element: Node, data: object, converterPool: ConverterPool) {
         const result = {};
         let value = element.innerHTML;
 
-        if (elementConverterPool.get(config.html.converter)) {
-            value = elementConverterPool.get(config.html.converter).fromDom(value);
+        if (converterPool.get(config.html.converter)) {
+            value = converterPool.get(config.html.converter).fromDom(value);
         }
 
         result[config.html.var] = value;
@@ -219,13 +219,13 @@ export default class Configurable implements ReadInterface {
      *
      * @param {object} config
      * @param {object} data
-     * @param {DataConverterPool} dataConverterPool
+     * @param {MassConverterPool} massConverterPool
      * @returns {object}
      */
-    private convertData(config: any, data: object, dataConverterPool: DataConverterPool) {
+    private convertData(config: any, data: object, massConverterPool: MassConverterPool) {
         for (const converterConfig of config.converters) {
-            if (dataConverterPool.get(converterConfig.component)) {
-                data = dataConverterPool.get(converterConfig.component).fromDom(
+            if (massConverterPool.get(converterConfig.component)) {
+                data = massConverterPool.get(converterConfig.component).fromDom(
                     data,
                     converterConfig.config,
                 );

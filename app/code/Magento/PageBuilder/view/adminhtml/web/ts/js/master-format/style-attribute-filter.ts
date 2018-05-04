@@ -6,6 +6,9 @@
 import _ from "underscore";
 import {DataObject} from "../data-store";
 
+/**
+ * @deprecated
+ */
 export default class StyleAttributeFilter {
     // Allowed style attributes
     private allowedAttributes: [string] = [

@@ -3,11 +3,11 @@
  * See COPYING.txt for license details.
  */
 
-import ElementConverterInterface from "../../../../converter/element-converter-interface";
+import ConverterInterface from "../../../../converter/converter-interface";
 import {fromHex} from "../../../../utils/color-converter";
 import {percentToDecimal} from "../../../../utils/number-converter";
 
-export default class OverlayColorTransparency implements ElementConverterInterface {
+export default class OverlayColorTransparency implements ConverterInterface {
     /**
      * Convert value to internal format
      *

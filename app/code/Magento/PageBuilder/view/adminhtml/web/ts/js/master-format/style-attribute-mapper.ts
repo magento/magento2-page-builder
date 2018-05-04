@@ -10,6 +10,9 @@ import {toDataUrl} from "../utils/directives";
 import {decodeUrl} from "../utils/image";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../utils/url";
 
+/**
+ * @deprecated
+ */
 export default class StyleAttributeMapper {
 
     /**

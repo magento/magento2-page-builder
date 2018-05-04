@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import DataConverterInterface from "./data-converter-interface";
+import ConverterInterface from "./converter-interface";
 
-export default class EmptyMobileImage implements DataConverterInterface {
+export default class EmptyMobileImage implements ConverterInterface {
     /**
      * Process data after it's read and converted by element converters
      *

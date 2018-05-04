@@ -17,9 +17,9 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {PreviewSortableSortUpdateEventParams} from "../../preview-sortable";
-import BlockCreateEventParamsInterface from "../block-create-event-params.d";
-import BlockMountEventParamsInterface from "../block-mount-event-params.d";
-import BlockReadyEventParamsInterface from "../block-ready-event-params.d";
+import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
+import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
+import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import Slide from "../slide/preview";
@@ -98,7 +98,7 @@ export default class Preview extends PreviewCollection {
 
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
-        events.on("slider:block:ready", (args: BlockReadyEventParamsInterface) => {
+        events.on("slider:block:ready", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 sliderReady = true;
             }
@@ -124,7 +124,7 @@ export default class Preview extends PreviewCollection {
             }
         });
         // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
-        events.on("slide:block:create", (args: BlockCreateEventParamsInterface) => {
+        events.on("slide:block:create", (args: ContentTypeCreateEventParamsInterface) => {
             if (this.element && sliderReady && args.block.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
@@ -247,7 +247,7 @@ export default class Preview extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((slide) => {
-            events.on("slide:block:mount", (args: BlockMountEventParamsInterface) => {
+            events.on("slide:block:mount", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
                     _.delay(() => {
                         this.navigateToSlide(this.parent.children().length - 1);
@@ -266,7 +266,7 @@ export default class Preview extends PreviewCollection {
     protected bindEvents() {
         super.bindEvents();
         // Block being mounted onto container
-        events.on("slider:block:dropped:create", (args: BlockReadyEventParamsInterface) => {
+        events.on("slider:block:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
             }
@@ -291,7 +291,7 @@ export default class Preview extends PreviewCollection {
                 duplicatedSlideIndex = args.index;
             }
         });
-        events.on("slide:block:mount", (args: BlockMountEventParamsInterface) => {
+        events.on("slide:block:mount", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 // Mark the new duplicate slide as active
                 (this as SliderPreview).navigateToSlide(duplicatedSlideIndex);

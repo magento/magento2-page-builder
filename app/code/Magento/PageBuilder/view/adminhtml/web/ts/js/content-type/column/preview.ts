@@ -15,12 +15,12 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
-import BlockMountEventParamsInterface from "../block-mount-event-params.d";
 import ColumnGroup from "../column-group/preview";
 import {
     findShrinkableColumn, getAcceptedColumnWidth, getColumnsWidth,
     getColumnWidth, getMaxColumns, getSmallestColumnWidth, updateColumnWidth,
 } from "../column-group/resizing";
+import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -56,7 +56,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column-group")) {
-            events.on("column:block:mount", (args: BlockMountEventParamsInterface) => {
+            events.on("column:block:mount", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === this.parent.id) {
                     this.createColumnGroup();
                 }

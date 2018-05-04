@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/loader", "Magento_PageBuilder/js/content-type/observable-updater-factory", "Magento_PageBuilder/js/content-type/preview-converter-resolver"], function (_loader, _observableUpdaterFactory, _previewConverterResolver) {
+define(["Magento_PageBuilder/js/utils/loader", "Magento_PageBuilder/js/content-type/observable-updater-factory", "Magento_PageBuilder/js/content-type/preview-converter-resolver"], function (_loader, _observableUpdaterFactory, _previewConverterResolver) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import ElementConverterInterface from "../element-converter-interface";
+import ConverterInterface from "../converter-interface";
 
-export default class CreateValueForTarget implements ElementConverterInterface {
+export default class CreateValueForTarget implements ConverterInterface {
     /**
      * Convert value to internal format
      *

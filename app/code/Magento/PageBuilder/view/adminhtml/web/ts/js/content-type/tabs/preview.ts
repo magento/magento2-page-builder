@@ -16,9 +16,9 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import BlockRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
-import {BlockCreateEventParamsInterface} from "../block-create-event-params.d";
-import {BlockMountEventParamsInterface} from "../block-mount-event-params.d";
-import {BlockReadyEventParamsInterface} from "../block-ready-event-params.d";
+import {ContentTypeCreateEventParamsInterface} from "../content-type-create-event-params.d";
+import {ContentTypeMountEventParamsInterface} from "../content-type-mount-event-params.d";
+import {ContentTypeReadyEventParamsInterface} from "../content-type-ready-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
@@ -58,17 +58,17 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        events.on("tabs:block:ready", (args: BlockReadyEventParamsInterface) => {
+        events.on("tabs:block:ready", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id && this.element) {
                 this.buildTabs();
             }
         });
-        events.on("tab-item:block:create", (args: BlockCreateEventParamsInterface) => {
+        events.on("tab-item:block:create", (args: ContentTypeCreateEventParamsInterface) => {
             if (this.element && args.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }
         });
-        events.on("tab-item:block:removed", (args: BlockCreateEventParamsInterface) => {
+        events.on("tab-item:block:removed", (args: ContentTypeCreateEventParamsInterface) => {
             if (this.element && args.block.parent.id === this.parent.id) {
                 this.buildTabs();
             }
@@ -157,7 +157,7 @@ export default class Preview extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((tab) => {
-            events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
+            events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === tab.id) {
                     this.setFocusedTab(this.parent.children().length - 1);
                     events.off(`tab-item:block:mount:${tab.id}`);
@@ -218,7 +218,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
         // Block being mounted onto container
 
-        events.on("tabs:block:dropped:create", (args: BlockReadyEventParamsInterface) => {
+        events.on("tabs:block:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addTab();
             }
@@ -234,7 +234,7 @@ export default class Preview extends PreviewCollection {
         events.on("tab-item:block:duplicate", (args: BlockDuplicateEventParams) => {
             this.buildTabs(args.index);
         });
-        events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
+        events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
             if (this.parent.id === args.block.parent.id) {
                 this.updateTabNamesInDataStore();
                 args.block.dataStore.subscribe(() => {

@@ -4,11 +4,11 @@ define(["Magento_PageBuilder/js/content-type/content-collection"], function (_co
 
   var Content =
   /*#__PURE__*/
-  function (_ContentCollectionBas) {
-    _inheritsLoose(Content, _ContentCollectionBas);
+  function (_ContentCollection) {
+    _inheritsLoose(Content, _ContentCollection);
 
     function Content() {
-      return _ContentCollectionBas.apply(this, arguments) || this;
+      return _ContentCollection.apply(this, arguments) || this;
     }
 
     var _proto = Content.prototype;

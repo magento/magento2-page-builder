@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import {ElementConverterInterface} from "../../../../converter/element-converter-interface";
+import {ConverterInterface} from "../../../../converter/converter-interface";
 
-export default class Zoom implements ElementConverterInterface {
+export default class Zoom implements ConverterInterface {
     /**
      * Convert value to internal format
      *
