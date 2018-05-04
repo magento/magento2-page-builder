@@ -660,4 +660,49 @@
             <argument name="index" value="2"/>
         </actionGroup>
     </test>
+    <test name="HtmlNoRequiredAttributes">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Html"/>
+            <title value="HTML - Required Attributes"/>
+            <description value="Add HTML and validate save without required fields causes error"/>
+            <severity value="MAJOR"/>
+            <testCaseId value="MAGETWO-91142"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-html"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragToStage">
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="clearHTMLField">
+            <argument name="property" value="PageBuilderHtmlProperty_invalid"/>
+        </actionGroup>
+        <!-- Validate Error Message -->
+        <comment userInput="Validate Error Message" stepKey="commentValidateError"/>
+        <waitForElementVisible selector="{{HTMLOnConfiguration.htmlFieldError}}" stepKey="waitForFieldError"/>
+        <waitForElementVisible selector="{{HTMLOnConfiguration.htmlFieldErrorMessage(PageBuilderHtmlProperty_invalid.errorMessage)}}" stepKey="waitForErrorMessage"/>
+        <!-- Validate Cannot Save -->
+        <comment userInput="Validate Cannot Save" stepKey="commentValidateCannotSave"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton"/>
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+    </test>
 </tests>
