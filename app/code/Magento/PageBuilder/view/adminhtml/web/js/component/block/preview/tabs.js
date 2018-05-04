@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_jquery, _knockout, _translate, _tabs, _underscore, _contentTypeFactory, _previewCollection, _config, _eventBus, _option) {
+define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/preview-collection", "Magento_PageBuilder/js/component/config", "Magento_PageBuilder/js/component/stage/structural/options/option"], function (_jquery, _knockout, _translate, _tabs, _uiEvents, _underscore, _contentTypeFactory, _previewCollection, _config, _option) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Tabs =
@@ -43,20 +43,20 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
         }
       }, 10);
 
-      _eventBus.on("tabs:block:ready", function (event, params) {
-        if (params.id === _this.parent.id && _this.element) {
+      _uiEvents.on("tabs:block:ready", function (args) {
+        if (args.id === _this.parent.id && _this.element) {
           _this.buildTabs();
         }
       });
 
-      _eventBus.on("tab-item:block:create", function (event, params) {
-        if (_this.element && params.block.parent.id === _this.parent.id) {
+      _uiEvents.on("tab-item:block:create", function (args) {
+        if (_this.element && args.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
       });
 
-      _eventBus.on("tab-item:block:removed", function (event, params) {
-        if (_this.element && params.block.parent.id === _this.parent.id) {
+      _uiEvents.on("tab-item:block:removed", function (args) {
+        if (_this.element && args.block.parent.id === _this.parent.id) {
           _this.buildTabs();
         }
       }); // Set the stage to interacting when a tab is focused
@@ -70,9 +70,9 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
         _underscore.delay(function () {
           if (focusTabValue === value) {
             if (value !== null) {
-              _eventBus.trigger("interaction:start", {});
+              _uiEvents.trigger("interaction:start");
             } else {
-              _eventBus.trigger("interaction:stop", {});
+              _uiEvents.trigger("interaction:stop");
             }
           }
         }, value === null ? 200 : 0);
@@ -123,7 +123,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
             document.execCommand("selectAll", false, null);
           } else {
             // If the active element isn't the tab title, we're not interacting with the stage
-            _eventBus.trigger("interaction:stop", {});
+            _uiEvents.trigger("interaction:stop");
           }
         });
       }
@@ -150,22 +150,18 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       var _this2 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.parent, this.parent.stageId).then(function (tab) {
-        _underscore.defer(function () {
-          var mountFunction = function mountFunction(event, params) {
-            if (params.id === tab.id) {
-              _this2.setFocusedTab(_this2.parent.children().length - 1);
+        _uiEvents.on("tab-item:block:mount", function (args) {
+          if (args.id === tab.id) {
+            _this2.setFocusedTab(_this2.parent.children().length - 1);
 
-              _eventBus.off("tab-item:block:mount", mountFunction);
-            }
-          };
+            _uiEvents.off("tab-item:block:mount:" + tab.id);
+          }
+        }, "tab-item:block:mount:" + tab.id);
 
-          _eventBus.on("tab-item:block:mount", mountFunction);
-
-          _this2.parent.addChild(tab, _this2.parent.children().length); // Update the default tab title when adding a new tab
+        _this2.parent.addChild(tab, _this2.parent.children().length); // Update the default tab title when adding a new tab
 
 
-          tab.store.updateKey(tab.id, (0, _translate)("Tab") + " " + (_this2.parent.children.indexOf(tab) + 1), "tab_name");
-        });
+        tab.store.updateKey(tab.id, (0, _translate)("Tab") + " " + (_this2.parent.children.indexOf(tab) + 1), "tab_name");
       });
     };
     /**
@@ -220,33 +216,33 @@ define(["jquery", "knockout", "mage/translate", "tabs", "underscore", "Magento_P
       _PreviewCollection.prototype.bindEvents.call(this); // Block being mounted onto container
 
 
-      _eventBus.on("tabs:block:dropped:create", function (event, params) {
-        if (params.id === _this3.parent.id && _this3.parent.children().length === 0) {
+      _uiEvents.on("tabs:block:dropped:create", function (args) {
+        if (args.id === _this3.parent.id && _this3.parent.children().length === 0) {
           _this3.addTab();
         }
       }); // Block being removed from container
 
 
-      _eventBus.on("tab-item:block:removed", function (event, params) {
-        if (params.parent.id === _this3.parent.id) {
+      _uiEvents.on("tab-item:block:removed", function (args) {
+        if (args.parent.id === _this3.parent.id) {
           // Mark the previous slide as active
-          var newIndex = params.index - 1 >= 0 ? params.index - 1 : 0;
+          var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
           _this3.setFocusedTab(newIndex);
         }
       });
 
-      _eventBus.on("tab-item:block:duplicate", function (event, params) {
-        _this3.buildTabs(params.index);
+      _uiEvents.on("tab-item:block:duplicate", function (args) {
+        _this3.buildTabs(args.index);
       });
 
-      _eventBus.on("tab-item:block:mount", function (event, params) {
-        if (_this3.parent.id === params.block.parent.id) {
+      _uiEvents.on("tab-item:block:mount", function (args) {
+        if (_this3.parent.id === args.block.parent.id) {
           _this3.updateTabNamesInDataStore();
 
           _this3.parent.store.subscribe(function () {
             _this3.updateTabNamesInDataStore();
-          }, params.block.id);
+          }, args.block.id);
         }
       });
     };

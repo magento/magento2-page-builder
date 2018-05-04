@@ -5,6 +5,7 @@
 
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
+import events from "uiEvents";
 import * as _ from "underscore";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
@@ -12,7 +13,6 @@ import ContentTypeInterface from "../content-type.d";
 import {removeQuotesInMediaDirectives} from "../utils/directives";
 import Block from "./block/block";
 import Config from "./config";
-import EventBus from "./event-bus";
 import validateFormat from "./format/format-validator";
 import AttributeReaderComposite from "./format/read/composite";
 import Stage from "./stage";
@@ -203,7 +203,7 @@ export default function build(
             content: $t("An error has occurred while initiating the content area."),
             title: $t("Advanced CMS Error"),
         });
-        EventBus.trigger("stage:error", error);
-        console.error(error);
+        events.trigger("stage:error", error);
+        console.error( error );
     });
 }

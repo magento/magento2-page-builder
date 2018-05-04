@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
+import events from "uiEvents";
 import {ContentTypeConfigInterface} from "../../../content-type-config.d";
 import createContentType from "../../../content-type-factory";
 import {ContentTypeInterface} from "../../../content-type.d";
@@ -14,7 +15,6 @@ import ObservableUpdater from "../../../observable-updater";
 import PreviewCollection from "../../../preview-collection";
 import BlockMountEventParamsInterface from "../../block/block-mount-event-params.d";
 import Config from "../../config";
-import EventBus from "../../event-bus";
 import {StyleAttributeMapperResult} from "../../format/style-attribute-mapper";
 import {Option} from "../../stage/structural/options/option";
 import {OptionInterface} from "../../stage/structural/options/option.d";
@@ -57,8 +57,8 @@ export default class Column extends PreviewCollection {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column-group")) {
-            EventBus.on("column:block:mount", (event: Event, params: BlockMountEventParamsInterface) => {
-                if (params.id === this.parent.id) {
+            events.on("column:block:mount", (args: BlockMountEventParamsInterface) => {
+                if (args.id === this.parent.id) {
                     this.createColumnGroup();
                 }
             });
@@ -72,7 +72,7 @@ export default class Column extends PreviewCollection {
      */
     public initColumn(element: Element) {
         this.parent.element = $(element);
-        EventBus.trigger("column:initElement", {
+        events.trigger("column:initElement", {
             column: this.parent,
             element: $(element),
             parent: this.parent.parent,
@@ -109,7 +109,7 @@ export default class Column extends PreviewCollection {
      * @param handle
      */
     public bindResizeHandle(handle: Element) {
-        EventBus.trigger("column:bindResizeHandle", {
+        events.trigger("column:bindResizeHandle", {
             column: this.parent,
             handle: $(handle),
             parent: this.parent.parent,
@@ -250,8 +250,8 @@ export default class Column extends PreviewCollection {
      */
     private fireMountEvent(...blocks: ContentTypeInterface[]) {
         blocks.forEach((block) => {
-            EventBus.trigger("block:mount", {id: block.id, block});
-            EventBus.trigger(block.config.name + ":block:mount", {id: block.id, block});
+            events.trigger("block:mount", {id: block.id, block});
+            events.trigger(block.config.name + ":block:mount", {id: block.id, block});
         });
     }
 }
