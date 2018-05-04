@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../../../../../../../../magento2ce/dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+        <!--xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">-->
+    <test name="PageBuilderMapEmptyWidthTest">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-90483: Add Missing Tests For Map" />
+            <title value="Map Configuration"/>
+            <description value="Tests the following for both map height and width: 1) empty 1) normal px value 2) normal % value 3) 0 px value 4) 0 % value 5) negative px value 6) negative % value 7) large px value 8) >100% value 9) invalid value"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90509"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="map"/>
+            <group value="skip"/> <!-- test will not run due to bug: https://jira.corp.magento.com/browse/MAGETWO-91090 -->
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- test will not run due to bug: https://jira.corp.magento.com/browse/MAGETWO-91090 -->
+        <fillField stepKey="filterToMap" selector="#search-blocks-input" userInput="Map"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- fill width and height with values -->
+        <fillField stepKey="fillMapWidth" selector="//*[@name='width']" userInput=""/>
+        <!-- click save -->
+        <click stepKey="clickSave" selector="" />
+        <!-- assert on behavior -->
+
+        <!-- TODO determine proper behavior when empty, map does not change if empty however value shows empty when edit panel is re-opened -->
+    </test>
+    <test name="PageBuilderMapEmptyHeightTest">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-90483: Add Missing Tests For Map" />
+            <title value="Map Configuration"/>
+            <description value="Tests the following for both map height and width: 1) empty 1) normal px value 2) normal % value 3) 0 px value 4) 0 % value 5) negative px value 6) negative % value 7) large px value 8) >100% value 9) invalid value"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90509"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="map"/>
+            <group value="skip"/> <!-- test will not run due to bug: https://jira.corp.magento.com/browse/MAGETWO-89299 -->
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- test will not run due to bug: https://jira.corp.magento.com/browse/MAGETWO-89299 -->
+        <fillField stepKey="filterToMap" selector="#search-blocks-input" userInput="Map"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- fill width with empty value -->
+        <fillField stepKey="fillMapHeight" selector="//*[@name='heigh']" userInput=""/>
+        <!-- click save -->
+        <click stepKey="clickSave" selector="" />
+        <!-- assert on behavior -->
+
+        <!-- TODO determine proper behavior when empty, map currently shrinks from view if set empty -->
+
+    </test>
+    <test name="PageBuilderMapValidWidthPxTest">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-90483: Add Missing Tests For Map" />
+            <title value="Map Configuration"/>
+            <description value="Tests the following for both map height and width: 1) empty 1) normal px value 2) normal % value 3) 0 px value 4) 0 % value 5) negative px value 6) negative % value 7) large px value 8) >100% value 9) invalid value"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90509"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- add title to page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- add a new map to the block -->
+        <fillField stepKey="filterToMap" selector="#search-blocks-input" userInput="Map"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- add a pin to the map -->
+        <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
+            <argument name="page" value="PageBuilderMapPositionDefaultProperty"/>
+        </actionGroup>
+        <!-- fill width with empty value -->
+        <waitForElementVisible selector="//input[@name='width']" stepKey="waitForElement"/>
+        <fillField stepKey="fillMapWidth" selector="//input[@name='width']" userInput="500px"/>
+        <!-- click save -->
+        <click stepKey="clickSave" selector="#save"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterSave1"/>
+        <!-- assert on width is properly set -->
+        <executeJS function="return document.getElementsByClassName('gm-style')[0].clientWidth" stepKey="pageBuilderStageMapWidth" />
+        <assertEquals stepKey="assertPageBuilderStageMapWidth">
+            <expectedResult type="int">500</expectedResult>
+            <actualResult type="variable">pageBuilderStageMapWidth</actualResult>
+        </assertEquals>
+
+        <!-- open the panel and validate the value is set properly -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <grabValueFrom selector="//input[@name='width']" stepKey="grabMapWidthValue"/>
+        <assertEquals stepKey="assertWidthIsStillSet">
+            <actualResult type="variable">grabMapWidthValue</actualResult>
+            <expectedResult type="string">500px</expectedResult>
+        </assertEquals>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+
+        <!-- save page -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+
+        <!-- go to url and validate size -->
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(&quot;//div[@data-role='map']&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientWidth" stepKey="pageBuilderStorefrontMapWidth" />
+        <assertEquals stepKey="assertPageBuilderStorefrontMapWidth">
+            <expectedResult type="int">500</expectedResult>
+            <actualResult type="variable">pageBuilderStorefrontMapWidth</actualResult>
+        </assertEquals>
+    </test>
+    <test name="PageBuilderMapValidHeightPxTest">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-90483: Add Missing Tests For Map" />
+            <title value="Map Configuration"/>
+            <description value="Tests the following for both map height and width: 1) empty 1) normal px value 2) normal % value 3) 0 px value 4) 0 % value 5) negative px value 6) negative % value 7) large px value 8) >100% value 9) invalid value"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90509"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- add title to page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- add a new map to the block -->
+        <fillField stepKey="filterToMap" selector="#search-blocks-input" userInput="Map"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- add a pin to the map -->
+        <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
+            <argument name="page" value="PageBuilderMapPositionDefaultProperty"/>
+        </actionGroup>
+        <!-- fill height with empty value -->
+        <waitForElementVisible selector="//input[@name='height']" stepKey="waitForElement"/>
+        <fillField stepKey="fillMapHeight" selector="//input[@name='height']" userInput="500px"/>
+        <!-- click save -->
+        <click stepKey="clickSave" selector="#save"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterSave1"/>
+        <!-- assert on height is properly set -->
+        <executeJS function="return document.getElementsByClassName('gm-style')[0].clientHeight" stepKey="pageBuilderStageMapHeight" />
+        <assertEquals stepKey="assertPageBuilderStageMapHeight">
+            <expectedResult type="int">500</expectedResult>
+            <actualResult type="variable">pageBuilderStageMapHeight</actualResult>
+        </assertEquals>
+
+        <!-- open the panel and validate the value is set properly -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <grabValueFrom selector="//input[@name='height']" stepKey="grabMapHeightValue"/>
+        <assertEquals stepKey="assertWidthIsStillSet">
+            <actualResult type="variable">grabMapHeightValue</actualResult>
+            <expectedResult type="string">500px</expectedResult>
+        </assertEquals>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+
+        <!-- save page -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+
+        <!-- go to url and validate size -->
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate(&quot;//div[@data-role='map']&quot;, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.clientHeight" stepKey="pageBuilderStorefrontMapHeight" />
+        <assertEquals stepKey="assertPageBuilderStorefrontMapHeight">
+            <expectedResult type="int">500</expectedResult>
+            <actualResult type="variable">pageBuilderStorefrontMapHeight</actualResult>
+        </assertEquals>
+    </test>
+    <test name="PageBuilderMapValidHeightPercentageTest">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-90483: Add Missing Tests For Map" />
+            <title value="Map Configuration"/>
+            <description value="Tests the following for both map height and width: 1) empty 1) normal px value 2) normal % value 3) 0 px value 4) 0 % value 5) negative px value 6) negative % value 7) large px value 8) >100% value 9) invalid value"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90509"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="skip"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- add title to page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- add a new map to the block -->
+        <fillField stepKey="filterToMap" selector="#search-blocks-input" userInput="Map"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- add a pin to the map -->
+        <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
+            <argument name="page" value="PageBuilderMapPositionDefaultProperty"/>
+        </actionGroup>
+        <!-- fill width with empty value -->
+        <waitForElementVisible selector="//input[@name='height']" stepKey="waitForElement"/>
+        <fillField stepKey="fillMapHeight" selector="//input[@name='height']" userInput="50%"/>
+        <!-- click save -->
+        <click stepKey="clickSave" selector="#save"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterSave1"/>
+
+        <!-- TODO Determine proper behavior, currently when any percentage is set the map shrinks completely from view -->
+    </test>
+    <test name="PageBuilderMapValidWidthPercentageTest">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-90483: Add Missing Tests For Map" />
+            <title value="Map Configuration"/>
+            <description value="Tests the following for both map height and width: 1) empty 1) normal px value 2) normal % value 3) 0 px value 4) 0 % value 5) negative px value 6) negative % value 7) large px value 8) >100% value 9) invalid value"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-90509"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="skip"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- add title to page -->
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- add a new map to the block -->
+        <fillField stepKey="filterToMap" selector="#search-blocks-input" userInput="Map"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- add a pin to the map -->
+        <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
+            <argument name="page" value="PageBuilderMapPositionDefaultProperty"/>
+        </actionGroup>
+        <!-- fill width with empty value -->
+        <waitForElementVisible selector="//input[@name='width']" stepKey="waitForElement"/>
+        <fillField stepKey="fillMapWidth" selector="//input[@name='width']" userInput="50%"/>
+        <!-- click save -->
+        <click stepKey="clickSave" selector="#save"/>
+        <waitForPageLoad stepKey="waitForPageLoadAfterSave1"/>
+        <!-- assert on width is properly set -->
+        <executeJS function="return Math.round(document.getElementsByClassName('pagebuilder-content-type')[0].clientWidth/2)" stepKey="pageBuilderStageWidth" />
+        <executeJS function="return document.getElementsByClassName('gm-style')[0].clientWidth" stepKey="pageBuilderStageMapWidth" />
+        <assertEquals stepKey="assertPageBuilderStageMapHeight">
+            <expectedResult type="variable">pageBuilderStageWidth</expectedResult>
+            <actualResult type="variable">pageBuilderStageMapWidth</actualResult>
+        </assertEquals>
+
+        <!-- open the panel and validate the value is set properly -->
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <grabValueFrom selector="//input[@name='width']" stepKey="grabMapWidthValue"/>
+        <assertEquals stepKey="assertWidthIsStillSet">
+            <actualResult type="variable">grabMapWidthValue</actualResult>
+            <expectedResult type="string">50%</expectedResult>
+        </assertEquals>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+
+        <!-- save page -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+
+        <!-- go to url and validate size -->
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+
+        <!-- TODO Determine proper behavior, currently when this is set the map width does not change on the storefront -->
+    </test>
+</tests>
