@@ -9,9 +9,9 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Source;
 
 /**
- * TextAlignment options class used for system configuration
+ * VisualSelect options class used for system configuration
  */
-class TextAlignment extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype
+class VisualSelect extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype
 {
     /**
      * @var \Magento\Framework\View\Asset\Repository
