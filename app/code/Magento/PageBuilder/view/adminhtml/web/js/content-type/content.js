@@ -58,7 +58,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
       var result = {};
       var css = "";
 
-      var data = _underscore.extend({}, this.parent.store.get(this.parent.id));
+      var data = _underscore.extend({}, this.parent.dataStore.get());
 
       if (element === undefined) {
         if ("css_classes" in data && data.css_classes !== "") {
@@ -91,7 +91,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
 
 
     _proto.getStyle = function getStyle(element) {
-      var data = _underscore.extend({}, this.parent.store.get(this.parent.id), this.parent.config);
+      var data = _underscore.extend({}, this.parent.dataStore.get(), this.parent.config);
 
       if (element === undefined) {
         if (typeof data.appearance !== "undefined" && typeof data.appearances !== "undefined" && typeof data.appearances[data.appearance] !== "undefined") {
@@ -121,7 +121,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
 
 
     _proto.getAttributes = function getAttributes(element) {
-      var data = _underscore.extend({}, this.parent.store.get(this.parent.id), this.parent.config);
+      var data = _underscore.extend({}, this.parent.dataStore.get(), this.parent.config);
 
       if (element === undefined) {
         if (undefined === data.appearance || !data.appearance) {
@@ -152,7 +152,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
 
 
     _proto.getHtml = function getHtml(element) {
-      var data = this.parent.store.get(this.parent.id);
+      var data = this.parent.dataStore.get();
       var config = (0, _appearanceConfig)(this.parent.config.name, data.appearance).data_mapping.elements[element];
       var result = "";
 
@@ -172,7 +172,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
 
 
     _proto.getData = function getData(element) {
-      var data = _underscore.extend({}, this.parent.store.get(this.parent.id));
+      var data = _underscore.extend({}, this.parent.dataStore.get());
 
       if (undefined === element) {
         return data;
@@ -197,9 +197,9 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      this.parent.store.subscribe(function (data) {
+      this.parent.dataStore.subscribe(function (data) {
         _this.updateObservables();
-      }, this.parent.id);
+      });
     };
     /**
      * After observables updated, allows to modify observables
@@ -217,7 +217,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
     _proto.updateObservables = function updateObservables() {
       this.observableUpdater.update(this, _underscore.extend({
         name: this.parent.config.name
-      }, this.parent.store.get(this.parent.id)));
+      }, this.parent.dataStore.get()));
       this.afterObservablesUpdated();
     };
 

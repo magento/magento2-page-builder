@@ -12,8 +12,8 @@ export default interface ContentTypeInterface {
     id: string;
     stageId: string;
     parent: ContentTypeInterface;
-    config: ContentTypeConfigInterface,
-    preview: Preview
-    content: Content
-    store: DataStore
+    config: ContentTypeConfigInterface;
+    preview: Preview;
+    content: Content;
+    dataStore: DataStore;
 }

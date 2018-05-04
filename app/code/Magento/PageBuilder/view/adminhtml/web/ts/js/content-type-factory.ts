@@ -9,6 +9,7 @@ import _ from "underscore";
 import ConfigFieldInterface from "./config-field.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
+import BlockMountEventParamsInterface from "./content-type/block-mount-event-params.d";
 import contentFactory from "./content-type/content-factory";
 import ContentTypeMountEventParamsInterface from "./content-type/content-type-mount-event-params.d";
 import previewFactory from "./content-type/preview-factory";
@@ -47,8 +48,7 @@ export default function createContentType(
                 const [previewComponent, contentComponent] = resolvedPromises;
                 contentType.preview = previewComponent;
                 contentType.content = contentComponent;
-                contentType.store.update(
-                    contentType.id,
+                contentType.dataStore.update(
                     prepareData(config, data),
                 );
                 resolve(contentType);

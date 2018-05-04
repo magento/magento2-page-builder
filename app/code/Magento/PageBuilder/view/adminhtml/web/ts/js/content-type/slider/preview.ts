@@ -105,7 +105,7 @@ export default class Preview extends PreviewCollection {
         });
 
         this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
-        this.parent.store.subscribe(this.buildSlick);
+        this.parent.dataStore.subscribe(this.buildSlick);
 
         // Set the active slide to the new position of the sorted slide
         events.on("previewSortable:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
@@ -319,7 +319,7 @@ export default class Preview extends PreviewCollection {
      * fade: boolean; infinite: boolean; arrows: boolean; dots: boolean}}
      */
     private buildSlickConfig() {
-        const data = this.parent.store.get(this.parent.id);
+        const data = this.parent.dataStore.get();
         return {
             arrows: data.show_arrows === "1",
             autoplay: data.autoplay === "1",

@@ -38,7 +38,7 @@ define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_Page
       _BasePreview.prototype.bindEvents.call(this);
 
       _uiEvents.on(this.parent.id + ":updated", function () {
-        var imageDataStore = _this2.parent.store.get(_this2.parent.id);
+        var imageDataStore = _this2.parent.dataStore.get();
 
         var imageObject = imageDataStore.image[0] || {};
 
@@ -46,7 +46,7 @@ define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_Page
       });
 
       _uiEvents.on("image:block:ready", function () {
-        var imageDataStore = _this2.parent.store.get(_this2.parent.id);
+        var imageDataStore = _this2.parent.dataStore.get();
 
         var initialImageValue = imageDataStore.image || ""; // Create uploader
 
@@ -65,7 +65,7 @@ define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_Page
 
 
     _proto.onImageUploaded = function onImageUploaded(data) {
-      this.parent.store.updateKey(this.parent.id, data, "image");
+      this.parent.dataStore.update(data, "image");
     };
 
     return Preview;

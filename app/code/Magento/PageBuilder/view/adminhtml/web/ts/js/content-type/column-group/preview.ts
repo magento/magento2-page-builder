@@ -16,7 +16,7 @@ import {moveArrayItem} from "../../utils/array";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
 import PreviewCollection from "../preview-collection";
-import {calculateDropPositions, DropPosition} from "./drag-and-drop";
+import {calculateDropPositions, DropPosition} from "./drag-n-drop";
 import {createColumn} from "./factory";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import {

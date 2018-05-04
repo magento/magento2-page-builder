@@ -35,8 +35,8 @@ define(["Magento_PageBuilder/js/content-type/content-collection"], function (_co
 
 
     _proto.getActive = function getActive() {
-      if (this.parent.store.get(this.parent.id).items) {
-        var items = this.parent.store.get(this.parent.id).items;
+      if (this.parent.dataStore.get().items) {
+        var items = this.parent.dataStore.get().items;
         var activeItems = items.map(function (item, index) {
           return item.open_on_load === "1" ? index : null;
         }).filter(function (item) {

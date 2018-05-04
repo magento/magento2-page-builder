@@ -31,7 +31,7 @@ export default class Stage {
     public interacting: KnockoutObservable<boolean> = ko.observable(false);
     public userSelect: KnockoutObservable<boolean> = ko.observable(true);
     public stageLoadingMessage: string = $t("Please hold! we're just retrieving your content...");
-    public store: DataStore = new DataStore();
+    public dataStore: DataStore = new DataStore();
     private template: string = "Magento_PageBuilder/content-type/preview";
     private render: Render = new Render();
     private collection: Collection = new Collection();
@@ -161,7 +161,7 @@ export default class Stage {
         });
 
         // Any store state changes trigger a stage update event
-        this.store.subscribe(() => events.trigger("stage:updated", {stageId: this.id}));
+        this.dataStore.subscribe(() => events.trigger("stage:updated", {stageId: this.id}));
 
         // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
         // can occur concurrently.
@@ -188,9 +188,6 @@ export default class Stage {
      */
     private onBlockRemoved(params: ContentTypeRemovedParamsInterface): void {
         params.parent.removeChild(params.block);
-
-        // Remove the instance from the data store
-        params.parent.store.remove(params.block.id);
     }
 
     /**

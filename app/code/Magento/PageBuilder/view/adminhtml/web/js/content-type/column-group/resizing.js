@@ -54,7 +54,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
 
   function getColumnWidth(column) {
-    return getAcceptedColumnWidth(column.store.get(column.id).width.toString());
+    return getAcceptedColumnWidth(column.dataStore.get().width.toString());
   }
   /**
    * Retrieve the index of the column within it's group
@@ -376,7 +376,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
 
   function updateColumnWidth(column, width) {
-    column.store.updateKey(column.id, parseFloat(width.toString()) + "%", "width");
+    column.dataStore.update(parseFloat(width.toString()) + "%", "width");
   }
 
   return {

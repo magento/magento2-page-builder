@@ -21,7 +21,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       this.interacting = _knockout.observable(false);
       this.userSelect = _knockout.observable(true);
       this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
-      this.store = new _dataStore();
+      this.dataStore = new _dataStore();
       this.template = "Magento_PageBuilder/content-type/preview";
       this.render = new _render();
       this.collection = new _collection();
@@ -159,7 +159,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       }); // Any store state changes trigger a stage update event
 
 
-      this.store.subscribe(function () {
+      this.dataStore.subscribe(function () {
         return _uiEvents.trigger("stage:updated", {
           stageId: _this.id
         });
@@ -195,9 +195,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
 
 
     _proto.onBlockRemoved = function onBlockRemoved(params) {
-      params.parent.removeChild(params.block); // Remove the instance from the data store
-
-      params.parent.store.remove(params.block.id);
+      params.parent.removeChild(params.block);
     };
     /**
      * On instance of an existing block is dropped onto container

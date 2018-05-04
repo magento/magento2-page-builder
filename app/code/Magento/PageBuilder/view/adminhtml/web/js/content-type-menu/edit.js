@@ -9,18 +9,18 @@ define(["uiEvents"], function (_uiEvents) {
   function () {
     /**
      * @param {ContentTypeInterface} instance
-     * @param {DataStore} store
+     * @param {DataStore} dataStore
      */
-    function Edit(instance, store) {
+    function Edit(instance, dataStore) {
       var _this = this;
 
       this.instance = void 0;
-      this.store = void 0;
+      this.dataStore = void 0;
       this.instance = instance;
-      this.store = store;
+      this.dataStore = dataStore;
 
       _uiEvents.on("form:save:" + this.instance.id, function (data) {
-        _this.store.update(_this.instance.id, data);
+        _this.dataStore.update(data);
       });
     }
     /**
@@ -31,7 +31,7 @@ define(["uiEvents"], function (_uiEvents) {
     var _proto = Edit.prototype;
 
     _proto.open = function open() {
-      var contentTypeData = this.store.get(this.instance.id);
+      var contentTypeData = this.dataStore.get();
       var formNamespace = this.instance.config.form; // Use the default form unless a custom one is defined
 
       if (undefined !== this.instance.config.appearances[contentTypeData.appearance].form) {
