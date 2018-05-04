@@ -37,7 +37,7 @@ class TextAlignment extends \Magento\Eav\Model\Adminhtml\System\Config\Source\In
     public function __construct(
         \Magento\Framework\View\Asset\Repository $assetRepo,
         array $optionsData = [],
-        string $optionsSize = null
+        $optionsSize = null
     ) {
         $this->assetRepo = $assetRepo;
         $this->optionsData = $optionsData;
