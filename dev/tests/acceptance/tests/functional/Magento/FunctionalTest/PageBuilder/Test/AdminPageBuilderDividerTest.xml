@@ -504,12 +504,12 @@
     </test>
     <test name="DividerDuplicate">
         <annotations>
-            <features value="Pagebuilder: Divider"/>
-            <stories value="MAGETWO-90475: Add Missing Tests For Divider"/>
+            <features value="Pagebuilder"/>
+            <stories value="Divider"/>
             <title value="Divider - Duplicate Divider"/>
             <description value="A user should be able to duplicate a divider content block. Verify on Stage and Storefront."/>
-            <severity value="AVERAGE"/>
-            <testCaseId value="MAGETWO-91042"/>
+            <severity value="MAJOR"/>
+            <testCaseId value="MAGETWO-91143"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-divider"/>
         </annotations>
@@ -542,24 +542,62 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineWidth">
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Duplicate and Validate Stage -->
+        <comment userInput="Duplicate and Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
             <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
         </actionGroup>
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateDivider" stepKey="validateStage2">
             <argument name="page" value="DividerOnStage"/>
-            <argument name="index" value="2"/>
             <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
             <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
             <argument name="width" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="2"/>
         </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate Edit Panel For Duplicate -->
+        <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEditBeforeSave"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnDuplicateBeforeSave">
             <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEditBeforeSave"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLineColorBeforeSave">
             <argument name="property" value="PageBuilderDividerLineColor_FF5733"/>
         </actionGroup>
@@ -569,23 +607,61 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLineWidthBeforeSave">
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelBeforeSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageBeforeSave"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageBeforeSave"/>
-        <!-- Validate Edit Panel For Duplicate Post Save -->
-        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfter"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <actionGroup ref="validateDivider" stepKey="validateStageAfterSave">
             <argument name="page" value="DividerOnStage"/>
-            <argument name="index" value="2"/>
             <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
             <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
             <argument name="width" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="2"/>
         </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
+            <argument name="page" value="DividerOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Validate Edit Panel For Duplicate -->
+        <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEditAfterSave"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStageAfterSave">
             <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
-        <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEditAfterSave"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLineColorAfterSave">
             <argument name="property" value="PageBuilderDividerLineColor_FF5733Lower"/>
         </actionGroup>
@@ -595,17 +671,55 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateLineWidthAfterSave">
             <argument name="property" value="PageBuilderDividerLineWidth_50"/>
         </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelAfterSave"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPageAfterSave"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStageAfterSave"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
+        </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="validateDivider" stepKey="validateStorefront">
             <argument name="page" value="DividerOnStorefront"/>
-            <argument name="index" value="2"/>
             <argument name="color" value="PageBuilderDividerLineColor_FF5733"/>
             <argument name="thickness" value="PageBuilderDividerLineThickness_10"/>
             <argument name="width" value="PageBuilderDividerLineWidth_50"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+            <argument name="page" value="DividerOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
         </actionGroup>
     </test>
     <test name="DividerNoRequired">
