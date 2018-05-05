@@ -62,8 +62,10 @@
                             </element>
                             <element name="link" path=".//a">
                                 <attributes>
-                                    <attribute name="href" var="link_url"/>
-                                    <attribute name="target" var="link_target"/>
+                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
+                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
+                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
+                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
                                     <attribute name="title" var="title_attribute"/>
                                 </attributes>
                             </element>

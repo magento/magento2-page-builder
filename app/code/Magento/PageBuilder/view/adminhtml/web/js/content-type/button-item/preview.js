@@ -20,19 +20,8 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type/preview"], functi
     var _proto = Preview.prototype;
 
     /**
-     * After child render record element
-     * returns {object}
-     */
-    _proto.childrenStyle = function childrenStyle() {
-      return {
-        display: "inline-block"
-      };
-    };
-    /**
      * Focus out of the element
      */
-
-
     _proto.onFocusOut = function onFocusOut() {
       this.parent.parent.preview.isLiveEditing(null);
     };

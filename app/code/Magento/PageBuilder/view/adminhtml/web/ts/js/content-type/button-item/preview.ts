@@ -10,16 +10,6 @@ export default class Preview extends BasePreview {
     private buttonPlaceholder: string = $t("Edit Button Text");
 
     /**
-     * After child render record element
-     * returns {object}
-     */
-    private childrenStyle(): {} {
-        return {
-            display: "inline-block",
-        };
-    }
-
-    /**
      * Focus out of the element
      */
     private onFocusOut(): void {

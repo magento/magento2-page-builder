@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import PropertyReaderInterface from "../../property/property-reader-interface";
+import PropertyReaderInterface from "../property-reader-interface";
 
 export default class Link implements PropertyReaderInterface {
 
@@ -34,6 +34,13 @@ export default class Link implements PropertyReaderInterface {
         };
     }
 
+    /**
+     * Returns link value from widget string
+     *
+     * @param {string} href
+     * @param {RegExp} regexp
+     * @return {string}
+     */
     private getIdFromWidgetSyntax(href: string, regexp: RegExp): string {
         const attributeIdMatches = href.match(regexp);
 

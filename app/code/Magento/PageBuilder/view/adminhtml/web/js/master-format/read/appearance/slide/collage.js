@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/extract-alpha-from-rgba", "Magento_PageBuilder/js/utils/image"], function (_colorConverter, _extractAlphaFromRgba, _image) {
+define(["Magento_PageBuilder/js/property/link", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/extract-alpha-from-rgba", "Magento_PageBuilder/js/utils/image"], function (_link, _colorConverter, _extractAlphaFromRgba, _image) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -7,7 +7,9 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
   var Collage =
   /*#__PURE__*/
   function () {
-    function Collage() {}
+    function Collage() {
+      this.linkConverter = new _link();
+    }
 
     var _proto = Collage.prototype;
 
@@ -23,6 +25,7 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
       var target = element.querySelector("a").getAttribute("target");
       var backgroundImage = element.querySelector(".pagebuilder-mobile-hidden").style.backgroundImage;
       var backgroundMobileImageElement = element.querySelector(".pagebuilder-mobile-only");
+      var linkUrl = element.querySelector("a");
 
       if (backgroundMobileImageElement !== undefined && backgroundMobileImageElement.style.backgroundImage !== "" && backgroundImage !== backgroundMobileImageElement.style.backgroundImage) {
         mobileImage = (0, _image.decodeUrl)(backgroundMobileImageElement.style.backgroundImage);
@@ -39,7 +42,7 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
         background_size: element.style.backgroundSize,
         button_text: buttonText,
         button_type: buttonType,
-        link_url: element.querySelector("a").getAttribute("href"),
+        link_url: this.linkConverter.read(linkUrl),
         margins_and_padding: {
           margin: {
             bottom: marginSrc.marginBottom.replace("px", ""),

@@ -1,5 +1,7 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/content"], function (_translate, _colorConverter, _directives, _numberConverter, _content) {
+define(["mage/translate", "Magento_PageBuilder/js/converter/attribute/link-href", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/content"], function (_translate, _linkHref, _colorConverter, _directives, _numberConverter, _content) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Content =
@@ -8,7 +10,13 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
     _inheritsLoose(Content, _BaseContent);
 
     function Content() {
-      return _BaseContent.apply(this, arguments) || this;
+      var _temp, _this;
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _BaseContent.call.apply(_BaseContent, [this].concat(args)) || this, _this.createValueForHref = new _linkHref(), _temp) || _this;
     }
 
     var _proto = Content.prototype;
@@ -192,12 +200,10 @@ define(["mage/translate", "Magento_PageBuilder/js/utils/color-converter", "Magen
       var data = this.parent.dataStore.get();
       var attribute = {};
 
-      if (data.link_url !== "") {
-        attribute.href = data.link_url;
-      }
-
-      if (data.open_in_new_tab === "1") {
-        attribute.target = "_blank";
+      if (_typeof(data.link_url) === "object") {
+        attribute.href = this.createValueForHref.toDom("link_url", data);
+        attribute["data-link-type"] = data.link_url.type;
+        attribute.target = data.link_url.setting === true ? "_blank" : "";
       }
 
       return attribute;

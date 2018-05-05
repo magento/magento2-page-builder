@@ -4,12 +4,15 @@
  */
 
 import $t from "mage/translate";
+import CreateValueForHref from "../../converter/attribute/link-href";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
 import BaseContent from "../content";
 
 export default class Content extends BaseContent {
+
+    private createValueForHref: CreateValueForHref = new CreateValueForHref();
 
     /**
      * Get the slide wrapper styles for the storefront
@@ -164,11 +167,10 @@ export default class Content extends BaseContent {
     public getLinkAttribute(): {} {
         const data = this.parent.dataStore.get();
         const attribute: any = {};
-        if (data.link_url !== "") {
-            attribute.href = data.link_url;
-        }
-        if (data.open_in_new_tab === "1") {
-            attribute.target = "_blank";
+        if (typeof data.link_url === "object") {
+            attribute.href = this.createValueForHref.toDom("link_url", data);
+            attribute["data-link-type"] = data.link_url.type;
+            attribute.target = data.link_url.setting === true ? "_blank" : "";
         }
         return attribute;
     }

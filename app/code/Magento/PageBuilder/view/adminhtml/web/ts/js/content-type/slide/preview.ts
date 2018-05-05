@@ -148,6 +148,19 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * Get the link href for preview
+     *
+     * @returns {String}
+     */
+    public getHref() {
+        let href = "";
+        if (!!this.previewData.link_url && typeof this.previewData.link_url() === "object") {
+            href = this.previewData.link_url()[this.previewData.link_url().type];
+        }
+        return href;
+    }
+
+    /**
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOverWrapper() {
