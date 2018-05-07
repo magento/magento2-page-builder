@@ -45,7 +45,7 @@ class ProductList implements RendererInterface
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
         $rootElementAttributes = [
-            'data-role' => 'products-list',
+            'data-role' => 'product-list',
             'data-appearance' => 'default',
             'class' => $itemData['formData']['css_classes'] ?? '',
             'data-category-id' => $eavData['category_id'] ?? '',

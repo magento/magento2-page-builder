@@ -11,8 +11,8 @@
             <label>Button</label>
             <icon>icon-pagebuilder-button</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/button-item</preview_component>
-            <content_component>Magento_PageBuilder/js/content</content_component>
+            <preview_component>Magento_PageBuilder/js/content-type/button-item/preview</preview_component>
+            <content_component>Magento_PageBuilder/js/content-type/content</content_component>
             <form>pagebuilder_button_item_form</form>
             <group>general</group>
             <allowed_parents>
@@ -35,28 +35,28 @@
                             <element name="link" path="./a">
                                 <style_properties>
                                     <property var="text_align" name="text_align"/>
-                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/default/style/border-style"/>
-                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
-                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
-                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings"/>
+                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
                                 </style_properties>
                                 <attributes>
-                                    <complex_attribute var="button_link" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
-                                    <attribute var="button_link" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
-                                    <attribute var="button_link" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
-                                    <attribute var="button_link" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
+                                    <complex_attribute var="button_link" persist="false" reader="Magento_PageBuilder/js/property/link"/>
+                                    <attribute var="button_link" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
+                                    <attribute var="button_link" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
+                                    <attribute var="button_link" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
                                 </attributes>
                                 <css var="button_type"/>
                             </element>
                             <element name="link_text" path="./a/span">
-                                <html var="button_text" placeholder=""/>
+                                <html var="button_text"/>
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/component/block/preview/button-item.html</preview_template>
-                    <render_template>Magento_PageBuilder/component/block/render/button-item.html</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <preview_template>Magento_PageBuilder/content-type/button-item/default/preview</preview_template>
+                    <render_template>Magento_PageBuilder/content-type/button-item/default/master</render_template>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

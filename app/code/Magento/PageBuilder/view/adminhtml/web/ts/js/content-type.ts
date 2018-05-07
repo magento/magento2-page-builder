@@ -6,10 +6,10 @@
 import ko from "knockout";
 import mageUtils from "mageUtils";
 import events from "uiEvents";
-import DataStore from "./component/data-store";
 import Content from "./content";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
+import DataStore from "./data-store";
 import Preview from "./preview";
 
 export default class ContentType implements ContentTypeInterface {
@@ -20,7 +20,7 @@ export default class ContentType implements ContentTypeInterface {
     public data = {};
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
     public element: JQuery<HTMLElement>;
-    public store: DataStore = new DataStore();
+    public dataStore: DataStore = new DataStore();
     public preview: Preview;
     public content: Content;
 
@@ -44,14 +44,14 @@ export default class ContentType implements ContentTypeInterface {
         const eventName: string = this.id + ":updated";
         const paramObj: any = {};
         paramObj[this.id] = this;
-        this.store.subscribe(
+        this.dataStore.subscribe(
             () => events.trigger(
                 eventName,
                 paramObj,
             ),
         );
 
-        this.store.subscribe(
+        this.dataStore.subscribe(
             () => events.trigger(
                 "stage:updated",
                 {stageId: this.stageId},
