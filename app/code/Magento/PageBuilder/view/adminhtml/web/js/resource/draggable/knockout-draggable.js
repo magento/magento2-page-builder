@@ -5,8 +5,8 @@
 
 /*eslint-disable vars-on-top, strict*/
 
-define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"],
-    function(ko, jQuery, EventBus) {
+define(["knockout", "jquery", "Magento_Ui/js/lib/core/events", "jquery/ui"],
+    function(ko, jQuery, events) {
 
     /**
      * Retrieve the view model for an element
@@ -48,12 +48,12 @@ define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "jqu
                 .on('dragstart', function (event, ui) {
                     // Ensure the dimensions are retained on the element
                     ui.helper.css({width: ui.helper.width(), height: ui.helper.height()});
-                    EventBus.trigger("drag:start", {event: event, ui: ui, component: getViewModelFromEvent(event)});
-                    EventBus.trigger("interaction:start", {stage: getViewModelFromEvent(event).stage});
+                    events.trigger("drag:start", {event: event, ui: ui, component: getViewModelFromEvent(event)});
+                    events.trigger("interaction:start", {stage: getViewModelFromEvent(event).stage});
                 })
                 .on('dragstop', function (event, ui) {
-                    EventBus.trigger("drag:stop", {event: event, ui: ui, component: getViewModelFromEvent(event)});
-                    EventBus.trigger("interaction:stop", {stage: getViewModelFromEvent(event).stage});
+                    events.trigger("drag:stop", {event: event, ui: ui, component: getViewModelFromEvent(event)});
+                    events.trigger("interaction:stop", {stage: getViewModelFromEvent(event).stage});
                 });
         },
 

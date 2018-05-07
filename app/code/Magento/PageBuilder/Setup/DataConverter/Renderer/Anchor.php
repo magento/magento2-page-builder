@@ -44,6 +44,7 @@ class Anchor implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'anchor',
+            'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? '',
             'id' => $eavData['anchor_id']
         ];

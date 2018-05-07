@@ -5,8 +5,8 @@
 
 import ko from "knockout";
 import mageUtils from "mageUtils";
+import events from "uiEvents";
 import DataStore from "./component/data-store";
-import EventBus from "./component/event-bus";
 import Content from "./content";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
@@ -45,14 +45,14 @@ export default class ContentType implements ContentTypeInterface {
         const paramObj: any = {};
         paramObj[this.id] = this;
         this.store.subscribe(
-            () => EventBus.trigger(
+            () => events.trigger(
                 eventName,
                 paramObj,
             ),
         );
 
         this.store.subscribe(
-            () => EventBus.trigger(
+            () => events.trigger(
                 "stage:updated",
                 {stageId: this.stageId},
             ),

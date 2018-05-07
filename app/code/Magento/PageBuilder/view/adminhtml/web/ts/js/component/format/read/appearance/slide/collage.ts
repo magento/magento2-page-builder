@@ -6,7 +6,6 @@
 import {toHex} from "../../../../../utils/color-converter";
 import extractAlphaFromRgba from "../../../../../utils/extract-alpha-from-rgba";
 import {decodeUrl} from "../../../../../utils/image";
-import {DataObject} from "../../../../data-store";
 import {ReadInterface} from "../../../read-interface";
 
 export default class Collage implements ReadInterface {

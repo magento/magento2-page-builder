@@ -44,6 +44,7 @@ class Heading implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'heading',
+            'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
         ];
 

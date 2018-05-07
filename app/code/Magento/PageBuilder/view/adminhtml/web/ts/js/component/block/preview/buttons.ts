@@ -4,12 +4,15 @@
  */
 
 import ko from "knockout";
+import $t from "mage/translate";
+import events from "uiEvents";
 import createContentType from "../../../content-type-factory";
 import PreviewCollection from "../../../preview-collection";
 import Config from "../../config";
-import EventBus from "../../event-bus";
+import {Option} from "../../stage/structural/options/option";
+import {OptionInterface} from "../../stage/structural/options/option.d";
 import BlockMountEventParamsInterface from "../block-mount-event-params.d";
-import ButtonItem from "../button-item";
+import ButtonItem from "./button-item";
 
 export default class Buttons extends PreviewCollection {
     public isLiveEditing: KnockoutObservable<boolean> = ko.observable(false);
@@ -17,11 +20,32 @@ export default class Buttons extends PreviewCollection {
     public bindEvents() {
         super.bindEvents();
 
-        EventBus.on("buttons:block:dropped:create", (event: Event, params: BlockMountEventParamsInterface) => {
-            if (params.id === this.parent.id && this.parent.children().length === 0) {
+        events.on("buttons:block:dropped:create", (args: BlockMountEventParamsInterface) => {
+            if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addButton();
             }
         });
+    }
+
+    /**
+     * Return an array of options
+     *
+     * @returns {Array<OptionInterface>}
+     */
+    public retrieveOptions(): OptionInterface[] {
+        const options = super.retrieveOptions();
+        options.push(
+            new Option(
+                this,
+                "add",
+                "<i class='icon-pagebuilder-add'></i>",
+                $t("Add Button"),
+                this.addButton,
+                ["add-child"],
+                20,
+            ),
+        );
+        return options;
     }
 
     /**

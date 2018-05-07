@@ -52,7 +52,7 @@ class Code implements RendererInterface
             }
         }
 
-        $rootElementHtml = '<div data-role="html"><pre';
+        $rootElementHtml = '<div data-role="html" data-appearance="default"><pre';
         foreach ($preElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }

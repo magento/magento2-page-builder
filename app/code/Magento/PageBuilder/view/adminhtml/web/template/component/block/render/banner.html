@@ -7,23 +7,33 @@
 
 <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css">
     <a data-bind="attr: data.link.attributes, style: data.link.style, css: data.link.css">
-        <div class="pagebuilder-banner-wrapper pagebuilder-mobile-hidden" data-bind="attr: data.desktop_image.attributes, style: data.desktop_image.style, css: data.desktop_image.css">
-            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style, css: data.overlay.css">
+        <div class="pagebuilder-banner-wrapper pagebuilder-mobile-hidden" attr="data.desktop_image.attributes" ko-style="data.desktop_image.style" css="data.desktop_image.css">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" attr="data.overlay.attributes" ko-style="data.overlay.style" css="data.overlay.css">
                 <div class="pagebuilder-poster-content">
-                    <div data-bind="attr: data.content.attributes, style: data.content.style, css: data.content.css, html: data.content.html"></div>
-                    <!-- ko if: data.main.attributes()["data-show-button"] !== "never_show" -->
-                    <button type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css, html: data.button.html"></button>
-                    <!-- /ko -->
+                    <div attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" html="data.content.html"></div>
+                    <button if="data.main.attributes()['data-show-button'] !== 'never_show'"
+                            type="button"
+                            class="pagebuilder-banner-button"
+                            attr="data.button.attributes"
+                            ko-style="data.button.style"
+                            css="data.button.css"
+                            html="data.button.html">
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="pagebuilder-banner-wrapper pagebuilder-mobile-only" data-bind="attr: data.mobile_image.attributes, style: data.mobile_image.style, css: data.mobile_image.css">
-            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: data.overlay.attributes, style: data.overlay.style, css: data.overlay.css">
+        <div class="pagebuilder-banner-wrapper pagebuilder-mobile-only" attr="data.mobile_image.attributes" ko-style="data.mobile_image.style" css="data.mobile_image.css">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" attr="data.overlay.attributes" ko-style="data.overlay.style" css="data.overlay.css">
                 <div class="pagebuilder-poster-content">
-                    <div data-bind="attr: data.content.attributes, style: data.content.style, css: data.content.css, html: data.content.html"></div>
-                    <!-- ko if: data.main.attributes()["data-show-button"] !== "never_show" -->
-                        <button type="button" class="pagebuilder-banner-button" data-bind="attr: data.button.attributes, style: data.button.style, css: data.button.css, html: data.button.html"></button>
-                    <!-- /ko -->
+                    <div attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" html="data.content.html"></div>
+                    <button if="data.main.attributes()['data-show-button'] !== 'never_show'"
+                            type="button"
+                            class="pagebuilder-banner-button"
+                            attr="data.button.attributes"
+                            ko-style="data.button.style"
+                            css="data.button.css"
+                            html="data.button.html">
+                    </button>
                 </div>
             </div>
         </div>

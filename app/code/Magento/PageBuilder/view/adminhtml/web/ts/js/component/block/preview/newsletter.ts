@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import events from "uiEvents";
 import Preview from "../../../preview";
 import Config from "../../config";
-import EventBus from "../../event-bus";
 
 export default class Newsletter extends Preview {
     /**
@@ -13,8 +13,8 @@ export default class Newsletter extends Preview {
      */
     protected bindEvents() {
         super.bindEvents();
-        EventBus.on("previewObservables:updated", (event, params) => {
-            if (params.preview.parent.id === this.parent.id) {
+        events.on("previewObservables:updated", (args) => {
+            if (args.preview.parent.id === this.parent.id) {
                 const attributes = this.data.main.attributes();
                 if (attributes["data-title"] === "") {
                     return;
