@@ -55,8 +55,9 @@
             <argument name="property" value="PageBuilderSlideItemContent1"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL1">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkURL1">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
@@ -68,6 +69,7 @@
         <!--Open Slider settings -->
         <comment userInput="Open Slider settings" stepKey="EditSlider"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openSliderEditPanel">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
@@ -110,7 +112,11 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderColorProperty">
+        <comment userInput="I fill out color into Border Color using Color Picker" stepKey="comment2"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor2">
+            <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField2">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
@@ -139,8 +145,9 @@
             <argument name="property" value="PageBuilderSlideItemContent2"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkURL2">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkURL2">
             <argument name="property" value="PageBuilderSlideItemLinkURL2"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty2">
             <argument name="property" value="PageBuilderSlideShowButtonAlwaysProperty"/>
@@ -188,6 +195,7 @@
         <seeElement selector="{{SliderOnFrontend.IsInfinite(PageBuilderSliderIsInfiniteProperty.value)}}" stepKey="seeSliderIsInfiniteSetting"/>
         <seeElement selector="{{SliderOnFrontend.ShowArrows(PageBuilderSliderShowArrowsYesProperty.value)}}" stepKey="seeSliderShowArrowsSetting"/>
         <seeElement selector="{{SliderOnFrontend.ShowDots(PageBuilderSliderShowDotsNoProperty.value)}}" stepKey="seeSliderShowDotsOffOnFrontendSetting"/>
+        <seeElement selector="{{SliderOnFrontend.sliderBorderColor}}" stepKey="seeSliderShowGreenColor"/>
         <seeElement selector="{{SliderOnFrontend.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnFrontEnd"/>
         <seeElement selector="{{SliderOnFrontend.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnFrontEnd"/>
         <seeElement selector="{{SlideOnFrontend.slide('1')}}" stepKey="seeSlide1InSlider"/>
@@ -325,7 +333,7 @@
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-83933: Advanced Slider"/>
-            <title value="Can add slides and see tooltip and slide title when hovering over navigation dots"/>
+            <title value="Can add slides and see tooltip and slide title when clicking navigation dots"/>
             <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87949"/>
@@ -371,8 +379,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
 
-        <comment userInput="Slide is not focused, Option panel is not displayed" stepKey="AC6"/>
-        <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="dontSeeSlideOptionsAfterSaveSlide"/>
+        <comment userInput="Slide option panel is displayed" stepKey="AC6"/>
+        <waitForElementVisible time="5" selector="{{SliderInAdmin.slideOptions}}" stepKey="SeeSlideOptionsAfterSaveSlide"/>
 
         <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.content}}" stepKey="scrollToContent"/>
@@ -384,6 +392,7 @@
         <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
 
         <comment userInput="User doesn't see Slide Option panel, both option panels not displayed at once." stepKey="AC8"/>
+        <waitForElementNotVisible time="5" selector="{{SliderInAdmin.slideOptions}}" stepKey="waitForSlideOptionsPanelNotVisible" />
         <dontSeeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanelStillHidden"/>
 
         <comment userInput="User sees button (+) inside the Slider Option Panel. Tooltip shows Add New Slide" stepKey="AC9"/>
@@ -418,6 +427,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
 
         <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide title" stepKey="AC15"/>
+        <click stepKey="unfocusNavigation" selector="{{SliderInAdmin.sliderContainer}}"/>
         <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
         <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2InTooltip"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
@@ -694,8 +704,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
             <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkUrl">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
             <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
@@ -811,13 +822,14 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
             <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkUrl">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
             <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+        <actionGroup ref="clickSlideOutPanelFieldOpenInNewTab" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderSlideNewTabProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -876,8 +888,9 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideButtonText">
             <argument name="property" value="PageBuilderSlideButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideLinkUrl">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
             <argument name="property" value="PageBuilderSlideShowContentOverlayAlwaysProperty"/>
@@ -1024,6 +1037,13 @@
             <argument name="property" value="PageBuilderSlideMessageLongProperty"/>
             <argument name="section" value="SlideOnConfigurationPanel"/>
         </actionGroup>
+        <comment userInput="I fill out color into Background Color using Color Picker" stepKey="comment1"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor1">
+            <argument name="colorCode" value="PageBuilderBackgroundColorProperty_FFFFFF"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField1">
+            <argument name="property" value="PageBuilderBackgroundColorProperty_FFFFFF"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -1039,6 +1059,7 @@
         <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdminAfterSave"/>
         <grabTextFrom selector="{{SlideOnBackend.slideContent('0')}}" stepKey="grabSlideContent"/>
         <assertEquals expected="{{PageBuilderSlideMessageLongProperty.value}}" expectedType="string" actual="grabSlideContent" actualType="variable" message="actual=$grabSlideContent" stepKey="assertContentIsVisible"/>
+        <seeElement selector="{{SlideOnBackend.backgroundColorOnStage(PageBuilderBackgroundColorProperty_FFFFFF.rgb)}}"  stepKey="seeSliderBackgroundColorApplied"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
@@ -1047,5 +1068,6 @@
         <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedOnStorefront"/>
         <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedOnStorefront"/>
+        <seeElementInDOM selector="{{SlideOnFrontend.posterMobileBackgroundColor}}" stepKey="seeBackgroundColorOnFrontend" />
     </test>
 </tests>

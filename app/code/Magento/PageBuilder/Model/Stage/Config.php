@@ -9,8 +9,8 @@ use Magento\Framework\UrlInterface;
 
 class Config
 {
-    const DEFAULT_COMPONENT = 'Magento_PageBuilder/js/component/block/block';
-    const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/component/block/preview/block';
+    const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/preview';
+    const DEFAULT_CONTENT_COMPONENT = 'Magento_PageBuilder/js/content';
 
     /**
      * @var \Magento\PageBuilder\Model\Config\ConfigInterface
@@ -120,7 +120,7 @@ class Config
     {
         return [
             'name' => $name,
-            'label' => __($contentType['label']),
+            'label' => $contentType['label'],
             'icon' => $contentType['icon'],
             'form' => $contentType['form'],
             'contentType' => '',
@@ -131,14 +131,17 @@ class Config
                 ? $contentType['preview_template'] : ''),
             'render_template' => (isset($contentType['render_template'])
                 ? $contentType['render_template'] : ''),
+            'component' => $contentType['component'],
             'preview_component' => (isset($contentType['preview_component'])
                 ? $contentType['preview_component']
                 : self::DEFAULT_PREVIEW_COMPONENT),
-            'component' => (isset($contentType['component'])
-                ? $contentType['component'] : self::DEFAULT_COMPONENT),
+            'content_component' => (isset($contentType['content_component'])
+                ? $contentType['content_component']
+                : self::DEFAULT_CONTENT_COMPONENT),
             'allowed_parents' => isset($contentType['allowed_parents']) ? $contentType['allowed_parents'] : [],
             'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
             'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
+            'additional_data' => isset($contentType['additional_data']) ? $contentType['additional_data'] : [],
             'data_mapping' => isset($contentType['data_mapping']) ? $contentType['data_mapping'] : [],
             'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
         ];

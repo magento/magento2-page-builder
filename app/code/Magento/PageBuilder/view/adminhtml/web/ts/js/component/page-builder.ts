@@ -5,9 +5,9 @@
 
 import ko from "knockout";
 import utils from "mageUtils";
+import events from "uiEvents";
 import _ from "underscore";
 import Config from "./config";
-import EventBus from "./event-bus";
 import { PageBuilderInterface } from "./page-builder.d";
 import Stage from "./stage";
 import Panel from "./stage/panel";
@@ -24,7 +24,7 @@ export default class PageBuilder implements PageBuilderInterface {
     public loading: KnockoutObservable<boolean> = ko.observable(true);
 
     constructor(config: any, initialValue: string) {
-        Config.setInitConfig(config);
+        Config.setConfig(config);
         this.initialValue = initialValue;
         this.isFullScreen(config.isFullScreen);
         this.config = config;
@@ -37,7 +37,7 @@ export default class PageBuilder implements PageBuilderInterface {
      * Init listeners.
      */
     public initListeners() {
-        EventBus.on(`pagebuilder:toggleFullScreen:${ this.id }`, () => this.toggleFullScreen());
+        events.on(`pagebuilder:toggleFullScreen:${ this.id }`, () => this.toggleFullScreen());
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 
@@ -63,7 +63,7 @@ export default class PageBuilder implements PageBuilderInterface {
             });
         }
 
-        EventBus.trigger(`pagebuilder:fullScreen:${ this.id }`, {
+        events.trigger(`pagebuilder:fullScreen:${ this.id }`, {
             fullScreen: this.isFullScreen(),
         });
     }

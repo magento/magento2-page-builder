@@ -8,9 +8,7 @@ define(["uiEvents"], function (_uiEvents) {
   /*#__PURE__*/
   function () {
     /**
-     * Initiate the edit class with an instance of structural
-     *
-     * @param {Structural} instance
+     * @param {ContentTypeInterface} instance
      * @param {DataStore} store
      */
     function Edit(instance, store) {
@@ -33,10 +31,19 @@ define(["uiEvents"], function (_uiEvents) {
     var _proto = Edit.prototype;
 
     _proto.open = function open() {
+      var contentTypeData = this.store.get(this.instance.id);
+      var formNamespace = this.instance.config.form; // Use the default form unless a custom one is defined
+
+      if (undefined !== this.instance.config.appearances[contentTypeData.appearance].form) {
+        formNamespace = this.instance.config.appearances[contentTypeData.appearance].form;
+      }
+
       _uiEvents.trigger("form:render", {
-        data: this.store.get(this.instance.id),
+        data: contentTypeData,
+        appearances: this.instance.config.appearances,
+        defaultNamespace: this.instance.config.form,
         id: this.instance.id,
-        namespace: this.instance.config.form,
+        namespace: formNamespace,
         title: this.instance.config.label
       });
     };

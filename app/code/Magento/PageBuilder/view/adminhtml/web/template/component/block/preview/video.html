@@ -5,14 +5,12 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-video" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }, mouseoverBubble: false">
-    <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css">
-        <!-- ko ifnot: data.video.attributes().src -->
-        <i class="icon-pagebuilder-video"></i> <span data-bind="text: $t('Video');"></span>
-        <!-- /ko -->
-        <!-- ko if: data.video.attributes().src -->
-        <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen data-bind="attr: data.video.attributes, style: data.video.style, css: data.video.css"></iframe>
-        <!-- /ko -->
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-video" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
+        <ifnot args="data.video.attributes().src">
+            <i class="icon-pagebuilder-video"></i> <span translate="'Video'"></span>
+        </ifnot>
+        <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen if="data.video.attributes().src" attr="data.video.attributes" ko-style="data.video.style" css="data.video.css"></iframe>
     </div>
-    <!-- ko template: getOptions().template --><!-- /ko -->
+    <render args="getOptions().template" />
 </div>

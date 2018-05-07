@@ -5,9 +5,9 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-button-item no-system-border" data-bind="event: { mouseover: preview.onMouseOver, mouseout: preview.onMouseOut }">
-    <!-- ko template: getOptions().template --><!-- /ko -->
-    <a data-bind="attr: { class: preview.data.button_type() }, style: preview.previewStyle()">
-        <span data-bind="liveEdit: { field: 'button_text', placeholder: preview.buttonPlaceholder }, hasFocus: $parent.preview.isLiveEditing() === $index(), event: { focusout: preview.onFocusOut.call(preview) }"></span>
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-button-item no-system-border" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }">
+    <render args="getOptions().template" />
+    <a data-bind="attr: { class: previewData.button_type() }, style: previewStyle()">
+        <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }, hasFocus: $parent.parent.preview.isLiveEditing() === $index(), event: { focusout: onFocusOut.call($data) }"></span>
     </a>
 </div>

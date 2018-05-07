@@ -5,7 +5,6 @@
  */
 -->
 
-<div class="element-children" data-bind="foreach: getChildren(), attr: {id: id + '-children'}, sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.pagebuilder-content-type-wrapper', connectWith: '.element-children' }, afterRender: function (element) { if (typeof preview !== 'undefined' && typeof preview.afterChildrenRender === 'function') { preview.afterChildrenRender(element) } }">
-    <div class="pagebuilder-content-type-wrapper" data-bind="template: previewTemplate, attr: {id: id}"></div>
-    <!-- remove css: widthClasses from above element -->
+<div class="element-children" each="parent.getChildren()" attr="{id: parent.id + '-children'}" data-bind="sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.pagebuilder-content-type-wrapper', connectWith: '.element-children' }" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
+    <div class="pagebuilder-content-type-wrapper" template="{ name: preview.previewTemplate, data: preview }" attr="{ id: id }"></div>
 </div>

@@ -1,41 +1,29 @@
 /*eslint-disable */
-define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/block/preview/block"], function (_jquery, _knockout, _underscore, _block) {
+define(["jquery", "underscore", "Magento_PageBuilder/js/preview"], function (_jquery, _underscore, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Accordion =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Accordion, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Accordion, _Preview);
 
-    /**
-     * @param {Accordion} parent
-     * @param {object} config
-     */
-    function Accordion(parent, config) {
-      var _this;
+    function Accordion() {
+      var _temp, _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this; // Declare our tabs, they'll get populated later
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
 
-      _this.element = void 0;
-      _this.renderCounter = 0;
-      _this.data.items = _knockout.observableArray([]);
-
-      _this.data.items.subscribe(function (data) {
-        _this.renderCounter = 0;
-        (0, _jquery)(_this.element).accordion("destroy");
-      });
-
-      return _this;
+      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, _this.element = void 0, _this.renderCounter = 0, _temp) || _this;
     }
+
+    var _proto = Accordion.prototype;
+
     /**
      * On render init the tabs widget
      *
      * @param {Element} element
      */
-
-
-    var _proto = Accordion.prototype;
-
     _proto.onContainerRender = function onContainerRender(element) {
       this.element = element;
     };
@@ -49,11 +37,11 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/bl
 
       ++this.renderCounter;
 
-      if (this.data.items().length === this.renderCounter) {
+      if (this.previewData.items().length === this.renderCounter) {
         require(["accordion"], function () {
           _underscore.delay(function () {
             return (0, _jquery)(_this2.element).accordion({
-              active: _this2.parent.getActive()
+              active: _this2.parent.content.getActive()
             });
           }, 50);
         });
@@ -61,9 +49,25 @@ define(["jquery", "knockout", "underscore", "Magento_PageBuilder/js/component/bl
         this.renderCounter = 0;
       }
     };
+    /**
+     * Setup fields observables within the data class property
+     */
+
+
+    _proto.setupDataFields = function setupDataFields() {
+      var _this3 = this;
+
+      _Preview.prototype.setupDataFields.call(this);
+
+      this.updateDataValue("items", []);
+      this.previewData.items.subscribe(function (data) {
+        _this3.renderCounter = 0;
+        (0, _jquery)(_this3.element).accordion("destroy");
+      });
+    };
 
     return Accordion;
-  }(_block);
+  }(_preview);
 
   return Accordion;
 });

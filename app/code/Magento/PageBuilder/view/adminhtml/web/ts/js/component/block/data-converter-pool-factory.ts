@@ -11,7 +11,7 @@ import DataConverterPool from "./data-converter-pool";
  * Create a new instance of converter pool
  */
 export default function create(contentType: string): Promise<> {
-    const config = Config.getContentType(contentType);
+    const config = Config.getContentTypeConfig(contentType);
     const converters = [];
     for (const appearanceName: string of Object.keys(config.appearances)) {
         const dataMapping = config.appearances[appearanceName].data_mapping;

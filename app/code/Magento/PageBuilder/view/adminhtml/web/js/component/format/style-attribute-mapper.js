@@ -68,7 +68,7 @@ define(["underscore", "Magento_PageBuilder/js/component/config", "Magento_PageBu
         if (key === "background_image" && Array.isArray(value) && value[0] !== undefined || key === "mobile_image" && Array.isArray(value) && value[0] !== undefined) {
           // convert to media directive
           var imageUrl = value[0].url;
-          var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getInitConfig("media_url"), imageUrl);
+          var mediaUrl = (0, _url.convertUrlToPathIfOtherUrlIsOnlyAPath)(_config.getConfig("media_url"), imageUrl);
           var mediaPath = imageUrl.split(mediaUrl);
           var directive = "{{media url=" + mediaPath[1] + "}}";
           value = "url(\'" + (0, _directives.toDataUrl)(directive) + "\')";

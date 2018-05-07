@@ -7,14 +7,14 @@ import ko from "knockout";
 import "ko-draggable";
 import "ko-sortable";
 import $t from "mage/translate";
+import events from "uiEvents";
 import _ from "underscore";
-import Config, {ConfigContentBlock} from "../config";
-import EventBus from "../event-bus";
+import ContentTypeConfigInterface from "../../content-type-config.d";
+import Config from "../config";
 import PageBuilder from "../page-builder";
 import { PanelInterface } from "./panel.d";
 import { Group } from "./panel/group";
 import { Block as GroupBlock } from "./panel/group/block";
-import { load as loadPreviews } from "./previews";
 
 export default class Panel implements PanelInterface {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
@@ -35,14 +35,13 @@ export default class Panel implements PanelInterface {
         this.parent = parent;
         this.id = this.parent.id;
         this.initListeners();
-        loadPreviews();
     }
 
     /**
      * Init listeners
      */
     public initListeners(): void {
-        EventBus.on("stage:ready:" + this.id, () => {
+        events.on("stage:ready:" + this.id, () => {
             this.populateContentBlocks();
             this.isVisible(true);
         });
@@ -72,8 +71,8 @@ export default class Panel implements PanelInterface {
             this.searching(true);
             this.searchResults(_.map(
                 _.filter(
-                    Config.getInitConfig("content_types"),
-                    (contentBlock: ConfigContentBlock) => {
+                    Config.getConfig("content_types"),
+                    (contentBlock: ContentTypeConfigInterface) => {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
                         const matches = !!contentBlock.label.toLowerCase().match(regEx);
                         return matches &&
@@ -89,11 +88,33 @@ export default class Panel implements PanelInterface {
     }
 
     /**
+     * Traverse up to the WYSIWYG component and set as full screen
+     */
+    public fullScreen(): void {
+        events.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`);
+    }
+
+    /**
+     * Collapse the panel into the side of the UI
+     */
+    public collapse(): void {
+        this.isCollapsed(!this.isCollapsed());
+    }
+
+    /**
+     * Clear Search Results
+     */
+    public clearSearch(): void {
+        this.searchValue("");
+        this.searching(false);
+    }
+
+    /**
      * Populate the panel with the content blocks
      */
-    public populateContentBlocks(): void {
-        const groups = Config.getInitConfig("groups");
-        const contentBlocks = Config.getInitConfig("content_types");
+    private populateContentBlocks(): void {
+        const groups = Config.getConfig("groups");
+        const contentBlocks = Config.getConfig("content_types");
 
         // Verify the configuration contains the required information
         if (groups && contentBlocks) {
@@ -108,7 +129,7 @@ export default class Panel implements PanelInterface {
                             group: id,
                             is_visible: true,
                         }), /* Retrieve content blocks with group id */
-                        (contentBlock: ConfigContentBlock, identifier: string) => {
+                        (contentBlock: ContentTypeConfigInterface, identifier: string) => {
                             const groupBlock = new GroupBlock(identifier, contentBlock);
                             return groupBlock;
                         },
@@ -127,27 +148,5 @@ export default class Panel implements PanelInterface {
         } else {
             console.warn( "Configuration is not properly initialized, please check the Ajax response." );
         }
-    }
-
-    /**
-     * Traverse up to the WYSIWYG component and set as full screen
-     */
-    public fullScreen(): void {
-        EventBus.trigger(`pagebuilder:toggleFullScreen:${ this.parent.id }`, {});
-    }
-
-    /**
-     * Collapse the panel into the side of the UI
-     */
-    public collapse(): void {
-        this.isCollapsed(!this.isCollapsed());
-    }
-
-    /**
-     * Clear Search Results
-     */
-    public clearSearch(): void {
-        this.searchValue("");
-        this.searching(false);
     }
 }

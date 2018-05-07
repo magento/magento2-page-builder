@@ -194,6 +194,7 @@
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
 
         <comment userInput="Edit tab name inline on stage" stepKey="AC2"/>
+        <click selector="{{TabOnStage.tabHeaderEditableTitle('1')}}" stepKey="clickTabTitle"/>
         <pressKey selector="{{TabOnStage.tabHeaderEditableTitle('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="enterTabTitle"/>
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleAdmin"/>
 
@@ -259,7 +260,11 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabMinHeight">
             <argument name="property" value="PageBuilderTabMinimumHeight200Property"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabBackgroundColor">
+        <comment userInput="I fill out color using Color Picker" stepKey="comment"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderTabBackgroundColorPink"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField7">
             <argument name="property" value="PageBuilderTabBackgroundColorPink"/>
         </actionGroup>
         <comment userInput="User updates tab settings and saves configuration" stepKey="AC3"/>
@@ -1695,7 +1700,11 @@
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+        <comment userInput="I fill out color using Color Picker" stepKey="comment"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField7">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">

@@ -1,49 +1,33 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/component/block/preview/block"], function (_translate, _block) {
+define(["mage/translate", "Magento_PageBuilder/js/preview"], function (_translate, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Button =
   /*#__PURE__*/
-  function (_PreviewBlock) {
-    _inheritsLoose(Button, _PreviewBlock);
+  function (_Preview) {
+    _inheritsLoose(Button, _Preview);
 
-    /**
-     * Button constructor
-     *
-     * @param {Block} parent
-     * @param {ConfigContentBlock} config
-     */
-    function Button(parent, config) {
-      var _this;
+    function Button() {
+      var _temp, _this;
 
-      _this = _PreviewBlock.call(this, parent, config) || this;
-      _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
-      return _this;
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return (_temp = _this = _Preview.call.apply(_Preview, [this].concat(args)) || this, _this.buttonPlaceholder = (0, _translate)("Edit Button Text"), _temp) || _this;
     }
-    /**
-     * After child render record element
-     * returns {object}
-     */
-
 
     var _proto = Button.prototype;
 
-    _proto.childrenStyle = function childrenStyle() {
-      return {
-        display: "inline-block"
-      };
-    };
     /**
      * Focus out of the element
      */
-
-
     _proto.onFocusOut = function onFocusOut() {
       this.parent.parent.preview.isLiveEditing(null);
     };
 
     return Button;
-  }(_block);
+  }(_preview);
 
   return Button;
 });

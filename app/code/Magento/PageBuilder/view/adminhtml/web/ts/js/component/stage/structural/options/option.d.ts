@@ -3,8 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import Structural from "../abstract";
-
 export interface OptionInterface {
     code: string;
     icon?: string;

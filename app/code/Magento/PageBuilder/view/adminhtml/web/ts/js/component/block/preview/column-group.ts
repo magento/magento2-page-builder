@@ -2,30 +2,43 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
+import alertDialog from "Magento_Ui/js/modal/alert";
+import events from "uiEvents";
 import _ from "underscore";
-import Config, {ConfigContentBlock} from "../../config";
-import EventBus from "../../event-bus";
+import ContentTypeConfigInterface from "../../../content-type-config.d";
+import ContentTypeInterface from "../../../content-type.d";
+import PreviewCollection from "../../../preview-collection";
+import {moveArrayItem} from "../../../utils/array";
+import Config from "../../config";
+import ConfigContentBlock from "../../config";
 import {Block as GroupBlock} from "../../stage/panel/group/block";
-import Block from "../block";
-import Column from "../column";
-import {default as ColumnGroupBlock} from "../column-group";
-import PreviewBlock from "./block";
+import {createColumn} from "../column-group/factory";
+import {resizeColumn, updateColumnWidth} from "../column-group/resizing";
+import {default as ColumnGroupPreview} from "../preview/column-group";
+import Column from "./column";
 import {calculateDropPositions, DropPosition} from "./column-group/dragdrop";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./column-group/registry";
 import {
     calculateGhostWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth,
-    getAdjacentColumn, getColumnWidth, getMaxColumns,
+    findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
+    getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth,
 } from "./column-group/resizing";
 
-export default class ColumnGroup extends PreviewBlock {
-    public resizing: KnockoutObservable<boolean> = ko.observable(false);
+interface BlockRemovedParams {
+    parent: ColumnGroup;
+    block: Column;
+    index: number;
+}
 
+export default class ColumnGroup extends PreviewCollection {
+    public resizing: KnockoutObservable<boolean> = ko.observable(false);
     private dropPlaceholder: JQuery<HTMLElement>;
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;
-
     private resizeGhost: JQuery<HTMLElement>;
     private resizeColumnInstance: Column;
     private resizeColumnWidths: ColumnWidth[] = [];
@@ -39,19 +52,153 @@ export default class ColumnGroup extends PreviewBlock {
         left: [],
         right: [],
     };
-
     private dropOverElement: boolean;
     private dropPositions: DropPosition[] = [];
     private dropPosition: DropPosition;
     private movePosition: DropPosition;
 
     /**
-     * @param {Block} parent
-     * @param {object} config
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {number} stageId
      */
-    constructor(parent: Block, config: ConfigContentBlock) {
-        super(parent, config);
-        this.parent = parent;
+    constructor(
+        parent: EditableArea,
+        config: ConfigContentBlock,
+        stageId,
+    ) {
+        super(parent, config, stageId);
+
+        events.on("block:removed", (args: BlockRemovedParams) => {
+            if (args.parent.id === this.parent.id) {
+                this.spreadWidth(event, args);
+            }
+        });
+
+        // Listen for resizing events from child columns
+        events.on("column:bindResizeHandle", (args) => {
+            // Does the events parent match the previews parent? (e.g. column group)
+            if (args.parent.id === this.parent.id) {
+                (this as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
+            }
+        });
+        events.on("column:initElement", (args) => {
+            // Does the events parent match the previews parent? (e.g. column group)
+            if (args.parent.id === this.parent.id) {
+                (this as ColumnGroupPreview).bindDraggable(args.column);
+            }
+        });
+
+        this.parent.children.subscribe(
+            _.debounce(
+                this.removeIfEmpty.bind(this),
+                50,
+            ),
+        );
+    }
+
+    /**
+     * Handle a new column being dropped into the group
+     *
+     * @param {Event} event
+     * @param {JQueryUI.DroppableEventUIParam} ui
+     * @param {DropPosition} dropPosition
+     */
+    public onNewColumnDrop(event: Event, ui: JQueryUI.DroppableEventUIParam, dropPosition: DropPosition) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        // Create our new column
+        createColumn(
+            this.parent,
+            getSmallestColumnWidth(),
+            dropPosition.insertIndex,
+        ).then(() => {
+            const newWidth = getAcceptedColumnWidth(
+                (getColumnWidth(dropPosition.affectedColumn) - getSmallestColumnWidth()).toString(),
+            );
+            // Reduce the affected columns width by the smallest column width
+            updateColumnWidth(dropPosition.affectedColumn, newWidth);
+        });
+    }
+
+    /**
+     * Handle an existing column being dropped into a new column group
+     *
+     * @param {Event} event
+     * @param {DropPosition} movePosition
+     */
+    public onExistingColumnDrop(event: Event, movePosition: DropPosition) {
+        const column: Column = getDragColumn();
+        let modifyOldNeighbour;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        // Determine which old neighbour we should modify
+        const oldWidth = getColumnWidth(column);
+
+        // Retrieve the adjacent column either +1 or -1
+        if (getAdjacentColumn(column, "+1")) {
+            modifyOldNeighbour = getAdjacentColumn(column, "+1");
+        } else if (getAdjacentColumn(column, "-1")) {
+            modifyOldNeighbour = getAdjacentColumn(column, "-1");
+        }
+
+        // Set the column to it's smallest column width
+        updateColumnWidth(column, getSmallestColumnWidth());
+
+        column.parent.removeChild(column);
+
+        events.trigger("block:instanceDropped", {
+            blockInstance: column,
+            index: movePosition.insertIndex,
+            parent: this,
+            stageId: this.parent.stageId,
+        });
+
+        // Modify the old neighbour
+        if (modifyOldNeighbour) {
+            const oldNeighbourWidth = getAcceptedColumnWidth(
+                (oldWidth + getColumnWidth(modifyOldNeighbour)).toString(),
+            );
+            updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
+        }
+
+        // Modify the columns new neighbour
+        const newNeighbourWidth = getAcceptedColumnWidth(
+            (getColumnWidth(movePosition.affectedColumn) - getSmallestColumnWidth()).toString(),
+        );
+
+        // Reduce the affected columns width by the smallest column width
+        updateColumnWidth(movePosition.affectedColumn, newNeighbourWidth);
+    }
+
+    /**
+     * Handle a column being sorted into a new position in the group
+     *
+     * @param {Column} column
+     * @param {number} newIndex
+     */
+    public onColumnSort(column: Column, newIndex: number) {
+        const currentIndex = getColumnIndexInGroup(column);
+        if (currentIndex !== newIndex) {
+            if (currentIndex < newIndex) {
+                // As we're moving an array item the keys all reduce by 1
+                --newIndex;
+            }
+            moveArrayItem(this.parent.children, currentIndex, newIndex);
+        }
+    }
+
+    /**
+     * Handle a column being resized
+     *
+     * @param {Column} column
+     * @param {number} width
+     * @param {Column} adjustedColumn
+     */
+    public onColumnResize(column: Column, width: number, adjustedColumn: Column) {
+        resizeColumn(column, width, adjustedColumn);
     }
 
     /**
@@ -126,7 +273,7 @@ export default class ColumnGroup extends PreviewBlock {
             this.resizeLastPosition = null;
             this.resizeMouseDown = true;
 
-            EventBus.trigger("interaction:start", {stage: this.parent.stage});
+            events.trigger("interaction:start", {stageId: this.parent.stageId});
         });
     }
 
@@ -154,14 +301,14 @@ export default class ColumnGroup extends PreviewBlock {
             start: (event: Event) => {
                 const columnInstance: Column = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
-                setDragColumn(columnInstance);
+                setDragColumn(columnInstance.parent);
                 this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
 
-                EventBus.trigger("column:drag:start", {
+                events.trigger("column:drag:start", {
                     column: columnInstance,
-                    stage: this.parent.stage,
+                    stageId: this.parent.stageId,
                 });
-                EventBus.trigger("interaction:start", {stage: this.parent.stage});
+                events.trigger("interaction:start", {stageId: this.parent.stageId});
             },
             stop: () => {
                 const draggedColumn: Column = getDragColumn();
@@ -169,7 +316,7 @@ export default class ColumnGroup extends PreviewBlock {
                     // Check if we're moving within the same group, even though this function will
                     // only ever run on the group that bound the draggable event
                     if (draggedColumn.parent === this.parent) {
-                        (this.parent as ColumnGroupBlock).onColumnSort(draggedColumn, this.movePosition.insertIndex);
+                        this.onColumnSort(draggedColumn, this.movePosition.insertIndex);
                         this.movePosition = null;
                     }
                 }
@@ -179,11 +326,11 @@ export default class ColumnGroup extends PreviewBlock {
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
 
-                EventBus.trigger("column:drag:stop", {
+                events.trigger("column:drag:stop", {
                     column: draggedColumn,
-                    stage: this.parent.stage,
+                    stageId: this.parent.stageId,
                 });
-                EventBus.trigger("interaction:stop", {stage: this.parent.stage});
+                events.trigger("interaction:stop", {stageId: this.parent.stageId});
             },
         });
     }
@@ -195,7 +342,7 @@ export default class ColumnGroup extends PreviewBlock {
      */
     private setColumnsAsResizing(...columns: Column[]) {
         columns.forEach((column) => {
-            column.resizing(true);
+            column.preview.resizing(true);
         });
     }
 
@@ -204,7 +351,7 @@ export default class ColumnGroup extends PreviewBlock {
      */
     private unsetResizingColumns() {
         (this.parent as ColumnGroupBlock).children().forEach((column: Column) => {
-            column.resizing(false);
+            column.preview.resizing(false);
         });
     }
 
@@ -213,7 +360,7 @@ export default class ColumnGroup extends PreviewBlock {
      */
     private endAllInteractions() {
         if (this.resizing() === true) {
-            EventBus.trigger("interaction:stop", {stage: this.parent.stage});
+            events.trigger("interaction:stop", {stageId: this.parent.stageId});
         }
 
         this.resizing(false);
@@ -353,7 +500,7 @@ export default class ColumnGroup extends PreviewBlock {
 
                         this.resizeLastColumnInPair = modifyColumnInPair;
 
-                        (this.parent as ColumnGroupBlock).onColumnResize(
+                        this.onColumnResize(
                             mainColumn,
                             newColumnWidth.width,
                             adjustedColumn,
@@ -482,13 +629,14 @@ export default class ColumnGroup extends PreviewBlock {
             },
             drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
                 if (this.dropOverElement && this.dropPosition) {
-                    (this.parent as ColumnGroupBlock).onNewColumnDrop(event, ui, this.dropPosition);
+                    (this as ColumnGroupBlock).onNewColumnDrop(event, ui, this.dropPosition);
                     this.dropOverElement = null;
                 }
 
                 const column: Column = getDragColumn();
+
                 if (this.movePosition && column && column.parent !== this.parent) {
-                    (this.parent as ColumnGroupBlock).onExistingColumnDrop(event, this.movePosition);
+                    (this as ColumnGroupBlock).onExistingColumnDrop(event, this.movePosition);
                 }
 
                 this.dropPositions = [];
@@ -505,12 +653,79 @@ export default class ColumnGroup extends PreviewBlock {
 
                 // Is the element currently being dragged a column?
                 if (currentDraggedBlock instanceof GroupBlock &&
-                    currentDraggedBlock.getConfig() === Config.getContentType("column")
+                    currentDraggedBlock.getConfig() === Config.getContentTypeConfig("column")
                 ) {
                     this.dropOverElement = true;
                 }
             },
         });
+    }
+
+    /**
+     * Spread any empty space across the other columns
+     *
+     * @param {Event} event
+     * @param {BlockRemovedParams} params
+     */
+    private spreadWidth(event: Event, params: BlockRemovedParams) {
+        if (this.parent.children().length === 0) {
+            return;
+        }
+
+        const availableWidth = 100 - getColumnsWidth(this.parent);
+        const formattedAvailableWidth = getRoundedColumnWidth(availableWidth);
+        const totalChildColumns = this.parent.children().length;
+        const allowedColumnWidths = [];
+        let spreadAcross = 1;
+        let spreadAmount;
+
+        for (let i = getMaxColumns(); i > 0; i--) {
+            allowedColumnWidths.push(getRoundedColumnWidth(100 / 6 * i));
+        }
+
+        // Determine how we can spread the empty space across the columns
+        for (let i = totalChildColumns; i > 0; i--) {
+            const potentialWidth = Math.floor(formattedAvailableWidth / i);
+            for (const width of allowedColumnWidths) {
+                if (potentialWidth === Math.floor(width)) {
+                    spreadAcross = i;
+                    spreadAmount = formattedAvailableWidth / i;
+                    break;
+                }
+            }
+            if (spreadAmount) {
+                break;
+            }
+        }
+
+        // Let's spread the width across the columns
+        for (let i = 1; i <= spreadAcross; i++) {
+            let columnToModify: Column;
+
+            // As the original column has been removed from the array, check the new index for a column
+            if ((params.index) <= this.parent.children().length
+                && typeof this.parent.children()[params.index] !== "undefined") {
+                columnToModify = (this.parent.children()[params.index] as Column);
+            }
+            if (!columnToModify && (params.index - i) >= 0 &&
+                typeof this.parent.children()[params.index - i] !== "undefined"
+            ) {
+                columnToModify = (this.parent.children()[params.index - i] as Column);
+            }
+            if (columnToModify) {
+                updateColumnWidth(columnToModify, getColumnWidth(columnToModify) + spreadAmount);
+            }
+        }
+    }
+
+    /**
+     * Remove self if we contain no children
+     */
+    private removeIfEmpty() {
+        if (this.parent.children().length === 0) {
+            this.parent.parent.removeChild(this.parent);
+            return;
+        }
     }
 }
 

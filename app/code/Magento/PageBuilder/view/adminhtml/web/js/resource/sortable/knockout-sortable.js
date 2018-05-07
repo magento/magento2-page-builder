@@ -5,8 +5,9 @@
 
 /*eslint-disable vars-on-top, strict, max-len, max-depth */
 
-define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/event-bus", "jquery/ui"],
-    function(ko, jQuery, _, EventBus) {
+define([
+    "knockout", "jquery", "underscore", "Magento_Ui/js/lib/core/events", "Magento_PageBuilder/js/content-type", "jquery/ui"],
+    function(ko, jQuery, _, events, ContentType) {
 
     /**
      * Retrieve the view model for an element
@@ -21,10 +22,10 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
     // Listen for the dragged component from the event bus
     var draggedComponent;
 
-    EventBus.on("drag:start", function (event, params) {
-        draggedComponent = params.component;
+    events.on("drag:start", function (args) {
+        draggedComponent = args.component;
     });
-    EventBus.on("drag:stop", function () {
+    events.on("drag:stop", function () {
         draggedComponent = false;
     });
 
@@ -113,11 +114,12 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
-                    originalEle: ui.item
+                    originalEle: ui.item,
+                    stageId: block.stageId
                 };
 
                 // ui.position to ensure we're only reacting to sorting events
-                EventBus.trigger("block:sortStart", eventData);
+                events.trigger("block:sortStart", eventData);
             }
         },
 
@@ -140,11 +142,12 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
-                    originalEle: ui.item
+                    originalEle: ui.item,
+                    stageId: block.stageId
                 };
 
                 // ui.position to ensure we're only reacting to sorting events
-                EventBus.trigger("block:sortStop", eventData);
+                events.trigger("block:sortStop", eventData);
             }
 
             ui.item.css('opacity', 1);
@@ -191,24 +194,26 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
 
                 // Detect if we're sorting items within the stage
                 if (typeof newParent.stageId === 'function' && newParent.stageId()) {
-                    newParent = block.stage;
+                    newParent = newParent.stage;
                 }
 
                 // Fire our events on the various parents of the operation
                 if (block !== newParent) {
                     ui.item.remove();
                     if (block.originalParent === newParent) {
-                        EventBus.trigger("block:sorted", {
+                        events.trigger("block:sorted", {
                             parent: newParent,
                             block: block,
-                            index: newIndex
+                            index: newIndex,
+                            stageId: block.stageId
                         });
                     } else {
                         block.originalParent.removeChild(block);
-                        EventBus.trigger("block:instanceDropped", {
+                        events.trigger("block:instanceDropped", {
                             parent: newParent,
                             blockInstance: block,
-                            index: newIndex
+                            index: newIndex,
+                            stageId: block.stageId
                         });
                     }
 
@@ -279,11 +284,13 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
                     event.stopPropagation();
                     // Emit the blockDropped event upon the target
                     // Detect if the target is the parent UI component, if so swap the target to the stage
-                    target = typeof target.addChild === "undefined" ? target.stage : target;
-                    EventBus.trigger("block:dropped", {
+                    var stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.id;
+                    target = typeof target.parent.preview !== "undefined" ? target.parent : target;
+                    events.trigger("block:dropped", {
                         parent: target,
+                        stageId: stageId,
                         block: block,
-                        index: this.draggedItem.index()
+                        index: this.draggedItem.index(),
                     });
                     this.draggedItem.remove();
                 }

@@ -41,8 +41,6 @@ define([], function () {
   }
 
   return {
-    isPathOnly: isPathOnly,
-    getPathFromUrl: getPathFromUrl,
     convertUrlToPathIfOtherUrlIsOnlyAPath: convertUrlToPathIfOtherUrlIsOnlyAPath
   };
 });

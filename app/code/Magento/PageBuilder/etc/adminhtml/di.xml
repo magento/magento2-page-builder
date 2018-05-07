@@ -21,6 +21,7 @@
             </argument>
             <argument name="wysiwygConfigPostProcessor" xsi:type="array">
                 <item name="Magento_PageBuilder/pageBuilderAdapter" xsi:type="string">Magento\Cms\Model\WysiwygDefaultConfig</item>
+                <item name="default" xsi:type="string">Magento\PageBuilder\Model\Wysiwyg\DefaultConfigProvider</item>
             </argument>
             <argument name="galleryConfigProvider" xsi:type="array">
                 <item name="Magento_PageBuilder/pageBuilderAdapter" xsi:type="string">Magento\Cms\Model\WysiwygDefaultConfig</item>
@@ -45,6 +46,59 @@
         <arguments>
             <argument name="eavWysiwygDataProcessors" xsi:type="array">
                 <item name="pageBuilder" xsi:type="object">Magento\PageBuilder\Ui\DataProvider\Product\Form\Modifier\Eav\WysiwygConfigDataProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\PageBuilder\Model\Wysiwyg\DefaultConfigProvider">
+        <arguments>
+            <argument name="additionalSettings" xsi:type="array">
+                <item name="fontsize_formats" xsi:type="string">10px 12px 14px 16px 18px 20px 24px 26px 28px 32px 34px 36px 38px 40px 42px 48px 52px 56px 64px 72px</item>
+                <item name="style_formats" xsi:type="array">
+                    <item name="paragraph" xsi:type="array">
+                        <item name="title" xsi:type="string">Paragraph</item>
+                        <item name="block" xsi:type="string">p</item>
+                    </item>
+                    <item name="heading1" xsi:type="array">
+                        <item name="title" xsi:type="string">Heading 1</item>
+                        <item name="block" xsi:type="string">h1</item>
+                    </item>
+                    <item name="heading2" xsi:type="array">
+                        <item name="title" xsi:type="string">Heading 2</item>
+                        <item name="block" xsi:type="string">h2</item>
+                    </item>
+                    <item name="heading3" xsi:type="array">
+                        <item name="title" xsi:type="string">Heading 3</item>
+                        <item name="block" xsi:type="string">h3</item>
+                    </item>
+                    <item name="heading4" xsi:type="array">
+                        <item name="title" xsi:type="string">Heading 4</item>
+                        <item name="block" xsi:type="string">h4</item>
+                    </item>
+                    <item name="heading5" xsi:type="array">
+                        <item name="title" xsi:type="string">Heading 5</item>
+                        <item name="block" xsi:type="string">h5</item>
+                    </item>
+                    <item name="heading6" xsi:type="array">
+                        <item name="title" xsi:type="string">Heading 6</item>
+                        <item name="block" xsi:type="string">h6</item>
+                    </item>
+                    <item name="important" xsi:type="array">
+                        <item name="title" xsi:type="string">Important</item>
+                        <item name="block" xsi:type="string">div</item>
+                        <item name="classes" xsi:type="string">cms-content-important</item>
+                    </item>
+                    <item name="preformatted" xsi:type="array">
+                        <item name="title" xsi:type="string">Preformatted</item>
+                        <item name="block" xsi:type="string">pre</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Ui\Model\UrlInput\LinksConfigProvider">
+        <arguments>
+            <argument name="linksConfiguration" xsi:type="array">
+                <item name="page" xsi:type="string">Magento\PageBuilder\Ui\Component\UrlInput\Page</item>
             </argument>
         </arguments>
     </type>

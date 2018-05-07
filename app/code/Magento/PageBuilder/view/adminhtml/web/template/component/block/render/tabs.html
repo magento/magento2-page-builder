@@ -5,15 +5,17 @@
  */
 -->
 
-<div data-bind="attr: getAttributes('main'), style: getStyle('main'), css: getCss('main')">
-    <ul role="tablist" class="tabs-navigation" data-bind="foreach: getChildren(), attr: getAttributes('navigation'), style: getStyle('navigation'), css: getCss('navigation')">
-        <li role="tab" class="tab-header" data-bind="attr: { active: getData().default_active_tab }, attr: $parent.getAttributes('headers'), style: $parent.getStyle('headers'), css: $parent.getCss('headers')">
-            <a href="#no-tab" class="tab-title" data-bind="attr: { href: '#' + id }">
-                <span class="tab-title" data-bind="text: getData().tab_name"></span>
-            </a>
-        </li>
+<div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
+    <ul role="tablist" class="tabs-navigation" each="parent.getChildren()" attr="data.navigation.attributes" ko-style="data.navigation.style" css="data.navigation.css">
+        <with args="content">
+            <li role="tab" class="tab-header" attr="Object.assign({}, parent.parent.content.data.headers.attributes(), { active: getData().default_active_tab })" ko-style="parent.parent.content.data.headers.style" css="parent.parent.content.data.headers.css">
+                <a href="#no-tab" class="tab-title" attr="{ href: '#' + parent.id }">
+                    <span class="tab-title" text="getData().tab_name"></span>
+                </a>
+            </li>
+        </with>
     </ul>
-    <div class="tabs-content" data-bind="attr: getAttributes('content'), style: getStyle('content'), css: getCss('content')">
-        <!-- ko template: renderChildTemplate --><!-- /ko -->
+    <div class="tabs-content" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css">
+        <render args="renderChildTemplate" />
     </div>
 </div>

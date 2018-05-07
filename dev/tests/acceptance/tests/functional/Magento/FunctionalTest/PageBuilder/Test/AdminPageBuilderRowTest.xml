@@ -8,16 +8,17 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddBackgroundColorForRow">
+    <test name="EditPanelColorPickerFunctionality">
         <annotations>
             <features value="Pagebuilder: Row"/>
             <stories value="MAGETWO-71622: [UI Component] Color Picker"/>
             <title value="Add background color to PageBuilder using Color Picker UI component"/>
             <description value="Color picker extends input field in the form and allows user conveniently specify color value."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-89768 MAGETWO-89770 "/>
+            <testCaseId value="MAGETWO-89768 MAGETWO-89770"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -40,85 +41,131 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="2" selector="{{RowOnBackend.backgroundSectionName}}" stepKey="waitForBackgroundForm"/>
-        <!--I see empty color swatch and empty color input field-->
-        <seeElement selector="//div[contains(@class,'sp-preview-inner sp-clear-display')]" stepKey="seeColorSwatch" />
-        <seeElement selector="//input[@placeholder='No Color']" stepKey="seeEmptyField" />
 
-        <!--I input HEX color code into input field-->
-        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="test" stepKey="inputWrongFormatColorCodeIntoInputField"/>
-        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField1"/>
-        <see userInput="Wrong color format. Please specify color in HEX, RGBa, HSVa, HSLa or use color name." stepKey="seeValidationMsg" />
-        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.yellowHEX}}" stepKey="inputColorCodeIntoInputField1"/>
-        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField2"/>
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.yellowHEX}}" stepKey="seeHEXInField1"/>
-        <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(255, 255, 13);']" stepKey="seeSwatchInRed" />
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch1" />
+        <!-- I see empty color swatch and empty color input field -->
+        <comment userInput="I see empty color swatch and empty color input field" stepKey="comment1"/>
+        <actionGroup ref="seeNoColorInColorSwatch" stepKey="seeColorSwatch">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="seeEmptyField">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Default"/>
+        </actionGroup>
+
+        <!-- I input invalid HEX color code into input field -->
+        <comment userInput="I input invalid HEX color code into input field" stepKey="comment2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputWrongFormatColorCodeIntoInputField">
+            <argument name="property" value="PageBuilderRowBackgroundColor_invalid"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateError">
+            <argument name="property" value="PageBuilderRowBackgroundColor_invalid"/>
+        </actionGroup>
+
+        <!-- I input HEX color code into input field -->
+        <comment userInput="I input HEX color code into input field" stepKey="comment3"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField1">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchInYellow">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField1">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch1" />
         <seeElement selector="{{ColorPicker.colorWheel}}" stepKey="seeColorPickerWindow" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.yellowHEX}}" stepKey="seeYellowHEXOnInputFieldOfColorPicker" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_Yellow.value}}" stepKey="seeYellowHEXOnInputFieldOfColorPicker" />
 
 
-        <!--I input HSL color code into input field-->
-        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.orangeHSL}}" stepKey="inputColorCodeIntoInputField2"/>
-        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField3"/>
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.orangeHEX}}" stepKey="seeHEXInField2"/>
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch2" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.orangeHEX}}" stepKey="seeOrangeHEXOnInputFieldOfColorPicker" />
+        <!-- I input HSL color code into input field -->
+        <comment userInput="I input HSL color code into input field" stepKey="comment4"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField2">
+            <argument name="property" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField2">
+            <argument name="property" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch2" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_OrangeHSL.editPanelValue}}" stepKey="seeOrangeHEXOnInputFieldOfColorPicker" />
 
 
-        <!--I input RGB color code into input field-->
-        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.greenRGB}}" stepKey="inputColorCodeIntoInputField3"/>
-        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField4"/>
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.greenHEX}}" stepKey="seeHEXInField3"/>
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch3" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.greenHEX}}" stepKey="seeGreenHEXOnInputFieldOfColorPicker" />
+        <!-- I input RGB color code into input field -->
+        <comment userInput="I input RGB color code into input field" stepKey="comment5"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField3">
+            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField3">
+            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch3" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_rgb_0_0_255.editPanelValue}}" stepKey="seeGreenHEXOnInputFieldOfColorPicker" />
 
 
-        <!--I input RGBA color code into input field-->
-        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.blueRGBA}}" stepKey="inputColorCodeIntoInputField4"/>
-        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField5"/>
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.blueRGBA}}" stepKey="seeHEXInField4"/>
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch4" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.blueRGBA}}" stepKey="seeBlueRGBAOnInputFieldOfColorPicker" />
+        <!-- I input RGBA color code into input field -->
+        <comment userInput="I input RGBA color code into input field" stepKey="comment6"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField4">
+            <argument name="property" value="PageBuilderRowBackgroundColor_BlueRGBa"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField4">
+            <argument name="property" value="PageBuilderRowBackgroundColor_BlueRGBa"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch4" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_BlueRGBa.value}}" stepKey="seeBlueRGBAOnInputFieldOfColorPicker" />
 
-        <!--I input color name into input field-->
-        <fillField selector="{{BackgroundColor.colorInputField}}" userInput="purple" stepKey="inputColorCodeIntoInputField5"/>
-        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField6"/>
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.purpleHEX}}" stepKey="seeHEXInField5"/>
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch5" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_CCCCCC.purpleHEX}}" stepKey="seePurpleHEXOnInputFieldOfColorPicker" />
+        <!-- I input color name into input field -->
+        <comment userInput="I input color name into input field" stepKey="comment7"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField5">
+            <argument name="property" value="PageBuilderRowBackgroundColor_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField5">
+            <argument name="property" value="PageBuilderRowBackgroundColor_green"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch5" />
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_green.editPanelValue}}" stepKey="seePurpleHEXOnInputFieldOfColorPicker" />
 
 
+        <!-- I click Color Wheel -->
+        <comment userInput="I click Color Wheel" stepKey="comment8"/>
         <click selector="{{ColorPicker.firstColorBox}}" stepKey="clickOnRedColorBoxOfColorPicker" />
         <click selector="{{ColorPicker.colorWheel}}" stepKey="clickOnColorWheel" />
         <click selector="{{ColorPicker.applyBtn}}" stepKey="clickOnApplyBtn" />
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#804042" stepKey="seeColorCode804042InInputField1" />
-        <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(128, 64, 66);']" stepKey="seeSwatchInBrown1" />
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField6">
+            <argument name="property" value="PageBuilderRowBackgroundColor_804042"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchInYellow2">
+            <argument name="property" value="PageBuilderRowBackgroundColor_804042"/>
+        </actionGroup>
 
-        <!--Verify color picking from input field and  Cancel button-->
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch6" />
+        <!-- Verify color picking from input field and Cancel button -->
+        <comment userInput="Verify color picking from input field and Cancel button" stepKey="comment9"/>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch6" />
         <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHEXcodeIntoInputField1" />
-        <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['#0000FF',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#0000ff" stepKey="seeBlueColorCodeInInputField1" />
+        <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{PageBuilderRowBackgroundColor_rgb_0_0_255.editPanelValue}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField7">
+            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+        </actionGroup>
         <click selector="{{ColorPicker.cancelBtn}}" stepKey="cancelSelection"/>
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#804042" stepKey="seeColorCode804042InInputField2" />
-        <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]/div[@style='background-color: rgb(128, 64, 66);']" stepKey="seeSwatchInBrown2" />
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch7" />
-        <fillField selector="{{ColorPicker.inputField}}" userInput="#0000FF" stepKey="inputBlueHEXcodeIntoInputField2" />
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField8">
+            <argument name="property" value="PageBuilderRowBackgroundColor_804042"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchInYellow3">
+            <argument name="property" value="PageBuilderRowBackgroundColor_804042"/>
+        </actionGroup>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch7" />
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_rgb_0_0_255.editPanelValue}}" stepKey="inputBlueHEXcodeIntoInputField2" />
         <click selector="{{ColorPicker.applyBtn}}" stepKey="applySelection"/>
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#0000ff" stepKey="seeBlueColorCodeInInputField2" />
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField9">
+            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+        </actionGroup>
 
-        <!--click Out Side color picker to select a color-->
-        <click selector="{{BackgroundColor.colorSwatch}}" stepKey="clickColorSwatch8" />
-        <fillField selector="{{ColorPicker.inputField}}" userInput="#ff0000" stepKey="inputRedHEXcodeIntoInputField" />
-        <click selector="{{BackgroundColor.label}}" stepKey="lostFocusFromInputField8"/>
-        <seeInField selector="{{BackgroundColor.colorInputField}}" userInput="#ff0000" stepKey="seeRedColorCodeInInputField2" />
-
+        <!-- click Out Side color picker to select a color -->
+        <comment userInput="click Out Side color picker to select a color" stepKey="comment10"/>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch8" />
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_FF0000.value}}" stepKey="inputRedHEXcodeIntoInputField" />
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="lostFocusFromInputField8"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField10">
+            <argument name="property" value="PageBuilderRowBackgroundColor_FF0000"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <seeElement selector="//div[contains(concat(' ',normalize-space(@class),' '),'pagebuilder-row') and (contains(@style,'background-color: rgb(255, 0, 0);'))]" stepKey="seePreviewColorOnStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
-        <seeElement selector="//div[@data-role='row' and contains(@style,'background-color: rgb(255, 0, 0)')]" stepKey="seeColorBackground"/>
     </test>
     <test name="RowInitializeWithRow">
         <annotations>
@@ -130,6 +177,7 @@
             <testCaseId value="MAGETWO-82841"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -154,6 +202,7 @@
             <testCaseId value="MAGETWO-82857"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -180,6 +229,7 @@
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -211,6 +261,7 @@
             <testCaseId value="MAGETWO-82859"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -246,6 +297,7 @@
             <testCaseId value="MAGETWO-88296"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -276,6 +328,7 @@
             <testCaseId value="MAGETWO-88297"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -323,202 +376,6 @@
             <actualResult type="variable">getNewRowHeight2</actualResult>
         </assertEquals>
     </test>
-    <test name="RowUpdateBackgroundFormSection">
-        <annotations>
-            <features value="Pagebuilder: Row"/>
-            <stories value="MAGETWO-66349: Bluefoot Row Configuration "/>
-            <title value="Row - Update All Background Form Attributes"/>
-            <description value="See that the background tab in row form works"/>
-            <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-row"/>
-            <!-- Skipped; see MAGETWO-88218 -->
-            <group value="skip"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
-        </actionGroup>
-        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPositionProperty">
-            <argument name="property" value="PageBuilderRowBackgroundPosition_TopAligned"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterSizeProperty">
-            <argument name="property" value="PageBuilderRowBackgroundSize_Cover"/>
-        </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundRepeat">
-            <argument name="property" value="PageBuilderRowBackgroundRepeat_Enabled"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAttachmentProperty">
-            <argument name="property" value="PageBuilderRowBackgroundAttachment_Fixed"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{RowOnStage.backgroundColor('1', PageBuilderRowBackgroundColor_CCCCCC.rgb)}}" stepKey="seeBackgroundColorAdminPreview"/>
-        <waitForElementVisible selector="{{RowOnStage.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.baseFileName, PageBuilderRowBackgroundImage_MagentoJpg.fileType)}}" stepKey="seeBackgroundImageAdminPreview"/>
-        <waitForElementVisible selector="{{RowOnStage.backgroundPosition('1', PageBuilderRowBackgroundPosition_TopAligned.styleValue)}}" stepKey="seeBackgroundPositionAdminPreview"/>
-        <waitForElementVisible selector="{{RowOnStage.backgroundSize('1', PageBuilderRowBackgroundSize_Cover.value)}}" stepKey="seeBackgroundSizeAdminPreview"/>
-        <waitForElementVisible selector="{{RowOnStage.backgroundRepeat('1', PageBuilderRowBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatAdminPreview"/>
-        <waitForElementVisible selector="{{RowOnStage.backgroundAttachment('1', PageBuilderRowBackgroundAttachment_Fixed.value)}}" stepKey="seeBackgroundAttachmentAdminPreview"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <!-- Validate Edit Panel -->
-        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
-        </actionGroup>
-        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateUploadedImage">
-            <argument name="property" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
-            <argument name="property" value="PageBuilderRowBackgroundPosition_TopAligned"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
-            <argument name="property" value="PageBuilderRowBackgroundSize_Cover"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
-            <argument name="property" value="PageBuilderRowBackgroundRepeat_Enabled"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
-            <argument name="property" value="PageBuilderRowBackgroundAttachment_Fixed"/>
-        </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible selector="{{RowOnStorefront.backgroundColor('1', PageBuilderRowBackgroundColor_CCCCCC.rgb)}}" stepKey="seeBackgroundColorSet"/>
-        <waitForElementVisible selector="{{RowOnStorefront.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.baseFileName, PageBuilderRowBackgroundImage_MagentoJpg.fileType)}}" stepKey="seeBackgroundImageSet"/>
-        <waitForElementVisible selector="{{RowOnStorefront.backgroundPosition('1', PageBuilderRowBackgroundPosition_TopAligned.styleValue)}}" stepKey="seeBackgroundPositionSet"/>
-        <waitForElementVisible selector="{{RowOnStorefront.backgroundSize('1', PageBuilderRowBackgroundSize_Cover.value)}}" stepKey="seeBackgroundSizeSet"/>
-        <waitForElementVisible selector="{{RowOnStorefront.backgroundRepeat('1', PageBuilderRowBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatSet"/>
-        <waitForElementVisible selector="{{RowOnStorefront.backgroundAttachment('1', PageBuilderRowBackgroundAttachment_Fixed.value)}}" stepKey="seeBackgroundAttachmentSet"/>
-    </test>
-    <test name="RowCanAddParallaxBackground">
-        <annotations>
-            <features value="Pagebuilder: Row"/>
-            <stories value="MAGETWO-66349: Bluefoot Row Configuration "/>
-            <title value="Add parallax to background image"/>
-            <description value="A user should be able to apply parallax to a background image"/>
-            <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-row"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxSection">
-            <argument name="section" value="ParallaxBackgroundForm"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxEnabledProperty">
-            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeParallaxSpeedProperty">
-            <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
-        </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
-            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterParallaxSpeedProperty">
-            <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <seeElementInDOM selector="{{RowOnStorefront.parallaxClass('1')}}" stepKey="seeParallaxBackgroundSet"/>
-        <seeElementInDOM selector="{{RowOnStorefront.parallaxSpeed('1', PageBuilderRowParallaxSpeed_2.value)}}" stepKey="seeParallaxSpeedSet"/>
-    </test>
-    <test name="RowHasParallaxDefaultSettings">
-        <annotations>
-            <features value="Pagebuilder: Row"/>
-            <stories value="MAGETWO-88247: Row parallax background is broken when background position is set"/>
-            <title value="Row has parallax default settings"/>
-            <description value="A user should see the default settings for parallax row"/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-88899"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-row"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxSection">
-            <argument name="section" value="ParallaxBackgroundForm"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeEnableParallaxProperty">
-            <argument name="property" value="PageBuilderRowParallax_Default"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeEnabledParallaxDefault">
-            <argument name="property" value="PageBuilderRowParallax_Default"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeParallaxSpeedIsDisabled">
-            <argument name="property" value="PageBuilderRowParallaxSpeed_Default"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeParallaxSpeed">
-            <argument name="property" value="PageBuilderRowParallaxSpeed_Default"/>
-        </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterParallaxEnabled">
-            <argument name="property" value="PageBuilderRowParallax_Default"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeParallaxEnabled">
-            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
-        </actionGroup>
-        <moveMouseOver selector="{{RowOnBackend.parallaxSpeedToolTip}}" stepKey="moveMouseOverParallaxSpeedToolTip"/>
-        <waitForElementVisible selector="{{RowOnBackend.parallaxSpeedToolTipContent}}" stepKey="seeParallaxSpeedToolTipContent"/>
-        <see selector="{{RowOnBackend.parallaxSpeedNotice}}" userInput="{{PageBuilderRowParallaxSpeed_Default.notice}}" stepKey="seeParallaxSpeedNotice"/>
-    </test>
     <test name="RowValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Row"/>
@@ -529,6 +386,7 @@
             <testCaseId value="MAGETWO-89361"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -650,6 +508,7 @@
             <testCaseId value="MAGETWO-90054"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -677,7 +536,11 @@
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+        <comment userInput="I fill out Border Color using Color Picker" stepKey="comment"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField7">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
@@ -815,6 +678,7 @@
             <testCaseId value="MAGETWO-85692"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -889,101 +753,365 @@
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="21" stepKey="seeElementRow"/>
     </test>
-    <test name="RowCanAddImageToRow">
+    <test name="RowNoRequiredAttributes">
         <annotations>
             <features value="Pagebuilder: Row"/>
-            <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
-            <title value="Add an image content block into row"/>
-            <description value="A user should be able to add an image into slideout of row."/>
-            <severity value="CRITICAL"/>
+            <stories value="MAGETWO-90461: Add Missing Tests For Row"/>
+            <title value="Row - No Required Attributes"/>
+            <description value="The edit form for Row should not have any required attributes."/>
+            <severity value="AVERAGE"/>
+            <testCaseId value="MAGETWO-90524"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilder"/>
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
-            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!--Assign block to cms page-->
-        <actionGroup ref="AssignBlockToCMSPage" stepKey="assignBlockToCMSPage">
-            <argument name="Block" value="$$createPreReqBlock$$"/>
-            <argument name="CmsPage" value="$$createPreReqCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-        <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
-            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+        <!-- Validate Background Fields Not Required -->
+        <comment userInput="Validate Background Fields Not Required" stepKey="commentBackground"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderRowBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundImage">
+            <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderRowBackgroundPosition_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderRowBackgroundSize_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundRepeat">
+            <argument name="property" value="PageBuilderRowBackgroundRepeat_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderRowBackgroundAttachment_Default"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxBackground">
+            <argument name="section" value="ParallaxBackgroundForm"/>
+        </actionGroup>
+        <!-- Validate Parallax Background Fields Not Required -->
+        <comment userInput="Validate Parallax Background Fields Not Required" stepKey="commentParallaxBackground"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateParallaxBackground">
+            <argument name="property" value="PageBuilderRowParallax_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateParallaxBackgroundSpeed">
+            <argument name="property" value="PageBuilderRowParallaxSpeed_Default"/>
+        </actionGroup>
+        <!-- Note that Advanced section is a shared form and is covered in AdvancedConfigurationEditPanelVisual test -->
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+    </test>
+    <test name="RowDuplicate">
+        <annotations>
+            <features value="Pagebuilder: Row"/>
+            <stories value="MAGETWO-90461: Add Missing Tests For Row"/>
+            <title value="Row - Duplicate Row"/>
+            <description value="A user should be able to duplicate a row content block. Verify on Stage amd Storefront."/>
+            <severity value="AVERAGE"/>
+            <testCaseId value="MAGETWO-90598"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-        <waitForElementVisible time="2" selector="{{RowOnBackend.backgroundSectionName}}" stepKey="waitForBackgroundForm"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
-
-        <!--Upload image from local machine using image placeholder button-->
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
-
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
-
-        <!--Remove uploaded image by TrashBin icon-->
-        <click selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="removeUploadedImage1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage2"/>
-
-        <!--Upload image from local machine using image placeholder button-->
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile2">
-            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        <!-- Fill All Fields -->
+        <comment userInput="Fill All Fields" stepKey="commentEdit"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="waitForUploadImage2" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
-
-        <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
-        <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
-            <argument name="ImageFolder" value="ImageFolder"/>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachBackgroundImage">
+            <argument name="property" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
         </actionGroup>
-        <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="PageBuilderImagePropertyJpgCopy"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundPosition">
+            <argument name="property" value="PageBuilderRowBackgroundPosition_Centered"/>
         </actionGroup>
-        <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundSize">
+            <argument name="property" value="PageBuilderRowBackgroundSize_Contain"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enableBackgroundRepeat">
+            <argument name="property" value="PageBuilderRowBackgroundRepeat_Enabled"/>
         </actionGroup>
-        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Text from Row" stepKey="addTextToEditor"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
-        <click selector="{{BlockNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="saveBlock" />
-        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
-        <waitForPageLoad stepKey="waitForContentLoaded"/>
-        <seeElement selector="{{ImageOnStorefront.backgroundImageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource4"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBackgroundAttachment">
+            <argument name="property" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxBackgroundSection">
+            <argument name="section" value="ParallaxBackgroundForm"/>
+        </actionGroup>
+        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enableParallaxBackground">
+            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterParallaxBackgroundSpeed">
+            <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Duplicate and Validate Stage -->
+        <comment userInput="Duplicate" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateDuplicateBackgroundOnStage">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="index" value="2"/>
+            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="backgroundImage" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
+            <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Centered"/>
+            <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderRowBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateDuplicateParallaxBackgroundOnStage">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="index" value="2"/>
+            <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
+            <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentBlockIndex" value="2"/>
+        </actionGroup>
+        <!-- Validate Edit Panel For Duplicate -->
+        <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEdit"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage">
+            <argument name="property" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition">
+            <argument name="property" value="PageBuilderRowBackgroundPosition_Centered"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize">
+            <argument name="property" value="PageBuilderRowBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
+            <argument name="property" value="PageBuilderRowBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
+            <argument name="property" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxBackgroundSection2">
+            <argument name="section" value="ParallaxBackgroundForm"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateParallaxBackgroundEnabled">
+            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateParallaxBackgroundSpeed">
+            <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateDuplicateBackgroundOnStage2">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="index" value="2"/>
+            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="backgroundImage" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
+            <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Centered"/>
+            <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderRowBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateDuplicateParallaxBackgroundOnStage2">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="index" value="2"/>
+            <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
+            <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentBlockIndex" value="2"/>
+        </actionGroup>
+        <!-- Validate Edit Panel For Duplicate After Save -->
+        <comment userInput="Validate Edit Panel For Duplicate After Save" stepKey="commentValidateEdit2"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor2">
+            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage2">
+            <argument name="property" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundPosition2">
+            <argument name="property" value="PageBuilderRowBackgroundPosition_Centered"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundSize2">
+            <argument name="property" value="PageBuilderRowBackgroundSize_Contain"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat2">
+            <argument name="property" value="PageBuilderRowBackgroundRepeat_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment2">
+            <argument name="property" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandParallaxBackgroundSection3">
+            <argument name="section" value="ParallaxBackgroundForm"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateParallaxBackgroundEnabled2">
+            <argument name="property" value="PageBuilderRowParallax_Enabled"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateParallaxBackgroundSpeed2">
+            <argument name="property" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateDuplicateOnStorefront">
+            <argument name="page" value="RowOnStorefront"/>
+            <argument name="index" value="2"/>
+            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="backgroundImage" value="PageBuilderRowBackgroundImage_MagentoJpg"/>
+            <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Centered"/>
+            <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Contain"/>
+            <argument name="backgroundRepeat" value="PageBuilderRowBackgroundRepeat_Enabled"/>
+            <argument name="backgroundAttachment" value="PageBuilderRowBackgroundAttachment_Fixed"/>
+        </actionGroup>
+        <actionGroup ref="validateRowParallaxBackgroundAttributes" stepKey="validateDuplicateParallaxBackgroundOnStorefront">
+            <argument name="page" value="RowOnStorefront"/>
+            <argument name="index" value="2"/>
+            <argument name="parallaxStateValue" value="PageBuilderRowParallax_Enabled"/>
+            <argument name="parallaxSpeedValue" value="PageBuilderRowParallaxSpeed_2"/>
+        </actionGroup>
+        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
+            <argument name="page" value="RowOnStorefront"/>
+            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
+            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
+            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
+            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
+            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
     </test>
 </tests>

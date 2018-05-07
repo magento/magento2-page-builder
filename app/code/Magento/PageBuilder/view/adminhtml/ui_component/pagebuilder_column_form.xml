@@ -30,7 +30,7 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="appearance" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
+    <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
             <label translate="true">Appearance</label>
             <collapsible>true</collapsible>
@@ -105,10 +105,27 @@
             <collapsible>true</collapsible>
             <opened>true</opened>
         </settings>
-        <field name="background_color" sortOrder="10" formElement="input">
+        <field name="background_color" sortOrder="10" formElement="colorPicker">
             <settings>
                 <label translate="true">Background Color</label>
+                <componentType>colorPicker</componentType>
+                <placeholder translate="true">No Color</placeholder>
+                <validation>
+                    <rule name="validate-color" xsi:type="boolean">true</rule>
+                </validation>
+                <dataScope>background_color</dataScope>
+                <additionalClasses>
+                    <class name="admin__field-medium">true</class>
+                </additionalClasses>
             </settings>
+            <formElements>
+                <colorPicker>
+                    <settings>
+                        <colorPickerMode>full</colorPickerMode>
+                        <colorFormat>hex</colorFormat>
+                    </settings>
+                </colorPicker>
+            </formElements>
         </field>
         <field name="background_image" sortOrder="20" formElement="imageUploader">
             <settings>

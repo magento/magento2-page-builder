@@ -27,6 +27,7 @@ return [
             'group' => 'group2',
             'component' => 'Path/to/component',
             'preview_component' => 'Path/to/preview/component',
+            'content_component' => 'Path/to/content/component',
             'allowed_parents' => [
                 0 => 'stage'
             ],
@@ -82,7 +83,36 @@ return [
                     ],
                     'default' => 'true'
                 ]
-            ]
+            ],
+            'additional_data' => [
+                'config1' => [
+                    'settingWithTypeString' => 'string',
+                    'settingWithTypeObject' => 'test data',
+                    'settingWithTypeNull' => null,
+                    'settingWithTypeInteger' => '20',
+                    'settingWithTypeBooleanTrue' => true,
+                    'settingWithTypeBooleanFalse' => false,
+                    'settingWithTypeNumber2' => '-90'
+                ],
+                'config2' => [
+                    'arrayConfig' => [
+                        'settingWithTypeString' => 'string',
+                        'settingWithTypeObject' => 'test data',
+                        'settingWithTypeNull' => null,
+                        'settingWithTypeInteger' => '20',
+                        'settingWithTypeBooleanTrue' => true,
+                        'settingWithTypeBooleanFalse' => false,
+                        'settingWithTypeNumber2' => '-90'
+                    ]
+                ],
+                'settingWithTypeString' => 'string',
+                'settingWithTypeObject' => 'test data',
+                'settingWithTypeNull' => null,
+                'settingWithTypeInteger' => '20',
+                'settingWithTypeBooleanTrue' => true,
+                'settingWithTypeBooleanFalse' => false,
+                'settingWithTypeNumber2' => '-90'
+            ],
         ],
         'type2' => [
             'sortOrder' => '2',
@@ -387,7 +417,8 @@ return [
                             ]
                         ]
                     ],
-                    'default' => 'true'
+                    'default' => 'true',
+                    'form' => 'Path/to/custom/form'
                 ],
                 'appearance1' => [
                     'preview_template' => 'Path/to/preview/template',
@@ -438,7 +469,8 @@ return [
                         ],
                         'converters' => []
                     ],
-                    'default' => 'false'
+                    'default' => 'false',
+                    'form' => 'Path/to/form'
                 ],
                 'appearance2' => [
                     'preview_template' => 'Path/to/preview/template',
@@ -503,7 +535,8 @@ return [
                         ],
                         'converters' => []
                     ],
-                    'default' => null
+                    'default' => null,
+                    'form' => 'Path/to/custom/form'
                 ]
             ]
         ],
@@ -511,6 +544,7 @@ return [
             'sortOrder' => '3',
             'label' => 'Type 3',
             'icon' => 'pagebuilder-type3-icon',
+            'component' => 'Path/to/custom/component',
             'form' => 'pagebuilder_type3_form',
             'group' => 'group1'
         ],

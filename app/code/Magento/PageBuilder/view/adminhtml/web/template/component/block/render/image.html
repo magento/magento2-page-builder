@@ -5,26 +5,37 @@
  */
 -->
 
-<figure data-bind="attr: getAttributes('main'), style: getStyle('main'), css: getCss('main')">
-    <!-- ko if: getAttributes('link').href -->
-        <a data-bind="attr: getAttributes('link'), style: getStyle('link'), css: getCss('link')">
-            <!-- ko if: getAttributes('desktop_image').src -->
-                <img data-bind="attr: getAttributes('desktop_image'), style: getStyle('desktop_image'), css: getCss('desktop_image')" class="pagebuilder-mobile-hidden" />
-            <!-- /ko -->
-            <!-- ko if: getAttributes('mobile_image').src -->
-                <img data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image'), css: getCss('mobile_image')" class="pagebuilder-mobile-only" />
-            <!-- /ko -->
-        </a>
-    <!-- /ko -->
-    <!-- ko ifnot: getAttributes('link').href -->
-        <!-- ko if: getAttributes('desktop_image').src -->
-            <img data-bind="attr: getAttributes('desktop_image'), style: getStyle('desktop_image'), css: getCss('desktop_image')" class="pagebuilder-mobile-hidden" />
-        <!-- /ko -->
-        <!-- ko if: getAttributes('mobile_image').src -->
-            <img data-bind="attr: getAttributes('mobile_image'), style: getStyle('mobile_image'), css: getCss('mobile_image')" class="pagebuilder-mobile-only" />
-        <!-- /ko -->
-    <!-- /ko -->
-    <!-- ko if: getHtml('caption') -->
-        <figcaption data-bind="attr: getAttributes('caption'), style: getStyle('caption'), css: getCss('caption'), text: getHtml('caption')"></figcaption>
-    <!-- /ko -->
+<figure attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
+    <a if="data.link.attributes().href" attr="data.link.attributes" ko-style="data.link.style" css="data.link.css">
+        <img if="data.desktop_image.attributes().src"
+             attr="data.desktop_image.attributes"
+             class="pagebuilder-mobile-hidden"
+             css="data.desktop_image.css"
+             ko-style="data.desktop_image.style" />
+        <img if="data.mobile_image.attributes().src"
+             attr="data.mobile_image.attributes"
+             class="pagebuilder-mobile-only"
+             css="data.mobile_image.css"
+             ko-style="data.mobile_image.style" />
+    </a>
+
+    <ifnot args="data.link.attributes().href">
+        <img if="data.desktop_image.attributes().src"
+             attr="data.desktop_image.attributes"
+             class="pagebuilder-mobile-hidden"
+             css="data.desktop_image.css"
+             ko-style="data.desktop_image.style"/>
+        <img if="data.mobile_image.attributes().src"
+             attr="data.mobile_image.attributes"
+             class="pagebuilder-mobile-only"
+             css="data.mobile_image.css"
+             ko-style="data.mobile_image.style" />
+    </ifnot>
+
+    <figcaption if="data.caption.html()"
+                attr="data.caption.attributes"
+                css="data.caption.css"
+                ko-style="data.caption.style"
+                text="data.caption.html">
+    </figcaption>
 </figure>
