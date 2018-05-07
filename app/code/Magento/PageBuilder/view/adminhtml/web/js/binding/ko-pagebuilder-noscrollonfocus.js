@@ -31,8 +31,8 @@ define(["knockout", "Magento_Ui/js/lib/knockout/template/renderer"], function (_
     }
   };
 
-  _renderer.default.addAttribute('hasFocusNoScroll', {
-    name: 'ko-pagebuilder-noscrollonfocus'
+  _renderer.default.addAttribute("hasFocusNoScroll", {
+    name: "ko-pagebuilder-noscrollonfocus"
   });
 });
 //# sourceMappingURL=ko-pagebuilder-noscrollonfocus.js.map

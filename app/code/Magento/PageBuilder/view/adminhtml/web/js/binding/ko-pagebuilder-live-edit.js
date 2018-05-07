@@ -166,8 +166,8 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes", "Magento_Ui/js/lib/
     }
   };
 
-  _renderer.default.addAttribute('liveEdit', {
-    name: 'ko-pagebuilder-live-edit'
+  _renderer.default.addAttribute("liveEdit", {
+    name: "ko-pagebuilder-live-edit"
   });
 });
 //# sourceMappingURL=ko-pagebuilder-live-edit.js.map

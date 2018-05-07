@@ -3,25 +3,29 @@
  * See COPYING.txt for license details.
  */
 
-
 /**
  * The sortable binding is an adapter for the jQuery UI Sortable widget.
- * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/ko-pagebuilder-sortable. See on Github.
+ * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/ko-pagebuilder-sortable.
+ * See on Github.
  * Value type: Object.
  * Configuration for the sortable widget.
  * Aliases: [ko-pagebuilder-sortable]
  * Usage example:
- * <div  ko-pagebuilder-sortable="{ sortableClass: 'stage-container', handle: '.move-structural', items: '.pagebuilder-row-wrapper', connectWith: '.pagebuilder-canvas' }"></div>
+ * <div ko-pagebuilder-sortable="{
+ *      sortableClass: 'stage-container',
+ *      handle: '.move-structural',
+ *      items: '.pagebuilder-row-wrapper',
+ *      connectWith: '.pagebuilder-canvas'
+ * }"></div>
  */
 
-import ko from "knockout";
 import jQuery from "jquery";
-import _ from "underscore";
+import "jquery/ui";
+import ko from "knockout";
 import EventBus from "Magento_PageBuilder/js/component/event-bus";
 import ContentType from "Magento_PageBuilder/js/content-type";
 import renderer from "Magento_Ui/js/lib/knockout/template/renderer";
-import "jquery/ui"
-
+import _ from "underscore";
 
 /**
  * Retrieve the view model for an element
@@ -36,34 +40,35 @@ function getViewModelFromUi(ui: any) {
 // Listen for the dragged component from the event bus
 let draggedComponent: any;
 
-EventBus.on('drag:start', function (event: Event, params: any) {
+EventBus.on("drag:start", (event: Event, params: any) => {
     draggedComponent = params.component;
 });
-EventBus.on('drag:stop', function () {
+EventBus.on("drag:stop", () => {
     draggedComponent = false;
 });
 
-let Sortable = {
+const Sortable = {
     defaults: {
-        tolerance: 'pointer',
-        cursor: '-webkit-grabbing',
-        connectWith: '.pagebuilder-sortable',
-        helper: function (event: Event, element: HTMLElement) {
-            return element.css('opacity', 0.5);
+        tolerance: "pointer",
+        cursor: "-webkit-grabbing",
+        connectWith: ".pagebuilder-sortable",
+        helper(event: Event, element: HTMLElement) {
+            return element.css("opacity", 0.5);
         },
         appendTo: document.body,
         placeholder: {
-            element: function (clone: ContentType) {
-                if (clone.hasClass('pagebuilder-draggable-block')) {
-                    return jQuery('<div />').addClass('pagebuilder-draggable-block pagebuilder-placeholder').append(clone.html());
+            element(clone: ContentType) {
+                if (clone.hasClass("pagebuilder-draggable-block")) {
+                    return jQuery("<div />").addClass("pagebuilder-draggable-block pagebuilder-placeholder")
+                        .append(clone.html());
                 }
-                return jQuery('<div />').addClass('pagebuilder-placeholder-sortable');
+                return jQuery("<div />").addClass("pagebuilder-placeholder-sortable");
             },
-            update: function () {
+            update() {
                 return;
-            }
+            },
         },
-        sortableClass: 'pagebuilder-sortable'
+        sortableClass: "pagebuilder-sortable",
     },
 
     /**
@@ -72,19 +77,19 @@ let Sortable = {
      * @param {HTMLElement} element
      * @param {Object} extendedConfig
      */
-    init: function (element: HTMLElement, extendedConfig: {}) {
-        let config = this._getConfig(extendedConfig);
+    init(element: HTMLElement, extendedConfig: {}) {
+        const config = this._getConfig(extendedConfig);
 
         // Init sortable on our element with necessary event handlers
         element
             .addClass(config.sortableClass)
             .sortable(config)
-            .on('sortstart', this.onSortStart)
-            .on('sortstop', this.onSortStop)
-            .on('sortupdate', this.onSortUpdate)
-            .on('sortchange', this.onSortChange)
-            .on('sortbeforestop', this.onSortBeforeStop)
-            .on('sortreceive', this.onSortReceive);
+            .on("sortstart", this.onSortStart)
+            .on("sortstop", this.onSortStop)
+            .on("sortupdate", this.onSortUpdate)
+            .on("sortchange", this.onSortChange)
+            .on("sortbeforestop", this.onSortBeforeStop)
+            .on("sortreceive", this.onSortReceive);
     },
 
     /**
@@ -94,12 +99,12 @@ let Sortable = {
      * @returns {Sortable.defaults|{scroll, revert, revertDuration, helper, zIndex}}
      * @private
      */
-    _getConfig: function (extendedConfig: {}) {
+    _getConfig(extendedConfig: {}) {
         let config = this.defaults;
 
         // Extend the config with any custom configuration
         if (extendedConfig) {
-            if (typeof extendedConfig === 'function') {
+            if (typeof extendedConfig === "function") {
                 extendedConfig = extendedConfig();
             }
             config = ko.utils.extend(config, extendedConfig);
@@ -114,25 +119,25 @@ let Sortable = {
      * @param {Event} event
      * @param {any} ui
      */
-    onSortStart: function (event: Event, ui: any) {
-        let block = getViewModelFromUi(ui);
+    onSortStart(event: Event, ui: any) {
+        const block = getViewModelFromUi(ui);
 
         // Store the original parent for use in the update call
         block.originalParent = block.parent || false;
 
         // ui.helper.data('sorting') is appended to the helper of sorted items
-        if (block && jQuery(ui.helper).data('sorting')) {
-            let eventData = {
-                block: block,
-                event: event,
+        if (block && jQuery(ui.helper).data("sorting")) {
+            const eventData = {
+                block,
+                event,
                 helper: ui.helper,
                 placeholder: ui.placeholder,
                 originalEle: ui.item,
-                stageId: block.stageId
+                stageId: block.stageId,
             };
 
             // ui.position to ensure we're only reacting to sorting events
-            EventBus.trigger('block:sortStart', eventData);
+            EventBus.trigger("block:sortStart", eventData);
         }
     },
 
@@ -142,28 +147,28 @@ let Sortable = {
      * @param {Event} event
      * @param {any} ui
      */
-    onSortStop: function (event: Event, ui: any) {
+    onSortStop(event: Event, ui: any) {
         // Always remove the sorting original class from an element
-        ui.item.removeClass('pagebuilder-sorting-original');
+        ui.item.removeClass("pagebuilder-sorting-original");
 
-        let block = getViewModelFromUi(ui);
+        const block = getViewModelFromUi(ui);
 
         // ui.helper.data('sorting') is appended to the helper of sorted items
-        if (block && jQuery(ui.helper).data('sorting')) {
-            let eventData = {
-                block: block,
-                event: event,
+        if (block && jQuery(ui.helper).data("sorting")) {
+            const eventData = {
+                block,
+                event,
                 helper: ui.helper,
                 placeholder: ui.placeholder,
                 originalEle: ui.item,
-                stageId: block.stageId
+                stageId: block.stageId,
             };
 
             // ui.position to ensure we're only reacting to sorting events
-            EventBus.trigger('block:sortStop', eventData);
+            EventBus.trigger("block:sortStop", eventData);
         }
 
-        ui.item.css('opacity', 1);
+        ui.item.css("opacity", 1);
     },
 
     /**
@@ -172,32 +177,32 @@ let Sortable = {
      * @param {Event} event
      * @param {any} ui
      */
-    onSortUpdate: function (event: Event, ui: any) {
-        let blockEl = ui.item,
-            newParentEl = blockEl.parent()[0],
-            newIndex = blockEl.index();
+    onSortUpdate(event: Event, ui: any) {
+        const blockEl = ui.item;
+        const newParentEl = blockEl.parent()[0];
+        const newIndex = blockEl.index();
 
         if (blockEl && newParentEl && newParentEl === this) {
-            let block = ko.dataFor(blockEl[0]),
-                newParent = ko.dataFor(newParentEl);
+            const block = ko.dataFor(blockEl[0]);
+            let newParent = ko.dataFor(newParentEl);
 
             // @todo to be refactored under MAGETWO-86953
-            if ((block.config.name === 'column-group' || block.config.name === 'column') &&
-                jQuery(event.currentTarget).hasClass('column-container')
+            if ((block.config.name === "column-group" || block.config.name === "column") &&
+                jQuery(event.currentTarget).hasClass("column-container")
             ) {
                 return;
             }
 
-            let parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name,
-                allowedParents = getViewModelFromUi(ui).config.allowed_parents;
+            const parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name;
+            const allowedParents = getViewModelFromUi(ui).config.allowed_parents;
 
             if (parentContainerName && Array.isArray(allowedParents)) {
                 if (allowedParents.indexOf(parentContainerName) === -1) {
-                    jQuery(this).sortable('cancel');
+                    jQuery(this).sortable("cancel");
                     jQuery(ui.item).remove();
 
                     // Force refresh of the parent
-                    let data = getViewModelFromUi(ui).parent.children().slice(0);
+                    const data = getViewModelFromUi(ui).parent.children().slice(0);
 
                     getViewModelFromUi(ui).parent.children([]);
                     getViewModelFromUi(ui).parent.children(data);
@@ -206,7 +211,7 @@ let Sortable = {
             }
 
             // Detect if we're sorting items within the stage
-            if (typeof newParent.stageId === 'function' && newParent.stageId()) {
+            if (typeof newParent.stageId === "function" && newParent.stageId()) {
                 newParent = newParent.stage;
             }
 
@@ -214,24 +219,24 @@ let Sortable = {
             if (block !== newParent) {
                 ui.item.remove();
                 if (block.originalParent === newParent) {
-                    EventBus.trigger('block:sorted', {
+                    EventBus.trigger("block:sorted", {
                         parent: newParent,
-                        block: block,
+                        block,
                         index: newIndex,
-                        stageId: block.stageId
+                        stageId: block.stageId,
                     });
                 } else {
                     block.originalParent.removeChild(block);
-                    EventBus.trigger('block:instanceDropped', {
+                    EventBus.trigger("block:instanceDropped", {
                         parent: newParent,
                         blockInstance: block,
                         index: newIndex,
-                        stageId: block.stageId
+                        stageId: block.stageId,
                     });
                 }
 
                 block.originalParent = false;
-                jQuery(this).sortable('refresh');
+                jQuery(this).sortable("refresh");
             }
         }
     },
@@ -242,16 +247,16 @@ let Sortable = {
      * @param {Event} event
      * @param {any} ui
      */
-    onSortChange: function (event: Event, ui: any) {
-        let parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name,
-            currentInstance = getViewModelFromUi(ui);
+    onSortChange(event: Event, ui: any) {
+        const parentContainerName = ko.dataFor(jQuery(event.target)[0]).config.name;
+        let currentInstance = getViewModelFromUi(ui);
 
         // If the registry contains a reference to the drag element view model use that instead
         if (draggedComponent) {
             currentInstance = draggedComponent;
         }
 
-        let allowedParents = currentInstance.config.allowed_parents;
+        const allowedParents = currentInstance.config.allowed_parents;
 
         // Verify if the currently dragged block is accepted by the hovered parent
         if (parentContainerName && Array.isArray(allowedParents)) {
@@ -269,7 +274,7 @@ let Sortable = {
      * @param {Event} event
      * @param {any} ui
      */
-    onSortBeforeStop: function (event: Event, ui: any) {
+    onSortBeforeStop(event: Event, ui: any) {
         this.draggedItem = ui.item;
     },
 
@@ -279,15 +284,15 @@ let Sortable = {
      * @param {Event} event
      * @param {any} ui
      */
-    onSortReceive: function (event: Event, ui: any) {
+    onSortReceive(event: Event, ui: any) {
         if (jQuery(event.target)[0] === this) {
-            let block = getViewModelFromUi(ui),
-                target = ko.dataFor(jQuery(event.target)[0]);
+            const block = getViewModelFromUi(ui);
+            let target = ko.dataFor(jQuery(event.target)[0]);
 
             // Don't run sortable when dropping on a placeholder
             // @todo to be refactored under MAGETWO-86953
-            if (block.config.name === 'column' &&
-                jQuery(event.srcElement).parents('.ui-droppable').length > 0
+            if (block.config.name === "column" &&
+                jQuery(event.srcElement).parents(".ui-droppable").length > 0
             ) {
                 return;
             }
@@ -296,22 +301,22 @@ let Sortable = {
                 event.stopPropagation();
                 // Emit the blockDropped event upon the target
                 // Detect if the target is the parent UI component, if so swap the target to the stage
-                let stageId = typeof target.parent.preview !== 'undefined' ? target.parent.stageId : target.id;
-                target = typeof target.parent.preview !== 'undefined' ? target.parent : target;
-                EventBus.trigger('block:dropped', {
+                const stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.id;
+                target = typeof target.parent.preview !== "undefined" ? target.parent : target;
+                EventBus.trigger("block:dropped", {
                     parent: target,
-                    stageId: stageId,
-                    block: block,
+                    stageId,
+                    block,
                     index: this.draggedItem.index(),
                 });
                 this.draggedItem.remove();
             }
         } else if (!ui.helper && ui.item) {
-            _.defer(function () {
+            _.defer(() => {
                 jQuery(ui.item).remove();
             });
         }
-    }
+    },
 };
 
 // Create a new sortable Knockout binding
@@ -323,13 +328,12 @@ ko.bindingHandlers.sortable = {
      * @param {any} element
      * @param {() => any} valueAccessor
      */
-    init: function (element: any, valueAccessor: () => any) {
+    init(element: any, valueAccessor: () => any) {
         // Initialize draggable on all children of the element
         Sortable.init(jQuery(element), valueAccessor);
-    }
+    },
 };
 
-renderer.addAttribute('sortable', {
-    name: 'ko-pagebuilder-sortable'
+renderer.addAttribute("sortable", {
+    name: "ko-pagebuilder-sortable",
 });
-

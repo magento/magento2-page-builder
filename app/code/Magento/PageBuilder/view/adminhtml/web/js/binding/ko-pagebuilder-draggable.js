@@ -1,9 +1,9 @@
 /*eslint-disable */
-define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "Magento_Ui/js/lib/knockout/template/renderer", "jquery/ui"], function (_knockout, _jquery, _eventBus, _renderer, _ui) {
+define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/event-bus", "Magento_Ui/js/lib/knockout/template/renderer"], function (_jquery, _ui, _knockout, _eventBus, _renderer) {
   "use strict";
 
-  _knockout = _interopRequireDefault(_knockout);
   _jquery = _interopRequireDefault(_jquery);
+  _knockout = _interopRequireDefault(_knockout);
   _eventBus = _interopRequireDefault(_eventBus);
   _renderer = _interopRequireDefault(_renderer);
 
@@ -16,7 +16,8 @@ define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "Mag
 
   /**
    * The draggable binding is an adapter for the jQuery UI draggable widget.
-   * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/ko-pagebuilder-draggable. See on Github.
+   * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/ko-pagebuilder-draggable.
+   * See on Github.
    * Value type: Object.
    * Configuration for the draggable widget.
    * Aliases: [ko-pagebuilder-draggable]
@@ -40,12 +41,12 @@ define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "Mag
       revert: true,
       revertDuration: 0,
       zIndex: 500,
-      containment: 'body',
-      connectToSortable: '.pagebuilder-sortable',
+      containment: "body",
+      connectToSortable: ".pagebuilder-sortable",
       appendTo: document.body,
       helper: function helper(event) {
         var clone = (0, _jquery.default)(event.currentTarget).clone();
-        clone.css('pointerEvents', 'none');
+        clone.css("pointerEvents", "none");
         return clone;
       }
     },
@@ -58,7 +59,7 @@ define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "Mag
      * @returns {HTMLElement}
      */
     init: function init(elements, extendedConfig) {
-      return (0, _jquery.default)(elements).draggable(this._getConfig(extendedConfig)).on('dragstart', function (event, ui) {
+      return (0, _jquery.default)(elements).draggable(this._getConfig(extendedConfig)).on("dragstart", function (event, ui) {
         // Ensure the dimensions are retained on the element
         ui.helper.css({
           width: ui.helper.width(),
@@ -74,7 +75,7 @@ define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "Mag
         _eventBus.default.trigger("interaction:start", {
           stage: getViewModelFromEvent(event).stage
         });
-      }).on('dragstop', function (event, ui) {
+      }).on("dragstop", function (event, ui) {
         _eventBus.default.trigger("drag:stop", {
           event: event,
           ui: ui,
@@ -98,7 +99,7 @@ define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "Mag
       var config = this.defaults; // Extend the config with any custom configuration
 
       if (extendedConfig) {
-        if (typeof extendedConfig === 'function') {
+        if (typeof extendedConfig === "function") {
           extendedConfig = extendedConfig();
         }
 
@@ -129,8 +130,8 @@ define(["knockout", "jquery", "Magento_PageBuilder/js/component/event-bus", "Mag
     }
   };
 
-  _renderer.default.addAttribute('draggable', {
-    name: 'ko-pagebuilder-draggable'
+  _renderer.default.addAttribute("draggable", {
+    name: "ko-pagebuilder-draggable"
   });
 });
 //# sourceMappingURL=ko-pagebuilder-draggable.js.map

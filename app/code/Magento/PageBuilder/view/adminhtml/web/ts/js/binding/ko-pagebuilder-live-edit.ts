@@ -6,7 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import keyCodes from "Magento_Ui/js/lib/key-codes";
-import renderer from 'Magento_Ui/js/lib/knockout/template/renderer';
+import renderer from "Magento_Ui/js/lib/knockout/template/renderer";
 
 /**
  * The liveEdit binding allows inline editing.
@@ -153,6 +153,6 @@ ko.bindingHandlers.liveEdit = {
     },
 };
 
-renderer.addAttribute('liveEdit', {
-    name: 'ko-pagebuilder-live-edit'
+renderer.addAttribute("liveEdit", {
+    name: "ko-pagebuilder-live-edit",
 });

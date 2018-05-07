@@ -4,7 +4,7 @@
  */
 
 import ko from "knockout";
-import renderer from 'Magento_Ui/js/lib/knockout/template/renderer';
+import renderer from "Magento_Ui/js/lib/knockout/template/renderer";
 
 /**
  * The hasFocusNoScroll binding allows inline editing.
@@ -24,6 +24,6 @@ ko.bindingHandlers.hasFocusNoScroll = {
     },
 };
 
-renderer.addAttribute('hasFocusNoScroll', {
-    name: 'ko-pagebuilder-noscrollonfocus'
+renderer.addAttribute("hasFocusNoScroll", {
+    name: "ko-pagebuilder-noscrollonfocus",
 });

@@ -1,12 +1,12 @@
 /*eslint-disable */
-define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/event-bus", "Magento_Ui/js/lib/knockout/template/renderer", "jquery/ui"], function (_knockout, _jquery, _underscore, _eventBus, _renderer, _ui) {
+define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/event-bus", "Magento_Ui/js/lib/knockout/template/renderer", "underscore"], function (_jquery, _ui, _knockout, _eventBus, _renderer, _underscore) {
   "use strict";
 
-  _knockout = _interopRequireDefault(_knockout);
   _jquery = _interopRequireDefault(_jquery);
-  _underscore = _interopRequireDefault(_underscore);
+  _knockout = _interopRequireDefault(_knockout);
   _eventBus = _interopRequireDefault(_eventBus);
   _renderer = _interopRequireDefault(_renderer);
+  _underscore = _interopRequireDefault(_underscore);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17,12 +17,18 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
 
   /**
    * The sortable binding is an adapter for the jQuery UI Sortable widget.
-   * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/ko-pagebuilder-sortable. See on Github.
+   * Source: <Magento_Pagebuilder_module_dir>/view/adminhtml/web/js/resource/sortable/ko-pagebuilder-sortable.
+   * See on Github.
    * Value type: Object.
    * Configuration for the sortable widget.
    * Aliases: [ko-pagebuilder-sortable]
    * Usage example:
-   * <div  ko-pagebuilder-sortable="{ sortableClass: 'stage-container', handle: '.move-structural', items: '.pagebuilder-row-wrapper', connectWith: '.pagebuilder-canvas' }"></div>
+   * <div ko-pagebuilder-sortable="{
+   *      sortableClass: 'stage-container',
+   *      handle: '.move-structural',
+   *      items: '.pagebuilder-row-wrapper',
+   *      connectWith: '.pagebuilder-canvas'
+   * }"></div>
    */
 
   /**
@@ -38,36 +44,36 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
 
   var draggedComponent;
 
-  _eventBus.default.on('drag:start', function (event, params) {
+  _eventBus.default.on("drag:start", function (event, params) {
     draggedComponent = params.component;
   });
 
-  _eventBus.default.on('drag:stop', function () {
+  _eventBus.default.on("drag:stop", function () {
     draggedComponent = false;
   });
 
   var Sortable = {
     defaults: {
-      tolerance: 'pointer',
-      cursor: '-webkit-grabbing',
-      connectWith: '.pagebuilder-sortable',
+      tolerance: "pointer",
+      cursor: "-webkit-grabbing",
+      connectWith: ".pagebuilder-sortable",
       helper: function helper(event, element) {
-        return element.css('opacity', 0.5);
+        return element.css("opacity", 0.5);
       },
       appendTo: document.body,
       placeholder: {
         element: function element(clone) {
-          if (clone.hasClass('pagebuilder-draggable-block')) {
-            return (0, _jquery.default)('<div />').addClass('pagebuilder-draggable-block pagebuilder-placeholder').append(clone.html());
+          if (clone.hasClass("pagebuilder-draggable-block")) {
+            return (0, _jquery.default)("<div />").addClass("pagebuilder-draggable-block pagebuilder-placeholder").append(clone.html());
           }
 
-          return (0, _jquery.default)('<div />').addClass('pagebuilder-placeholder-sortable');
+          return (0, _jquery.default)("<div />").addClass("pagebuilder-placeholder-sortable");
         },
         update: function update() {
           return;
         }
       },
-      sortableClass: 'pagebuilder-sortable'
+      sortableClass: "pagebuilder-sortable"
     },
 
     /**
@@ -80,7 +86,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
       var config = this._getConfig(extendedConfig); // Init sortable on our element with necessary event handlers
 
 
-      element.addClass(config.sortableClass).sortable(config).on('sortstart', this.onSortStart).on('sortstop', this.onSortStop).on('sortupdate', this.onSortUpdate).on('sortchange', this.onSortChange).on('sortbeforestop', this.onSortBeforeStop).on('sortreceive', this.onSortReceive);
+      element.addClass(config.sortableClass).sortable(config).on("sortstart", this.onSortStart).on("sortstop", this.onSortStop).on("sortupdate", this.onSortUpdate).on("sortchange", this.onSortChange).on("sortbeforestop", this.onSortBeforeStop).on("sortreceive", this.onSortReceive);
     },
 
     /**
@@ -94,7 +100,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
       var config = this.defaults; // Extend the config with any custom configuration
 
       if (extendedConfig) {
-        if (typeof extendedConfig === 'function') {
+        if (typeof extendedConfig === "function") {
           extendedConfig = extendedConfig();
         }
 
@@ -115,7 +121,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
 
       block.originalParent = block.parent || false; // ui.helper.data('sorting') is appended to the helper of sorted items
 
-      if (block && (0, _jquery.default)(ui.helper).data('sorting')) {
+      if (block && (0, _jquery.default)(ui.helper).data("sorting")) {
         var eventData = {
           block: block,
           event: event,
@@ -125,7 +131,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
           stageId: block.stageId
         }; // ui.position to ensure we're only reacting to sorting events
 
-        _eventBus.default.trigger('block:sortStart', eventData);
+        _eventBus.default.trigger("block:sortStart", eventData);
       }
     },
 
@@ -137,10 +143,10 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
      */
     onSortStop: function onSortStop(event, ui) {
       // Always remove the sorting original class from an element
-      ui.item.removeClass('pagebuilder-sorting-original');
+      ui.item.removeClass("pagebuilder-sorting-original");
       var block = getViewModelFromUi(ui); // ui.helper.data('sorting') is appended to the helper of sorted items
 
-      if (block && (0, _jquery.default)(ui.helper).data('sorting')) {
+      if (block && (0, _jquery.default)(ui.helper).data("sorting")) {
         var eventData = {
           block: block,
           event: event,
@@ -150,10 +156,10 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
           stageId: block.stageId
         }; // ui.position to ensure we're only reacting to sorting events
 
-        _eventBus.default.trigger('block:sortStop', eventData);
+        _eventBus.default.trigger("block:sortStop", eventData);
       }
 
-      ui.item.css('opacity', 1);
+      ui.item.css("opacity", 1);
     },
 
     /**
@@ -163,25 +169,27 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
      * @param {any} ui
      */
     onSortUpdate: function onSortUpdate(event, ui) {
-      var blockEl = ui.item,
-          newParentEl = blockEl.parent()[0],
-          newIndex = blockEl.index();
+      var blockEl = ui.item;
+      var newParentEl = blockEl.parent()[0];
+      var newIndex = blockEl.index();
 
       if (blockEl && newParentEl && newParentEl === this) {
-        var block = _knockout.default.dataFor(blockEl[0]),
-            newParent = _knockout.default.dataFor(newParentEl); // @todo to be refactored under MAGETWO-86953
+        var block = _knockout.default.dataFor(blockEl[0]);
+
+        var newParent = _knockout.default.dataFor(newParentEl); // @todo to be refactored under MAGETWO-86953
 
 
-        if ((block.config.name === 'column-group' || block.config.name === 'column') && (0, _jquery.default)(event.currentTarget).hasClass('column-container')) {
+        if ((block.config.name === "column-group" || block.config.name === "column") && (0, _jquery.default)(event.currentTarget).hasClass("column-container")) {
           return;
         }
 
-        var parentContainerName = _knockout.default.dataFor((0, _jquery.default)(event.target)[0]).config.name,
-            allowedParents = getViewModelFromUi(ui).config.allowed_parents;
+        var parentContainerName = _knockout.default.dataFor((0, _jquery.default)(event.target)[0]).config.name;
+
+        var allowedParents = getViewModelFromUi(ui).config.allowed_parents;
 
         if (parentContainerName && Array.isArray(allowedParents)) {
           if (allowedParents.indexOf(parentContainerName) === -1) {
-            (0, _jquery.default)(this).sortable('cancel');
+            (0, _jquery.default)(this).sortable("cancel");
             (0, _jquery.default)(ui.item).remove(); // Force refresh of the parent
 
             var data = getViewModelFromUi(ui).parent.children().slice(0);
@@ -192,7 +200,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
         } // Detect if we're sorting items within the stage
 
 
-        if (typeof newParent.stageId === 'function' && newParent.stageId()) {
+        if (typeof newParent.stageId === "function" && newParent.stageId()) {
           newParent = newParent.stage;
         } // Fire our events on the letious parents of the operation
 
@@ -201,7 +209,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
           ui.item.remove();
 
           if (block.originalParent === newParent) {
-            _eventBus.default.trigger('block:sorted', {
+            _eventBus.default.trigger("block:sorted", {
               parent: newParent,
               block: block,
               index: newIndex,
@@ -210,7 +218,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
           } else {
             block.originalParent.removeChild(block);
 
-            _eventBus.default.trigger('block:instanceDropped', {
+            _eventBus.default.trigger("block:instanceDropped", {
               parent: newParent,
               blockInstance: block,
               index: newIndex,
@@ -219,7 +227,7 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
           }
 
           block.originalParent = false;
-          (0, _jquery.default)(this).sortable('refresh');
+          (0, _jquery.default)(this).sortable("refresh");
         }
       }
     },
@@ -231,9 +239,9 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
      * @param {any} ui
      */
     onSortChange: function onSortChange(event, ui) {
-      var parentContainerName = _knockout.default.dataFor((0, _jquery.default)(event.target)[0]).config.name,
-          currentInstance = getViewModelFromUi(ui); // If the registry contains a reference to the drag element view model use that instead
+      var parentContainerName = _knockout.default.dataFor((0, _jquery.default)(event.target)[0]).config.name;
 
+      var currentInstance = getViewModelFromUi(ui); // If the registry contains a reference to the drag element view model use that instead
 
       if (draggedComponent) {
         currentInstance = draggedComponent;
@@ -268,12 +276,13 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
      */
     onSortReceive: function onSortReceive(event, ui) {
       if ((0, _jquery.default)(event.target)[0] === this) {
-        var block = getViewModelFromUi(ui),
-            target = _knockout.default.dataFor((0, _jquery.default)(event.target)[0]); // Don't run sortable when dropping on a placeholder
+        var block = getViewModelFromUi(ui);
+
+        var target = _knockout.default.dataFor((0, _jquery.default)(event.target)[0]); // Don't run sortable when dropping on a placeholder
         // @todo to be refactored under MAGETWO-86953
 
 
-        if (block.config.name === 'column' && (0, _jquery.default)(event.srcElement).parents('.ui-droppable').length > 0) {
+        if (block.config.name === "column" && (0, _jquery.default)(event.srcElement).parents(".ui-droppable").length > 0) {
           return;
         }
 
@@ -281,10 +290,10 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
           event.stopPropagation(); // Emit the blockDropped event upon the target
           // Detect if the target is the parent UI component, if so swap the target to the stage
 
-          var stageId = typeof target.parent.preview !== 'undefined' ? target.parent.stageId : target.id;
-          target = typeof target.parent.preview !== 'undefined' ? target.parent : target;
+          var stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.id;
+          target = typeof target.parent.preview !== "undefined" ? target.parent : target;
 
-          _eventBus.default.trigger('block:dropped', {
+          _eventBus.default.trigger("block:dropped", {
             parent: target,
             stageId: stageId,
             block: block,
@@ -314,8 +323,8 @@ define(["knockout", "jquery", "underscore", "Magento_PageBuilder/js/component/ev
     }
   };
 
-  _renderer.default.addAttribute('sortable', {
-    name: 'ko-pagebuilder-sortable'
+  _renderer.default.addAttribute("sortable", {
+    name: "ko-pagebuilder-sortable"
   });
 });
 //# sourceMappingURL=ko-pagebuilder-sortable.js.map
