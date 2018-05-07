@@ -12,8 +12,10 @@ define(["jquery"], function (_jquery) {
    * @returns {JQuery}
    */
   function filterHtml(element) {
+    var _this = this;
+
     var isWhiteSpaceOrComment = function isWhiteSpaceOrComment() {
-      return this.nodeType === Node.COMMENT_NODE || this.nodeType === Node.TEXT_NODE && this.data.match(/^\s+$/);
+      return _this.nodeType === Node.COMMENT_NODE || _this.nodeType === Node.TEXT_NODE && _this.data.match(/^\s+$/);
     };
 
     element.find("[data-bind]").each(function (index, value) {

@@ -9,7 +9,7 @@ import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/slick/slick.min";
 import events from "uiEvents";
 import _ from "underscore";
-import "../../binding/focus";
+import "../../binding/ko-pagebuilder-noscrollonfocus";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";

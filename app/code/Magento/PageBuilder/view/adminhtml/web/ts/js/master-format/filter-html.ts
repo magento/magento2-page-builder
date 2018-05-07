@@ -13,7 +13,7 @@ import $ from "jquery";
  */
 
 export default function filterHtml(element: JQuery): JQuery {
-    const isWhiteSpaceOrComment = function() {
+    const isWhiteSpaceOrComment = () => {
         return this.nodeType === Node.COMMENT_NODE
             || (this.nodeType === Node.TEXT_NODE && this.data.match(/^\s+$/));
     };
