@@ -6,12 +6,12 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Source\VisualSelect;
+namespace Magento\PageBuilder\Model\Source;
 
 /**
  * Prepares options for Visual Select
  */
-class OptionsSource implements \Magento\PageBuilder\Model\Source\VisualSelect\OptionsSourceInterface
+class VisualSelect extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype
 {
     /**
      * @var \Magento\Framework\View\Asset\Repository
@@ -29,7 +29,7 @@ class OptionsSource implements \Magento\PageBuilder\Model\Source\VisualSelect\Op
     private $optionsSize;
 
     /**
-     * OptionsSource constructor.
+     * Visual Select constructor.
      *
      * @param \Magento\Framework\View\Asset\Repository $assetRepo
      * @param array $optionsData
@@ -46,9 +46,11 @@ class OptionsSource implements \Magento\PageBuilder\Model\Source\VisualSelect\Op
     }
 
     /**
-     * {@inheritdoc}
+     * Returns options for Visual Select based on di configuration
+     *
+     * @return array
      */
-    public function getOptions(): array
+    public function toOptionArray(): array
     {
         if ($this->optionsData) {
             foreach ($this->optionsData as $optionKey => $optionValue) {
