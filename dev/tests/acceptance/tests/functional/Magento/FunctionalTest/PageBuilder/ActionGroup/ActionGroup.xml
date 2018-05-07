@@ -283,6 +283,17 @@
         <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
     </actionGroup>
+    <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <fillField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
+        <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionErrorIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldAlternate">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -312,6 +323,22 @@
         <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
         <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="selectOption" />
         <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkInput}}" userInput="{{property.value}}" stepKey="inputURLLink"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="fillSlideOutPanelLinkUrlField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+            <argument name="selection" defaultValue=""/>
+            <argument name="linkType" defaultValue="URL" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" userInput="{{linkType}}" stepKey="seeLinkSelectedByDefault" />
+        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
+        <waitForElement time="5" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
+        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="selectOption" />
+        <fillField selector="{{PageBuilderSection.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="inputURLLink"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldGeneral">
@@ -368,6 +395,14 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(property.fieldName)}}" stepKey="clickProperty"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionUpdated"/>
+    </actionGroup>
+    <actionGroup name="clickSlideOutPanelFieldOpenInNewTab">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControlSwitch(property.fieldName)}}" stepKey="waitForElementVisible" />
         <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(property.fieldName)}}" stepKey="clickProperty"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionUpdated"/>
     </actionGroup>
@@ -437,6 +472,20 @@
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <seeCheckboxIsChecked selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="seeOptionIsCheckedProperty"/>
+    </actionGroup>
+    <actionGroup name="seeSlideOutPanelFieldOpenInNewTab">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControlSwitch(property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeCheckboxIsChecked selector="{{PageBuilderActionsSection.panelFieldControlCheckbox(property.fieldName)}}" stepKey="clickProperty"/>
+    </actionGroup>
+    <actionGroup name="seeSlideOutPanelFieldNotOpenInNewTab">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControlSwitch(property.fieldName)}}" stepKey="waitForElementVisible" />
+        <dontSeeCheckboxIsChecked selector="{{PageBuilderActionsSection.panelFieldControlCheckbox(property.fieldName)}}" stepKey="clickProperty"/>
     </actionGroup>
     <actionGroup name="seeOptionIsNotCheckedSlideOutProperty">
         <arguments>
@@ -611,5 +660,14 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlock.role, '1')}}" stepKey="seeOptionsDuplicate"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockRemove(contentBlock.role)}}" stepKey="seeOptionsRemove"/>
         <see selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlock.role)}}" userInput="{{contentBlock.name}}" stepKey="seeOptionMenuTitle"/>
+    </actionGroup>
+    <actionGroup name="fillOutColorPicker">
+        <arguments>
+            <argument name="colorCode" defaultValue=""/>
+        </arguments>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(colorCode.section, colorCode.fieldName)}}" stepKey="clickColorSwatch" />
+        <waitForElementVisible selector="{{ColorPicker.inputField}}" stepKey="waitForColorPicker"/>
+        <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHexCodeIntoInputField1" />
+        <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{colorCode.value}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
     </actionGroup>
 </actionGroups>

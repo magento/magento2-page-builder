@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/component/loader", "uiEvents", "underscore", "Magento_PageBuilder/js/content-factory", "Magento_PageBuilder/js/preview-factory"], function (_loader, _uiEvents, _underscore, _contentFactory, _previewFactory) {
+define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type/content-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_loader, _uiEvents, _underscore, _contentFactory, _previewFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -32,7 +32,7 @@ define(["Magento_PageBuilder/js/component/loader", "uiEvents", "underscore", "Ma
               contentComponent = resolvedPromises[1];
           contentType.preview = previewComponent;
           contentType.content = contentComponent;
-          contentType.store.update(contentType.id, prepareData(config, data));
+          contentType.dataStore.update(prepareData(config, data));
           resolve(contentType);
         });
       });

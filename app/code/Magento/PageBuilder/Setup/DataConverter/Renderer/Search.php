@@ -54,7 +54,7 @@ class Search implements RendererInterface
         $searchPlaceHolder = $eavData['placeholder'] ?? '';
 
         $searchHtml = "{{block class='Magento\Framework\View\Element\Template' " .
-            "template='Magento_PageBuilder::pagebuilder/blocks/core/search.phtml' " .
+            "template='Magento_PageBuilder::content_type/search.phtml' " .
             "placeholder=\"$searchPlaceHolder\" classes=\"$searchClasses\" styles=\"$searchStyles\"}}";
         $rootElementHtml = '<div data-role="html" data-appearance="default">';
 
