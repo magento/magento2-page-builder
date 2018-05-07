@@ -102,7 +102,7 @@
             </argument>
         </arguments>
     </type>
-    <type name="Magento\PageBuilder\Model\Source\VisualSelect">
+    <virtualType name="AlignmentSource" type="Magento\PageBuilder\Model\Source\VisualSelect\OptionsSource">
         <arguments>
             <argument name="optionsSize" xsi:type="string">small</argument>
             <argument name="optionsData" xsi:type="array">
@@ -126,6 +126,11 @@
                     <item name="icon" xsi:type="string">Magento_PageBuilder/css/images/form/element/visual-select/alignment/right.svg</item>
                 </item>
             </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\PageBuilder\Model\Source\VisualSelect\AlignmentOptions">
+        <arguments>
+            <argument name="optionsSource" xsi:type="object">AlignmentSource</argument>
         </arguments>
     </type>
 </config>

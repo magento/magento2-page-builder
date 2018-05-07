@@ -6,12 +6,12 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Source;
+namespace Magento\PageBuilder\Model\Source\VisualSelect;
 
 /**
- * VisualSelect options class used for system configuration
+ * Prepares options for Visual Select
  */
-class VisualSelect extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype
+class OptionsSource implements \Magento\PageBuilder\Model\Source\VisualSelect\OptionsSourceInterface
 {
     /**
      * @var \Magento\Framework\View\Asset\Repository
@@ -29,15 +29,16 @@ class VisualSelect extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inp
     private $optionsSize;
 
     /**
-     * TextAlignment constructor.
+     * OptionsSource constructor.
+     *
      * @param \Magento\Framework\View\Asset\Repository $assetRepo
      * @param array $optionsData
      * @param string|null $optionsSize
      */
     public function __construct(
         \Magento\Framework\View\Asset\Repository $assetRepo,
-        array $optionsData = [],
-        $optionsSize = null
+        array $optionsData,
+        $optionsSize
     ) {
         $this->assetRepo = $assetRepo;
         $this->optionsData = $optionsData;
@@ -47,7 +48,7 @@ class VisualSelect extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inp
     /**
      * {@inheritdoc}
      */
-    public function toOptionArray(): array
+    public function getOptions(): array
     {
         if ($this->optionsData) {
             foreach ($this->optionsData as $optionKey => $optionValue) {
@@ -57,7 +58,10 @@ class VisualSelect extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inp
                 $optionValue['size'] = $this->optionsSize ?? 'small';
                 $this->optionsData[$optionKey] = $optionValue;
             }
+        } else {
+            return [];
         }
+
         return $this->optionsData;
     }
 }
