@@ -8,6 +8,7 @@ import $t from "mage/translate";
 import Content from "../../content";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
+import CreateValueForHref from "../../converter/default/attribute/link-href";
 import ObservableUpdater from "../../observable-updater";
 import Preview from "../../preview";
 import {fromHex} from "../../utils/color-converter";
@@ -19,6 +20,8 @@ import {Option} from "../stage/structural/options/option";
 import {OptionInterface} from "../stage/structural/options/option.d";
 
 export default class Slide extends Content {
+
+    private createValueForHref: CreateValueForHref = new CreateValueForHref();
 
     /**
      * Get the slide wrapper styles for the storefront
@@ -173,11 +176,10 @@ export default class Slide extends Content {
     public getLinkAttribute(): {} {
         const data = this.parent.store.get(this.parent.id);
         const attribute: any = {};
-        if (data.link_url !== "") {
-            attribute.href = data.link_url;
-        }
-        if (data.open_in_new_tab === "1") {
-            attribute.target = "_blank";
+        if (typeof data.link_url === "object") {
+            attribute.href = this.createValueForHref.toDom("link_url", data);
+            attribute["data-link-type"] = data.link_url.type;
+            attribute.target = data.link_url.setting === true ? "_blank" : "";
         }
         return attribute;
     }

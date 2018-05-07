@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/extract-alpha-from-rgba", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/component/format/read/default"], function (_colorConverter, _extractAlphaFromRgba, _image, _default) {
+define(["Magento_PageBuilder/js/property/default/link", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/extract-alpha-from-rgba", "Magento_PageBuilder/js/utils/image", "Magento_PageBuilder/js/component/format/read/default"], function (_link, _colorConverter, _extractAlphaFromRgba, _image, _default) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -9,6 +9,7 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
   function () {
     function Slide() {
       this.defaultReader = new _default();
+      this.linkConverter = new _link();
     }
 
     var _proto = Slide.prototype;
@@ -21,8 +22,7 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
      */
     _proto.read = function read(element) {
       var bgMobileImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[0].style.backgroundImage;
-      var linkUrl = element.querySelector("a").getAttribute("href");
-      var target = element.querySelector("a").getAttribute("target");
+      var linkUrl = element.querySelector("a");
       var bgImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[1].style.backgroundImage;
       var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
       var paddingSrc = element.querySelector(".pagebuilder-poster-overlay").style;
@@ -40,7 +40,7 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
         background_size: element.style.backgroundSize,
         button_text: buttonText,
         button_type: buttonType,
-        link_url: linkUrl ? linkUrl : "",
+        link_url: this.linkConverter.read(linkUrl),
         margins_and_padding: {
           margin: {
             bottom: marginSrc.marginBottom.replace("px", ""),
@@ -58,7 +58,6 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
         content: element.querySelector(".pagebuilder-poster-content div").innerHTML,
         min_height: element.querySelector(".pagebuilder-poster-overlay").style.minHeight.split("px")[0],
         mobile_image: bgMobileImage ? (0, _image.decodeUrl)(bgMobileImage) : "",
-        open_in_new_tab: target && target === "_blank" ? "1" : "0",
         overlay_color: this.getOverlayColor(overlayColor),
         overlay_transparency: this.getOverlayTransparency(overlayColor),
         show_button: element.getAttribute("data-show-button"),

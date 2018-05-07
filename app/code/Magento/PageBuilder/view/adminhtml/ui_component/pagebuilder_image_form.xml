@@ -109,38 +109,14 @@
                 </imageUploader>
             </formElements>
         </field>
-        <field name="link_url" sortOrder="10" formElement="input">
+        <urlInput name="link_url" sortOrder="20">
             <settings>
-                <label translate="true">Link</label>
                 <dataType>text</dataType>
+                <label translate="true">Link</label>
                 <dataScope>link_url</dataScope>
+                <urlTypes class="Magento\Ui\Model\UrlInput\LinksConfigProvider"/>
             </settings>
-        </field>
-        <field name="link_target" sortOrder="20" formElement="checkbox">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">_self</item>
-                </item>
-            </argument>
-            <settings>
-                <validation>
-                    <rule name="validate-string" xsi:type="boolean">true</rule>
-                </validation>
-                <dataType>string</dataType>
-                <label translate="true">Open in New Tab?</label>
-            </settings>
-            <formElements>
-                <checkbox>
-                    <settings>
-                        <valueMap>
-                            <map name="false" xsi:type="string">_self</map>
-                            <map name="true" xsi:type="string">_blank</map>
-                        </valueMap>
-                        <prefer>toggle</prefer>
-                    </settings>
-                </checkbox>
-            </formElements>
-        </field>
+        </urlInput>
         <field name="image_caption" sortOrder="30" formElement="input">
             <settings>
                 <label translate="true">Image Caption</label>
