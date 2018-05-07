@@ -4,8 +4,8 @@
  */
 
 import ko from "knockout";
-import "ko-draggable";
-import "ko-sortable";
+import "ko-pagebuilder-draggable";
+import "ko-pagebuilder-sortable";
 import $t from "mage/translate";
 import events from "uiEvents";
 import _ from "underscore";
