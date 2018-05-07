@@ -9,7 +9,7 @@ import $t from "mage/translate";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
 import events from "uiEvents";
 import _ from "underscore";
-import "../binding/live-edit";
+import "../binding/ko-pagebuilder-live-edit";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";

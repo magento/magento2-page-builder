@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/event-bus", "Magento_Ui/js/lib/knockout/template/renderer", "underscore"], function (_jquery, _ui, _knockout, _eventBus, _renderer, _underscore) {
+define(["jquery", "jquery/ui", "knockout", "Magento_Ui/js/lib/knockout/template/renderer", "uiEvents", "underscore"], function (_jquery, _ui, _knockout, _renderer, _uiEvents, _underscore) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
-  _eventBus = _interopRequireDefault(_eventBus);
   _renderer = _interopRequireDefault(_renderer);
+  _uiEvents = _interopRequireDefault(_uiEvents);
   _underscore = _interopRequireDefault(_underscore);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -44,11 +44,11 @@ define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/eve
 
   var draggedComponent;
 
-  _eventBus.default.on("drag:start", function (event, params) {
-    draggedComponent = params.component;
+  _uiEvents.default.on("drag:start", function (args) {
+    draggedComponent = args.component;
   });
 
-  _eventBus.default.on("drag:stop", function () {
+  _uiEvents.default.on("drag:stop", function () {
     draggedComponent = false;
   });
 
@@ -131,7 +131,7 @@ define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/eve
           stageId: block.stageId
         }; // ui.position to ensure we're only reacting to sorting events
 
-        _eventBus.default.trigger("block:sortStart", eventData);
+        _uiEvents.default.trigger("block:sortStart", eventData);
       }
     },
 
@@ -156,7 +156,7 @@ define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/eve
           stageId: block.stageId
         }; // ui.position to ensure we're only reacting to sorting events
 
-        _eventBus.default.trigger("block:sortStop", eventData);
+        _uiEvents.default.trigger("block:sortStop", eventData);
       }
 
       ui.item.css("opacity", 1);
@@ -209,7 +209,7 @@ define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/eve
           ui.item.remove();
 
           if (block.originalParent === newParent) {
-            _eventBus.default.trigger("block:sorted", {
+            _uiEvents.default.trigger("block:sorted", {
               parent: newParent,
               block: block,
               index: newIndex,
@@ -218,7 +218,7 @@ define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/eve
           } else {
             block.originalParent.removeChild(block);
 
-            _eventBus.default.trigger("block:instanceDropped", {
+            _uiEvents.default.trigger("block:instanceDropped", {
               parent: newParent,
               blockInstance: block,
               index: newIndex,
@@ -293,7 +293,7 @@ define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/eve
           var stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.id;
           target = typeof target.parent.preview !== "undefined" ? target.parent : target;
 
-          _eventBus.default.trigger("block:dropped", {
+          _uiEvents.default.trigger("block:dropped", {
             parent: target,
             stageId: stageId,
             block: block,

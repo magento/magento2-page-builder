@@ -1,11 +1,11 @@
 /*eslint-disable */
-define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/event-bus", "Magento_Ui/js/lib/knockout/template/renderer"], function (_jquery, _ui, _knockout, _eventBus, _renderer) {
+define(["jquery", "jquery/ui", "knockout", "Magento_Ui/js/lib/knockout/template/renderer", "uiEvents"], function (_jquery, _ui, _knockout, _renderer, _uiEvents) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
   _knockout = _interopRequireDefault(_knockout);
-  _eventBus = _interopRequireDefault(_eventBus);
   _renderer = _interopRequireDefault(_renderer);
+  _uiEvents = _interopRequireDefault(_uiEvents);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -66,23 +66,23 @@ define(["jquery", "jquery/ui", "knockout", "Magento_PageBuilder/js/component/eve
           height: ui.helper.height()
         });
 
-        _eventBus.default.trigger("drag:start", {
+        _uiEvents.default.trigger("drag:start", {
           event: event,
           ui: ui,
           component: getViewModelFromEvent(event)
         });
 
-        _eventBus.default.trigger("interaction:start", {
+        _uiEvents.default.trigger("interaction:start", {
           stage: getViewModelFromEvent(event).stage
         });
       }).on("dragstop", function (event, ui) {
-        _eventBus.default.trigger("drag:stop", {
+        _uiEvents.default.trigger("drag:stop", {
           event: event,
           ui: ui,
           component: getViewModelFromEvent(event)
         });
 
-        _eventBus.default.trigger("interaction:stop", {
+        _uiEvents.default.trigger("interaction:stop", {
           stage: getViewModelFromEvent(event).stage
         });
       });

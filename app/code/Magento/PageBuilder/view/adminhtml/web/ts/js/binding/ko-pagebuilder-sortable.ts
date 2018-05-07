@@ -22,10 +22,10 @@
 import jQuery from "jquery";
 import "jquery/ui";
 import ko from "knockout";
-import EventBus from "Magento_PageBuilder/js/component/event-bus";
-import ContentType from "Magento_PageBuilder/js/content-type";
 import renderer from "Magento_Ui/js/lib/knockout/template/renderer";
+import events from "uiEvents";
 import _ from "underscore";
+import ContentType from "../content-type";
 
 /**
  * Retrieve the view model for an element
@@ -40,10 +40,10 @@ function getViewModelFromUi(ui: any) {
 // Listen for the dragged component from the event bus
 let draggedComponent: any;
 
-EventBus.on("drag:start", (event: Event, params: any) => {
-    draggedComponent = params.component;
+events.on("drag:start", (args: any) => {
+    draggedComponent = args.component;
 });
-EventBus.on("drag:stop", () => {
+events.on("drag:stop", () => {
     draggedComponent = false;
 });
 
@@ -137,7 +137,7 @@ const Sortable = {
             };
 
             // ui.position to ensure we're only reacting to sorting events
-            EventBus.trigger("block:sortStart", eventData);
+            events.trigger("block:sortStart", eventData);
         }
     },
 
@@ -165,7 +165,7 @@ const Sortable = {
             };
 
             // ui.position to ensure we're only reacting to sorting events
-            EventBus.trigger("block:sortStop", eventData);
+            events.trigger("block:sortStop", eventData);
         }
 
         ui.item.css("opacity", 1);
@@ -219,7 +219,7 @@ const Sortable = {
             if (block !== newParent) {
                 ui.item.remove();
                 if (block.originalParent === newParent) {
-                    EventBus.trigger("block:sorted", {
+                    events.trigger("block:sorted", {
                         parent: newParent,
                         block,
                         index: newIndex,
@@ -227,7 +227,7 @@ const Sortable = {
                     });
                 } else {
                     block.originalParent.removeChild(block);
-                    EventBus.trigger("block:instanceDropped", {
+                    events.trigger("block:instanceDropped", {
                         parent: newParent,
                         blockInstance: block,
                         index: newIndex,
@@ -303,7 +303,7 @@ const Sortable = {
                 // Detect if the target is the parent UI component, if so swap the target to the stage
                 const stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.id;
                 target = typeof target.parent.preview !== "undefined" ? target.parent : target;
-                EventBus.trigger("block:dropped", {
+                events.trigger("block:dropped", {
                     parent: target,
                     stageId,
                     block,

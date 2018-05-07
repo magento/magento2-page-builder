@@ -17,8 +17,8 @@
 import jQuery from "jquery";
 import "jquery/ui";
 import ko from "knockout";
-import EventBus from "Magento_PageBuilder/js/component/event-bus";
 import renderer from "Magento_Ui/js/lib/knockout/template/renderer";
+import events from "uiEvents";
 
 /**
  * Retrieve the view model for an element
@@ -60,12 +60,12 @@ const Draggable = {
             .on("dragstart", (event: Event, ui: any) => {
                 // Ensure the dimensions are retained on the element
                 ui.helper.css({width: ui.helper.width(), height: ui.helper.height()});
-                EventBus.trigger("drag:start", {event, ui, component: getViewModelFromEvent(event)});
-                EventBus.trigger("interaction:start", {stage: getViewModelFromEvent(event).stage});
+                events.trigger("drag:start", {event, ui, component: getViewModelFromEvent(event)});
+                events.trigger("interaction:start", {stage: getViewModelFromEvent(event).stage});
             })
             .on("dragstop", (event: Event, ui: any) => {
-                EventBus.trigger("drag:stop", {event, ui, component: getViewModelFromEvent(event)});
-                EventBus.trigger("interaction:stop", {stage: getViewModelFromEvent(event).stage});
+                events.trigger("drag:stop", {event, ui, component: getViewModelFromEvent(event)});
+                events.trigger("interaction:stop", {stage: getViewModelFromEvent(event).stage});
             });
     },
 
