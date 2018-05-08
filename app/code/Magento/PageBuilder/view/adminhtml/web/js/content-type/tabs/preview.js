@@ -361,8 +361,8 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
       _uiEvents.on("tab-item:block:duplicate", function (args) {
         if (_this3.parent.id === args.duplicateBlock.parent.id) {
-          var tabData = args.duplicateBlock.store.get(args.duplicateBlock.id);
-          args.duplicateBlock.store.updateKey(args.duplicateBlock.id, tabData.tab_name.toString() + " copy", "tab_name");
+          var tabData = args.duplicateBlock.dataStore.get(args.duplicateBlock.id);
+          args.duplicateBlock.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
           duplicatedTab = args.duplicateBlock;
           duplicatedTabIndex = args.index;
         }
