@@ -70,6 +70,8 @@
     <fieldset name="general" sortOrder="20">
         <settings>
             <label/>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
         </settings>
         <field name="position" sortOrder="1" formElement="input" component="Magento_PageBuilder/js/form/element/map">
             <settings>
@@ -77,22 +79,83 @@
                 <notice translate="true">You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.</notice>
             </settings>
         </field>
-        <field name="width" formElement="input">
+        <field name="location_name" sortOrder="20" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Location Name</label>
+                <dataScope>location_name</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="address" sortOrder="40" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Street Address</label>
+                <dataScope>address</dataScope>
+            </settings>
+        </field>
+        <field name="city" sortOrder="50" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">City</label>
+                <dataScope>city</dataScope>
+            </settings>
+        </field>
+        <field name="zip" sortOrder="60" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Zip/Postal Code</label>
+                <dataScope>zip</dataScope>
+            </settings>
+        </field>
+        <field name="country" formElement="select" sortOrder="70">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">block</item>
-                    <item name="default" xsi:type="string">100%</item>
+                    <item name="default" xsi:type="string">default</item>
                 </item>
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Width</label>
-                <dataScope>width</dataScope>
-                <addAfter translate="true">px or %</addAfter>
-                <notice translate="true">Example: 50px or 100%</notice>
+                <label translate="true">Country</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">default</item>
+                                <item name="label" xsi:type="string" translate="true">Default</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">country1</item>
+                                <item name="label" xsi:type="string" translate="true">Country1</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">country2</item>
+                                <item name="label" xsi:type="string" translate="true">Country2</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="comment" sortOrder="80" formElement="textarea">
+            <settings>
+                <label translate="true">Comment</label>
+                <dataType>text</dataType>
+                <dataScope>comment</dataScope>
             </settings>
         </field>
-        <field name="height" formElement="input">
+    </fieldset>
+    <fieldset name="map_settings" sortOrder="30">
+        <settings>
+            <label translate="true">Map Settings</label>
+            <collapsible>true</collapsible>
+            <opened>true</opened>
+        </settings>
+        <field name="height" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">block</item>
@@ -101,11 +164,37 @@
             </argument>
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Height</label>
+                <label translate="true">Map Height</label>
                 <dataScope>height</dataScope>
                 <addAfter translate="true">px or %</addAfter>
                 <notice translate="true">Example: 50px or 100%</notice>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
             </settings>
+        </field>
+        <field name="show_controls" sortOrder="20" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">Yes</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Show Controls</label>
+                <dataScope>show_controls</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">No</map>
+                            <map name="true" xsi:type="string">Yes</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
         </field>
     </fieldset>
 </form>

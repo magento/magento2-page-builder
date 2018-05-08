@@ -54,7 +54,6 @@
     <actionGroup name="validateMap">
         <arguments>
             <argument name="page" defaultValue=""/>
-            <argument name="width" defaultValue="PageBuilderMapWidthDefaultProperty"/>
             <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
             <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
             <argument name="cssClasses" defaultValue=""/>
@@ -62,7 +61,6 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
-        <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForMapWidth"/>
         <waitForElementVisible selector="{{page.height(index, height.value)}}" stepKey="waitForMapHeight"/>
     </actionGroup>
     <actionGroup name="validateEmptyMapStoreFront">
@@ -73,7 +71,5 @@
         <dontSeeElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="dontSeeEmptyMapOnFrontend"/>
         <seeElementInDOM selector="{{MapOnStorefront.height(index, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="seeInDOMEmptyMapHeightOnFrontend"/>
         <dontSeeElement selector="{{MapOnStorefront.height(index, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="dontSeeEmptyMapHeightOnFrontend"/>
-        <seeElementInDOM selector="{{MapOnStorefront.width(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="seeInDOMEmptyMapWidthOnFrontend"/>
-        <dontSeeElement selector="{{MapOnStorefront.width(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="dontSeeEmptyMapWidthOnFrontend"/>
     </actionGroup>
 </actionGroups>
