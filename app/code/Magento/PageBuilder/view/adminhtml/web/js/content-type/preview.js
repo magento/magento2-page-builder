@@ -27,6 +27,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       this.displayLabel = void 0;
       this.previewData = {};
       this.previewStyle = void 0;
+      this.fieldsToIgnoreOnRemove = [];
       this.edit = void 0;
       this.observableUpdater = void 0;
       this.mouseover = false;
@@ -370,10 +371,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.isConfigured = function isConfigured() {
+      var _this6 = this;
+
       var data = this.parent.dataStore.get();
       var hasDataChanges = false;
 
       _underscore.each(this.parent.config.fields, function (field, key) {
+        if (_this6.fieldsToIgnoreOnRemove && _this6.fieldsToIgnoreOnRemove.includes(key)) {
+          return;
+        }
+
         var fieldValue = data[key];
 
         if (!fieldValue) {
