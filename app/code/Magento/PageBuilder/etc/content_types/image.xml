@@ -11,7 +11,7 @@
             <label>Image</label>
             <icon>icon-pagebuilder-image</icon>
             <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/image</preview_component>
+            <preview_component>Magento_PageBuilder/js/content-type/image/preview</preview_component>
             <form>pagebuilder_image_form</form>
             <group>media</group>
             <allowed_parents>
@@ -26,11 +26,11 @@
                             <element name="main" path=".">
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-style" var="border" name="border_style"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" var="margins_and_padding"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-style" var="border" name="border_style"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="data-role" var="name"/>
@@ -44,7 +44,7 @@
                                     <static_property name="height" value="auto"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute converter="Magento_PageBuilder/js/converter/default/attribute/src" name="src" preview_converter="Magento_PageBuilder/js/converter/default/attribute/preview/src" var="image"/>
+                                    <attribute converter="Magento_PageBuilder/js/converter/attribute/src" name="src" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/src" var="image"/>
                                     <attribute name="alt" var="alt"/>
                                     <attribute name="title" var="title_attribute"/>
                                 </attributes>
@@ -55,17 +55,17 @@
                                     <static_property name="height" value="auto"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute converter="Magento_PageBuilder/js/converter/default/attribute/src" name="src" preview_converter="Magento_PageBuilder/js/converter/default/attribute/preview/src" var="mobile_image"/>
+                                    <attribute converter="Magento_PageBuilder/js/converter/attribute/src" name="src" preview_converter="Magento_PageBuilder/js/converter/attribute/preview/src" var="mobile_image"/>
                                     <attribute name="alt" var="alt"/>
                                     <attribute name="title" var="title_attribute"/>
                                 </attributes>
                             </element>
                             <element name="link" path=".//a">
                                 <attributes>
-                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
-                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
-                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
-                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
+                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/link"/>
+                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
+                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
+                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
                                     <attribute name="title" var="title_attribute"/>
                                 </attributes>
                             </element>
@@ -74,7 +74,7 @@
                             </element>
                         </elements>
                         <converters>
-                            <converter component="Magento_PageBuilder/js/converter/default/empty-mobile-image" name="empty_mobile_image">
+                            <converter component="Magento_PageBuilder/js/mass-converter/empty-mobile-image" name="empty_mobile_image">
                                 <config>
                                     <item name="desktop_image_variable" value="image"/>
                                     <item name="mobile_image_variable" value="mobile_image"/>
@@ -82,9 +82,9 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/component/block/preview/image.html</preview_template>
-                    <render_template>Magento_PageBuilder/component/block/render/image.html</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <preview_template>Magento_PageBuilder/content-type/image/full-width/preview</preview_template>
+                    <render_template>Magento_PageBuilder/content-type/image/full-width/master</render_template>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
             <additional_data>
@@ -98,8 +98,8 @@
                     <item name="uploaderConfig" xsi:type="array">
                         <item name="url" xsi:type="object">Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider\Uploader\SaveUrl</item>
                     </item>
-                    <item name="previewTmpl" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview/image</item>
-                    <item name="template" xsi:type="string">Magento_PageBuilder/form/element/stage/preview/uploader/image</item>
+                    <item name="previewTmpl" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview</item>
+                    <item name="template" xsi:type="string">Magento_PageBuilder/form/element/uploader/preview/image</item>
                     <item name="mediaGallery" xsi:type="array">
                         <item name="openDialogUrl" xsi:type="object">Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider\Uploader\OpenDialogUrl</item>
                         <item name="openDialogTitle" xsi:type="string" translate="true">Insert Images...</item>

@@ -11,8 +11,8 @@
             <label>Tabs</label>
             <icon>icon-pagebuilder-tabs</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/tabs</preview_component>
-            <content_component>Magento_PageBuilder/js/content-collection</content_component>
+            <preview_component>Magento_PageBuilder/js/content-type/tabs/preview</preview_component>
+            <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
             <form>pagebuilder_tabs_form</form>
             <group>interactive</group>
             <allowed_parents>
@@ -42,10 +42,10 @@
                             </element>
                             <element name="headers" path=".//ul/li">
                                 <style_properties>
-                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/default/style/border-style"/>
-                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
-                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                 </style_properties>
                             </element>
                             <element name="navigation" path=".//ul">
@@ -55,26 +55,26 @@
                             </element>
                             <element name="content" path=".//div">
                                 <style_properties>
-                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/default/style/border-style"/>
+                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
                                     <property var="text_align" name="text_align"/>
-                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
-                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
-                                    <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                 </style_properties>
                             </element>
                         </elements>
                         <converters>
-                            <converter name="header_alignment_class" component="Magento_PageBuilder/js/converter/tabs/header-alignment-class">
+                            <converter name="header_alignment_class" component="Magento_PageBuilder/js/content-type/tabs/mass-converter/header-alignment">
                                 <config>
                                     <item name="navigation_alignment_variable" value="navigation_alignment"/>
                                 </config>
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/component/block/preview/tabs.html</preview_template>
-                    <render_template>Magento_PageBuilder/component/block/render/tabs.html</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <preview_template>Magento_PageBuilder/content-type/tabs/default/preview</preview_template>
+                    <render_template>Magento_PageBuilder/content-type/tabs/default/master</render_template>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

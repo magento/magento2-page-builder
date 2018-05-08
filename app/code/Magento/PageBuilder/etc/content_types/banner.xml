@@ -11,7 +11,7 @@
             <label>Banner</label>
             <icon>icon-pagebuilder-image</icon>
             <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/banner</preview_component>
+            <preview_component>Magento_PageBuilder/js/content-type/banner/preview</preview_component>
             <form>pagebuilder_banner_form</form>
             <group>media</group>
             <allowed_parents>
@@ -25,11 +25,11 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-style" var="border" name="border_style"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins" reader="Magento_PageBuilder/js/property/default/margins" var="margins_and_padding"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-style" var="border" name="border_style"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins" reader="Magento_PageBuilder/js/property/margins" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="data-role" var="name"/>
@@ -41,57 +41,57 @@
                             </element>
                             <element name="link" path=".//a">
                                 <attributes>
-                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
-                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
-                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
-                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
+                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/link"/>
+                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
+                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
+                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
                                 </attributes>
                             </element>
                             <element name="overlay" path=".//a/div[1]/div">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" name="background_color" var="background_color" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" name="background_color" var="background_color" virtual="true"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" name="data-overlay-color" persist="false" var="overlay_color"/>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" name="data-overlay-color" persist="false" var="overlay_transparency"/>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" name="data-overlay-color" var="overlay_transparency" virtual="true"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" name="data-overlay-color" persist="false" var="overlay_color"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" name="data-overlay-color" persist="false" var="overlay_transparency"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" name="data-overlay-color" var="overlay_transparency" virtual="true"/>
                                 </attributes>
                             </element>
                             <element name="desktop_image" path=".//a/div[1]">
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="min_height" var="min_height"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image" var="background_image"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="min_height" var="min_height"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="background_image"/>
                                     <property name="background_position" var="background_position"/>
                                     <property name="background_size" var="background_size"/>
                                     <property name="background_repeat" var="background_repeat"/>
                                     <property name="background_attachment" var="background_attachment"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/paddings" name="padding" var="margins_and_padding" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/paddings" name="padding" var="margins_and_padding" virtual="true"/>
                                 </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="min_height" var="min_height"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image" var="mobile_image"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="min_height" var="min_height"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="mobile_image"/>
                                     <property name="background_position" var="background_position"/>
                                     <property name="background_size" var="background_size"/>
                                     <property name="background_repeat" var="background_repeat"/>
                                     <property name="background_attachment" var="background_attachment"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/paddings" reader="Magento_PageBuilder/js/property/default/paddings" var="margins_and_padding"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/paddings" reader="Magento_PageBuilder/js/property/paddings" var="margins_and_padding"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
-                                <html placeholder="Edit banner text" var="message" preview_converter="Magento_PageBuilder/js/converter/html/html/directives"/>
+                                <html var="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                             </element>
                             <element name="button" path=".//a/div[1]/div/div/button">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" name="opacity" var="opacity" virtual="true"/>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" name="visibility" var="visibility" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-opacity" name="opacity" var="opacity" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-visibility" name="visibility" var="visibility" virtual="true"/>
                                 </style_properties>
-                                <html placeholder="Edit Button Text" var="button_text"/>
+                                <html var="button_text"/>
                                 <css var="button_type">
                                     <filter>
                                         <class name="pagebuilder-banner-button"/>
@@ -100,7 +100,7 @@
                             </element>
                         </elements>
                         <converters>
-                            <converter component="Magento_PageBuilder/js/converter/default/empty-mobile-image" name="empty_mobile_image">
+                            <converter component="Magento_PageBuilder/js/mass-converter/empty-mobile-image" name="empty_mobile_image">
                                 <config>
                                     <item name="desktop_image_variable" value="background_image"/>
                                     <item name="mobile_image_variable" value="mobile_image"/>
@@ -108,20 +108,20 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/banner/collage-left.html</preview_template>
-                    <render_template>Magento_PageBuilder/component/block/render/appearance/banner/collage-left.html</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <preview_template>Magento_PageBuilder/content-type/banner/collage-left/preview</preview_template>
+                    <render_template>Magento_PageBuilder/content-type/banner/collage-left/master</render_template>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
                 <appearance name="collage-centered">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-style" var="border" name="border_style"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins" reader="Magento_PageBuilder/js/property/default/margins" var="margins_and_padding"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-style" var="border" name="border_style"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins" reader="Magento_PageBuilder/js/property/margins" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="data-role" var="name"/>
@@ -133,57 +133,57 @@
                             </element>
                             <element name="link" path=".//a">
                                 <attributes>
-                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
-                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
-                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
-                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
+                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/link"/>
+                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
+                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
+                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
                                 </attributes>
                             </element>
                             <element name="overlay" path=".//a/div[1]/div">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" name="background_color" var="background_color" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" name="background_color" var="background_color" virtual="true"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" name="data-overlay-color" persist="false" var="overlay_color"/>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" name="data-overlay-color" persist="false" var="overlay_transparency"/>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" name="data-overlay-color" var="overlay_transparency" virtual="true"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" name="data-overlay-color" persist="false" var="overlay_color"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" name="data-overlay-color" persist="false" var="overlay_transparency"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" name="data-overlay-color" var="overlay_transparency" virtual="true"/>
                                 </attributes>
                             </element>
                             <element name="desktop_image" path=".//a/div[1]">
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="min_height" var="min_height"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image" var="background_image"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="min_height" var="min_height"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="background_image"/>
                                     <property name="background_position" var="background_position"/>
                                     <property name="background_size" var="background_size"/>
                                     <property name="background_repeat" var="background_repeat"/>
                                     <property name="background_attachment" var="background_attachment"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/paddings" name="padding" var="margins_and_padding" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/paddings" name="padding" var="margins_and_padding" virtual="true"/>
                                 </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="min_height" var="min_height"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image" var="mobile_image"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="min_height" var="min_height"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="mobile_image"/>
                                     <property name="background_position" var="background_position"/>
                                     <property name="background_size" var="background_size"/>
                                     <property name="background_repeat" var="background_repeat"/>
                                     <property name="background_attachment" var="background_attachment"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/paddings" reader="Magento_PageBuilder/js/property/default/paddings" var="margins_and_padding"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/paddings" reader="Magento_PageBuilder/js/property/paddings" var="margins_and_padding"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
-                                <html placeholder="Edit banner text" var="message" preview_converter="Magento_PageBuilder/js/converter/html/html/directives"/>
+                                <html var="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                             </element>
                             <element name="button" path=".//a/div[1]/div/div/button">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" name="opacity" var="opacity" virtual="true"/>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" name="visibility" var="visibility" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-opacity" name="opacity" var="opacity" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-visibility" name="visibility" var="visibility" virtual="true"/>
                                 </style_properties>
-                                <html placeholder="Edit Button Text" var="button_text"/>
+                                <html var="button_text"/>
                                 <css var="button_type">
                                     <filter>
                                         <class name="pagebuilder-banner-button"/>
@@ -192,7 +192,7 @@
                             </element>
                         </elements>
                         <converters>
-                            <converter component="Magento_PageBuilder/js/converter/default/empty-mobile-image" name="empty_mobile_image">
+                            <converter component="Magento_PageBuilder/js/mass-converter/empty-mobile-image" name="empty_mobile_image">
                                 <config>
                                     <item name="desktop_image_variable" value="background_image"/>
                                     <item name="mobile_image_variable" value="mobile_image"/>
@@ -200,20 +200,20 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/banner/collage-centered.html</preview_template>
-                    <render_template>Magento_PageBuilder/component/block/render/appearance/banner/collage-centered.html</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <preview_template>Magento_PageBuilder/content-type/banner/collage-centered/preview</preview_template>
+                    <render_template>Magento_PageBuilder/content-type/banner/collage-centered/master</render_template>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
                 <appearance name="collage-right">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-style" var="border" name="border_style"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins" reader="Magento_PageBuilder/js/property/default/margins" var="margins_and_padding"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-style" var="border" name="border_style"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins" reader="Magento_PageBuilder/js/property/margins" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="data-role" var="name"/>
@@ -225,57 +225,57 @@
                             </element>
                             <element name="link" path=".//a">
                                 <attributes>
-                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
-                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
-                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
-                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
+                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/link"/>
+                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
+                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
+                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
                                 </attributes>
                             </element>
                             <element name="overlay" path=".//a/div[1]/div">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" name="background_color" var="background_color" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" name="background_color" var="background_color" virtual="true"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" name="data-overlay-color" persist="false" var="overlay_color"/>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" name="data-overlay-color" persist="false" var="overlay_transparency"/>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" name="data-overlay-color" var="overlay_transparency" virtual="true"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" name="data-overlay-color" persist="false" var="overlay_color"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" name="data-overlay-color" persist="false" var="overlay_transparency"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" name="data-overlay-color" var="overlay_transparency" virtual="true"/>
                                 </attributes>
                             </element>
                             <element name="desktop_image" path=".//a/div[1]">
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="min_height" var="min_height"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image" var="background_image"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="min_height" var="min_height"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="background_image"/>
                                     <property name="background_position" var="background_position"/>
                                     <property name="background_size" var="background_size"/>
                                     <property name="background_repeat" var="background_repeat"/>
                                     <property name="background_attachment" var="background_attachment"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/paddings" name="padding" var="margins_and_padding" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/paddings" name="padding" var="margins_and_padding" virtual="true"/>
                                 </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="min_height" var="min_height"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image" var="mobile_image"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="min_height" var="min_height"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="mobile_image"/>
                                     <property name="background_position" var="background_position"/>
                                     <property name="background_size" var="background_size"/>
                                     <property name="background_repeat" var="background_repeat"/>
                                     <property name="background_attachment" var="background_attachment"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/paddings" reader="Magento_PageBuilder/js/property/default/paddings" var="margins_and_padding"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/paddings" reader="Magento_PageBuilder/js/property/paddings" var="margins_and_padding"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
-                                <html placeholder="Edit banner text" var="message" preview_converter="Magento_PageBuilder/js/converter/html/html/directives"/>
+                                <html var="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                             </element>
                             <element name="button" path=".//a/div[1]/div/div/button">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" name="opacity" var="opacity" virtual="true"/>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" name="visibility" var="visibility" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-opacity" name="opacity" var="opacity" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-visibility" name="visibility" var="visibility" virtual="true"/>
                                 </style_properties>
-                                <html placeholder="Edit Button Text" var="button_text"/>
+                                <html var="button_text"/>
                                 <css var="button_type">
                                     <filter>
                                         <class name="pagebuilder-banner-button"/>
@@ -284,7 +284,7 @@
                             </element>
                         </elements>
                         <converters>
-                            <converter component="Magento_PageBuilder/js/converter/default/empty-mobile-image" name="empty_mobile_image">
+                            <converter component="Magento_PageBuilder/js/mass-converter/empty-mobile-image" name="empty_mobile_image">
                                 <config>
                                     <item name="desktop_image_variable" value="background_image"/>
                                     <item name="mobile_image_variable" value="mobile_image"/>
@@ -292,20 +292,20 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/component/block/preview/appearance/banner/collage-right.html</preview_template>
-                    <render_template>Magento_PageBuilder/component/block/render/appearance/banner/collage-right.html</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <preview_template>Magento_PageBuilder/content-type/banner/collage-right/preview</preview_template>
+                    <render_template>Magento_PageBuilder/content-type/banner/collage-right/master</render_template>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
                 <appearance default="true" name="poster">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-style" var="border" name="border_style"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins" reader="Magento_PageBuilder/js/property/default/margins" var="margins_and_padding"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-style" var="border" name="border_style"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins" reader="Magento_PageBuilder/js/property/margins" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="data-role" var="name"/>
@@ -317,29 +317,29 @@
                             </element>
                             <element name="link" path=".//a">
                                 <attributes>
-                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
-                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
-                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
-                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
+                                    <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/link"/>
+                                    <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
+                                    <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
+                                    <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
                                 </attributes>
                             </element>
                             <element name="overlay" path=".//a/div[2]/div">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="min_height" var="min_height"/>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color" name="background_color" var="background_color" virtual="true"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/paddings" reader="Magento_PageBuilder/js/property/default/paddings" var="margins_and_padding"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="min_height" var="min_height"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color" name="background_color" var="background_color" virtual="true"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/paddings" reader="Magento_PageBuilder/js/property/paddings" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color" name="data-overlay-color" persist="false" var="overlay_color"/>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-transparency" name="data-overlay-color" persist="false" var="overlay_transparency"/>
-                                    <attribute converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color-transparency" name="data-overlay-color" var="overlay_transparency" virtual="true"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color" name="data-overlay-color" persist="false" var="overlay_color"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-transparency" name="data-overlay-color" persist="false" var="overlay_transparency"/>
+                                    <attribute converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color-transparency" name="data-overlay-color" var="overlay_transparency" virtual="true"/>
                                 </attributes>
                             </element>
                             <element name="desktop_image" path=".//a/div[1]">
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image" var="background_image"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="background_image"/>
                                     <property name="background_position" var="background_position"/>
                                     <property name="background_size" var="background_size"/>
                                     <property name="background_repeat" var="background_repeat"/>
@@ -349,8 +349,8 @@
                             <element name="mobile_image" path=".//a/div[2]">
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image" var="mobile_image"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="mobile_image"/>
                                     <property name="background_position" var="background_position"/>
                                     <property name="background_size" var="background_size"/>
                                     <property name="background_repeat" var="background_repeat"/>
@@ -358,14 +358,14 @@
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[2]/div/div/div[1]">
-                                <html placeholder="Edit banner text" var="message" preview_converter="Magento_PageBuilder/js/converter/html/html/directives"/>
+                                <html var="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                             </element>
                             <element name="button" path=".//a/div[2]/div/div/button">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/button-opacity" name="opacity" var="opacity" virtual="true"/>
-                                    <property converter="Magento_PageBuilder/js/converter/banner/style/button-visibility" name="visibility" var="visibility" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-opacity" name="opacity" var="opacity" virtual="true"/>
+                                    <property converter="Magento_PageBuilder/js/content-type/banner/converter/style/button-visibility" name="visibility" var="visibility" virtual="true"/>
                                 </style_properties>
-                                <html placeholder="Edit Button Text" var="button_text"/>
+                                <html var="button_text"/>
                                 <css var="button_type">
                                     <filter>
                                         <class name="pagebuilder-banner-button"/>
@@ -374,7 +374,7 @@
                             </element>
                         </elements>
                         <converters>
-                            <converter component="Magento_PageBuilder/js/converter/default/empty-mobile-image" name="empty_mobile_image">
+                            <converter component="Magento_PageBuilder/js/mass-converter/empty-mobile-image" name="empty_mobile_image">
                                 <config>
                                     <item name="desktop_image_variable" value="background_image"/>
                                     <item name="mobile_image_variable" value="mobile_image"/>
@@ -382,9 +382,9 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
-                    <render_template>Magento_PageBuilder/component/block/render/banner.html</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
+                    <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
