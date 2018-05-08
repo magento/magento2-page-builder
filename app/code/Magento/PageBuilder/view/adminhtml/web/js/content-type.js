@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/component/data-store"], function (_knockout, _mageUtils, _uiEvents, _dataStore) {
+define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/data-store"], function (_knockout, _mageUtils, _uiEvents, _dataStore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -22,7 +22,7 @@ define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/component/d
         width: "100%"
       });
       this.element = void 0;
-      this.store = new _dataStore();
+      this.dataStore = new _dataStore();
       this.preview = void 0;
       this.content = void 0;
       this.parent = parent;
@@ -39,10 +39,10 @@ define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/component/d
       var eventName = this.id + ":updated";
       var paramObj = {};
       paramObj[this.id] = this;
-      this.store.subscribe(function () {
+      this.dataStore.subscribe(function () {
         return _uiEvents.trigger(eventName, paramObj);
       });
-      this.store.subscribe(function () {
+      this.dataStore.subscribe(function () {
         return _uiEvents.trigger("stage:updated", {
           stageId: _this.stageId
         });

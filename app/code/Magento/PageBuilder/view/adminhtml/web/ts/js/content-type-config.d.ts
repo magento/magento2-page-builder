@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ConfigFieldInterface from "./component/block/config-field.d";
+import ConfigFieldInterface from "./config-field.d";
 
 export default interface ContentTypeConfigInterface {
     name: string;
