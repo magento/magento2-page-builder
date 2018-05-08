@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block"], function (_knockout, _koDraggable, _koSortable, _translate, _uiEvents, _underscore, _config, _group, _block) {
+define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block"], function (_jquery, _knockout, _koSortable, _translate, _uiEvents, _underscore, _draggable, _config, _group, _block) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -101,6 +101,38 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiEvents",
     _proto.clearSearch = function clearSearch() {
       this.searchValue("");
       this.searching(false);
+    };
+    /**
+     * Retrieve the draggable options for the panel items
+     *
+     * @returns {JQueryUI.DraggableOptions}
+     */
+
+
+    _proto.getDraggableOptions = function getDraggableOptions() {
+      var self = this;
+      return {
+        connectToSortable: ".content-type-container",
+        helper: function helper() {
+          return (0, _jquery)(this).clone().css({
+            width: (0, _jquery)(this).width(),
+            height: (0, _jquery)(this).height(),
+            zIndex: 10001
+          });
+        },
+        revert: true,
+        revertDuration: 150,
+        start: function start() {
+          _uiEvents.trigger("interaction:start", {
+            stage: self.parent.stage
+          });
+        },
+        stop: function stop() {
+          _uiEvents.trigger("interaction:stop", {
+            stage: self.parent.stage
+          });
+        }
+      };
     };
     /**
      * Populate the panel with the content blocks

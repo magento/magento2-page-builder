@@ -38,7 +38,9 @@ export class Block {
      *
      * @returns {string}
      */
-    public getDraggableConfig() {
-        return this.config.allowed_parents.map((value, index) => "." + value + "-container").join(", ");
+    public getDraggableOptions() {
+        return {
+            connectToSortable: this.config.allowed_parents.map((value, index) => "." + value + "-container").join(", "),
+        };
     }
 }

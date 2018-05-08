@@ -80,7 +80,7 @@ define(["knockout", "jquery", "Magento_Ui/js/lib/core/events", "jquery/ui"],
     };
 
     // Create a new draggable Knockout binding
-    ko.bindingHandlers.draggable = {
+    ko.bindingHandlers.oldDraggable = {
 
         /**
          * Init the draggable binding on an element

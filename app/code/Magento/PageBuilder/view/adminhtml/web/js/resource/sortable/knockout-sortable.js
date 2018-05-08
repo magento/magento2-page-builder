@@ -34,18 +34,15 @@ define([
             tolerance: 'pointer',
             cursor: '-webkit-grabbing',
             connectWith: '.pagebuilder-sortable',
-            helper: function (event, element) {
-                return element.css('opacity', 0.5);
+            helper: function(event, item) {
+                return jQuery(item).clone()[0];
             },
             appendTo: document.body,
             placeholder: {
-                element: function (clone) {
-                    if (clone.hasClass('pagebuilder-draggable-block')) {
-                        return jQuery('<div />').addClass('pagebuilder-draggable-block pagebuilder-placeholder').append(clone.html());
-                    }
-                    return jQuery('<div />').addClass('pagebuilder-placeholder-sortable');
+                element: function (currentItem) {
+                    return jQuery("<div />").addClass("pagebuilder-sortable-placeholder").show()[0];
                 },
-                update: function () {
+                update: function (container, p) {
                     return;
                 }
             },

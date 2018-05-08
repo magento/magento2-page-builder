@@ -3,12 +3,13 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import ko from "knockout";
-import "ko-draggable";
 import "ko-sortable";
 import $t from "mage/translate";
 import events from "uiEvents";
 import _ from "underscore";
+import "./binding/draggable";
 import Config from "./config";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import PageBuilder from "./page-builder";
@@ -107,6 +108,33 @@ export default class Panel implements PanelInterface {
     public clearSearch(): void {
         this.searchValue("");
         this.searching(false);
+    }
+
+    /**
+     * Retrieve the draggable options for the panel items
+     *
+     * @returns {JQueryUI.DraggableOptions}
+     */
+    public getDraggableOptions(): JQueryUI.DraggableOptions {
+        const self = this;
+        return {
+            connectToSortable: ".content-type-container",
+            helper() {
+                return $(this).clone().css({
+                    width: $(this).width(),
+                    height: $(this).height(),
+                    zIndex: 10001,
+                });
+            },
+            revert: true,
+            revertDuration: 150,
+            start() {
+                events.trigger("interaction:start", {stage: self.parent.stage});
+            },
+            stop() {
+                events.trigger("interaction:stop", {stage: self.parent.stage});
+            },
+        };
     }
 
     /**

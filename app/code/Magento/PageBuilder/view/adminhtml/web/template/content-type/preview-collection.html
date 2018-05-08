@@ -5,6 +5,17 @@
  */
 -->
 
-<div class="element-children" each="parent.getChildren()" attr="{id: parent.id + '-children'}" data-bind="sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.pagebuilder-content-type-wrapper', connectWith: '.element-children' }" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
-    <div class="pagebuilder-content-type-wrapper" template="{ name: preview.previewTemplate, data: preview }" attr="{ id: id }"></div>
-</div>
+<if args="parent.getChildren()().length === 0">
+    <div class="element-children content-type-container" attr="{id: parent.id + '-children'}" data-bind="sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.pagebuilder-content-type-wrapper', connectWith: '.element-children' }">
+        <div class="pagebuilder-drop-indicator"></div>
+    </div>
+</if>
+<if args="parent.getChildren()().length > 0">
+    <div class="element-children content-type-container" each="parent.getChildren()" attr="{id: parent.id + '-children'}" data-bind="sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.pagebuilder-content-type-wrapper', connectWith: '.element-children' }" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
+        <div class="pagebuilder-drop-indicator"></div>
+        <div class="pagebuilder-content-type-wrapper" template="{ name: preview.previewTemplate, data: preview }" attr="{ id: id }"></div>
+        <if args="$index() === $parent.parent.getChildren()().length - 1">
+        <div class="pagebuilder-drop-indicator"></div>
+        </if>
+    </div>
+</if>
