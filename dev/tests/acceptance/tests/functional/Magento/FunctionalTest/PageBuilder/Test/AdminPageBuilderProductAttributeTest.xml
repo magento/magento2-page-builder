@@ -18,11 +18,9 @@
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
         </before>
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
@@ -104,7 +102,6 @@
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>
-            <group value="pagebuilder-customBeforeAfter"/>
             <!-- Skipped; see MAGETWO-88218 -->
             <group value="skip"/>
         </annotations>
@@ -114,7 +111,6 @@
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
         </before>
         <after>
             <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute" />
@@ -168,7 +164,6 @@
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>
-            <group value="pagebuilder-customBeforeAfter"/>
             <!-- Skipped; see MAGETWO-88218 -->
             <group value="skip"/>
         </annotations>
@@ -178,12 +173,9 @@
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
         </before>
         <after>
             <deleteData createDataKey="myProductAttributeCreation" stepKey="deletePreReqProductAttribute" />
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid1"/>
@@ -234,7 +226,6 @@
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-productAttribute"/>
-            <group value="pagebuilder-customBeforeAfter"/>
             <!--Bug link MAGETWO-87851-->
             <group value="skip"/>
         </annotations>
@@ -244,11 +235,8 @@
                 <requiredEntity createDataKey="myProductAttributeCreation"/>
             </createData>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <amOnPage url="{{AdminProductAttributeGridPage.url}}" stepKey="navigateToProductAttributeGrid1"/>
