@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/preview-sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _uiEvents, _underscore, _liveEdit, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _styleAttributeFilter, _styleAttributeMapper, _previewSortable, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/preview-sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _uiEvents, _underscore, _liveEdit, _sortable, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _styleAttributeFilter, _styleAttributeMapper, _previewSortable, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -247,6 +247,51 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       } else {
         removeBlock();
       }
+    };
+    /**
+     * Determine if the container can receive drop events?
+     *
+     * @returns {boolean}
+     */
+
+
+    _proto.canParentReceiveDrops = function canParentReceiveDrops() {
+      return this.parent.config.type !== "restricted-container";
+    };
+    /**
+     * Return the sortable options
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+
+
+    _proto.getSortableOptions = function getSortableOptions() {
+      // If the
+      if (this.parent.config.type === "restricted-container") {
+        return null;
+      }
+
+      var self = this;
+      return {
+        cursor: "-webkit-grabbing",
+        helper: function helper(event, item) {
+          return jQuery(item).clone()[0];
+        },
+        appendTo: document.body,
+        placeholder: {
+          element: function element(currentItem) {
+            return jQuery("<div />").addClass("pagebuilder-sortable-placeholder")[0];
+          },
+          update: function update(container, p) {
+            return;
+          }
+        },
+        handle: ".move-structural",
+        items: "> .pagebuilder-content-type-wrapper",
+        receive: function receive(event, ui) {
+          console.log(self.config.name, self.canParentReceiveDrops());
+        }
+      };
     };
     /**
      * Return an array of options

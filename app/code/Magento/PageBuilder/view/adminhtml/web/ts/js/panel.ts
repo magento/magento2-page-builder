@@ -118,7 +118,7 @@ export default class Panel implements PanelInterface {
     public getDraggableOptions(): JQueryUI.DraggableOptions {
         const self = this;
         return {
-            connectToSortable: ".content-type-container",
+            connectToSortable: ".content-type-drop",
             helper() {
                 return $(this).clone().css({
                     width: $(this).width(),

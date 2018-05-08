@@ -112,7 +112,7 @@ define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "unde
     _proto.getDraggableOptions = function getDraggableOptions() {
       var self = this;
       return {
-        connectToSortable: ".content-type-container",
+        connectToSortable: ".content-type-drop",
         helper: function helper() {
           return (0, _jquery)(this).clone().css({
             width: (0, _jquery)(this).width(),

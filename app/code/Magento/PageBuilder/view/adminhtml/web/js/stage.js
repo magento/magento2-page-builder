@@ -14,7 +14,8 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       this.parent = void 0;
       this.id = void 0;
       this.config = {
-        name: "stage"
+        name: "stage",
+        type: "container"
       };
       this.loading = _knockout.observable(true);
       this.showBorders = _knockout.observable(false);

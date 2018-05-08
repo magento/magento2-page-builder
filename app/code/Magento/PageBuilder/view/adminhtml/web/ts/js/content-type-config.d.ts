@@ -7,6 +7,7 @@ import ConfigFieldInterface from "./config-field.d";
 
 export default interface ContentTypeConfigInterface {
     name: string;
+    type: "container" | "restricted-container" | "static";
     label: string;
     icon: string;
     form: string;

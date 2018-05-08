@@ -25,7 +25,10 @@ import {moveArrayItem} from "./utils/array";
 export default class Stage {
     public parent: PageBuilderInterface;
     public id: string;
-    public config: {} = {name: "stage"};
+    public config: {} = {
+        name: "stage",
+        type: "container",
+    };
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public showBorders: KnockoutObservable<boolean> = ko.observable(false);
     public interacting: KnockoutObservable<boolean> = ko.observable(false);

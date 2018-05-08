@@ -33,7 +33,6 @@ define([
         defaults: {
             tolerance: 'pointer',
             cursor: '-webkit-grabbing',
-            connectWith: '.pagebuilder-sortable',
             helper: function(event, item) {
                 return jQuery(item).clone()[0];
             },
@@ -45,8 +44,7 @@ define([
                 update: function (container, p) {
                     return;
                 }
-            },
-            sortableClass: 'pagebuilder-sortable'
+            }
         },
 
         /**
@@ -61,7 +59,6 @@ define([
 
             // Init sortable on our element with necessary event handlers
             element
-                .addClass(config.sortableClass)
                 .sortable(config)
                 .on('sortstart', this.onSortStart)
                 .on('sortstop', this.onSortStop)
@@ -300,18 +297,20 @@ define([
     };
 
     // Create a new sortable Knockout binding
-    ko.bindingHandlers.sortable = {
+    ko.bindingHandlers.oldSortable = {
 
         /**
          * Init the draggable binding on an element
          *
          * @param element
          * @param valueAccessor
-         * @param allBindingsAccessor
-         * @param data
-         * @param context
          */
         init: function(element, valueAccessor) {
+            // Don't init sortable when the options are null
+            if (valueAccessor() === null) {
+                return;
+            }
+
             // Initialize draggable on all children of the element
             Sortable.init(jQuery(element), valueAccessor);
         }

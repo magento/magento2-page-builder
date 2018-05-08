@@ -10,6 +10,7 @@ import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm
 import events from "uiEvents";
 import _ from "underscore";
 import "../binding/live-edit";
+import "../binding/sortable";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
@@ -254,6 +255,49 @@ export default class Preview {
         } else {
             removeBlock();
         }
+    }
+
+    /**
+     * Determine if the container can receive drop events?
+     *
+     * @returns {boolean}
+     */
+    public canParentReceiveDrops() {
+        return this.parent.config.type !== "restricted-container";
+    }
+
+    /**
+     * Return the sortable options
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+    public getSortableOptions(): JQueryUI.SortableOptions | any {
+        // If the
+        if (this.parent.config.type === "restricted-container") {
+            return null;
+        }
+
+        const self = this;
+        return {
+            cursor: "-webkit-grabbing",
+            helper(event: Event, item: Element) {
+                return jQuery(item).clone()[0];
+            },
+            appendTo: document.body,
+            placeholder: {
+                element(currentItem: any) {
+                    return jQuery("<div />").addClass("pagebuilder-sortable-placeholder")[0];
+                },
+                update(container: any, p: any) {
+                    return;
+                },
+            },
+            handle: ".move-structural",
+            items: "> .pagebuilder-content-type-wrapper",
+            receive(event: Event, ui: JQueryUI.SortableUIParams) {
+                console.log(self.config.name, self.canParentReceiveDrops());
+            },
+        };
     }
 
     /**
