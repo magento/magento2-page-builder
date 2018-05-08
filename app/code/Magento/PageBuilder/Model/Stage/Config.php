@@ -120,6 +120,7 @@ class Config
     {
         return [
             'name' => $name,
+            'type' => $contentType['type'],
             'label' => $contentType['label'],
             'icon' => $contentType['icon'],
             'form' => $contentType['form'],
@@ -138,7 +139,7 @@ class Config
             'content_component' => (isset($contentType['content_component'])
                 ? $contentType['content_component']
                 : self::DEFAULT_CONTENT_COMPONENT),
-            'allowed_parents' => isset($contentType['allowed_parents']) ? $contentType['allowed_parents'] : [],
+            'accepts' => isset($contentType['accepts']) ? $contentType['accepts'] : [],
             'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
             'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
             'additional_data' => isset($contentType['additional_data']) ? $contentType['additional_data'] : [],

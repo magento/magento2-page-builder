@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
     <content_types>
-        <type name="product-list" sortOrder="20" translate="label">
+        <type name="product-list" type="static" sortOrder="20" translate="label">
             <label>Product List</label>
             <icon>icon-pagebuilder-products</icon>
             <component>Magento_PageBuilder/js/content-type</component>
@@ -16,11 +16,6 @@
             <group>magento</group>
             <backend_block>Magento\PageBuilder\Block\ContentType\ProductList</backend_block>
             <backend_template>Magento_PageBuilder::content_type/product_list.phtml</backend_template>
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="column"/>
-                <parent name="tab-item"/>
-            </allowed_parents>
             <appearances>
                 <appearance default="true" name="default">
                     <data_mapping>

@@ -40,7 +40,7 @@ export class Block {
      */
     public getDraggableOptions() {
         return {
-            connectToSortable: this.config.allowed_parents.map((value, index) => "." + value + "-container").join(", "),
+            //connectToSortable: this.config.allowed_parents.map((value, index) => "." + value + "-container").join(", "),
         };
     }
 }

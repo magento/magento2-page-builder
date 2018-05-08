@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
     <content_types>
-        <type name="accordion" sortOrder="10" translate="label">
+        <type name="accordion" type="static" sortOrder="10" translate="label">
             <label>Accordion</label>
             <icon>icon-pagebuilder-accordian</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
@@ -15,11 +15,6 @@
             <content_component>Magento_PageBuilder/js/content-type/accordion/content</content_component>
             <form>pagebuilder_accordion_form</form>
             <group>interactive</group>
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="column"/>
-                <parent name="tab-item"/>
-            </allowed_parents>
             <appearances>
                 <appearance default="true" name="default">
                     <preview_template>Magento_PageBuilder/content-type/accordion/default/preview</preview_template>

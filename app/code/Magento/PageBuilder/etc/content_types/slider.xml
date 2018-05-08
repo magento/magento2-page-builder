@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
     <content_types>
-        <type name="slider" sortOrder="30" translate="label">
+        <type name="slider" type="restricted-container" sortOrder="30" translate="label">
             <label>Slider</label>
             <icon>icon-pagebuilder-slider</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
@@ -15,11 +15,9 @@
             <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
             <form>pagebuilder_slider_form</form>
             <group>media</group>
-            <allowed_parents>
-                <parent name="row"/>
-                <parent name="column"/>
-                <parent name="tab-item"/>
-            </allowed_parents>
+            <accepts>
+                <type name="slide" />
+            </accepts>
             <appearances>
                 <appearance default="true" name="default">
                     <preview_template>Magento_PageBuilder/content-type/slider/default/preview</preview_template>

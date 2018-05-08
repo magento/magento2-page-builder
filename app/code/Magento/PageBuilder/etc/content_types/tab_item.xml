@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
     <content_types>
-        <type name="tab-item" translate="label" sortOrder="30">
+        <type name="tab-item" type="container" translate="label" sortOrder="30">
             <label>Tab</label>
             <icon>icon-pagebuilder-tabs</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
@@ -15,9 +15,6 @@
             <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
             <form>pagebuilder_tab_item_form</form>
             <group>interactive</group>
-            <allowed_parents>
-                <parent name="tabs"/>
-            </allowed_parents>
             <appearances>
                 <appearance name="default" default="true">
                     <data_mapping>

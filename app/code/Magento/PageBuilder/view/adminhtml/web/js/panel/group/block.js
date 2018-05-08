@@ -42,10 +42,7 @@ define(["knockout"], function (_knockout) {
 
 
     _proto.getDraggableOptions = function getDraggableOptions() {
-      return {
-        connectToSortable: this.config.allowed_parents.map(function (value, index) {
-          return "." + value + "-container";
-        }).join(", ")
+      return {//connectToSortable: this.config.allowed_parents.map((value, index) => "." + value + "-container").join(", "),
       };
     };
 

@@ -29,6 +29,7 @@
                                         <xs:element type="xs:string" name="form"/>
                                         <xs:element type="xs:string" name="group"/>
                                         <xs:element type="allowed_parents" name="allowed_parents" minOccurs="0" maxOccurs="1"/>
+                                        <xs:element type="accepts" name="accepts" minOccurs="0" maxOccurs="1"/>
                                         <xs:element name="appearances" minOccurs="0" maxOccurs="1">
                                             <xs:complexType>
                                                 <xs:sequence>
@@ -41,6 +42,7 @@
                                     </xs:all>
                                     <xs:attribute type="xs:string" name="name" use="required"/>
                                     <xs:attribute type="xs:string" name="translate" use="required"/>
+                                    <xs:attribute type="xs:string" name="type" use="required"/>
                                     <xs:attribute type="xs:byte" name="sortOrder" use="optional"/>
                                 </xs:complexType>
                             </xs:element>
@@ -70,6 +72,14 @@
         </xs:choice>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:boolean" name="default"/>
+    </xs:complexType>
+    <xs:complexType name="accepts">
+        <xs:sequence>
+            <xs:element type="type" name="type" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="type">
+        <xs:attribute type="xs:string" name="name" use="required"/>
     </xs:complexType>
     <xs:complexType name="allowed_parents">
         <xs:sequence>
