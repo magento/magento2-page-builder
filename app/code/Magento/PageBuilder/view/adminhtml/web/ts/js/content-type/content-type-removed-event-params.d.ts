@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import ContentTypeInterface from "../../content-type.d";
+import ContentTypeInterface from "../content-type.d";
 
-export interface BlockRemovedEventParamsInterface {
+export interface ContentTypeRemovedEventParamsInterface {
     block: ContentTypeInterface;
     index: number;
     parent: ContentTypeInterface;

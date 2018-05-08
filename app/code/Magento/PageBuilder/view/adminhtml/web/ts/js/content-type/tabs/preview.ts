@@ -16,17 +16,14 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import BlockRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
-import {ContentTypeCreateEventParamsInterface} from "../content-type-create-event-params.d";
+import {PreviewSortableSortUpdateEventParams} from "../../preview-sortable";
 import {ContentTypeMountEventParamsInterface} from "../content-type-mount-event-params.d";
 import {ContentTypeReadyEventParamsInterface} from "../content-type-ready-event-params.d";
+import {ContentTypeRemovedEventParamsInterface} from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
+import {ActiveOptionsInterface} from "../options/active-options.d";
+import {SortableOptionsInterface} from "../options/sortable-options.d";
 import PreviewCollection from "../preview-collection";
-import {BlockMountEventParamsInterface} from "../block-mount-event-params.d";
-import {BlockReadyEventParamsInterface} from "../block-ready-event-params.d";
-import {BlockRemovedEventParamsInterface} from "../block-removed-event-params.d";
-import {ActiveOptionsInterface} from "./options/active-options.d";
-import {SortableOptionsInterface} from "./options/sortable-options.d";
-import {PreviewSortableSortUpdateEventParams} from "./sortable/binding";
 
 export default class Preview extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable();
@@ -70,13 +67,13 @@ export default class Preview extends PreviewCollection {
                 this.buildTabs();
             }
         });
-        events.on("tab-item:block:mount", (args: BlockMountEventParamsInterface) => {
+        events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
             if (this.element && args.block.parent.id === this.parent.id) {
                 this.refreshTabs();
             }
         });
         // Set the active tab to the new position of the sorted tab
-        events.on("tab-item:block:removed", (args: BlockRemovedEventParamsInterface) => {
+        events.on("tab-item:block:removed", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 this.refreshTabs();
 

@@ -5,9 +5,9 @@
 
 import $t from "mage/translate";
 import Options from "../../content-type-menu";
+import Option from "../../content-type-menu/option";
+import OptionInterface from "../../content-type-menu/option.d";
 import PreviewCollection from "../preview-collection";
-import {Option} from "../../stage/structural/options/option";
-import {OptionInterface} from "../../stage/structural/options/option.d";
 
 export default class Preview extends PreviewCollection {
 
