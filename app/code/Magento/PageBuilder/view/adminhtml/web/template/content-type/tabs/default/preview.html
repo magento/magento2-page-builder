@@ -14,7 +14,7 @@
                     <a href="#no-tab" class="tab-title focus-options" attr="{ href: '#' + parent.id }">
                         <render args="getOptions().template" />
                     <span class="tab-drag-handle"></span>
-                        <span class="tab-title tab-name" data-tab-title="true" data-bind="liveEdit: { field: 'tab_name', placeholder: $t('...') }, hasFocusNoScroll: parent.parent.preview.focusedTab() === $index()" event="{ focusin: function () { parent.parent.preview.focusedTab($index()) }, focusout: function () { window.getSelection().removeAllRanges(); parent.parent.preview.focusedTab(null) } }"></span>
+                        <span class="tab-title tab-name" data-tab-title="true" data-bind="liveEdit: { field: 'tab_name', placeholder: $t('...') }, hasFocusNoScroll: parent.parent.preview.focusedTab() === $index()" event="{ focusin: function () { parent.parent.preview.setFocusedTab($index(), true) }, focusout: function () { window.getSelection().removeAllRanges(); parent.parent.preview.disableDelay = true; parent.parent.preview.focusedTab(null); parent.parent.preview.disableDelay = false; } }"></span>
                     </a>
                 </li>
             </with>

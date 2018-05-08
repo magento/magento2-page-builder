@@ -24,6 +24,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.focusedTab = _knockout.observable();
       _this.disableInteracting = void 0;
+      _this.disableDelay = void 0;
       _this.element = void 0;
       _this.buildTabs = _underscore.debounce(function (activeTabIndex) {
         if (activeTabIndex === void 0) {
@@ -89,7 +90,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
               _uiEvents.trigger("interaction:stop");
             }
           }
-        }, value === null ? 200 : 0);
+        }, value === null && !_this.disableDelay ? 200 : 0);
       });
 
       return _this;
@@ -155,9 +156,6 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         _underscore.defer(function () {
           if ((0, _jquery)(":focus").hasClass("tab-name") && (0, _jquery)(":focus").prop("contenteditable")) {
             document.execCommand("selectAll", false, null);
-          } else {
-            // If the active element isn't the tab title, we're not interacting with the stage
-            _uiEvents.trigger("interaction:stop");
           }
         });
       }

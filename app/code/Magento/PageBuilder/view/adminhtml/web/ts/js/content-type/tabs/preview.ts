@@ -28,6 +28,7 @@ import PreviewCollection from "../preview-collection";
 export default class Preview extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable();
     private disableInteracting: boolean;
+    private disableDelay: boolean;
     private element: Element;
 
     /**
@@ -101,7 +102,7 @@ export default class Preview extends PreviewCollection {
                         events.trigger("interaction:stop");
                     }
                 }
-            }, (value === null ? 200 : 0));
+            }, ((value === null && !this.disableDelay) ? 200 : 0));
         });
     }
 
@@ -152,9 +153,6 @@ export default class Preview extends PreviewCollection {
             _.defer(() => {
                 if ($(":focus").hasClass("tab-name") && $(":focus").prop("contenteditable")) {
                     document.execCommand("selectAll", false, null);
-                } else {
-                    // If the active element isn't the tab title, we're not interacting with the stage
-                    events.trigger("interaction:stop");
                 }
             });
         }
