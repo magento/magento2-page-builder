@@ -18,20 +18,15 @@
             <testCaseId value="MAGETWO-90274"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-text"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
             <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="SwitchToVersion4ActionGroup" stepKey="switchToTinyMCE4" />
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
         </before>
         <after>
             <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
