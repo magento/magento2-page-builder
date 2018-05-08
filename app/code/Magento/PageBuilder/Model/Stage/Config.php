@@ -9,8 +9,8 @@ use Magento\Framework\UrlInterface;
 
 class Config
 {
-    const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/preview';
-    const DEFAULT_CONTENT_COMPONENT = 'Magento_PageBuilder/js/content';
+    const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/content-type/preview';
+    const DEFAULT_CONTENT_COMPONENT = 'Magento_PageBuilder/js/content-type/content';
 
     /**
      * @var \Magento\PageBuilder\Model\Config\ConfigInterface

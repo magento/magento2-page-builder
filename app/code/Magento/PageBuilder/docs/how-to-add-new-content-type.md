@@ -25,10 +25,10 @@ To add configuration for a new content type, create a file under the following l
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
                                     <property name="border_style" var="border"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" var="margins_and_padding"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="data-role" var="name"/>
@@ -37,8 +37,8 @@ To add configuration for a new content type, create a file under the following l
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Vendor_ModuleNameCustom/content-type/preview/simple.html</preview_template>
-                    <render_template>Vendor_ModuleNameCustom/content-type/master/simple.html</render_template>
+                    <preview_template>Vendor_ModuleNameCustom/content-type/simple/default/preview</preview_template>
+                    <render_template>Vendor_ModuleNameCustom/content-type/simple/default/master</render_template>
                     <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
@@ -53,7 +53,7 @@ Let's create templates specified in the configuration.
 
 Optional: For template knockout bindings, you can use the original data-bind syntax, or utilize Magento custom Knockout.js bindings as seen in the template snippets below. `http://devdocs.magento.com/guides/v2.2/ui_comp_guide/concepts/knockout-bindings.html`
 
-Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/simple.html`.
+Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/simple/default/preview.html`.
 
 ``` HTML
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
@@ -62,7 +62,7 @@ Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content
 </div>
 ```
 
-And master template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/master/simple.html`.
+And master template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/simple/default/master.html`.
 
 ``` HTML
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
@@ -157,28 +157,27 @@ And to allow this form to be loaded in PageBuilder, let's create layout `Vendor/
             <uiComponent name="modulename_simple_form"/>
         </referenceContainer>
     </body>
-</page>```
+</page>
+```
 
-## Preview, PreviewCollection, Content and ContentCollection
+## Preview, PreviewCollection, Content, and ContentCollection
 
-If your content type has custom preview logic, you need to specify `preview_component`, otherwise the default one `Magento_PageBuilder/js/preview` will be used.
+If your content type has custom preview logic, you need to specify `preview_component`, otherwise the default one `Magento_PageBuilder/js/content-type/preview` will be used.
 
-If your content type can have other components as children, you need to extend `Magento_PageBuilder/js/preview-collection` component. Otherwice you need to extend `Magento_PageBuilder/js/preview`.
+If your content type can have other components as children, you need to extend `Magento_PageBuilder/js/content-type/preview-collection` component. Otherwice you need to extend `Magento_PageBuilder/js/content-type/preview`.
 
 In the preview component you can add custom logic that will be available in the template. You can also do modifications to observables used in preview template if you override `afterObservablesUpdated` method. 
 
 Let's add a button in the preview that would display `Hello World` on click.
 
-``` JS
-define(["Magento_PageBuilder/js/preview"], function (Preview) {
+``` js
+define(["Magento_PageBuilder/js/content-type/preview"], function (Preview) {
     var Simple = function() {
         Preview.apply(this, arguments);
     };
 
     Simple.prototype = Object.create(Preview.prototype);
-    Simple.prototype.constructor = Custom;
-    
-    var super_ = Preview.prototype;
+    Simple.prototype.constructor = Simple;
 
     /**
      * Alert Hello World
@@ -207,8 +206,8 @@ Now, let's add content type that can contain other content types. Create configu
             <label>Complex</label>
             <icon>icon-vendorname-complex</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/preview-collection</preview_component>
-            <content_component>Magento_PageBuilder/js/content-collection</content_component>
+            <preview_component>Magento_PageBuilder/js/content-type/preview-collection</preview_component>
+            <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
             <form>vendorname_complex_form</form>
             <group>general</group>
             <allowed_parents>
@@ -223,10 +222,10 @@ Now, let's add content type that can contain other content types. Create configu
                                 <style_properties>
                                     <property name="text_align" var="text_align"/>
                                     <property name="border_style" var="border"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" var="margins_and_padding"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="data-role" var="name"/>
@@ -235,8 +234,8 @@ Now, let's add content type that can contain other content types. Create configu
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Vendor_ModuleName/content-type/preview/complex.html</preview_template>
-                    <render_template>Vendor_ModuleName/content-type/master/complex.html</render_template>
+                    <preview_template>Vendor_ModuleName/content-type/complex/default/preview</preview_template>
+                    <render_template>Vendor_ModuleName/content-type/complex/default/master</render_template>
                     <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
                 </appearance>
             </appearances>
@@ -252,7 +251,7 @@ Now we need to specify which content types can be inserted into our new content 
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
     <content_types>
-        <type name="heading" sortOrder="30" translate="label">
+        <type name="heading">
             <allowed_parents>
                 <parent name="complex"/>
             </allowed_parents>
@@ -263,7 +262,7 @@ Now we need to specify which content types can be inserted into our new content 
 
 Now need to create preview and render templates.
 
-`Vendor/ModuleName/view/adminhtml/web/template/content-type/preview/complex.html`
+`Vendor/ModuleName/view/adminhtml/web/template/content-type/complex/default/preview.html`
 
 ``` HTML
 <div class="pagebuilder-content-type type-container pagebuilder-complex children-min-height" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
@@ -272,7 +271,7 @@ Now need to create preview and render templates.
 </div>
 ```
 
-`Vendor/ModuleName/view/adminhtml/web/template/content-type/master/complex.html`
+`Vendor/ModuleName/view/adminhtml/web/template/content-type/complex/default/master.html`
 ``` HTML
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
     <render args="renderChildTemplate" />
@@ -284,8 +283,8 @@ Please also notice that we specified in configuration the following, to allow ou
 | Setting             | Value                                          |
 | ------------------- | ---------------------------------------------- |
 | `component`         | Magento_PageBuilder/js/content-type-collection |
-| `preview_component` | Magento_PageBuilder/js/preview-collection      |
-| `content_component` | Magento_PageBuilder/js/content-collection      |
+| `preview_component` | Magento_PageBuilder/js/content-type/preview-collection      |
+| `content_component` | Magento_PageBuilder/js/content-type/content-collection      |
 
 You can also specify `content_component` if you want to do modifications to observables used in master format templates.
 
@@ -294,11 +293,11 @@ You can also specify `content_component` if you want to do modifications to obse
 
 `component` is structure element. If your content type can contain children use `Magento_PageBuilder/js/content-type-collection`, otherwise use `Magento_PageBuilder/js/content-type`. You may extend default `component` if you want to dispatch additional or subscribe to existing events.
 
-`preview_component` contains preview logic that is generic for all appearances. If `preview_component` not specified, the default one `Magento_PageBuilder/js/preview` will be used. If your content type can have other components as children, you need to specify `Magento_PageBuilder/js/preview-collection`.
+`preview_component` contains preview logic that is generic for all appearances. If `preview_component` not specified, the default one `Magento_PageBuilder/js/content-type/preview` will be used. If your content type can have other components as children, you need to specify `Magento_PageBuilder/js/content-type/preview-collection`.
 
 You can also do modifications to observables used in preview template if you override `afterObservablesUpdated` method. 
 
-`content_component` contains master format rendering logic that is generic for all appearances. If `content_component` not specified, the default one `Magento_PageBuilder/js/content` will be used. If your content type can have other components as children, you need to specify `Magento_PageBuilder/js/content-collection`. If you need to do modifications to observables used in preview template if you override `afterObservablesUpdated` method.
+`content_component` contains master format rendering logic that is generic for all appearances. If `content_component` not specified, the default one `Magento_PageBuilder/js/content-type/content` will be used. If your content type can have other components as children, you need to specify `Magento_PageBuilder/js/content-type/content-collection`. If you need to do modifications to observables used in preview template if you override `afterObservablesUpdated` method.
 
 ## Config
 
