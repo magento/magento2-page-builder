@@ -110,33 +110,27 @@
                 <dataScope>zip</dataScope>
             </settings>
         </field>
-        <field name="country" formElement="select" sortOrder="70">
+        <field name="country" component="Magento_Catalog/js/components/new-category" sortOrder="70" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">default</item>
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="showCheckbox" xsi:type="boolean">false</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="isRemoveSelectedIcon" xsi:type="boolean">false</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
                 </item>
             </argument>
             <settings>
-                <dataType>text</dataType>
+                <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
                 <label translate="true">Country</label>
+                <dataScope>country</dataScope>
+                <componentType>field</componentType>
             </settings>
             <formElements>
                 <select>
                     <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">default</item>
-                                <item name="label" xsi:type="string" translate="true">Default</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">country1</item>
-                                <item name="label" xsi:type="string" translate="true">Country1</item>
-                            </option>
-                            <option name="2" xsi:type="array">
-                                <item name="value" xsi:type="string">country2</item>
-                                <item name="label" xsi:type="string" translate="true">Country2</item>
-                            </option>
-                        </options>
+                        <options class="Magento\Pagebuilder\Model\Config\Source\Country"/>
                     </settings>
                 </select>
             </formElements>
