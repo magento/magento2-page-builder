@@ -151,11 +151,8 @@ export default class Preview extends PreviewCollection {
         const focusTime = new Date().getTime();
         Preview.focusOperationTime = focusTime;
 
-        console.log("setFocusedTab: focusTime=" + focusTime);
-
         // Add a 200ms delay after a null set to allow for clicks to be captured
         _.delay(() => {
-            console.log("delay: index=" + index + " -- this.focusOperationTime=" + Preview.focusOperationTime + " -- focusTime=" + focusTime);
             if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
                 if (index !== null) {
                     events.trigger("interaction:start");

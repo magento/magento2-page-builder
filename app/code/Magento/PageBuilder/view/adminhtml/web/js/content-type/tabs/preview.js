@@ -152,12 +152,9 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
 
       var focusTime = new Date().getTime();
-      Preview.focusOperationTime = focusTime;
-      console.log("setFocusedTab: focusTime=" + focusTime); // Add a 200ms delay after a null set to allow for clicks to be captured
+      Preview.focusOperationTime = focusTime; // Add a 200ms delay after a null set to allow for clicks to be captured
 
       _underscore.delay(function () {
-        console.log("delay: index=" + index + " -- this.focusOperationTime=" + Preview.focusOperationTime + " -- focusTime=" + focusTime);
-
         if (!_this2.disableInteracting && Preview.focusOperationTime === focusTime) {
           if (index !== null) {
             _uiEvents.trigger("interaction:start");
