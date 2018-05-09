@@ -67,7 +67,7 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
                 ),
                 'content_css' => [
                     $this->assetRepo->getUrl('mage/adminhtml/wysiwyg/tiny_mce/themes/ui.css'),
-                    $this->assetRepo->getUrl('Magento_PageBuilder/css/source/wysiwyg/tinymce.css')
+                    $this->assetRepo->getUrl('Magento_PageBuilder/css/source/form/element/tinymce.css')
                 ]
             ],
             'settings' => $this->additionalSettings

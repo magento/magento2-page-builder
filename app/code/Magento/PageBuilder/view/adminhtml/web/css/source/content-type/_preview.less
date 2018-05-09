@@ -1,0 +1,625 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+.pagebuilder-content-type {
+    [contenteditable=true] {
+        -webkit-user-select: text;
+        user-select: text;
+
+        b {
+            font-weight: normal;
+        }
+        i {
+            font-style: normal;
+        }
+        &:empty:before {
+            content: attr(data-placeholder);
+        }
+    }
+
+    .pagebuilder-system-border;
+
+    &.pagebuilder-content-type-active:hover:not(.no-system-border) {
+        .pagebuilder-system-border-hover;
+    }
+
+    &.type-container {
+        outline: 1px solid rgba(153, 153, 153, .3);
+    }
+
+    .pagebuilder-empty-container {
+        color: rgba(153, 153, 153, .8);
+        font-size: 14px;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        transform: translateY(-50%);
+        -webkit-transition: .3s;
+        -moz-transition: .3s;
+        transition: .3s;
+        visibility: hidden;
+        width: 100%;
+
+        &.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        &.empty-placeholder {
+            background: url('@{baseDir}Magento_PageBuilder/css/images/cms-empty-row.svg') no-repeat center center;
+            background-size: 505px 97px;
+            height: 170px;
+            left: 0;
+            padding-top: 130px;
+            position: absolute;
+            text-align: center;
+            -webkit-transition: .3s;
+            -moz-transition: .3s;
+            transition: .3s;
+            width: 100%;
+            z-index: 1;
+        }
+    }
+
+    .element-children {
+        font-size: 0;
+        position: relative;
+        z-index: 10;
+    }
+
+    &.children-min-height {
+        > .element-children {
+            min-height: 190px;
+            padding: 30px;
+        }
+        > div {
+            > .element-children {
+                min-height: 190px;
+                padding: 30px;
+            }
+        }
+    }
+
+    &.pagebuilder-entity {
+        display: inline-block;
+        font-size: 0;
+        width: 100%;
+
+        &.pagebuilder-abstract {
+            background: @entityColor;
+            color: white;
+            text-align: center;
+
+            i {
+                font-size: 24px;
+            }
+
+            h3 {
+                margin: 6px 0 0;
+                padding: 0;
+            }
+
+            * {
+                color: white;
+            }
+        }
+
+        &.pagebuilder-entity-preview {
+            font-size: 14px;
+        }
+
+        .pagebuilder-loading {
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        &.pagebuilder-image {
+            .pagebuilder-image-placeholder {
+                background: #f8f8f8;
+                cursor: pointer;
+                font-size: 12px;
+                padding: 30px 0 16px;
+                text-align: center;
+
+                i {
+                    font-size: 34px;
+                    margin-bottom: 8px;
+                }
+
+                p {
+                    padding: 0 20px;
+                }
+            }
+
+            &.loading {
+
+                img {
+                    opacity: .5;
+                }
+            }
+
+            .dz-message,
+            .dz-preview {
+                display: none;
+            }
+
+            &.dz-drag-hover {
+                img,
+                .pagebuilder-image-placeholder {
+                    -webkit-filter: blur(5px);
+                    -moz-filter: blur(5px);
+                    filter: blur(5px);
+                    opacity: .6;
+                }
+            }
+        }
+    }
+}
+
+.no-user-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+
+.no-pointer-events {
+    pointer-events: none;
+}
+
+.ui-draggable-dragging {
+    &.pagebuilder-draggable-block {
+        display: block;
+        width: 150px;
+
+        a {
+            background: @panelColor;
+            color: @iconColorHover;
+            cursor: pointer;
+            display: block;
+            line-height: 44px;
+            min-width: 160px;
+            padding: 0 18px;
+            text-decoration: none;
+            width: 100%;
+
+            i {
+                margin-right: 6px;
+            }
+        }
+    }
+}
+
+.pagebuilder-display-label {
+    background: rgba(255, 255, 255, .9);
+    border-radius: 2px;
+    color: rgba(153, 153, 153, .8);
+    display: inline;
+    font-size: 9px;
+    left: 50%;
+    letter-spacing: .1em;
+    padding: 0 4px;
+    position: absolute;
+    text-align: center;
+    text-transform: capitalize;
+    top: 0;
+    transform: translate(-50%, -50%);
+}
+
+.pagebuilder-placeholder {
+    &.pagebuilder-draggable-block {
+        display: block;
+        float: left;
+        margin-left: -5px;
+        width: calc(~'100% + 10px');
+
+        a {
+            background: @color-phoenix-dark;
+            border: none;
+            display: inline-block;
+            height: 1px;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            width: 100%;
+            z-index: 12;
+
+            &:before,
+            &:after {
+                background: @color-phoenix-dark;
+                border-radius: 10px;
+                content: '';
+                height: 10px;
+                margin-top: -5px;
+                position: absolute;
+                width: 10px;
+                z-index: 12;
+            }
+
+            &:before {
+                float: left;
+            }
+
+            &:after {
+                float: right;
+                right: 0;
+            }
+        }
+    }
+}
+
+.pagebuilder-system-border {
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    outline: 1px solid rgba(153, 153, 153, 0);
+    position: relative;
+    -webkit-transition: outline 200ms ease 200ms;
+    -moz-transition: outline 200ms ease 200ms;
+    -o-transition: outline 200ms ease 200ms;
+    transition: outline 200ms ease 200ms;
+    z-index: 10;
+}
+.pagebuilder-system-border-hover {
+    outline: 1px solid rgb(153, 153, 153);
+    -webkit-transition: outline 200ms ease 200ms;
+    -moz-transition: outline 200ms ease 200ms;
+    -o-transition: outline 200ms ease 200ms;
+    transition: outline 200ms ease 200ms;
+    z-index: 25;
+
+    &.type-container {
+        outline: 1px solid rgb(153, 153, 153);
+    }
+}
+
+.pagebuilder-stage {
+    &.dragging {
+        .pagebuilder-content-type {
+            .pagebuilder-column {
+                .pagebuilder-column-resize-handle {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+.pagebuilder-placeholder-sortable {
+    background: @color-phoenix-dark;
+    border: none;
+    display: inline-block;
+    height: 1px;
+    margin-left: -5px;
+    padding: 0;
+    position: relative;
+    width: calc(~'100% + 10px');
+
+    &:before,
+    &:after {
+        background: @color-phoenix-dark;
+        border-radius: 10px;
+        content: '';
+        height: 10px;
+        margin-top: -5px;
+        position: absolute;
+        width: 10px;
+        z-index: 999;
+    }
+
+    &:before {
+        float: left;
+    }
+
+    &:after {
+        float: right;
+        right: 0;
+    }
+
+    &.pagebuilder-structure-wrapper {
+        box-sizing: content-box;
+        position: relative;
+    }
+
+    &.pagebuilder-placeholder-column {
+        height: 90px;
+        margin: 10px -6px;
+        width: 12px;
+        z-index: 500;
+    }
+}
+
+// Don't display the hover state when the stage is being interacted with
+.pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-content-type-active:hover {
+    outline: 1px solid rgba(153, 153, 153, 0);
+    z-index: 10;
+
+    &.type-container {
+        outline: 1px solid rgba(153, 153, 153, .3);
+    }
+}
+
+//
+//  Options Panel
+//  _____________________________________________
+
+.pagebuilder-options-visible {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition-delay: 200ms;
+    visibility: visible;
+}
+
+.pagebuilder-options {
+    height: 40px;
+    left: 50%;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    transform: translate(-50%, -50%);
+    -webkit-transition: opacity 200ms, visibility 200ms;
+    -moz-transition: opacity 200ms, visibility 200ms;
+    -o-transition: opacity 200ms, visibility 200ms;
+    transition: opacity 200ms, visibility 200ms;
+    visibility: hidden;
+    z-index: 30;
+
+    &.pagebuilder-options-visible {
+        .pagebuilder-options-visible;
+    }
+
+    .pagebuilder-options-wrapper {
+        background: #fff;
+        border: 1px solid rgba(153, 153, 153, .7);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+        display: flex;
+        z-index: 99;
+
+        .pagebuilder-name {
+            display: inline-block;
+            font-size: 14px;
+            height: 38px;
+            padding: 10px 0;
+            vertical-align: bottom;
+            white-space: nowrap;
+        }
+
+        a {
+            color: @color-very-dark-grayish-orange;
+            text-decoration: none;
+
+            &:hover {
+                background-color: #eee;
+            }
+        }
+
+        .pagebuilder-options-links {
+            background: white;
+            display: flex;
+            list-style: none;
+            margin: 0;
+            vertical-align: middle;
+            z-index: 2;
+
+            .pagebuilder-options-link {
+                vertical-align: top;
+
+                .remove-structural {
+
+                    &.disabled {
+                        color: @color-dark-gray;
+                        cursor: not-allowed;
+
+                        &:hover {
+                            background-color: #fff;
+                            color: @color-dark-gray;
+                        }
+                    }
+                }
+
+                > a {
+                    color: @color-very-dark-grayish-orange;
+                    display: block;
+                    height: 36px;
+                    text-align: center;
+                    text-decoration: none;
+                    transition: background .2s, color .2s;
+                    vertical-align: middle;
+                    width: 36px;
+
+                    i {
+                        font-size: 18px;
+                        line-height: 36px;
+                        text-decoration: none;
+                        vertical-align: middle;
+                    }
+
+                    &.move-structural,
+                    &.move-column {
+                        cursor: move; /* fallback if grab cursor is unsupported */
+                        cursor: grab;
+                        cursor: -moz-grab;
+                        cursor: -webkit-grab;
+                        display: inline-block;
+                        margin: 0;
+                        padding: 0;
+                        width: 36px;
+
+                        &:active {
+                            cursor: grabbing;
+                            cursor: -moz-grabbing;
+                            cursor: -webkit-grabbing;
+                        }
+                    }
+
+                    &:hover:not(&.option-title) {
+                        background-color: #eee;
+                        color: @color-very-dark-gray-black;
+                    }
+                }
+
+                > .option-title {
+                    cursor: default;
+                    font-size: 14px;
+                    height: 36px;
+                    line-height: 36px;
+                    padding: 0 4px;
+                    text-decoration: none;
+                    white-space: nowrap;
+                }
+
+                &:first-child {
+                    > .option-title {
+                        padding-left: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.focus-options {
+    .pagebuilder-options {
+        top: -20px;
+        transform: translate(-50%, -20%);
+        -webkit-transition: opacity 200ms, visibility 200ms, transform 200ms;
+        -moz-transition: opacity 200ms, visibility 200ms, transform 200ms;
+        -o-transition: opacity 200ms, visibility 200ms, transform 200ms;
+        transition: opacity 200ms, visibility 200ms, transform 200ms;
+        transition-delay: 0ms !important; // Arrow options have no delay in transitioning out
+
+        .pagebuilder-options-wrapper {
+            &:after {
+                background: #fff;
+                border: 1px solid rgba(153, 153, 153, .7);
+                bottom: -6px;
+                content: '';
+                display: block;
+                height: 12px;
+                left: calc(50% - 1px);
+                position: absolute;
+                transform: rotate(45deg) translateX(-50%);
+                width: 12px;
+                z-index: 1;
+            }
+        }
+    }
+}
+
+.type-nested {
+    .pagebuilder-options:nth-of-type(2) {
+        left: auto;
+        right: 0;
+        transform: none;
+    }
+}
+
+.ui-sortable-helper .pagebuilder-options .pagebuilder-options-wrapper .pagebuilder-options-links .pagebuilder-options-link {
+    &.move-structural,
+    &.move-column {
+        cursor: -webkit-grabbing;
+    }
+}
+
+// Don't display the options when the stage is being interacted with
+.pagebuilder-stage.interacting {
+    .pagebuilder-options {
+        display: none;
+    }
+
+    // We still want to display any arrow options, as they're shown on focus
+    .focus-options {
+        .pagebuilder-options {
+            display: block;
+        }
+    }
+}
+
+//
+//  Live Edit
+//  _____________________________________________
+
+.pagebuilder-live-edit-wrapper {
+    background: #2b2625;
+    border: none;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
+    color: #f8f3eb;
+    display: none;
+    left: 10px !important;
+    overflow: hidden;
+    position: absolute !important;
+    top: -43px !important;
+    z-index: 1000;
+
+    ul.pagebuilder-live-edit-options {
+        font-size: 0;
+        height: 42px;
+        margin: 0;
+        padding: 0;
+
+        li.pagebuilder-live-edit-option {
+            display: inline-block;
+            padding: 0;
+
+            label {
+                display: inline-block;
+                font-size: 13px;
+                font-weight: 600;
+                padding: 0 12px 0 14px;
+            }
+            ul.pagebuilder-select-options {
+                display: inline-block;
+                font-size: 0;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                li {
+                    display: inline-block;
+
+                    a {
+                        color: white;
+                        display: block;
+                        font-size: 13px;
+                        line-height: 42px;
+                        padding: 0 14px;
+
+                        &:hover {
+                            background: #534d49;
+                            color: #f8f3eb;
+                            text-decoration: none;
+                        }
+                    }
+
+                    &.active {
+                        a {
+                            background: #534d49;
+                            color: #f8f3eb;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
