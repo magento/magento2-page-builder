@@ -10,6 +10,7 @@ import ContentTypeConfigInterface from "../content-type-config";
 import {getDraggedBlockConfig} from "../panel/registry";
 import Stage from "../stage";
 import Preview from "./preview";
+import {createStyleSheet} from "../utils/create-stylesheet";
 
 /**
  * Return the sortable options for an instance which requires sorting / dropping functionality
@@ -90,6 +91,41 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
 
         // Remove the DOM element, as this is a drop event we can't just remove the ui.item
         $(event.target).find(".pagebuilder-draggable-block").remove();
+    }
+}
+
+let headDropIndicatorStyles: HTMLStyleElement;
+
+/**
+ * Show the drop indicators for a specific content type
+ *
+ * @param {string} contentType
+ * @returns {HTMLStyleElement}
+ */
+export function showDropIndicators(contentType: string) {
+    const acceptedContainers = getContainersFor(contentType);
+    if (acceptedContainers.length > 0) {
+        const classNames = acceptedContainers.map((container: string) => {
+            return ".content-type-container." + container + "-container > .pagebuilder-drop-indicator";
+        });
+        const styles = createStyleSheet({
+            [classNames.join(", ")]: {
+                opacity: 1,
+                visibility: "visible",
+            },
+        });
+        document.head.appendChild(styles);
+        headDropIndicatorStyles = styles;
+        return styles;
+    }
+}
+
+/**
+ * Hide the drop indicators
+ */
+export function hideDropIndicators() {
+    if (headDropIndicatorStyles) {
+        headDropIndicatorStyles.remove();
     }
 }
 

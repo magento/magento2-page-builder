@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/registry"], function (_jquery, _uiEvents, _underscore, _config, _registry) {
+define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/utils/create-stylesheet"], function (_jquery, _uiEvents, _underscore, _config, _registry, _createStylesheet) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -85,6 +85,43 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Ma
     }
   }
 
+  var headDropIndicatorStyles;
+  /**
+   * Show the drop indicators for a specific content type
+   *
+   * @param {string} contentType
+   * @returns {HTMLStyleElement}
+   */
+
+  function showDropIndicators(contentType) {
+    var acceptedContainers = getContainersFor(contentType);
+
+    if (acceptedContainers.length > 0) {
+      var _createStyleSheet;
+
+      var classNames = acceptedContainers.map(function (container) {
+        return ".content-type-container." + container + "-container > .pagebuilder-drop-indicator";
+      });
+      var styles = (0, _createStylesheet.createStyleSheet)((_createStyleSheet = {}, _createStyleSheet[classNames.join(", ")] = {
+        opacity: 1,
+        visibility: "visible"
+      }, _createStyleSheet));
+      document.head.appendChild(styles);
+      headDropIndicatorStyles = styles;
+      return styles;
+    }
+  }
+  /**
+   * Hide the drop indicators
+   */
+
+
+  function hideDropIndicators() {
+    if (headDropIndicatorStyles) {
+      headDropIndicatorStyles.remove();
+    }
+  }
+
   var acceptedMatrix = {};
   /**
    * Build a matrix of which containers each content type can go into, these are calculated by the type given to the
@@ -150,6 +187,8 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Ma
 
   return {
     getSortableOptions: getSortableOptions,
+    showDropIndicators: showDropIndicators,
+    hideDropIndicators: hideDropIndicators,
     generateContainerAcceptedMatrix: generateContainerAcceptedMatrix,
     getContainersFor: getContainersFor
   };
