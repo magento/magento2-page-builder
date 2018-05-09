@@ -76,9 +76,9 @@
             <argument name="to" defaultValue="2" type="string"/>
         </arguments>
         <click selector="{{TabOnStorefront.tabHeader(to)}}" stepKey="switchToTab"/>
-        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" />
         <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
         <wait time="1" stepKey="waitForTabRender"/>
+        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
