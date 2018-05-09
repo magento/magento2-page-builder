@@ -28,8 +28,8 @@ import PreviewCollection from "../preview-collection";
 export default class Preview extends PreviewCollection {
     public focusedTab: KnockoutObservable<number> = ko.observable();
     private disableInteracting: boolean;
-    private disableDelay: boolean;
     private element: Element;
+    private focusOperationTime: number;
 
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
@@ -89,21 +89,6 @@ export default class Preview extends PreviewCollection {
         events.on("previewSortable:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
             this.refreshTabs(args.newPosition, true);
         });
-        // Set the stage to interacting when a tab is focused
-        let focusTabValue: number;
-        this.focusedTab.subscribe((value: number) => {
-            focusTabValue = value;
-            // If we're stopping the interaction we need to wait, to ensure any other actions can complete
-            _.delay(() => {
-                if (focusTabValue === value && !this.disableInteracting) {
-                    if (value !== null) {
-                        events.trigger("interaction:start");
-                    } else {
-                        events.trigger("interaction:stop");
-                    }
-                }
-            }, ((value === null && !this.disableDelay) ? 200 : 0));
-        });
     }
 
     /**
@@ -130,7 +115,9 @@ export default class Preview extends PreviewCollection {
      * @param {number} index
      */
     public setActiveTab(index: number) {
-        $(this.element).tabs("option", "active", index);
+        if (index !== null) {
+            $(this.element).tabs("option", "active", index);
+        }
     }
 
     /**
@@ -146,9 +133,9 @@ export default class Preview extends PreviewCollection {
         }
         this.focusedTab(index);
 
-        if (this.element) {
+        if (this.element && index !== null) {
             if (this.element.getElementsByClassName("tab-name")[index]) {
-                this.element.getElementsByClassName("tab-name")[index].focus();
+                (this.element.getElementsByClassName("tab-name")[index] as HTMLElement).focus();
             }
             _.defer(() => {
                 if ($(":focus").hasClass("tab-name") && $(":focus").prop("contenteditable")) {
@@ -156,6 +143,24 @@ export default class Preview extends PreviewCollection {
                 }
             });
         }
+
+        /**
+         * Record the time the focus operation was completed to ensure the delay doesn't stop interaction when another
+         * interaction has started after.
+         */
+        const focusTime = new Date().getTime();
+        this.focusOperationTime = focusTime;
+
+        // Add a 200ms delay after a null set to allow for clicks to be captured
+        _.delay(() => {
+            if (!this.disableInteracting && this.focusOperationTime === focusTime) {
+                if (index !== null) {
+                    events.trigger("interaction:start");
+                } else {
+                    events.trigger("interaction:stop");
+                }
+            }
+        }, ((index === null) ? 200 : 0));
     }
 
     /**
