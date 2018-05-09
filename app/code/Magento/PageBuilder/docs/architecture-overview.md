@@ -63,6 +63,14 @@ Here is simplified data flow:
 8. Preview and master component observables updated.
 9. Attribute that editable with Page Builder updated, master format hen user saves pages data saved to the database.
 
+## Data store
+
+Data for content type stored in DataStore `Magento_PageBuilder/js/data-store`.
+
+DataStore is a simple object. `var` from [content type configuration](content-type-configuration.md) is the name of parameter in DataStore.
+
+You can use `subscribe` method to subscribe to changes of the data and perform custom action on it.
+
 ## Content type configuration
 
 Please see [content type configuration](content-type-configuration.md#Converter Interfaces) for content type configuration.
