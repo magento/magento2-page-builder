@@ -269,7 +269,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <waitForElementVisible time="10" selector="{{SlideOnBackend.optionTitle}}" stepKey="waitForOptionTitle" />
         <grabTextFrom selector="{{SlideOnBackend.optionTitle}}" stepKey="grabSlide1OptionTitle"/>
-        <assertEquals expected="Slide1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
+        <assertEquals expected="Slide 1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
         <!-- Empty slide background defaults on admin preview -->
         <comment userInput="Verify slide defaults on admin: Background Color defaults to empty" stepKey="adminDefaultColor"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="background-color: transparent" stepKey="verifyAdminTransparent"/>

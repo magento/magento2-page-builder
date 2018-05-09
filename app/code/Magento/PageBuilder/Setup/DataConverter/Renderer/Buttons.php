@@ -44,6 +44,7 @@ class Buttons implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'buttons',
+            'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? ''
         ];
 

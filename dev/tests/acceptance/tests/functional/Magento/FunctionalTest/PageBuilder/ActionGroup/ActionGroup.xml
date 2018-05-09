@@ -98,6 +98,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentBlockNameInEditFormTitle" />
         <see userInput="Edit {{contentBlockType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <waitForPageLoad stepKey="waitForEditFormLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToContainer">
         <arguments>
@@ -202,9 +203,10 @@
         </arguments>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
-        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <waitForPageLoad stepKey="waitForPageLoad1" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockRemove(contentBlockType.role)}}" stepKey="clickRemoveContentBlock"/>
+        <waitForPageLoad stepKey="waitForPageLoad2" />
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal" />
         <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalOk" />
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>

@@ -75,6 +75,7 @@ class Product implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'products',
+            'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? '',
             'data-view-mode' => $eavData['product_display'] ?? '',
             'data-sku' => $productSku

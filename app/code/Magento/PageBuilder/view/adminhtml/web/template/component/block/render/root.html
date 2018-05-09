@@ -5,6 +5,6 @@
  */
 -->
 
-<div data-bind="foreach: getChildren()" data-wrapper="true">
-    <!-- ko template: {name: content.renderTemplate, data: content} --><!-- /ko -->
+<div each="getChildren()" data-wrapper="true">
+    <render args="{ name: content.renderTemplate, data: content }" />
 </div>

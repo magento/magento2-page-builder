@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/event-bus", "Magento_PageBuilder/js/component/uploader"], function (_uiEvents, _preview, _eventBus, _uploader) {
+define(["uiEvents", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/component/uploader"], function (_uiEvents, _preview, _uploader) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Image =
@@ -37,7 +37,7 @@ define(["uiEvents", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/co
 
       _Preview.prototype.bindEvents.call(this);
 
-      _eventBus.on(this.parent.id + ":updated", function (event, params) {
+      _uiEvents.on(this.parent.id + ":updated", function () {
         var imageDataStore = _this2.parent.store.get(_this2.parent.id);
 
         var imageObject = imageDataStore.image[0] || {};
@@ -45,7 +45,7 @@ define(["uiEvents", "Magento_PageBuilder/js/preview", "Magento_PageBuilder/js/co
         _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
       });
 
-      _eventBus.once("image:block:ready", function (event, params) {
+      _uiEvents.on("image:block:ready", function () {
         var imageDataStore = _this2.parent.store.get(_this2.parent.id);
 
         var initialImageValue = imageDataStore.image || ""; // Create uploader

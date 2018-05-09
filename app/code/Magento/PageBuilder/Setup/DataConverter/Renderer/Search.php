@@ -56,7 +56,7 @@ class Search implements RendererInterface
         $searchHtml = "{{block class='Magento\Framework\View\Element\Template' " .
             "template='Magento_PageBuilder::pagebuilder/blocks/core/search.phtml' " .
             "placeholder=\"$searchPlaceHolder\" classes=\"$searchClasses\" styles=\"$searchStyles\"}}";
-        $rootElementHtml = '<div data-role="html">';
+        $rootElementHtml = '<div data-role="html" data-appearance="default">';
 
         $rootElementHtml .= $searchHtml . '</div>';
 

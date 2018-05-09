@@ -59,6 +59,7 @@ class Accordion implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'accordion',
+            'data-appearance' => 'default',
             'data-mage-init' => $this->getMageInitValue($itemData),
             'class' => 'pagebuilder-accordion ' . ($eavData['css_classes'] ?? '')
         ];
