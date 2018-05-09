@@ -141,6 +141,13 @@ requirejs([
             mapOptions = {},
             zoom;
 
+        /**
+         * Sets height to 300px as default if no height input. But will not be saved to database
+         */
+        if ($(element).context.style.height === '') {
+            $(element).height('300px');
+        }
+
         if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '[]') {
             markers = JSON.parse(element.getAttribute('data-markers'));
             zoom = element.getAttribute('data-zoom');
@@ -151,8 +158,8 @@ requirejs([
             country = element.getAttribute('data-country');
             zip = element.getAttribute('data-zip');
             controls = element.getAttribute('data-show-controls');
-            marker= [{
-                coordinates : markers[0],
+            marker = [{
+                coordinates: markers[0],
                 location: location,
                 address: address,
                 city: city,
