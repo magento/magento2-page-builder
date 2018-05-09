@@ -26,10 +26,10 @@ import {SortableOptionsInterface} from "../options/sortable-options.d";
 import PreviewCollection from "../preview-collection";
 
 export default class Preview extends PreviewCollection {
+    public static focusOperationTime: number;
     public focusedTab: KnockoutObservable<number> = ko.observable();
     private disableInteracting: boolean;
     private element: Element;
-    private focusOperationTime: number;
 
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
@@ -149,11 +149,14 @@ export default class Preview extends PreviewCollection {
          * interaction has started after.
          */
         const focusTime = new Date().getTime();
-        this.focusOperationTime = focusTime;
+        Preview.focusOperationTime = focusTime;
+
+        console.log("setFocusedTab: focusTime=" + focusTime);
 
         // Add a 200ms delay after a null set to allow for clicks to be captured
         _.delay(() => {
-            if (!this.disableInteracting && this.focusOperationTime === focusTime) {
+            console.log("delay: index=" + index + " -- this.focusOperationTime=" + Preview.focusOperationTime + " -- focusTime=" + focusTime);
+            if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
                 if (index !== null) {
                     events.trigger("interaction:start");
                 } else {

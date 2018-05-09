@@ -25,7 +25,6 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       _this.focusedTab = _knockout.observable();
       _this.disableInteracting = void 0;
       _this.element = void 0;
-      _this.focusOperationTime = void 0;
       _this.buildTabs = _underscore.debounce(function (activeTabIndex) {
         if (activeTabIndex === void 0) {
           activeTabIndex = _this.previewData.default_active();
@@ -153,10 +152,13 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
 
       var focusTime = new Date().getTime();
-      this.focusOperationTime = focusTime; // Add a 200ms delay after a null set to allow for clicks to be captured
+      Preview.focusOperationTime = focusTime;
+      console.log("setFocusedTab: focusTime=" + focusTime); // Add a 200ms delay after a null set to allow for clicks to be captured
 
       _underscore.delay(function () {
-        if (!_this2.disableInteracting && _this2.focusOperationTime === focusTime) {
+        console.log("delay: index=" + index + " -- this.focusOperationTime=" + Preview.focusOperationTime + " -- focusTime=" + focusTime);
+
+        if (!_this2.disableInteracting && Preview.focusOperationTime === focusTime) {
           if (index !== null) {
             _uiEvents.trigger("interaction:start");
           } else {
@@ -411,6 +413,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
   }(_previewCollection); // Resolve issue with jQuery UI tabs blocking events on content editable areas
 
 
+  Preview.focusOperationTime = void 0;
   var originalTabKeyDown = _jquery.ui.tabs.prototype._tabKeydown;
 
   _jquery.ui.tabs.prototype._tabKeydown = function (event) {
