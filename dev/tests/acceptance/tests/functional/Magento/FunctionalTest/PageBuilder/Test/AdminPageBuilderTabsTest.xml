@@ -420,6 +420,7 @@
             <title value="Can duplicate tab in tabs"/>
             <description value="Tabs should duplicate configured tab"/>
             <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
         </annotations>
         <before>
@@ -488,6 +489,7 @@
             <title value="Can duplicate tab in tabs"/>
             <description value="Tabs should duplicate with custom content"/>
             <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
         </annotations>
         <before>
@@ -526,6 +528,6 @@
             <argument name="from" value="1"/>
             <argument name="to" value="2"/>
         </actionGroup>
-        <seeElement selector="{{TabOnStorefront.tabContentText('2')}}" stepKey="seeTextElementInTabContent"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentText('2')}}" stepKey="seeTextElementInTabContent"/>
     </test>
 </tests>
