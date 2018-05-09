@@ -221,16 +221,16 @@ export default class Stage {
         const index = params.index || 0;
 
         new Promise<ContentTypeInterface>((resolve, reject) => {
-            if (params.block) {
-                return createContentType(params.block.config, params.parent, params.stageId)
+            if (params.blockConfig) {
+                return createContentType(params.blockConfig, params.parent, params.stageId)
                     .then((block: ContentTypeInterface) => {
                         params.parent.addChild(block, index);
                         events.trigger("block:dropped:create", {id: block.id, block});
-                        events.trigger(params.block.config.name + ":block:dropped:create", {id: block.id, block});
+                        events.trigger(params.blockConfig.name + ":block:dropped:create", {id: block.id, block});
                         return block;
                     });
             } else {
-                reject("Parameter block missing from event.");
+                reject("Parameter blockConfig missing from event.");
             }
         }).catch((error: string) => {
             console.error(error);

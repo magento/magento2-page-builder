@@ -228,8 +228,8 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
     _proto.onBlockDropped = function onBlockDropped(params) {
       var index = params.index || 0;
       new Promise(function (resolve, reject) {
-        if (params.block) {
-          return (0, _contentTypeFactory)(params.block.config, params.parent, params.stageId).then(function (block) {
+        if (params.blockConfig) {
+          return (0, _contentTypeFactory)(params.blockConfig, params.parent, params.stageId).then(function (block) {
             params.parent.addChild(block, index);
 
             _uiEvents.trigger("block:dropped:create", {
@@ -237,7 +237,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
               block: block
             });
 
-            _uiEvents.trigger(params.block.config.name + ":block:dropped:create", {
+            _uiEvents.trigger(params.blockConfig.name + ":block:dropped:create", {
               id: block.id,
               block: block
             });
@@ -245,7 +245,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
             return block;
           });
         } else {
-          reject("Parameter block missing from event.");
+          reject("Parameter blockConfig missing from event.");
         }
       }).catch(function (error) {
         console.error(error);

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block"], function (_jquery, _knockout, _koSortable, _translate, _uiEvents, _underscore, _draggable, _config, _group, _block) {
+define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block", "Magento_PageBuilder/js/panel/registry"], function (_jquery, _knockout, _koSortable, _translate, _uiEvents, _underscore, _draggable, _config, _group, _block, _registry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -112,7 +112,10 @@ define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "unde
     _proto.getDraggableOptions = function getDraggableOptions() {
       var self = this;
       return {
+        appendTo: "body",
+        cursor: "-webkit-grabbing",
         connectToSortable: ".content-type-drop",
+        containment: "document",
         helper: function helper() {
           return (0, _jquery)(this).clone().css({
             width: (0, _jquery)(this).width(),
@@ -120,12 +123,16 @@ define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "unde
             zIndex: 10001
           });
         },
-        revert: true,
-        revertDuration: 150,
         start: function start() {
-          _uiEvents.trigger("interaction:start", {
-            stage: self.parent.stage
-          });
+          var block = _knockout.dataFor(this);
+
+          if (block && block.config) {
+            (0, _registry.setDraggedBlockConfig)(block.config);
+
+            _uiEvents.trigger("interaction:start", {
+              stage: self.parent.stage
+            });
+          }
         },
         stop: function stop() {
           _uiEvents.trigger("interaction:stop", {

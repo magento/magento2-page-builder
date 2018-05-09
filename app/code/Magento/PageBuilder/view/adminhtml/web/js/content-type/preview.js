@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/preview-sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _uiEvents, _underscore, _liveEdit, _sortable, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _styleAttributeFilter, _styleAttributeMapper, _previewSortable, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/preview-sortable", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _uiEvents, _underscore, _liveEdit, _sortable, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _styleAttributeFilter, _styleAttributeMapper, _registry, _previewSortable, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -275,12 +275,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       return {
         cursor: "-webkit-grabbing",
         helper: function helper(event, item) {
-          return jQuery(item).clone()[0];
+          return (0, _jquery)(item).clone()[0];
         },
         appendTo: document.body,
         placeholder: {
           element: function element(currentItem) {
-            return jQuery("<div />").addClass("pagebuilder-sortable-placeholder")[0];
+            return (0, _jquery)("<div />").addClass("pagebuilder-sortable-placeholder")[0];
           },
           update: function update(container, p) {
             return;
@@ -289,7 +289,30 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
         handle: ".move-structural",
         items: "> .pagebuilder-content-type-wrapper",
         receive: function receive(event, ui) {
-          console.log(self.config.name, self.canParentReceiveDrops());
+          // If the parent can't receive drops we need to cancel the operation
+          if (!self.canParentReceiveDrops()) {
+            (0, _jquery)(this).sortable("cancel");
+            return;
+          }
+
+          var blockConfig = (0, _registry.getDraggedBlockConfig)();
+
+          if (blockConfig) {
+            // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
+            var index = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
+              return element.classList.contains("pagebuilder-draggable-block");
+            }); // Fire the event to be handled by the stage
+
+            _uiEvents.trigger("block:dropped", {
+              parent: self.parent,
+              stageId: self.parent.stageId,
+              blockConfig: blockConfig,
+              index: index
+            }); // Remove the DOM element, as this is a drop event we can't just remove the ui.item
+
+
+            (0, _jquery)(event.target).find(".pagebuilder-draggable-block").remove();
+          }
         }
       };
     };

@@ -16,6 +16,7 @@ import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
 import {Block as GroupBlock} from "./panel/group/block";
+import {setDraggedBlockConfig} from "./panel/registry";
 
 export default class Panel implements PanelInterface {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
@@ -118,7 +119,10 @@ export default class Panel implements PanelInterface {
     public getDraggableOptions(): JQueryUI.DraggableOptions {
         const self = this;
         return {
+            appendTo: "body",
+            cursor: "-webkit-grabbing",
             connectToSortable: ".content-type-drop",
+            containment: "document",
             helper() {
                 return $(this).clone().css({
                     width: $(this).width(),
@@ -126,10 +130,12 @@ export default class Panel implements PanelInterface {
                     zIndex: 10001,
                 });
             },
-            revert: true,
-            revertDuration: 150,
             start() {
-                events.trigger("interaction:start", {stage: self.parent.stage});
+                const block = ko.dataFor(this);
+                if (block && block.config) {
+                    setDraggedBlockConfig(block.config);
+                    events.trigger("interaction:start", {stage: self.parent.stage});
+                }
             },
             stop() {
                 events.trigger("interaction:stop", {stage: self.parent.stage});

@@ -38,3 +38,21 @@
 .content-type-drop {
     outline: red dotted 1px;
 }
+
+.pagebuilder-draggable-block a {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+
+    &:active {
+        cursor: grabbing;
+        cursor: -moz-grabbing;
+        cursor: -webkit-grabbing;
+    }
+}
+.pagebuilder-draggable-block.ui-draggable-dragging a {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
