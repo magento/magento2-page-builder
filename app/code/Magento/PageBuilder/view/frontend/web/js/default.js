@@ -130,16 +130,41 @@ requirejs([
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {
         var markers = [],
-            centerCoord = '',
+            marker = [],
+            location,
+            address,
+            city,
+            comment,
+            controls,
+            country,
+            zip,
             mapOptions = {},
             zoom;
 
         if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '[]') {
             markers = JSON.parse(element.getAttribute('data-markers'));
             zoom = element.getAttribute('data-zoom');
-            centerCoord = markers[0];
+            location = element.getAttribute('data-location-name');
+            address = element.getAttribute('data-address');
+            city = element.getAttribute('data-city');
+            comment = element.getAttribute('data-comment');
+            country = element.getAttribute('data-country');
+            zip = element.getAttribute('data-zip');
+            controls = element.getAttribute('data-show-controls');
+            marker= [{
+                coordinates : markers[0],
+                location: location,
+                address: address,
+                city: city,
+                comment: comment,
+                country: country,
+                zip: zip
+            }];
+
+            mapOptions.center = markers[0];
             mapOptions.zoom = parseInt(zoom, 10);
-            new GoogleMap(element, markers, centerCoord, mapOptions);
+            mapOptions.disableDefaultUI = controls !== 'false';
+            new GoogleMap(element, marker, mapOptions);
         }
     });
 

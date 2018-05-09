@@ -56,24 +56,18 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
     _proto.generateMap = function generateMap(element) {
       var markers = typeof this.data.main.attributes()["data-markers"] === "string" ? JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
-      var centerCoord = {
-        lat: 30.2672,
-        lng: -97.7431
-      };
       var options = {
-        zoom: 8
+        zoom: 8,
+        disableDefaultUI: false
       };
 
       if (markers && markers !== "" && markers.length && Object.keys(markers[0]).length) {
-        var pos = this.getPosition();
+        var pos = this.getMarkers();
         markers = pos.markers;
-        centerCoord = pos.latLng;
-        options = {
-          zoom: pos.zoom
-        };
+        options = pos.options;
       }
 
-      this.map = new _map(element, markers, centerCoord, options);
+      this.map = new _map(element, markers, options);
     };
     /**
      * Updates map
@@ -90,8 +84,8 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
       }
 
       if (markers.length) {
-        var pos = this.getPosition();
-        this.map.onUpdate(pos.markers, pos.latLng, pos.zoom);
+        var pos = this.getMarkers();
+        this.map.onUpdate(pos.markers, pos.options);
       }
     };
     /**
@@ -101,24 +95,43 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
      */
 
 
-    _proto.getPosition = function getPosition() {
-      var markers = typeof this.data.main.attributes()["data-markers"] === "string" ? JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
-      var zoom = this.data.main.attributes()["data-zoom"];
+    _proto.getMarkers = function getMarkers() {
+      var attributes = this.data.main.attributes();
+      var markers = typeof attributes["data-markers"] === "string" ? JSON.parse(attributes["data-markers"]) : attributes["data-markers"];
+      var zoom = attributes["data-zoom"];
+      var location = attributes["data-location-name"];
+      var address = attributes["data-address"];
+      var city = attributes["data-city"];
+      var comment = attributes["data-comment"];
+      var controls = attributes['data-show-controls'];
+      var country = attributes["data-country"];
+      var zip = attributes["data-zip"];
 
       if (typeof zoom !== "number") {
         zoom = parseInt(zoom, 10);
       }
 
       return {
-        latLng: {
-          lat: parseFloat(markers[0].lat),
-          lng: parseFloat(markers[0].lng)
-        },
         markers: [{
-          lat: parseFloat(markers[0].lat),
-          lng: parseFloat(markers[0].lng)
+          coordinates: {
+            lat: parseFloat(markers[0].lat),
+            lng: parseFloat(markers[0].lng)
+          },
+          location: location,
+          address: address,
+          city: city,
+          comment: comment,
+          country: country,
+          zip: zip
         }],
-        zoom: zoom
+        options: {
+          zoom: zoom,
+          center: {
+            lat: parseFloat(markers[0].lat),
+            lng: parseFloat(markers[0].lng)
+          },
+          disableDefaultUI: controls !== 'false'
+        }
       };
     };
 

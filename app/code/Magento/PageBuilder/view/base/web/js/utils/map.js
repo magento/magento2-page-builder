@@ -21,12 +21,16 @@ define([
             return new google.maps.LatLng(latLng.lat, latLng.lng);
         };
 
-    return function (element, markers, centerCoord, options) {
+    return function (element, markers, options) {
         var mapOptions = _.extend({
             zoom: 8,
-            center: googleLatLng(centerCoord),
+            center: googleLatLng({
+                lat: 30.2672,
+                lng: -97.7431,
+            }),
             scrollwheel: false,
             disableDoubleClickZoom: false,
+            disableDefaultUI: false,
             mapTypeControl: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
@@ -44,12 +48,10 @@ define([
         /**
          * Callback function on map config update
          * @param {Array} newMarkers
-         * @param {Object} latLng
-         * @param {Number} zoom
+         * @param {Object} updateOptions
          */
-        this.onUpdate = function (newMarkers, latLng, zoom) {
-            this.map.setZoom(parseInt(zoom, 10));
-            this.map.setCenter(latLng);
+        this.onUpdate = function (newMarkers, updateOptions) {
+            this.map.setOptions(updateOptions);
             this.setMarkers(newMarkers);
         };
 
@@ -64,13 +66,35 @@ define([
             this.markers = [];
 
             if (newMarkers) {
-                newMarkers.forEach(function (markerCoord) {
-                    this.markers.push(
-                        new google.maps.Marker({
-                            map: this.map,
-                            position: googleLatLng(markerCoord)
-                        })
-                    );
+                newMarkers.forEach(function (marker) {
+                    var address = marker.address ? marker.address + '<br/>' : '';
+                    var zip = marker.zip ? ',' + marker.zip : '';
+
+                    var contentString =
+                        '<div>' +
+                        '<h3><b>' + marker.location + '</b></h3>' +
+                        '<p>' + marker.comment + '</p>' +
+                        '<p>' + address +
+                        marker.city + zip + '<br/>' +
+                        marker.country + '</p>' +
+                        '</div>';
+
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        maxWidth: 350
+                    });
+
+                    var newMarker = new google.maps.Marker({
+                        map: this.map,
+                        position: googleLatLng(marker.coordinates),
+                        title: marker.location
+                    });
+
+                    newMarker.addListener('click', function() {
+                        infowindow.open(this.map, newMarker);
+                    });
+
+                    this.markers.push(newMarker);
                 }, this);
             }
         };

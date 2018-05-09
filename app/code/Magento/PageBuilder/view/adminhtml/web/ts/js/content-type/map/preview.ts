@@ -47,23 +47,18 @@ export default class Preview extends BasePreview {
     private generateMap(element: Element) {
         let markers: any = typeof this.data.main.attributes()["data-markers"] === "string" ?
             JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
-        let centerCoord = {
-            lat: 30.2672,
-            lng: -97.7431,
-        };
         let options = {
             zoom: 8,
+            disableDefaultUI: false,
         };
 
         if (markers && markers !== "" && markers.length && Object.keys(markers[0]).length) {
-            const pos = this.getPosition();
+            const pos = this.getMarkers();
             markers = pos.markers;
-            centerCoord = pos.latLng;
-            options = {
-                zoom: pos.zoom,
-            };
+            options = pos.options;
         }
-        this.map = new GoogleMap(element, markers, centerCoord, options);
+
+        this.map = new GoogleMap(element, markers, options);
     }
 
     /**
@@ -77,8 +72,8 @@ export default class Preview extends BasePreview {
            markers = JSON.parse(this.data.main.attributes()["data-markers"]) ;
         }
         if (markers.length) {
-            const pos = this.getPosition();
-            this.map.onUpdate(pos.markers, pos.latLng, pos.zoom);
+            const pos = this.getMarkers();
+            this.map.onUpdate(pos.markers, pos.options);
         }
     }
 
@@ -87,24 +82,44 @@ export default class Preview extends BasePreview {
      *
      * @returns {Object}
      */
-    private getPosition() {
-        const markers: any = typeof this.data.main.attributes()["data-markers"] === "string" ?
-            JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
-        let zoom: number = this.data.main.attributes()["data-zoom"];
+    private getMarkers() {
+        const attributes = this.data.main.attributes();
+        const markers: any = typeof attributes["data-markers"] === "string" ?
+            JSON.parse(attributes["data-markers"]) : attributes["data-markers"];
+        let zoom: number = attributes["data-zoom"];
+        let location: string = attributes["data-location-name"];
+        let address: string = attributes["data-address"];
+        let city: string = attributes["data-city"];
+        let comment: string = attributes["data-comment"];
+        let controls = attributes['data-show-controls'];
+        let country: string = attributes["data-country"];
+        let zip: string = attributes["data-zip"];
+
         if (typeof zoom !== "number") {
             zoom = parseInt(zoom, 10);
         }
 
         return {
-            latLng: {
-                lat: parseFloat(markers[0].lat),
-                lng: parseFloat(markers[0].lng),
-            },
             markers: [{
-                lat: parseFloat(markers[0].lat),
-                lng: parseFloat(markers[0].lng),
+                coordinates : {
+                    lat: parseFloat(markers[0].lat),
+                    lng: parseFloat(markers[0].lng),
+                },
+                location,
+                address,
+                city,
+                comment,
+                country,
+                zip,
             }],
-            zoom,
+            options: {
+                zoom,
+                center: {
+                    lat: parseFloat(markers[0].lat),
+                    lng: parseFloat(markers[0].lng),
+                },
+                disableDefaultUI: controls !== 'false',
+            },
         };
     }
 }
