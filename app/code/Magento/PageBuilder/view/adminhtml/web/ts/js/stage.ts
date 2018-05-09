@@ -9,27 +9,27 @@ import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import _ from "underscore";
 import Collection from "./collection";
+import ContentTypeConfigInterface from "./content-type-config";
 import ContentTypeDroppedParamsInterface from "./content-type-dropped-params.d";
 import createContentType from "./content-type-factory";
 import ContentTypeInstanceDroppedParamsInterface from "./content-type-instance-dropped-params.d";
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
 import ContentTypeSortedParamsInterface from "./content-type-sorted-params.d";
 import ContentTypeInterface from "./content-type.d";
-import {getSortableOptions} from "./content-type/preview-sortable-options";
+import {generateContainerAcceptedMatrix, getSortableOptions} from "./content-type/preview-sortable-options";
 import DataStore from "./data-store";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import SortParamsInterface from "./sort-params.d";
 import buildStage from "./stage-builder";
 import {moveArrayItem} from "./utils/array";
-import ContentTypeConfigInterface from "./content-type-config";
 
 export default class Stage {
     public parent: PageBuilderInterface;
     public id: string;
     public config: ContentTypeConfigInterface | any = {
         name: "stage",
-        type: "container",
+        type: "restricted-container",
         accepts: [
             "row",
         ],
@@ -52,6 +52,7 @@ export default class Stage {
         this.id = parent.id;
         this.initListeners();
         buildStage(this, parent.initialValue).then(this.ready.bind(this));
+        generateContainerAcceptedMatrix();
     }
 
     /**

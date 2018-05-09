@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout"], function (_knockout) {
+define(["knockout", "Magento_PageBuilder/js/content-type/preview-sortable-options"], function (_knockout, _previewSortableOptions) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -35,14 +35,17 @@ define(["knockout"], function (_knockout) {
       return this.config;
     };
     /**
-     * Return the draggable config to the element
+     * Only connect to container sortable instances that the current content type is accepted into
      *
      * @returns {string}
      */
 
 
     _proto.getDraggableOptions = function getDraggableOptions() {
-      return {//connectToSortable: this.config.allowed_parents.map((value, index) => "." + value + "-container").join(", "),
+      return {
+        connectToSortable: (0, _previewSortableOptions.getContainersFor)(this.config.name).map(function (value, index) {
+          return ".content-type-container." + value + "-container";
+        }).join(", ")
       };
     };
 

@@ -15,7 +15,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       this.id = void 0;
       this.config = {
         name: "stage",
-        type: "container",
+        type: "restricted-container",
         accepts: ["row"]
       };
       this.loading = _knockout.observable(true);
@@ -31,6 +31,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       this.id = parent.id;
       this.initListeners();
       (0, _stageBuilder)(this, parent.initialValue).then(this.ready.bind(this));
+      (0, _previewSortableOptions.generateContainerAcceptedMatrix)();
     }
     /**
      * Get template.

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "uiEvents", "Magento_PageBuilder/js/panel/registry"], function (_jquery, _uiEvents, _registry) {
+define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/registry"], function (_jquery, _uiEvents, _underscore, _config, _registry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -85,8 +85,73 @@ define(["jquery", "uiEvents", "Magento_PageBuilder/js/panel/registry"], function
     }
   }
 
+  var acceptedMatrix = {};
+  /**
+   * Build a matrix of which containers each content type can go into, these are calculated by the type given to the
+   * content type in it's declaration.
+   *
+   * Types:
+   * static - can go into any container (not into restricted containers)
+   * container - can contain any static item
+   * restricted-static - can only go into containers which declare it <accepts /> them
+   * restricted-container - can only contain items which it declares it <accepts />
+   */
+
+  function generateContainerAcceptedMatrix() {
+    var contentTypes = [// @todo move stage config into XML
+    {
+      name: "stage",
+      type: "restricted-container",
+      accepts: ["row"]
+    }].concat(_underscore.values(_config.getConfig("content_types"))); // Retrieve all containers
+
+    var containers = contentTypes.filter(function (config) {
+      return config.type === "container";
+    }).map(function (config) {
+      return config.name;
+    });
+    contentTypes.forEach(function (contentType) {
+      // Iterate over restricted containers to calculate their allowed children first
+      if (contentType.accepts && contentType.accepts.length > 0) {
+        contentType.accepts.forEach(function (accepted) {
+          if (!acceptedMatrix[accepted]) {
+            acceptedMatrix[accepted] = [];
+          }
+
+          acceptedMatrix[accepted].push(contentType.name);
+        });
+      } // Any static / restricted-container content type can go in all unrestricted containers
+
+
+      if (contentType.type === "static" || contentType.type === "restricted-container") {
+        if (!acceptedMatrix[contentType.name]) {
+          acceptedMatrix[contentType.name] = [];
+        }
+
+        acceptedMatrix[contentType.name] = acceptedMatrix[contentType.name].concat(containers);
+      }
+    });
+  }
+  /**
+   * Retrieve the containers a specific content type can be contained in
+   *
+   * @param {string} contentType
+   * @returns {any}
+   */
+
+
+  function getContainersFor(contentType) {
+    if (acceptedMatrix[contentType]) {
+      return acceptedMatrix[contentType];
+    }
+
+    return null;
+  }
+
   return {
-    getSortableOptions: getSortableOptions
+    getSortableOptions: getSortableOptions,
+    generateContainerAcceptedMatrix: generateContainerAcceptedMatrix,
+    getContainersFor: getContainersFor
   };
 });
 //# sourceMappingURL=preview-sortable-options.js.map

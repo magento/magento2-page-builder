@@ -286,7 +286,6 @@ export default class Preview {
      * @returns {{[p: string]: boolean}}
      */
     public getChildrenCss() {
-        console.log(this);
         return {
             "content-type-drop": this.canReceiveDrops(),
             [this.config.name + "-container"]: true,

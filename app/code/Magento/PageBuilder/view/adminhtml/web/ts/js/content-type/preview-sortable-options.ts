@@ -4,6 +4,9 @@
  */
 import $ from "jquery";
 import events from "uiEvents";
+import _ from "underscore";
+import Config from "../config";
+import ContentTypeConfigInterface from "../content-type-config";
 import {getDraggedBlockConfig} from "../panel/registry";
 import Stage from "../stage";
 import Preview from "./preview";
@@ -88,4 +91,75 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
         // Remove the DOM element, as this is a drop event we can't just remove the ui.item
         $(event.target).find(".pagebuilder-draggable-block").remove();
     }
+}
+
+interface AcceptedMatrix {
+    [key: string]: string[];
+}
+
+const acceptedMatrix: AcceptedMatrix = {};
+
+/**
+ * Build a matrix of which containers each content type can go into, these are calculated by the type given to the
+ * content type in it's declaration.
+ *
+ * Types:
+ * static - can go into any container (not into restricted containers)
+ * container - can contain any static item
+ * restricted-static - can only go into containers which declare it <accepts /> them
+ * restricted-container - can only contain items which it declares it <accepts />
+ */
+export function generateContainerAcceptedMatrix(): void {
+    const contentTypes = [
+        // @todo move stage config into XML
+        {
+            name: "stage",
+            type: "restricted-container",
+            accepts: [
+                "row",
+            ],
+        },
+        ..._.values(Config.getConfig("content_types")),
+    ];
+
+    // Retrieve all containers
+    const containers = contentTypes.filter((config: ContentTypeConfigInterface) => {
+        return config.type === "container";
+    }).map((config: ContentTypeConfigInterface) => {
+        return config.name;
+    });
+
+    contentTypes.forEach((contentType: ContentTypeConfigInterface) => {
+        // Iterate over restricted containers to calculate their allowed children first
+        if (contentType.accepts && contentType.accepts.length > 0) {
+            contentType.accepts.forEach((accepted: string) => {
+                if (!acceptedMatrix[accepted]) {
+                    acceptedMatrix[accepted] = [];
+                }
+                acceptedMatrix[accepted].push(contentType.name);
+            });
+        }
+
+        // Any static / restricted-container content type can go in all unrestricted containers
+        if (contentType.type === "static" || contentType.type === "restricted-container") {
+            if (!acceptedMatrix[contentType.name]) {
+                acceptedMatrix[contentType.name] = [];
+            }
+            acceptedMatrix[contentType.name] = acceptedMatrix[contentType.name].concat(containers);
+        }
+    });
+}
+
+/**
+ * Retrieve the containers a specific content type can be contained in
+ *
+ * @param {string} contentType
+ * @returns {any}
+ */
+export function getContainersFor(contentType: string) {
+    if (acceptedMatrix[contentType]) {
+        return acceptedMatrix[contentType];
+    }
+
+    return null;
 }

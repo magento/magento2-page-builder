@@ -282,7 +282,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     _proto.getChildrenCss = function getChildrenCss() {
       var _ref;
 
-      console.log(this);
       return _ref = {
         "content-type-drop": this.canReceiveDrops()
       }, _ref[this.config.name + "-container"] = true, _ref;
