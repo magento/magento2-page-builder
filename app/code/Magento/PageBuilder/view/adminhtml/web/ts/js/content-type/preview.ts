@@ -22,12 +22,12 @@ import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import StyleAttributeFilter from "../master-format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
-import {getDraggedBlockConfig} from "../panel/registry";
 import "../preview-sortable";
 import SortParamsInterface from "../sort-params.d";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
+import {getSortableOptions} from "./preview-sortable-options";
 
 export default class Preview {
     public parent: ContentTypeInterface;
@@ -263,7 +263,7 @@ export default class Preview {
      *
      * @returns {boolean}
      */
-    public canParentReceiveDrops() {
+    public canReceiveDrops() {
         return this.parent.config.type !== "restricted-container";
     }
 
@@ -273,57 +273,23 @@ export default class Preview {
      * @returns {JQueryUI.SortableOptions}
      */
     public getSortableOptions(): JQueryUI.SortableOptions | any {
-        // If the
         if (this.parent.config.type === "restricted-container") {
             return null;
         }
 
-        const self = this;
+        return getSortableOptions(this);
+    }
+
+    /**
+     * Get the CSS classes for the children element
+     *
+     * @returns {{[p: string]: boolean}}
+     */
+    public getChildrenCss() {
+        console.log(this);
         return {
-            cursor: "-webkit-grabbing",
-            helper(event: Event, item: Element) {
-                return $(item).clone()[0];
-            },
-            appendTo: document.body,
-            placeholder: {
-                element(currentItem: any) {
-                    return $("<div />").addClass("pagebuilder-sortable-placeholder")[0];
-                },
-                update(container: any, p: any) {
-                    return;
-                },
-            },
-            handle: ".move-structural",
-            items: "> .pagebuilder-content-type-wrapper",
-            receive(event: Event, ui: JQueryUI.SortableUIParams) {
-                // If the parent can't receive drops we need to cancel the operation
-                if (!self.canParentReceiveDrops()) {
-                    $(this).sortable("cancel");
-                    return;
-                }
-
-                const blockConfig = getDraggedBlockConfig();
-                if (blockConfig) {
-                    // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
-                    const index = $(event.target)
-                        .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")
-                        .toArray()
-                        .findIndex((element: Element) => {
-                            return element.classList.contains("pagebuilder-draggable-block");
-                        });
-
-                    // Fire the event to be handled by the stage
-                    events.trigger("block:dropped", {
-                        parent: self.parent,
-                        stageId: self.parent.stageId,
-                        blockConfig,
-                        index,
-                    });
-
-                    // Remove the DOM element, as this is a drop event we can't just remove the ui.item
-                    $(event.target).find(".pagebuilder-draggable-block").remove();
-                }
-            },
+            "content-type-drop": this.canReceiveDrops(),
+            [this.config.name + "-container"]: true,
         };
     }
 

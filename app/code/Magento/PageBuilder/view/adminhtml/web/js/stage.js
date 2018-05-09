@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/array"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _contentTypeFactory, _dataStore, _render, _stageBuilder, _array) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/preview-sortable-options", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/array"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _contentTypeFactory, _previewSortableOptions, _dataStore, _render, _stageBuilder, _array) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -15,7 +15,8 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       this.id = void 0;
       this.config = {
         name: "stage",
-        type: "container"
+        type: "container",
+        accepts: ["row"]
       };
       this.loading = _knockout.observable(true);
       this.showBorders = _knockout.observable(false);
@@ -108,8 +109,28 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
     };
 
     /**
+     * Determine if the container can receive drop events?
+     *
+     * @returns {boolean}
+     */
+    _proto.canReceiveDrops = function canReceiveDrops() {
+      return true;
+    };
+    /**
+     * Return the sortable options
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+
+
+    _proto.getSortableOptions = function getSortableOptions() {
+      return (0, _previewSortableOptions.getSortableOptions)(this);
+    };
+    /**
      * Init listeners
      */
+
+
     _proto.initListeners = function initListeners() {
       var _this = this;
 

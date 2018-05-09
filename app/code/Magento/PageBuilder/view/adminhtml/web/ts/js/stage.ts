@@ -15,19 +15,24 @@ import ContentTypeInstanceDroppedParamsInterface from "./content-type-instance-d
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
 import ContentTypeSortedParamsInterface from "./content-type-sorted-params.d";
 import ContentTypeInterface from "./content-type.d";
+import {getSortableOptions} from "./content-type/preview-sortable-options";
 import DataStore from "./data-store";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import SortParamsInterface from "./sort-params.d";
 import buildStage from "./stage-builder";
 import {moveArrayItem} from "./utils/array";
+import ContentTypeConfigInterface from "./content-type-config";
 
 export default class Stage {
     public parent: PageBuilderInterface;
     public id: string;
-    public config: {} = {
+    public config: ContentTypeConfigInterface | any = {
         name: "stage",
         type: "container",
+        accepts: [
+            "row",
+        ],
     };
     public loading: KnockoutObservable<boolean> = ko.observable(true);
     public showBorders: KnockoutObservable<boolean> = ko.observable(false);
@@ -114,6 +119,24 @@ export default class Stage {
 
     get children() {
         return this.collection.getChildren();
+    }
+
+    /**
+     * Determine if the container can receive drop events?
+     *
+     * @returns {boolean}
+     */
+    public canReceiveDrops() {
+        return true;
+    }
+
+    /**
+     * Return the sortable options
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+    public getSortableOptions(): JQueryUI.SortableOptions | any {
+        return getSortableOptions(this);
     }
 
     /**

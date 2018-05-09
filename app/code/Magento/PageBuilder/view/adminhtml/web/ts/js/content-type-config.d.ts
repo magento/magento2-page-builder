@@ -21,6 +21,7 @@ export default interface ContentTypeConfigInterface {
     component: string;
     appearances: string[];
     readers: string[];
+    accepts: string[];
     allowed_parents: string[];
     is_visible: boolean;
 }

@@ -6,19 +6,19 @@
 -->
 
 <if args="parent.getChildren()().length === 0">
-    <div class="element-children content-type-container" attr="{id: parent.id + '-children'}" css="{ 'content-type-drop' : canParentReceiveDrops() }" data-bind="sortable: getSortableOptions()">
-        <if args="canParentReceiveDrops()">
+    <div class="element-children content-type-container" attr="{id: parent.id + '-children'}" css="getChildrenCss()" data-bind="sortable: getSortableOptions()">
+        <if args="canReceiveDrops()">
             <div class="pagebuilder-drop-indicator"></div>
         </if>
     </div>
 </if>
 <if args="parent.getChildren()().length > 0">
-    <div class="element-children content-type-container" each="parent.getChildren()" css="{ 'content-type-drop' : canParentReceiveDrops() }" attr="{id: parent.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
-        <if args="$parent.canParentReceiveDrops()">
+    <div class="element-children content-type-container" each="parent.getChildren()" css="getChildrenCss()" attr="{id: parent.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
+        <if args="$parent.canReceiveDrops()">
             <div class="pagebuilder-drop-indicator"></div>
         </if>
         <div class="pagebuilder-content-type-wrapper" template="{ name: preview.previewTemplate, data: preview }" attr="{ id: id }"></div>
-        <if args="$parent.canParentReceiveDrops() && $index() === $parent.parent.getChildren()().length - 1">
+        <if args="$parent.canReceiveDrops() && $index() === $parent.parent.getChildren()().length - 1">
             <div class="pagebuilder-drop-indicator"></div>
         </if>
     </div>
