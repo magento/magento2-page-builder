@@ -14,7 +14,10 @@
         <element name="pinLocation" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
         <!-- General Configuration -->
         <element name="width" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'width: {{arg2}};')]" parameterized="true"/>
+        <element name="computedWidth" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-map > div:first-child')).width)"/>
+        <element name="parentContainerWidth" type="text" selector="document.querySelector('.pagebuilder-map')"/>
         <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}};')]" parameterized="true"/>
+        <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-map > div:first-child')).height)"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -43,7 +46,9 @@
         <element name="zoom" type="button" selector="(//div[@data-role='map'])[{{arg1}}][@data-zoom='{{arg2}}']" parameterized="true"/>
         <!-- General Configuration -->
         <element name="width" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'width: {{arg2}};')]" parameterized="true"/>
+        <element name="computedWidth" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('[data-role=map]')).width)"/>
         <element name="height" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}};')]" parameterized="true"/>
+        <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('[data-role=map]')).height)"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
