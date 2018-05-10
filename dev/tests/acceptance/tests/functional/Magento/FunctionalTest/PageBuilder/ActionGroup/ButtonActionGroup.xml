@@ -42,6 +42,19 @@
             <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
         </assertEquals>
     </actionGroup>
+    <actionGroup name="removeContentBlockFromStageSmallByIndex">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForButtonElement"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickButtonElement"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockRemoveByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForRemoveButton"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockRemoveByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickRemoveContentBlock"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
     <actionGroup name="validateButtonItemContent">
         <arguments>
             <argument name="page"/>

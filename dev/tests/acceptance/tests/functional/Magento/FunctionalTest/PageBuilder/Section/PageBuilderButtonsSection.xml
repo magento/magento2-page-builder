@@ -42,6 +42,7 @@
         <element name="padding" type="text" selector="(//div[@data-role='buttons'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="ButtonItemOnStage">
+        <element name="allButtons" type="button" selector="//div[contains(@class,'pagebuilder-button-item')]//a[contains(@class,'pagebuilder-button')]"/>
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
         <element name="emptyButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@class,'placeholder-text') and not(text())]" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@contenteditable,'true')]"/>
@@ -62,6 +63,7 @@
         <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
     <section name="ButtonItemOnStorefront">
+        <element name="allButtons" type="button" selector="//div[@data-role='button-item']"/>
         <element name="base" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]" parameterized="true"/>
         <element name="emptyButtonItemElement" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a//span[not(text())]" parameterized="true"/>
         <!-- Content Configuration -->
