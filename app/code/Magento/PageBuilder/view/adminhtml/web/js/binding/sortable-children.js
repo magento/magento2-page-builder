@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"], function (_jquery, _knockout, _uiEvents, _array) {
+define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/binding/utils/array"], function (_jquery, _knockout, _uiEvents, _array) {
   "use strict";
 
   _jquery = _interopRequireDefault(_jquery);
@@ -13,7 +13,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"],
    * See COPYING.txt for license details.
    */
   // Create a new sortable Knockout binding
-  _knockout.default.bindingHandlers.previewSortable = {
+  _knockout.default.bindingHandlers.sortableChildren = {
     /**
      * Init the draggable binding on an element
      *
@@ -32,7 +32,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"],
       (0, _jquery.default)(element).sortable(options).on("sortstart", function (event, ui) {
         originalPosition = ui.item.index();
 
-        _uiEvents.default.trigger("previewSortable:sortstart", {
+        _uiEvents.default.trigger("sortableChildren:sortstart", {
           instance: instance,
           originalPosition: originalPosition,
           ui: ui
@@ -44,7 +44,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"],
           ui.item.remove();
           (0, _array.moveArrayItem)(instance.children, originalPosition, index);
 
-          _uiEvents.default.trigger("previewSortable:sortupdate", {
+          _uiEvents.default.trigger("sortableChildren:sortupdate", {
             instance: instance,
             newPosition: index,
             originalPosition: originalPosition,
@@ -55,4 +55,4 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"],
     }
   };
 });
-//# sourceMappingURL=preview-sortable.js.map
+//# sourceMappingURL=sortable-children.js.map
