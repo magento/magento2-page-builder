@@ -53,9 +53,10 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <executeJS function="{{MapOnStage.computedWidth}}" stepKey="actualStageMapWidth1"/>
+        <executeJS function="return Math.round(({$actualStageMapWidth1}/{{PageBuilderMapWidthProperty500px.integer}})*100)/100" stepKey="actualStageMapWidthRatio1"/>
         <assertEquals stepKey="assertStageMapWidth1">
-            <expectedResult type="int">{{PageBuilderMapWidthProperty500px.integer}}</expectedResult>
-            <actualResult type="variable">actualStageMapWidth1</actualResult>
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">actualStageMapWidthRatio1</actualResult>
         </assertEquals>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
@@ -71,9 +72,10 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <executeJS function="{{MapOnStage.computedWidth}}" stepKey="actualStageMapWidth2"/>
+        <executeJS function="return Math.round(({$actualStageMapWidth2}/{{PageBuilderMapWidthProperty500px.integer}})*100)/100" stepKey="actualStageMapWidthRatio2"/>
         <assertEquals stepKey="assertStageMapWidth2">
-            <expectedResult type="int">{{PageBuilderMapWidthProperty500px.integer}}</expectedResult>
-            <actualResult type="variable">actualStageMapWidth2</actualResult>
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">actualStageMapWidthRatio2</actualResult>
         </assertEquals>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
@@ -89,9 +91,10 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <executeJS function="{{MapOnStorefront.computedWidth}}" stepKey="actualStorefrontMapWidth"/>
+        <executeJS function="return Math.round(({$actualStorefrontMapWidth}/{{PageBuilderMapWidthProperty500px.integer}})*100)/100" stepKey="actualStorefrontMapWidthRatio"/>
         <assertEquals stepKey="assertPageBuilderStorefrontMapWidth">
-            <expectedResult type="int">{{PageBuilderMapWidthProperty500px.integer}}</expectedResult>
-            <actualResult type="variable">actualStorefrontMapWidth</actualResult>
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">actualStorefrontMapWidthRatio</actualResult>
         </assertEquals>
     </test>
     <test name="MapCommonCaseHeightPx">
@@ -138,9 +141,10 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <executeJS function="{{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight1"/>
+        <executeJS function="return Math.round(({$actualStageMapHeight1}/{{PageBuilderMapHeightProperty500px.integer}})*100)/100" stepKey="actualStageMapHeightRatio1"/>
         <assertEquals stepKey="assertStageMapHeight1">
-            <expectedResult type="int">{{PageBuilderMapHeightProperty500px.integer}}</expectedResult>
-            <actualResult type="variable">actualStageMapHeight1</actualResult>
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">actualStageMapHeightRatio1</actualResult>
         </assertEquals>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
@@ -156,9 +160,10 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <executeJS function="{{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight2"/>
+        <executeJS function="return Math.round(({$actualStageMapHeight2}/{{PageBuilderMapHeightProperty500px.integer}})*100)/100" stepKey="actualStageMapHeightRatio2"/>
         <assertEquals stepKey="assertStageMapHeight2">
-            <expectedResult type="int">{{PageBuilderMapHeightProperty500px.integer}}</expectedResult>
-            <actualResult type="variable">actualStageMapHeight2</actualResult>
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">actualStageMapHeightRatio2</actualResult>
         </assertEquals>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
@@ -174,9 +179,10 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <executeJS function="{{MapOnStorefront.computedHeight}}" stepKey="actualStorefrontMapHeight"/>
+        <executeJS function="return Math.round(({$actualStorefrontMapHeight}/{{PageBuilderMapHeightProperty500px.integer}})*100)/100" stepKey="actualStorefrontMapHeightRatio"/>
         <assertEquals stepKey="assertStorefrontMapHeight">
-            <expectedResult type="int">{{PageBuilderMapHeightProperty500px.integer}}</expectedResult>
-            <actualResult type="variable">actualStorefrontMapHeight</actualResult>
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">actualStorefrontMapHeightRatio</actualResult>
         </assertEquals>
     </test>
     <test name="MapCommonCaseWidthPercentage">
@@ -211,8 +217,14 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel1"/>
+        <!-- Get the initial width of the map on the stage -->
+        <executeJS function="{{MapOnStage.computedWidth}}" stepKey="initialStageMapWidth"/>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
         <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
             <argument name="page" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
@@ -222,36 +234,37 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <!-- Get the pre-computed width of the map container and multiply by percentage -->
-        <executeJS function="return Math.round({{MapOnStage.parentContainerWidth}}.clientWidth*.{{PageBuilderMapWidthProperty75.integer}})" stepKey="expectedStageMapWidth1"/>
+        <!-- Get the computed width of the map and get ratio of map width to row width -->
+        <executeJS function="return Math.round({$initialStageMapWidth}*.{{PageBuilderMapWidthProperty75.integer}})" stepKey="expectedStageMapWidth"/>
         <executeJS function="{{MapOnStage.computedWidth}}" stepKey="actualStageMapWidth1"/>
+        <executeJS function="return Math.round(({$expectedStageMapWidth}/{$actualStageMapWidth1})*100)/100" stepKey="actualStageMapWidthRatio1"/>
         <assertEquals stepKey="assertStageMapWidth1">
-            <expectedResult type="variable">expectedStageMapWidth1</expectedResult>
-            <actualResult type="variable">actualStageMapWidth1</actualResult>
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">actualStageMapWidthRatio1</actualResult>
         </assertEquals>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateWidth">
             <argument name="property" value="PageBuilderMapWidthProperty75"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <!-- Get the pre-computed width of the map container and multiply by percentage -->
-        <executeJS function="return Math.round({{MapOnStage.parentContainerWidth}}.clientWidth*.{{PageBuilderMapWidthProperty75.integer}})" stepKey="expectedStageMapWidth2"/>
+        <!-- Get the computed width of the map and get ratio of map width to row width -->
         <executeJS function="{{MapOnStage.computedWidth}}" stepKey="actualStageMapWidth2"/>
+        <executeJS function="return Math.round(({$expectedStageMapWidth}/{$actualStageMapWidth2})*100)/100" stepKey="actualStageMapWidthRatio2"/>
         <assertEquals stepKey="assertStageMapWidth2">
-            <expectedResult type="variable">expectedStageMapWidth2</expectedResult>
-            <actualResult type="variable">actualStageMapWidth2</actualResult>
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">actualStageMapWidthRatio2</actualResult>
         </assertEquals>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateWidth2">
@@ -265,9 +278,10 @@
         <!-- Get the computed width of the parent row container and multiply by percentage -->
         <executeJS function="return Math.round({{RowOnStorefront.computedWidth}}*.{{PageBuilderMapWidthProperty75.integer}})" stepKey="expectedStorefrontMapWidth"/>
         <executeJS function="{{MapOnStorefront.computedWidth}}" stepKey="actualStorefrontMapWidth"/>
+        <executeJS function="return Math.round(({$expectedStorefrontMapWidth}/{$actualStorefrontMapWidth})*100)/100" stepKey="actualStorefrontMapWidthRatio"/>
         <assertEquals stepKey="assertPageBuilderStorefrontMapWidth">
-            <expectedResult type="variable">expectedStorefrontMapWidth</expectedResult>
-            <actualResult type="variable">actualStorefrontMapWidth</actualResult>
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">actualStorefrontMapWidthRatio</actualResult>
         </assertEquals>
     </test>
 </tests>
