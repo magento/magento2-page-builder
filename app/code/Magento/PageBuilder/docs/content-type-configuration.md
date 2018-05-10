@@ -470,3 +470,14 @@ define([], function () {
     return EmptyMobileImage;
 });
 ```
+
+## Preview Component Settings
+
+### fieldsToIgnoreOnRemove
+The `fieldsToIgnoreOnRemove` property can be used to exclude certain fields from consideration when evaluating whether 
+an element has been configured. The default value is an empty array.
+
+**Example:** `content-type/tab-item/preview.ts`
+```angular2html
+    protected fieldsToIgnoreOnRemove: string[] = ["tab_name"];
+```

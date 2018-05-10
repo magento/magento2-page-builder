@@ -16,6 +16,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
      */
 
     /**
+     * Fields that should not be considered when evaluating whether an object has been configured.
+     *
+     * @see {Preview.isConfigured}
+     * @type {[string]}
+     */
+
+    /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
