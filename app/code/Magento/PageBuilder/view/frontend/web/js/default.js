@@ -168,6 +168,7 @@ requirejs([
 
             mapOptions.center = markers[0];
             mapOptions.disableDefaultUI = controls !== 'false';
+            mapOptions.mapTypeControl = controls === 'false';
             new GoogleMap(element, marker, mapOptions);
         }
     });

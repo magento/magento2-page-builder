@@ -35,10 +35,6 @@ define([
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
             },
-            navigationControl: true,
-            navigationControlOptions: {
-                style: google.maps.NavigationControlStyle.DEFAULT
-            }
         }, options);
 
         /* Create the map */

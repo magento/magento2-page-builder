@@ -122,7 +122,8 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
             lat: parseFloat(position[0].lat),
             lng: parseFloat(position[0].lng)
           },
-          disableDefaultUI: controls !== "false"
+          disableDefaultUI: controls !== "false",
+          mapTypeControl: controls === "false"
         }
       };
     };

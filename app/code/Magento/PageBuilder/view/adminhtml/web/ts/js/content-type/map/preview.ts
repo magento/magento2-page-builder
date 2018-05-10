@@ -89,7 +89,6 @@ export default class Preview extends BasePreview {
         if (position !== "" && typeof position === "string") {
             position = JSON.parse(position);
         }
-
         return {
             markers: [{
                 coordinates : {
@@ -109,6 +108,7 @@ export default class Preview extends BasePreview {
                     lng: parseFloat(position[0].lng),
                 },
                 disableDefaultUI: controls !== "false",
+                mapTypeControl: controls === "false",
             },
         };
     }
