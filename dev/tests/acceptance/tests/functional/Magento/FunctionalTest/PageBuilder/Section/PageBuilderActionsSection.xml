@@ -36,6 +36,8 @@
         <element name="nothingFound" type="text" selector='//*[@id="pagebuilder-panel"]/div[2]/div' timeout="30"/>
         <element name="modal" type="text" selector='body._has-modal div.modals-wrapper aside.modal-popup.prompt._show'/>
         <element name="modalOk" type="button" selector=".modal-popup button.action-primary.action-accept"/>
+        <element name="modalCancel" type="button" selector="//aside[contains(@class,'modal-popup')]//button[contains(@class,'action-dismiss')]//span[.='Cancel']"/>
+        <element name="modalX" type="button" selector=".modal-popup button.action-close"/>
         <!-- It's safer to click the label, as Selenium will complain if it's not clicking the exact element -->
         <element name="modalDoNotShowThisAgain" type="input" selector=".modal-popup input[name='modal-dnsa'] + label"/>
         <element name="unableToRemoveTitle" type="text" selector='//aside[contains(@class, "modal-popup")]/div[@class="modal-inner-wrap"]/header/h1[contains(text(), "Unable to Remove")]'/>

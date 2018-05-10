@@ -390,6 +390,118 @@
         <!-- Validate the items are removed -->
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="dontSeeHeaderInStage"/>
     </test>
+    <test name="CancelOnRemovalConfirmationModal">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Removal Confirmation Modal"/>
+            <title value="Cancel Removal Confirmation Modal"/>
+            <description value="The user should be able to click cancel in removal confirmation modal and not have content removed."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87059"/>
+            <testCaseId value="MAGETWO-91320"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Heading -->
+        <comment userInput="Add Heading" stepKey="commentAddHeading"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <!-- Configure Heading -->
+        <comment userInput="Configure Heading" stepKey="commentHeading"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <!-- Click Remove Then Cancel In Modal -->
+        <comment userInput="Click Remove Then Cancel In Modal" stepKey="commentCancel"/>
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeFirstHeader">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modalCancel}}" stepKey="waitForCancelButton"/>
+        <click selector="{{PageBuilderActionsSection.modalCancel}}" stepKey="clickCancelButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementNotVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalGone"/>
+        <!-- Verify Heading Still Exists -->
+        <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
+    </test>
+    <test name="XOnRemovalConfirmationModal">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Removal Confirmation Modal"/>
+            <title value="Click X On Removal Confirmation Modal"/>
+            <description value="The user should be able to click on the 'X' button in removal confirmation modal and not have content removed."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87059"/>
+            <testCaseId value="MAGETWO-91321"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Heading -->
+        <comment userInput="Add Heading" stepKey="commentAddHeading"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <!-- Configure Heading -->
+        <comment userInput="Configure Heading" stepKey="commentHeading"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+            <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <!-- Click Remove Then X In Modal -->
+        <comment userInput="Click Remove Then X In Modal" stepKey="commentX"/>
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeFirstHeader">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modalX}}" stepKey="waitForXButton"/>
+        <click selector="{{PageBuilderActionsSection.modalX}}" stepKey="clickXButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementNotVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalGone"/>
+        <!-- Verify Heading Still Exists -->
+        <comment userInput="Verify Heading Still Exists" stepKey="validateHeading"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading2"/>
+    </test>
     <test name="LoginCycleResetsRemoveConfirmationDismissal">
         <annotations>
             <features value="Pagebuilder"/>
