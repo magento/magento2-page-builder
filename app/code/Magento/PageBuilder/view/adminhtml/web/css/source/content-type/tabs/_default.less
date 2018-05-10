@@ -8,6 +8,32 @@
 //  _____________________________________________
 
 .pagebuilder-content-type.pagebuilder-tabs {
+
+    .tabs-content {
+        border: @entityBorderWidth solid #ccc;
+        overflow: hidden;
+        position: relative;
+        z-index: 9;
+
+        > .element-children {
+            min-height: inherit;
+            padding: 0;
+        }
+
+        .pagebuilder-content-type.pagebuilder-tab {
+            min-height: inherit;
+
+            &.empty-container {
+                min-height: 220px;
+            }
+
+            > .element-children {
+                min-height: inherit;
+                padding: 0;
+            }
+        }
+    }
+
     .tabs-navigation {
         display: block;
         font-size: 0;
@@ -20,7 +46,7 @@
 
         li.tab-header {
             background: #f6f6f6;
-            border: 1px solid #ccc;
+            border: @entityBorderWidth solid #ccc;
             border-bottom: 0 !important;
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
@@ -52,7 +78,7 @@
             }
 
             &:last-child {
-                border-right: 1px solid #ccc;
+                border-right: @entityBorderWidth solid #ccc;
             }
 
             &.ui-state-active {
@@ -69,31 +95,6 @@
                 .pagebuilder-options {
                     .pagebuilder-options-visible;
                 }
-            }
-        }
-    }
-
-    .tabs-content {
-        border: 1px solid #ccc;
-        overflow: hidden;
-        position: relative;
-        z-index: 9;
-
-        > .element-children {
-            min-height: inherit;
-            padding: 0;
-        }
-
-        .pagebuilder-content-type.pagebuilder-tab {
-            min-height: inherit;
-
-            &.empty-container {
-                min-height: 220px;
-            }
-
-            > .element-children {
-                min-height: inherit;
-                padding: 0;
             }
         }
     }

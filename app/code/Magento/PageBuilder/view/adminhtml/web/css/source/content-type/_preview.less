@@ -91,7 +91,7 @@
 
         &.pagebuilder-abstract {
             background: @entityColor;
-            color: white;
+            color: @color-white;
             text-align: center;
 
             i {
@@ -104,7 +104,7 @@
             }
 
             * {
-                color: white;
+                color: @color-white;
             }
         }
 
@@ -121,7 +121,7 @@
 
         &.pagebuilder-image {
             .pagebuilder-image-placeholder {
-                background: #f8f8f8;
+                background: @color-white-fog;
                 cursor: pointer;
                 font-size: 12px;
                 padding: 30px 0 16px;
@@ -266,7 +266,7 @@
 }
 
 .pagebuilder-system-border {
-    border: 1px solid transparent;
+    border: @entityBorderWidth solid transparent;
     box-sizing: border-box;
     outline: 1px solid rgba(153, 153, 153, 0);
     position: relative;
@@ -387,19 +387,10 @@
 
     .pagebuilder-options-wrapper {
         background: #fff;
-        border: 1px solid rgba(153, 153, 153, .7);
+        border: @entityBorderWidth solid rgba(153, 153, 153, .7);
         box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
         display: flex;
         z-index: 99;
-
-        .pagebuilder-name {
-            display: inline-block;
-            font-size: 14px;
-            height: 38px;
-            padding: 10px 0;
-            vertical-align: bottom;
-            white-space: nowrap;
-        }
 
         a {
             color: @color-very-dark-grayish-orange;
@@ -508,7 +499,7 @@
         .pagebuilder-options-wrapper {
             &:after {
                 background: #fff;
-                border: 1px solid rgba(153, 153, 153, .7);
+                border: @entityBorderWidth solid rgba(153, 153, 153, .7);
                 bottom: -6px;
                 content: '';
                 display: block;
@@ -557,13 +548,13 @@
 //  _____________________________________________
 
 .pagebuilder-live-edit-wrapper {
-    background: #2b2625;
+    background: @panelColor;
     border: none;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
-    color: #f8f3eb;
+    color: @iconColorHover ;
     display: none;
     left: 10px !important;
     overflow: hidden;
@@ -598,23 +589,23 @@
                     display: inline-block;
 
                     a {
-                        color: white;
+                        color: @color-white;
                         display: block;
                         font-size: 13px;
                         line-height: 42px;
                         padding: 0 14px;
 
                         &:hover {
-                            background: #534d49;
-                            color: #f8f3eb;
+                            background: @iconColorBackgroundHover;
+                            color: @iconColorHover;
                             text-decoration: none;
                         }
                     }
 
                     &.active {
                         a {
-                            background: #534d49;
-                            color: #f8f3eb;
+                            background: @iconColorBackgroundHover;
+                            color: @iconColorHover;
                             text-decoration: none;
                         }
                     }

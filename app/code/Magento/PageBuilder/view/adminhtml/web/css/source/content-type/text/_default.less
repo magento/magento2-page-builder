@@ -7,24 +7,6 @@
 //  Default appearance styles
 //  _____________________________________________
 
-.redactor-toolbar {
-    a {
-        &.re-fontColor {
-            height: 42px;
-            padding-bottom: 0;
-            padding-top: 0;
-            .redactor-color-picker {
-                background: black;
-                border: 2px solid #f8f3eb;
-                border-radius: 10px;
-                float: left;
-                height: 18px;
-                margin: 12px 0;
-                width: 18px;
-            }
-        }
-    }
-}
 
 .pagebuilder-entity {
     .pagebuilder-textarea {
@@ -60,7 +42,7 @@
             color: #f8f3eb;
 
             &:hover {
-                background: #534d49;
+                background: @iconColorBackgroundHover;
                 color: #f8f3eb;
             }
         }
@@ -69,4 +51,23 @@
 
 .redactor-placeholder {
     min-height: 10px;
+}
+
+.redactor-toolbar {
+    a {
+        &.re-fontColor {
+            height: 42px;
+            padding-bottom: 0;
+            padding-top: 0;
+            .redactor-color-picker {
+                background: @color-black;
+                border: 2px solid @iconColorHover;
+                border-radius: 10px;
+                float: left;
+                height: 18px;
+                margin: 12px 0;
+                width: 18px;
+            }
+        }
+    }
 }
