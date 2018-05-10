@@ -32,11 +32,11 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      * @param string $defaultScope
      */
     public function __construct(
-        \Magento\Framework\Config\FileResolverInterface $fileResolver,
+        \Magento\PageBuilder\Model\Config\FileResolver $fileResolver,
         \Magento\PageBuilder\Model\Config\Groups\Converter $converter,
         \Magento\PageBuilder\Model\Config\Groups\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
-        string $fileName = 'groups.xml',
+        string $fileName = 'group.xml',
         array $idAttributes = [],
         string $domDocumentClass = \Magento\Framework\Config\Dom::class,
         string $defaultScope = 'global'

@@ -54,14 +54,14 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      * @param string $defaultScope
      */
     public function __construct(
-        \Magento\PageBuilder\Model\Config\ContentTypes\FileResolver $fileResolver,
+        \Magento\PageBuilder\Model\Config\FileResolver $fileResolver,
         \Magento\PageBuilder\Model\Config\ContentTypes\Converter $converter,
         \Magento\PageBuilder\Model\Config\ContentTypes\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
-        string $fileName = '*.xml',
+        string $fileName = 'content_type/*.xml',
         array $idAttributes = [],
         string $domDocumentClass = \Magento\Framework\Config\Dom::class,
-        string $defaultScope = 'content_types'
+        string $defaultScope = 'global'
     ) {
         parent::__construct(
             $fileResolver,

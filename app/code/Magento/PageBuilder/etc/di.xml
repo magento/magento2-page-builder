@@ -469,4 +469,24 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\PageBuilder\Model\Config\FileResolver">
+        <arguments>
+            <argument name="baseFiles" xsi:type="object">pageBuilderComponentAggregatedSourceBaseSorted</argument>
+        </arguments>
+    </type>
+    <virtualType name="pageBuilderComponentAggregatedSourceBase" type="Magento\Framework\View\File\Collector\Base">
+        <arguments>
+            <argument name="subDir" xsi:type="string">pagebuilder</argument>
+        </arguments>
+    </virtualType>
+    <virtualType shared="false" name="pageBuilderComponentAggregatedSourceBaseFiltered" type="Magento\Framework\View\File\Collector\Decorator\ModuleOutput">
+        <arguments>
+            <argument name="subject" xsi:type="object">pageBuilderComponentAggregatedSourceBase</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="pageBuilderComponentAggregatedSourceBaseSorted" type="Magento\Framework\View\File\Collector\Decorator\ModuleDependency">
+        <arguments>
+            <argument name="subject" xsi:type="object">pageBuilderComponentAggregatedSourceBaseFiltered</argument>
+        </arguments>
+    </virtualType>
 </config>
