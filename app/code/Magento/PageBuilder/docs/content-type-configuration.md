@@ -4,7 +4,7 @@
 
 Use the content type and group configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
 
-The following is an example of a group configuration in `etc/groups.xml`
+The following is an example of a group configuration in `view/adminhtml/pagebuilder/groups.xml`
 
 ``` xml
 <!-- Definition of main menu, used for grouping content types  -->
@@ -22,7 +22,7 @@ The following is an example of a group configuration in `etc/groups.xml`
 | `label`             | Label displayed on the menu.                                             |
 
 
-The following is an example of a content type configuration in `etc/content_types/banner.xml`:
+The following is an example of a content type configuration in `view/adminhtml/pagebuilder/content_type/banner.xml`:
 
 ``` xml
 <content_types>

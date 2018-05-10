@@ -16,7 +16,7 @@ To add customization to a Page Builder content type, you must:
 
 ## Add additional data to the XML config {#additional-data}
 
-Use `additional_data` in your `Vendor/ModuleName/etc/content_types/<your-content-type>.xml` XML config file to add custom configuration to a content type:
+Use `additional_data` in your `Vendor/ModuleName/view/adminhtml/pagebuilder/content_type/<your-content-type>.xml` XML config file to add custom configuration to a content type:
 
 ``` xml
 <additional_data>

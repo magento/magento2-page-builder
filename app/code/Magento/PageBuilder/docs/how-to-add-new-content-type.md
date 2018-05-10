@@ -4,7 +4,7 @@
 
 Adding new content type starts with [configuration](content-type-configuration.md).
 
-To add configuration for a new content type, create a file under the following location `Vendor\ModuleName\etc\content_types\simple.xml` with the following content
+To add configuration for a new content type, create a file under the following location `Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\simple.xml` with the following content
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Vendor_ModuleName:etc/content_types.xsd">
     <content_types>
@@ -197,7 +197,7 @@ And the last part is to add button to a template.
 <button type="button" click="helloWorld" translate="'Display Hello World'"/>
 ```
 
-Now, let's add content type that can contain other content types. Create configuration `Vendor\ModuleName\etc\content_types\complex.xml`.
+Now, let's add content type that can contain other content types. Create configuration `Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\complex.xml`.
 
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
@@ -246,7 +246,7 @@ Now, let's add content type that can contain other content types. Create configu
 
 Now we need to specify which content types can be inserted into our new content type. To allow default content type Heading be inserted into our Complex content type, add the following configuration.
 
-`Vendor\ModuleName\etc\content_types\heading.xml`
+`Vendor\ModuleName\view\adminhtml\pagebuilder\content_types\heading.xml`
 
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
