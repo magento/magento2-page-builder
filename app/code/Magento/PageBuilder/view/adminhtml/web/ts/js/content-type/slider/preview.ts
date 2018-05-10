@@ -16,7 +16,7 @@ import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import {PreviewSortableSortUpdateEventParams} from "../../preview-sortable";
+import {PreviewSortableSortUpdateEventParams} from "../../sortable-children";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
@@ -108,7 +108,7 @@ export default class Preview extends PreviewCollection {
         this.parent.dataStore.subscribe(this.buildSlick);
 
         // Set the active slide to the new position of the sorted slide
-        events.on("previewSortable:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
+        events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
             if (args.instance.id === this.parent.id) {
                 $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(args.newPosition);
