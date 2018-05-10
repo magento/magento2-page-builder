@@ -1083,4 +1083,52 @@
             <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
         </actionGroup>
     </test>
+    <test name="MapInputValidation">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-91233"/>
+            <title value="Pagebuilder - Map Height Percentage Breaks Map"/>
+            <description value="Make sure the map does not accept percentage height"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-bug"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
+            <argument name="page" value="PageBuilderMapPositionDefaultProperty"/>
+        </actionGroup>
+        <!-- Add Fill Required Fields -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationNameDefaultProperty"/>
+        </actionGroup>
+        <!-- Empty Height Fields -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPercentageHeightField">
+            <argument name="property" value="PageBuilderMapHeightPropertyPercentage"/>
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask2"/>
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
+        <seeElement selector="{{MapOnStage.errorField}}" stepKey="seeErrorInTransparencyMin"/>
+    </test>
 </tests>
