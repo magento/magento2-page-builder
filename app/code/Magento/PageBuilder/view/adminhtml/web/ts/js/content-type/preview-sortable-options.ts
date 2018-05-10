@@ -75,13 +75,15 @@ let sortedContentType: ContentTypeInterface;
  * @param {JQueryUI.SortableUIParams} ui
  */
 function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
-    const contentTypeInstance: ContentTypeInterface = ko.dataFor(ui.item[0]);
-    if (contentTypeInstance) {
-        // Ensure the original item is displayed but with reduced opacity
-        ui.item.show().addClass("pagebuilder-sorting-original");
+    if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
+        const contentTypeInstance: ContentTypeInterface = ko.dataFor(ui.item[0]);
+        if (contentTypeInstance) {
+            // Ensure the original item is displayed but with reduced opacity
+            ui.item.show().addClass("pagebuilder-sorting-original");
 
-        sortedContentType = contentTypeInstance;
-        showDropIndicators(contentTypeInstance.config.name);
+            sortedContentType = contentTypeInstance;
+            showDropIndicators(contentTypeInstance.config.name);
+        }
     }
 }
 
@@ -203,7 +205,6 @@ let headDropIndicatorStyles: HTMLStyleElement;
  * @returns {HTMLStyleElement}
  */
 export function showDropIndicators(contentType: string) {
-    debugger;
     const acceptedContainers = getContainersFor(contentType);
     if (acceptedContainers.length > 0) {
         const classNames = acceptedContainers.map((container: string) => {
@@ -227,6 +228,7 @@ export function showDropIndicators(contentType: string) {
 export function hideDropIndicators() {
     if (headDropIndicatorStyles) {
         headDropIndicatorStyles.remove();
+        headDropIndicatorStyles = null;
     }
 }
 

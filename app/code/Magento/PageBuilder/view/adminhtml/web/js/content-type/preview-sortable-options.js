@@ -65,13 +65,15 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
    */
 
   function onSortStart(preview, event, ui) {
-    var contentTypeInstance = _knockout.dataFor(ui.item[0]);
+    if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
+      var contentTypeInstance = _knockout.dataFor(ui.item[0]);
 
-    if (contentTypeInstance) {
-      // Ensure the original item is displayed but with reduced opacity
-      ui.item.show().addClass("pagebuilder-sorting-original");
-      sortedContentType = contentTypeInstance;
-      showDropIndicators(contentTypeInstance.config.name);
+      if (contentTypeInstance) {
+        // Ensure the original item is displayed but with reduced opacity
+        ui.item.show().addClass("pagebuilder-sorting-original");
+        sortedContentType = contentTypeInstance;
+        showDropIndicators(contentTypeInstance.config.name);
+      }
     }
   }
   /**
@@ -188,7 +190,6 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
    */
 
   function showDropIndicators(contentType) {
-    debugger;
     var acceptedContainers = getContainersFor(contentType);
 
     if (acceptedContainers.length > 0) {
@@ -214,6 +215,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
   function hideDropIndicators() {
     if (headDropIndicatorStyles) {
       headDropIndicatorStyles.remove();
+      headDropIndicatorStyles = null;
     }
   }
 
