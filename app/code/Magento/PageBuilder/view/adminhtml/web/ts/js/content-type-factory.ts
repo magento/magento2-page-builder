@@ -3,16 +3,17 @@
  * See COPYING.txt for license details.
  */
 
-import loadModule from "Magento_PageBuilder/js/component/loader";
+import loadModule from "Magento_PageBuilder/js/loader";
 import events from "uiEvents";
 import _ from "underscore";
-import BlockMountEventParamsInterface from "./component/block/block-mount-event-params.d";
-import ConfigFieldInterface from "./component/block/config-field.d";
-import FieldDefaultsInterface from "./component/block/field-defaults.d";
-import contentFactory from "./content-factory";
+import ConfigFieldInterface from "./config-field.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
-import previewFactory from "./preview-factory";
+import BlockMountEventParamsInterface from "./content-type/block-mount-event-params.d";
+import contentFactory from "./content-type/content-factory";
+import ContentTypeMountEventParamsInterface from "./content-type/content-type-mount-event-params.d";
+import previewFactory from "./content-type/preview-factory";
+import FieldDefaultsInterface from "./field-defaults.d";
 
 /**
  * Create new content type
@@ -47,8 +48,7 @@ export default function createContentType(
                 const [previewComponent, contentComponent] = resolvedPromises;
                 contentType.preview = previewComponent;
                 contentType.content = contentComponent;
-                contentType.store.update(
-                    contentType.id,
+                contentType.dataStore.update(
                     prepareData(config, data),
                 );
                 resolve(contentType);
@@ -97,7 +97,7 @@ function fireBlockReadyEvent(block: ContentTypeInterface, childrenLength: number
         fire();
     } else {
         let mountCounter = 0;
-        events.on("block:mount", (args: BlockMountEventParamsInterface) => {
+        events.on("block:mount", (args: ContentTypeMountEventParamsInterface) => {
             if (args.block.parent.id === block.id) {
                 mountCounter++;
 

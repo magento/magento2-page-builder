@@ -46,7 +46,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <waitForElementVisible selector="{{BannerOnBackend.emptyBanner}}" stepKey="waitForBannerVisible"/>
+        <waitForElementVisible selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="waitForBannerVisible"/>
     </test>
     <test name="BannerEmptyBannerPreviewValidation">
         <annotations>
@@ -86,7 +86,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.emptyPoster}}" stepKey="waitForPoster" />
-        <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBannerContent"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeEmptyBannerContent"/>
         <dontSeeElement selector="{{BannerOnBackend.emptyPoster}} button" stepKey="dontSeePosterButton"/>
         <dontSeeElement selector="{{BannerOnBackend.posterOverlay}}" stepKey="dontSeePosterOverlay"/>
         <moveMouseOver selector="{{BannerOnBackend.emptyPoster}}" stepKey="moveMouseOverPoster"/>
@@ -100,7 +100,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <waitForElementVisible time="2" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend" />
-        <dontSeeElement selector="{{BannerOnFrontend.messageText('Edit banner text')}}" stepKey="dontSeePosterMessageInFrontend"/>
+        <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeePosterMessageInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.poster}} button" stepKey="dontSeePosterButtonInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="dontSeePosterOverlayInInFrontend"/>
         <moveMouseOver selector="{{BannerOnFrontend.poster}}" stepKey="moveMouseOverPosterFrontend"/>
@@ -121,7 +121,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage2"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.emptyCollageLeft}}" stepKey="waitForCollageLeft" />
-        <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBannerContent2"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeEmptyBannerContent2"/>
         <dontSeeElement selector="{{BannerOnBackend.emptyCollageLeft}} button" stepKey="dontSeeCollageLeftButton"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="dontSeeCollageLeftOverlay"/>
         <switchToNextTab stepKey="switchToNextTab"/>
@@ -132,7 +132,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront2"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend2"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.emptyCollageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
-        <dontSeeElement selector="{{BannerOnFrontend.messageText('Edit banner text')}}" stepKey="dontSeeCollageLeftMessageInFrontend"/>
+        <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageLeftMessageInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.emptyCollageLeft}} button" stepKey="dontSeeCollageLeftButtonInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="dontSeeCollageLeftOverlayInInFrontend"/>
         <!-- Go back to cms page and change configuration to collage centered -->
@@ -150,7 +150,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage3"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.emptyCollageCentered}}" stepKey="waitForCollageCentered" />
-        <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBannerContent3"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeEmptyBannerContent3"/>
         <dontSeeElement selector="{{BannerOnBackend.emptyCollageCentered}} button" stepKey="dontSeeCollageCenteredButton"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="dontSeeCollageCenteredOverlay"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
@@ -161,7 +161,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront3"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend3"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.emptyCollageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
-        <dontSeeElement selector="{{BannerOnFrontend.messageText('Edit banner text')}}" stepKey="dontSeeCollageCenteredMessageInFrontend"/>
+        <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageCenteredMessageInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.emptyCollageCentered}} button" stepKey="dontSeeCollageCenteredButtonInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="dontSeeCollageCenteredOverlayInInFrontend"/>
         <!-- Go back to cms page and change configuration to collage right -->
@@ -179,7 +179,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage4"/>
         <waitForElementVisible time="2" selector="{{BannerOnBackend.emptyCollageRight}}" stepKey="waitForCollageRight" />
-        <seeElement selector="{{BannerOnBackend.emptyBanner}}" stepKey="seeEmptyBannerContent4"/>
+        <seeElement selector="{{BannerOnBackend.emptyBanner(PageBuilderBannerMessageDefaultProperty.placeholder)}}" stepKey="seeEmptyBannerContent4"/>
         <dontSeeElement selector="{{BannerOnBackend.emptyCollageRight}} button" stepKey="dontSeeCollageRightButton"/>
         <dontSeeElement selector="{{BannerOnBackend.collageOverlay}}" stepKey="dontSeeCollageRightOverlay"/>
         <switchToNextTab stepKey="switchToNextTab3"/>
@@ -190,7 +190,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront4"/>
         <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend4"/>
         <waitForElementVisible time="3" selector="{{BannerOnFrontend.emptyCollageRight}}" stepKey="waitForCollageRightInFrontend"/>
-        <dontSeeElement selector="{{BannerOnFrontend.messageText('Edit banner text')}}" stepKey="dontSeeRightCenteredMessageInFrontend"/>
+        <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageRightMessageInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.emptyCollageRight}} button" stepKey="dontSeeCollageRightButtonInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="dontSeeCollageRightOverlayInInFrontend"/>
     </test>
@@ -243,8 +243,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
             <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
@@ -332,8 +336,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
@@ -342,7 +350,11 @@
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
             <argument name="section" value="BannerOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
+        <comment userInput="I fill out color using Color Picker" stepKey="comment"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField7">
             <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
@@ -609,7 +621,7 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonLinkProperty">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeOpenInNewTabProperty">
+        <actionGroup ref="seeSlideOutPanelFieldNotOpenInNewTab" stepKey="seeOpenInNewTabProperty">
             <argument name="property" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonTypeProperty">
@@ -786,8 +798,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
@@ -908,13 +924,17 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
         </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterBannerNewTab">
+        <actionGroup ref="clickSlideOutPanelFieldOpenInNewTab" stepKey="enterBannerNewTab">
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -976,8 +996,12 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerButtonText">
             <argument name="property" value="PageBuilderBannerButtonTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerLinkUrl">
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="waitForLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('link_url')}}" stepKey="seeLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('link_url')}}" userInput="URL" stepKey="seeLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
+            <argument name="selection" value="ExternalLink"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
