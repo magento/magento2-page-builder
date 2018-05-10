@@ -10,6 +10,7 @@ import Config from "../config";
 import ContentTypeInterface from "../content-type";
 import ContentTypeCollectionInterface from "../content-type-collection";
 import ContentTypeConfigInterface from "../content-type-config";
+import createContentType from "../content-type-factory";
 import {getDraggedBlockConfig} from "../panel/registry";
 import Stage from "../stage";
 import {createStyleSheet} from "../utils/create-stylesheet";
@@ -40,6 +41,7 @@ export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableO
             return $(item).clone()[0];
         },
         appendTo: document.body,
+        containment: "document",
         placeholder: {
             element() {
                 return $("<div />").addClass("pagebuilder-sortable-placeholder")[0];
@@ -75,6 +77,7 @@ let sortedContentType: ContentTypeInterface;
  * @param {JQueryUI.SortableUIParams} ui
  */
 function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    // Verify we're sorting an already created item
     if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
         const contentTypeInstance: ContentTypeInterface = ko.dataFor(ui.item[0]);
         if (contentTypeInstance) {
@@ -83,6 +86,10 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
 
             sortedContentType = contentTypeInstance;
             showDropIndicators(contentTypeInstance.config.name);
+
+            // Dynamically change the connect with option to restrict content types
+            $(this).sortable("option", "connectWith", getAllowedContainersClasses(contentTypeInstance.config.name));
+            $(this).sortable("refresh");
         }
     }
 }
@@ -119,13 +126,14 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
                 return element.classList.contains("pagebuilder-draggable-block");
             });
 
-        // Fire the event to be handled by the stage
-        events.trigger("block:dropped", {
-            parent: preview.parent,
-            stageId: preview.parent.stageId,
-            blockConfig,
-            index,
-        });
+        // Create the new content type and insert it into the parent
+        createContentType(blockConfig, preview.parent, preview.parent.stageId)
+            .then((block: ContentTypeInterface) => {
+                (preview.parent as ContentTypeCollectionInterface).addChild(block, index);
+                events.trigger("block:dropped:create", {id: block.id, block});
+                events.trigger(blockConfig.name + ":block:dropped:create", {id: block.id, block});
+                return block;
+            });
 
         // Remove the DOM element, as this is a drop event we can't just remove the ui.item
         $(event.target).find(".pagebuilder-draggable-block").remove();
@@ -140,55 +148,62 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
  * @param {JQueryUI.SortableUIParams} ui
  */
 function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
-    const el = ui.item[0];
-    const contentTypeInstance = ko.dataFor(el);
-    const target = ko.dataFor(event.target);
+    if (sortedContentType && (this === ui.item.parent()[0])) {
+        const el = ui.item[0];
+        const contentTypeInstance = ko.dataFor(el);
+        const target = ko.dataFor(ui.item.parents(".content-type-container")[0]);
 
-    if (target && contentTypeInstance) {
-        // Calculate the source and target index
-        const sourceParent: ContentTypeCollectionInterface = contentTypeInstance.parent;
-        const sourceParentChildren = sourceParent.getChildren();
-        const sourceIndex = (sortedContentType.parent as ContentTypeCollectionInterface)
-            .children()
-            .indexOf(sortedContentType);
-        const targetParent: ContentTypeCollectionInterface = target.parent;
-        const targetIndex = $(event.target)
-            .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")
-            .toArray()
-            .findIndex((element: Element) => {
-                return element === el;
-            });
+        if (target && contentTypeInstance) {
+            // Calculate the source and target index
+            const sourceParent: ContentTypeCollectionInterface = contentTypeInstance.parent;
+            const sourceParentChildren = sourceParent.getChildren();
+            const sourceIndex = (sortedContentType.parent as ContentTypeCollectionInterface)
+                .children()
+                .indexOf(sortedContentType);
+            const targetParent: ContentTypeCollectionInterface = target.parent;
+            const targetParentChildren = targetParent.getChildren();
+            const targetIndex = $(event.target)
+                .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")
+                .toArray()
+                .findIndex((element: Element) => {
+                    return element === el;
+                });
 
-        if (sourceParent) {
-            $(sourceParent === targetParent ? this : ui.sender || this).sortable("cancel");
-        } else {
-            $(el).remove();
-        }
-
-        if (sourceParent !== targetParent) {
-            // Handle dragging between sortable elements
-        } else {
-            // Retrieve the children from the source parent
-            const children = ko.utils.unwrapObservable(sourceParentChildren);
-
-            // Inform KO that this value is about to mutate
-            if (sourceParentChildren.valueWillMutate) {
-                sourceParentChildren.valueWillMutate();
+            if (sourceParent) {
+                $(sourceParent === targetParent ? this : ui.sender || this).sortable("cancel");
+            } else {
+                $(el).remove();
             }
 
-            // Perform the mutation
-            children.splice(sourceIndex, 1);
-            children.splice(targetIndex, 0, contentTypeInstance);
+            if (sourceParent !== targetParent) {
+                // Handle dragging between sortable elements
+                sourceParentChildren.splice(sourceIndex, 1);
+                targetParentChildren.splice(targetIndex, 0, contentTypeInstance);
+                contentTypeInstance.parent = targetParent;
+                ui.item.remove();
+            } else {
+                // Retrieve the children from the source parent
+                const children = ko.utils.unwrapObservable(sourceParentChildren);
 
-            // Inform KO that the mutation is complete
-            if (sourceParentChildren.valueHasMutated) {
-                sourceParentChildren.valueHasMutated();
+                // Inform KO that this value is about to mutate
+                if (sourceParentChildren.valueWillMutate) {
+                    sourceParentChildren.valueWillMutate();
+                }
+
+                // Perform the mutation
+                children.splice(sourceIndex, 1);
+                children.splice(targetIndex, 0, contentTypeInstance);
+
+                // Inform KO that the mutation is complete
+                if (sourceParentChildren.valueHasMutated) {
+                    sourceParentChildren.valueHasMutated();
+                }
             }
-        }
 
-        // Process any deferred bindings
-        if (ko.processAllDeferredBindingUpdates) {
-            ko.processAllDeferredBindingUpdates();
+            // Process any deferred bindings
+            if (ko.processAllDeferredBindingUpdates) {
+                ko.processAllDeferredBindingUpdates();
+            }
         }
     }
 }
@@ -301,4 +316,15 @@ export function getContainersFor(contentType: string) {
     }
 
     return null;
+}
+
+/**
+ * Generate classes of containers the content type is allowed within
+ *
+ * @param {string} contentType
+ * @returns {string}
+ */
+export function getAllowedContainersClasses(contentType: string) {
+    return getContainersFor(contentType)
+        .map((value, index) => ".content-type-container." + value + "-container").join(", ");
 }

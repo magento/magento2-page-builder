@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import ContentTypeConfigInterface from "../../content-type-config.d";
-import {getContainersFor} from "../../content-type/preview-sortable-options";
+import {getAllowedContainersClasses} from "../../content-type/preview-sortable-options";
 
 export class Block {
     public droppable: boolean = true;
@@ -41,8 +41,7 @@ export class Block {
      */
     public getDraggableOptions() {
         return {
-            connectToSortable: getContainersFor(this.config.name)
-                .map((value, index) => ".content-type-container." + value + "-container").join(", "),
+            connectToSortable: getAllowedContainersClasses(this.config.name),
         };
     }
 }

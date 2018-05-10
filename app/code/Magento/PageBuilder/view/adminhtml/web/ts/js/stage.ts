@@ -147,31 +147,11 @@ export default class Stage {
         this.collection.getChildren().subscribe(
             () => events.trigger("stage:updated", {stageId: this.id}),
         );
-        // Block dropped from left hand panel
-        events.on("block:dropped", (args: ContentTypeDroppedParamsInterface) => {
-            if (args.stageId === this.id) {
-                this.onBlockDropped(args);
-            }
-        });
-
-        // Block instance being moved between structural elements
-        events.on("block:instanceDropped", (args: ContentTypeInstanceDroppedParamsInterface) => {
-            if (args.stageId === this.id) {
-                this.onBlockInstanceDropped(args);
-            }
-        });
 
         // Block being removed from container
         events.on("block:removed", (args: ContentTypeRemovedParamsInterface) => {
             if (args.stageId === this.id) {
                 this.onBlockRemoved(args);
-            }
-        });
-
-        // Block sorted within the same structural element
-        events.on("block:sorted", (args: ContentTypeSortedParamsInterface) => {
-            if (args.stageId === this.id) {
-                this.onBlockSorted(args);
             }
         });
 
@@ -215,62 +195,6 @@ export default class Stage {
      */
     private onBlockRemoved(params: ContentTypeRemovedParamsInterface): void {
         params.parent.removeChild(params.block);
-    }
-
-    /**
-     * On instance of an existing block is dropped onto container
-     *
-     * @param {Event} event
-     * @param {BlockInstanceDroppedParams} params
-     */
-    private onBlockInstanceDropped(params: ContentTypeInstanceDroppedParamsInterface): void {
-        const originalParent = params.blockInstance.parent;
-        params.blockInstance.parent = params.parent;
-        params.parent.parent.addChild(params.blockInstance, params.index);
-
-        events.trigger("block:moved", {
-            block: params.blockInstance,
-            index: params.index,
-            newParent: params.parent,
-            originalParent,
-        });
-    }
-
-    /**
-     * On block dropped into container
-     *
-     * @param {BlockDroppedParams} params
-     */
-    private onBlockDropped(params: ContentTypeDroppedParamsInterface) {
-        const index = params.index || 0;
-
-        new Promise<ContentTypeInterface>((resolve, reject) => {
-            if (params.blockConfig) {
-                return createContentType(params.blockConfig, params.parent, params.stageId)
-                    .then((block: ContentTypeInterface) => {
-                        params.parent.addChild(block, index);
-                        events.trigger("block:dropped:create", {id: block.id, block});
-                        events.trigger(params.blockConfig.name + ":block:dropped:create", {id: block.id, block});
-                        return block;
-                    });
-            } else {
-                reject("Parameter blockConfig missing from event.");
-            }
-        }).catch((error: string) => {
-            console.error(error);
-        });
-    }
-
-    /**
-     * On block sorted within it's own container
-     *
-     * @param {BlockSortedParams} params
-     */
-    private onBlockSorted(params: ContentTypeSortedParamsInterface): void {
-        const originalIndex = ko.utils.arrayIndexOf(params.parent.children(), params.block);
-        if (originalIndex !== params.index) {
-            moveArrayItem(params.parent.children, originalIndex, params.index);
-        }
     }
 
     /**

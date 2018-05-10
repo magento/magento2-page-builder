@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type/preview-sortable-options", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/array"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _contentTypeFactory, _previewSortableOptions, _dataStore, _render, _stageBuilder, _array) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type/preview-sortable-options", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _previewSortableOptions, _dataStore, _render, _stageBuilder) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -139,32 +139,11 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
         return _uiEvents.trigger("stage:updated", {
           stageId: _this.id
         });
-      }); // Block dropped from left hand panel
-
-      _uiEvents.on("block:dropped", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onBlockDropped(args);
-        }
-      }); // Block instance being moved between structural elements
-
-
-      _uiEvents.on("block:instanceDropped", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onBlockInstanceDropped(args);
-        }
       }); // Block being removed from container
-
 
       _uiEvents.on("block:removed", function (args) {
         if (args.stageId === _this.id) {
           _this.onBlockRemoved(args);
-        }
-      }); // Block sorted within the same structural element
-
-
-      _uiEvents.on("block:sorted", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onBlockSorted(args);
         }
       }); // Observe sorting actions
 
@@ -219,73 +198,6 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
 
     _proto.onBlockRemoved = function onBlockRemoved(params) {
       params.parent.removeChild(params.block);
-    };
-    /**
-     * On instance of an existing block is dropped onto container
-     *
-     * @param {Event} event
-     * @param {BlockInstanceDroppedParams} params
-     */
-
-
-    _proto.onBlockInstanceDropped = function onBlockInstanceDropped(params) {
-      var originalParent = params.blockInstance.parent;
-      params.blockInstance.parent = params.parent;
-      params.parent.parent.addChild(params.blockInstance, params.index);
-
-      _uiEvents.trigger("block:moved", {
-        block: params.blockInstance,
-        index: params.index,
-        newParent: params.parent,
-        originalParent: originalParent
-      });
-    };
-    /**
-     * On block dropped into container
-     *
-     * @param {BlockDroppedParams} params
-     */
-
-
-    _proto.onBlockDropped = function onBlockDropped(params) {
-      var index = params.index || 0;
-      new Promise(function (resolve, reject) {
-        if (params.blockConfig) {
-          return (0, _contentTypeFactory)(params.blockConfig, params.parent, params.stageId).then(function (block) {
-            params.parent.addChild(block, index);
-
-            _uiEvents.trigger("block:dropped:create", {
-              id: block.id,
-              block: block
-            });
-
-            _uiEvents.trigger(params.blockConfig.name + ":block:dropped:create", {
-              id: block.id,
-              block: block
-            });
-
-            return block;
-          });
-        } else {
-          reject("Parameter blockConfig missing from event.");
-        }
-      }).catch(function (error) {
-        console.error(error);
-      });
-    };
-    /**
-     * On block sorted within it's own container
-     *
-     * @param {BlockSortedParams} params
-     */
-
-
-    _proto.onBlockSorted = function onBlockSorted(params) {
-      var originalIndex = _knockout.utils.arrayIndexOf(params.parent.children(), params.block);
-
-      if (originalIndex !== params.index) {
-        (0, _array.moveArrayItem)(params.parent.children, originalIndex, params.index);
-      }
     };
     /**
      * On sorting start

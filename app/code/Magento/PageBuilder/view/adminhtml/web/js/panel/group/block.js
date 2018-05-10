@@ -43,9 +43,7 @@ define(["knockout", "Magento_PageBuilder/js/content-type/preview-sortable-option
 
     _proto.getDraggableOptions = function getDraggableOptions() {
       return {
-        connectToSortable: (0, _previewSortableOptions.getContainersFor)(this.config.name).map(function (value, index) {
-          return ".content-type-container." + value + "-container";
-        }).join(", ")
+        connectToSortable: (0, _previewSortableOptions.getAllowedContainersClasses)(this.config.name)
       };
     };
 
