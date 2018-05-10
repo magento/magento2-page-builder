@@ -1024,4 +1024,63 @@
         <!-- Verify Map Not In Storefront -->
         <dontSeeElementInDOM selector="{{MapOnStorefront.base('1')}}" stepKey="dontSeeContentBlockInStorefront"/>
     </test>
+    <test name="MapEmptyHeight">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-89299"/>
+            <title value="Pagebuilder - Empty Map Height Saves As 0 Instead Of Default 300px"/>
+            <description value="Make sure the map will default to 300px height if field is empty"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-bug"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
+            <argument name="page" value="PageBuilderMapPositionDefaultProperty"/>
+        </actionGroup>
+        <!-- Add Fill Required Fields -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationNameDefaultProperty"/>
+        </actionGroup>
+        <!-- Empty Height Fields -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="emptyHeightField">
+            <argument name="property" value="PageBuilderMapHeightPropertyEmpty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateMap" stepKey="validateMapStage">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="validateMap" stepKey="validateMapStoreFront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
+        </actionGroup>
+    </test>
 </tests>
