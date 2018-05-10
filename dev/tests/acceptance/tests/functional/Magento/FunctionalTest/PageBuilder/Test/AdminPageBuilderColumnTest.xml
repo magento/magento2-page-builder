@@ -853,7 +853,7 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedCssClassesProperty">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentProperty">
+        <actionGroup ref="selectAlignment" stepKey="selectAignmentLeft">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
@@ -870,7 +870,9 @@
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
-        <seeOptionIsSelected userInput="{{PageBuilderAdvancedAlignmentPropertyLeft.value}}" selector="{{AdvancedForm.advancedAlignment}}" stepKey="assertAlignmentSavedInColumn"/>
+        <actionGroup ref="validateTextAlignment" stepKey="seeOptionIsSelected">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+        </actionGroup>
         <seeOptionIsSelected userInput="{{PageBuilderAdvancedBorderPropertyDotted.value}}" selector="{{AdvancedForm.advancedBorder}}" stepKey="assertBorderSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderColorProperty_ffffff.value}}" selector="{{AdvancedForm.advancedBorderColor}}" stepKey="assertBorderColorSavedInColumn"/>
         <seeInField userInput="{{PageBuilderAdvancedBorderWidthProperty10.value}}" selector="{{AdvancedForm.advancedBorderWidth}}" stepKey="assertBorderSizeSavedInColumn"/>
