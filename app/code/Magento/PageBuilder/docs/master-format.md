@@ -13,9 +13,9 @@ This document describes master format for default Page Builder content types.
 ### main element
 
 Attributes
-1. data-role
-2. data-appearance
-3. data-enable-parallax
+1. data-role [row]
+2. data-appearance [default]
+3. data-enable-parallax [1, 0]
 4. data-parallax-speed
 5. data-background-color-format
 
@@ -33,6 +33,7 @@ Inline styles
 11. border-radius
 12. margin
 13. padding
+14. class
 
 ## Column group
 
@@ -40,11 +41,37 @@ Inline styles
 <div data-role="column-group" data-appearance="default"></div>
 ```
 
+Attributes
+1. data-role [column-group]
+2. data-appearance [default]
+
 ## Column
 
 ```
 <div data-role="column" data-appearance="full-height" style="..."></div>
 ```
+
+Attributes
+1. data-role [column]
+2. data-appearance [full-height, align-top, align-center, align-bottom]
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. border-style
+9. border-color
+10. border-width
+11. border-radius
+12. margin
+13. padding
+14. align-self
+15. min-height
+16. class
 
 ## Tabs
 
@@ -87,6 +114,20 @@ Inline styles
 <div data-role="text" data-appearance="default" style="..."></div>
 ```
 
+Attributes
+1. data-role [text]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
 ## Heading
 
 ```
@@ -94,11 +135,39 @@ Inline styles
 <!-- The same for h2, h3, h4, etc -->
 ```
 
+Attributes
+1. data-role [heading]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
 ## Buttons
 
 ```
 <div data-role="buttons" data-appearance="default" style="..."></div>
 ```
+
+Attributes
+1. data-role [buttons]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
 
 ## Button item
 
@@ -108,11 +177,64 @@ Inline styles
 </div>
 ```
 
+### main element
+
+Attributes
+1. data-role [button-item]
+2. data-appearance [default]
+
+Inline styles
+1. display
+
+### link element
+
+Attributes
+1. data-link-type
+2. href
+3. target
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+### link_text element
+
+HTML content.
+
 ## Divider
 
 ```
 <hr data-role="divider" data-appearance="default" style="..."/>
 ```
+
+### main element
+
+Attributes
+1. data-role [divider]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+### link element
+
+Inline styles
+1. width
+2. border-color
+3. border-width
 
 ## Anchor
 
@@ -120,11 +242,42 @@ Inline styles
 <div data-role="anchor" data-appearance="default" id="" style="..."></div>
 ```
 
+Attributes
+1. data-role [anchor]
+2. data-appearance [default]
+2. id
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
 ## HTML & JS Code
 
 ```
 <div data-role="html" data-appearance="default" style="..."></div>
 ```
+
+Attributes
+1. data-role
+2. data-appearance
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+HTML & JavaScript content.
 
 ## Image
 
@@ -141,8 +294,8 @@ Inline styles
 ### main element
 
 Attributes
-1. data-role
-2. data-appearance
+1. data-role [image]
+2. data-appearance [full-width]
 
 Inline styles
 1. text-align
@@ -152,6 +305,7 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
+8. class
 
 ### desktop_image element
 
@@ -192,25 +346,240 @@ HTML content.
 </div>
 ```
 
+### main element
+
+Attributes
+1. data-role [video]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+
+### video element
+
+Attributes
+1. src
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. width
+9. height
+10. class
+
 ## Slider
 
 ```
 <div data-role="slider" data-appearance="default" style="..."></div>
 ```
 
+Attributes
+1. data-role [slider]
+2. data-appearance [default]
+3. data-autoplay
+4. data-autoplay-speed
+5. data-fade
+6. data-is-infinite
+7. data-show-arrows
+8. data-show-dots
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. min-height
+9. class
+
+## Slide
+
+Poster
+
 ```
-<div data-role="slide" data-appearance="poster" data-has-overlay="true" style="...">
-    <div>
-        <div class="content-wrapper">
-            <h3>Slide 1 Title</h3>
-            <div class="content">Slide 1 content</div>
-            <a href="" class="button">
-                <span><span>Button Text</span></span>
-            </a>
+<div data-role="slide" data-appearance="poster" data-overlay-color="rgb(0, 0, 0)" data-appearance="poster" style="...">
+    <a href="" target="">
+        <div class="wrapper pagebuilder-mobile-only">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Content</div>
+                    <button type="button" style="" class="action primary" >Button Text</button>
+                </div>
+            </div>
         </div>
-    </div>
+        <div style="" class="wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button type="button" style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
 </div>
 ```
+
+Collage Left
+
+```
+<div data-role="slide" data-appearance="collage-left" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-left" style="" class="pagebuilder-banner">
+    <a href="" target="">
+        <div style=""
+             class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay>
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Banner Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+
+Collage Centered
+
+```
+<div data-role="slide" data-appearance="collage-centered" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-center" style="" class="pagebuilder-banner">
+    <a href="" target="">
+        <div style="" class="pagebuilder-desktop-only wrapper">
+            <div class="overlay">
+                <div class="content">
+                    <div>Button content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+Collage Right
+
+```
+<div data-role="slide" data-appearance="collage-right" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-right" style="" class="pagebuilder-banner">
+    <a href="" target="">
+        <div style="" class="pagebuilder-desktop-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div data-bind="html: getContentHtml()"></div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+
+### main element
+
+Attributes
+1. data-role [slide]
+2. data-appearance [poster, collage-left, collage-centered, collage-right]
+2. data-show-button
+2. data-show-overlay
+
+Inline styles
+1. border-style
+2. border-color
+3. border-width
+4. border-radius
+5. margin
+6. class
+
+### link element
+
+Attributes
+1. data-role
+2. data-appearance
+3. href
+4. target
+5. data-link-type
+
+### overlay element
+
+Attributes
+1. data-role
+2. data-appearance
+3. data-link-type
+4. data-overlay-color
+5. href
+6. target
+
+Inline styles
+1. background-color
+
+### desktop_image element
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. padding
+9. min-height
+
+
+### mobile_image element
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. padding
+9. min-height
+
+### content element
+
+HTML content.
+
+### button element
+
+Attributes
+1. class
+
+Inline styles
+1. opacity
+2. visibility
+
+HTML content.
 
 ## Banner
 
@@ -314,11 +683,109 @@ Collage Right
 </div>
 ```
 
+### main element
+
+Attributes
+1. data-role [banner]
+2. data-appearance [poster, collage-left, collage-centered, collage-right]
+2. data-show-button
+2. data-show-overlay
+
+Inline styles
+1. border-style
+2. border-color
+3. border-width
+4. border-radius
+5. margin
+6. class
+
+### link element
+
+Attributes
+1. data-role
+2. data-appearance
+3. href
+4. target
+5. data-link-type
+
+### overlay element
+
+Attributes
+1. data-role
+2. data-appearance
+3. data-link-type
+4. data-overlay-color
+5. href
+6. target
+
+Inline styles
+1. background-color
+
+### desktop_image element
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. padding
+9. min-height
+
+
+### mobile_image element
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. padding
+9. min-height
+
+### content element
+
+HTML content.
+
+### button element
+
+Attributes
+1. class
+
+Inline styles
+1. opacity
+2. visibility
+
+HTML content.
+
 ## Map
 
 ```
 <iframe data-role="map" data-appearance="default" style="..."></iframe>
 ```
+
+Attributes
+1. data-role [map]
+2. data-appearance [default]
+3. data-markers
+4. data-zoom
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. width
+9. height
+10. class
 
 ## Block
 
@@ -326,15 +793,70 @@ Collage Right
 <div data-role="block" data-appearance="default" data-identifier="block-identifier" style="..."></div>
 ```
 
+Attributes
+1. data-role ['block']
+2. data-appearance ['default']
+3. data-identifier
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+**Note:**
+*Mater format will change to use Magento directive for rendering dynamic content.*
+
 ## Product
 
 ```
 <div data-role="product" data-appearance="default" data-sku="product1-sku" data-view-mode="list" style="" class="pagebuilder-product"></div>
 ```
 
+Attributes
+1. data-role [product]
+2. data-appearance [default]
+2. data-sku
+2. data-view-mode
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+**Note:**
+*Mater format will change to use Magento directive for rendering dynamic content.*
 
 ## Product List
 
 ```
-<div data-role="product-list" data-appearance="default" data-category-id="product1-sku" data-hide-out-of-stock="" data-product-count="4" style="..." class="pagebuilder-product-list"></div>
+<div data-role="product-list" data-appearance="default" data-category-id="1" data-product-count="4" style="..." class="pagebuilder-product-list"></div>
 ```
+
+Attributes
+1. data-role `string` [product-list]
+2. data-appearance `string` [default]
+2. data-category-id `string`
+2. data-product-count `int`
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+**Note:**
+*Mater format will change to use Magento directive for rendering dynamic content.*
