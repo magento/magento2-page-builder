@@ -21,9 +21,9 @@ import {ContentTypeMountEventParamsInterface} from "../content-type-mount-event-
 import {ContentTypeReadyEventParamsInterface} from "../content-type-ready-event-params.d";
 import {ContentTypeRemovedEventParamsInterface} from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
+import PreviewCollection from "../preview-collection";
 import {ActiveOptionsInterface} from "./active-options.d";
 import {SortableOptionsInterface} from "./sortable-options.d";
-import PreviewCollection from "../preview-collection";
 
 export default class Preview extends PreviewCollection {
     public static focusOperationTime: number;
