@@ -329,17 +329,27 @@
         <arguments>
             <argument name="property" defaultValue=""/>
             <argument name="selection" defaultValue=""/>
-            <argument name="linkType" defaultValue="URL" type="string"/>
+            <argument name="newTab" defaultValue=""/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="waitForLinkSelect"/>
-        <seeElement selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="seeLinkSelect"/>
-        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" userInput="{{linkType}}" stepKey="seeLinkSelectedByDefault" />
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="5" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
-        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="selectOption" />
-        <fillField selector="{{PageBuilderSection.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="inputURLLink"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="waitForLinkSelect"/>
+        <waitForElement time="10" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="selectOption"/>
+        <fillField selector="{{PageBuilderSection.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="inputLink"/>
+        <conditionalClick selector="{{PageBuilderActionsSection.panelFieldControlSwitch(newTab.fieldName)}}" dependentSelector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" visible="false" stepKey="conditionalClickNewTab"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" stepKey="waitForNewTabStateChange"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="validateSlideOutPanelLinkUrlField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+            <argument name="selection" defaultValue=""/>
+            <argument name="newTab" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="waitForLinkSelect"/>
+        <waitForElement time="10" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <seeInField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="seeOptionIsSelected"/>
+        <seeInField selector="{{PageBuilderSection.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInField"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" stepKey="waitForNewTab"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldGeneral">
         <arguments>

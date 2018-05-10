@@ -11,18 +11,50 @@
     <actionGroup name="openPageBuilderEditPanelSmallByIndex">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
-            <argument name="contentBlockIndex" defaultValue="1"/>
-            <argument name="contentBlockXCoordinate" defaultValue="10"/>
-            <argument name="contentBlockYCoordinate" defaultValue="0"/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex.index)}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
-        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForOptions" />
-        <waitForElementVisible selector="{{ButtonsBackendSection.editButtonItemElement(contentBlockType.role, contentBlockIndex.index)}}" stepKey="waitForEditButton"/>
-        <click selector="{{ButtonsBackendSection.editButtonItemElement(contentBlockType.role, contentBlockIndex.index)}}" stepKey="clickEditContentBlock"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForButtonElement"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickButtonElement"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForEditButton"/>
+        <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickEditButton"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+    <actionGroup name="addButton">
+        <arguments>
+            <argument name="buttonGroupIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="Adding Button" stepKey="comment"/>
+        <executeJS function="return Math.round(document.getElementsByClassName('pagebuilder-button-item').length+1)" stepKey="initialNumberOfButtonsPlusOne"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderButtonsContentBlock.role, buttonGroupIndex)}}" stepKey="mouseOverButtonsGroup"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderButtonsContentBlock.role)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible time="10" selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="seeAddButton"/>
+        <click selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="clickAddButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <executeJS function="return document.getElementsByClassName('pagebuilder-button-item').length" stepKey="numberOfButtonsAfterAdd"/>
+        <assertEquals stepKey="assertOneMoreButton">
+            <expectedResult type="variable">initialNumberOfButtonsPlusOne</expectedResult>
+            <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateButtonItemContent">
+        <arguments>
+            <argument name="page"/>
+            <argument name="text" defaultValue="PageBuilderButtonItemText_Empty"/>
+            <argument name="type" defaultValue="PageBuilderButtonItemType_Primary"/>
+            <argument name="url" defaultValue="PageBuilderButtonItemLink_Empty"/>
+            <argument name="newTab" defaultValue="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForButtonElement"/>
+        <waitForElementVisible selector="{{page.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
+        <waitForElementVisible selector="{{page.buttonItemType(index, type.value)}}" stepKey="waitForButtonType"/>
+        <waitForElementVisible selector="{{page.buttonItemUrl(index, url.value)}}" stepKey="waitForButtonUrl"/>
+        <waitForElementVisible selector="{{page.buttonItemNewTab(index, newTab.stageValue)}}" stepKey="waitForButtonNewTab"/>
     </actionGroup>
 </actionGroups>
