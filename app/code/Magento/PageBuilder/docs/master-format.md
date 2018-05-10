@@ -16,8 +16,8 @@ Attributes
 1. data-role [row]
 2. data-appearance [default]
 3. data-enable-parallax [1, 0]
-4. data-parallax-speed
-5. data-background-color-format
+4. data-parallax-speed [0-1]
+5. data-background-color-format [hex, rgb, rgba, hsl, hsla]
 
 Inline styles
 1. background-color
@@ -87,26 +87,89 @@ Inline styles
 </div>
 ```
 
+Attributes
+1. data-role [tabs]
+2. data-appearance [default]
+3. class
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+
 ## Tab item
 
 ```
 <div data-role="tab-item" data-appearance="default" data-tab-name="Tab 1" id="AAQ3VJB" style="..."></div>
 ```
 
+Attributes
+1. data-role [tab-item]
+2. data-appearance [default]
+3. data-tab-name
+4. class
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. border-style
+9. border-color
+10. border-width
+11. border-radius
+12. margin
+13. padding
+14. align-self
+15. min-height
+
 ## Accordion
 
 ```
-<div data-role="accordion" style="..."></div>
+<div data-role="accordion" data-appearance="default" style="..."></div>
 ```
 
+Attributes
+1. data-role [accordion]
+2. data-appearance [default]
+3. class
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. align-self
+9. min-height
+
+## Accordion item
+
 ```
-<div data-role="item" data-collapsible="true" data-open-on-load="true" class="title">
+<div data-collapsible="true" data-open-on-load="true" class="title">
     <div data-role="trigger">
         <span>Section 1 Title</span></div>
     </div>
     <div data-content="true" class="content">Section 1 content</div>
 </div>
 ```
+
+Attributes
+1. data-open-on-load [true, false]
+2. class
+
+Title.
+
+HTML content.
 
 ## Text
 
@@ -264,8 +327,8 @@ Inline styles
 ```
 
 Attributes
-1. data-role
-2. data-appearance
+1. data-role [html]
+2. data-appearance [default]
 
 Inline styles
 1. text-align
@@ -794,8 +857,8 @@ Inline styles
 ```
 
 Attributes
-1. data-role ['block']
-2. data-appearance ['default']
+1. data-role [block]
+2. data-appearance [default]
 3. data-identifier
 
 Inline styles
@@ -843,10 +906,10 @@ Inline styles
 ```
 
 Attributes
-1. data-role `string` [product-list]
-2. data-appearance `string` [default]
-2. data-category-id `string`
-2. data-product-count `int`
+1. data-role [product-list]
+2. data-appearance [default]
+2. data-category-id
+2. data-product-count
 
 Inline styles
 1. text-align
