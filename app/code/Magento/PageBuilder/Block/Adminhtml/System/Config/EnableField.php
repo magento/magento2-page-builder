@@ -66,7 +66,7 @@ class EnableField extends \Magento\Config\Block\System\Config\Form\Field
     private function getModalContentBody()
     {
         $templateFileName = $this->getTemplateFile(
-            'Magento_PageBuilder::system/config/enableField/modalContentBody.phtml'
+            'Magento_PageBuilder::system/config/enable_field/modal_content_body.phtml'
         );
 
         return $this->fetchView($templateFileName);

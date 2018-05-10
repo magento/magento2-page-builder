@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../component/config";
+import Config from "../config";
 
 /**
  * Decode image background URL to object

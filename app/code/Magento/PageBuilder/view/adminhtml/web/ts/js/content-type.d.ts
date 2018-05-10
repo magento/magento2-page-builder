@@ -4,16 +4,16 @@
  */
 
 import ContentTypeConfigInterface from "./content-type-config.d";
-import Preview from "./preview";
-import Content from "./content";
-import DataStore from "./component/data-store";
+import Preview from "./content-type/preview";
+import Content from "./content-type/content";
+import DataStore from "./data-store";
 
 export default interface ContentTypeInterface {
     id: string;
     stageId: string;
     parent: ContentTypeInterface;
-    config: ContentTypeConfigInterface,
-    preview: Preview
-    content: Content
-    store: DataStore
+    config: ContentTypeConfigInterface;
+    preview: Preview;
+    content: Content;
+    dataStore: DataStore;
 }

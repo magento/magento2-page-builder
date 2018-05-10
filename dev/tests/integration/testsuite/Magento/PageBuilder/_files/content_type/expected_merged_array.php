@@ -317,7 +317,6 @@ return [
                                 ],
                                 'html' => [
                                     'var' => 'html',
-                                    'placeholder' => 'custom-text',
                                     'converter' => null,
                                     'preview_converter' => null
                                 ],
