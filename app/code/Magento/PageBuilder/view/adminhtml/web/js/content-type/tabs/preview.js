@@ -71,7 +71,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       }); // Refresh tab contents and set the focus to the new position of the sorted tab
 
 
-      _uiEvents.on("previewSortable:sortupdate", function (args) {
+      _uiEvents.on("sortableChildren:sortupdate", function (args) {
         _this.refreshTabs(args.newPosition, true);
         /**
          * Update the default active tab if its position was affected by the sorting

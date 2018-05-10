@@ -21,7 +21,7 @@ import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import StyleAttributeFilter from "../master-format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
-import "../preview-sortable";
+import "../sortable-children";
 import SortParamsInterface from "../sort-params.d";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";

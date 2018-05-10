@@ -16,14 +16,13 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import BlockRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
-import {PreviewSortableSortUpdateEventParams} from "../../preview-sortable";
+import {PreviewSortableSortUpdateEventParams} from "../../sortable-children";
 import {ContentTypeMountEventParamsInterface} from "../content-type-mount-event-params.d";
 import {ContentTypeReadyEventParamsInterface} from "../content-type-ready-event-params.d";
 import {ContentTypeRemovedEventParamsInterface} from "../content-type-removed-event-params.d";
-import {ContentTypeSortedEventParamsInterface} from "../content-type-sorted-event-params.d";
 import ObservableUpdater from "../observable-updater";
-import {ActiveOptionsInterface} from "../options/active-options.d";
-import {SortableOptionsInterface} from "../options/sortable-options.d";
+import {ActiveOptionsInterface} from "./active-options.d";
+import {SortableOptionsInterface} from "./sortable-options.d";
 import PreviewCollection from "../preview-collection";
 
 export default class Preview extends PreviewCollection {
@@ -87,7 +86,7 @@ export default class Preview extends PreviewCollection {
             }
         });
         // Refresh tab contents and set the focus to the new position of the sorted tab
-        events.on("previewSortable:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
+        events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
             this.refreshTabs(args.newPosition, true);
             /**
              * Update the default active tab if its position was affected by the sorting
