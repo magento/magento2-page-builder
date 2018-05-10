@@ -89,6 +89,49 @@
                 </validation>
             </settings>
         </field>
+        <container name="coordinates" component="Magento_Ui/js/form/components/group" sortOrder="30" >
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="additionalClasses" xsi:type="string">admin__control-grouped</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" translate="true" xsi:type="string">Coordinates</item>
+                </item>
+            </argument>
+            <settings>
+                <notice translate="true">Numbers between -85 and 85 for latitude and -180 and 180 for longitude accepted. </notice>
+            </settings>
+            <field name="latitude" formElement="input">
+                <settings>
+                    <dataScope>position.lat</dataScope>
+                    <dataType>text</dataType>
+                    <additionalClasses>
+                        <class name="admin__field-small">true</class>
+                    </additionalClasses>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                        <rule name="validate-number" xsi:type="boolean">true</rule>
+                        <rule name="validate-number-range" xsi:type="string">-85-85</rule>
+                    </validation>
+                </settings>
+            </field>
+            <field name="longitude" formElement="input">
+                <settings>
+                    <dataScope>position.lng</dataScope>
+                    <dataType>text</dataType>
+                    <additionalClasses>
+                        <class name="admin__field-small">true</class>
+                    </additionalClasses>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                        <rule name="validate-number" xsi:type="boolean">true</rule>
+                        <rule name="validate-number-range" xsi:type="string">-180-180</rule>
+                    </validation>
+                </settings>
+            </field>
+        </container>
         <field name="address" sortOrder="40" formElement="input">
             <settings>
                 <dataType>text</dataType>

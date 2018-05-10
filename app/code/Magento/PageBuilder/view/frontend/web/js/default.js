@@ -138,8 +138,7 @@ requirejs([
             controls,
             country,
             zip,
-            mapOptions = {},
-            zoom;
+            mapOptions = {};
 
         /**
          * Sets height to 300px as default if no height input. But will not be saved to database
@@ -148,9 +147,8 @@ requirejs([
             $(element).height('300px');
         }
 
-        if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '[]') {
+        if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '') {
             markers = JSON.parse(element.getAttribute('data-markers'));
-            zoom = element.getAttribute('data-zoom');
             location = element.getAttribute('data-location-name');
             address = element.getAttribute('data-address');
             city = element.getAttribute('data-city');
@@ -169,7 +167,6 @@ requirejs([
             }];
 
             mapOptions.center = markers[0];
-            mapOptions.zoom = parseInt(zoom, 10);
             mapOptions.disableDefaultUI = controls !== 'false';
             new GoogleMap(element, marker, mapOptions);
         }

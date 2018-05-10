@@ -55,13 +55,13 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.generateMap = function generateMap(element) {
-      var markers = typeof this.data.main.attributes()["data-markers"] === "string" ? JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
+      var position = this.data.main.attributes()["data-markers"];
+      var markers = [];
       var options = {
-        zoom: 8,
         disableDefaultUI: false
       };
 
-      if (markers && markers !== "" && markers.length && Object.keys(markers[0]).length) {
+      if (position !== "") {
         var pos = this.getMarkers();
         markers = pos.markers;
         options = pos.options;
@@ -77,13 +77,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.updateMap = function updateMap() {
-      var markers = this.data.main.attributes()["data-markers"];
-
-      if (typeof markers === "string" && markers !== "") {
-        markers = JSON.parse(this.data.main.attributes()["data-markers"]);
-      }
-
-      if (markers.length) {
+      if (this.data.main.attributes()["data-markers"] !== "") {
         var pos = this.getMarkers();
         this.map.onUpdate(pos.markers, pos.options);
       }
@@ -97,25 +91,24 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
     _proto.getMarkers = function getMarkers() {
       var attributes = this.data.main.attributes();
-      var markers = typeof attributes["data-markers"] === "string" ? JSON.parse(attributes["data-markers"]) : attributes["data-markers"];
-      var zoom = attributes["data-zoom"];
       var location = attributes["data-location-name"];
+      var position = attributes["data-markers"];
       var address = attributes["data-address"];
       var city = attributes["data-city"];
       var comment = attributes["data-comment"];
-      var controls = attributes['data-show-controls'];
+      var controls = attributes["data-show-controls"];
       var country = attributes["data-country"];
       var zip = attributes["data-zip"];
 
-      if (typeof zoom !== "number") {
-        zoom = parseInt(zoom, 10);
+      if (position !== "" && typeof position === "string") {
+        position = JSON.parse(position);
       }
 
       return {
         markers: [{
           coordinates: {
-            lat: parseFloat(markers[0].lat),
-            lng: parseFloat(markers[0].lng)
+            lat: parseFloat(position[0].lat),
+            lng: parseFloat(position[0].lng)
           },
           location: location,
           address: address,
@@ -125,12 +118,11 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
           zip: zip
         }],
         options: {
-          zoom: zoom,
           center: {
-            lat: parseFloat(markers[0].lat),
-            lng: parseFloat(markers[0].lng)
+            lat: parseFloat(position[0].lat),
+            lng: parseFloat(position[0].lng)
           },
-          disableDefaultUI: controls !== 'false'
+          disableDefaultUI: controls !== "false"
         }
       };
     };
