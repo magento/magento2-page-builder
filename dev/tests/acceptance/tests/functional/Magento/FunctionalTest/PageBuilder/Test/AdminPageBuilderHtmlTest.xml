@@ -749,6 +749,7 @@
             <testCaseId value="MAGETWO-91142"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-html"/>
+            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -771,12 +772,12 @@
             <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="clearHTMLField">
-            <argument name="property" value="PageBuilderHtmlProperty_invalid"/>
+            <argument name="property" value="PageBuilderHtmlProperty_Empty"/>
         </actionGroup>
         <!-- Validate Error Message -->
         <comment userInput="Validate Error Message" stepKey="commentValidateError"/>
         <waitForElementVisible selector="{{HTMLOnConfiguration.htmlFieldError}}" stepKey="waitForFieldError"/>
-        <waitForElementVisible selector="{{HTMLOnConfiguration.htmlFieldErrorMessage(PageBuilderHtmlProperty_invalid.errorMessage)}}" stepKey="waitForErrorMessage"/>
+        <waitForElementVisible selector="{{HTMLOnConfiguration.htmlFieldErrorMessage(PageBuilderHtmlProperty_Empty.errorMessage)}}" stepKey="waitForErrorMessage"/>
         <!-- Validate Cannot Save -->
         <comment userInput="Validate Cannot Save" stepKey="commentValidateCannotSave"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton"/>
