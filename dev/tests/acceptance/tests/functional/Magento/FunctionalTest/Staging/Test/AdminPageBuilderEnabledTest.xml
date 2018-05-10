@@ -16,6 +16,7 @@
             <description value="Admin are able to see PageBuilder on Staging of CMS Page, Block Page after enable PageBuilder from Configuration"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-ee"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -48,6 +49,7 @@
             <description value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynmic Block after enable PageBuilder from Configuration"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-ee"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -81,7 +83,6 @@
         <!--Verify PageBuilder visible on Newsletter creation form-->
         <amOnPage url="{{NewsletterTemplateForm.url}}" stepKey="amOnNewsletterTemplatePage"/>
         <waitForPageLoad stepKey="waitForPageLoad6"/>
-        <!--<dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>-->
         <actionGroup ref="verifyPageBuilderNotVisibleOnPage" stepKey="dontSeePageBuilderOnPage"/>
         <seeElement selector="{{NewsletterWYSIWYGSection.TextArea}}" stepKey="seeTextArea"/>
         <!--Verify PageBuilder visible on Dynamic Block creation form -->
