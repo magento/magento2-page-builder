@@ -245,6 +245,82 @@
         <!-- Validate the item is removed -->
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="dontSeeHeaderInStage"/>
     </test>
+    <test name="NoRemovalConfirmationModalAfterConfiguringContentToDefaultState">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Removal Confirmation Modal"/>
+            <title value="Verify No Removal Confirmation Modal After Configuring Content Back To Default State"/>
+            <description value="The user should not see a removal confirmation modal if they reconfigure their content to match default state"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87059"/>
+            <testCaseId value="MAGETWO-91322"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add 2nd Row and Heading-->
+        <comment userInput="2nd Row and Heading" stepKey="commentAdd"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage1">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragContentBlockToStage2">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <!-- Configure Heading -->
+        <comment userInput="Configure Heading" stepKey="commentEditHeading1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+            <argument name="property" value="PageBuilderHeadingTextProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
+        <!-- Configure Heading Back To Default -->
+        <comment userInput="Configure Heading Back To Default" stepKey="commentEditHeading2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitle2">
+            <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Remove Heading -->
+        <comment userInput="Remove Heading" stepKey="commentRemoveHeading"/>
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeHeading">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <!-- Verify No Modal 1 -->
+        <comment userInput="Verify No Modal 1" stepKey="commentNoModal1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeading"/>
+        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeading"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeRows1"/>
+        <!-- Remove Parent Row -->
+        <comment userInput="Remove Parent Row" stepKey="commentRemoveRow"/>
+        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeRow">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentBlockNumber" value="2"/>
+        </actionGroup>
+        <!-- Verify No Modal 2 -->
+        <comment userInput="Verify No Modal 2" stepKey="commentNoModal2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalRow"/>
+        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkRow"/>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeRows2"/>
+    </test>
     <test name="DismissRemovalConfirmationModal">
         <annotations>
             <features value="Pagebuilder"/>
@@ -423,17 +499,17 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingType">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitle">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
         <!-- Click Remove Then Cancel In Modal -->
         <comment userInput="Click Remove Then Cancel In Modal" stepKey="commentCancel"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeFirstHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeHeading">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForPageLoad"/>
@@ -475,21 +551,21 @@
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <!-- Configure Heading -->
-        <comment userInput="Configure Heading" stepKey="commentHeading"/>
+        <comment userInput="Configure Heading" stepKey="commentEditHeading"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingTypePropertyH5">
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterHeadingType">
             <argument name="property" value="PageBuilderHeadingTypeProperty_H2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitleProperty">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTitle">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible selector="{{HeadingOnStage.base(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="validateHeading1"/>
         <!-- Click Remove Then X In Modal -->
         <comment userInput="Click Remove Then X In Modal" stepKey="commentX"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeFirstHeader">
+        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeHeading">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForPageLoad"/>
