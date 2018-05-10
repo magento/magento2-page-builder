@@ -4,6 +4,7 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+  // @todo refactor this code
   function createStyleSheet(blocks) {
     var style = document.createElement('style');
     var text = Object.keys(blocks).map(function (selector) {

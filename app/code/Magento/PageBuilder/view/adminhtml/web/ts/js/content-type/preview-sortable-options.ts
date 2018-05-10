@@ -3,14 +3,17 @@
  * See COPYING.txt for license details.
  */
 import $ from "jquery";
+import ko from "knockout";
 import events from "uiEvents";
 import _ from "underscore";
 import Config from "../config";
+import ContentTypeInterface from "../content-type";
+import ContentTypeCollectionInterface from "../content-type-collection";
 import ContentTypeConfigInterface from "../content-type-config";
 import {getDraggedBlockConfig} from "../panel/registry";
 import Stage from "../stage";
-import Preview from "./preview";
 import {createStyleSheet} from "../utils/create-stylesheet";
+import Preview from "./preview";
 
 /**
  * Return the sortable options for an instance which requires sorting / dropping functionality
@@ -47,14 +50,47 @@ export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableO
         },
         handle: ".move-structural",
         items: "> .pagebuilder-content-type-wrapper",
-
-        /**
-         * Pass receive event through to handler with additional preview argument
-         */
+        start() {
+            onSortStart.apply(this, [preview, ...arguments]);
+        },
         receive() {
             onSortReceive.apply(this, [preview, ...arguments]);
         },
+        update() {
+            onSortUpdate.apply(this, [preview, ...arguments]);
+        },
+        stop() {
+            onSortStop.apply(this, [preview, ...arguments]);
+        },
     };
+}
+
+let sortedContentType: ContentTypeInterface;
+
+/**
+ * On sort start record the item being sorted
+ *
+ * @param {Preview} preview
+ * @param {Event} event
+ * @param {JQueryUI.SortableUIParams} ui
+ */
+function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    const contentTypeInstance: ContentTypeInterface = ko.dataFor(ui.item[0]);
+    if (contentTypeInstance) {
+        // Ensure the original item is displayed but with reduced opacity
+        ui.item.show().addClass("pagebuilder-sorting-original");
+
+        sortedContentType = contentTypeInstance;
+        showDropIndicators(contentTypeInstance.config.name);
+    }
+}
+
+/**
+ * On sort stop hide any indicators
+ */
+function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    ui.item.removeClass("pagebuilder-sorting-original");
+    hideDropIndicators();
 }
 
 /**
@@ -94,15 +130,80 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
     }
 }
 
+/**
+ * On sort update handle sorting the underlying children knockout list
+ *
+ * @param {Preview} preview
+ * @param {Event} event
+ * @param {JQueryUI.SortableUIParams} ui
+ */
+function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    const el = ui.item[0];
+    const contentTypeInstance = ko.dataFor(el);
+    const target = ko.dataFor(event.target);
+
+    if (target && contentTypeInstance) {
+        // Calculate the source and target index
+        const sourceParent: ContentTypeCollectionInterface = contentTypeInstance.parent;
+        const sourceParentChildren = sourceParent.getChildren();
+        const sourceIndex = (sortedContentType.parent as ContentTypeCollectionInterface)
+            .children()
+            .indexOf(sortedContentType);
+        const targetParent: ContentTypeCollectionInterface = target.parent;
+        const targetIndex = $(event.target)
+            .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")
+            .toArray()
+            .findIndex((element: Element) => {
+                return element === el;
+            });
+
+        if (sourceParent) {
+            $(sourceParent === targetParent ? this : ui.sender || this).sortable("cancel");
+        } else {
+            $(el).remove();
+        }
+
+        if (sourceParent !== targetParent) {
+            // Handle dragging between sortable elements
+        } else {
+            // Retrieve the children from the source parent
+            const children = ko.utils.unwrapObservable(sourceParentChildren);
+
+            // Inform KO that this value is about to mutate
+            if (sourceParentChildren.valueWillMutate) {
+                sourceParentChildren.valueWillMutate();
+            }
+
+            // Perform the mutation
+            children.splice(sourceIndex, 1);
+            children.splice(targetIndex, 0, contentTypeInstance);
+
+            // Inform KO that the mutation is complete
+            if (sourceParentChildren.valueHasMutated) {
+                sourceParentChildren.valueHasMutated();
+            }
+        }
+
+        // Process any deferred bindings
+        if (ko.processAllDeferredBindingUpdates) {
+            ko.processAllDeferredBindingUpdates();
+        }
+    }
+}
+
 let headDropIndicatorStyles: HTMLStyleElement;
 
 /**
  * Show the drop indicators for a specific content type
  *
+ * We do this by creating a style sheet and injecting it into the head. It's dramatically quicker to allow the browsers
+ * CSS engine to display these for us than manually iterating through the DOM and applying a class to the elements.
+ *
  * @param {string} contentType
  * @returns {HTMLStyleElement}
  */
 export function showDropIndicators(contentType: string) {
+    debugger;
     const acceptedContainers = getContainersFor(contentType);
     if (acceptedContainers.length > 0) {
         const classNames = acceptedContainers.map((container: string) => {

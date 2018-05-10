@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+// @todo refactor this code
 export function createStyleSheet(blocks) {
     var style = document.createElement('style');
     var text = Object.keys(blocks).map(function (selector) {

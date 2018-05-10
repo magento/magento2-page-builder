@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/utils/create-stylesheet"], function (_jquery, _uiEvents, _underscore, _config, _registry, _createStylesheet) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/utils/create-stylesheet"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _registry, _createStylesheet) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -40,14 +40,48 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Ma
       },
       handle: ".move-structural",
       items: "> .pagebuilder-content-type-wrapper",
-
-      /**
-       * Pass receive event through to handler with additional preview argument
-       */
+      start: function start() {
+        onSortStart.apply(this, [preview].concat(Array.prototype.slice.call(arguments)));
+      },
       receive: function receive() {
         onSortReceive.apply(this, [preview].concat(Array.prototype.slice.call(arguments)));
+      },
+      update: function update() {
+        onSortUpdate.apply(this, [preview].concat(Array.prototype.slice.call(arguments)));
+      },
+      stop: function stop() {
+        onSortStop.apply(this, [preview].concat(Array.prototype.slice.call(arguments)));
       }
     };
+  }
+
+  var sortedContentType;
+  /**
+   * On sort start record the item being sorted
+   *
+   * @param {Preview} preview
+   * @param {Event} event
+   * @param {JQueryUI.SortableUIParams} ui
+   */
+
+  function onSortStart(preview, event, ui) {
+    var contentTypeInstance = _knockout.dataFor(ui.item[0]);
+
+    if (contentTypeInstance) {
+      // Ensure the original item is displayed but with reduced opacity
+      ui.item.show().addClass("pagebuilder-sorting-original");
+      sortedContentType = contentTypeInstance;
+      showDropIndicators(contentTypeInstance.config.name);
+    }
+  }
+  /**
+   * On sort stop hide any indicators
+   */
+
+
+  function onSortStop(preview, event, ui) {
+    ui.item.removeClass("pagebuilder-sorting-original");
+    hideDropIndicators();
   }
   /**
    * Handle receiving a block from the left panel
@@ -84,16 +118,77 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Ma
       (0, _jquery)(event.target).find(".pagebuilder-draggable-block").remove();
     }
   }
+  /**
+   * On sort update handle sorting the underlying children knockout list
+   *
+   * @param {Preview} preview
+   * @param {Event} event
+   * @param {JQueryUI.SortableUIParams} ui
+   */
+
+
+  function onSortUpdate(preview, event, ui) {
+    var el = ui.item[0];
+
+    var contentTypeInstance = _knockout.dataFor(el);
+
+    var target = _knockout.dataFor(event.target);
+
+    if (target && contentTypeInstance) {
+      // Calculate the source and target index
+      var sourceParent = contentTypeInstance.parent;
+      var sourceParentChildren = sourceParent.getChildren();
+      var sourceIndex = sortedContentType.parent.children().indexOf(sortedContentType);
+      var targetParent = target.parent;
+      var targetIndex = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
+        return element === el;
+      });
+
+      if (sourceParent) {
+        (0, _jquery)(sourceParent === targetParent ? this : ui.sender || this).sortable("cancel");
+      } else {
+        (0, _jquery)(el).remove();
+      }
+
+      if (sourceParent !== targetParent) {// Handle dragging between sortable elements
+      } else {
+        // Retrieve the children from the source parent
+        var children = _knockout.utils.unwrapObservable(sourceParentChildren); // Inform KO that this value is about to mutate
+
+
+        if (sourceParentChildren.valueWillMutate) {
+          sourceParentChildren.valueWillMutate();
+        } // Perform the mutation
+
+
+        children.splice(sourceIndex, 1);
+        children.splice(targetIndex, 0, contentTypeInstance); // Inform KO that the mutation is complete
+
+        if (sourceParentChildren.valueHasMutated) {
+          sourceParentChildren.valueHasMutated();
+        }
+      } // Process any deferred bindings
+
+
+      if (_knockout.processAllDeferredBindingUpdates) {
+        _knockout.processAllDeferredBindingUpdates();
+      }
+    }
+  }
 
   var headDropIndicatorStyles;
   /**
    * Show the drop indicators for a specific content type
+   *
+   * We do this by creating a style sheet and injecting it into the head. It's dramatically quicker to allow the browsers
+   * CSS engine to display these for us than manually iterating through the DOM and applying a class to the elements.
    *
    * @param {string} contentType
    * @returns {HTMLStyleElement}
    */
 
   function showDropIndicators(contentType) {
+    debugger;
     var acceptedContainers = getContainersFor(contentType);
 
     if (acceptedContainers.length > 0) {

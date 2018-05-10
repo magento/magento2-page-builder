@@ -4,12 +4,12 @@
 //  */
 
 .pagebuilder-drop-indicator {
-    border-bottom: 1px dashed rgb(105, 105, 105);
+    border-bottom: 1px dashed #ccc;
     display: block;
     height: 1px;
     margin: -1px 6px 0 6px;
     position: absolute;
-    transition: all .2s;
+    transition: all .3s;
     width: calc(~'100% - 28px');
     opacity: 0;
     visibility: hidden;
@@ -55,4 +55,13 @@
     cursor: grabbing;
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
+}
+
+.pagebuilder-content-type-wrapper {
+    transition: opacity .3s;
+    opacity: 1;
+
+    &.pagebuilder-sorting-original {
+        opacity: .4;
+    }
 }
