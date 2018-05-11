@@ -4,6 +4,9 @@ For storage (later master format) Page Builder uses XHTML with inline styles and
 
 This document describes master format for default Page Builder content types.
 
+**Note:**
+*We are still revising master format and it may change.*
+
 ## Row
 
 ```
@@ -871,9 +874,6 @@ Inline styles
 7. padding
 8. class
 
-**Note:**
-*Mater format will change to use Magento directive for rendering dynamic content.*
-
 ## Product
 
 ```
@@ -896,9 +896,6 @@ Inline styles
 7. padding
 8. class
 
-**Note:**
-*Mater format will change to use Magento directive for rendering dynamic content.*
-
 ## Product List
 
 ```
@@ -920,6 +917,3 @@ Inline styles
 6. margin
 7. padding
 8. class
-
-**Note:**
-*Mater format will change to use Magento directive for rendering dynamic content.*
