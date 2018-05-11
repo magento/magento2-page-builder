@@ -1129,9 +1129,6 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
-        </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
             <argument name="group" value="PageBuilderMapContentBlock"/>
         </actionGroup>
@@ -1139,20 +1136,22 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
         <actionGroup ref="addMapPin" stepKey="enterMapPositionProperties">
             <argument name="page" value="PageBuilderMapPositionDefaultProperty"/>
         </actionGroup>
-        <!-- Add Fill Required Fields -->
+        <!-- Fill Required Fields -->
+        <comment userInput="Fill Required Fields" stepKey="commentFillRequiredFields"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationNameDefaultProperty"/>
         </actionGroup>
         <!-- Empty Height Fields -->
+        <comment userInput="Empty Height Fields" stepKey="commentEmptyHeightFields"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPercentageHeightField">
             <argument name="property" value="PageBuilderMapHeightPropertyPercentage"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask2"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
-        <seeElement selector="{{MapOnStage.errorField}}" stepKey="seeErrorInTransparencyMin"/>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateError">
+            <argument name="property" value="PageBuilderMapHeightPropertyPercentage"/>
+        </actionGroup>
     </test>
 </tests>
