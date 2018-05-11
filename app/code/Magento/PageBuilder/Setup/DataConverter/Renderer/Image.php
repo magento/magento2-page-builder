@@ -61,12 +61,12 @@ class Image implements RendererInterface
         $rootElementHtml = '<figure' . $this->printAttributes($rootElementAttributes);
 
         $linkAttributes = [
-            'href' => '{{media url=gene-cms' . $eavData['image'] . '}}',
+            'href' => '{{media url=wysiwyg' . $eavData['image'] . '}}',
             'title' => $eavData['title_tag'] ?? ''
         ];
 
         $imageAttributes = [
-            'src' => '{{media url=gene-cms' . $eavData['image'] . '}}',
+            'src' => '{{media url=wysiwyg' . $eavData['image'] . '}}',
             'alt' => $eavData['alt_tag'] ?? '',
             'title' => $eavData['title_tag'] ?? '',
             'style' => 'max-width: 100%; height: auto;'
@@ -75,7 +75,7 @@ class Image implements RendererInterface
         $mobileImageHtml = '';
         if (isset($eavData['mobile_image'])) {
             $mobileImageAttributes = [
-                'src' => '{{media url=gene-cms' . $eavData['mobile_image'] . '}}',
+                'src' => '{{media url=wysiwyg' . $eavData['mobile_image'] . '}}',
                 'alt' => $eavData['alt_tag'] ?? '',
                 'title' => $eavData['title_tag'] ?? '',
                 'style' => 'max-width: 100%; height: auto;'
