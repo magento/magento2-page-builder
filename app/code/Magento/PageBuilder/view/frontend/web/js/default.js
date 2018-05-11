@@ -7,12 +7,11 @@
 
 requirejs([
     'jquery',
-    'highlight',
     'Magento_PageBuilder/js/utils/map',
     'jquery/ui',
     'slick',
     'jarallax'
-], function ($, hljs, GoogleMap) {
+], function ($, GoogleMap) {
     'use strict';
 
     /**
@@ -65,11 +64,6 @@ requirejs([
     }
 
     $(document).ready(function () {
-        $('pre code:not(.hljs)').each(function (i, block) {
-            $(block).html(
-                hljs.highlight('html', $(block).html()).value
-            );
-        });
 
         $('div[data-role="slider"]').each(function (index, element) {
             if ($(element) && $(element).length > 0) {
