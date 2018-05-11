@@ -20,6 +20,7 @@ import OptionInterface from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
+import {getSortableOptions} from "../interactions/sortable";
 import StyleAttributeFilter from "../master-format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
 import "../preview-sortable";
@@ -27,7 +28,6 @@ import SortParamsInterface from "../sort-params.d";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
-import {getSortableOptions} from "./preview-sortable-options";
 
 export default class Preview {
     public parent: ContentTypeInterface;

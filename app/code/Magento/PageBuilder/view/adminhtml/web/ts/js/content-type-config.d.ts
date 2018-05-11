@@ -22,6 +22,7 @@ export default interface ContentTypeConfigInterface {
     appearances: string[];
     readers: string[];
     accepts: string[];
+    generate_allowed_containers: string;
     allowed_parents: string[];
     is_visible: boolean;
 }

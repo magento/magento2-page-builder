@@ -11,10 +11,12 @@ import ContentTypeInterface from "../content-type";
 import ContentTypeCollectionInterface from "../content-type-collection";
 import ContentTypeConfigInterface from "../content-type-config";
 import createContentType from "../content-type-factory";
+import Preview from "../content-type/preview";
 import {getDraggedBlockConfig, setDraggedBlockConfig} from "../panel/registry";
 import Stage from "../stage";
 import {createStyleSheet} from "../utils/create-stylesheet";
-import Preview from "./preview";
+import {createAllowedContainersGenerator} from "./allowed-containers-factory";
+import {AllowedContainersGenerator} from "./allowed-containers.d";
 
 /**
  * Return the sortable options for an instance which requires sorting / dropping functionality
@@ -116,8 +118,6 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
     if ($(event.target)[0] !== this) {
         return;
     }
-
-    console.log(ui, event);
 
     // If the parent can't receive drops we need to cancel the operation
     if (!preview.canReceiveDrops()) {
@@ -256,7 +256,7 @@ export function hideDropIndicators() {
     }
 }
 
-interface AcceptedMatrix {
+export interface AcceptedMatrix {
     [key: string]: string[];
 }
 
@@ -273,26 +273,7 @@ const acceptedMatrix: AcceptedMatrix = {};
  * restricted-container - can only contain items which it declares it <accepts />
  */
 export function generateContainerAcceptedMatrix(): void {
-    const contentTypes = [
-        // @todo move stage config into XML
-        {
-            name: "stage",
-            type: "restricted-container",
-            accepts: [
-                "row",
-            ],
-        },
-        ..._.values(Config.getConfig("content_types")),
-    ];
-
-    // Retrieve all containers
-    const containers = contentTypes.filter((config: ContentTypeConfigInterface) => {
-        return config.type === "container";
-    }).map((config: ContentTypeConfigInterface) => {
-        return config.name;
-    });
-
-    contentTypes.forEach((contentType: ContentTypeConfigInterface) => {
+    getContentTypesArray().forEach((contentType: ContentTypeConfigInterface) => {
         // Iterate over restricted containers to calculate their allowed children first
         if (contentType.accepts && contentType.accepts.length > 0) {
             contentType.accepts.forEach((accepted: string) => {
@@ -308,8 +289,50 @@ export function generateContainerAcceptedMatrix(): void {
             if (!acceptedMatrix[contentType.name]) {
                 acceptedMatrix[contentType.name] = [];
             }
-            acceptedMatrix[contentType.name] = acceptedMatrix[contentType.name].concat(containers);
+            acceptedMatrix[contentType.name] = acceptedMatrix[contentType.name].concat(getAllContainers());
         }
+
+        // Does the content type have a specific generator for the containers?
+        if (contentType.generate_allowed_containers) {
+            createAllowedContainersGenerator(contentType.generate_allowed_containers).then(
+                (generator: AllowedContainersGenerator) => {
+                    acceptedMatrix[contentType.name] = generator.generate(acceptedMatrix[contentType.name]);
+                },
+            );
+        }
+    });
+    console.log(acceptedMatrix);
+}
+
+/**
+ * Retrieve the content type configuration as an array
+ *
+ * @returns {({name: string; type: string; accepts: string[]} | any)[]}
+ */
+export function getContentTypesArray() {
+    return [
+        // @todo move stage config into XML
+        {
+            name: "stage",
+            type: "restricted-container",
+            accepts: [
+                "row",
+            ],
+        },
+        ..._.values(Config.getConfig("content_types")),
+    ];
+}
+
+/**
+ * Get all container content type names
+ *
+ * @returns {string[]}
+ */
+export function getAllContainers() {
+    return getContentTypesArray().filter((config: ContentTypeConfigInterface) => {
+        return config.type === "container";
+    }).map((config: ContentTypeConfigInterface) => {
+        return config.name;
     });
 }
 
@@ -319,12 +342,12 @@ export function generateContainerAcceptedMatrix(): void {
  * @param {string} contentType
  * @returns {any}
  */
-export function getContainersFor(contentType: string) {
+export function getContainersFor(contentType: string): string[] {
     if (acceptedMatrix[contentType]) {
         return acceptedMatrix[contentType];
     }
 
-    return null;
+    return [];
 }
 
 /**
@@ -335,5 +358,5 @@ export function getContainersFor(contentType: string) {
  */
 export function getAllowedContainersClasses(contentType: string) {
     return getContainersFor(contentType)
-        .map((value, index) => ".content-type-container." + value + "-container").join(", ");
+        .map((value) => ".content-type-container." + value + "-container").join(", ");
 }

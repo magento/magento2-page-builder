@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/utils/create-stylesheet"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _contentTypeFactory, _registry, _createStylesheet) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/interactions/allowed-containers-factory"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _contentTypeFactory, _registry, _createStylesheet, _allowedContainersFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -105,9 +105,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
   function onSortReceive(preview, event, ui) {
     if ((0, _jquery)(event.target)[0] !== this) {
       return;
-    }
+    } // If the parent can't receive drops we need to cancel the operation
 
-    console.log(ui, event); // If the parent can't receive drops we need to cancel the operation
 
     if (!preview.canReceiveDrops()) {
       (0, _jquery)(this).sortable("cancel");
@@ -261,19 +260,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
    */
 
   function generateContainerAcceptedMatrix() {
-    var contentTypes = [// @todo move stage config into XML
-    {
-      name: "stage",
-      type: "restricted-container",
-      accepts: ["row"]
-    }].concat(_underscore.values(_config.getConfig("content_types"))); // Retrieve all containers
-
-    var containers = contentTypes.filter(function (config) {
-      return config.type === "container";
-    }).map(function (config) {
-      return config.name;
-    });
-    contentTypes.forEach(function (contentType) {
+    getContentTypesArray().forEach(function (contentType) {
       // Iterate over restricted containers to calculate their allowed children first
       if (contentType.accepts && contentType.accepts.length > 0) {
         contentType.accepts.forEach(function (accepted) {
@@ -291,8 +278,45 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           acceptedMatrix[contentType.name] = [];
         }
 
-        acceptedMatrix[contentType.name] = acceptedMatrix[contentType.name].concat(containers);
+        acceptedMatrix[contentType.name] = acceptedMatrix[contentType.name].concat(getAllContainers());
+      } // Does the content type have a specific generator for the containers?
+
+
+      if (contentType.generate_allowed_containers) {
+        (0, _allowedContainersFactory.createAllowedContainersGenerator)(contentType.generate_allowed_containers).then(function (generator) {
+          acceptedMatrix[contentType.name] = generator.generate(acceptedMatrix[contentType.name]);
+        });
       }
+    });
+    console.log(acceptedMatrix);
+  }
+  /**
+   * Retrieve the content type configuration as an array
+   *
+   * @returns {({name: string; type: string; accepts: string[]} | any)[]}
+   */
+
+
+  function getContentTypesArray() {
+    return [// @todo move stage config into XML
+    {
+      name: "stage",
+      type: "restricted-container",
+      accepts: ["row"]
+    }].concat(_underscore.values(_config.getConfig("content_types")));
+  }
+  /**
+   * Get all container content type names
+   *
+   * @returns {string[]}
+   */
+
+
+  function getAllContainers() {
+    return getContentTypesArray().filter(function (config) {
+      return config.type === "container";
+    }).map(function (config) {
+      return config.name;
     });
   }
   /**
@@ -308,7 +332,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       return acceptedMatrix[contentType];
     }
 
-    return null;
+    return [];
   }
   /**
    * Generate classes of containers the content type is allowed within
@@ -319,7 +343,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
   function getAllowedContainersClasses(contentType) {
-    return getContainersFor(contentType).map(function (value, index) {
+    return getContainersFor(contentType).map(function (value) {
       return ".content-type-container." + value + "-container";
     }).join(", ");
   }
@@ -329,8 +353,10 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     showDropIndicators: showDropIndicators,
     hideDropIndicators: hideDropIndicators,
     generateContainerAcceptedMatrix: generateContainerAcceptedMatrix,
+    getContentTypesArray: getContentTypesArray,
+    getAllContainers: getAllContainers,
     getContainersFor: getContainersFor,
     getAllowedContainersClasses: getAllowedContainersClasses
   };
 });
-//# sourceMappingURL=preview-sortable-options.js.map
+//# sourceMappingURL=sortable.js.map

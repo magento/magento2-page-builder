@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/content-type/preview-sortable-options"], function (_jquery, _knockout, _koSortable, _translate, _uiEvents, _underscore, _draggable, _config, _group, _block, _registry, _previewSortableOptions) {
+define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/sortable", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block", "Magento_PageBuilder/js/panel/registry"], function (_jquery, _knockout, _koSortable, _translate, _uiEvents, _underscore, _draggable, _config, _sortable, _group, _block, _registry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -127,7 +127,7 @@ define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "unde
           var block = _knockout.dataFor(this);
 
           if (block && block.config) {
-            (0, _previewSortableOptions.showDropIndicators)(block.config.name);
+            (0, _sortable.showDropIndicators)(block.config.name);
             (0, _registry.setDraggedBlockConfig)(block.config);
 
             _uiEvents.trigger("interaction:start", {
@@ -136,7 +136,7 @@ define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "unde
           }
         },
         stop: function stop() {
-          (0, _previewSortableOptions.hideDropIndicators)();
+          (0, _sortable.hideDropIndicators)();
 
           _uiEvents.trigger("interaction:stop", {
             stage: self.parent.stage

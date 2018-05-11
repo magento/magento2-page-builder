@@ -140,6 +140,8 @@ class Config
                 ? $contentType['content_component']
                 : self::DEFAULT_CONTENT_COMPONENT),
             'accepts' => isset($contentType['accepts']) ? $contentType['accepts'] : [],
+            'generate_allowed_containers' => isset($contentType['generate_allowed_containers']) ?
+                $contentType['generate_allowed_containers'] : '',
             'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
             'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
             'additional_data' => isset($contentType['additional_data']) ? $contentType['additional_data'] : [],

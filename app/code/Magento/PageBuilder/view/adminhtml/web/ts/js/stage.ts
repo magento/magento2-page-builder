@@ -10,19 +10,14 @@ import events from "uiEvents";
 import _ from "underscore";
 import Collection from "./collection";
 import ContentTypeConfigInterface from "./content-type-config";
-import ContentTypeDroppedParamsInterface from "./content-type-dropped-params.d";
-import createContentType from "./content-type-factory";
-import ContentTypeInstanceDroppedParamsInterface from "./content-type-instance-dropped-params.d";
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
-import ContentTypeSortedParamsInterface from "./content-type-sorted-params.d";
 import ContentTypeInterface from "./content-type.d";
-import {generateContainerAcceptedMatrix, getSortableOptions} from "./content-type/preview-sortable-options";
 import DataStore from "./data-store";
+import {generateContainerAcceptedMatrix, getSortableOptions} from "./interactions/sortable";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import SortParamsInterface from "./sort-params.d";
 import buildStage from "./stage-builder";
-import {moveArrayItem} from "./utils/array";
 
 export default class Stage {
     public parent: PageBuilderInterface;

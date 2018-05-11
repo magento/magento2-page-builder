@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import ContentTypeConfigInterface from "../../content-type-config.d";
-import {getAllowedContainersClasses} from "../../content-type/preview-sortable-options";
+import {getAllowedContainersClasses} from "../../interactions/sortable";
 
 export class Block {
     public droppable: boolean = true;
