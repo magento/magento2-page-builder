@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\Groups;
+namespace Magento\PageBuilder\Model\Config\Group;
 
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {
@@ -22,9 +22,9 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
     /**
      * Constructor
      *
-     * @param \Magento\Framework\Config\FileResolverInterface $fileResolver
-     * @param \Magento\PageBuilder\Model\Config\Groups\Converter $converter
-     * @param \Magento\PageBuilder\Model\Config\Groups\SchemaLocator $schemaLocator
+     * @param \Magento\PageBuilder\Model\Config\FileResolver $fileResolver
+     * @param \Magento\PageBuilder\Model\Config\Group\Converter $converter
+     * @param \Magento\PageBuilder\Model\Config\Group\SchemaLocator $schemaLocator
      * @param \Magento\Framework\Config\ValidationStateInterface $validationState
      * @param string $fileName
      * @param array $idAttributes
@@ -33,8 +33,8 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      */
     public function __construct(
         \Magento\PageBuilder\Model\Config\FileResolver $fileResolver,
-        \Magento\PageBuilder\Model\Config\Groups\Converter $converter,
-        \Magento\PageBuilder\Model\Config\Groups\SchemaLocator $schemaLocator,
+        \Magento\PageBuilder\Model\Config\Group\Converter $converter,
+        \Magento\PageBuilder\Model\Config\Group\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
         string $fileName = 'group.xml',
         array $idAttributes = [],

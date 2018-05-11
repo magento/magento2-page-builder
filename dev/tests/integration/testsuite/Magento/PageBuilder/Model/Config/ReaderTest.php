@@ -42,11 +42,11 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         );
 
         $groupsReader = $this->objectManager->create(
-            \Magento\PageBuilder\Model\Config\Groups\Reader::class,
+            \Magento\PageBuilder\Model\Config\Group\Reader::class,
             ['fileResolver' => $this->groupsFileResolverMock]
         );
         $contentTypesReader = $this->objectManager->create(
-            \Magento\PageBuilder\Model\Config\ContentTypes\Reader::class,
+            \Magento\PageBuilder\Model\Config\ContentType\Reader::class,
             ['fileResolver' => $this->contentTypesFileResolverMock]
         );
 

@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\ContentTypes;
+namespace Magento\PageBuilder\Model\Config\ContentType;
 
 use Magento\TestFramework\Helper\Bootstrap;
 
@@ -20,7 +20,7 @@ class AppearanceTest extends \PHPUnit\Framework\TestCase
         $objectManager = Bootstrap::getObjectManager();
 
         $contentTypesReader = $objectManager->create(
-            \Magento\PageBuilder\Model\Config\ContentTypes\Reader::class
+            \Magento\PageBuilder\Model\Config\ContentType\Reader::class
         );
         $contentTypes = $contentTypesReader->read();
 

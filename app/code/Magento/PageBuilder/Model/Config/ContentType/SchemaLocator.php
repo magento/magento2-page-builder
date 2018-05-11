@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\ContentTypes;
+namespace Magento\PageBuilder\Model\Config\ContentType;
 
 class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
 {

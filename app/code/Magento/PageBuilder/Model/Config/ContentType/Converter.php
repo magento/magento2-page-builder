@@ -6,11 +6,11 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\ContentTypes;
+namespace Magento\PageBuilder\Model\Config\ContentType;
 
 use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
 use Magento\Framework\Data\Argument\InterpreterInterface;
-use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderInterface;
+use Magento\PageBuilder\Model\Config\ContentType\AdditionalData\ProviderInterface;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {

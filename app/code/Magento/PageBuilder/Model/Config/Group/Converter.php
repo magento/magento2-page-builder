@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\Groups;
+namespace Magento\PageBuilder\Model\Config\Group;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {

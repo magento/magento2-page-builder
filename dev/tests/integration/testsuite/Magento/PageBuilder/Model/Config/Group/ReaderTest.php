@@ -6,14 +6,14 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\ContentTypes;
+namespace Magento\PageBuilder\Model\Config\Group;
 
 use Magento\TestFramework\Helper\Bootstrap;
 
 class ReaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Magento\PageBuilder\Model\Config\ContentTypes\Reader
+     * @var \Magento\PageBuilder\Model\Config\Group\Reader
      */
     private $model;
 
@@ -31,7 +31,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->model = $objectManager->create(
-            \Magento\PageBuilder\Model\Config\ContentTypes\Reader::class,
+            \Magento\PageBuilder\Model\Config\Group\Reader::class,
             ['fileResolver' => $this->fileResolverMock]
         );
     }
@@ -41,7 +41,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testPartial()
     {
-        $file = file_get_contents(__DIR__ . '/../../../_files/content_type/type3_content_type2.xml');
+        $file = file_get_contents(__DIR__ . '/../../../_files/content_type/groups3.xml');
         $this->fileResolverMock->expects($this->once())
             ->method('get')
             ->willReturn([$file]);
@@ -51,14 +51,15 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     public function testMergeCompleteAndPartial()
     {
         $fileList = [
-            file_get_contents(__DIR__ . '/../../../_files/content_type/type3_content_type1.xml'),
-            file_get_contents(__DIR__ . '/../../../_files/content_type/type3_content_type2.xml'),
+            file_get_contents(__DIR__ . '/../../../_files/content_type/groups1.xml'),
+            file_get_contents(__DIR__ . '/../../../_files/content_type/groups2.xml'),
+            file_get_contents(__DIR__ . '/../../../_files/content_type/groups3.xml'),
         ];
         $this->fileResolverMock->expects($this->once())
             ->method('get')
-            ->with('content_type/*.xml', 'global')
+            ->with('group.xml', 'global')
             ->willReturn($fileList);
-        $expected = include __DIR__ . '/../../../_files/content_type/type3_expected_merged_array.php';
+        $expected = include __DIR__ . '/../../../_files/content_type/groups_expected_merged_array.php';
         $this->assertEquals($expected, $this->model->read('global'));
     }
 }

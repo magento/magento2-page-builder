@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\ContentTypes;
+namespace Magento\PageBuilder\Model\Config\ContentType;
 
 class Reader extends \Magento\Framework\Config\Reader\Filesystem
 {
@@ -44,9 +44,9 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
     /**
      * Constructor
      *
-     * @param \Magento\PageBuilder\Model\Config\ContentTypes\FileResolver $fileResolver
-     * @param \Magento\PageBuilder\Model\Config\ContentTypes\Converter $converter
-     * @param \Magento\PageBuilder\Model\Config\ContentTypes\SchemaLocator $schemaLocator
+     * @param \Magento\PageBuilder\Model\Config\FileResolver $fileResolver
+     * @param \Magento\PageBuilder\Model\Config\ContentType\Converter $converter
+     * @param \Magento\PageBuilder\Model\Config\ContentType\SchemaLocator $schemaLocator
      * @param \Magento\Framework\Config\ValidationStateInterface $validationState
      * @param string $fileName
      * @param array $idAttributes
@@ -55,8 +55,8 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
      */
     public function __construct(
         \Magento\PageBuilder\Model\Config\FileResolver $fileResolver,
-        \Magento\PageBuilder\Model\Config\ContentTypes\Converter $converter,
-        \Magento\PageBuilder\Model\Config\ContentTypes\SchemaLocator $schemaLocator,
+        \Magento\PageBuilder\Model\Config\ContentType\Converter $converter,
+        \Magento\PageBuilder\Model\Config\ContentType\SchemaLocator $schemaLocator,
         \Magento\Framework\Config\ValidationStateInterface $validationState,
         string $fileName = 'content_type/*.xml',
         array $idAttributes = [],

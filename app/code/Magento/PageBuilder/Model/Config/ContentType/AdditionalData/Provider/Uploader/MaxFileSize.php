@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\Provider\Uploader;
+namespace Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader;
 
-use Magento\PageBuilder\Model\Config\ContentTypes\AdditionalData\ProviderInterface;
+use Magento\PageBuilder\Model\Config\ContentType\AdditionalData\ProviderInterface;
 use Magento\Framework\File\Size;
 
 /**
