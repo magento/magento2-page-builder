@@ -55,13 +55,15 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.generateMap = function generateMap(element) {
-      var position = this.data.main.attributes()["data-markers"];
+      var position = this.data.main.attributes()["data-markers"] ? this.data.main.attributes()["data-markers"] : "[]";
+      var controls = this.data.main.attributes()["data-show-controls"] ? this.data.main.attributes()["data-show-controls"] : "true";
       var markers = [];
       var options = {
-        disableDefaultUI: false
+        disableDefaultUI: controls !== "true",
+        mapTypeControl: controls === "true"
       };
 
-      if (position !== "") {
+      if (position !== "[]") {
         var pos = this.getMarkers();
         markers = pos.markers;
         options = pos.options;
@@ -77,7 +79,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.updateMap = function updateMap() {
-      if (this.data.main.attributes()["data-markers"] !== "") {
+      if (this.data.main.attributes()["data-markers"] !== "[]") {
         var pos = this.getMarkers();
         this.map.onUpdate(pos.markers, pos.options);
       }
@@ -122,8 +124,8 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
             lat: parseFloat(position[0].lat),
             lng: parseFloat(position[0].lng)
           },
-          disableDefaultUI: controls !== "false",
-          mapTypeControl: controls === "false"
+          disableDefaultUI: controls !== "true",
+          mapTypeControl: controls === "true"
         }
       };
     };

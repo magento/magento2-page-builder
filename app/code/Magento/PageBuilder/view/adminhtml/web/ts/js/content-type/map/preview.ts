@@ -45,13 +45,19 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private generateMap(element: Element) {
-        const position: string = this.data.main.attributes()["data-markers"];
+        const position: string = this.data.main.attributes()["data-markers"] ?
+            this.data.main.attributes()["data-markers"] :
+            "[]";
+        const controls = this.data.main.attributes()["data-show-controls"] ?
+            this.data.main.attributes()["data-show-controls"] :
+            "true";
         let markers: any[] = [];
 
         let options = {
-            disableDefaultUI: false,
+            disableDefaultUI: controls !== "true",
+            mapTypeControl: controls === "true",
         };
-        if (position !== "") {
+        if (position !== "[]") {
             const pos = this.getMarkers();
             markers = pos.markers;
             options = pos.options;
@@ -65,7 +71,7 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private updateMap() {
-        if (this.data.main.attributes()["data-markers"] !== "") {
+        if (this.data.main.attributes()["data-markers"] !== "[]") {
             const pos = this.getMarkers();
             this.map.onUpdate(pos.markers, pos.options);
         }
@@ -89,6 +95,7 @@ export default class Preview extends BasePreview {
         if (position !== "" && typeof position === "string") {
             position = JSON.parse(position);
         }
+
         return {
             markers: [{
                 coordinates : {
@@ -107,8 +114,8 @@ export default class Preview extends BasePreview {
                     lat: parseFloat(position[0].lat),
                     lng: parseFloat(position[0].lng),
                 },
-                disableDefaultUI: controls !== "false",
-                mapTypeControl: controls === "false",
+                disableDefaultUI: controls !== "true",
+                mapTypeControl: controls === "true",
             },
         };
     }

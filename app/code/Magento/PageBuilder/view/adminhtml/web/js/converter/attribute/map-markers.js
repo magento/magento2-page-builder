@@ -20,7 +20,7 @@ define([], function () {
      * @returns {string | object}
      */
     _proto.fromDom = function fromDom(value) {
-      return value !== "" ? JSON.parse(value)[0] : value;
+      return value !== "[]" ? JSON.parse(value)[0] : "";
     };
     /**
      * Convert value to knockout format
@@ -32,7 +32,7 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      var result = data[name];
+      var result = "[]";
 
       if (_typeof(data[name]) === "object") {
         data[name].lat = parseFloat(data[name].lat);

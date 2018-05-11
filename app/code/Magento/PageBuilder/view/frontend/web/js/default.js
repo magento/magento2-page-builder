@@ -147,7 +147,7 @@ requirejs([
             $(element).height('300px');
         }
 
-        if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '') {
+        if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '[]') {
             markers = JSON.parse(element.getAttribute('data-markers'));
             location = element.getAttribute('data-location-name');
             address = element.getAttribute('data-address');
@@ -167,8 +167,8 @@ requirejs([
             }];
 
             mapOptions.center = markers[0];
-            mapOptions.disableDefaultUI = controls !== 'false';
-            mapOptions.mapTypeControl = controls === 'false';
+            mapOptions.disableDefaultUI = controls !== 'true';
+            mapOptions.mapTypeControl = controls === 'true';
             new GoogleMap(element, marker, mapOptions);
         }
     });
