@@ -100,9 +100,6 @@
                     <item name="label" translate="true" xsi:type="string">Coordinates</item>
                 </item>
             </argument>
-            <settings>
-                <notice translate="true">Numbers between -85 and 85 for latitude and -180 and 180 for longitude accepted. </notice>
-            </settings>
             <field name="latitude" formElement="input">
                 <settings>
                     <dataScope>position.lat</dataScope>
@@ -115,6 +112,8 @@
                         <rule name="validate-number" xsi:type="boolean">true</rule>
                         <rule name="validate-number-range" xsi:type="string">-85-85</rule>
                     </validation>
+                    <notice translate="true">Accepted values between -85 and 85</notice>
+                    <placeholder translate="true">Latitude</placeholder>
                 </settings>
             </field>
             <field name="longitude" formElement="input">
@@ -129,6 +128,8 @@
                         <rule name="validate-number" xsi:type="boolean">true</rule>
                         <rule name="validate-number-range" xsi:type="string">-180-180</rule>
                     </validation>
+                    <notice translate="true">Accepted values between -180 and 180</notice>
+                    <placeholder translate="true">Longitude</placeholder>
                 </settings>
             </field>
         </container>
