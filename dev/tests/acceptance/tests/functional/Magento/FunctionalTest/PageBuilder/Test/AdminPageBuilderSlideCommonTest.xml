@@ -160,7 +160,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <comment userInput="Validate slider settings on stage" stepKey="commentValidateSliderStage"/>
         <waitForElementVisible selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForSliderContainer" time="10"/>
         <seeElement selector="{{SliderInAdmin.ShowArrows}}" stepKey="verifyArrowsYesOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeight500OnAdmin"/>
@@ -168,6 +168,8 @@
         <seeElement selector="{{SliderInAdmin.sliderBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnAdmin"/>
+        <comment userInput="Validate slide 1 on stage" stepKey="commentValidateSlide1Stage"/>
+        <dontSee userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SlideOnBackend.slideName('0')}}" stepKey="dontSeeSlide1NameDisplayedOnStage"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
         <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnBackend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearance"/>
@@ -175,7 +177,9 @@
         <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
         <click selector="{{SliderInAdmin.nextSlide}}" stepKey="clickNextSlideOnSliderAdmin"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.slide('1')}}" stepKey="waitForSlide2Admin" />
+        <comment userInput="Validate slide 2 on stage" stepKey="commentValidateSlide2Stage"/>
         <seeElement selector="{{SlideOnBackend.slide('1')}}" stepKey="seeSlide2InSliderAdmin"/>
+        <dontSee userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SlideOnBackend.slideName('1')}}" stepKey="dontSeeSlide2NameDisplayedOnStage"/>
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayedAdmin"/>
         <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnBackend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayedAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearance"/>
@@ -185,7 +189,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <comment userInput="Validate Slider settings on Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <seeElement selector="{{SliderOnFrontend.Autoplay(PageBuilderSliderAutoplayOnProperty.value)}}" stepKey="seeSliderAutoplayOnSetting"/>
         <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderSliderAutoplaySpeed5000Property.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
@@ -196,6 +200,8 @@
         <seeElement selector="{{SliderOnFrontend.sliderBorderColor}}" stepKey="seeSliderShowGreenColor"/>
         <seeElement selector="{{SliderOnFrontend.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnFrontEnd"/>
         <seeElement selector="{{SliderOnFrontend.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnFrontEnd"/>
+        <comment userInput="Validate Slide 1 on Storefront" stepKey="commentValidateSlide1Storefront"/>
+        <dontSee userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SlideOnFrontend.slideName('0')}}" stepKey="dontSeeSlide1NameDisplayedStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide('1')}}" stepKey="seeSlide1InSlider"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayed"/>
         <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnFrontend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayed"/>
@@ -205,6 +211,8 @@
         <click selector="{{SliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnSlider"/>
         <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
         <seeElement selector="{{SlideOnFrontend.slide2}}" stepKey="seeSlide2InSlider"/>
+        <comment userInput="Validate Slide 2 on Storefront" stepKey="commentValidateSlide2Storefront"/>
+        <dontSee userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SlideOnFrontend.slideName('1')}}" stepKey="dontSeeSlide2NameDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayed"/>
         <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnFrontend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
