@@ -783,9 +783,10 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    parent: ColumnGroup;
-    block: Column;
+    parent: ContentTypeInterface;
     index: number;
+    block: ContentTypeInterface;
+    stageId: string;
 }
 ```
 
@@ -837,8 +838,8 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    eventName,
-    paramObj
+    eventName: string,
+    paramObj: [key: string]: Stage
 }
 ```
 
