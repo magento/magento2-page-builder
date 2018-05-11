@@ -24,7 +24,7 @@
         width: 14px;
         button {
             background: transparent;
-            border: @entityBorderWidth solid #ccc;
+            border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: none;
             cursor: pointer;
@@ -36,7 +36,7 @@
             width: 14px;
 
             &:hover {
-                border: @entityBorderWidth solid #b3b3b3;
+                border: 1px solid #b3b3b3;
             }
 
             &:active,
@@ -72,7 +72,17 @@
         cursor: hand;
     }
 }
+
 .slick-next {
+    right: 2rem;
+    &:before {
+        content: @icon-pagebuilder-caret-next__content;
+        padding-left: 5px;
+    }
+}
+
+.slick-next,
+.slick-prev {
     background: rgba(252, 252, 252, .6);
     border: none;
     border-radius: 0;
@@ -85,7 +95,6 @@
     outline: none;
     padding: 0;
     position: absolute;
-    right: 2rem;
     top: 50%;
     -webkit-transform: translate(0, -50%);
     -ms-transform: translate(0, -50%);
@@ -96,7 +105,6 @@
     &.slick-disabled {
         opacity: .2;
     }
-
 
     &:hover {
         background: rgba(252, 252, 252, 1);
@@ -109,10 +117,7 @@
         }
     }
 
-    &:before {
-        content: @icon-pagebuilder-caret-next__content;
-        padding-left: 5px;
-    }
+    &:before,
     &:after {
         &:extend(.pagebuilder-icon all);
         color: @color-gray-darken3;
@@ -132,6 +137,29 @@
             box-shadow: none;
         }
     }
+}
+
+.slick-prev {
+    left: 2rem;
+    &:before {
+        content: @icon-pagebuilder-caret-prev__content;
+        padding-right: 5px;
+    }
+}
+
+.slick-slider {
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .slick-slide {
@@ -162,25 +190,12 @@
     }
 
     .slick-vertical & {
-        border: @entityBorderWidth solid transparent;
+        border: 1px solid transparent;
         display: block;
         height: auto;
     }
 }
-.slick-slider {
-    box-sizing: border-box;
-    display: block;
-    position: relative;
-    -webkit-tap-highlight-color: transparent;
-    -ms-touch-action: pan-y;
-    touch-action: pan-y;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
+
 .slick-slider .slick-track,
 .slick-slider .slick-list {
     -webkit-transform: translate3d(0, 0, 0);
@@ -212,13 +227,3 @@
         visibility: hidden;
     }
 }
-
-.slick-prev {
-    left: 2rem;
-    &:before {
-        content: @icon-pagebuilder-caret-prev__content;
-        padding-right: 5px;
-    }
-}
-
-.slick-prev
