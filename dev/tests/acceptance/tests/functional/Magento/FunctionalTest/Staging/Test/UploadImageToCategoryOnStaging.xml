@@ -78,6 +78,8 @@
         <waitForPageLoad stepKey="waitForPageLoad3" />
         <switchToNextTab stepKey="switchToNextTab1"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
+        <executeJS function="document.querySelector('iframe[data-role=\'preview-iframe\']').setAttribute('id', 'stagingIFrame');" stepKey="makeIFrameInteractable"/>
+        <switchToIFrame selector="stagingIFrame" stepKey="switchToIFrame"/>
         <seeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload1.fileName)}}" stepKey="seeMainImageSource4"/>
     </test>
 </tests>
