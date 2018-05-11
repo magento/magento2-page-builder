@@ -1,7 +1,7 @@
 # Additional Data Configuration
 
 ## What's in this topic
-This topic describes how to extend and configure Page Builder content types to accommodate any preferred setting that is not addressed in the confines of our existing `content_types.xsd` schema definition.
+This topic describes how to extend and configure Page Builder content types to accommodate any preferred setting that is not addressed in the confines of our existing `content_type.xsd` schema definition.
 
 `additional_data` allows you to provide extra configuration, such as `maxFileSize` or `allowedExtensions`, for various content types.
 

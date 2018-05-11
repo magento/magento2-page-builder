@@ -31,8 +31,8 @@ class SchemaLocator implements \Magento\Framework\Config\SchemaLocatorInterface
         \Magento\Framework\Module\Dir\Reader $moduleReader
     ) {
         $etcDir = $moduleReader->getModuleDir('etc', 'Magento_PageBuilder');
-        $this->schema = $etcDir . DIRECTORY_SEPARATOR . 'content_types_merged.xsd';
-        $this->perFileSchema = $etcDir . DIRECTORY_SEPARATOR . 'content_types.xsd';
+        $this->schema = $etcDir . DIRECTORY_SEPARATOR . 'content_type_merged.xsd';
+        $this->perFileSchema = $etcDir . DIRECTORY_SEPARATOR . 'content_type.xsd';
     }
 
     /**
