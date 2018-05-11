@@ -30,24 +30,16 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
      */
     private $contentTypesFileResolverMock;
 
-    /**
-     * @var \Magento\Framework\Filesystem\File\ReadFactory|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private $readFactoryMock;
-
     protected function setUp()
     {
         $this->objectManager = Bootstrap::getObjectManager();
 
         $this->groupsFileResolverMock = $this->createMock(
-            \Magento\PageBuilder\Model\Config\FileResolver::class //\Magento\Framework\Config\FileResolverInterface::class
+            \Magento\PageBuilder\Model\Config\FileResolver::class
         );
         $this->contentTypesFileResolverMock = $this->createMock(
             \Magento\PageBuilder\Model\Config\FileResolver::class
         );
-        $this->readFactoryMock = $this->createMock(\Magento\Framework\Filesystem\File\ReadFactory::class);
-        $read = $this->createMock(\Magento\Framework\Filesystem\File\Read::class);
-        $this->readFactoryMock->expects($this->any())->method('create')->willReturn($read);
 
         $groupsReader = $this->objectManager->create(
             \Magento\PageBuilder\Model\Config\Groups\Reader::class,
@@ -69,14 +61,15 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         $groupsFileList = [
             file_get_contents(__DIR__ . '/../../_files/content_type/groups1.xml'),
             file_get_contents(__DIR__ . '/../../_files/content_type/groups2.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/groups3.xml')
         ];
         $contentTypesFiles = [
             file_get_contents(__DIR__ . '/../../_files/content_type/type1_content_type1.xml'),
             file_get_contents(__DIR__ . '/../../_files/content_type/type1_content_type2.xml'),
             file_get_contents(__DIR__ . '/../../_files/content_type/type2_content_type1.xml'),
             file_get_contents(__DIR__ . '/../../_files/content_type/type2_content_type2.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/type3_content_type.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/type4_content_type.xml')
+            file_get_contents(__DIR__ . '/../../_files/content_type/type3_content_type1.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/type3_content_type2.xml')
         ];
 
         $this->groupsFileResolverMock->expects($this->any())
