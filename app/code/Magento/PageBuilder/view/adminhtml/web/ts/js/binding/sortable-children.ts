@@ -6,8 +6,8 @@
 import $ from "jquery";
 import ko from "knockout";
 import events from "uiEvents";
-import ContentTypeInterface from "./content-type.d";
-import {moveArrayItem} from "./utils/array";
+import ContentTypeInterface from "../content-type.d";
+import {moveArrayItem} from "../utils/array";
 
 // Create a new sortable Knockout binding
 ko.bindingHandlers.sortableChildren = {
