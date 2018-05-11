@@ -46,6 +46,7 @@ class Map implements RendererInterface
             'data-role' => 'map',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? '',
+            'data-show-controls' => 'true',
             'data-markers' => '[]',
         ];
 
@@ -56,12 +57,11 @@ class Map implements RendererInterface
                 . ',&quot;lng&quot;:'
                 . $map[1]
                 . '}]';
-            $rootElementAttributes['data-zoom'] = $map[2];
         }
 
         if (isset($itemData['formData'])) {
             $formData = $itemData['formData'];
-            $formData['width'] = $eavData['map_width'] ?? '100%';
+            $formData['width'] = '100%';
             $formData['height'] = $eavData['map_height'] ?? '300px';
 
             $style = $this->styleExtractor->extractStyle($formData);
