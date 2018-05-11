@@ -26,6 +26,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
     return {
       cursor: "-webkit-grabbing",
+      tolerance: "pointer",
       helper: function helper(event, item) {
         return (0, _jquery)(item).clone()[0];
       },
@@ -87,8 +88,10 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
   function onSortStop(preview, event, ui) {
+    sortedContentType = null;
     ui.item.removeClass("pagebuilder-sorting-original");
     hideDropIndicators();
+    (0, _registry.setDraggedBlockConfig)(null);
   }
   /**
    * Handle receiving a block from the left panel
@@ -100,7 +103,12 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
   function onSortReceive(preview, event, ui) {
-    // If the parent can't receive drops we need to cancel the operation
+    if ((0, _jquery)(event.target)[0] !== this) {
+      return;
+    }
+
+    console.log(ui, event); // If the parent can't receive drops we need to cancel the operation
+
     if (!preview.canReceiveDrops()) {
       (0, _jquery)(this).sortable("cancel");
       return;

@@ -11,7 +11,7 @@ import ContentTypeInterface from "../content-type";
 import ContentTypeCollectionInterface from "../content-type-collection";
 import ContentTypeConfigInterface from "../content-type-config";
 import createContentType from "../content-type-factory";
-import {getDraggedBlockConfig} from "../panel/registry";
+import {getDraggedBlockConfig, setDraggedBlockConfig} from "../panel/registry";
 import Stage from "../stage";
 import {createStyleSheet} from "../utils/create-stylesheet";
 import Preview from "./preview";
@@ -37,6 +37,7 @@ export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableO
 
     return {
         cursor: "-webkit-grabbing",
+        tolerance: "pointer",
         helper(event: Event, item: Element) {
             return $(item).clone()[0];
         },
@@ -98,8 +99,10 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
  * On sort stop hide any indicators
  */
 function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    sortedContentType = null;
     ui.item.removeClass("pagebuilder-sorting-original");
     hideDropIndicators();
+    setDraggedBlockConfig(null);
 }
 
 /**
@@ -110,6 +113,12 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
  * @param {JQueryUI.SortableUIParams} ui
  */
 function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    if ($(event.target)[0] !== this) {
+        return;
+    }
+
+    console.log(ui, event);
+
     // If the parent can't receive drops we need to cancel the operation
     if (!preview.canReceiveDrops()) {
         $(this).sortable("cancel");
