@@ -86,5 +86,13 @@ Appearance allows to make the following customizations to content type:
 4. Move data between elements, achieved with data mapping configuration. For example, developer can move margin from one element to another.
 5. Change form for content type.
 
+## Module structure
+
+| File type                | Location                                                                                       |
+| -------------------------|------------------------------------------------------------------------------------------------|
+| Content type components  | `Vendor/ModuleName/view/adminhtml/web/js/content-type/content-type-name`                       |
+| Content type templates   | `Vendor/ModuleName/view/adminhtml/web/template/content-type/content-type-name/appearance-name` |
+| Styles                   | `Vendor/ModuleName/view/adminhtml/web/css/source/content-type/content-type-name`               |
+
 **Note:**
 *We also considering introducing appearance component and/or moving initialization of the libraries to bindings. This would allow add custom logic per appearance changes libraries per appearance for content types like slider, tabs, accordion, etc.*
