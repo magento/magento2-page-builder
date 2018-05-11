@@ -78,9 +78,20 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelDropdownField" stepKey="fillButton1LinkField">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
             <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
             <argument name="selection" value="ExternalLink"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <comment userInput="I fill out color using Color Picker" stepKey="comment"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
+            <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField7">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage2"/>
@@ -96,7 +107,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton2TextField">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelDropdownField" stepKey="fillButton1Link2Field">
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1Link2Field">
             <argument name="property" value="PageBuilderButtonItemLinkProperty"/>
             <argument name="selection" value="ExternalLink"/>
         </actionGroup>
@@ -135,8 +146,8 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonItemTextProperty">
             <argument name="property" value="PageBuilderButtonItemTextProperty"/>
         </actionGroup>
-        <waitForElement time="2" selector="{{PageBuilderButtonLinkSection.ButtonLinkInput}}" stepKey="waitForElementVisible" />
-        <seeInField selector="{{PageBuilderButtonLinkSection.ButtonLinkInput}}" userInput="{{PageBuilderButtonItemLinkProperty.value}}"  stepKey="seeInFieldProperty"/>
+        <waitForElement time="2" selector="{{PageBuilderSection.LinkInput('button_link')}}" stepKey="waitForElementVisible" />
+        <seeInField selector="{{PageBuilderSection.LinkInput('button_link')}}" userInput="{{PageBuilderButtonItemLinkProperty.value}}"  stepKey="seeInFieldProperty"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage3"/>
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickContentTab5" />
@@ -150,11 +161,11 @@
         <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedForm3"/>
         <seeElement selector="{{AdvancedForm.sectionName}}" stepKey="seeAdvancedFormSection3"/>
         <click selector="{{AdvancedForm.sectionName}}" stepKey="clickAdvancedFormSection3"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAdvancedAlignmentPropertyDefault">
+        <actionGroup ref="validateTextAlignment" stepKey="seeAdvancedAlignmentPropertyDefault">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeAdvancedBorderPropertyDefault">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
     </test>
     <test name="ButtonDelete">
@@ -312,7 +323,8 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
         <!-- Validate Style On Stage -->
         <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
-        <waitForElementVisible selector="{{ButtonsBackendSection.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyButtons.value)}}" stepKey="waitForStyle"/>
+        <!--commented due bug MAGETWO-91061-->
+        <!--<waitForElementVisible selector="{{ButtonsBackendSection.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderPaddingPropertyButtons.value)}}" stepKey="waitForStyle"/>-->
     </test>
     <test name="ButtonHaveFields">
         <annotations>

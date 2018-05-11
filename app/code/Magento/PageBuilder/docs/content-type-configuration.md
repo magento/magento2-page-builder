@@ -30,8 +30,9 @@ The following is an example of a content type configuration in `etc/content_type
     <type name="banner" translate="label" sortOrder="1">
         <label>Banner</label>
         <icon>icon-pagebuilder-image</icon>
-        <component>Magento_PageBuilder/js/component/block/banner</component>
-        <preview_component>Magento_PageBuilder/js/component/block/preview/banner</preview_component>
+        <component>Magento_PageBuilder/js/content-type</component>
+        <preview_component>Magento_PageBuilder/js/content-type/banner/preview</preview_component>
+        <content_component>Magento_PageBuilder/js/content-type/content</content_component>
         <form>pagebuilder_banner_form</form>
         <group>media</group>
         <allowed_parents>
@@ -45,10 +46,10 @@ The following is an example of a content type configuration in `etc/content_type
                         <element name="main" path=".">
                             <style_properties>
                                 <property var="border" name="border_style"/>
-                                <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-                                <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/default/style/border-width"/>
-                                <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
-                                <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins" converter="Magento_PageBuilder/js/converter/default/style/margins"/>
+                                <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                                <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                             </style_properties>
                             <attributes>
                                 <attribute var="name" name="data-role"/>
@@ -60,15 +61,17 @@ The following is an example of a content type configuration in `etc/content_type
                         </element>
                         <element name="link" path=".//a">
                             <attributes>
-                                <attribute var="link_url" name="href" />
-                                <attribute var="open_in_new_tab" name="target" converter="Magento_PageBuilder/js/converter/default/attribute/target"/>
+                                <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
+                                <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
+                                <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
+                                <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
                             </attributes>
                         </element>
                         <element name="overlay" path=".//a/div[2]/div">
                             <style_properties>
-                                <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/default/style/remove-px"/>
+                                <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                 <property var="background_color" name="background_color" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/overlay-background-color"/>
-                                <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/paddings" converter="Magento_PageBuilder/js/converter/default/style/paddings"/>
+                                <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                             </style_properties>
                             <attributes>
                                 <attribute var="overlay_color" name="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/converter/banner/attribute/overlay-color"/>
@@ -79,34 +82,34 @@ The following is an example of a content type configuration in `etc/content_type
                         <element name="desktop_image" path=".//a/div[1]">
                             <style_properties>
                                 <property var="text_align" name="text_align"/>
-                                <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-                                <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
+                                <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
                                 <property var="background_position" name="background_position"/>
                                 <property var="background_size" name="background_size"/>
-                                <property var="background_repeat" name="background_repeat" converter="Magento_PageBuilder/js/converter/default/style/background-repeat"/>
+                                <property var="background_repeat" name="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
                                 <property var="background_attachment" name="background_attachment"/>
                             </style_properties>
                         </element>
                         <element name="mobile_image" path=".//a/div[2]">
                             <style_properties>
                                 <property var="text_align" name="text_align"/>
-                                <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-                                <property var="mobile_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
+                                <property var="background_color" name="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                <property var="mobile_image" name="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
                                 <property var="background_position" name="background_position"/>
                                 <property var="background_size" name="background_size"/>
-                                <property var="background_repeat" name="background_repeat" converter="Magento_PageBuilder/js/converter/default/style/background-repeat"/>
+                                <property var="background_repeat" name="background_repeat" converter="Magento_PageBuilder/js/converter/style/background-repeat"/>
                                 <property var="background_attachment" name="background_attachment"/>
                             </style_properties>
                         </element>
                         <element name="content" path=".//a/div[2]/div/div/div[1]">
-                            <html var="message" placeholder="Edit banner text"/>
+                            <html var="message"/>
                         </element>
                         <element name="button" path=".//a/div[2]/div/div/button">
                             <style_properties>
                                 <property var="opacity" name="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
                                 <property var="visibility" name="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
                             </style_properties>
-                            <html var="button_text" placeholder="Edit Button Text"/>
+                            <html var="button_text"/>
                             <css var="button_type">
                                 <filter>
                                     <class name="pagebuilder-banner-button"/>
@@ -115,7 +118,7 @@ The following is an example of a content type configuration in `etc/content_type
                         </element>
                     </elements>
                     <converters>
-                        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/default/empty-mobile-image">
+                        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
                             <config>
                                 <item name="desktop_image_variable" value="background_image"/>
                                 <item name="mobile_image_variable" value="mobile_image"/>
@@ -123,8 +126,8 @@ The following is an example of a content type configuration in `etc/content_type
                         </converter>
                     </converters>
                 </data_mapping>
-                <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
-                <render_template>Magento_PageBuilder/component/block/render/banner.html</render_template>
+                <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
+                <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
                 <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
             </appearance>
             <appearance name="collage-left">
@@ -142,18 +145,20 @@ The following is an example of a content type configuration in `etc/content_type
 ```
 ### Configuration reference
 
-| Element             | Description                                                                                                                             |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.  |
-| `label`             | Label displayed on the menu and stage.                                                                                                  |
-| `icon`              | Icon displayed on the menu.                                                                                                             |
-| `component`         | View model responsible for rendering the preview and master format.                                                                     |
-| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                    |
-| `form`              | UI component form used for editing the content type                                                                                     |
-| `group`             | Existing menu group that contains this content type.                                                                                    |
-| `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                      |
-| `appearances`       | Appearance configuration.                                                                                                               |
-| `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.               |
+| Element             | Description                                                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.      |
+| `label`             | Label displayed on the menu and stage.                                                                                                      |
+| `icon`              | Icon displayed on the menu.                                                                                                                 |
+| `component`         | View model responsible for rendering the preview and master format.                                                                         |
+| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
+| `content_component` | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
+| `form`              | UI component form used for editing the content type                                                                                         |
+| `group`             | Existing menu group that contains this content type.                                                                                        |
+| `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                          |
+| `appearances`       | Appearance configuration.                                                                                                                   |
+| `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
+| `additional_data`   | Allows to specify additional data for component, see [custom configuration for content type](custom-configuration.md) for more information. |
 
 
 ### `form` configuration reference
@@ -183,13 +188,13 @@ The `allowed_parents` element specifies which content types can accept this type
 The `appearances` element specifies how the content type renders in the admin preview and the master format.
 It controls the templates, how data is read from the master format, and how to apply style properties and attributes to the elements.
 
-| Element              | Description                                                                            |
-| -------------------- | -------------------------------------------------------------------------------------- |
-| `appearance`         | The name of the appearance. Every content type requires one default appearance.        |
-| ` data_mapping `     | Specifies how data is read from, saved to, and converted to and from the master format |
-| ` preview_template ` | Template used to display the element in the preview                                    |
-| ` render_template `  | Template used to render the content type to the master format                          |
-| ` reader `           | Reads data for the content type from the master format                                 |
+| Element             | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| `appearance`        | The name of the appearance. Every content type requires one default appearance.        |
+| `data_mapping`      | Specifies how data is read from, saved to, and converted to and from the master format |
+| `preview_template`  | Template used to display the element in the preview                                    |
+| `render_template`   | Template used to render the content type to the master format                          |
+| `reader`            | Reads data for the content type from the master format                                 |
 
 The default reader is `Magento_PageBuilder/js/component/format/read/configurable`.
 It reads data based on the configuration specified in `data_mapping`.
@@ -198,8 +203,8 @@ It reads data based on the configuration specified in `data_mapping`.
 ``` xml
 <appearance name="poster" default="true">
     <data_mapping/>
-    <preview_template>Magento_PageBuilder/component/block/preview/banner.html</preview_template>
-    <render_template>Magento_PageBuilder/component/block/render/banner.html</render_template>
+    <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
+    <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
     <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
 </appearance>
 ```
@@ -225,8 +230,8 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     <element name="main" path=".">
         <style_properties>
             <property var="border" name="border_style"/>
-            <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/default/style/color"/>
-            <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins" converter="Magento_PageBuilder/js/converter/default/style/margins"/>
+            <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+            <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
         </style_properties>
         <attributes>
             <attribute var="name" name="data-role"/>
@@ -235,8 +240,10 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
     <element name="link" path=".//a">
         <attributes>
-            <attribute var="link_url" name="href" />
-            <attribute var="open_in_new_tab" name="target" converter="Magento_PageBuilder/js/converter/default/attribute/target"/>
+            <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
+            <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
+            <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
+            <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
         </attributes>
     </element>
     <element name="overlay" path=".//a/div[2]/div">
@@ -248,23 +255,23 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
     <element name="desktop_image" path=".//a/div[1]">
         <style_properties>
-            <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
+            <property var="background_image" name="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
         </style_properties>
     </element>
     <element name="mobile_image" path=".//a/div[2]">
         <style_properties>
-            <property var="mobile_image" name="background_image" converter="Magento_PageBuilder/js/converter/default/style/background-image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image"/>
+            <property var="mobile_image" name="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
         </style_properties>
     </element>
     <element name="content" path=".//a/div[2]/div/div/div[1]">
-        <html var="message" placeholder="Edit banner text"/>
+        <html var="message"/>
     </element>
     <element name="button" path=".//a/div[2]/div/div/button">
         <style_properties>
             <property var="opacity" name="opacity" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-opacity"/>
             <property var="visibility" name="visibility" virtual="true" converter="Magento_PageBuilder/js/converter/banner/style/button-visibility"/>
         </style_properties>
-        <html var="button_text" placeholder="Edit Button Text"/>
+        <html var="button_text"/>
         <css var="button_type">
             <filter>
                 <class name="pagebuilder-banner-button"/>
@@ -273,7 +280,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
 </elements>
 <converters>
-    <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/default/empty-mobile-image">
+    <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
         <config>
             <item name="desktop_image_variable" value="background_image"/>
             <item name="mobile_image_variable" value="mobile_image"/>
@@ -299,7 +306,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 
 ``` xml
 <style_properties>
-    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/default/margins" converter="Magento_PageBuilder/js/converter/default/style/margins"/>
+    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
 </style_properties>
 ```
 
@@ -326,10 +333,8 @@ These style properties and attributes are applied in the preview and persisted i
 
 The `html` element allows you to read the value of the element in a property and map it back to the master format.
 
-Use the `placeholder` when you need to specify a label for preview and there is no input provided.
-
 ``` xml
-<html var="message" placeholder="Edit banner text"/>
+<html var="message"/>
 ```
 
 ### Css element
@@ -357,19 +362,19 @@ The `tag` element allows you to read the tag value of the element and map back t
 
 ## Converter Interfaces
 
-Element converter and data converter are the two types of converters. Both converters expect `fromDom` and `toDom` methods, with usage examples described below.
+Converter and mass converter are the two types of converters. Both converters expect `fromDom` and `toDom` methods, with usage examples described below.
 
-### Element Converter
+### Converter
 
-The elemement converter converts data for the property or attribute.
+The converter converts data for the property or attribute.
 
 The `fromDom` method is called after data is read from the master format.
 
 The `toDom` method is called before observables are updated in the cycle rendering preview or master format.
 
-**Example:** Element converter that determines the output for an overlay background color
+**Example:** Converter that determines the output for an overlay background color
 
-``` JS  
+``` js
 define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter"], function (colorConverter, numberConverter) {
     var OverlayBackgroundColor = function () {};
     
@@ -403,19 +408,19 @@ define(["Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/
 });
 ```
 
-### Data Converter
+### Mass Converter
 
-The data converter works on the data for all elements.
+The mass converter works on the data for all elements.
 
 The `fromDom` method is called after data is read for all elements and converted by element converters.
 
 The `toDom` method is called before data is converted by element converters to update observables.
 
-**Example:** Data converter that defaults mobile image value to desktop image value if not configured 
+**Example:** Mass converter that defaults mobile image value to desktop image value if not configured 
 ``` xml
 <data_mapping>
     <converters>
-        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/converter/default/empty-mobile-image">
+        <converter name="empty_mobile_image" component="Magento_PageBuilder/js/mass-converter/empty-mobile-image">
             <config>
                 <item name="desktop_image_variable" value="background_image"/>
                 <item name="mobile_image_variable" value="mobile_image"/>
@@ -425,7 +430,7 @@ The `toDom` method is called before data is converted by element converters to u
 </data_mapping>
 ```
 
-``` JS  
+``` js
 define([], function () {
     var EmptyMobileImage = function () {};
     

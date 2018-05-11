@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import Config from "../component/config";
+import Config from "../config";
 
 /**
  * MIME type to use in place of the image

@@ -11,8 +11,8 @@
             <label>Row</label>
             <icon>icon-pagebuilder-row</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/component/block/preview/row</preview_component>
-            <content_component>Magento_PageBuilder/js/content-collection</content_component>
+            <preview_component>Magento_PageBuilder/js/content-type/row/preview</preview_component>
+            <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
             <form>pagebuilder_row_form</form>
             <group>general</group>
             <allowed_parents>
@@ -24,18 +24,18 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/default/style/preview/background-image" var="background_image"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="background_image"/>
                                     <property name="background_position" var="background_position"/>
                                     <property name="background_size" var="background_size"/>
                                     <property name="background_repeat" var="background_repeat"/>
                                     <property name="background_attachment" var="background_attachment"/>
                                     <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/border-style" var="border" name="border_style"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/default/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/default/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/converter/row/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/default/margins-and-paddings" var="margins_and_padding"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-style" var="border" name="border_style"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_width" var="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" var="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="data-role" var="name"/>
@@ -48,16 +48,16 @@
                             </element>
                         </elements>
                         <converters>
-                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/converter/default/preferred-color-format">
+                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
                                 <config>
                                     <item name="background_color_format" value="background_color_format"/>
                                 </config>
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/component/block/preview/row.html</preview_template>
-                    <render_template>Magento_PageBuilder/component/block/render/row.html</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <preview_template>Magento_PageBuilder/content-type/row/default/preview</preview_template>
+                    <render_template>Magento_PageBuilder/content-type/row/default/master</render_template>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
