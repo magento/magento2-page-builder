@@ -45,12 +45,8 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private generateMap(element: Element) {
-        const position: string = this.data.main.attributes()["data-markers"] ?
-            this.data.main.attributes()["data-markers"] :
-            "[]";
-        const controls = this.data.main.attributes()["data-show-controls"] ?
-            this.data.main.attributes()["data-show-controls"] :
-            "true";
+        const position: string = this.data.main.attributes()["data-markers"] || "[]";
+        const controls = this.data.main.attributes()["data-show-controls"] || "true";
         let markers: any[] = [];
 
         let options = {

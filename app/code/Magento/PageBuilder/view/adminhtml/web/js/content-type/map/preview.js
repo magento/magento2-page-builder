@@ -55,8 +55,8 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.generateMap = function generateMap(element) {
-      var position = this.data.main.attributes()["data-markers"] ? this.data.main.attributes()["data-markers"] : "[]";
-      var controls = this.data.main.attributes()["data-show-controls"] ? this.data.main.attributes()["data-show-controls"] : "true";
+      var position = this.data.main.attributes()["data-markers"] || "[]";
+      var controls = this.data.main.attributes()["data-show-controls"] || "true";
       var markers = [];
       var options = {
         disableDefaultUI: controls !== "true",
