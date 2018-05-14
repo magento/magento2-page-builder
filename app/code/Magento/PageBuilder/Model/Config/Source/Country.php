@@ -3,13 +3,15 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\Pagebuilder\Model\Config\Source;
 
 /**
  * Options provider for countries list
  *
  * @api
- * @since 100.0.2
  */
 class Country implements \Magento\Framework\Option\ArrayInterface
 {
@@ -18,7 +20,14 @@ class Country implements \Magento\Framework\Option\ArrayInterface
      *
      * @var \Magento\Directory\Model\ResourceModel\Country\Collection
      */
-    protected $_countryCollection;
+    private $_countryCollection;
+
+    /**
+     * Options array
+     *
+     * @var array
+     */
+    private $_options;
 
     /**
      * @param \Magento\Directory\Model\ResourceModel\Country\Collection $countryCollection
@@ -28,21 +37,15 @@ class Country implements \Magento\Framework\Option\ArrayInterface
         $this->_countryCollection = $countryCollection;
     }
 
-    /**
-     * Options array
-     *
-     * @var array
-     */
-    protected $_options;
+
 
     /**
      * Return options array
      *
-     * @param boolean $isMultiselect
      * @param string|array $foregroundCountries
      * @return array
      */
-    public function toOptionArray($foregroundCountries = '')
+    public function toOptionArray($foregroundCountries = ''): array
     {
         if (!$this->_options) {
             $this->_options = $this->_countryCollection->loadData()->setForegroundCountries(
