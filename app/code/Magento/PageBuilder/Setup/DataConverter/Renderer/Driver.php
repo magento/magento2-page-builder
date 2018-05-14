@@ -85,7 +85,7 @@ class Driver implements RendererInterface
 
         $imageAttributes = [
             'style' => 'background-image: url('
-                . "'{{media url=gene-cms"
+                . "'{{media url=wysiwyg"
                 . $eavData['image']
                 . "}}'); "
                 . 'min-height: 300px; background-size: auto; background-repeat: no-repeat; '
@@ -96,7 +96,7 @@ class Driver implements RendererInterface
 
         $mobileImageAttributes = [
             'style' => 'background-image: url('
-                . "'{{media url=gene-cms"
+                . "'{{media url=wysiwyg"
                 . (isset($eavData['image']) ? $eavData['image'] : $eavData['mobile_image'])
                 . "}}'); "
                 . 'min-height: 300px; background-size: auto; background-repeat: no-repeat; '

@@ -23,12 +23,12 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
       var slider = _this.parent.parent;
 
-      _this.displayLabel((0, _translate)("Slide") + (slider.children().indexOf(_this.parent) + 1));
+      _this.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this.parent) + 1)));
 
       slider.children.subscribe(function (children) {
         var index = children.indexOf(_this.parent);
 
-        _this.displayLabel((0, _translate)("Slide") + (index + 1));
+        _this.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this.parent) + 1)));
       });
       return _this;
     }

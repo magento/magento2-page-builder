@@ -1,0 +1,80 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* Visual Select {less} */
+.admin__field-visual-select {
+
+    box-sizing: border-box;
+
+    ol {
+        display: block;
+        font-size: 0;
+        margin: 0;
+        list-style: none;
+        padding: 0;
+
+        li {
+            border: 1px solid @color-gray68;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            padding: 12px;
+            text-align: center;
+            vertical-align: top;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &:hover {
+                border-color: @field-control__active__border-color;
+            }
+
+            &.active {
+                border-color: @field-control__active__border-color;
+                box-sizing: border-box;
+                outline: 2px solid @field-control__active__border-color;
+            }
+        }
+    }
+
+    input[type="text"] {
+        display: none;
+    }
+}
+
+.admin__field-visual-select-large {
+    min-height: 150px;
+    width: 220px;
+
+    img {
+        max-width: 100%;
+        max-height: 100px;
+        object-fit: contain;
+    }
+}
+
+.admin__field-visual-select-small {
+    height: 46px;
+    min-width: 120px;
+
+    img {
+        margin-right: 6px;
+        width: 20px;
+    }
+
+    span {
+        vertical-align: top;
+    }
+}
+
+.admin__field-visual-select-spacer {
+    font-size: 0;
+    height: 85px;
+    line-height: 0;
+    width: 100px;
+}

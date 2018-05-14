@@ -98,6 +98,7 @@
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentBlockNameInEditFormTitle" />
         <see userInput="Edit {{contentBlockType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <waitForPageLoad stepKey="waitForEditFormLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToContainer">
         <arguments>
@@ -360,6 +361,21 @@
         <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="selectPropertyField"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="selectAlignment">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector='//li[@name="{{property.value}}"]' stepKey="seeAlignment"/>
+        <click selector='//li[@name="{{property.value}}"]' stepKey="selectAlignment" />
+    </actionGroup>
+    <actionGroup name="validateAlignmentFieldIsNotDisabled">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <dontSeeElement selector='//div[@data-index="{{property.section}}"]/descendant::div[@name="{{property.value}}" and contains(@class, "_disabled")]' stepKey="seeAlignmentNotDisabled"/>
     </actionGroup>
     <actionGroup name="pickColorSwatchCell">
         <arguments>
