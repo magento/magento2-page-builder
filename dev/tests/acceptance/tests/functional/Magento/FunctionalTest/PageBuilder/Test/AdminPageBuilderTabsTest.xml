@@ -385,10 +385,12 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeaderItemAdvancedStyles}}" stepKey="seeTabHeaderItemAdvancedStylesInAdminPreview"/>
         <waitForElementVisible selector="{{TabsOnStage.tabsContentAdvancedStyles}}" stepKey="seeTabsContentAdvancedStylesInAdminPreview"/>
+        <waitForElementVisible selector="{{TabsOnStage.tabsAlignment('center')}}" stepKey="seeTabAlignCenterInStage"/>
         <!-- Verify in Storefront -->
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront"/>
         <waitForElementVisible selector="{{TabsOnFrontend.tabsContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsAlignment('center')}}" stepKey="seeTabAlignCenterInStorefront"/>
     </test>
 </tests>
