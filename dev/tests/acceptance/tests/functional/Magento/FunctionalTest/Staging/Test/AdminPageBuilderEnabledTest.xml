@@ -10,41 +10,6 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="VerifyPageBuilderVisibleOnStagingOfPages">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-71404: Enabling PageBuilder on Webstore"/>
-            <title value="Admin are able to see PageBuilder on Staging of CMS Page, Block Page after enable PageBuilder from Configuration"/>
-            <description value="Admin are able to see PageBuilder on Staging of CMS Page, Block Page after enable PageBuilder from Configuration"/>
-            <severity value="CRITICAL"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-ee"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
-            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
-            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
-        </before>
-        <after>
-            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
-            <deleteData createDataKey="createPreReqBlock" stepKey="deleteCreatePreReqBlock"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!--Verify PageBuilder visible on CMS Page creation form-->
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
-            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="navigateToStagingSlideout" stepKey="navigateToStagingSlideoutCMS"/>
-        <click selector="{{AdminStagingSlideOutSection.contentTab}}" stepKey="expandContentTab" />
-        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnCMSStaging"/>
-        <!--Verify PageBuilder visible on CMS Block creation form-->
-        <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedBlock">
-            <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
-        </actionGroup>
-        <actionGroup ref="navigateToStagingSlideout" stepKey="navigateToStagingSlideoutBlock"/>
-        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnBlockStaging"/>
-    </test>
     <test name="VerifyPageBuilderVisibleOnPages">
         <annotations>
             <features value="Pagebuilder"/>
@@ -75,7 +40,7 @@
         <!--Verify PageBuilder visible on staging slideout of CMS Page-->
         <actionGroup ref="navigateToStagingSlideout" stepKey="navigateToStagingSlideoutCMS"/>
         <click selector="{{AdminStagingSlideOutSection.contentTab}}" stepKey="expandContentTab" />
-        <actionGroup ref="verifyPageBuilderVisibleOnStaging" stepKey="verifyPageBuilderVisibleOnCMSStaging"/>
+        <actionGroup ref="verifyPageBuilderVisibleOnStaging" stepKey="verifyPageBuilderVisibleOnCmsStaging"/>
         <!--Verify PageBuilder visible on CMS Block creation form-->
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedBlock">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
