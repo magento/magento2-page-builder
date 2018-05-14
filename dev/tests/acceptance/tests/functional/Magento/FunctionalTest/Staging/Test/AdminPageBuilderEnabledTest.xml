@@ -73,19 +73,17 @@
         </actionGroup>
         <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnCMSPage"/>
         <!--Verify PageBuilder visible on staging slideout of CMS Page-->
-        <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop1"/>
         <actionGroup ref="navigateToStagingSlideout" stepKey="navigateToStagingSlideoutCMS"/>
         <click selector="{{AdminStagingSlideOutSection.contentTab}}" stepKey="expandContentTab" />
-        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnCMSStaging"/>
+        <actionGroup ref="verifyPageBuilderVisibleOnStaging" stepKey="verifyPageBuilderVisibleOnCMSStaging"/>
         <!--Verify PageBuilder visible on CMS Block creation form-->
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedBlock">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
         <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnBlockPage"/>
         <!--Verify PageBuilder visible on staging slideout of CMS Block-->
-        <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop2"/>
         <actionGroup ref="navigateToStagingSlideout" stepKey="navigateToStagingSlideoutBlock"/>
-        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnBlockStaging"/>
+        <actionGroup ref="verifyPageBuilderVisibleOnStaging" stepKey="verifyPageBuilderVisibleOnBlockStaging"/>
         <!--Verify PageBuilder visible on Newsletter creation form-->
         <amOnPage url="{{NewsletterTemplateForm.url}}" stepKey="amOnNewsletterTemplatePage"/>
         <waitForPageLoad stepKey="waitForPageLoad6"/>

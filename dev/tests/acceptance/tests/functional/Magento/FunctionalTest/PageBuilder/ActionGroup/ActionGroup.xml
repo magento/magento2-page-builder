@@ -597,6 +597,10 @@
         <waitForPageLoad stepKey="waitForPageLoad3"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnPage">
+        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+    </actionGroup>
+    <actionGroup name="verifyPageBuilderVisibleOnStaging">
         <scrollTo selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="scrollToIdentifyPageBuilder"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
