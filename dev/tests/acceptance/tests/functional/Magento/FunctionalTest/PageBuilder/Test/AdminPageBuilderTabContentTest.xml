@@ -219,6 +219,9 @@
             <testCaseId value="MAGETWO-89957"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs-content"/>
+            <group value="pagebuilder-image"/>
+            <group value="skip"/>
+            <!--bug in develop MAGETWO-91060 -->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -435,7 +438,7 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditSlide" />
         <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditSlide"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
-            <argument name="property" value="PageBuilderSlideItemTitle1"/>
+            <argument name="property" value="PageBuilderSlideItemName1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
@@ -459,7 +462,6 @@
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <seeElement selector="{{SlideOnFrontend.slide('1')}}" stepKey="seeSlide1InSlider"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayed"/>
         <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnFrontend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
