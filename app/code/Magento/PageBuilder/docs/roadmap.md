@@ -1,5 +1,31 @@
 # Project Roadmap
 
+## Navigation
+
+1. [Introduction]
+2. [Installation guide]
+3. Contribution guide
+4. [Developer documentation]
+5. **Roadmap and Known Issues**
+   1. [Overview](#overview)
+   1. [Planned features and functionality](#planned-features-and-functionality)
+   1. [Known issues](#known-issues)
+
+
+[Introduction]: README.md
+[Installation guide]: install.md
+[Developer documentation]: developer-documentation.md
+[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
+[Third-party content type migration]: new-content-type-example.md
+[Iconography]: iconography.md
+[Module integration]: module-integration.md
+[Additional data capability]: additional-data.md
+[Content type configuration]: content-type-configuration.md
+[How to add a new content type]: how-to-add-new-content-type.md
+[Roadmap and known issues]: roadmap.md
+
+## Overview
+
 This page lists the upcoming functionality and known issues for the PageBuilder project.
 
 ## Planned features and functionality
