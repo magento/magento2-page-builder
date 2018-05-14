@@ -24,27 +24,27 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="background_color" var="background_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/background-image" name="background_image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image" var="background_image"/>
-                                    <property name="background_position" var="background_position"/>
-                                    <property name="background_size" var="background_size"/>
-                                    <property name="background_repeat" var="background_repeat"/>
-                                    <property name="background_attachment" var="background_attachment"/>
-                                    <property name="text_align" var="text_align"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/border-style" var="border" name="border_style"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" var="margins_and_padding"/>
+                                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                                    <property name="background_position" source="background_position"/>
+                                    <property name="background_size" source="background_size"/>
+                                    <property name="background_repeat" source="background_repeat"/>
+                                    <property name="background_attachment" source="background_attachment"/>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute name="data-role" var="name"/>
-                                    <attribute name="data-appearance" var="appearance"/>
-                                    <attribute name="data-enable-parallax" var="enable_parallax"/>
-                                    <attribute name="data-parallax-speed" var="parallax_speed"/>
-                                    <attribute var="background_color_format" name="data-background-color-format" virtual="true"/>
+                                    <attribute name="name" source="data-role"/>
+                                    <attribute name="appearance" source="data-appearance"/>
+                                    <attribute name="enable_parallax" source="data-enable-parallax"/>
+                                    <attribute name="parallax_speed" source="data-parallax-speed"/>
+                                    <attribute name="background_color_format" source="data-background-color-format" virtual="true"/>
                                 </attributes>
-                                <css var="css_classes"/>
+                                <css name="css_classes"/>
                             </element>
                         </elements>
                         <converters>

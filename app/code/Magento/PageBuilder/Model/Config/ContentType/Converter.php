@@ -274,8 +274,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         if ($propertiesNode) {
             foreach ($propertiesNode->getElementsByTagName('property') as $propertyNode) {
                 $propertiesData[] = [
-                    'var' => $this->getAttributeValue($propertyNode, 'var'),
-                    'name' => $this->getAttributeValue($propertyNode, 'name'),
+                    'var' => $this->getAttributeValue($propertyNode, 'name'),
+                    'name' => $this->getAttributeValue($propertyNode, 'source'),
                     'converter' => $this->getAttributeValue($propertyNode, 'converter'),
                     'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
                     'virtual' => $this->getAttributeValue($propertyNode, 'virtual'),
@@ -284,7 +284,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             }
             foreach ($propertiesNode->getElementsByTagName('complex_property') as $propertyNode) {
                 $propertiesData[] = [
-                    'var' => $this->getAttributeValue($propertyNode, 'var'),
+                    'var' => $this->getAttributeValue($propertyNode, 'name'),
                     'reader' => $this->getAttributeValue($propertyNode, 'reader'),
                     'converter' => $this->getAttributeValue($propertyNode, 'converter'),
                     'preview_converter' => $this->getAttributeValue($propertyNode, 'preview_converter'),
@@ -294,7 +294,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             }
             foreach ($propertiesNode->getElementsByTagName('static_property') as $propertyNode) {
                 $propertiesData[] = [
-                    'name' => $this->getAttributeValue($propertyNode, 'name'),
+                    'name' => $this->getAttributeValue($propertyNode, 'source'),
                     'value' => $this->getAttributeValue($propertyNode, 'value'),
                     'static' => true
                 ];
@@ -316,8 +316,8 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         if ($attributesNode) {
             foreach ($attributesNode->getElementsByTagName('attribute') as $attributeNode) {
                 $attributesData[] = [
-                    'var' => $this->getAttributeValue($attributeNode, 'var'),
-                    'name' => $this->getAttributeValue($attributeNode, 'name'),
+                    'var' => $this->getAttributeValue($attributeNode, 'name'),
+                    'name' => $this->getAttributeValue($attributeNode, 'source'),
                     'converter' => $this->getAttributeValue($attributeNode, 'converter'),
                     'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
                     'virtual' => $this->getAttributeValue($attributeNode, 'virtual'),
@@ -326,14 +326,14 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             }
             foreach ($attributesNode->getElementsByTagName('static_attribute') as $attributeNode) {
                 $attributesData[] = [
-                    'name' => $this->getAttributeValue($attributeNode, 'name'),
+                    'name' => $this->getAttributeValue($attributeNode, 'source'),
                     'value' => $this->getAttributeValue($attributeNode, 'value'),
                     'static' => true
                 ];
             }
             foreach ($attributesNode->getElementsByTagName('complex_attribute') as $attributeNode) {
                 $attributesData[] = [
-                    'var' => $this->getAttributeValue($attributeNode, 'var'),
+                    'var' => $this->getAttributeValue($attributeNode, 'name'),
                     'reader' => $this->getAttributeValue($attributeNode, 'reader'),
                     'converter' => $this->getAttributeValue($attributeNode, 'converter'),
                     'preview_converter' => $this->getAttributeValue($attributeNode, 'preview_converter'),
@@ -357,7 +357,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $htmlData = [];
         $htmlNode = $elementNode->getElementsByTagName('html')->item(0);
         if ($htmlNode) {
-            $htmlData['var']= $this->getAttributeValue($htmlNode, 'var');
+            $htmlData['var']= $this->getAttributeValue($htmlNode, 'name');
             $htmlData['converter'] = $this->getAttributeValue($htmlNode, 'converter');
             $htmlData['preview_converter'] = $this->getAttributeValue($htmlNode, 'preview_converter');
         }
@@ -375,13 +375,13 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $cssData = [];
         $cssNode = $elementNode->getElementsByTagName('css')->item(0);
         if ($cssNode) {
-            $cssData['var'] = $this->getAttributeValue($cssNode, 'var');
+            $cssData['var'] = $this->getAttributeValue($cssNode, 'name');
             $cssData['converter'] = $this->getAttributeValue($cssNode, 'converter');
             $filterClasses = [];
             $filterNode = $cssNode->getElementsByTagName('filter')->item(0);
             if ($filterNode) {
                 foreach ($filterNode->getElementsByTagName('class') as $classNode) {
-                    $filterClasses[] = $this->getAttributeValue($classNode, 'name');
+                    $filterClasses[] = $this->getAttributeValue($classNode, 'source');
                 }
             }
             $cssData['filter'] = $filterClasses;
@@ -400,7 +400,7 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         $tagData = [];
         $tagNode = $elementNode->getElementsByTagName('tag')->item(0);
         if ($tagNode) {
-            $tagData['var'] = $this->getAttributeValue($tagNode, 'var');
+            $tagData['var'] = $this->getAttributeValue($tagNode, 'name');
             $tagData['converter'] = $this->getAttributeValue($tagNode, 'converter');
         }
         return $tagData;

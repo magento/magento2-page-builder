@@ -28,41 +28,41 @@
                         <elements>
                             <element name="first_element" path=".">
                                 <style_properties>
-                                    <property var="style_attributes_change" name="custom_name" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persist="true" virtual="false" />
-                                    <property var="style_attributes_add" name="attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persist="false" virtual="true" />
-                                    <property var="new_style" name="new-style"/>
-                                    <complex_property var="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" reader="Path/to/custom/reader" />
-                                    <complex_property var="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="true" reader="Path/to/custom/reader" />
-                                    <complex_property var="new_complex" reader="Path/to/reader"/>
-                                    <static_property name="static_style_attributes_change" value="custom_value" />
-                                    <static_property name="new_static" value="new-value"/>
+                                    <property name="style_attributes_change" source="custom_name" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persist="true" virtual="false" />
+                                    <property name="style_attributes_add" source="attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" persist="false" virtual="true" />
+                                    <property name="new_style" source="new-style"/>
+                                    <complex_property name="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" reader="Path/to/custom/reader" />
+                                    <complex_property name="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="true" reader="Path/to/custom/reader" />
+                                    <complex_property name="new_complex" reader="Path/to/reader"/>
+                                    <static_property source="static_style_attributes_change" value="custom_value" />
+                                    <static_property source="new_static" value="new-value"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute var="attribute_change" name="data-custom" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" persist="true"/>
-                                    <attribute var="attribute_add" name="attribute_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" persist="true"/>
-                                    <attribute var="new_attribute" name="data-new" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="true" persist="false"/>
-                                    <complex_attribute var="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" reader="Path/to/custom/reader" />
-                                    <complex_attribute var="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="true" reader="Path/to/custom/reader" />
-                                    <complex_attribute var="new_complex" reader="Path/to/reader"/>
-                                    <static_attribute name="static_attribute_change" value="custom_value" />
-                                    <static_attribute name="new_static" value="new-value"/>
+                                    <attribute name="attribute_change" source="data-custom" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" persist="true"/>
+                                    <attribute name="attribute_add" source="attribute_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" persist="true"/>
+                                    <attribute name="new_attribute" source="data-new" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="true" persist="false"/>
+                                    <complex_attribute name="complex_style_attributes_change" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="false" reader="Path/to/custom/reader" />
+                                    <complex_attribute name="complex_style_attributes_add" converter="Path/to/custom/converter" preview_converter="Path/to/preview/custom/converter" virtual="true" reader="Path/to/custom/reader" />
+                                    <complex_attribute name="new_complex" reader="Path/to/reader"/>
+                                    <static_attribute source="static_attribute_change" value="custom_value" />
+                                    <static_attribute source="new_static" value="new-value"/>
                                 </attributes>
-                                <tag var="tag" converter="Path/to/custom/converter" />
-                                <html var="html"/>
-                                <css var="css_classes" converter="Path/to/custom/converter">
+                                <tag name="tag" converter="Path/to/custom/converter" />
+                                <html name="html"/>
+                                <css name="css_classes" converter="Path/to/custom/converter">
                                     <filter>
-                                        <class name="new-class"/>
+                                        <class source="new-class"/>
                                     </filter>
                                 </css>
                             </element>
                             <element name="third_element" path="//div">
                                 <style_properties>
-                                    <property var="style_no_converter" name="no_converter"/>
+                                    <property name="style_no_converter" source="no_converter"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute var="name" name="data-role"/>
+                                    <attribute name="name" source="data-role"/>
                                 </attributes>
-                                <css var="css_classes"/>
+                                <css name="css_classes"/>
                             </element>
                         </elements>
                         <converters>
@@ -92,13 +92,13 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property var="style_converter" name="converter" converter="Path/to/converter"/>
-                                    <property var="style_no_converter" name="no_converter"/>
+                                    <property name="style_converter" source="converter" converter="Path/to/converter"/>
+                                    <property name="style_no_converter" source="no_converter"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute var="name" name="data-role"/>
+                                    <attribute name="name" source="data-role"/>
                                 </attributes>
-                                <css var="css_classes"/>
+                                <css name="css_classes"/>
                             </element>
                         </elements>
                     </data_mapping>

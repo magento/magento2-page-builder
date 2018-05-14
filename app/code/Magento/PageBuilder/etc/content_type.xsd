@@ -144,22 +144,22 @@
         </xs:choice>
     </xs:complexType>
     <xs:complexType name="property">
-        <xs:attribute type="xs:string" name="var" use="required"/>
-        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="source" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:string" name="persist" use="optional"/>
     </xs:complexType>
     <xs:complexType name="complex_property">
-        <xs:attribute type="xs:string" name="var" use="required"/>
+        <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="reader" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_property">
-        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="source" use="required"/>
         <xs:attribute type="xs:string" name="value" use="optional"/>
     </xs:complexType>
     <xs:complexType name="attributes">
@@ -170,15 +170,15 @@
         </xs:choice>
     </xs:complexType>
     <xs:complexType name="attribute">
-        <xs:attribute type="xs:string" name="var" use="required"/>
-        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="source" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
         <xs:attribute type="xs:string" name="virtual" use="optional"/>
         <xs:attribute type="xs:boolean" name="persist" use="optional"/>
     </xs:complexType>
     <xs:complexType name="complex_attribute">
-        <xs:attribute type="xs:string" name="var" use="required"/>
+        <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="reader" use="optional"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
@@ -186,11 +186,11 @@
         <xs:attribute type="xs:boolean" name="persist" use="optional"/>
     </xs:complexType>
     <xs:complexType name="static_attribute">
-        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="source" use="required"/>
         <xs:attribute type="xs:string" name="value" use="optional"/>
     </xs:complexType>
     <xs:complexType name="html">
-        <xs:attribute type="xs:string" name="var" use="required"/>
+        <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
         <xs:attribute type="xs:string" name="preview_converter" use="optional"/>
     </xs:complexType>
@@ -198,7 +198,7 @@
         <xs:sequence>
             <xs:element type="filter" name="filter" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="var" use="required"/>
+        <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
     </xs:complexType>
     <xs:complexType name="filter">
@@ -207,10 +207,10 @@
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="class">
-        <xs:attribute type="xs:string" name="name" use="required"/>
+        <xs:attribute type="xs:string" name="source" use="required"/>
     </xs:complexType>
     <xs:complexType name="tag">
-        <xs:attribute type="xs:string" name="var" use="required"/>
+        <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="converter" use="optional"/>
     </xs:complexType>
 </xs:schema>

@@ -25,42 +25,42 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <complex_property var="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute var="name" name="data-role"/>
-                                    <attribute name="data-appearance" var="appearance"/>
-                                    <attribute var="default_active" name="data-active-tab"/>
+                                    <attribute name="name" source="data-role"/>
+                                    <attribute name="appearance" source="data-appearance"/>
+                                    <attribute name="default_active" source="data-active-tab"/>
                                 </attributes>
-                                <css var="css_classes">
+                                <css name="css_classes">
                                     <filter>
-                                        <class name="tab-align-left"/>
-                                        <class name="tab-align-center"/>
-                                        <class name="tab-align-right"/>
+                                        <class source="tab-align-left"/>
+                                        <class source="tab-align-center"/>
+                                        <class source="tab-align-right"/>
                                     </filter>
                                 </css>
                             </element>
                             <element name="headers" path=".//ul/li">
                                 <style_properties>
-                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                 </style_properties>
                             </element>
                             <element name="navigation" path=".//ul">
                                 <style_properties>
-                                    <property var="navigation_alignment" name="text_align"/>
+                                    <property name="navigation_alignment" source="text_align"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//div">
                                 <style_properties>
-                                    <property var="border" name="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
-                                    <property var="text_align" name="text_align"/>
-                                    <property var="border_color" name="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
-                                    <property var="border_width" name="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <property var="border_radius" name="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                 </style_properties>
                             </element>
                         </elements>

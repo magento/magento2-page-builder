@@ -24,18 +24,18 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
         self::TYPE_PATH . '/appearances/appearance/data' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/style_properties/property'
-            => 'var',
+            => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/style_properties/complex_property'
-            => 'var',
+            => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/style_properties/static_property'
-            => 'name',
+            => 'source',
         self::TYPE_PATH . '/additional_data/arguments' => 'name',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attributes/attribute' => 'var',
+        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attributes/attribute' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attributes/complex_attribute'
-            => 'var',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attributes/static_attribute'
             => 'name',
-        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/css/filter/class' => 'name',
+        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attributes/static_attribute'
+            => 'source',
+        self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/css/filter/class' => 'source',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/converters/converter' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/converters/converter/config/item' => 'name',
         self::TYPE_PATH . '/appearances/appearance/readers/reader' => 'name'
