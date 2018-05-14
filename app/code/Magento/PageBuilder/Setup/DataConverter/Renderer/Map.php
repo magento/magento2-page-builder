@@ -61,7 +61,6 @@ class Map implements RendererInterface
 
         if (isset($itemData['formData'])) {
             $formData = $itemData['formData'];
-            $formData['width'] = '100%';
             $formData['height'] = $eavData['map_height'] ?? '300px';
 
             $style = $this->styleExtractor->extractStyle($formData);
