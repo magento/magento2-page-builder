@@ -38,7 +38,7 @@
         <waitForText userInput="Category Image" stepKey="waitForText" />
         <seeElement selector="{{CategoryContentSection.SelectFromGalleryBtn}}" stepKey="seeSelectFromGallery" />
         <see userInput="Maximum file size" stepKey="seeMediaGalleryValidationMsg"/>
-        <see userInput="Browse to find or drag image here" stepKey="seeBrowseImageonPlaceHolder1"/>
+        <see userInput="Browse to find or drag image here" stepKey="seeBrowseImageOnPlaceHolder1"/>
         <seeElement selector="{{CategoryContentSection.ImagePlaceHolder}}" stepKey="seeImagePlaceHolder"/>
         <!--Upload image from local machine using image placeholder button-->
         <comment userInput="Upload image from local machine using image placeholder button" stepKey="uploadImageComment"/>
@@ -49,7 +49,7 @@
         <!--Remove uploaded image-->
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="waitForDeleteIconAppear"/>
         <click selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="removeUploadedImage"/>
-        <see userInput="Browse to find or drag image here" stepKey="seeBrowseImageonPlaceHolder2"/>
+        <see userInput="Browse to find or drag image here" stepKey="seeBrowseImageOnPlaceHolder2"/>
         <!--Upload another image from local machine using image placeholder button-->
         <comment userInput="Upload another image from local machine using image placeholder button" stepKey="uploadImageComment2"/>
         <attachFile selector="{{CategoryContentSection.Upload}}" userInput="{{ImageUpload.value}}" stepKey="uploadImage2"/>
@@ -68,7 +68,7 @@
             <argument name="Image" value="ImageUpload1"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(ImageUpload1.fileName)}}" stepKey="seeImgeNameOnPreview3"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(ImageUpload1.fileName)}}" stepKey="seeImageNameOnPreview3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(ImageUpload1.fileName)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <fillField selector="{{AdminStagingSlideOutSection.updateName}}" userInput="{{_staging.update_name}}" stepKey="fillUpdateName" />

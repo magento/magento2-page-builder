@@ -49,8 +49,8 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-71404: Enabling PageBuilder on Webstore"/>
-            <title value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynmic Block after enable PageBuilder from Configuration"/>
-            <description value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynmic Block after enable PageBuilder from Configuration"/>
+            <title value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynamic Block after enable PageBuilder from Configuration"/>
+            <description value="Admin are able to see PageBuilder on CMS Page, Block Page, Dynamic Block after enable PageBuilder from Configuration"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-ee"/>
@@ -81,7 +81,7 @@
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToContentCreatedBlock">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnBlockPage"/>
+        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnBlockBlockPage"/>
         <!--Verify PageBuilder visible on staging slideout of CMS Block-->
         <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop2"/>
         <actionGroup ref="navigateToStagingSlideout" stepKey="navigateToStagingSlideoutBlock"/>
@@ -94,6 +94,6 @@
         <!--Verify PageBuilder visible on Dynamic Block creation form -->
         <amOnPage url="{{AdminBannerPage.url}}" stepKey="openNewBannerForm"/>
         <waitForPageLoad stepKey="waitForPageLoad5"/>
-        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyBluefootVisibleOnBlockPage"/>
+        <actionGroup ref="verifyPageBuilderVisibleOnPage" stepKey="verifyPageBuilderVisibleOnDynamicBlockPage"/>
     </test>
 </tests>

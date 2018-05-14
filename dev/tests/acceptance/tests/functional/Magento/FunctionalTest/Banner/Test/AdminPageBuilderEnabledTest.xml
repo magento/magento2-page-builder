@@ -14,8 +14,8 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="MAGETWO-71404: Enabling PageBuilder on Webstore"/>
-            <title value="Admin are able to see PageBuilder on Dynmic Block after enable PageBuilder from Configuration"/>
-            <description value="Admin are able to see PageBuilder on Dynmic Block after enable PageBuilder from Configuration"/>
+            <title value="Admin are able to see PageBuilder on Dynamic Block after enable PageBuilder from Configuration"/>
+            <description value="Admin are able to see PageBuilder on Dynamic Block after enable PageBuilder from Configuration"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-ee"/>
@@ -78,5 +78,10 @@
         </actionGroup>
         <seeElement selector="{{TinyMCESection.TinyMCE4}}" stepKey="seeTinyMCE4Visible" />
         <!--Missing step of asserting PageBuilder text convert to TinyMCE4 (blocked by current testing framework - unable to grab text from TinyMCE4)-->
+        <executeJS function="var div = document.createElement('div'); div.innerHTML = tinymce.activeEditor.getContent(); div.innerText.trim();" stepKey="textFromPageBuilder"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">Hello Dynamic Block from PageBuilder</expectedResult>
+            <actualResult type="variable">textFromPageBuilder</actualResult>
+        </assertEquals>
     </test>
 </tests>
