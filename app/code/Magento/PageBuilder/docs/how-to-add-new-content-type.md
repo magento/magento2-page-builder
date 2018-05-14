@@ -23,17 +23,17 @@ To add configuration for a new content type, create a file under the following l
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property name="text_align" var="text_align"/>
-                                    <property name="border_style" var="border"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" var="margins_and_padding"/>
+                                    <property source="text_align" name="text_align"/>
+                                    <property source="border_style" name="border"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" source="border_color" name="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" source="border_width" name="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" source="border_radius" name="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" name="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute name="data-role" var="name"/>
+                                    <attribute source="data-role" name="name"/>
                                 </attributes>
-                                <css var="css_classes"/>
+                                <css name="css_classes"/>
                             </element>
                         </elements>
                     </data_mapping>
@@ -220,17 +220,17 @@ Now, let's add content type that can contain other content types. Create configu
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property name="text_align" var="text_align"/>
-                                    <property name="border_style" var="border"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" var="margins_and_padding"/>
+                                    <property source="text_align" name="text_align"/>
+                                    <property source="border_style" name="border"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/color" source="border_color" name="border_color"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" source="border_width" name="border_width"/>
+                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" source="border_radius" name="border_radius"/>
+                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" name="margins_and_padding"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute name="data-role" var="name"/>
+                                    <attribute source="data-role" name="name"/>
                                 </attributes>
-                                <css var="css_classes"/>
+                                <css name="css_classes"/>
                             </element>
                         </elements>
                     </data_mapping>
