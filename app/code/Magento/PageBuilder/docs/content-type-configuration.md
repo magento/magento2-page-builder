@@ -61,7 +61,7 @@ The following is an example of a content type configuration in `etc/content_type
                         </element>
                         <element name="link" path=".//a">
                             <attributes>
-                                <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
+                                <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/link"/>
                                 <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
                                 <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
                                 <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
@@ -128,7 +128,7 @@ The following is an example of a content type configuration in `etc/content_type
                 </data_mapping>
                 <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
                 <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
-                <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
             </appearance>
             <appearance name="collage-left">
                 <!-- Collage left appearance configuration -->
@@ -196,7 +196,7 @@ It controls the templates, how data is read from the master format, and how to a
 | `render_template`   | Template used to render the content type to the master format                          |
 | `reader`            | Reads data for the content type from the master format                                 |
 
-The default reader is `Magento_PageBuilder/js/component/format/read/configurable`.
+The default reader is `Magento_PageBuilder/js/master-format/read/configurable`.
 It reads data based on the configuration specified in `data_mapping`.
 
 **Example:**
@@ -205,7 +205,7 @@ It reads data based on the configuration specified in `data_mapping`.
     <data_mapping/>
     <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
     <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
-    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
 </appearance>
 ```
 
@@ -240,7 +240,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
     <element name="link" path=".//a">
         <attributes>
-            <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
+            <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/link"/>
             <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
             <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
             <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />

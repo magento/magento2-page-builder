@@ -39,7 +39,7 @@ To add configuration for a new content type, create a file under the following l
                     </data_mapping>
                     <preview_template>Vendor_ModuleNameCustom/content-type/simple/default/preview</preview_template>
                     <render_template>Vendor_ModuleNameCustom/content-type/simple/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
@@ -236,7 +236,7 @@ Now, let's add content type that can contain other content types. Create configu
                     </data_mapping>
                     <preview_template>Vendor_ModuleName/content-type/complex/default/preview</preview_template>
                     <render_template>Vendor_ModuleName/content-type/complex/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
