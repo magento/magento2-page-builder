@@ -41,7 +41,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testPartial()
     {
-        $file = file_get_contents(__DIR__ . '/../../../_files/content_type/groups3.xml');
+        $file = file_get_contents(__DIR__ . '/../../../_files/content_type/group3.xml');
         $this->fileResolverMock->expects($this->once())
             ->method('get')
             ->willReturn([$file]);
@@ -51,9 +51,9 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     public function testMergeCompleteAndPartial()
     {
         $fileList = [
-            file_get_contents(__DIR__ . '/../../../_files/content_type/groups1.xml'),
-            file_get_contents(__DIR__ . '/../../../_files/content_type/groups2.xml'),
-            file_get_contents(__DIR__ . '/../../../_files/content_type/groups3.xml'),
+            file_get_contents(__DIR__ . '/../../../_files/content_type/group1.xml'),
+            file_get_contents(__DIR__ . '/../../../_files/content_type/group2.xml'),
+            file_get_contents(__DIR__ . '/../../../_files/content_type/group3.xml'),
         ];
         $this->fileResolverMock->expects($this->once())
             ->method('get')

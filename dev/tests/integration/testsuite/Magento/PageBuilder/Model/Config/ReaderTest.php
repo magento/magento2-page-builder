@@ -59,9 +59,9 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     public function testMerge()
     {
         $groupsFileList = [
-            file_get_contents(__DIR__ . '/../../_files/content_type/groups1.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/groups2.xml'),
-            file_get_contents(__DIR__ . '/../../_files/content_type/groups3.xml')
+            file_get_contents(__DIR__ . '/../../_files/content_type/group1.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/group2.xml'),
+            file_get_contents(__DIR__ . '/../../_files/content_type/group3.xml')
         ];
         $contentTypesFiles = [
             file_get_contents(__DIR__ . '/../../_files/content_type/type1_content_type1.xml'),
