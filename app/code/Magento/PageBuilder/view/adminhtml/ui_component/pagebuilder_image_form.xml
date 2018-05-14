@@ -47,18 +47,17 @@
                 </item>
             </argument>
             <settings>
-                <label translate="true">Appearance</label>
                 <dataType>text</dataType>
+                <label translate="true">Appearance</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
             </settings>
             <formElements>
                 <select>
                     <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">full-width</item>
-                                <item name="label" xsi:type="string" translate="true">Full Width Image</item>
-                            </option>
-                        </options>
+                        <options class="AppearanceSourceImage" />
                     </settings>
                 </select>
             </formElements>

@@ -49,28 +49,15 @@
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Appearance</label>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
             </settings>
             <formElements>
                 <select>
                     <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">poster</item>
-                                <item name="label" xsi:type="string" translate="true">Poster</item>
-                            </option>
-                            <option name="1" xsi:type="array">
-                                <item name="value" xsi:type="string">collage-left</item>
-                                <item name="label" xsi:type="string" translate="true">Collage Left</item>
-                            </option>
-                            <option name="2" xsi:type="array">
-                                <item name="value" xsi:type="string">collage-centered</item>
-                                <item name="label" xsi:type="string" translate="true">Collage Center</item>
-                            </option>
-                            <option name="3" xsi:type="array">
-                                <item name="value" xsi:type="string">collage-right</item>
-                                <item name="label" xsi:type="string" translate="true">Collage Right</item>
-                            </option>
-                        </options>
+                        <options class="AppearanceSourceBanner" />
                     </settings>
                 </select>
             </formElements>
