@@ -1,5 +1,8 @@
 # Content Type Configuration
 
+**Note:**
+*We are revising configuration, format may change.*
+
 ## Navigation
 
 1. [Introduction]

@@ -42,7 +42,7 @@ This document describes events dispatched in PageBuilder and parameters.
 * [slider:block:ready](#sliderblockready)
 * [stage:error](#stageerror)
 * [stage:ready:{{id}}](#stagereadyid)
-* [stage:renderTrree:{{id}}](#stagerendertrreeid)
+* [stage:renderTree:{{id}}](#stagerendertreeid)
 * [stage:updated](#stageupdated)
 * [state](#state)
 * [tab-item:block:duplicate](#tab-itemblockduplicate)
@@ -268,7 +268,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    column: ContentTypeInterface;
+    column: Column;
     stageId: string;
 }
 ```
@@ -284,9 +284,9 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    column,
+    column: Column,
     handle,
-    parent
+    parent: ColumnGroup
 }
 ```
 
@@ -302,8 +302,8 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    column,
-    stageId
+    column: Column,
+    stageId: string
 }
 ```
 
@@ -319,9 +319,9 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    column,
+    column: Column,
     element,
-    parent
+    parent: ColumnGroup
 }
 ```
 
@@ -405,8 +405,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 **Params**
 
-``` js
-```
+object
 
 ## `image:block:ready`
 
@@ -416,8 +415,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 **Params**
 
-``` js
-```
+Function
 
 [Back to top]
 
@@ -429,11 +427,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 **Params**
 
-``` js
-{
-    callback: (files: object [ ] ) => any
-}
-```
+Function
 
 [Back to top]
 
@@ -543,7 +537,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `ContentTypeFactory::fireBlockReadyEvent`
-* `ContentTypeMountEventParamsInterface`
 
 **Params**
 
@@ -561,7 +554,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `ContentTypeFactory::createContentType`
-* `ContentTypeCreateEventParamsInterface`
 
 **Params**
 
@@ -577,7 +569,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `Stage::onBlockDropped`
-* `ContentTypeReadyEventParamsInterface`
 
 **Params**
 
@@ -615,7 +606,6 @@ This document describes events dispatched in PageBuilder and parameters.
 
 * `ContentTypeCollection::addChild`
 * `Column.Preview::fireMountEvent`
-* `ContentTypeMountEventParamsInterface`
 
 **Params**
 
@@ -652,7 +642,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `ContentTypeFactory::fireBlockReadyEvent`
-* `ContentTypeReadyEventParamsInterface`
 
 **Params**
 
@@ -673,8 +662,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 **Params**
 
-``` js
-```
+Error
 
 [Back to top]
 
@@ -685,7 +673,7 @@ This document describes events dispatched in PageBuilder and parameters.
 * `Stage::ready`
 * `stage instance`
 
-## `stage:renderTrree:{{id}}`
+## `stage:renderTree:{{id}}`
 
 **Triggers**
 
@@ -695,7 +683,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    value
+    value: string
 }
 ```
 
@@ -712,7 +700,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    stageId
+    stageId: number
 }
 ```
 
@@ -728,7 +716,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    state
+    state: DataObject
 }
 ```
 
@@ -745,9 +733,9 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    original: originalBlock,
-    duplicateBlock,
-    index,
+    original: ContentTypeInterface,
+    duplicateBlock: ContentTypeInterface,
+    index: number,
 }
 ```
 
@@ -759,7 +747,6 @@ This document describes events dispatched in PageBuilder and parameters.
 
 * `ContentTypeCollection::addChild`
 * `Column.Preview::fireMountEvent`
-* `ContentTypeMountEventParamsInterface`
 
 **Params**
 
@@ -797,7 +784,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `Stage::onBlockDropped`
-* `ContentTypeReadyEventParamsInterface`
 
 **Params**
 
@@ -815,7 +801,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `ContentTypeFactory::fireBlockReadyEvent`
-* `ContentTypeReadyEventParamsInterface`
 
 **Params**
 
