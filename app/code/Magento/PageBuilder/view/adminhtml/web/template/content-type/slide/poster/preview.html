@@ -5,13 +5,10 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-slide" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }">
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-slide" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, attr: {'data-slide-name': previewData.slide_name()}">
     <div class="pagebuilder-slide-wrapper" data-bind="style: Object.assign(previewStyle(), getBackgroundStyles()), event: { mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper }">
         <div class="pagebuilder-poster-overlay" data-bind="style: getOverlayStyles()">
             <div class="pagebuilder-poster-content">
-                <!-- ko if: previewData.title() -->
-                <h3 data-bind="text: previewData.title()"></h3>
-                <!-- /ko -->
                 <div data-bind="html: getContentHtml(), css: {'pagebuilder-empty-slide': isContentEmpty()}"></div>
                 <!-- ko if: previewData.show_button() !== "never_show" -->
                 <a type="button" class="pagebuilder-slide-button" data-bind="css: previewData.button_type(), attr: {'data-link-url': getHref()}, style: getButtonStyles()">
