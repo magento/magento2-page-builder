@@ -1,5 +1,32 @@
 # Content Type Configuration
 
+## Navigation
+
+1. [Introduction]
+2. [Installation guide]
+3. Contribution guide
+4. [Developer documentation]
+    1. [BlueFoot to PageBuilder data migration]
+    1. [Third-party content type migration]
+    1. [Iconography]
+    1. [Module integration]
+    1. [Additional data capability]
+    1. **Content type configuration**
+    1. [How to add a new content type]
+5. [Roadmap and known issues]
+
+[Introduction]: README.md
+[Installation guide]: install.md
+[Developer documentation]: developer-documentation.md
+[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
+[Third-party content type migration]: new-content-type-example.md
+[Iconography]: iconography.md
+[Module integration]: module-integration.md
+[Additional data capability]: additional-data.md
+[Content type configuration]: content-type-configuration.md
+[How to add a new content type]: how-to-add-new-content-type.md
+[Roadmap and known issues]: roadmap.md
+
 ## Configuration
 
 Use the content type and group configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
@@ -61,7 +88,7 @@ The following is an example of a content type configuration in `etc/content_type
                         </element>
                         <element name="link" path=".//a">
                             <attributes>
-                                <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
+                                <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/link"/>
                                 <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
                                 <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
                                 <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
@@ -128,7 +155,7 @@ The following is an example of a content type configuration in `etc/content_type
                 </data_mapping>
                 <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
                 <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
-                <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
             </appearance>
             <appearance name="collage-left">
                 <!-- Collage left appearance configuration -->
@@ -196,7 +223,7 @@ It controls the templates, how data is read from the master format, and how to a
 | `render_template`   | Template used to render the content type to the master format                          |
 | `reader`            | Reads data for the content type from the master format                                 |
 
-The default reader is `Magento_PageBuilder/js/component/format/read/configurable`.
+The default reader is `Magento_PageBuilder/js/master-format/read/configurable`.
 It reads data based on the configuration specified in `data_mapping`.
 
 **Example:**
@@ -205,7 +232,7 @@ It reads data based on the configuration specified in `data_mapping`.
     <data_mapping/>
     <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
     <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
-    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
 </appearance>
 ```
 
@@ -240,7 +267,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
     <element name="link" path=".//a">
         <attributes>
-            <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
+            <complex_attribute var="link_url" persist="false" reader="Magento_PageBuilder/js/property/link"/>
             <attribute var="link_url" name="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
             <attribute var="link_url" name="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
             <attribute var="link_url" name="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />

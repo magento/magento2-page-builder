@@ -24,17 +24,25 @@ class MigrateToPageBuilder implements DataPatchInterface
     private $moduleDataSetup;
 
     /**
+     * @var \Magento\Framework\App\State
+     */
+    private $appState;
+
+    /**
      * Constructor
      *
      * @param \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
      * @param ModuleDataSetupInterface $moduleDataSetup
+     * @param \Magento\Framework\App\State $appState
      */
     public function __construct(
         \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory,
-        ModuleDataSetupInterface $moduleDataSetup
+        ModuleDataSetupInterface $moduleDataSetup,
+        \Magento\Framework\App\State $appState
     ) {
         $this->convertBlueFootToPageBuilderFactory = $convertBlueFootToPageBuilderFactory;
         $this->moduleDataSetup = $moduleDataSetup;
+        $this->appState = $appState;
     }
 
     /**
@@ -46,7 +54,13 @@ class MigrateToPageBuilder implements DataPatchInterface
     {
         if ($this->moduleDataSetup->tableExists('gene_bluefoot_entity')) {
             $this->updateEavConfiguration();
-            $this->convertBlueFootToPageBuilderFactory->create(['setup' => $this->moduleDataSetup])->convert();
+            $convertBlueFootToPageBuilder = $this->convertBlueFootToPageBuilderFactory->create(
+                ['setup' => $this->moduleDataSetup]
+            );
+            $this->appState->emulateAreaCode(
+                \Magento\Framework\App\Area::AREA_ADMINHTML,
+                [$convertBlueFootToPageBuilder, 'convert']
+            );
         }
     }
 

@@ -1,0 +1,919 @@
+# Master format
+
+For storage (later master format) Page Builder uses XHTML with inline styles and data attributes.
+
+This document describes master format for default Page Builder content types.
+
+**Note:**
+*We are still revising master format and it may change.*
+
+## Row
+
+```
+<div data-role="row" data-appearance="default" style="..."></div>
+```
+
+### main element
+
+Attributes
+1. data-role [row]
+2. data-appearance [default]
+3. data-enable-parallax [1, 0]
+4. data-parallax-speed [0-1]
+5. data-background-color-format [hex, rgb, rgba, hsl, hsla]
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. border-style
+9. border-color
+10. border-width
+11. border-radius
+12. margin
+13. padding
+14. class
+
+## Column group
+
+```
+<div data-role="column-group" data-appearance="default"></div>
+```
+
+Attributes
+1. data-role [column-group]
+2. data-appearance [default]
+
+## Column
+
+```
+<div data-role="column" data-appearance="full-height" style="..."></div>
+```
+
+Attributes
+1. data-role [column]
+2. data-appearance [full-height, align-top, align-center, align-bottom]
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. border-style
+9. border-color
+10. border-width
+11. border-radius
+12. margin
+13. padding
+14. align-self
+15. min-height
+16. class
+
+## Tabs
+
+```
+<div data-role="tabs" data-appearance="default" data-active-tab="" class="tab-align-left" style="margin: 0px; padding: 0px;">
+    <ul role="tablist" class="tabs-navigation" style="text-align: left;">
+        <li role="tab" data-appearance="default" class="tab-header" style="border-radius: 0px; border-width: 1px;"><a href="#AAQ3VJB" class="tab-title"><span class="tab-title">Tab 1</span></a></li>
+        <li role="tab" data-appearance="default" class="tab-header" style="border-radius: 0px; border-width: 1px;"><a href="#D1KOU6H" class="tab-title"><span class="tab-title">Tab 2</span></a></li>
+    </ul>
+    <div class="tabs-content" style="border-width: 1px; border-radius: 0px; min-height: 300px;">
+        ....
+    </div>
+</div>
+```
+
+Attributes
+1. data-role [tabs]
+2. data-appearance [default]
+3. class
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+
+## Tab item
+
+```
+<div data-role="tab-item" data-appearance="default" data-tab-name="Tab 1" id="AAQ3VJB" style="..."></div>
+```
+
+Attributes
+1. data-role [tab-item]
+2. data-appearance [default]
+3. data-tab-name
+4. class
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. border-style
+9. border-color
+10. border-width
+11. border-radius
+12. margin
+13. padding
+14. align-self
+15. min-height
+
+## Accordion
+
+```
+<div data-role="accordion" data-appearance="default" style="..."></div>
+```
+
+Attributes
+1. data-role [accordion]
+2. data-appearance [default]
+3. class
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. align-self
+9. min-height
+
+## Accordion item
+
+```
+<div data-collapsible="true" data-open-on-load="true" class="title">
+    <div data-role="trigger">
+        <span>Section 1 Title</span></div>
+    </div>
+    <div data-content="true" class="content">Section 1 content</div>
+</div>
+```
+
+Attributes
+1. data-open-on-load [true, false]
+2. class
+
+Title.
+
+HTML content.
+
+## Text
+
+```
+<div data-role="text" data-appearance="default" style="..."></div>
+```
+
+Attributes
+1. data-role [text]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+## Heading
+
+```
+<h1 data-role="heading" data-appearance="default" style="" class="pagebuilder-heading">Heading Text</h1>
+<!-- The same for h2, h3, h4, etc -->
+```
+
+Attributes
+1. data-role [heading]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+## Buttons
+
+```
+<div data-role="buttons" data-appearance="default" style="..."></div>
+```
+
+Attributes
+1. data-role [buttons]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+## Button item
+
+```
+<div data-role="button-item" data-appearance="default">
+    <button href="" style="..." class="item button-primary"><span>Button Text</span></button>
+</div>
+```
+
+### main element
+
+Attributes
+1. data-role [button-item]
+2. data-appearance [default]
+
+Inline styles
+1. display
+
+### link element
+
+Attributes
+1. data-link-type
+2. href
+3. target
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+### link_text element
+
+HTML content.
+
+## Divider
+
+```
+<hr data-role="divider" data-appearance="default" style="..."/>
+```
+
+### main element
+
+Attributes
+1. data-role [divider]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+### link element
+
+Inline styles
+1. width
+2. border-color
+3. border-width
+
+## Anchor
+
+```
+<div data-role="anchor" data-appearance="default" id="" style="..."></div>
+```
+
+Attributes
+1. data-role [anchor]
+2. data-appearance [default]
+2. id
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+## HTML & JS Code
+
+```
+<div data-role="html" data-appearance="default" style="..."></div>
+```
+
+Attributes
+1. data-role [html]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+HTML & JavaScript content.
+
+## Image
+
+```
+<figure data-role="image" data-appearance="full-width" data-lightbox="false" style="...">
+    <a href="" title="">
+        <img src="" title="" alt="" class="pagebuilder-mobile-hidden" />
+        <img src="" title="" alt="" class="pagebuilder-desktop-hidden" />
+    </a>
+    <figcaption>Image description</figcaption>
+</figure>
+```
+
+### main element
+
+Attributes
+1. data-role [image]
+2. data-appearance [full-width]
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+### desktop_image element
+
+Attributes
+1. alt
+2. title
+
+Inline styles
+1. max-width
+2. height
+
+### mobile_image element
+
+Attributes
+1. alt
+2. title
+
+Inline styles
+1. max-width
+2. height
+
+### link element
+
+Attributes
+1. href
+2. title
+3. data-link-type
+
+### caption element
+
+HTML content.
+
+## Video
+
+```
+<div data-role="video" data-appearance="default" style="...">
+    <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen data-bind="attr: getVideoAttributes(), style: getStyle(), css: getCss()"></iframe>
+</div>
+```
+
+### main element
+
+Attributes
+1. data-role [video]
+2. data-appearance [default]
+
+Inline styles
+1. text-align
+
+### video element
+
+Attributes
+1. src
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. width
+9. height
+10. class
+
+## Slider
+
+```
+<div data-role="slider" data-appearance="default" style="..."></div>
+```
+
+Attributes
+1. data-role [slider]
+2. data-appearance [default]
+3. data-autoplay
+4. data-autoplay-speed
+5. data-fade
+6. data-is-infinite
+7. data-show-arrows
+8. data-show-dots
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. min-height
+9. class
+
+## Slide
+
+Poster
+
+```
+<div data-role="slide" data-appearance="poster" data-overlay-color="rgb(0, 0, 0)" data-appearance="poster" style="...">
+    <a href="" target="">
+        <div class="wrapper pagebuilder-mobile-only">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Content</div>
+                    <button type="button" style="" class="action primary" >Button Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button type="button" style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+
+Collage Left
+
+```
+<div data-role="slide" data-appearance="collage-left" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-left" style="" class="pagebuilder-banner">
+    <a href="" target="">
+        <div style=""
+             class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay>
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Banner Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+
+Collage Centered
+
+```
+<div data-role="slide" data-appearance="collage-centered" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-center" style="" class="pagebuilder-banner">
+    <a href="" target="">
+        <div style="" class="pagebuilder-desktop-only wrapper">
+            <div class="overlay">
+                <div class="content">
+                    <div>Button content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+Collage Right
+
+```
+<div data-role="slide" data-appearance="collage-right" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-right" style="" class="pagebuilder-banner">
+    <a href="" target="">
+        <div style="" class="pagebuilder-desktop-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div data-bind="html: getContentHtml()"></div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+
+### main element
+
+Attributes
+1. data-role [slide]
+2. data-appearance [poster, collage-left, collage-centered, collage-right]
+2. data-show-button
+2. data-show-overlay
+
+Inline styles
+1. border-style
+2. border-color
+3. border-width
+4. border-radius
+5. margin
+6. class
+
+### link element
+
+Attributes
+1. data-role
+2. data-appearance
+3. href
+4. target
+5. data-link-type
+
+### overlay element
+
+Attributes
+1. data-role
+2. data-appearance
+3. data-link-type
+4. data-overlay-color
+5. href
+6. target
+
+Inline styles
+1. background-color
+
+### desktop_image element
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. padding
+9. min-height
+
+
+### mobile_image element
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. padding
+9. min-height
+
+### content element
+
+HTML content.
+
+### button element
+
+Attributes
+1. class
+
+Inline styles
+1. opacity
+2. visibility
+
+HTML content.
+
+## Banner
+
+Poster
+
+```
+<div data-role="banner" data-appearance="poster" data-overlay-color="rgb(0, 0, 0)" data-appearance="poster" style="...">
+    <a href="" target="">
+        <div class="wrapper pagebuilder-mobile-only">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Content</div>
+                    <button type="button" style="" class="action primary" >Button Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button type="button" style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+
+Collage Left
+
+```
+<div data-role="banner" data-appearance="collage-left" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-left" style="" class="pagebuilder-banner">
+    <a href="" target="">
+        <div style=""
+             class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay>
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Banner Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+
+Collage Centered
+
+```
+<div data-role="banner" data-appearance="collage-centered" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-center" style="" class="pagebuilder-banner">
+    <a href="" target="">
+        <div style="" class="pagebuilder-desktop-only wrapper">
+            <div class="overlay">
+                <div class="content">
+                    <div>Button content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+Collage Right
+
+```
+<div data-role="banner" data-appearance="collage-right" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-right" style="" class="pagebuilder-banner">
+    <a href="" target="">
+        <div style="" class="pagebuilder-desktop-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div data-bind="html: getContentHtml()"></div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+        <div style="" class="pagebuilder-mobile-only wrapper">
+            <div style="" class="overlay">
+                <div class="content">
+                    <div>Banner content</div>
+                    <button style="" class="action primary">Button Text</button>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+```
+
+### main element
+
+Attributes
+1. data-role [banner]
+2. data-appearance [poster, collage-left, collage-centered, collage-right]
+2. data-show-button
+2. data-show-overlay
+
+Inline styles
+1. border-style
+2. border-color
+3. border-width
+4. border-radius
+5. margin
+6. class
+
+### link element
+
+Attributes
+1. data-role
+2. data-appearance
+3. href
+4. target
+5. data-link-type
+
+### overlay element
+
+Attributes
+1. data-role
+2. data-appearance
+3. data-link-type
+4. data-overlay-color
+5. href
+6. target
+
+Inline styles
+1. background-color
+
+### desktop_image element
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. padding
+9. min-height
+
+
+### mobile_image element
+
+Inline styles
+1. background-color
+2. background-image
+3. background-position
+4. background-size
+5. background-repeat
+6. background-attachment
+7. text-align
+8. padding
+9. min-height
+
+### content element
+
+HTML content.
+
+### button element
+
+Attributes
+1. class
+
+Inline styles
+1. opacity
+2. visibility
+
+HTML content.
+
+## Map
+
+```
+<iframe data-role="map" data-appearance="default" style="..."></iframe>
+```
+
+Attributes
+1. data-role [map]
+2. data-appearance [default]
+3. data-markers
+4. data-zoom
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. width
+9. height
+10. class
+
+## Block
+
+```
+<div data-role="block" data-appearance="default" data-identifier="block-identifier" style="..."></div>
+```
+
+Attributes
+1. data-role [block]
+2. data-appearance [default]
+3. data-identifier
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+## Product
+
+```
+<div data-role="product" data-appearance="default" data-sku="product1-sku" data-view-mode="list" style="" class="pagebuilder-product"></div>
+```
+
+Attributes
+1. data-role [product]
+2. data-appearance [default]
+2. data-sku
+2. data-view-mode
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
+
+## Product List
+
+```
+<div data-role="product-list" data-appearance="default" data-category-id="1" data-product-count="4" style="..." class="pagebuilder-product-list"></div>
+```
+
+Attributes
+1. data-role [product-list]
+2. data-appearance [default]
+2. data-category-id
+2. data-product-count
+
+Inline styles
+1. text-align
+2. border-style
+3. border-color
+4. border-width
+5. border-radius
+6. margin
+7. padding
+8. class
