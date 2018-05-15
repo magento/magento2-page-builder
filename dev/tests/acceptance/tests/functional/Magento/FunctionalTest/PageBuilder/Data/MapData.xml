@@ -8,31 +8,135 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
-    <entity name="PageBuilderMapLocationNameDefaultProperty" type="pagebuilder_map_location_name_property">
-        <data key="name">Location Name</data>
-        <data key="section">general</data>
-        <data key="fieldName">location_name</data>
-        <data key="value">Default Location</data>
-    </entity>
+    <!-- Postition -->
     <entity name="PageBuilderMapPositionDefaultProperty" type="pagebuilder_map_position_property">
         <data key="name">Position</data>
         <data key="section">general</data>
         <data key="fieldName">position</data>
         <data key="position">"/{\"lat\".30.\d+,\"lng\".-97.\d+}/"</data>
     </entity>
+    <!-- Location Name -->
+    <entity name="PageBuilderMapLocationName_Default" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapLocationName_Common1" type="pagebuilder_map_location_name_property">
+        <data key="name">Location Name</data>
+        <data key="section">general</data>
+        <data key="fieldName">location_name</data>
+        <data key="value">Default Location</data>
+    </entity>
+    <!-- Latitude -->
+    <entity name="PageBuilderMapLatitude_Default" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[lat]</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapLatitude_ClickedPin" type="pagebuilder_map_latitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[lat]</data>
+        <data key="value">/30\.\d+/</data>
+    </entity>
+    <!-- Longitude -->
+    <entity name="PageBuilderMapLongitude_Default" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[lng]</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapLongitude_ClickedPin" type="pagebuilder_map_longitude_property">
+        <data key="name">Coordinates</data>
+        <data key="section">general</data>
+        <data key="fieldName">position[lng]</data>
+        <data key="value">/-97\.\d+/</data>
+    </entity>
+    <!-- Street Address -->
+    <entity name="PageBuilderMapStreetAddress_Default" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapStreetAddress_Common1" type="pagebuilder_map_street_address_property">
+        <data key="name">Street Address</data>
+        <data key="section">general</data>
+        <data key="fieldName">address</data>
+        <data key="value">1234 Fake Drive</data>
+    </entity>
+    <!-- City -->
+    <entity name="PageBuilderMapCity_Default" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapCity_Common1" type="pagebuilder_map_city_property">
+        <data key="name">City</data>
+        <data key="section">general</data>
+        <data key="fieldName">city</data>
+        <data key="value">Nowheresville</data>
+    </entity>
+    <!-- Zip Code -->
+    <entity name="PageBuilderMapZipCode_Default" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zip</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapZipCode_Common1" type="pagebuilder_map_zip_code_property">
+        <data key="name">Zip/Postal Code</data>
+        <data key="section">general</data>
+        <data key="fieldName">zip</data>
+        <data key="value">12345-6789</data>
+    </entity>
+    <!-- Country -->
+    <entity name="PageBuilderMapCountry_Default" type="pagebuilder_map_country_property">
+        <data key="name">Country</data>
+        <data key="section">general</data>
+        <data key="fieldName">country</data>
+        <data key="value">Select...</data>
+    </entity>
+    <entity name="PageBuilderMapCountry_USA" type="pagebuilder_map_country_property">
+        <data key="name">Country</data>
+        <data key="section">general</data>
+        <data key="fieldName">country</data>
+        <data key="value">United States</data>
+    </entity>
+    <!-- Comment -->
+    <entity name="PageBuilderMapComment_Default" type="pagebuilder_map_comment_property">
+        <data key="name">Comment</data>
+        <data key="section">general</data>
+        <data key="fieldName">comment</data>
+        <data key="value"/>
+    </entity>
+    <entity name="PageBuilderMapComment_Common1" type="pagebuilder_map_comment_property">
+        <data key="name">Comment</data>
+        <data key="section">general</data>
+        <data key="fieldName">comment</data>
+        <data key="value">This is a test comment.</data>
+    </entity>
+    <!-- Map Height -->
     <entity name="PageBuilderMapHeightDefaultProperty" type="pagebuilder_map_height_property">
         <data key="name">Map Height</data>
         <data key="section">map_settings</data>
         <data key="fieldName">height</data>
         <data key="value">300</data>
-        <data key="valueWithUnits">300px</data>
+    </entity>
+    <entity name="PageBuilderMapHeightPropertyEmpty" type="pagebuilder_map_height_property">
+        <data key="name">Height</data>
+        <data key="section">map_settings</data>
+        <data key="fieldName">height</data>
+        <data key="value"/>
     </entity>
     <entity name="PageBuilderMapHeightProperty350" type="pagebuilder_map_height_property">
         <data key="name">Height</data>
         <data key="section">map_settings</data>
         <data key="fieldName">height</data>
         <data key="value">350</data>
-        <data key="valueWithUnits">300px</data>
     </entity>
     <entity name="PageBuilderMapHeightPropertyPercentage" type="pagebuilder_map_height_property">
         <data key="name">Height</data>
@@ -41,16 +145,11 @@
         <data key="value">50%</data>
         <data key="errorMessage">Please enter a valid number in this field.</data>
     </entity>
-    <entity name="PageBuilderMapHeightPropertyEmpty" type="pagebuilder_map_height_property">
-        <data key="name">Height</data>
+    <!-- Show Controls -->
+    <entity name="PageBuilderMapShowControls_Default" type="pagebuilder_map_height_property">
+        <data key="name"> Show Controls</data>
         <data key="section">map_settings</data>
-        <data key="fieldName">height</data>
-        <data key="value"></data>
-    </entity>
-    <entity name="PageBuilderMapIndex1" type="pagebuilder_map_index_1">
-        <data key="index">1</data>
-    </entity>
-    <entity name="PageBuilderMapIndex2" type="pagebuilder_map_index_2">
-        <data key="index">2</data>
+        <data key="fieldName">show_controls</data>
+        <data key="value">true</data>
     </entity>
 </entities>

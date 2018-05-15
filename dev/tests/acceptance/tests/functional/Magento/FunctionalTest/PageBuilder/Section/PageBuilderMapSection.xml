@@ -13,7 +13,7 @@
         <element name="pin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
         <element name="pinLocation" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
         <!-- General Configuration -->
-        <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}};')]" parameterized="true"/>
+        <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -28,6 +28,7 @@
         <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <!-- Map Buttons -->
         <element name="fullScreen" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Toggle fullscreen view']" parameterized="true"/>
+        <element name="allPegmen" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@aria-label='Street View Pegman Control']" parameterized="true"/>
         <element name="pegman" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))]" parameterized="true"/>
         <element name="satelliteView" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@title='Show satellite imagery']" parameterized="true"/>
         <element name="streetView" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@title='Show street map']" parameterized="true"/>
@@ -35,13 +36,14 @@
         <element name="zoomOut" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Zoom out']" parameterized="true"/>
     </section>
     <section name="MapOnStorefront">
-        <element name="emptyMap" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(@src) and contains(@style, 'display: none;')]" parameterized="true"/>
+        <element name="emptyMap" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(@src) and contains(@style,'display: none;')]" parameterized="true"/>
         <element name="base" type="button" selector="(//div[@data-role='map'])[{{arg1}}]" parameterized="true"/>
+        <element name="baseJS" type="text" selector="document.querySelectorAll('div[data-role=\'map\']')[{{arg1}}]" parameterized="true"/>
         <element name="pin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
         <element name="pinLocation" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
         <element name="zoom" type="button" selector="(//div[@data-role='map'])[{{arg1}}][@data-zoom='{{arg2}}']" parameterized="true"/>
         <!-- General Configuration -->
-        <element name="height" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}};')]" parameterized="true"/>
+        <element name="height" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -56,6 +58,7 @@
         <element name="padding" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <!-- Map Buttons -->
         <element name="fullScreen" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//button[@title='Toggle fullscreen view']" parameterized="true"/>
+        <element name="allPegmen" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@aria-label='Street View Pegman Control']" parameterized="true"/>
         <element name="pegman" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@aria-label='Street View Pegman Control' and not(contains(@style,'visibility: hidden;'))]" parameterized="true"/>
         <element name="satelliteView" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@title='Show satellite imagery']" parameterized="true"/>
         <element name="streetView" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@title='Show street map']" parameterized="true"/>
@@ -66,7 +69,7 @@
         <element name="base" type="button" selector="//div[@data-index='position']//div[@class='map-field']"/>
         <element name="pin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2.png')]"/>
         <element name="position" type="input" selector="//div[@data-index='position']//div[@class='map-field']/../input"/>
-        <element name="positionJS" type="input" selector=".admin__field-map input[type=\'text\']"/>
+        <element name="positionJS" type="input" selector="document.querySelector('.admin__field-map input[type=\'text\']')"/>
         <element name="helperText" type="button" selector="//div[@data-index='position']//span[.='You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.']"/>
         <!-- Map Buttons -->
         <element name="fullScreen" type="button" selector="(//div[@data-index='position']//div[@class='map-field']//button[@title='Toggle fullscreen view'])[{{arg1}}]" parameterized="true"/>

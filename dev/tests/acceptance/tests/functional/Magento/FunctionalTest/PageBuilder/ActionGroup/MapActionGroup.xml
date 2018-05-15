@@ -34,19 +34,34 @@
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <dontSeeElementInDOM selector="{{page.pin(index)}}" stepKey="dontSeeMapPin"/>
+        <dontSeeElement selector="{{page.pin(index)}}" stepKey="dontSeeMapPin"/>
     </actionGroup>
     <actionGroup name="validateMapButtons">
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
         <waitForElementVisible selector="{{page.fullScreen(index)}}" stepKey="waitForFullScreenButton"/>
         <waitForElementVisible selector="{{page.pegman(index)}}" stepKey="waitForMapPegman"/>
         <waitForElementVisible selector="{{page.satelliteView(index)}}" stepKey="waitForMapSatelliteView"/>
         <waitForElementVisible selector="{{page.streetView(index)}}" stepKey="waitForMapStreetView"/>
         <waitForElementVisible selector="{{page.zoomIn(index)}}" stepKey="waitForMapZoomIn"/>
         <waitForElementVisible selector="{{page.zoomOut(index)}}" stepKey="waitForMapZoomOut"/>
+    </actionGroup>
+    <actionGroup name="validateNoMapButtons">
+        <arguments>
+            <argument name="page" defaultValue="MapOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
+        <waitForElement selector="{{page.fullScreen(index)}}" stepKey="waitForFullScreenButton"/>
+        <dontSeeElement selector="{{page.fullScreen(index)}}" stepKey="dontSeeFullScreenButton"/>
+        <dontSeeElementInDOM selector="{{page.allPegmen(index)}}" stepKey="dontSeeMapPegman"/>
+        <dontSeeElementInDOM selector="{{page.satelliteView(index)}}" stepKey="dontSeeMapSatelliteView"/>
+        <dontSeeElementInDOM selector="{{page.streetView(index)}}" stepKey="dontSeeMapStreetView"/>
+        <dontSeeElementInDOM selector="{{page.zoomIn(index)}}" stepKey="dontSeeMapZoomIn"/>
+        <dontSeeElementInDOM selector="{{page.zoomOut(index)}}" stepKey="dontSeeMapZoomOut"/>
     </actionGroup>
     <actionGroup name="validateMapHelperText">
         <waitForElementVisible selector="{{MapOnConfigurationPanel.helperText}}" stepKey="seeMapHelperText"/>
@@ -55,13 +70,10 @@
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
-            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
-            <argument name="cssClasses" defaultValue=""/>
-            <argument name="marginAndPadding" defaultValue="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
-        <waitForElementVisible selector="{{page.height(index, height.valueWithUnits)}}" stepKey="waitForMapHeight"/>
+        <waitForElementVisible selector="{{page.height(index, height.value)}}" stepKey="waitForMapHeight"/>
     </actionGroup>
     <actionGroup name="validateEmptyMapStoreFront">
         <arguments>
@@ -69,7 +81,11 @@
         </arguments>
         <waitForElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="seeInDOMEmptyMapOnFrontend"/>
         <dontSeeElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="dontSeeEmptyMapOnFrontend"/>
-        <seeElementInDOM selector="{{MapOnStorefront.height(index, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="seeInDOMEmptyMapHeightOnFrontend"/>
-        <dontSeeElement selector="{{MapOnStorefront.height(index, PageBuilderMapHeightDefaultProperty.value)}}" stepKey="dontSeeEmptyMapHeightOnFrontend"/>
+        <executeJS function="return Math.round({{index}}-1)" stepKey="jSIndex"/>
+        <executeJS function="return {{MapOnStorefront.baseJS('${jSIndex}')}}.clientHeight" stepKey="mapHeight"/>
+        <assertEquals stepKey="assertMapHeightIsZero">
+            <expectedResult type="int">0</expectedResult>
+            <actualResult type="variable">$mapHeight</actualResult>
+        </assertEquals>
     </actionGroup>
 </actionGroups>
