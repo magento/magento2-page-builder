@@ -117,12 +117,18 @@ define([
             var content = this.value(),
                 latLng;
 
+            if (this.marker && content.lat === '' && content.lng === '') {
+                this.marker.setMap(null);
+                return;
+            }
+
             if (!this.validateCoordinate(content)
                 || !this.map
                 || this.value() === ''
                 || this.value() === this.exportValue()) {
                 return;
             }
+
 
             if (typeof this.value() === 'string' && this.value() !== '') {
                 content = JSON.parse(this.value());
@@ -134,14 +140,16 @@ define([
             this.map.setCenter(latLng);
         },
 
-        validateCoordinate: function(coodindates) {
+        validateCoordinate: function(coordinates) {
             var valid = true;
-            if(isNaN(coodindates.lng)
-                || isNaN(coodindates.lat)
-                || parseFloat(coodindates.lng) < -180
-                || parseFloat(coodindates.lng) > 180
-                || parseFloat(coodindates.lat) < -90
-                || parseFloat(coodindates.lat) > 90
+            if( coordinates.lng === ''
+                || coordinates.lat === ''
+                || isNaN(coordinates.lng)
+                || isNaN(coordinates.lat)
+                || parseFloat(coordinates.lng) < -180
+                || parseFloat(coordinates.lng) > 180
+                || parseFloat(coordinates.lat) < -90
+                || parseFloat(coordinates.lat) > 90
             ) {
                 valid = false;
             }
