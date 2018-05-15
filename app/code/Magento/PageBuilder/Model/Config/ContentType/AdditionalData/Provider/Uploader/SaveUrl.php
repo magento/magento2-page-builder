@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader;
 
 use Magento\PageBuilder\Model\Config\ContentType\AdditionalData\ProviderInterface;
-use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\Backend\Model\Url;
 
 /**
  * Provides save URL for uploader
@@ -17,16 +17,16 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 class SaveUrl implements ProviderInterface
 {
     /**
-     * @var ContextInterface
+     * @var Url
      */
-    private $context;
+    private $urlBuilder;
 
     /**
-     * @param ContextInterface $context
+     * @param Url $urlBuilder
      */
-    public function __construct(ContextInterface $context)
+    public function __construct(Url $urlBuilder)
     {
-        $this->context = $context;
+        $this->urlBuilder = $urlBuilder;
     }
 
     /**
@@ -35,7 +35,7 @@ class SaveUrl implements ProviderInterface
     public function getData(string $itemName) : array
     {
         return [
-            $itemName => $this->context->getUrl(
+            $itemName => $this->urlBuilder->getUrl(
                 'pagebuilder/contenttype/image_upload',
                 ['_secure' => true]
             )
