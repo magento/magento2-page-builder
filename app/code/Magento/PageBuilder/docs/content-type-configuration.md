@@ -61,7 +61,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                         </element>
                         <element name="link" path=".//a">
                             <attributes>
-                                <complex_attribute name="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
+                                <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/default/link" persist="false"/>
                                 <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
                                 <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
                                 <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
@@ -240,7 +240,7 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
     <element name="link" path=".//a">
         <attributes>
-            <complex_attribute name="link_url" persist="false" reader="Magento_PageBuilder/js/property/default/link"/>
+            <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/default/link" persist="false"/>
             <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
             <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
             <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
