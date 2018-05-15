@@ -42,8 +42,8 @@
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
-            <argument name="property" value="PageBuilderSlideItemTitle1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideName1">
+            <argument name="property" value="PageBuilderSlideItemName1"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile1">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty1"/>
@@ -103,7 +103,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentPropertyDefault">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedAlignmentPropertyLeft">
+        <actionGroup ref="selectAlignment" stepKey="selectAlignmentLeft2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedBorderPropertyNone">
@@ -135,8 +135,8 @@
         <!--Add second slide -->
         <comment userInput="Add second slide" stepKey="addSecondSlide"/>
         <actionGroup ref="addSlide" stepKey="addSlide"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle2">
-            <argument name="property" value="PageBuilderSlideItemTitle2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideName2">
+            <argument name="property" value="PageBuilderSlideItemName2"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachSlideImageFile2">
             <argument name="property" value="PageBuilderSlideBackgroundImageProperty2"/>
@@ -160,7 +160,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <comment userInput="Validate slider settings on stage" stepKey="commentValidateSliderStage"/>
         <waitForElementVisible selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForSliderContainer" time="10"/>
         <seeElement selector="{{SliderInAdmin.ShowArrows}}" stepKey="verifyArrowsYesOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeight500OnAdmin"/>
@@ -168,7 +168,8 @@
         <seeElement selector="{{SliderInAdmin.sliderBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnAdmin"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
+        <comment userInput="Validate slide 1 on stage" stepKey="commentValidateSlide1Stage"/>
+        <dontSee userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SlideOnBackend.slideName('0')}}" stepKey="dontSeeSlide1NameDisplayedOnStage"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
         <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnBackend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearance"/>
@@ -176,8 +177,9 @@
         <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
         <click selector="{{SliderInAdmin.nextSlide}}" stepKey="clickNextSlideOnSliderAdmin"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.slide('1')}}" stepKey="waitForSlide2Admin" />
+        <comment userInput="Validate slide 2 on stage" stepKey="commentValidateSlide2Stage"/>
         <seeElement selector="{{SlideOnBackend.slide('1')}}" stepKey="seeSlide2InSliderAdmin"/>
-        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnBackend.slideTitle('1')}}" stepKey="seeSlide2TitleDisplayedAdmin"/>
+        <dontSee userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SlideOnBackend.slideName('1')}}" stepKey="dontSeeSlide2NameDisplayedOnStage"/>
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayedAdmin"/>
         <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnBackend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayedAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearance"/>
@@ -187,7 +189,7 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <comment userInput="Validate Slider settings on Storefront" stepKey="commentValidateStorefront"/>
         <seeElement selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <seeElement selector="{{SliderOnFrontend.Autoplay(PageBuilderSliderAutoplayOnProperty.value)}}" stepKey="seeSliderAutoplayOnSetting"/>
         <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderSliderAutoplaySpeed5000Property.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
@@ -198,8 +200,9 @@
         <seeElement selector="{{SliderOnFrontend.sliderBorderColor}}" stepKey="seeSliderShowGreenColor"/>
         <seeElement selector="{{SliderOnFrontend.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnFrontEnd"/>
         <seeElement selector="{{SliderOnFrontend.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnFrontEnd"/>
+        <comment userInput="Validate Slide 1 on Storefront" stepKey="commentValidateSlide1Storefront"/>
+        <dontSee userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SlideOnFrontend.slideName('0')}}" stepKey="dontSeeSlide1NameDisplayedStorefront"/>
         <seeElement selector="{{SlideOnFrontend.slide('1')}}" stepKey="seeSlide1InSlider"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayed"/>
         <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnFrontend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
@@ -208,7 +211,8 @@
         <click selector="{{SliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnSlider"/>
         <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
         <seeElement selector="{{SlideOnFrontend.slide2}}" stepKey="seeSlide2InSlider"/>
-        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SlideOnFrontend.slideTitle('1')}}" stepKey="seeSlide2TitleDisplayed"/>
+        <comment userInput="Validate Slide 2 on Storefront" stepKey="commentValidateSlide2Storefront"/>
+        <dontSee userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SlideOnFrontend.slideName('1')}}" stepKey="dontSeeSlide2NameDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayed"/>
         <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnFrontend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURL"/>
@@ -251,10 +255,10 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible stepKey="wait2" selector="{{SlideOnBackend.emptyslide}}" time="10"/>
-        <grabTextFrom selector="{{SlideOnBackend.emptyslide}}" stepKey="grabTitleFromEmptySlide"/>
+        <grabTextFrom selector="{{SlideOnBackend.emptyslide}}" stepKey="grabNameFromEmptySlide"/>
         <assertEquals stepKey="assertEditSlideOnEmptyPreview" message="Empty slide says Edit slide text on admin preview">
             <expectedResult type="string">Edit slide text</expectedResult>
-            <actualResult type="variable">grabTitleFromEmptySlide</actualResult>
+            <actualResult type="variable">grabNameFromEmptySlide</actualResult>
         </assertEquals>
         <!-- Verify Poster overlay -->
         <comment userInput="User sees Slider preview that contains first slide (poster)" stepKey="AC2"/>
@@ -280,7 +284,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <waitForElementVisible time="10" selector="{{SlideOnBackend.optionTitle}}" stepKey="waitForOptionTitle" />
         <grabTextFrom selector="{{SlideOnBackend.optionTitle}}" stepKey="grabSlide1OptionTitle"/>
-        <assertEquals expected="Slide1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
+        <assertEquals expected="Slide 1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
         <!-- Empty slide background defaults on admin preview -->
         <comment userInput="Verify slide defaults on admin: Background Color defaults to empty" stepKey="adminDefaultColor"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="background-color: transparent" stepKey="verifyAdminTransparent"/>
@@ -333,7 +337,7 @@
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-83933: Advanced Slider"/>
-            <title value="Can add slides and see tooltip and slide title when clicking navigation dots"/>
+            <title value="Can add slides and see tooltip and slide name when clicking navigation dots"/>
             <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87949"/>
@@ -367,15 +371,15 @@
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideNavigationDot('1')}}" attribute="class" expectedValue="active" stepKey="assertFirstDotActive"/>
         <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel"/>
 
-        <comment userInput="User sees Slide 1 default title in the Slide Option Panel." stepKey="AC4"/>
-        <see userInput="Slide1" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
+        <comment userInput="User sees Slide 1 default name in the Slide Option Panel." stepKey="AC4"/>
+        <see userInput="Slide 1" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide1DefaultTitle"/>
 
         <comment userInput="User updates settings of first slide and saves configuration." stepKey="AC5"/>
         <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitleText1">
-            <argument name="property" value="PageBuilderSlideItemTitle1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText1">
+            <argument name="property" value="PageBuilderSlideItemName1"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel1Settings"/>
 
@@ -397,7 +401,7 @@
 
         <comment userInput="User sees button (+) inside the Slider Option Panel. Tooltip shows Add New Slide" stepKey="AC9"/>
         <seeElement selector="{{SliderInAdmin.addNewSlide}}" stepKey="seeAddNewSlideChild"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.addNewSlide}}" attribute="title" expectedValue="Add" stepKey="assertAddSlideTitle"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.addNewSlide}}" attribute="title" expectedValue="Add" stepKey="assertAddSlideName"/>
 
         <comment userInput="User clicks (+) icon, sees new slide added to to the right." stepKey="AC10"/>
         <actionGroup ref="addSlide" stepKey="addSecondSlide"/>
@@ -414,24 +418,24 @@
         <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeSlideOptionsPanel2"/>
 
         <comment userInput="Slide has default title Title N that reflects the order of the slide in the Slider." stepKey="AC13"/>
-        <see userInput="Slide2" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
+        <see userInput="Slide 2" selector="{{SliderInAdmin.slideOptionsTitle}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
         <click stepKey="focusOutsideStage" selector="{{PageBuilderActionsSection.searchPanel}}"/>
 
         <comment userInput="User updates settings of second slide and saves configuration." stepKey="AC14"/>
         <actionGroup ref="openSlideOptionsByIndex" stepKey="openSecondSlideOptions">
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitleText2">
-            <argument name="property" value="PageBuilderSlideItemTitle2"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideNameText2">
+            <argument name="property" value="PageBuilderSlideItemName2"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanel2Settings"/>
 
-        <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide title" stepKey="AC15"/>
+        <comment userInput="User hovers each slide dot, user sees tooltip displayed with Slide name" stepKey="AC15"/>
         <click stepKey="unfocusNavigation" selector="{{SliderInAdmin.sliderContainer}}"/>
         <moveMouseOver selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="mouseOverActiveSlide2"/>
-        <see userInput="{{PageBuilderSlideItemTitle2.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle2InTooltip"/>
+        <see userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName2InTooltip"/>
         <moveMouseOver selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="moveMouseOverFirstSlideNavigationDot"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SliderInAdmin.slideNavigationDotTitleTooltip}}" stepKey="seeSlideTitle1InTooltip"/>
+        <see userInput="{{PageBuilderSlideItemName1.value}}" selector="{{SliderInAdmin.slideNavigationDotNameTooltip}}" stepKey="seeSlideName1InTooltip"/>
     </test>
     <test name="SliderDelete">
         <annotations>
@@ -940,8 +944,8 @@
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
-            <argument name="property" value="PageBuilderSlideItemTitle1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideName1">
+            <argument name="property" value="PageBuilderSlideItemName1"/>
         </actionGroup>
         <fillField selector="{{TextOnSlider.textArea}}" userInput="Text from Slide" stepKey="addTextToEditor"/>
         <seeElement selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
@@ -1027,8 +1031,8 @@
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
-            <argument name="property" value="PageBuilderSlideItemTitle1"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideName1">
+            <argument name="property" value="PageBuilderSlideItemName1"/>
         </actionGroup>
         <actionGroup ref="scrollToSlideOutPanelField" stepKey="scrollToLink">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
@@ -1048,14 +1052,12 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <!-- Depends on MQE-818 to grab computed height attribute using JS so instead adding long text content-->
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdmin"/>
         <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage 2 -->
         <comment userInput="Validate Stage 2" stepKey="commentValidateStage2"/>
         <waitForElementVisible selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForSliderContainer" time="10"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnBackend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedAdminAfterSave"/>
         <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdminAfterSave"/>
         <grabTextFrom selector="{{SlideOnBackend.slideContent('0')}}" stepKey="grabSlideContent"/>
         <assertEquals expected="{{PageBuilderSlideMessageLongProperty.value}}" expectedType="string" actual="grabSlideContent" actualType="variable" message="actual=$grabSlideContent" stepKey="assertContentIsVisible"/>
@@ -1066,7 +1068,6 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
-        <see userInput="{{PageBuilderSlideItemTitle1.value}}" selector="{{SlideOnFrontend.slideTitle('0')}}" stepKey="seeSlide1TitleDisplayedOnStorefront"/>
         <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedOnStorefront"/>
         <seeElementInDOM selector="{{SlideOnFrontend.posterMobileBackgroundColor}}" stepKey="seeBackgroundColorOnFrontend" />
     </test>

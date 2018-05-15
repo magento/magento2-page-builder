@@ -4,6 +4,7 @@
  */
 
 import $t from "mage/translate";
+import _ from "underscore";
 import CreateValueForHref from "../../converter/attribute/link-href";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
@@ -14,6 +15,19 @@ export default class Content extends BaseContent {
 
     private createValueForHref: CreateValueForHref = new CreateValueForHref();
 
+    /**
+     * Get data for attr binding, example {"data-role": "element"}
+     *
+     * @returns {DataObject}
+     * @deprecated
+     */
+    public getAttributes(element: string): {} {
+        const attributes = _.clone(super.getAttributes(element));
+        return {
+            ...attributes,
+            "data-slide-name": this.getData(element).slide_name,
+        };
+    }
     /**
      * Get the slide wrapper styles for the storefront
      *

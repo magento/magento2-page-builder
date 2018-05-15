@@ -33,9 +33,9 @@
 
 Adding new content type starts with [configuration](content-type-configuration.md).
 
-To add configuration for a new content type, create a file under the following location `Vendor\ModuleName\etc\content_types\simple.xml` with the following content
+To add configuration for a new content type, create a file under the following location `Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\simple.xml` with the following content
 ``` XML
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Vendor_ModuleName:etc/content_types.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Vendor_ModuleName:etc/content_type.xsd">
     <content_types>
         <type name="simple" sortOrder="35" translate="label">
             <label>Simple</label>
@@ -52,17 +52,17 @@ To add configuration for a new content type, create a file under the following l
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property name="text_align" var="text_align"/>
-                                    <property name="border_style" var="border"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" var="margins_and_padding"/>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="border" source="border_style"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute name="data-role" var="name"/>
+                                    <attribute name="name" source="data-role"/>
                                 </attributes>
-                                <css var="css_classes"/>
+                                <css name="css_classes"/>
                             </element>
                         </elements>
                     </data_mapping>
@@ -226,10 +226,10 @@ And the last part is to add button to a template.
 <button type="button" click="helloWorld" translate="'Display Hello World'"/>
 ```
 
-Now, let's add content type that can contain other content types. Create configuration `Vendor\ModuleName\etc\content_types\complex.xml`.
+Now, let's add content type that can contain other content types. Create configuration `Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\complex.xml`.
 
 ``` XML
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
         <type name="complex" sortOrder="35" translate="label">
             <label>Complex</label>
@@ -249,17 +249,17 @@ Now, let's add content type that can contain other content types. Create configu
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property name="text_align" var="text_align"/>
-                                    <property name="border_style" var="border"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings" var="margins_and_padding"/>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="border" source="border_style"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute name="data-role" var="name"/>
+                                    <attribute name="name" source="data-role"/>
                                 </attributes>
-                                <css var="css_classes"/>
+                                <css name="css_classes"/>
                             </element>
                         </elements>
                     </data_mapping>
@@ -275,10 +275,10 @@ Now, let's add content type that can contain other content types. Create configu
 
 Now we need to specify which content types can be inserted into our new content type. To allow default content type Heading be inserted into our Complex content type, add the following configuration.
 
-`Vendor\ModuleName\etc\content_types\heading.xml`
+`Vendor\ModuleName\view\adminhtml\pagebuilder\content_type\heading.xml`
 
 ``` XML
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
         <type name="heading">
             <allowed_parents>

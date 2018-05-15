@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\PageBuilder\Setup\MoveImages;
 
 class MigrateToPageBuilder implements DataPatchInterface
 {
@@ -24,6 +25,11 @@ class MigrateToPageBuilder implements DataPatchInterface
     private $moduleDataSetup;
 
     /**
+     * @var MoveImages $moveImages
+     */
+    private $moveImages;
+
+    /**
      * @var \Magento\Framework\App\State
      */
     private $appState;
@@ -33,15 +39,18 @@ class MigrateToPageBuilder implements DataPatchInterface
      *
      * @param \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
      * @param ModuleDataSetupInterface $moduleDataSetup
+     * @param MoveImages $moveImages
      * @param \Magento\Framework\App\State $appState
      */
     public function __construct(
         \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory,
         ModuleDataSetupInterface $moduleDataSetup,
+        MoveImages $moveImages,
         \Magento\Framework\App\State $appState
     ) {
         $this->convertBlueFootToPageBuilderFactory = $convertBlueFootToPageBuilderFactory;
         $this->moduleDataSetup = $moduleDataSetup;
+        $this->moveImages = $moveImages;
         $this->appState = $appState;
     }
 
@@ -61,6 +70,7 @@ class MigrateToPageBuilder implements DataPatchInterface
                 \Magento\Framework\App\Area::AREA_ADMINHTML,
                 [$convertBlueFootToPageBuilder, 'convert']
             );
+            $this->moveImages->move();
         }
     }
 
