@@ -41,6 +41,7 @@
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateMapButtons" stepKey="comment"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
         <waitForElementVisible selector="{{page.fullScreen(index)}}" stepKey="waitForFullScreenButton"/>
         <waitForElementVisible selector="{{page.pegman(index)}}" stepKey="waitForMapPegman"/>
@@ -54,6 +55,7 @@
             <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateNoMapButtons" stepKey="comment"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
         <waitForElement selector="{{page.fullScreen(index)}}" stepKey="waitForFullScreenButton"/>
         <dontSeeElement selector="{{page.fullScreen(index)}}" stepKey="dontSeeFullScreenButton"/>
@@ -66,19 +68,23 @@
     <actionGroup name="validateMapHelperText">
         <waitForElementVisible selector="{{MapOnConfigurationPanel.helperText}}" stepKey="seeMapHelperText"/>
     </actionGroup>
-    <actionGroup name="validateMap">
+    <actionGroup name="validateMapSettings">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="height" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="showControls" defaultValue="PageBuilderMapShowControls_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateMapSettings" stepKey="comment"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="seeMap"/>
-        <waitForElementVisible selector="{{page.height(index, height.value)}}" stepKey="waitForMapHeight"/>
+        <waitForElementVisible selector="{{page.height(index, height.value)}}" stepKey="waitForHeight"/>
+        <waitForElementVisible selector="{{page.showControls(index, showControls.value)}}" stepKey="waitForShowControls"/>
     </actionGroup>
     <actionGroup name="validateEmptyMapStoreFront">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateEmptyMapStoreFront" stepKey="comment"/>
         <waitForElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="seeInDOMEmptyMapOnFrontend"/>
         <dontSeeElement selector="{{MapOnStorefront.emptyMap(index)}}" stepKey="dontSeeEmptyMapOnFrontend"/>
         <executeJS function="return Math.round({{index}}-1)" stepKey="jSIndex"/>
@@ -87,5 +93,35 @@
             <expectedResult type="int">0</expectedResult>
             <actualResult type="variable">$mapHeight</actualResult>
         </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateMapPinLocationData">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="locationName" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="address" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="city" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="zip" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="country" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="comment" defaultValue="PageBuilderMapComment_Default"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateMapPinLocationData" stepKey="comment1"/>
+        <waitForElementVisible selector="{{page.pin(index)}}" stepKey="waitForPin"/>
+        <click selector="{{page.pin(index)}}" stepKey="clickPin"/>
+        <waitForElementVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltip"/>
+        <waitForElementVisible selector="{{page.locationName(index, locationName.value)}}" stepKey="waitForLocationName"/>
+        <waitForElementVisible selector="{{page.address(index, address.value)}}" stepKey="waitForAddress"/>
+        <waitForElementVisible selector="{{page.city(index, city.value)}}" stepKey="waitForCity"/>
+        <waitForElementVisible selector="{{page.zip(index, zip.value)}}" stepKey="waitForZip"/>
+        <waitForElementVisible selector="{{page.country(index, country.value)}}" stepKey="waitForCountry"/>
+        <waitForElementVisible selector="{{page.comment(index, comment.value)}}" stepKey="waitForComment"/>
+        <click selector="{{page.tooltipWindowClose(index)}}" stepKey="closePinTooltip"/>
+        <waitForElementNotVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltipGone"/>
+    </actionGroup>
+    <actionGroup name="validateNoPinTooltip">
+        <comment userInput="validateNoPinTooltip" stepKey="comment"/>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.pin}}" stepKey="waitForPin"/>
+        <click selector="{{MapOnConfigurationPanel.pin}}" stepKey="clickPin"/>
+        <dontSeeElementInDOM selector="{{MapOnConfigurationPanel.tooltipWindow}}" stepKey="dontSeeTooltip"/>
     </actionGroup>
 </actionGroups>
