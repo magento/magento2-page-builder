@@ -121,6 +121,15 @@ export default class Preview extends PreviewCollection {
             } else if (activeIndex) {
                 this.setActiveTab(activeIndex);
             }
+            // update sortability of tabs
+            const sortableElement = $(this.element).find(".tabs-navigation");
+            if (sortableElement.hasClass("ui-sortable")) {
+                if (this.parent.children().length <= 1) {
+                    sortableElement.sortable("disable");
+                } else {
+                    sortableElement.sortable("enable");
+                }
+            }
         }
     }
 

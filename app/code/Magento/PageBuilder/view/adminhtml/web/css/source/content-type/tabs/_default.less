@@ -60,6 +60,15 @@
                     visibility: hidden;
                     width: 14px;
 
+                    &.disabled:before {
+                        color: @color-light-gray;
+                        cursor: not-allowed;
+                    }
+
+                    &.disabled:active:before {
+                        cursor: not-allowed;
+                    }
+
                     &:before {
                         .abs-icon;
                         color: @color-dark-gray0;
