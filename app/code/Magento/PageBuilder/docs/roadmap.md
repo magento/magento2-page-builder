@@ -19,7 +19,7 @@
 [Third-party content type migration]: new-content-type-example.md
 [Iconography]: iconography.md
 [Module integration]: module-integration.md
-[Additional data capability]: additional-data.md
+[Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Roadmap and known issues]: roadmap.md

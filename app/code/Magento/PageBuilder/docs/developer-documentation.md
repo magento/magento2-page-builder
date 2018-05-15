@@ -10,7 +10,7 @@
     1. [Third-party content type migration]
     1. [Iconography]
     1. [Module integration]
-    1. [Additional data capability]
+    1. [Additional data configuration]
     1. [Content type configuration]
     1. [How to add a new content type]
 5. [Roadmap and known issues]
@@ -23,7 +23,7 @@
 
 **[Module integration]** - A summary of how the PageBuilder module is integrated into the form fields in the Admin area.
 
-**[Additional data capability]** - Describes how to extend and configure PageBuilder content types.
+**[Additional data configuration]** - Describes how to extend and configure PageBuilder content types.
 
 **[Content type configuration]** - Describes how content types are configured and provides API reference for adding new content types, extending existing content types, adding groups in the left menu, or rearranging content types in the groups.
 
@@ -35,7 +35,7 @@
 [Third-party content type migration]: new-content-type-example.md
 [Iconography]: iconography.md
 [Module integration]: module-integration.md
-[Additional data capability]: additional-data.md
+[Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Roadmap and known issues]: roadmap.md
