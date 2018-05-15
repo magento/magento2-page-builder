@@ -9,9 +9,12 @@ import events from "uiEvents";
 import _ from "underscore";
 import Config from "../../config";
 import ConfigContentBlock from "../../config";
+import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
+import {moveContentType} from "../../interactions/sortable";
 import {Block as GroupBlock} from "../../panel/group/block";
+import {getDraggedBlockConfig} from "../../panel/registry";
 import {moveArrayItem} from "../../utils/array";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
@@ -55,12 +58,12 @@ export default class Preview extends PreviewCollection {
     private movePosition: DropPosition;
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {number} stageId
      */
     constructor(
-        parent: EditableArea,
+        parent: ContentTypeCollectionInterface,
         config: ConfigContentBlock,
         stageId,
     ) {
@@ -144,14 +147,8 @@ export default class Preview extends PreviewCollection {
         // Set the column to it's smallest column width
         updateColumnWidth(column, getSmallestColumnWidth());
 
-        column.parent.removeChild(column);
-
-        events.trigger("block:instanceDropped", {
-            blockInstance: column,
-            index: movePosition.insertIndex,
-            parent: this,
-            stageId: this.parent.stageId,
-        });
+        // Move the content type
+        moveContentType(column, movePosition.insertIndex, this.parent);
 
         // Modify the old neighbour
         if (modifyOldNeighbour) {
@@ -183,7 +180,9 @@ export default class Preview extends PreviewCollection {
                 // As we're moving an array item the keys all reduce by 1
                 --newIndex;
             }
-            moveArrayItem(this.parent.children, currentIndex, newIndex);
+
+            // Move the content type
+            moveContentType(column, newIndex);
         }
     }
 
@@ -299,7 +298,7 @@ export default class Preview extends PreviewCollection {
                 const columnInstance: Column = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
                 setDragColumn(columnInstance.parent);
-                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
+                this.dropPositions = calculateDropPositions((this.parent as ContentTypeCollectionInterface));
 
                 events.trigger("column:drag:start", {
                     column: columnInstance,
@@ -347,7 +346,7 @@ export default class Preview extends PreviewCollection {
      * Unset resizing flag on all child columns
      */
     private unsetResizingColumns() {
-        (this.parent as ColumnGroupBlock).children().forEach((column: Column) => {
+        (this.parent as ContentTypeCollectionInterface).children().forEach((column: Column) => {
             column.preview.resizing(false);
         });
     }
@@ -529,7 +528,7 @@ export default class Preview extends PreviewCollection {
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
             if (this.dropPositions.length === 0) {
-                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
+                this.dropPositions = calculateDropPositions((this.parent as ContentTypeCollectionInterface));
             }
             const columnInstance = dragColumn;
             const currentX = event.pageX - $(group).offset().left;
@@ -614,45 +613,44 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery<HTMLElement>} group
      */
     private initDroppable(group: JQuery<HTMLElement>) {
-        let currentDraggedBlock: GroupBlock;
+        const self = this;
 
         group.droppable({
-            activate: (event: Event) => {
-                currentDraggedBlock = ko.dataFor(event.currentTarget);
+            accept: ".pagebuilder-draggable-block",
+            deactivate() {
+                self.dropOverElement = null;
+                self.dropPlaceholder.removeClass("left right");
             },
-            deactivate: () => {
-                this.dropOverElement = null;
-                this.dropPlaceholder.removeClass("left right");
-            },
-            drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
-                if (this.dropOverElement && this.dropPosition) {
-                    (this as ColumnGroupBlock).onNewColumnDrop(event, ui, this.dropPosition);
-                    this.dropOverElement = null;
+            drop(event: Event, ui: JQueryUI.DroppableEventUIParam) {
+                if (self.dropOverElement && self.dropPosition) {
+                    self.onNewColumnDrop(event, ui, self.dropPosition);
+                    self.dropOverElement = null;
                 }
 
                 const column: Column = getDragColumn();
 
-                if (this.movePosition && column && column.parent !== this.parent) {
-                    (this as ColumnGroupBlock).onExistingColumnDrop(event, this.movePosition);
+                if (self.movePosition && column && column.parent !== self.parent) {
+                    self.onExistingColumnDrop(event, self.movePosition);
                 }
 
-                this.dropPositions = [];
-                this.dropPlaceholder.removeClass("left right");
+                self.dropPositions = [];
+                self.dropPlaceholder.removeClass("left right");
             },
             greedy: true,
-            out: () => {
-                this.dropOverElement = null;
-                this.dropPlaceholder.removeClass("left right");
+            out() {
+                self.dropOverElement = null;
+                self.dropPlaceholder.removeClass("left right");
             },
-            over: () => {
+            over(event: Event, ui: JQueryUI.DroppableEventUIParam) {
                 // Always calculate drop positions when an element is dragged over
-                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
+                self.dropPositions = calculateDropPositions((self.parent as ContentTypeCollectionInterface));
 
                 // Is the element currently being dragged a column?
-                if (currentDraggedBlock instanceof GroupBlock &&
-                    currentDraggedBlock.getConfig() === Config.getContentTypeConfig("column")
-                ) {
-                    this.dropOverElement = true;
+                if (getDraggedBlockConfig() === Config.getContentTypeConfig("column")) {
+                    event.stopPropagation();
+                    self.dropOverElement = true;
+                } else {
+                    self.dropOverElement = null;
                 }
             },
         });

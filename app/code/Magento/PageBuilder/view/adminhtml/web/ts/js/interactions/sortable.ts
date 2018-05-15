@@ -165,12 +165,8 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
         if (target && contentTypeInstance) {
             // Calculate the source and target index
             const sourceParent: ContentTypeCollectionInterface = contentTypeInstance.parent;
-            const sourceParentChildren = sourceParent.getChildren();
-            const sourceIndex = (sortedContentType.parent as ContentTypeCollectionInterface)
-                .children()
-                .indexOf(sortedContentType);
             const targetParent: ContentTypeCollectionInterface = target.parent;
-            const targetParentChildren = targetParent.getChildren();
+
             const targetIndex = $(event.target)
                 .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")
                 .toArray()
@@ -184,37 +180,63 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
                 $(el).remove();
             }
 
-            if (sourceParent !== targetParent) {
-                // Handle dragging between sortable elements
-                sourceParentChildren.splice(sourceIndex, 1);
-                targetParentChildren.splice(targetIndex, 0, contentTypeInstance);
-                contentTypeInstance.parent = targetParent;
+            moveContentType(contentTypeInstance, targetIndex, targetParent);
+
+            if (contentTypeInstance.parent !== targetParent) {
                 ui.item.remove();
-            } else {
-                // Retrieve the children from the source parent
-                const children = ko.utils.unwrapObservable(sourceParentChildren);
-
-                // Inform KO that this value is about to mutate
-                if (sourceParentChildren.valueWillMutate) {
-                    sourceParentChildren.valueWillMutate();
-                }
-
-                // Perform the mutation
-                children.splice(sourceIndex, 1);
-                children.splice(targetIndex, 0, contentTypeInstance);
-
-                // Inform KO that the mutation is complete
-                if (sourceParentChildren.valueHasMutated) {
-                    sourceParentChildren.valueHasMutated();
-                }
-            }
-
-            // Process any deferred bindings
-            if (ko.processAllDeferredBindingUpdates) {
-                ko.processAllDeferredBindingUpdates();
             }
         }
     }
+}
+
+/**
+ * Move a content type to a new index, with the option to move to a new container
+ *
+ * @param {ContentType} contentType
+ * @param {number} targetIndex
+ * @param {ContentTypeCollection} targetParent
+ */
+export function moveContentType(
+    contentType: ContentTypeInterface,
+    targetIndex: number,
+    targetParent: ContentTypeCollectionInterface = null,
+) {
+    const sourceParent: ContentTypeCollectionInterface = (contentType.parent as ContentTypeCollectionInterface);
+    const sourceIndex = (contentType.parent as ContentTypeCollectionInterface)
+        .children()
+        .indexOf(contentType);
+    const sourceParentChildren = sourceParent.getChildren();
+
+    if (targetParent && sourceParent !== targetParent) {
+        contentType.parent = targetParent;
+        // Handle dragging between sortable elements
+        sourceParentChildren.splice(sourceIndex, 1);
+        targetParent.getChildren().splice(targetIndex, 0, contentType);
+    } else {
+        // Retrieve the children from the source parent
+        const children = ko.utils.unwrapObservable(sourceParentChildren);
+
+        // Inform KO that this value is about to mutate
+        if (sourceParentChildren.valueWillMutate) {
+            sourceParentChildren.valueWillMutate();
+        }
+
+        // Perform the mutation
+        children.splice(sourceIndex, 1);
+        children.splice(targetIndex, 0, contentType);
+
+        // Inform KO that the mutation is complete
+        if (sourceParentChildren.valueHasMutated) {
+            sourceParentChildren.valueHasMutated();
+        }
+    }
+
+    // Process any deferred bindings
+    if (ko.processAllDeferredBindingUpdates) {
+        ko.processAllDeferredBindingUpdates();
+    }
+
+    // @todo fire generic move event
 }
 
 let headDropIndicatorStyles: HTMLStyleElement;
@@ -301,7 +323,6 @@ export function generateContainerAcceptedMatrix(): void {
             );
         }
     });
-    console.log(acceptedMatrix);
 }
 
 /**

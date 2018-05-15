@@ -160,10 +160,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       if (target && contentTypeInstance) {
         // Calculate the source and target index
         var sourceParent = contentTypeInstance.parent;
-        var sourceParentChildren = sourceParent.getChildren();
-        var sourceIndex = sortedContentType.parent.children().indexOf(sortedContentType);
         var targetParent = target.parent;
-        var targetParentChildren = targetParent.getChildren();
         var targetIndex = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
           return element === el;
         });
@@ -174,36 +171,60 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           (0, _jquery)(el).remove();
         }
 
-        if (sourceParent !== targetParent) {
-          // Handle dragging between sortable elements
-          sourceParentChildren.splice(sourceIndex, 1);
-          targetParentChildren.splice(targetIndex, 0, contentTypeInstance);
-          contentTypeInstance.parent = targetParent;
+        moveContentType(contentTypeInstance, targetIndex, targetParent);
+
+        if (contentTypeInstance.parent !== targetParent) {
           ui.item.remove();
-        } else {
-          // Retrieve the children from the source parent
-          var children = _knockout.utils.unwrapObservable(sourceParentChildren); // Inform KO that this value is about to mutate
-
-
-          if (sourceParentChildren.valueWillMutate) {
-            sourceParentChildren.valueWillMutate();
-          } // Perform the mutation
-
-
-          children.splice(sourceIndex, 1);
-          children.splice(targetIndex, 0, contentTypeInstance); // Inform KO that the mutation is complete
-
-          if (sourceParentChildren.valueHasMutated) {
-            sourceParentChildren.valueHasMutated();
-          }
-        } // Process any deferred bindings
-
-
-        if (_knockout.processAllDeferredBindingUpdates) {
-          _knockout.processAllDeferredBindingUpdates();
         }
       }
     }
+  }
+  /**
+   * Move a content type to a new index, with the option to move to a new container
+   *
+   * @param {ContentType} contentType
+   * @param {number} targetIndex
+   * @param {ContentTypeCollection} targetParent
+   */
+
+
+  function moveContentType(contentType, targetIndex, targetParent) {
+    if (targetParent === void 0) {
+      targetParent = null;
+    }
+
+    var sourceParent = contentType.parent;
+    var sourceIndex = contentType.parent.children().indexOf(contentType);
+    var sourceParentChildren = sourceParent.getChildren();
+
+    if (targetParent && sourceParent !== targetParent) {
+      contentType.parent = targetParent; // Handle dragging between sortable elements
+
+      sourceParentChildren.splice(sourceIndex, 1);
+      targetParent.getChildren().splice(targetIndex, 0, contentType);
+    } else {
+      // Retrieve the children from the source parent
+      var children = _knockout.utils.unwrapObservable(sourceParentChildren); // Inform KO that this value is about to mutate
+
+
+      if (sourceParentChildren.valueWillMutate) {
+        sourceParentChildren.valueWillMutate();
+      } // Perform the mutation
+
+
+      children.splice(sourceIndex, 1);
+      children.splice(targetIndex, 0, contentType); // Inform KO that the mutation is complete
+
+      if (sourceParentChildren.valueHasMutated) {
+        sourceParentChildren.valueHasMutated();
+      }
+    } // Process any deferred bindings
+
+
+    if (_knockout.processAllDeferredBindingUpdates) {
+      _knockout.processAllDeferredBindingUpdates();
+    } // @todo fire generic move event
+
   }
 
   var headDropIndicatorStyles;
@@ -288,7 +309,6 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         });
       }
     });
-    console.log(acceptedMatrix);
   }
   /**
    * Retrieve the content type configuration as an array
@@ -350,6 +370,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
   return {
     getSortableOptions: getSortableOptions,
+    moveContentType: moveContentType,
     showDropIndicators: showDropIndicators,
     hideDropIndicators: hideDropIndicators,
     generateContainerAcceptedMatrix: generateContainerAcceptedMatrix,

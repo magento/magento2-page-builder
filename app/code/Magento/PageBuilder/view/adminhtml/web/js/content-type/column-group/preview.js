@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group/block", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _block, _array, _previewCollection, _dragAndDrop, _factory, _registry, _resizing) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/sortable", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _sortable, _registry, _previewCollection, _dragAndDrop, _factory, _registry2, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -8,7 +8,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     _inheritsLoose(Preview, _PreviewCollection);
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {number} stageId
      */
@@ -93,7 +93,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.onExistingColumnDrop = function onExistingColumnDrop(event, movePosition) {
-      var column = (0, _registry.getDragColumn)();
+      var column = (0, _registry2.getDragColumn)();
       var modifyOldNeighbour;
       event.preventDefault();
       event.stopImmediatePropagation(); // Determine which old neighbour we should modify
@@ -107,16 +107,9 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       } // Set the column to it's smallest column width
 
 
-      (0, _resizing.updateColumnWidth)(column, (0, _resizing.getSmallestColumnWidth)());
-      column.parent.removeChild(column);
+      (0, _resizing.updateColumnWidth)(column, (0, _resizing.getSmallestColumnWidth)()); // Move the content type
 
-      _uiEvents.trigger("block:instanceDropped", {
-        blockInstance: column,
-        index: movePosition.insertIndex,
-        parent: this,
-        stageId: this.parent.stageId
-      }); // Modify the old neighbour
-
+      (0, _sortable.moveContentType)(column, movePosition.insertIndex, this.parent); // Modify the old neighbour
 
       if (modifyOldNeighbour) {
         var oldNeighbourWidth = (0, _resizing.getAcceptedColumnWidth)((oldWidth + (0, _resizing.getColumnWidth)(modifyOldNeighbour)).toString());
@@ -143,9 +136,10 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         if (currentIndex < newIndex) {
           // As we're moving an array item the keys all reduce by 1
           --newIndex;
-        }
+        } // Move the content type
 
-        (0, _array.moveArrayItem)(this.parent.children, currentIndex, newIndex);
+
+        (0, _sortable.moveContentType)(column, newIndex);
       }
     };
     /**
@@ -271,7 +265,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           var columnInstance = _knockout.dataFor((0, _jquery)(event.target)[0]); // Use the global state as columns can be dragged between groups
 
 
-          (0, _registry.setDragColumn)(columnInstance.parent);
+          (0, _registry2.setDragColumn)(columnInstance.parent);
           _this3.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this3.parent);
 
           _uiEvents.trigger("column:drag:start", {
@@ -284,7 +278,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           });
         },
         stop: function stop() {
-          var draggedColumn = (0, _registry.getDragColumn)();
+          var draggedColumn = (0, _registry2.getDragColumn)();
 
           if (_this3.movePosition && draggedColumn) {
             // Check if we're moving within the same group, even though this function will
@@ -296,7 +290,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
             }
           }
 
-          (0, _registry.removeDragColumn)();
+          (0, _registry2.removeDragColumn)();
 
           _this3.dropPlaceholder.removeClass("left right");
 
@@ -493,7 +487,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.onDraggingMouseMove = function onDraggingMouseMove(event, group) {
-      var dragColumn = (0, _registry.getDragColumn)();
+      var dragColumn = (0, _registry2.getDragColumn)();
 
       if (dragColumn) {
         // If the drop positions haven't been calculated for this group do so now
@@ -578,47 +572,42 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.initDroppable = function initDroppable(group) {
-      var _this6 = this;
-
-      var currentDraggedBlock;
+      var self = this;
       group.droppable({
-        activate: function activate(event) {
-          currentDraggedBlock = _knockout.dataFor(event.currentTarget);
-        },
+        accept: ".pagebuilder-draggable-block",
         deactivate: function deactivate() {
-          _this6.dropOverElement = null;
-
-          _this6.dropPlaceholder.removeClass("left right");
+          self.dropOverElement = null;
+          self.dropPlaceholder.removeClass("left right");
         },
         drop: function drop(event, ui) {
-          if (_this6.dropOverElement && _this6.dropPosition) {
-            _this6.onNewColumnDrop(event, ui, _this6.dropPosition);
-
-            _this6.dropOverElement = null;
+          if (self.dropOverElement && self.dropPosition) {
+            self.onNewColumnDrop(event, ui, self.dropPosition);
+            self.dropOverElement = null;
           }
 
-          var column = (0, _registry.getDragColumn)();
+          var column = (0, _registry2.getDragColumn)();
 
-          if (_this6.movePosition && column && column.parent !== _this6.parent) {
-            _this6.onExistingColumnDrop(event, _this6.movePosition);
+          if (self.movePosition && column && column.parent !== self.parent) {
+            self.onExistingColumnDrop(event, self.movePosition);
           }
 
-          _this6.dropPositions = [];
-
-          _this6.dropPlaceholder.removeClass("left right");
+          self.dropPositions = [];
+          self.dropPlaceholder.removeClass("left right");
         },
         greedy: true,
         out: function out() {
-          _this6.dropOverElement = null;
-
-          _this6.dropPlaceholder.removeClass("left right");
+          self.dropOverElement = null;
+          self.dropPlaceholder.removeClass("left right");
         },
-        over: function over() {
+        over: function over(event, ui) {
           // Always calculate drop positions when an element is dragged over
-          _this6.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this6.parent); // Is the element currently being dragged a column?
+          self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(self.parent); // Is the element currently being dragged a column?
 
-          if (currentDraggedBlock instanceof _block.Block && currentDraggedBlock.getConfig() === _config.getContentTypeConfig("column")) {
-            _this6.dropOverElement = true;
+          if ((0, _registry.getDraggedBlockConfig)() === _config.getContentTypeConfig("column")) {
+            event.stopPropagation();
+            self.dropOverElement = true;
+          } else {
+            self.dropOverElement = null;
           }
         }
       });
