@@ -1,0 +1,848 @@
+# Events
+
+This document describes events dispatched in PageBuilder and parameters.
+
+**Note:**
+*We are revising naming conventions for events, naming may change.*
+
+* [block:dropped](#blockdropped)
+* [block:dropped:create](#blockdroppedcreate)
+* [block:instanceDropped](#blockinstancedropped)
+* [block:mount](#blockmount)
+* [block:moved](#blockmoved)
+* [block:removed](#blockremoved)
+* [block:sorted](#blocksorted)
+* [block:sortStart](#blocksortstart)
+* [block:sortStart](#blocksortstart)
+* [buttons:block:dropped:create](#buttonsblockdroppedcreate)
+* [colum:drag:start](#columdragstart)
+* [colum:drag:start](#columdragstart)
+* [drag:start](#dragstart)
+* [column:drag:stop](#columndragstop)
+* [column:initElement](#columninitelement)
+* [drag:start](#dragstart)
+* [drag:stop](#dragstop)
+* [form:render](#formrender)
+* [form:save](#formsave)
+* [image:assigned:{{id}}](#imageassignedid)
+* [image:block:ready](#imageblockready)
+* [image:uploaded](#imageuploaded)
+* [interaction:start](#interactionstart)
+* [interaction:stop](#interactionstop)
+* [pagebuilder:toggleFullScreen:{{id}}](#pagebuildertogglefullscreenid)
+* [previewObservables:updated](#previewobservablesupdated)
+* [previewSortable:sortstart](#previewsortablesortstart)
+* [previewSortable:sortupdate](#previewsortablesortupdate)
+* [row:block:ready](#rowblockready)
+* [slide:block:create](#slideblockcreate)
+* [slider:block:dropped:create](#sliderblockdroppedcreate)
+* [slide:block:duplicate](#slideblockduplicate)
+* [slide:block:mount](#slideblockmount)
+* [slide:block:removed](#slideblockremoved)
+* [slider:block:ready](#sliderblockready)
+* [stage:error](#stageerror)
+* [stage:ready:{{id}}](#stagereadyid)
+* [stage:renderTrree:{{id}}](#stagerendertrreeid)
+* [stage:updated](#stageupdated)
+* [state](#state)
+* [tab-item:block:duplicate](#tab-itemblockduplicate)
+* [tab-item:block:mount](#tab-itemblockmount)
+* [tab-item:block:removed](#tab-itemblockremoved)
+* [tabs:block:dropped:create](#tabsblockdroppedcreate)
+* [tabs:block:ready](#tabsblockready)
+* [{{id}}:updated](#idupdated)
+
+## `block:dropped`
+
+**Triggers**
+
+* `ko-sortable::onSortReceive`
+
+**Params**
+
+``` js
+{
+    parent: ContentTypeInterface;
+    index: number;
+    block: {
+        config: ContentTypeConfigInterface,
+    };
+    stageId: string;
+}
+```
+
+[Back to top]
+
+## `block:dropped:create`
+
+**Triggers**
+
+* `Stage::onBlockDropped`
+
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `block:instanceDropped`
+
+**Triggers**
+
+* `ko-sortable::onSortUpdate`
+* `ColumnGroup.Preview::onExistingColumnDrop`
+
+**Params**
+
+``` js
+{
+    parent: ContentTypeInterface;
+    blockInstance: ContentTypeInterface;
+    index?: number;
+    stageId: string;
+}
+```
+
+[Back to top]
+
+## `block:mount`
+
+**Triggers**
+
+* `ContentTypeCollection::addChild`
+* `Column.Preview::fireMountEvent`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `block:moved`
+
+**Triggers**
+
+* `Stage::onBlockInstanceDropped`
+
+**Params**
+
+``` js
+{
+    block: ContentTypeInterface,
+    index: number,
+    newParent: ContentTypeInterface,
+    originalParent: ContentTypeInterface
+}
+```
+
+## `block:removed`
+
+**Triggers**
+
+* `Preview::onOptionRemove`
+
+**Params**
+
+``` js
+{
+    parent: ContentTypeInterface;
+    index: number;
+    block: ContentTypeInterface;
+    stageId: string;
+}
+```
+
+## `block:sorted`
+
+**Triggers**
+
+* `ko-sortable::onSortUpdate`
+
+**Params**
+
+``` js
+{
+    parent: ContentTypeInterface;
+    block: ContentTypeInterface;
+    index: number;
+    stageId: string;
+}
+```
+
+[Back to top]
+
+## `block:sortStart`
+
+**Triggers**
+
+* `ko-sortable::onSortStart`
+
+**Params**
+
+``` js
+{
+    block: ContentTypeInterface;
+    event: Event;
+    originalEle: JQuery;
+    placeholder: JQuery;
+    helper?: any;
+    stageId: string;
+}
+```
+
+[Back to top]
+
+## `block:sortStop`
+
+**Triggers**
+
+* `ko-sortable::onSortStop`
+
+**Params**
+
+``` js
+{
+    block: ContentTypeInterface;
+    event: Event;
+    originalEle: JQuery;
+    placeholder: JQuery;
+    helper?: any;
+    stageId: string;
+}
+```
+
+[Back to top]
+
+## `buttons:block:dropped:create`
+
+**Triggers**
+
+* `Stage::onBlockDropped`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `colum:drag:start`
+
+**Triggers**
+
+* `ColumnGroup.Preview::start`
+
+**Params**
+
+``` js
+{
+    column: ContentTypeInterface;
+    stageId: string;
+}
+```
+
+[Back to top]
+
+## `colum:drag:start`
+
+**Triggers**
+
+* `ColumnGroup.Preview::start`
+
+**Params**
+
+``` js
+{
+    column: ContentTypeInterface;
+    stageId: string;
+}
+```
+
+## `drag:start`
+
+**Triggers**
+
+* `column:bindResizeHandle`
+* `Column.Preview::bindResizeHandle`
+
+**Params**
+
+``` js
+{
+    column,
+    handle,
+    parent
+}
+```
+
+[Back to top]
+
+## `column:drag:stop`
+
+**Triggers**
+
+* `ColumnGroup.Preview::stop`
+
+**Params**
+
+``` js
+{
+    column,
+    stageId
+}
+```
+
+[Back to top]
+
+## `column:initElement`
+
+**Triggers**
+
+* `Column.Preview::initColumn`
+
+**Params**
+
+``` js
+{
+    column,
+    element,
+    parent
+}
+```
+
+[Back to top]
+
+## `drag:start`
+
+**Triggers**
+
+* `ko-draggable::init`
+
+**Params**
+
+``` js
+{
+    event,
+    ui,
+    component
+}
+```
+
+[Back to top]
+
+## `drag:stop`
+
+**Triggers**
+
+* `ko-draggable::init`
+
+**Params**
+
+``` js
+{
+    event,
+    ui,
+    component
+}
+```
+
+[Back to top]
+
+## `form:render`
+
+**Triggers**
+
+* `Edit::open`
+
+**Params**
+
+``` js
+{
+    data,
+    appearances,
+    defaultNamespace,
+    id,
+    namespace,
+    title
+}
+```
+
+[Back to top]
+
+## `form:save`
+
+**Triggers**
+
+* `Provider::save`
+
+**Params**
+
+``` js
+```
+
+[Back to top]
+
+## `image:assigned:{{id}}`
+
+**Triggers**
+
+* `Image.Preview::bindEvents`
+
+**Params**
+
+``` js
+```
+
+## `image:block:ready`
+
+**Triggers**
+
+* `ContentTypeFactory::fireBlockReadyEvent`
+
+**Params**
+
+``` js
+```
+
+[Back to top]
+
+## `image:uploaded`
+
+**Triggers**
+
+* `ImageUploader::addFile`
+
+**Params**
+
+``` js
+{
+    callback: (files: object [ ] ) => any
+}
+```
+
+[Back to top]
+
+## `interaction:start`
+
+**Triggers**
+
+* `ko-draggable::init`
+* `Tabs.Preview::constructor`
+* `Slider.Preview::constructor`
+* `ColumnGroup.Preview::registerResizeHandle`
+* `ColumnGroup.Preview::start`
+
+**Params**
+
+``` js
+```
+
+[Back to top]
+
+## `interaction:stop`
+
+**Triggers**
+
+* `ko-draggable::init`
+* `Tabs.Preview::constructor`
+* `Tabs.Preview::setFocusedTab`
+* `Slider.Preview::constructor`
+* `ColumnGroup.Preview::endAllInteractions`
+* `ColumnGroup.Preview::stop`
+
+**Params**
+
+``` js
+```
+
+[Back to top]
+
+## `pagebuilder:toggleFullScreen:{{id}}`
+
+**Triggers**
+
+* `Panel::fullScreen`
+* `Wysiwyg::toggleFullScreen`
+
+**Params**
+
+``` js
+```
+
+[Back to top]
+
+## `previewObservables:updated`
+
+**Triggers**
+
+* `Preview::updateObservables`
+
+**Params**
+
+``` js
+{
+    preview
+}
+```
+
+[Back to top]
+
+## `previewSortable:sortstart`
+
+**Triggers**
+
+* `PreviewSortable::init`
+
+**Params**
+
+``` js
+{
+    instance,
+    originalPosition,
+    ui
+}
+```
+
+[Back to top]
+
+## `previewSortable:sortupdate`
+
+**Triggers**
+
+* `PreviewSortable::init`
+* `PreviewSortableSortUpdateEventParams`
+
+**Params**
+
+``` js
+{
+    instance: ContentTypeInterface;
+    newPosition: number;
+    originalPosition: number;
+    ui: JQueryUI.SortableUIParams;
+}
+```
+
+## `row:block:ready`
+
+**Triggers**
+
+* `ContentTypeFactory::fireBlockReadyEvent`
+* `ContentTypeMountEventParamsInterface`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `slide:block:create`
+
+**Triggers**
+
+* `ContentTypeFactory::createContentType`
+* `ContentTypeCreateEventParamsInterface`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+## `slider:block:dropped:create`
+
+**Triggers**
+
+* `Stage::onBlockDropped`
+* `ContentTypeReadyEventParamsInterface`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `slide:block:duplicate`
+
+**Triggers**
+
+* `Preview::dispatchContentTypeCloneEvents`
+* `ContentTypeDuplicateEventParams`
+
+**Params**
+
+``` js
+{
+    original: originalBlock,
+    duplicateBlock,
+    index,
+}
+```
+
+[Back to top]
+
+## `slide:block:mount`
+
+**Triggers**
+
+* `ContentTypeCollection::addChild`
+* `Column.Preview::fireMountEvent`
+* `ContentTypeMountEventParamsInterface`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `slide:block:removed`
+
+**Triggers**
+
+* `Preview::onOptionRemove`
+* `BlockRemovedParams`
+
+**Params**
+
+``` js
+{
+    parent: ColumnGroup;
+    block: Column;
+    index: number;
+}
+```
+
+[Back to top]
+
+## `slider:block:ready`
+
+**Triggers**
+
+* `ContentTypeFactory::fireBlockReadyEvent`
+* `ContentTypeReadyEventParamsInterface`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `stage:error`
+
+**Triggers**
+
+* `Stage::build`
+
+**Params**
+
+``` js
+```
+
+[Back to top]
+
+## `stage:ready:{{id}}`
+
+**Triggers**
+
+* `Stage::ready`
+* `stage instance`
+
+## `stage:renderTrree:{{id}}`
+
+**Triggers**
+
+* `Stage`
+
+**Params**
+
+``` js
+{
+    value
+}
+```
+
+[Back to top]
+
+## `stage:updated`
+
+**Triggers**
+
+* `Stage::initListeners`
+* `ContentTypeCollection::constructor`
+
+**Params**
+
+``` js
+{
+    stageId
+}
+```
+
+[Back to top]
+
+## `state`
+
+**Triggers**
+
+* `DataStore::emitState`
+
+**Params**
+
+``` js
+{
+    state
+}
+```
+
+[Back to top]
+
+## `tab-item:block:duplicate`
+
+**Triggers**
+
+* `Preview::dispatchContentTypeCloneEvents`
+* `ContentTypeDuplicateEventParams`
+
+**Params**
+
+``` js
+{
+    original: originalBlock,
+    duplicateBlock,
+    index,
+}
+```
+
+[Back to top]
+
+## `tab-item:block:mount`
+
+**Triggers**
+
+* `ContentTypeCollection::addChild`
+* `Column.Preview::fireMountEvent`
+* `ContentTypeMountEventParamsInterface`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `tab-item:block:removed`
+
+**Triggers**
+
+* `Preview::onOptionRemove`
+* `BlockRemovedParams`
+
+**Params**
+
+``` js
+{
+    parent: ContentTypeInterface;
+    index: number;
+    block: ContentTypeInterface;
+    stageId: string;
+}
+```
+
+[Back to top]
+
+## `tabs:block:dropped:create`
+
+**Triggers**
+
+* `Stage::onBlockDropped`
+* `ContentTypeReadyEventParamsInterface`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `tabs:block:ready`
+
+**Triggers**
+
+* `ContentTypeFactory::fireBlockReadyEvent`
+* `ContentTypeReadyEventParamsInterface`
+
+**Params**
+
+``` js
+{
+    id: string;
+    block: ContentTypeInterface;
+}
+```
+
+[Back to top]
+
+## `{{id}}:updated`
+
+**Triggers**
+
+* `ContentType::bindEvents`
+
+**Params**
+
+``` js
+{
+    eventName: string,
+    paramObj: [key: string]: Stage
+}
+```
+
+[Back to top]
+
+[Back to top]: #events

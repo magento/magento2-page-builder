@@ -1,5 +1,34 @@
 # How to Add New Content Type 
 
+## Navigation
+
+1. [Introduction]
+2. [Installation guide]
+3. Contribution guide
+4. [Developer documentation]
+    1. [BlueFoot to PageBuilder data migration]
+    1. [Third-party content type migration]
+    1. [Iconography]
+    1. [Module integration]
+    1. [Additional data capability]
+    1. [Content type configuration]
+    1. **How to add a new content type**
+5. [Roadmap and known issues]
+
+[Introduction]: README.md
+[Installation guide]: install.md
+[Developer documentation]: developer-documentation.md
+[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
+[Third-party content type migration]: new-content-type-example.md
+[Iconography]: iconography.md
+[Module integration]: module-integration.md
+[Additional data capability]: additional-data.md
+[Content type configuration]: content-type-configuration.md
+[How to add a new content type]: how-to-add-new-content-type.md
+[Roadmap and known issues]: roadmap.md
+
+
+
 ## Configuration
 
 Adding new content type starts with [configuration](content-type-configuration.md).
@@ -39,7 +68,7 @@ To add configuration for a new content type, create a file under the following l
                     </data_mapping>
                     <preview_template>Vendor_ModuleNameCustom/content-type/simple/default/preview</preview_template>
                     <render_template>Vendor_ModuleNameCustom/content-type/simple/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
@@ -236,7 +265,7 @@ Now, let's add content type that can contain other content types. Create configu
                     </data_mapping>
                     <preview_template>Vendor_ModuleName/content-type/complex/default/preview</preview_template>
                     <render_template>Vendor_ModuleName/content-type/complex/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
