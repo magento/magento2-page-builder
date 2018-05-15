@@ -63,16 +63,21 @@ define([
 
             if (newMarkers) {
                 newMarkers.forEach(function (marker) {
+
+                    var location = marker.location || '';
+                    var comment = marker.comment || '';
                     var address = marker.address ? marker.address + '<br/>' : '';
+                    var city = marker.city || '';
+                    var country = marker.country || '';
                     var zip = marker.zip ? ',' + marker.zip : '';
 
                     var contentString =
                         '<div>' +
-                        '<h3><b>' + marker.location + '</b></h3>' +
-                        '<p>' + marker.comment + '</p>' +
+                        '<h3><b>' + location + '</b></h3>' +
+                        '<p>' + comment + '</p>' +
                         '<p>' + address +
-                        marker.city + zip + '<br/>' +
-                        marker.country + '</p>' +
+                        city + zip + '<br/>' +
+                        country + '</p>' +
                         '</div>';
 
                     var infowindow = new google.maps.InfoWindow({
@@ -86,10 +91,12 @@ define([
                         title: marker.location
                     });
 
-                    newMarker.addListener('click', function() {
-                        infowindow.open(this.map, newMarker);
-                    });
-
+                    if(marker.location) {
+                        newMarker.addListener('click', function() {
+                            infowindow.open(this.map, newMarker);
+                        });
+                    }
+                    
                     this.markers.push(newMarker);
                 }, this);
             }
