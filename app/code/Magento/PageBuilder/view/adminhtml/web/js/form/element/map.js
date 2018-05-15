@@ -129,7 +129,6 @@ define([
                 return;
             }
 
-
             if (typeof this.value() === 'string' && this.value() !== '') {
                 content = JSON.parse(this.value());
             }
