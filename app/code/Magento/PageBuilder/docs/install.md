@@ -31,19 +31,18 @@ Use this method if you are testing and evaluating PageBuilder for your Magento s
 
 ### Prerequisites
 
-* Magento 2.3
-* Access to PageBuilder in Magento's composer repository
-* Composer
+* You submitted us MAGEID and github username and received access to 2.3 alpha and PageBuilder. If you didn't submit us github username with will send you an email and request it.
 
 ### Installation steps
 
 1. Navigate to the root directory of your Magento application
-1. Add the PageBuilder package to the `composer.json` file using the following command:
-    <!-- Need to confirm this is correct -->
+2. Install 2.3 alpha, run composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.3.0-alpha20
+    Enter keys that you crated in your account (go to Marketplace / My Profile / Access Keys)
+3. Install Page Builder
     ``` sh
-    composer require magento/module-page-builder
+    composer require magento/module-page-builder-commerce
     ```
-1. Download and install PageBuilder into Magento using the following command:
+4. Enable Page Builder module using the following command:
     ``` sh
     bin/magento setup:upgrade
     ```
@@ -64,23 +63,32 @@ Do not use this installation method for evaluation or production instances.
 ### Installation steps
 
 1. Navigate to the root directory of your Magento application
-1. Clone the PageBuilder repository as a sub-directory using the following command:
+2. Clone the PageBuilder repository as a sub-directory using the following command:
     ``` sh
     git clone git@github.com:magento/magento2-page-builder.git pagebuilder
     ```
-1. Navigate to the `pagebuilder` directory and install PageBuilder dependencies using the following command:
-    ``` sh
-    cd pagebuilder && yarn
-    ```
-1. Return to the root directory of your Magento application and navigate to `app/code/Magento`
-1. In the Magento modules directory, link the PageBuilder module code to the application code using the following command:
+3. Return to the root directory of your Magento application and navigate to `app/code/Magento`
+4. In the Magento modules directory, link the PageBuilder module code to the application code using the following command:
     ``` sh
     ln -s ../../../pagebuilder/app/code/Magento/PageBuilder
     ```
-1. Return to the root directory of your Magento application and install the PageBuilder module using the following command:
+5. Return to the root directory of your Magento application and install the PageBuilder module using the following command:
     ``` sh
     bin/magento setup:upgrade
     ```
+
+## Installing Node.js dependencies
+
+If you plan to contribute to Page Builder, you need to install Node.js dependencies to compile TypeScript.
+
+Navigate to the `pagebuilder` directory and install PageBuilder dependencies using the following command:
+``` sh
+cd pagebuilder && yarn install
+```
+
+Then you can run `npx gulp` to watch changes to TypeScript files and compile.
+
+To check for TypeScript errors, you can run `npx tslint --fix -p tsconfig.json`.
 
 ## Activation
 

@@ -21,7 +21,7 @@ For storage (later master format) Page Builder uses XHTML with inline styles and
 To display Page Builder content on storefront Magento and third party systems need to do the following
 
 1. Replace Magento directives (for instance {{image url=path/to/image.png}}).
-2. Add custom stylesheet.
+2. Add custom stylesheet to provide base styles that user can't edit (this includes styles for the content types like `slider`, `tabs`, `accordion`, etc).
 3. After content is rendered, on the frontend find all of content types that need to have widgets initialized (for instance, slider, tabs, etc) and load and initialize these widgets.
 
 See more on [master format](master-format.md)
@@ -54,14 +54,18 @@ Page Builder also would be enabled in custom extensions where WYSIWYG is used.
 
 Here is simplified data flow:
 1. Data read by reader `Magento_PageBuilder/js/master-format/read/configurable`.
-2. Data for each element (`border`, `border_color`, `border_width` etc) converted to internal format.
+2. Data for each element (`border`, `border_color`, `border_width` etc) converted to internal format by element converters.
 3. Data converted by mass converters, for more details see [converter interface](content-type-configuration.md).
 4. Content type created and `Magento_PageBuilder/js/data-store` populated with data.
-5. Data in data store modified and updated in data store.
+5. Data in data store modified in the form or using live edit.
 6. Data converted by mass converters.
-7. Converted by element converters.
+7. Converted by element data converters.
 8. Preview and master component observables updated.
-9. Attribute that editable with Page Builder updated, master format hen user saves pages data saved to the database.
+9. Editable with Page Builder entity attribute updated, when user saves the pages master format being saved to the database.
+
+Mass converter modifies on data for all content type elements. For instance, if content type two elements, main and image. And data for these elements stored in the fields `border`, `border_color`, `border_width`, `background_image`. Mass converter will allow to modify all these fields. See more on how [data stored internally](#Data store).
+
+Element converter modifies single field at a time.
 
 ## Data store
 

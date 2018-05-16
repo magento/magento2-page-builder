@@ -1,7 +1,7 @@
 # Content Type Configuration
 
 **Note:**
-*We are revising configuration, format may change.*
+*We are revising configuration, format will change. We will publish draft of new improved configuration soon to get feedback.*
 
 ## Navigation
 
@@ -239,7 +239,8 @@ It reads data based on the configuration specified in `data_mapping`.
 </appearance>
 ```
 
-Every content type needs a default appearance.
+Every content type requires a default appearance to ensure that other modules are able to easily add more appearances.
+
 Set the `default` attribute to "true" in an `appearance` node to set the default appearance for a content type.
 
 ### `data_mapping` configuration reference
@@ -248,11 +249,11 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 | ------------------ | ----------------------------------------------------------------------------------------------------- |
 | `elements`         | The container for all the elements of the content type.                                               |
 | `element`          | The name of the element that contains data for the master format and the render and preview template. |
-| `style_properties` | specifies styles properties for the element in the master format                                      |
-| `attributes`       | specifies attributes for the element in master format                                                 |
-| `css`              | specifies whether element has classes and in which variable they should be read                       |
-| `html`             | specifies whether element has html content and in which variable they should be read                  |
-| `tag`              | Allows you to read the tag value of the element and map it back to the master format.                 |
+| `style_properties` | Specifies styles properties for the element in the master format                                      |
+| `attributes`       | Specifies attributes for the element in master format                                                 |
+| `css`              | Specifies whether element has classes and in which variable they should be read                       |
+| `html`             | Specifies whether element has html content and in which variable they should be read                  |
+| `tag`              | Allows you to read the tag name of the element and map it back to the master format.                 |
 
 **Example:**
 ``` xml
@@ -361,7 +362,7 @@ These style properties and attributes are applied in the preview and persisted i
 
 ### Html element
 
-The `html` element allows you to read the value of the element in a property and map it back to the master format.
+The `html` element allows you to read the innerHTML of the element in a property and map it back to the master format.
 
 ``` xml
 <html name="message"/>
@@ -384,7 +385,7 @@ These classes are not read and do not appear on the form.
 
 ### Tag element
 
-The `tag` element allows you to read the tag value of the element and map back to the master format.
+The `tag` element allows you to read the tag name of the element and map back to the master format.
 
 ``` xml
 <tag name="heading_type"/>

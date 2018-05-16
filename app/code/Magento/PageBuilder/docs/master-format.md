@@ -351,7 +351,7 @@ HTML & JavaScript content.
 <figure data-role="image" data-appearance="full-width" data-lightbox="false" style="...">
     <a href="" title="">
         <img src="" title="" alt="" class="pagebuilder-mobile-hidden" />
-        <img src="" title="" alt="" class="pagebuilder-desktop-hidden" />
+        <img src="" title="" alt="" class="pagebuilder-mobile-only" />
     </a>
     <figcaption>Image description</figcaption>
 </figure>

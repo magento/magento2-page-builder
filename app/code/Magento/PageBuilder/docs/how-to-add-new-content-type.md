@@ -87,6 +87,7 @@ Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content
 ``` HTML
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
     <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
+    <!-- Display context menu options for content type -->
     <render args="getOptions().template" />
 </div>
 ```
@@ -173,6 +174,8 @@ In the `simple.xml` above we defined border attributes and form for component. L
     </fieldset>
 </form>
 ```
+
+Every form should have default appearance to allow other modules to add more appearances.
 
 Attributes that we want to edit as part of the advanced section are defined in `pagebuilder_base_form`, so we can just extend it.
 
