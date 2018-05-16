@@ -33,10 +33,13 @@
     <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
             <label translate="true">Appearance</label>
+            <additionalClasses>
+                <class name="admin__fieldset-appearance">true</class>
+            </additionalClasses>
             <collapsible>false</collapsible>
             <opened>true</opened>
             <imports>
-                <link name="appearancesHidden">${$.name}.appearance:options</link>
+                <link name="appearancesHiddenLabelOnlyIfOtherElementsExist">${$.name}.appearance:options</link>
             </imports>
         </settings>
         <field name="width" formElement="input">
