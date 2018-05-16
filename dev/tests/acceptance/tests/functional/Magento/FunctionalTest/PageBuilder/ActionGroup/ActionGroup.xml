@@ -362,13 +362,13 @@
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="selectAlignment">
+    <actionGroup name="chooseVisualSelect">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <seeElement selector='//li[@name="{{property.value}}"]' stepKey="seeAlignment"/>
-        <click selector='//li[@name="{{property.value}}"]' stepKey="selectAlignment" />
+        <seeElement selector='//li[@name="{{property.value}}"]' stepKey="seeVisualSelect"/>
+        <click selector='//div[@data-index="{{property.section}}" and contains(@class,"_show")]//li[@name="{{property.value}}"]' stepKey="chooseVisualSelect"/>
     </actionGroup>
     <actionGroup name="validateAlignmentFieldIsNotDisabled">
         <arguments>

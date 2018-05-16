@@ -42,18 +42,14 @@
         </actionGroup>
         <!-- Verify default and available values on Appearance section of Add Slide form -->
         <comment userInput="Appearance defaults to Poster" stepKey="AC0" />
-        <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" userInput="Poster" stepKey="seePosterAppearanceDefault"/>
-        <comment userInput="User sees 4 appearances displayed: Poster, Collage Left, Collage Center, Collage Right." stepKey="AC1" />
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabAppearanceDropdownValues"/>
-        <assertEquals stepKey="assertAppearanceDropdown" message="Verify 4 appearances displayed">
-            <expectedResult type="array">[Poster, Collage Left, Collage Center, Collage Right]</expectedResult>
-            <actualResult type="variable">grabAppearanceDropdownValues</actualResult>
-        </assertEquals>
+        <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
+            <argument name="property1" value="PageBuilderSlideAppearanceDefaultProperty"/>
+            <argument name="property2" value="PageBuilderSlideCollageLeftProperty"/>
+            <argument name="property3" value="PageBuilderSlideCollageCenteredProperty"/>
+            <argument name="property4" value="PageBuilderSlideCollageRightProperty"/>
+        </actionGroup>
         <comment userInput="User doesn't see Advanced Content appearance" stepKey="AC2"/>
-        <assertNotContains stepKey="assertNotContains" message="Advanced Content appearance not present">
-            <expectedResult type="string">Advanced Content</expectedResult>
-            <actualResult type="variable">grabAppearanceDropdownValues</actualResult>
-        </assertNotContains>
+        <dontSeeElement selector="//li[@name='advanced content']" stepKey="advancedContentAppearanceNotPresent"/>
         <comment userInput="User sees Name: input defaults to empty" stepKey="AC3"/>
         <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideItemName1.section, PageBuilderSlideItemName1.fieldName)}}" stepKey="grabNameDefaultValue"/>
         <assertEmpty stepKey="assertEmptyName" message="Name has text: $grabNameDefaultValue">
