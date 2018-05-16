@@ -385,6 +385,14 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
     </actionGroup>
+    <actionGroup name="conditionalClickSlideOutPanelFieldGeneral">
+    <arguments>
+        <argument name="property" defaultValue=""/>
+    </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <conditionalClick selector="{{PageBuilderActionsSection.panelFieldControlSwitch(property.fieldName)}}" dependentSelector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(property.fieldName, property.value)}}" visible="false" stepKey="conditionalClickAttribute"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(property.fieldName, property.value)}}" stepKey="waitForAttributeStateChange"/>
+    </actionGroup>
     <actionGroup name="clickSlideOutPanelFieldGeneral">
         <arguments>
             <argument name="property" defaultValue=""/>

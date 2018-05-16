@@ -8,12 +8,12 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="MapEmptyHeight">
+    <test name="MapHeightEmpty">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Map"/>
-            <title value="Pagebuilder - Empty Map Height Saves As 0 Instead Of Default 300px"/>
-            <description value="Make sure the map will default to 300px height if field is empty"/>
+            <title value="Map - Empty Map Height Saves As Default 300px"/>
+            <description value="Make sure the map will default to 300px height if height attribute field is empty"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-91359"/>
             <useCaseId value="MAGETWO-89299"/>
@@ -52,7 +52,7 @@
         <!-- Empty Height Fields -->
         <comment userInput="Empty Height Fields" stepKey="commentEmptyHeightFields"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="emptyHeightField">
-            <argument name="property" value="PageBuilderMapHeightPropertyEmpty"/>
+            <argument name="property" value="PageBuilderMapHeight_Empty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage After Save -->
@@ -75,7 +75,7 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEmptyHeightField">
-            <argument name="property" value="PageBuilderMapHeightPropertyEmpty"/>
+            <argument name="property" value="PageBuilderMapHeight_Empty"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -87,12 +87,12 @@
             <argument name="height" value="PageBuilderMapHeightDefaultProperty"/>
         </actionGroup>
     </test>
-    <test name="MapHeightInputValidation">
+    <test name="MapHeightInvalidInputs">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Map"/>
-            <title value="Pagebuilder - Map Height Percentage Breaks Map"/>
-            <description value="Make sure the map does not accept percentage height"/>
+            <title value="Map - Height Attribute - Invalid Inputs"/>
+            <description value="Make sure the map does not accept percentage or non-numeric height"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-91360"/>
             <useCaseId value="MAGETWO-91233"/>
@@ -125,15 +125,193 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <!-- Empty Height Fields -->
-        <comment userInput="Empty Height Fields" stepKey="commentEmptyHeightFields"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPercentageHeightField">
-            <argument name="property" value="PageBuilderMapHeightPropertyPercentage"/>
+        <!-- Height: Percentage -->
+        <comment userInput="Enter Height: Percentage" stepKey="commentHeightPercentage"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeightPercentage">
+            <argument name="property" value="PageBuilderMapHeight_Percentage"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateError">
-            <argument name="property" value="PageBuilderMapHeightPropertyPercentage"/>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorPercentage">
+            <argument name="property" value="PageBuilderMapHeight_Percentage"/>
+        </actionGroup>
+        <!-- Height: NonNumeric -->
+        <comment userInput="Enter Height: NonNumeric" stepKey="commentHeightNonNumeric"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeightNonNumeric">
+            <argument name="property" value="PageBuilderMapHeight_NonNumeric"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorNonNumeric">
+            <argument name="property" value="PageBuilderMapHeight_NonNumeric"/>
+        </actionGroup>
+    </test>
+    <test name="MapShowControlsEnabled">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Pagebuilder - Map Height Percentage Breaks Map"/>
+            <description value="Make sure the map does not accept percentage height"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-91360"/>
+            <useCaseId value="MAGETWO-91233"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapMapSettings"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Fill Required Fields -->
+        <comment userInput="Fill Required Fields" stepKey="commentFillRequiredFields"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Enable Show Controls -->
+        <comment userInput="Enable Show Controls" stepKey="commentEnableShowControls"/>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableShowControls">
+            <argument name="property" value="PageBuilderMapShowControls_True"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage  -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateMapSettings" stepKey="validateMapStage">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="showControls" value="PageBuilderMapShowControls_True"/>
+        </actionGroup>
+        <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsStage1"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateMapSettings" stepKey="validateMapStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="showControls" value="PageBuilderMapShowControls_True"/>
+        </actionGroup>
+        <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsStage2"/>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanelAfterSave"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateShowControlsEnabled">
+            <argument name="property" value="PageBuilderMapShowControls_True"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="showControls" value="PageBuilderMapShowControls_True"/>
+        </actionGroup>
+        <actionGroup ref="validateMapButtons" stepKey="validateMapButtonsStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapShowControlsDisabled">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Pagebuilder - Map Height Percentage Breaks Map"/>
+            <description value="Make sure the map does not accept percentage height"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-91360"/>
+            <useCaseId value="MAGETWO-91233"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapMapSettings"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Fill Required Fields -->
+        <comment userInput="Fill Required Fields" stepKey="commentFillRequiredFields"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <!-- Disable Show Controls -->
+        <comment userInput="Disable Show Controls" stepKey="commentDisableShowControls"/>
+        <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disableShowControls">
+            <argument name="property" value="PageBuilderMapShowControls_False"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage  -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateMapSettings" stepKey="validateMapStage">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="showControls" value="PageBuilderMapShowControls_False"/>
+        </actionGroup>
+        <actionGroup ref="validateNoMapButtons" stepKey="validateNoMapButtonsStage1"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateMapSettings" stepKey="validateMapStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="showControls" value="PageBuilderMapShowControls_False"/>
+        </actionGroup>
+        <actionGroup ref="validateNoMapButtons" stepKey="validateNoMapButtonsStage2"/>
+        <!-- Validate Edit Panel After Save -->
+        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanelAfterSave"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateShowControlsDisabled">
+            <argument name="property" value="PageBuilderMapShowControls_False"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="showControls" value="PageBuilderMapShowControls_False"/>
+        </actionGroup>
+        <actionGroup ref="validateNoMapButtons" stepKey="validateNoMapButtonsStorefront">
+            <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
     </test>
 </tests>
-        <!--todo: tests for each new attribute-->
-        <!--todo: empty coordinates removes pin-->
