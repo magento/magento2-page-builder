@@ -540,9 +540,9 @@
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Get Pin Location -->
-        <waitForElement selector="{{MapOnConfigurationPanel.pinLocation('1')}}" stepKey="waitForPinPositionEditPanel1"/>
+        <waitForElement selector="{{MapOnConfigurationPanel.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{MapOnConfigurationPanel.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
-        <actionGroup ref="verifyPinLocation" stepKey="verifyPinLocationEditPanel1">
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationEditPanel1">
             <argument name="page" value="MapOnConfigurationPanel"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
@@ -562,7 +562,7 @@
         <!-- Stage: Verify Map Has Pin -->
         <comment userInput="Stage: Verify Map Has Pin" stepKey="commentVerifyPinStage1"/>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage1"/>
-        <actionGroup ref="verifyPinLocation" stepKey="verifyPinLocationStage1">
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStage1">
             <argument name="page" value="MapOnStage"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
@@ -571,7 +571,7 @@
         <!-- Stage: Verify Map Has Pin After Save -->
         <comment userInput="Stage: Verify Map Has Pin After Save" stepKey="commentVerifyPinStage2"/>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage2"/>
-        <actionGroup ref="verifyPinLocation" stepKey="verifyPinLocationStage2">
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
@@ -581,7 +581,7 @@
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel2">
             <argument name="page" value="MapOnConfigurationPanel"/>
         </actionGroup>
-        <actionGroup ref="verifyPinLocation" stepKey="verifyPinLocationEditPanel2">
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationEditPanel2">
             <argument name="page" value="MapOnConfigurationPanel"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
@@ -605,7 +605,7 @@
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="verifyPinLocation" stepKey="verifyPinLocationStorefront">
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
@@ -660,13 +660,13 @@
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Get Pin Location -->
-        <waitForElement selector="{{MapOnConfigurationPanel.pinLocation('1')}}" stepKey="waitForPinPositionEditPanel1"/>
+        <waitForElement selector="{{MapOnConfigurationPanel.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{MapOnConfigurationPanel.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Verify Map Has Pin -->
         <comment userInput="Stage: Verify Map Has Pin" stepKey="commentVerifyPinStage1"/>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage1"/>
-        <actionGroup ref="verifyPinLocation" stepKey="verifyPinLocationStage">
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStage">
             <argument name="page" value="MapOnStage"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
@@ -677,7 +677,7 @@
         <!-- Stage: Verify Map Has Pin After Save -->
         <comment userInput="Stage: Verify Map Has Pin After Save" stepKey="commentVerifyPinStage2"/>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage2"/>
-        <actionGroup ref="verifyPinLocation" stepKey="verifyPinLocationStage2">
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
@@ -696,7 +696,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeLongitudeValue">
             <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
         </actionGroup>
-        <actionGroup ref="verifyPinLocation" stepKey="verifyPinLocationEditPanel">
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationEditPanel">
             <argument name="page" value="MapOnConfigurationPanel"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
@@ -709,7 +709,7 @@
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
-        <actionGroup ref="verifyPinLocation" stepKey="verifyPinLocationStorefront">
+        <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
@@ -789,6 +789,7 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <closeTab stepKey="closeTab"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
@@ -810,12 +811,14 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <!-- Edit Panel: Get Initial Coordinates -->
+        <!-- Edit Panel: Get Initial Coordinates & Pin Location -->
         <comment userInput="Edit Panel: Get Initial Coordinates" stepKey="commentEditPanelGetCoordinates"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="waitForLatitude1"/>
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="initialLatitudeEditPanel"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude1"/>
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
+        <waitForElement selector="{{MapOnConfigurationPanel.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{MapOnConfigurationPanel.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
         <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
@@ -837,79 +840,65 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <!-- Move Map Pin -->
-        <comment userInput="Move Map Pin" stepKey="commentMoveMapPin"/>
+        <!-- Move Map Pin By Click -->
+        <comment userInput="Move Map Pin By Click" stepKey="commentMoveMapPin"/>
         <actionGroup ref="moveMapPinByClick" stepKey="moveMapPinByClick"/>
         <!-- Edit Panel: Verify Pin Location Moved -->
         <comment userInput="Edit Panel: Verify Pin Location Moved" stepKey="commentVerifyPinMoveEditPanel"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="waitForLatitude2"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="newLatitudeEditPanel"/>
-        <assertNotEquals stepKey="assertLatitudeChangedEditPanel">
-            <expectedResult type="variable">initialLatitudeEditPanel</expectedResult>
-            <actualResult type="variable">newLatitudeEditPanel</actualResult>
-        </assertNotEquals>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude2"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="newLongitudeEditPanel"/>
-        <assertNotEquals stepKey="assertLongitudeChangedEditPanel">
-            <expectedResult type="variable">initialLongitudeEditPanel</expectedResult>
-            <actualResult type="variable">newLongitudeEditPanel</actualResult>
-        </assertNotEquals>
+        <actionGroup ref="verifyCoordinatesNotEqual" stepKey="verifyLatitudeNotEqual1">
+            <argument name="property" value="PageBuilderMapLatitude_ClickedPin"/>
+            <argument name="comparedCoordinate" value="initialLatitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyCoordinatesNotEqual" stepKey="verifyLongitudeNotEqual1">
+            <argument name="property" value="PageBuilderMapLongitude_ClickedPin"/>
+            <argument name="comparedCoordinate" value="initialLongitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel1">
+            <argument name="page" value="MapOnConfigurationPanel"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Stage: Verify Pin Location Moved -->
         <comment userInput="Stage: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStage"/>
-        <waitForElementVisible selector="{{MapOnStage.pinLocation('1')}}" stepKey="waitForPinLocationStage2"/>
-        <grabAttributeFrom selector="{{MapOnStage.pinLocation('1')}}" userInput="style" stepKey="newPinLocationStage"/>
-        <assertNotEquals stepKey="assertPinLocationChangedStage1">
-            <expectedResult type="variable">initialPinLocationStage</expectedResult>
-            <actualResult type="variable">newPinLocationStage</actualResult>
-        </assertNotEquals>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Stage: Verify Map Pin Still Moved After Save -->
         <comment userInput="Stage: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveStage2"/>
-        <waitForElementVisible selector="{{MapOnStage.pinLocation('1')}}" stepKey="waitForPinLocationStage3"/>
-        <grabAttributeFrom selector="{{MapOnStage.pinLocation('1')}}" userInput="style" stepKey="newPinLocationStage2"/>
-        <assertNotEquals stepKey="assertPinLocationChangedStage2">
-            <expectedResult type="variable">initialPinLocationStage</expectedResult>
-            <actualResult type="variable">newPinLocationStage2</actualResult>
-        </assertNotEquals>
-        <assertEquals stepKey="assertPinLocationSameAfterSave">
-            <expectedResult type="variable">newPinLocationStage</expectedResult>
-            <actualResult type="variable">newPinLocationStage2</actualResult>
-        </assertEquals>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <!-- Edit Panel: Verify Pin Location Moved After Save -->
         <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="waitForLatitude3"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="newLatitudeEditPanel2"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude3"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="newLongitudeEditPanel2"/>
-        <assertEquals stepKey="assertLatitudeSameAfterSave">
-            <expectedResult type="variable">newLatitudeEditPanel</expectedResult>
-            <actualResult type="variable">newLatitudeEditPanel2</actualResult>
-        </assertEquals>
-        <assertEquals stepKey="assertLongitudeSameAfterSave">
-            <expectedResult type="variable">newLongitudeEditPanel</expectedResult>
-            <actualResult type="variable">newLongitudeEditPanel2</actualResult>
-        </assertEquals>
+        <actionGroup ref="verifyCoordinatesNotEqual" stepKey="verifyLatitudeNotEqual2">
+            <argument name="property" value="PageBuilderMapLatitude_ClickedPin"/>
+            <argument name="comparedCoordinate" value="initialLatitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyCoordinatesNotEqual" stepKey="verifyLongitudeNotEqual2">
+            <argument name="property" value="PageBuilderMapLongitude_ClickedPin"/>
+            <argument name="comparedCoordinate" value="initialLongitudeEditPanel"/>
+        </actionGroup>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationEditPanel2">
+            <argument name="page" value="MapOnConfigurationPanel"/>
+            <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
+        </actionGroup>
         <!-- Storefront: Verify Pin Location Moved -->
         <comment userInput="Storefront: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStorefront"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStoreFront2"/>
-        <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="newPinLocationStorefront"/>
-        <assertNotEquals stepKey="assertPinLocationChangedStorefront">
-            <expectedResult type="variable">initialPinLocationStorefront</expectedResult>
-            <actualResult type="variable">newPinLocationStorefront</actualResult>
-        </assertNotEquals>
-        <assertEquals stepKey="assertPinLocationSameStageAndStorefront">
-            <expectedResult type="variable">newPinLocationStage</expectedResult>
-            <actualResult type="variable">newPinLocationStorefront</actualResult>
-        </assertEquals>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
+        </actionGroup>
     </test>
     <test name="MapAddAllAttributes">
         <annotations>
@@ -1861,3 +1850,20 @@
         </actionGroup>
     </test>
 </tests>
+
+
+
+
+        <!--todo: edit coordinates & verify move-->
+        <!--todo: drag & drop pin to move-->
+
+
+        <!--todo: tests for each new attribute-->
+        <!--todo: empty coordinates removes pin-->
+
+
+        <!--todo: map centered on austin-->
+        <!--todo: manual test for pin location correct-->
+
+
+        <!--todo: drag pin off map moves pin????-->
