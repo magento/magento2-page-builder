@@ -41,10 +41,15 @@ class Product extends \Magento\Catalog\Block\Product\AbstractProduct
      */
     public function getProduct()
     {
+        $product = null;
         if (!$this->hasData('product')) {
-            $this->setData('product', $this->productRepository->get($this->getSku()));
+            try {
+                $this->setData('product', $this->productRepository->get($this->getSku()));
+                $product = $this->getData('product');
+            } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            }
         }
-        return $this->getData('product');
+        return $product;
     }
 
     /**
