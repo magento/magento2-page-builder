@@ -37,8 +37,8 @@ define([
             mapOptions = {
                 zoom: 8,
                 center: new google.maps.LatLng(
-                    startValue.lat ? startValue.lat : 30.2672,
-                    startValue.lng ? startValue.lng : -97.7431
+                    !isNaN(startValue.lat) && startValue.lat !== '' ? startValue.lat : 30.2672,
+                    !isNaN(startValue.lng) && startValue.lng !== '' ? startValue.lng : -97.7431
                 ),
                 scrollwheel: false,
                 disableDoubleClickZoom: false,
