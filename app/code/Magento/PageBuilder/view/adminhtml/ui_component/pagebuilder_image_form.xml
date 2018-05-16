@@ -40,14 +40,15 @@
             <collapsible>false</collapsible>
             <opened>true</opened>
             <imports>
-                <link name="appearancesHiddenLabelOnlyIfOtherElementsExist">${$.name}.appearance:options</link>
+                <link name="hideFieldset">${$.name}.appearance:options</link>
+                <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
         <field name="appearance" formElement="select" component="Magento_PageBuilder/js/form/element/dependent-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">full-width</item>
-                    <item name="additionalClasses" xsi:type="string">admin__field-wide</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-wide admin__field-appearance</item>
                 </item>
             </argument>
             <settings>

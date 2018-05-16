@@ -33,29 +33,20 @@ define([
         },
 
         /**
-         * Hide fieldset if appearance field options is <= 1
+         * Hide fieldset if number of field options is <= 1 and it is the only element in the group
          *
          * @param {Array} options
          */
-        appearancesHidden: function (options) {
-            this.visible(options.length > 1);
+        hideFieldset: function (options) {
+            this.visible(options.length > 1 || this.elems().length > 1);
         },
 
         /**
-         * Delegate element to show/hide based on number of elements in fieldset
+         * Hide label if number of field options is <= 1
          *
          * @param {Array} options
          */
-        appearancesHiddenLabelOnlyIfOtherElementsExist: function (options) {
-            var otherElemsExist = this.elems().length > 1;
-
-            if (!otherElemsExist) { // show/hide fieldset
-                this.appearancesHidden(options);
-
-                return;
-            }
-
-            // show/hide label
+        hideLabel: function (options) {
             this.label(options.length > 1 ? this.originalLabelValue : '');
         }
     });
