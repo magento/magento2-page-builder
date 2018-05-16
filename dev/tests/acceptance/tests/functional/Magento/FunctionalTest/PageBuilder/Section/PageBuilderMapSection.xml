@@ -10,7 +10,8 @@
           xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
-        <element name="pin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gmnoprint']//map//area" parameterized="true"/>
+        <element name="clickablePin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gmnoprint']//map//area" parameterized="true"/>
+        <element name="pin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
         <element name="pinLocation" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
         <!-- Location Pin Configuration -->
         <element name="tooltipWindow" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']" parameterized="true"/>
@@ -49,7 +50,8 @@
         <element name="emptyMap" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(@src) and contains(@style,'display: none;')]" parameterized="true"/>
         <element name="base" type="button" selector="(//div[@data-role='map'])[{{arg1}}]" parameterized="true"/>
         <element name="baseJS" type="text" selector="document.querySelectorAll('div[data-role=\'map\']')[{{arg1}}]" parameterized="true"/>
-        <element name="pin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gmnoprint']//map//area" parameterized="true"/>
+        <element name="pin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
+        <element name="clickablePin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gmnoprint']//map//area" parameterized="true"/>
         <element name="pinLocation" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')]" parameterized="true"/>
         <element name="zoom" type="button" selector="(//div[@data-role='map'])[{{arg1}}][@data-zoom='{{arg2}}']" parameterized="true"/>
         <!-- Location Pin Configuration -->
@@ -87,8 +89,10 @@
     </section>
     <section name="MapOnConfigurationPanel">
         <element name="base" type="button" selector="//div[@data-index='position']//div[@class='map-field']"/>
-        <element name="pin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gmnoprint']//map//area"/>
+        <element name="clickablePin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gmnoprint']//map//area"/>
+        <element name="pin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2.png')]"/>
         <element name="tooltipWindow" type="text" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gm-style-iw']"/>
+        <element name="pinLocation" type="text" selector="(//div[@data-index='position']//div[contains(@style,'transform: matrix(1, 0, 0, 1, -')])[{{arg1}}]" parameterized="true"/>
         <element name="position" type="input" selector="//div[@data-index='position']//div[@class='map-field']/../input"/>
         <element name="positionJS" type="input" selector="document.querySelector('.admin__field-map input[type=\'text\']')"/>
         <element name="helperText" type="button" selector="//div[@data-index='position']//span[.='You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.']"/>
