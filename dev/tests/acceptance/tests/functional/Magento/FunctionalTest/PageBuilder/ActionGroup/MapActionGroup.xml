@@ -8,18 +8,23 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="addMapPin">
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.base}}" stepKey="waitForMapVisible"/>
-        <click selector="{{MapOnConfigurationPanel.base}}" stepKey="clickMap"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.pin}}" stepKey="waitForPinVisible"/>
-    </actionGroup>
-    <actionGroup name="moveMapPinByClick">
+    <actionGroup name="clickMapToAddOrMovePin">
         <arguments>
-            <argument name="x" defaultValue="1" type="string"/>
-            <argument name="y" defaultValue="1" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{MapOnConfigurationPanel.base}}" stepKey="waitForMapVisible"/>
-        <clickWithLeftButton selector="{{MapOnConfigurationPanel.base}}" x="1" y="1" stepKey="clickMapToMovePin"/>
+        <clickWithLeftButton selector="{{MapOnConfigurationPanel.base}}" x="{{x}}" y="{{y}}" stepKey="clickMapToMovePin"/>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.pin}}" stepKey="waitForPinVisible"/>
+        <wait time="2" stepKey="waitForPinMove"/>
+    </actionGroup>
+    <actionGroup name="moveMapPinByDraggingAndDroppingPin">
+        <arguments>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.clickablePin}}" stepKey="waitForMapVisible"/>
+        <dragAndDrop selector1="{{MapOnConfigurationPanel.clickablePin}}" selector2="{{MapOnConfigurationPanel.clickablePin}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropOnMapToMovePin"/>
         <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
     <actionGroup name="verifyMapHasPin">
