@@ -56,7 +56,7 @@ Optional: For template knockout bindings, you can use the original data-bind syn
 Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/simple/default/preview.html`.
 
 ``` HTML
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-entity-preview" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
     <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
     <render args="getOptions().template" />
 </div>
