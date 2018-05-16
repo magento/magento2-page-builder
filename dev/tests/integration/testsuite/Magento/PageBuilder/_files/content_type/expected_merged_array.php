@@ -14,7 +14,7 @@ return [
             'sortOrder' => '3'
         ],
         'group3' => [
-            'label' => 'Group 3',
+            'label' => 'Group 3 Label',
             'sortOrder' => '2'
         ],
     ],
@@ -541,19 +541,10 @@ return [
         ],
         'type3' => [
             'sortOrder' => '3',
-            'label' => 'Type 3',
+            'label' => 'Custom Type 3',
             'icon' => 'pagebuilder-type3-icon',
             'component' => 'Path/to/custom/component',
             'form' => 'pagebuilder_type3_form',
-            'group' => 'group1'
-        ],
-        'type4' => [
-            'sortOrder' => null,
-            'label' => 'Type 4',
-            'icon' => 'pagebuilder-type4-icon',
-            'component' => 'Path/to/component',
-            'preview_component' => 'Path/to/preview/component',
-            'form' => 'pagebuilder_type4_form',
             'group' => 'group1',
             'allowed_parents' => [
                 0 => 'stage'

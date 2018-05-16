@@ -21,7 +21,7 @@
         <element name="firstSection" type="button" selector='//*[@id="pagebuilder-panel-groups"]/li[1]' timeout="30"/>
         <element name="panelGroup" type="button" selector="//div[@id='pagebuilder-panel']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="panelGroupActive" type="button" selector="//div[@id='pagebuilder-panel']//li[@class='active']//h4[.='{{arg1}}']" parameterized="true"/>
-        <element name="generalGroup" type="button" selector='//*[@id="group-general"]'/>
+        <element name="generalGroup" type="button" selector='//*[@id="group-general"]' timeout="10"/>
         <element name="generalGroupBlock" type="button" selector='//*[@id="group-general"]/div/div/ul/li/a/span[2]'/>
         <element name="mediaGroup" type="button" selector='//*[@id="group-media"]'/>
         <element name="mediaGroupBlock" type="button" selector='//*[@id="group-media"]/div/div/ul/li/a/span[2]'/>
@@ -76,7 +76,7 @@
         <element name="panelMultiSelectFieldControlInput" type="input" selector=".pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form [data-index='{{arg1}}'] [data-index='{{arg2}}'] .admin__action-multiselect-search" parameterized="true"/>
         <element name="panelMultiSelectFieldControlResult" type="input" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}']//div[contains(@class,'action-menu-item')]//span[.='{{arg3}}']" parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
-        <element name="panelFieldValidationError" type="input" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}']//div[contains(@class,'')]//input[@name='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldValidationError" type="input" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}' and contains(@class,'_error')]//div[contains(@class,'')]//input[@name='{{arg2}}']" parameterized="true"/>
         <element name="panelFieldValidationErrorMessage" type="button" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//../label[.='{{arg3}}']" parameterized="true"/>
         <element name="panelEmptyColorSwatch" type="button" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[contains(@class,'sp-clear-display')]" parameterized="true"/>
         <element name="panelColorSwatch" type="button" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[@class='sp-preview']" parameterized="true"/>
@@ -113,6 +113,10 @@
         <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
         <element name="advancedPaddingLeft" type="input" selector="//input[@name='paddingLeft']"/>
         <element name="advancedMarginAndPaddingPlaceholderText" type="input" selector="//input[@name='{{arg1}}' and @placeholder='{{arg2}}']" parameterized="true"/>
+        <element name="advancedAlignDefault" type="input" selector="//div[@data-index='advanced']/descendant::*[@name='default']"/>
+        <element name="advancedAlignLeft" type="input" selector="//div[@data-index='advanced']/descendant::*[@name='left']"/>
+        <element name="advancedAlignCenter" type="input" selector="//div[@data-index='advanced']/descendant::*[@name='center']"/>
+        <element name="advancedAlignRight" type="input" selector="//div[@data-index='advanced']/descendant::*[@name='right']"/>
     </section>
     <section name="ColorPicker">
         <element name="colorSwatch" type="button" selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]"/>

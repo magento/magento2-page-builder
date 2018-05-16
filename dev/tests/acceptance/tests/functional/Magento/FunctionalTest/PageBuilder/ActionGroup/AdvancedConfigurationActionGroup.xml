@@ -8,6 +8,23 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateTextAlignments">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="{{AdvancedForm.advancedAlignDefault}}" stepKey="seeAlignDefault"/>
+        <seeElement selector="{{AdvancedForm.advancedAlignLeft}}" stepKey="seeAlignLeft"/>
+        <seeElement selector="{{AdvancedForm.advancedAlignCenter}}" stepKey="seeAlignCenter"/>
+        <seeElement selector="{{AdvancedForm.advancedAlignRight}}" stepKey="seeAlignRight"/>
+    </actionGroup>
+    <actionGroup name="validateTextAlignment">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="//li[@name='{{property.value}}' and contains(@class,'active')]" stepKey="alignmentIsSelected" />
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldMargins">
         <arguments>
             <argument name="property" defaultValue=""/>

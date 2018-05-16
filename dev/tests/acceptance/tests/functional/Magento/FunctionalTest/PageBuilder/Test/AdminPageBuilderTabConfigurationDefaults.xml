@@ -21,13 +21,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -40,27 +37,21 @@
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
         <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
-
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editTab"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Text Alignment -->
         <comment userInput="Text Alignment: dropdown defaults to Default and available values Default, Left, Center, Right" stepKey="AC0" />
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeTextAlignmentAttribute">
+        <actionGroup ref="validateTextAlignments" stepKey="seeTextAlignmentAttribute">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateTextAlignmentAttributeNotRequired">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateTextAlignmentAttributeNotDisabled">
+        <actionGroup ref="validateAlignmentFieldIsNotDisabled" stepKey="validateTextAlignmentAttributeNotDisabled">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeTextAlignmentAttributeValue">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
-        </actionGroup>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="innerText" stepKey="grabTextAlignmentOptions"/>
-        <assertEquals expected="{{PageBuilderAdvancedAlignmentPropertyDefault.optionsList}}" expectedType="array" actual="grabTextAlignmentOptions" actualType="variable" message="Verify Text Alignment dropdown options" stepKey="assertTextAlignmentDropdownOld"/>
         <!-- Border -->
         <comment userInput="Border: dropdown defaults to Default" stepKey="AC1"/>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBorderAttribute">

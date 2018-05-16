@@ -10,9 +10,6 @@
         <div class="pagebuilder-slide-wrapper pagebuilder-mobile-only" data-bind="style: getSlideStyles('mobileImage')">
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
                 <div class="pagebuilder-poster-content">
-                    <!-- ko if: getData().title -->
-                    <h3 data-bind="text: getData().title"></h3>
-                    <!-- /ko -->
                     <div data-bind="html: getContentHtml()"></div>
                     <!-- ko if: getData().show_button !== "never_show" -->
                     <button type="button" class="pagebuilder-slide-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
@@ -23,9 +20,6 @@
         <div class="pagebuilder-slide-wrapper" data-bind="style: getSlideStyles('image'), css: {'pagebuilder-mobile-hidden': getData().mobile_image}">
             <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
                 <div class="pagebuilder-poster-content">
-                    <!-- ko if: getData().title -->
-                    <h3 data-bind="text: getData().title"></h3>
-                    <!-- /ko -->
                     <div data-bind="html: getContentHtml()"></div>
                     <!-- ko if: getData().show_button !== "never_show" -->
                     <button type="button" class="pagebuilder-slide-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
