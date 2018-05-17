@@ -119,6 +119,7 @@ define([
 
             if (this.marker && content.lat === '' && content.lng === '') {
                 this.marker.setMap(null);
+                delete this.marker;
                 return;
             }
 
@@ -134,6 +135,10 @@ define([
             }
 
             latLng = new google.maps.LatLng(parseFloat(content.lat), parseFloat(content.lng));
+
+            if (!this.marker) {
+                this.addMarker(latLng.lat(),latLng.lng());
+            }
 
             this.marker.setPosition(latLng);
             this.map.setCenter(latLng);
