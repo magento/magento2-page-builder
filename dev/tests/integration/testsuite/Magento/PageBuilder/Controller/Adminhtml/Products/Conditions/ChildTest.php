@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Controller\Adminhtml\Products\Conditions;
 
 class ChildTest extends \Magento\TestFramework\TestCase\AbstractBackendController
