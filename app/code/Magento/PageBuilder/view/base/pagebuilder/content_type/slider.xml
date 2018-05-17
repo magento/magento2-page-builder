@@ -26,22 +26,22 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property var="text_align" name="text_align"/>
-                                    <property var="min_height" name="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/border-style" var="border" name="border_style"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" var="border_color"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" var="border_width"/>
-                                    <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" var="border_radius"/>
-                                    <complex_property converter="Magento_PageBuilder/js/converter/style/margins" reader="Magento_PageBuilder/js/property/margins" var="margins_and_padding"/>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <complex_property source="margins_and_padding" converter="Magento_PageBuilder/js/converter/style/margins" reader="Magento_PageBuilder/js/property/margins"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute name="data-role" var="name"/>
-                                    <attribute name="data-autoplay" var="autoplay"/>
-                                    <attribute name="data-autoplay-speed" var="autoplay_speed"/>
-                                    <attribute name="data-fade" var="fade"/>
-                                    <attribute name="data-infinite-loop" var="infinite_loop"/>
-                                    <attribute name="data-show-arrows" var="show_arrows"/>
-                                    <attribute name="data-show-dots" var="show_dots"/>
+                                    <attribute name="name" source="data-role" />
+                                    <attribute name="autoplay" source="data-autoplay"/>
+                                    <attribute name="autoplay_speed" source="data-autoplay-speed"/>
+                                    <attribute name="fade" source="data-fade"/>
+                                    <attribute name="infinite_loop" source="data-infinite-loop"/>
+                                    <attribute name="show_arrows" source="data-show-arrows"/>
+                                    <attribute name="show_dots" source="data-show-dots"/>
                                 </attributes>
                                 <css var="css_classes"/>
                             </element>
