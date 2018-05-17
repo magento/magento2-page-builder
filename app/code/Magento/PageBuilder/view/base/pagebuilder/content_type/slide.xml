@@ -85,7 +85,7 @@
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
-                                <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
+                                <html name="content" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                             </element>
                             <element name="button" path=".//a/div[1]/div/div/button">
                                 <style_properties>
@@ -176,7 +176,7 @@
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
-                                <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
+                                <html name="content" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                             </element>
                             <element name="button" path=".//a/div[1]/div/div/button">
                                 <style_properties>
@@ -269,7 +269,7 @@
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
-                                <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
+                                <html name="content" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                             </element>
                             <element name="button" path=".//a/div[1]/div/div/button">
                                 <style_properties>
@@ -327,7 +327,9 @@
                             </element>
                             <element name="overlay" path=".//a/div[1]/div">
                                 <style_properties>
+                                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="background_color" source="background_color" virtual="true" converter="Magento_PageBuilder/js/content-type/banner/converter/style/overlay-background-color"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="overlay_color" source="data-overlay-color" persist="false" converter="Magento_PageBuilder/js/content-type/banner/converter/attribute/overlay-color"/>
@@ -362,7 +364,7 @@
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
-                                <html name="message" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
+                                <html name="content" preview_converter="Magento_PageBuilder/js/converter/html/directive"/>
                             </element>
                             <element name="button" path=".//a/div[1]/div/div/button">
                                 <style_properties>
