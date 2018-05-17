@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/utils/delayed-promise"], function (_jquery, _knockout, _uiEvents, _config, _preview, _delayedPromise) {
+define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/delayed-promise", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _uiEvents, _config, _delayedPromise, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =

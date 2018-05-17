@@ -7,8 +7,8 @@ import $ from "jquery";
 import ko from "knockout";
 import events from "uiEvents";
 import Config from "../../config";
-import BasePreview from "../preview";
 import delayedPromise from "../../utils/delayed-promise";
+import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);

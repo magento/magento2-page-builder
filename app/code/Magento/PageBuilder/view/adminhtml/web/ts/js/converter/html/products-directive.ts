@@ -16,7 +16,7 @@ export default class ProductsDirective implements ConverterInterface {
     public fromDom(value: string): string | object {
         let attributes: object = {};
 
-        value.replace(/\{\{widget(.*?)\}\}/i, ((match,attributeString) => {
+        value.replace(/\{\{widget(.*?)\}\}/i, ((match, attributeString) => {
             attributes = this.parseAttributesString(attributeString);
         }).bind(this));
 
