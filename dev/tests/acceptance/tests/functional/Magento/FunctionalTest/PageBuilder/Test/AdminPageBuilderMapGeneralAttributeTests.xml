@@ -149,7 +149,7 @@
             <argument name="property" value="PageBuilderMapLocationName_Empty"/>
         </actionGroup>
         <!-- Location Name: Space -->
-        <comment userInput="Location Name: Empty" stepKey="commentLocationNameSpace"/>
+        <comment userInput="Location Name: Space" stepKey="commentLocationNameSpace"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationNameSpace">
             <argument name="property" value="PageBuilderMapLocationName_Space"/>
         </actionGroup>
@@ -230,5 +230,162 @@
             <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
     </test>
+    <test name="MapLatitudeInvalidInputs">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map - Latitude Attribute - Invalid Inputs"/>
+            <description value="Make sure the map does not accept the following values for Latitude: empty string, space character, non-numeric character, less than -85.05, greater than 85.05"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MAGETWO-91838"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Enter Required Fields -->
+        <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLongitude">
+            <argument name="property" value="PageBuilderMapLongitude_Negative104_99"/>
+        </actionGroup>
+        <!-- Latitude: Empty -->
+        <comment userInput="Latitude: Empty" stepKey="commentEmpty"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterEmpty">
+            <argument name="property" value="PageBuilderMapLatitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorEmpty">
+            <argument name="property" value="PageBuilderMapLatitude_Empty"/>
+        </actionGroup>
+        <!-- Latitude: Space -->
+        <comment userInput="Latitude: Space" stepKey="commentSpace"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSpace">
+            <argument name="property" value="PageBuilderMapLatitude_Space"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorSpace">
+            <argument name="property" value="PageBuilderMapLatitude_Space"/>
+        </actionGroup>
+        <!-- Latitude: Non-Numeric -->
+        <comment userInput="Latitude: Non-Numeric" stepKey="commentNonNumeric"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNonNumeric">
+            <argument name="property" value="PageBuilderMapLatitude_NonNumeric"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNonNumeric">
+            <argument name="property" value="PageBuilderMapLatitude_NonNumeric"/>
+        </actionGroup>
+        <!-- Latitude: Negative Boundary -->
+        <comment userInput="Latitude: Negative Boundary" stepKey="commentNegativeBoundary"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNegativeBoundary">
+            <argument name="property" value="PageBuilderMapLatitude_NegativeBoundary"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNegativeBoundary">
+            <argument name="property" value="PageBuilderMapLatitude_NegativeBoundary"/>
+        </actionGroup>
+        <!-- Latitude: Positive Boundary -->
+        <comment userInput="Latitude: Positive Boundary" stepKey="commentPositiveeBoundary"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPositiveBoundary">
+            <argument name="property" value="PageBuilderMapLatitude_PositiveBoundary"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorPositiveBoundary">
+            <argument name="property" value="PageBuilderMapLatitude_PositiveBoundary"/>
+        </actionGroup>
+    </test>
+    <test name="MapLongitudeInvalidInputs">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map - Longitude Attribute - Invalid Inputs"/>
+            <description value="Make sure the map does not accept the following values for Longitude: empty string, space character, non-numeric character, less than -180.05, greater than 180.05"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MAGETWO-91839"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Enter Required Fields -->
+        <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
+            <argument name="property" value="PageBuilderMapLatitude_39_74"/>
+        </actionGroup>
+        <!-- Longitude: Empty -->
+        <comment userInput="Longitude: Empty" stepKey="commentEmpty"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterEmpty">
+            <argument name="property" value="PageBuilderMapLongitude_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorEmpty">
+            <argument name="property" value="PageBuilderMapLongitude_Empty"/>
+        </actionGroup>
+        <!-- Longitude: Space -->
+        <comment userInput="Longitude: Space" stepKey="commentSpace"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSpace">
+            <argument name="property" value="PageBuilderMapLongitude_Space"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorSpace">
+            <argument name="property" value="PageBuilderMapLongitude_Space"/>
+        </actionGroup>
+        <!-- Longitude: Non-Numeric -->
+        <comment userInput="Longitude: Non-Numeric" stepKey="commentNonNumeric"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNonNumeric">
+            <argument name="property" value="PageBuilderMapLongitude_NonNumeric"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNonNumeric">
+            <argument name="property" value="PageBuilderMapLongitude_NonNumeric"/>
+        </actionGroup>
+        <!-- Longitude: Negative Boundary -->
+        <comment userInput="Longitude: Negative Boundary" stepKey="commentNegativeBoundary"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterNegativeBoundary">
+            <argument name="property" value="PageBuilderMapLongitude_NegativeBoundary"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNegativeBoundary">
+            <argument name="property" value="PageBuilderMapLongitude_NegativeBoundary"/>
+        </actionGroup>
+        <!-- Longitude: Positive Boundary -->
+        <comment userInput="Longitude: Positive Boundary" stepKey="commentPositiveeBoundary"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPositiveBoundary">
+            <argument name="property" value="PageBuilderMapLongitude_PositiveBoundary"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorPositiveBoundary">
+            <argument name="property" value="PageBuilderMapLongitude_PositiveBoundary"/>
+        </actionGroup>
+    </test>
 </tests>
-<!--todo: range is 85.05 180.05-->
