@@ -4,9 +4,9 @@
  * See COPYING.txt for license details.
  */
 
-namespace Magento\PageBuilder\Controller\Adminhtml\Product;
+declare(strict_types=1);
 
-use Magento\Framework\TestFramework\Unit\Helper\ObjectManager as ObjectManagerHelper;
+namespace Magento\PageBuilder\Controller\Adminhtml\Products;
 
 class ConditionsTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
@@ -25,26 +25,26 @@ class ConditionsTest extends \Magento\TestFramework\TestCase\AbstractBackendCont
         // Assert form is associated correctly
         $this->assertContains('data-form-part="test_namespace"', $responseBody);
         // Assert correct conditions are loaded
-        $this->assertContains('Magento\CatalogWidget\Model\Rule\Condition\Combine', $responseBody);
+        $this->assertContains(\Magento\CatalogWidget\Model\Rule\Condition\Combine::class, $responseBody);
     }
 
     public function testFormLoadsConditionsFromPost()
     {
         $conditions = [
             '1--1' => [
-                'type' => 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Product',
+                'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                 'attribute' => 'description',
                 'operator' => '{}',
                 'value' => 'foo',
             ],
             '1--2' => [
-                'type' => 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Combine',
+                'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
                 'aggregator' => 'all',
                 'value' => '1',
                 'new_child' => '',
             ],
             '1--2--1' => [
-                'type' => 'Magento\\CatalogWidget\\Model\\Rule\\Condition\\Product',
+                'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
                 'attribute' => 'giftcard_amounts',
                 'operator' => '==',
                 'value' => '123',
