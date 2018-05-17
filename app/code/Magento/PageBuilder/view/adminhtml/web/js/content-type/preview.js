@@ -133,6 +133,34 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
     };
     /**
+     * Set state based on toolbar focusin event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onToolbarFocusIn = function onToolbarFocusIn(context, event) {
+      var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+      (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
+
+      _uiEvents.trigger("interaction:start");
+    };
+    /**
+     * Set state based on toolbar focusout event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onToolbarFocusOut = function onToolbarFocusOut(context, event) {
+      var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+      (0, _jquery)(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
+
+      _uiEvents.trigger("interaction:stop");
+    };
+    /**
      * After children render fire an event
      *
      * @param {Element} element

@@ -127,6 +127,7 @@ export default class Preview {
         }
 
         optionsMenu.parent().addClass("pagebuilder-options-visible");
+
         $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 
@@ -151,6 +152,31 @@ export default class Preview {
                 $(currentTarget).removeClass("pagebuilder-content-type-active");
             }
         }, 100); // 100 ms delay to allow for users hovering over other elements
+    }
+
+    /**
+     * Set state based on toolbar focusin event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onToolbarFocusIn(context: Preview, event: Event) {
+        const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+        $(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
+        events.trigger("interaction:start");
+    }
+
+    /**
+     * Set state based on toolbar focusout event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onToolbarFocusOut(context: Preview, event: Event) {
+        const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
+        $(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
+        events.trigger("interaction:stop");
+
     }
 
     /**

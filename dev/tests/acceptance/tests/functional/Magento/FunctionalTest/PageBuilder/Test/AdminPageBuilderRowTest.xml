@@ -283,6 +283,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowGeneral"/>
+            <group value="pagebuilder-heading"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -311,6 +312,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowGeneral"/>
+            <group value="pagebuilder-heading"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -330,6 +332,9 @@
         </assertEquals>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <!-- Assert row height has changed when content added -->
         <comment userInput="Assert row height has changed when content added" stepKey="comment2"/>
