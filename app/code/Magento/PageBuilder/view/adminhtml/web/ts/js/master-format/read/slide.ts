@@ -22,6 +22,7 @@ export default class Slide implements ReadInterface {
      */
     public read(element: HTMLElement): Promise<object> {
         let bgMobileImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[0].style.backgroundImage;
+        const slideName = element.getAttribute("data-slide-name");
         const linkUrl = element.querySelector("a");
         const bgImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[1].style.backgroundImage;
         const overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
@@ -34,6 +35,7 @@ export default class Slide implements ReadInterface {
         const buttonText = button ? button.textContent : "";
         const buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
         const response: any = {
+            slide_name: slideName ? slideName : "",
             background_image: decodeUrl(bgImage),
             background_size: element.style.backgroundSize,
             button_text: buttonText,
