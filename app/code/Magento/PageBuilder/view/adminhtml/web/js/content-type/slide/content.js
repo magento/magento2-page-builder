@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/converter/attribute/link-href", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/content"], function (_translate, _linkHref, _colorConverter, _directives, _numberConverter, _content) {
+define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attribute/link-href", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/content"], function (_translate, _underscore, _linkHref, _colorConverter, _directives, _numberConverter, _content) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -22,14 +22,29 @@ define(["mage/translate", "Magento_PageBuilder/js/converter/attribute/link-href"
     var _proto = Content.prototype;
 
     /**
+     * Get data for attr binding, example {"data-role": "element"}
+     *
+     * @returns {DataObject}
+     * @deprecated
+     */
+    _proto.getAttributes = function getAttributes(element) {
+      var attributes = _underscore.clone(_BaseContent.prototype.getAttributes.call(this, element));
+
+      return { ...attributes,
+        "data-slide-name": this.getData(element).slide_name
+      };
+    };
+    /**
      * Get the slide wrapper styles for the storefront
      *
      * @returns {object}
      */
+
+
     _proto.getSlideStyles = function getSlideStyles(type) {
       var data = this.parent.dataStore.get();
 
-      var style = _.clone(this.getStyle());
+      var style = _underscore.clone(this.getStyle());
 
       var backgroundImage = "";
 
@@ -163,7 +178,7 @@ define(["mage/translate", "Magento_PageBuilder/js/converter/attribute/link-href"
         return false;
       }
 
-      if (_.isEmpty(data.background_image[0])) {
+      if (_underscore.isEmpty(data.background_image[0])) {
         return;
       }
 
@@ -183,7 +198,7 @@ define(["mage/translate", "Magento_PageBuilder/js/converter/attribute/link-href"
         return false;
       }
 
-      if (_.isEmpty(data.mobile_image[0])) {
+      if (_underscore.isEmpty(data.mobile_image[0])) {
         return;
       }
 
@@ -230,7 +245,7 @@ define(["mage/translate", "Magento_PageBuilder/js/converter/attribute/link-href"
 
 
     _proto.getSlideContainerStyle = function getSlideContainerStyle() {
-      var style = _.clone(this.getStyle());
+      var style = _underscore.clone(this.getStyle());
 
       return Object.assign(style, {
         backgroundImage: "",
