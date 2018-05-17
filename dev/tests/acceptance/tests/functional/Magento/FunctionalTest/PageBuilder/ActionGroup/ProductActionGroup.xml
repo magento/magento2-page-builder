@@ -24,14 +24,29 @@
         <waitForElementVisible selector="{{page.addToWishList(index)}}" stepKey="waitForProductAddToWishList"/>
         <waitForElementVisible selector="{{page.addToCompare(index)}}" stepKey="waitForProductAddToCompare"/>
     </actionGroup>
-    <actionGroup name="validateProductInProductList">
+    <actionGroup name="validateProductInProductsOnStage">
         <arguments>
             <argument name="page" defaultValue=""/>
-            <argument name="productListIndex" defaultValue="1" type="string"/>
+            <argument name="productsIndex" defaultValue="1" type="string"/>
             <argument name="productIndex" defaultValue="1" type="string"/>
             <argument name="product" defaultValue="_defaultProduct"/>
         </arguments>
-        <waitForElementVisible selector="{{page.base(productListIndex)}}" stepKey="waitForProductList"/>
+        <waitForElementVisible selector="{{page.base(productsIndex)}}" stepKey="waitForProducts"/>
+        <waitForElementVisible selector="{{page.productImage(productIndex)}}" stepKey="waitForProductImage"/>
+        <waitForElementVisible selector="{{page.productName(productIndex, product.name)}}" stepKey="waitForProductName"/>
+        <waitForElementVisible selector="{{page.productPrice(productIndex, product.price)}}" stepKey="waitForProductPrice"/>
+        <dontSee selector="{{page.productAddToCart(productIndex)}}" stepKey="DontSeeProductAddToCart"/>
+        <dontSee selector="{{page.productAddToWishList(productIndex)}}" stepKey="DontSeeProductAddToWishList"/>
+        <dontSee selector="{{page.productAddToCompare(productIndex)}}" stepKey="DontSeeProductAddToCompare"/>
+    </actionGroup>
+    <actionGroup name="validateProductInProducts">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="productsIndex" defaultValue="1" type="string"/>
+            <argument name="productIndex" defaultValue="1" type="string"/>
+            <argument name="product" defaultValue="_defaultProduct"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(productsIndex)}}" stepKey="waitForProducts"/>
         <waitForElementVisible selector="{{page.productImage(productIndex)}}" stepKey="waitForProductImage"/>
         <waitForElementVisible selector="{{page.productName(productIndex, product.name)}}" stepKey="waitForProductName"/>
         <waitForElementVisible selector="{{page.productPrice(productIndex, product.price)}}" stepKey="waitForProductPrice"/>
@@ -41,7 +56,7 @@
         <waitForElementVisible selector="{{page.productAddToWishList(productIndex)}}" stepKey="waitForProductAddToWishList"/>
         <waitForElementVisible selector="{{page.productAddToCompare(productIndex)}}" stepKey="waitForProductAddToCompare"/>
     </actionGroup>
-    <actionGroup name="validateProductCountInProductList">
+    <actionGroup name="validateProductCountInProducts">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -50,5 +65,18 @@
         <waitForElementVisible selector="{{page.product(index)}}" stepKey="waitForProduct"/>
         <grabMultiple selector="{{page.product(index)}}" stepKey="grabProducts"/>
         <assertCount stepKey="assertCount" expected="{{count}}" expectedType="int" actualType="variable" actual="grabProducts"/>
+    </actionGroup>
+    <actionGroup name="addCategoryConditionToProductsBlock">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="category" defaultValue=""/>
+            <argument name="conditionIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.conditionsList}}" stepKey="waitForConditionsToLoad"/>
+        <click selector="{{page.conditionsListAddButton}}" stepKey="addCondition"/>
+        <selectOption selector="{{page.conditionsListAddTypeSelect}}" userInput="Magento\CatalogWidget\Model\Rule\Condition\Product|category_ids" stepKey="selectCategoryOption"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForCategoriesToLoad"/>
+        <click selector="{{page.conditionsListConditionPlaceholder}}" stepKey="revealCategoryInput"/>
+        <fillField selector="{{page.conditionsListConditionInput}}" userInput="{{category}}" stepKey="fillCategoryField"/>
     </actionGroup>
 </actionGroups>
