@@ -55,6 +55,7 @@
     </section>
     <section name="RowOnStorefront">
         <element name="base" type="text" selector="(//div[@data-role='row'])[{{arg1}}]" parameterized="true"/>
+        <element name="computedWidth" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=row]')).width)"/>
         <!-- Background Configuration -->
         <element name="backgroundColor" type="button" selector="(//div[@data-role='row'])[{{arg1}}][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
         <element name="noBackgroundColor" type="button" selector="(//div[@data-role='row'])[{{arg1}}][not(contains(@style,'background-color:'))]" parameterized="true"/>
