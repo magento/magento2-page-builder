@@ -1,31 +1,57 @@
 # magento2-page-builder
 
-# PageBuilder EAP
+## PageBuilder Early Access Program
 
-We open access to PageBuilder code for Partners to:
-- explore extension points that PageBuilder provides in oder to build integration with native PageBuilder capabilities for 3rd parties (Facebook, Instagram etc)  and their own modules
-- try out PageBuilder customization options to grow its functionality beyond native features
-- Prepare to migrate clients from Bluefoot 1.0 to PageBuilder
+The PageBuilder Early Access Program (EAP) gives partners the following perks:
 
-This program is _not design_ to build a website and go live using early code. 
+* Explore PageBuilder extension points to build custom modules and integrations for 3rd party services, such as Facebook, Instagram, etc.
+* Try out PageBuilder customization options and extend its functionality beyond its default features.
+* Preview PageBuilder to prepare a migration plan from BlueFoot 1.0 to PageBuilder.
+ 
+**Note:**
+*This program should not be used to design and launch a production website using early code.*
 
-# PageBuilder Package 
-We offer 2 options to get the PageBuilder code:
-- Composer package - option for installing page builder if you do not plan to do any contribution into PageBuilder code repository 
-- GitHub repository - option to install page builder and contribute to the code 
+## Installation
 
-# Contribution to the PageBuilder
-We appreciate your direct contribution to PageBuilder repo. It can be either feature development or bug fix:
-List of known issues 
+We offer two methods for installing PageBuilder:
 
-# PageBuilder Updates from Magento Core Team
-Expect the code to be updated on regular basis (every 2 weeks) and be ready to the update introducing breaking changes. We want to limit that harm so we publish the backlog that core teams are going to work on next couple of months:
-link to the list of features
+* As a [Composer package] - use this option if you do not plan to contribute to the PageBuilder code repository 
+* Using the [GitHub repository] - use this option to install PageBuilder from the GitHub repository and contribute to the code 
 
-# Feedback needed
-We want to know more how you would need to customize PageBuilder. Here is the list of topics that we are specifically interested in:
-Web Content API
+[Composer package]: app/code/Magento/PageBuilder/docs/install.md#composer-installation
+[GitHub repository]: app/code/Magento/PageBuilder/docs/install.md#github-installation
 
-Join the PageBuilder slack channel to participate in technical discussions and ask questions 
-URL: magentocommeng.slack.com
-And ping Olena Tkacheva (https://magentocommeng.slack.com/messages/@UAFV915FB)
+## Contribute to PageBuilder
+
+We appreciate any and all contributions to PageBuilder. 
+A good place to start is by looking at our [features roadmap] and list of [known issues].
+
+If you are interested in contributing to this repository, please see our [Contribution Guide].
+
+[Contribution Guide]: app/code/Magento/PageBuilder/docs/CONTRIBUTING.md
+[features roadmap]: app/code/Magento/PageBuilder/docs/roadmap.md#planned-features-and-functionality
+[known issues]: app/code/Magento/PageBuilder/docs/roadmap.md#known-issues
+
+## PageBuilder updates from the Magento core team
+
+The PageBuilder team updates the code every 2 weeks.
+**These changes may introduce breaking changes.**
+
+To help you prepare for these changes, we are publishing a [roadmap] of features and issues that we are going to work on in the following months.
+
+[roadmap]: app/code/Magento/PageBuilder/docs/roadmap.md
+
+## Provide feedback
+
+We want to hear what you think of PageBuilder!
+We are particularly interested on your thoughts on the following:
+
+* How would you customize PageBuilder and what do you need to accomplish this task?
+* What web content API do you use or would like to see in PageBuilder?
+
+To participate in technical discussions and ask questions, join us in [Slack].
+
+For all other questions or requests, contact [Olena Tkacheva].
+
+[Slack]: https://magentocommeng.slack.com/
+[Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB
