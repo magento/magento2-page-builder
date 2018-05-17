@@ -102,11 +102,11 @@
     <actionGroup name="validateMapPinLocationData">
         <arguments>
             <argument name="page" defaultValue=""/>
-            <argument name="locationName" defaultValue="PageBuilderMapHeightDefaultProperty"/>
-            <argument name="address" defaultValue="PageBuilderMapHeightDefaultProperty"/>
-            <argument name="city" defaultValue="PageBuilderMapHeightDefaultProperty"/>
-            <argument name="zip" defaultValue="PageBuilderMapHeightDefaultProperty"/>
-            <argument name="country" defaultValue="PageBuilderMapHeightDefaultProperty"/>
+            <argument name="locationName" defaultValue="PageBuilderMapLocationName_Default"/>
+            <argument name="address" defaultValue="PageBuilderMapStreetAddress_Default"/>
+            <argument name="city" defaultValue="PageBuilderMapCity_Default"/>
+            <argument name="zip" defaultValue="PageBuilderMapZipCode_Default"/>
+            <argument name="country" defaultValue="PageBuilderMapCountry_Empty"/>
             <argument name="comment" defaultValue="PageBuilderMapComment_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
@@ -120,6 +120,26 @@
         <waitForElementVisible selector="{{page.zip(index, zip.value)}}" stepKey="waitForZip"/>
         <waitForElementVisible selector="{{page.country(index, country.value)}}" stepKey="waitForCountry"/>
         <waitForElementVisible selector="{{page.comment(index, comment.value)}}" stepKey="waitForComment"/>
+        <click selector="{{page.tooltipWindowClose(index)}}" stepKey="closePinTooltip"/>
+        <waitForElementNotVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltipGone"/>
+    </actionGroup>
+    <actionGroup name="validateMapPinLocationDataNoCommentNoZip">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="locationName" defaultValue="PageBuilderMapLocationName_Default"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateMapPinLocationDataOnlySeeLocationName" stepKey="comment1"/>
+        <waitForElementVisible selector="{{page.clickablePin(index)}}" stepKey="waitForPin"/>
+        <click selector="{{page.clickablePin(index)}}" stepKey="clickPin"/>
+        <waitForElementVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltip"/>
+        <waitForElementVisible selector="{{page.locationName(index, locationName.value)}}" stepKey="waitForLocationName"/>
+        <waitForElementVisible selector="{{page.onlyAddressCityOrCountry(index, PageBuilderMapStreetAddress_Default.value)}}" stepKey="waitForAddress"/>
+        <waitForElementVisible selector="{{page.onlyAddressCityOrCountry(index, PageBuilderMapCity_Default.value)}}" stepKey="waitForCity"/>
+        <waitForElementVisible selector="{{page.zip(index, PageBuilderMapZipCode_Default.value)}}" stepKey="waitForZip"/>
+        <waitForElementVisible selector="{{page.onlyAddressCityOrCountry(index, PageBuilderMapCountry_Empty.value)}}" stepKey="waitForCountry"/>
+        <waitForElement selector="{{page.comment(index, PageBuilderMapComment_Default.value)}}" stepKey="waitForComment"/>
+        <dontSeeElement selector="{{page.comment(index, PageBuilderMapComment_Default.value)}}" stepKey="dontSeeComment"/>
         <click selector="{{page.tooltipWindowClose(index)}}" stepKey="closePinTooltip"/>
         <waitForElementNotVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>

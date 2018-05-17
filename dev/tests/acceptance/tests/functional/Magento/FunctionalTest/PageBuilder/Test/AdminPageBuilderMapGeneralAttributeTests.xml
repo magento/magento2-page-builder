@@ -9,17 +9,166 @@
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../../../../magento2ce/dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
         <!--xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">-->
-    <test name="MapCommonCaseHeightPx">
+    <test name="MapLocationPinTooltip">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Map"/>
-            <title value="Map - 500px Height"/>
-            <description value="Validates map height of 500px on stage and storefront"/>
+            <title value="Map - Location Pin Tooltip"/>
+            <description value="Verify tooltip with location information appears on Stage and Storefront but not Edit Panel."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91230"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MAGETWO-88892"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
-            <group value="pagebuilder-mapGeneral"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Map Pin" stepKey="commentAddMapPin"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Update General Section -->
+        <comment userInput="Update General Section" stepKey="commentUpdateGeneralSection"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress">
+            <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
+            <argument name="property" value="PageBuilderMapCity_FakeCity"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
+            <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry">
+            <argument name="property" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment">
+            <argument name="property" value="PageBuilderMapComment_TestComment"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
+        </actionGroup>
+        <!-- Verify No Tooltip On Edit Panel -->
+        <comment userInput="Verify No Tooltip On Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="validateNoPinTooltip" stepKey="verifyNoTooltip"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
+        </actionGroup>
+    </test>
+    <test name="MapLocationNameInvalidInputs">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map - Location Name Attribute - Invalid Inputs"/>
+            <description value="Make sure the map does not accept the following values for Location Name: empty string, space character"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MAGETWO-91832"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <!-- Location Name: Empty -->
+        <comment userInput="Location Name: Empty" stepKey="commentLocationNameEmpty"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationNameEmpty">
+            <argument name="property" value="PageBuilderMapLocationName_Empty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorEmpty">
+            <argument name="property" value="PageBuilderMapLocationName_Empty"/>
+        </actionGroup>
+        <!-- Location Name: Space -->
+        <comment userInput="Location Name: Empty" stepKey="commentLocationNameSpace"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationNameSpace">
+            <argument name="property" value="PageBuilderMapLocationName_Space"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorSpace">
+            <argument name="property" value="PageBuilderMapLocationName_Space"/>
+        </actionGroup>
+    </test>
+    <test name="MapLocationNameSpecialCharacters">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map - Location Name Attribute - Special Characters"/>
+            <description value="Make sure the map accepts special characters for Location Name"/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-66519"/>
+            <testCaseId value="MAGETWO-91835"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -38,58 +187,48 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <!-- Update Edit Panel -->
-        <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeight">
-            <argument name="property" value="PageBuilderMapHeightProperty500px"/>
+        <!-- Location Name: Special Characters -->
+        <comment userInput="Location Name: Special Characters" stepKey="commentLocationName"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <executeJS function="{{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight1"/>
-        <executeJS function="return Math.round(({$actualStageMapHeight1}/{{PageBuilderMapHeightProperty500px.integer}})*100)/100" stepKey="actualStageMapHeightRatio1"/>
-        <assertEquals stepKey="assertStageMapHeight1">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">actualStageMapHeightRatio1</actualResult>
-        </assertEquals>
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateMapPinLocationDataNoCommentNoZip" stepKey="validateMapPinLocationDataStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
+        <actionGroup ref="validateMapPinLocationDataNoCommentNoZip" stepKey="validateMapPinLocationDataStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight">
-            <argument name="property" value="PageBuilderMapHeightProperty500px"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage After Save -->
-        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <executeJS function="{{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight2"/>
-        <executeJS function="return Math.round(({$actualStageMapHeight2}/{{PageBuilderMapHeightProperty500px.integer}})*100)/100" stepKey="actualStageMapHeightRatio2"/>
-        <assertEquals stepKey="assertStageMapHeight2">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">actualStageMapHeightRatio2</actualResult>
-        </assertEquals>
-        <!-- Validate Edit Panel After Save -->
-        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight2">
-            <argument name="property" value="PageBuilderMapHeightProperty500px"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
+            <argument name="property" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <executeJS function="{{MapOnStorefront.computedHeight}}" stepKey="actualStorefrontMapHeight"/>
-        <executeJS function="return Math.round(({$actualStorefrontMapHeight}/{{PageBuilderMapHeightProperty500px.integer}})*100)/100" stepKey="actualStorefrontMapHeightRatio"/>
-        <assertEquals stepKey="assertStorefrontMapHeight">
-            <expectedResult type="int">1</expectedResult>
-            <actualResult type="variable">actualStorefrontMapHeightRatio</actualResult>
-        </assertEquals>
+        <actionGroup ref="validateMapPinLocationDataNoCommentNoZip" stepKey="validateMapPinLocationDataStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
+        </actionGroup>
     </test>
 </tests>
+<!--todo: range is 85.05 180.05-->
