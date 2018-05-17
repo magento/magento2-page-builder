@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Magento\Pagebuilder\Model\Config\Source;
+namespace Magento\PageBuilder\Model\Config\Source;
 
 /**
  * Options provider for countries list

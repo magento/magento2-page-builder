@@ -46,7 +46,6 @@ class MigrateToPageBuilder implements DataPatchInterface
         \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory,
         ModuleDataSetupInterface $moduleDataSetup,
         \Magento\Framework\App\State $appState,
-        ModuleDataSetupInterface $moduleDataSetup,
         MoveImages $moveImages
     ) {
         $this->convertBlueFootToPageBuilderFactory = $convertBlueFootToPageBuilderFactory;
