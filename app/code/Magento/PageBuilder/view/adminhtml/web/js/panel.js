@@ -120,7 +120,8 @@ define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "unde
           return (0, _jquery)(this).clone().css({
             width: (0, _jquery)(this).width(),
             height: (0, _jquery)(this).height(),
-            zIndex: 10001
+            zIndex: 10001,
+            pointerEvents: "none"
           });
         },
         start: function start() {

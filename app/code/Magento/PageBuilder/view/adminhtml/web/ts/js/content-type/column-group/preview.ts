@@ -616,7 +616,6 @@ export default class Preview extends PreviewCollection {
         const self = this;
 
         group.droppable({
-            accept: ".pagebuilder-draggable-block",
             deactivate() {
                 self.dropOverElement = null;
                 self.dropPlaceholder.removeClass("left right");
@@ -636,18 +635,16 @@ export default class Preview extends PreviewCollection {
                 self.dropPositions = [];
                 self.dropPlaceholder.removeClass("left right");
             },
-            greedy: true,
             out() {
                 self.dropOverElement = null;
                 self.dropPlaceholder.removeClass("left right");
             },
-            over(event: Event, ui: JQueryUI.DroppableEventUIParam) {
+            over() {
                 // Always calculate drop positions when an element is dragged over
                 self.dropPositions = calculateDropPositions((self.parent as ContentTypeCollectionInterface));
 
                 // Is the element currently being dragged a column?
                 if (getDraggedBlockConfig() === Config.getContentTypeConfig("column")) {
-                    event.stopPropagation();
                     self.dropOverElement = true;
                 } else {
                     self.dropOverElement = null;

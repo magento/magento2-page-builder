@@ -41,7 +41,11 @@ export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableO
         cursor: "-webkit-grabbing",
         tolerance: "pointer",
         helper(event: Event, item: Element) {
-            return $(item).clone()[0];
+            const helper = $(item).clone();
+            helper.css({
+                pointerEvents: "none",
+            });
+            return helper[0];
         },
         appendTo: document.body,
         containment: "document",

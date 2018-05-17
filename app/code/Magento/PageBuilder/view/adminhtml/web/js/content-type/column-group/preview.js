@@ -574,7 +574,6 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     _proto.initDroppable = function initDroppable(group) {
       var self = this;
       group.droppable({
-        accept: ".pagebuilder-draggable-block",
         deactivate: function deactivate() {
           self.dropOverElement = null;
           self.dropPlaceholder.removeClass("left right");
@@ -594,17 +593,15 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           self.dropPositions = [];
           self.dropPlaceholder.removeClass("left right");
         },
-        greedy: true,
         out: function out() {
           self.dropOverElement = null;
           self.dropPlaceholder.removeClass("left right");
         },
-        over: function over(event, ui) {
+        over: function over() {
           // Always calculate drop positions when an element is dragged over
           self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(self.parent); // Is the element currently being dragged a column?
 
           if ((0, _registry.getDraggedBlockConfig)() === _config.getContentTypeConfig("column")) {
-            event.stopPropagation();
             self.dropOverElement = true;
           } else {
             self.dropOverElement = null;

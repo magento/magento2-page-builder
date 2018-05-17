@@ -129,6 +129,7 @@ export default class Panel implements PanelInterface {
                     width: $(this).width(),
                     height: $(this).height(),
                     zIndex: 10001,
+                    pointerEvents: "none",
                 });
             },
             start() {

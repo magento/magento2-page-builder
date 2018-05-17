@@ -28,7 +28,11 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       cursor: "-webkit-grabbing",
       tolerance: "pointer",
       helper: function helper(event, item) {
-        return (0, _jquery)(item).clone()[0];
+        var helper = (0, _jquery)(item).clone();
+        helper.css({
+          pointerEvents: "none"
+        });
+        return helper[0];
       },
       appendTo: document.body,
       containment: "document",
