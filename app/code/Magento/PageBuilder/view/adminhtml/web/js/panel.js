@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/sortable", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block", "Magento_PageBuilder/js/panel/registry"], function (_jquery, _knockout, _koSortable, _translate, _uiEvents, _underscore, _draggable, _config, _sortable, _group, _block, _registry) {
+define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/sortable", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block", "Magento_PageBuilder/js/panel/registry"], function (_jquery, _knockout, _translate, _uiEvents, _underscore, _draggable, _config, _sortable, _group, _block, _registry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

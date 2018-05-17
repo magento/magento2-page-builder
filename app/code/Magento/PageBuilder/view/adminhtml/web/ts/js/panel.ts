@@ -5,7 +5,6 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import "ko-sortable";
 import $t from "mage/translate";
 import events from "uiEvents";
 import _ from "underscore";
