@@ -645,7 +645,7 @@ export default class Preview extends PreviewCollection {
                     width: groupPosition.width / getMaxColumns() + "px",
                 }).addClass(this.dropPosition.placement);
             }
-        } else {
+        } else if (this.dropOverElement) {
             // Re-enable the parent sortable instance
             group.parents(".element-children").sortable("option", "disabled", false);
             this.dropPosition = null;
