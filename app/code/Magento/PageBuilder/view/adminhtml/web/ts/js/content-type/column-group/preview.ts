@@ -56,6 +56,7 @@ export default class Preview extends PreviewCollection {
     private dropPositions: DropPosition[] = [];
     private dropPosition: DropPosition;
     private movePosition: DropPosition;
+    private groupPositionCache: GroupPositionCache;
 
     /**
      * @param {ContentTypeCollectionInterface} parent
@@ -248,10 +249,11 @@ export default class Preview extends PreviewCollection {
         handle.off("mousedown");
         handle.on("mousedown", (event) => {
             event.preventDefault();
+            const groupPosition = this.getGroupPosition(this.groupElement);
             this.resizing(true);
 
             this.resizeColumnInstance = column;
-            this.resizeColumnWidths = determineColumnWidths(this.resizeColumnInstance, this.groupElement);
+            this.resizeColumnWidths = determineColumnWidths(this.resizeColumnInstance, groupPosition);
             this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
 
             // Set a flag of the columns which are currently being resized
@@ -372,6 +374,9 @@ export default class Preview extends PreviewCollection {
         this.dropPlaceholder.removeClass("left right");
         this.movePlaceholder.removeClass("active");
         this.resizeGhost.removeClass("active");
+
+        // Reset the group positions cache
+        this.groupPositionCache = null;
     }
 
     /**
@@ -381,10 +386,15 @@ export default class Preview extends PreviewCollection {
      */
     private initMouseMove(group: JQuery<HTMLElement>) {
         group.mousemove((event: JQuery.Event) => {
-            this.onResizingMouseMove(event, group);
-            this.onDraggingMouseMove(event, group);
-            this.onDroppingMouseMove(event, group);
+            const groupPosition = this.getGroupPosition(group);
+
+            this.onResizingMouseMove(event, group, groupPosition);
+            this.onDraggingMouseMove(event, group, groupPosition);
+            this.onDroppingMouseMove(event, group, groupPosition);
         }).mouseleave(() => {
+            this.groupPositionCache = null;
+            this.dropPosition = null;
+            this.dropPlaceholder.removeClass("left right");
             this.movePlaceholder.css("left", "").removeClass("active");
         });
 
@@ -392,6 +402,26 @@ export default class Preview extends PreviewCollection {
         $("body").mouseup(() => {
             this.endAllInteractions();
         });
+    }
+
+    /**
+     * Cache the groups positions
+     *
+     * @param {JQuery<HTMLElement>} group
+     */
+    private getGroupPosition(group: JQuery<HTMLElement>) {
+        if (!this.groupPositionCache) {
+            this.groupPositionCache = {
+                top: group.offset().top,
+                left: group.offset().left,
+                width: group.width(),
+                height: group.height(),
+                outerWidth: group.outerWidth(),
+                outerHeight: group.outerHeight(),
+            };
+        }
+
+        return this.groupPositionCache;
     }
 
     /**
@@ -422,8 +452,9 @@ export default class Preview extends PreviewCollection {
      *
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
+     * @param {GroupPositionCache} groupPosition
      */
-    private onResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
+    private onResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
         let newColumnWidth: ColumnWidth;
 
         if (this.resizeMouseDown) {
@@ -440,7 +471,6 @@ export default class Preview extends PreviewCollection {
 
             // Determine which column in the group should be adjusted for this action
             [adjustedColumn, modifyColumnInPair, usedHistory] = determineAdjustedColumn(
-                group,
                 currentPos,
                 this.resizeColumnInstance,
                 this.resizeHistory,
@@ -448,7 +478,7 @@ export default class Preview extends PreviewCollection {
 
             // Calculate the ghost width based on mouse position and bounds of allowed sizes
             const ghostWidth = calculateGhostWidth(
-                group,
+                groupPosition,
                 currentPos,
                 this.resizeColumnInstance,
                 modifyColumnInPair,
@@ -507,7 +537,7 @@ export default class Preview extends PreviewCollection {
                             // If we do a resize, re-calculate the column widths
                             this.resizeColumnWidths = determineColumnWidths(
                                 this.resizeColumnInstance,
-                                this.groupElement,
+                                groupPosition,
                             );
                             this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
                         });
@@ -522,8 +552,9 @@ export default class Preview extends PreviewCollection {
      *
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
+     * @param {GroupPositionCache} groupPosition
      */
-    private onDraggingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
+    private onDraggingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
         const dragColumn: Column = getDragColumn();
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
@@ -531,7 +562,7 @@ export default class Preview extends PreviewCollection {
                 this.dropPositions = calculateDropPositions((this.parent as ContentTypeCollectionInterface));
             }
             const columnInstance = dragColumn;
-            const currentX = event.pageX - $(group).offset().left;
+            const currentX = event.pageX - groupPosition.left;
 
             // Are we within the same column group or have we ended up over another?
             if (columnInstance.parent === this.parent) {
@@ -555,7 +586,7 @@ export default class Preview extends PreviewCollection {
                     this.movePlaceholder.css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
                         right: (this.movePosition.placement === "right" ?
-                                $(group).outerWidth() - this.movePosition.right - 5 : ""
+                                groupPosition.outerWidth - this.movePosition.right - 5 : ""
                         ),
                     }).addClass("active");
                 } else {
@@ -573,9 +604,9 @@ export default class Preview extends PreviewCollection {
                     this.dropPlaceholder.removeClass(classToRemove).css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
                         right: (this.movePosition.placement === "right" ?
-                                $(group).width() - this.movePosition.right : ""
+                                groupPosition.width - this.movePosition.right : ""
                         ),
-                        width: $(group).width() / getMaxColumns() + "px",
+                        width: groupPosition.width / getMaxColumns() + "px",
                     }).addClass(this.movePosition.placement);
                 } else {
                     this.dropPlaceholder.removeClass("left right");
@@ -589,10 +620,19 @@ export default class Preview extends PreviewCollection {
      *
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
+     * @param {GroupPositionCache} groupPosition
      */
-    private onDroppingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
-        if (this.dropOverElement) {
-            const currentX = event.pageX - $(group).offset().left;
+    private onDroppingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
+        // Only initiate this process if we're within the group by a buffer to allow for sortable to function correctly
+        if (
+            this.dropOverElement &&
+            event.pageY > groupPosition.top + 20 &&
+            event.pageY < (groupPosition.top + groupPosition.outerHeight) - 20
+        ) {
+            // Disable the parent sortable instance
+            group.parents(".element-children").sortable("option", "disabled", true);
+
+            const currentX = event.pageX - groupPosition.left;
             this.dropPosition = this.dropPositions.find((position) => {
                 return currentX > position.left && currentX < position.right && position.canShrink;
             });
@@ -600,10 +640,16 @@ export default class Preview extends PreviewCollection {
             if (this.dropPosition) {
                 this.dropPlaceholder.removeClass("left right").css({
                     left: (this.dropPosition.placement === "left" ? this.dropPosition.left : ""),
-                    right: (this.dropPosition.placement === "right" ? $(group).width() - this.dropPosition.right : ""),
-                    width: $(group).width() / getMaxColumns() + "px",
+                    right:
+                        (this.dropPosition.placement === "right" ? groupPosition.width - this.dropPosition.right : ""),
+                    width: groupPosition.width / getMaxColumns() + "px",
                 }).addClass(this.dropPosition.placement);
             }
+        } else {
+            // Re-enable the parent sortable instance
+            group.parents(".element-children").sortable("option", "disabled", false);
+            this.dropPosition = null;
+            this.dropPlaceholder.removeClass("left right");
         }
     }
 
@@ -619,6 +665,11 @@ export default class Preview extends PreviewCollection {
             deactivate() {
                 self.dropOverElement = null;
                 self.dropPlaceholder.removeClass("left right");
+
+                _.defer(() => {
+                    // Re-enable the parent sortable instance
+                    group.parents(".element-children").sortable("option", "disabled", false);
+                });
             },
             drop(event: Event, ui: JQueryUI.DroppableEventUIParam) {
                 if (self.dropOverElement && self.dropPosition) {
@@ -719,6 +770,15 @@ export default class Preview extends PreviewCollection {
             return;
         }
     }
+}
+
+export interface GroupPositionCache {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    outerWidth: number;
+    outerHeight: number;
 }
 
 export interface ResizeHistory {

@@ -62,6 +62,9 @@ export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableO
         start() {
             onSortStart.apply(this, [preview, ...arguments]);
         },
+        sort() {
+            onSort.apply(this, [preview, ...arguments]);
+        },
         receive() {
             onSortReceive.apply(this, [preview, ...arguments]);
         },
@@ -102,6 +105,21 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
 }
 
 /**
+ * On a sort action hide the placeholder if disabled
+ *
+ * @param {Preview} preview
+ * @param {Event} event
+ * @param {JQueryUI.SortableUIParams} ui
+ */
+function onSort(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    if ($(this).sortable("option", "disabled")) {
+        ui.placeholder.hide();
+    } else {
+        ui.placeholder.show();
+    }
+}
+
+/**
  * On sort stop hide any indicators
  */
 function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
@@ -120,6 +138,11 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
  */
 function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     if ($(event.target)[0] !== this) {
+        return;
+    }
+
+    // If the sortable instance is disabled don't complete this operation
+    if ($(this).sortable("option", "disabled")) {
         return;
     }
 
@@ -161,6 +184,12 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
  * @param {JQueryUI.SortableUIParams} ui
  */
 function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
+    // If the sortable instance is disabled don't complete this operation
+    if ($(this).sortable("option", "disabled")) {
+        ui.item.remove();
+        return;
+    }
+
     if (sortedContentType && (this === ui.item.parent()[0])) {
         const el = ui.item[0];
         const contentTypeInstance = ko.dataFor(el);

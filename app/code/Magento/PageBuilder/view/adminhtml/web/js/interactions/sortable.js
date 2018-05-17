@@ -49,6 +49,9 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       start: function start() {
         onSortStart.apply(this, [preview].concat(Array.prototype.slice.call(arguments)));
       },
+      sort: function sort() {
+        onSort.apply(this, [preview].concat(Array.prototype.slice.call(arguments)));
+      },
       receive: function receive() {
         onSortReceive.apply(this, [preview].concat(Array.prototype.slice.call(arguments)));
       },
@@ -87,6 +90,22 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     }
   }
   /**
+   * On a sort action hide the placeholder if disabled
+   *
+   * @param {Preview} preview
+   * @param {Event} event
+   * @param {JQueryUI.SortableUIParams} ui
+   */
+
+
+  function onSort(preview, event, ui) {
+    if ((0, _jquery)(this).sortable("option", "disabled")) {
+      ui.placeholder.hide();
+    } else {
+      ui.placeholder.show();
+    }
+  }
+  /**
    * On sort stop hide any indicators
    */
 
@@ -108,6 +127,11 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
   function onSortReceive(preview, event, ui) {
     if ((0, _jquery)(event.target)[0] !== this) {
+      return;
+    } // If the sortable instance is disabled don't complete this operation
+
+
+    if ((0, _jquery)(this).sortable("option", "disabled")) {
       return;
     } // If the parent can't receive drops we need to cancel the operation
 
@@ -154,6 +178,12 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
   function onSortUpdate(preview, event, ui) {
+    // If the sortable instance is disabled don't complete this operation
+    if ((0, _jquery)(this).sortable("option", "disabled")) {
+      ui.item.remove();
+      return;
+    }
+
     if (sortedContentType && this === ui.item.parent()[0]) {
       var el = ui.item[0];
 
