@@ -12,7 +12,7 @@
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}]" parameterized="true"/>
         <element name="image" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}]//img[@class='product-image-photo']" parameterized="true"/>
         <element name="name" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}]//strong//a[@class='product-item-link' and @href and contains(.,'{{arg2}}')]" parameterized="true"/>
-        <element name="price" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}]//span[@class='price' and .='${{arg2}}']" parameterized="true"/>
+        <element name="price" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}]//span[@class='price' and contains(text(), '${{arg2}}')]" parameterized="true"/>
         <element name="addToCart" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}]//button[contains(@class,'tocart') and @title='Add to Cart']" parameterized="true"/>
         <element name="addToWishList" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}]//a[contains(@class,'towishlist') and @title='Add to Wish List']" parameterized="true"/>
         <element name="addToCompare" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}]//a[contains(@class,'tocompare') and @title='Add to Compare']" parameterized="true"/>
@@ -28,12 +28,14 @@
         <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}][not(@class)]" parameterized="true"/>
         <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
         <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-product')]//div[@data-sku])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <!-- Empty Preview -->
+        <element name="emptyProduct" type="text" selector="(//div[contains(@class,'placeholder-text')])[{{arg1}}][text()='Product']" parameterized="true"/>
     </section>
     <section name="ProductOnStorefront">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-product-single')])[{{arg1}}]" parameterized="true"/>
         <element name="image" type="text" selector="(//div[contains(@class,'pagebuilder-product-single')])[{{arg1}}]//img[@class='product-image-photo']" parameterized="true"/>
         <element name="name" type="text" selector="(//div[contains(@class,'pagebuilder-product-single')])[{{arg1}}]//strong//a[@class='product-item-link' and @href and contains(.,'{{arg2}}')]" parameterized="true"/>
-        <element name="price" type="text" selector="(//div[contains(@class,'pagebuilder-product-single')])[{{arg1}}]//span[@class='price' and .='${{arg2}}']" parameterized="true"/>
+        <element name="price" type="text" selector="(//div[contains(@class,'pagebuilder-product-single')])[{{arg1}}]//span[@class='price' and contains(text(), '${{arg2}}')]" parameterized="true"/>
         <element name="addToCart" type="text" selector="(//div[contains(@class,'pagebuilder-product-single')])[{{arg1}}]//button[contains(@class,'tocart') and @title='Add to Cart']" parameterized="true"/>
         <element name="addToWishList" type="text" selector="(//div[contains(@class,'pagebuilder-product-single')])[{{arg1}}]//a[contains(@class,'towishlist') and @title='Add to Wish List']" parameterized="true"/>
         <element name="addToCompare" type="text" selector="(//div[contains(@class,'pagebuilder-product-single')])[{{arg1}}]//a[contains(@class,'tocompare') and @title='Add to Compare']" parameterized="true"/>
