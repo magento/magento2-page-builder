@@ -27,15 +27,14 @@ class Conditions extends Template
     private $serializer;
 
     /**
-     * Constructor
-     *
-     * @param \Magento\Framework\Serialize\Serializer\Json $serializer
+     * Conditions constructor.
      * @param Template\Context $context
+     * @param \Magento\Framework\Serialize\Serializer\Json $serializer
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\Serialize\Serializer\Json $serializer,
         \Magento\Backend\Block\Template\Context $context,
+        \Magento\Framework\Serialize\Serializer\Json $serializer,
         array $data = []
     ) {
         $this->serializer = $serializer;
