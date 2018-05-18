@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="navigateToAdminContentManagementPage">
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+    </actionGroup>
+    <actionGroup name="saveStoreConfiguration">
+        <comment userInput="saveStoreConfiguration" stepKey="comment"/>
+        <waitForElementVisible selector="{{StoreConfigSection.Save}}" stepKey="waitForSaveButton"/>
+        <click selector="{{StoreConfigSection.Save}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+    </actionGroup>
+    <actionGroup name="applyGoogleMapsAPIKey">
+        <arguments>
+            <argument name="apiKey" defaultValue="{{googleMapsAPIKey.valid}}" type="string"/>
+        </arguments>
+        <comment userInput="applyGoogleMapsAPIKey" stepKey="comment"/>
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="waitForGoogleMapsAPIKeyInputField"/>
+        <fillField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{apiKey}}" stepKey="inputAPIKey"/>
+        <pressKey selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" parameterArray="[\WebDriverKeys::ENTER]" stepKey="pressKey"/>
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+    </actionGroup>
+    <actionGroup name="inputGoogleMapsAPIKey">
+        <arguments>
+            <argument name="apiKey" defaultValue="{{googleMapsAPIKey.valid}}" type="string"/>
+        </arguments>
+        <comment userInput="inputGoogleMapsAPIKey" stepKey="comment"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="waitForGoogleMapsAPIKeyInputField"/>
+        <fillField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{apiKey}}" stepKey="inputAPIKey"/>
+        <pressKey selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" parameterArray="[\WebDriverKeys::ENTER]" stepKey="pressKey"/>
+    </actionGroup>
+    <actionGroup name="clickAndValidateGoogleMapsAPIKeyTestKeyButton">
+        <arguments>
+            <argument name="expectedResult" defaultValue="success" type="string"/>
+        </arguments>
+        <comment userInput="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="waitForTestKeyButtonEnabled"/>
+        <click selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="clickTestKeyButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult(expectedResult)}}" stepKey="waitForTestKeyButtonResult"/>
+    </actionGroup>
+</actionGroups>
