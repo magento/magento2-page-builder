@@ -510,3 +510,9 @@ define([], function () {
     return EmptyMobileImage;
 });
 ```
+
+## Preview component settings
+
+| Property                 | Description                                                                                                                         | Example        |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+|`fieldsToIgnoreOnRemove`| array containing field names to ignore when evaluating whether an element has been configured. The default value is an empty array. | `["tab_name"]` |

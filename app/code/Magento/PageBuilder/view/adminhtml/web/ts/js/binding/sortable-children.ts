@@ -6,11 +6,11 @@
 import $ from "jquery";
 import ko from "knockout";
 import events from "uiEvents";
-import ContentTypeInterface from "./content-type.d";
-import {moveArrayItem} from "./utils/array";
+import ContentTypeInterface from "../content-type.d";
+import {moveArrayItem} from "../utils/array";
 
 // Create a new sortable Knockout binding
-ko.bindingHandlers.previewSortable = {
+ko.bindingHandlers.sortableChildren = {
 
     /**
      * Init the draggable binding on an element
@@ -27,9 +27,8 @@ ko.bindingHandlers.previewSortable = {
         let originalPosition: number;
         $(element).sortable(options)
             .on("sortstart", (event: Event, ui: JQueryUI.SortableUIParams) => {
-                event.stopPropagation();
                 originalPosition = ui.item.index();
-                events.trigger("previewSortable:sortstart", {
+                events.trigger("sortableChildren:sortstart", {
                     instance,
                     originalPosition,
                     ui,
@@ -37,13 +36,16 @@ ko.bindingHandlers.previewSortable = {
             })
             .on("sortupdate", (event: Event, ui: JQueryUI.SortableUIParams) => {
                 const index = ui.item.index();
-                moveArrayItem(instance.children, originalPosition, index);
-                events.trigger("previewSortable:sortupdate", {
-                    instance,
-                    newPosition: index,
-                    originalPosition,
-                    ui,
-                });
+                if (originalPosition !== index) {
+                    ui.item.remove();
+                    moveArrayItem(instance.children, originalPosition, index);
+                    events.trigger("sortableChildren:sortupdate", {
+                        instance,
+                        newPosition: index,
+                        originalPosition,
+                        ui,
+                    });
+                }
             });
     },
 };

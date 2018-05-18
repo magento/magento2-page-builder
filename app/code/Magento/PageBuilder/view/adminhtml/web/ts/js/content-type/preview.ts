@@ -10,6 +10,7 @@ import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm
 import events from "uiEvents";
 import _ from "underscore";
 import "../binding/live-edit";
+import "../binding/sortable-children";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
@@ -21,7 +22,6 @@ import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import StyleAttributeFilter from "../master-format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
-import "../preview-sortable";
 import SortParamsInterface from "../sort-params.d";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
@@ -40,6 +40,13 @@ export default class Preview {
      * @deprecated
      */
     public previewStyle: KnockoutComputed<StyleAttributeMapperResult>;
+    /**
+     * Fields that should not be considered when evaluating whether an object has been configured.
+     *
+     * @see {Preview.isConfigured}
+     * @type {[string]}
+     */
+    protected fieldsToIgnoreOnRemove: string[] = [];
     private edit: Edit;
     private observableUpdater: ObservableUpdater;
     private mouseover: boolean = false;
@@ -421,6 +428,9 @@ export default class Preview {
         const data = this.parent.dataStore.get();
         let hasDataChanges = false;
         _.each(this.parent.config.fields, (field, key: string) => {
+            if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
+                return;
+            }
             let fieldValue = data[key];
             if (!fieldValue) {
                 fieldValue = "";
