@@ -76,4 +76,16 @@
         <seeElementInDOM selector="{{MapOnStorefront.width(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="seeInDOMEmptyMapWidthOnFrontend"/>
         <dontSeeElement selector="{{MapOnStorefront.width(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="dontSeeEmptyMapWidthOnFrontend"/>
     </actionGroup>
+    <actionGroup name="validateWarningMessageOnConfigurationPanel">
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.warningMessage}}" stepKey="waitFroWarningMessage"/>
+        <see userInput="{{PageBuilderGoogleMapsAPIKeys.warningMessage}}" selector="{{MapOnConfigurationPanel.warningMessage}}" stepKey="seeWarningMessage"/>
+    </actionGroup>
+    <actionGroup name="dontSeeWarningMessage">
+        <arguments>
+            <argument name="page" defaultValue="MapOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.base(index)}}" stepKey="seeMap"/>
+        <dontSee userInput="{{PageBuilderGoogleMapsAPIKeys.warningMessage}}" stepKey="dontSeeWarningMessage"/>
+    </actionGroup>
 </actionGroups>
