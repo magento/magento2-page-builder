@@ -5,9 +5,9 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-slider children-min-height" attr="data.main.attributes" data-bind="afterRender: onAfterRender, event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-slider children-min-height" attr="data.main.attributes" event="{ mouseover: onMouseOver, mouseout: onMouseOut },  mouseoverBubble: false" data-bind="afterRender: onAfterRender">
     <render args="getOptions().template" />
-    <div class="slider-container" css="data.main.css" ko-style="data.main.style" data-bind="afterRender: function(){console.log(this);}">
+    <div class="slider-container" css="data.main.css" ko-style="data.main.style">
         <render args="previewChildTemplate" />
     </div>
     <div class="slider-controls focus-options">
@@ -23,7 +23,7 @@
                 <span if="preview.previewData.slide_name() !== ''"
                       class="tooltip-content"
                       role="tooltip"
-                      data-bind="text: preview.previewData.slide_name()"/>
+                      html="preview.previewData.slide_name()"/>
             </div>
         </div>
     </div>
