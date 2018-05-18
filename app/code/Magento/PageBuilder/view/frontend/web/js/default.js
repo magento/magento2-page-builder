@@ -129,15 +129,15 @@ requirejs([
 
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {
-        var markers = [],
-            marker = [],
+        var mapPosition = {},
+            marker = {},
             location,
             address,
             city,
             comment,
             controls,
             country,
-            zip,
+            zipcode,
             mapOptions = {};
 
         /**
@@ -147,26 +147,26 @@ requirejs([
             $(element).height('300px');
         }
 
-        if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '[]') {
-            markers = JSON.parse(element.getAttribute('data-markers'));
+        if (element.hasAttribute('data-position') && element.getAttribute('data-position') !== '{}') {
+            mapPosition = JSON.parse(element.getAttribute('data-position'));
             location = element.getAttribute('data-location-name');
             address = element.getAttribute('data-address');
             city = element.getAttribute('data-city');
             comment = element.getAttribute('data-comment');
             country = element.getAttribute('data-country');
-            zip = element.getAttribute('data-zip');
+            zipcode = element.getAttribute('data-zipcode');
             controls = element.getAttribute('data-show-controls');
-            marker = [{
-                coordinates: markers[0],
+            marker = {
+                coordinates: mapPosition,
                 location: location,
                 address: address,
                 city: city,
                 comment: comment,
                 country: country,
-                zip: zip
-            }];
+                zipcode: zipcode
+            };
 
-            mapOptions.center = markers[0];
+            mapOptions.center = mapPosition;
             mapOptions.disableDefaultUI = controls !== 'true';
             mapOptions.mapTypeControl = controls === 'true';
             new GoogleMap(element, marker, mapOptions);
