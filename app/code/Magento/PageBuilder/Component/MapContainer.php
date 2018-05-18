@@ -15,24 +15,32 @@ use Magento\Framework\View\Element\UiComponentInterface;
 
 class MapContainer extends \Magento\Ui\Component\Container
 {
+    const GOOGLE_MAPS_API_KEY_PATH = 'cms/pagebuilder/google_maps_api_key';
+
     /**
      * @var UrlInterface $url
      */
     private $url;
-    private $scopeConfig;
-    private $keyValidator;
 
-    const GOOGLE_MAPS_API_KEY_PATH = 'cms/pagebuilder/google_maps_api_key';
+    /**
+     * @var ScopeConfigInterface $scopeConfig
+     */
+    private $scopeConfig;
+
+    /**
+     * @var \Magento\PageBuilder\Model\GoogleMaps\KeyValidator $keyValidator
+     */
+    private $keyValidator;
 
     /**
      * Constructor
      *
      * @param ContextInterface $context
-     * @param UiComponentInterface[] $components
-     * @param array $data
      * @param UrlInterface $url
      * @param ScopeConfigInterface $scopeConfig
      * @param \Magento\PageBuilder\Model\GoogleMaps\KeyValidator $keyValidator
+     * @param array $components
+     * @param array $data
      */
     public function __construct(
         ContextInterface $context,
@@ -56,9 +64,9 @@ class MapContainer extends \Magento\Ui\Component\Container
     {
         parent::prepare();
         $config = $this->getData('config');
-        $apiKey = $this->scopeConfig->getValue(self::GOOGLE_MAPS_API_KEY_PATH);
+        $apiKey = $this->scopeConfig->getValue(self::GOOGLE_MAPS_API_KEY_PATH) ?: "";
         $response = $this->keyValidator->validate($apiKey);
-        if (!$response["success"]) {
+        if (!$response['success']) {
             $config['visible'] = true;
         }
 

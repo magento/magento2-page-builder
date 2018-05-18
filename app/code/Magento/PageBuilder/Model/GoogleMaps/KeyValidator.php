@@ -13,10 +13,11 @@ class KeyValidator
 
     /**
      * Send test request to Google Maps and return response
+     *
      * @param string $apiKey
      * @return array
      */
-    public function validate($apiKey)
+    public function validate(string $apiKey): array
     {
         $testUrl = sprintf(self::GOOGLE_MAPS_EMBED_URL, $apiKey);
         $curl = curl_init($testUrl);

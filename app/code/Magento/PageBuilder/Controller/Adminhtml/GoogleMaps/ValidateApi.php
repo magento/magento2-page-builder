@@ -13,9 +13,12 @@ class ValidateApi extends \Magento\Backend\App\Action
 
     /**
      * @var \Magento\Framework\Controller\Result\JsonFactory
-     * @var \Magento\PageBuilder\Model\GoogleMaps\KeyValidator
      */
     private $resultJsonFactory;
+
+    /**
+     * @var \Magento\PageBuilder\Model\GoogleMaps\KeyValidator
+     */
     private $keyValidator;
 
     /**
