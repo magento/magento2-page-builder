@@ -591,6 +591,23 @@
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
         <waitForPageLoad stepKey="wait2"/>
     </actionGroup>
+    <actionGroup name="applyGoogleMapsAPIKey">
+        <arguments>
+            <argument name="apiKey" defaultValue="{{PageBuilderGoogleMapsAPIKeys.valid1}}" type="string"/>
+            <argument name="expectedResult" defaultValue="success" type="string"/>
+        </arguments>
+        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="waitForGoogleMapsAPIKeyInputField"/>
+        <fillField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{apiKey}}" stepKey="inputAPIKey"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="waitForTestKeyButtonEnabled"/>
+        <click selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="clickTestKeyButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult(expectedResult)}}" stepKey="waitForTestKeyButtonResult"/>
+        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+    </actionGroup>
     <actionGroup name="disablePageBuilderSetting">
         <!-- Enable first since it's dependent on disable Disclaimer modal showing -->
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage1" />
