@@ -34,6 +34,8 @@ This project repository contains PageBuilder developer documentation on the foll
 1. [Content type configuration]
 1. [How to add a new content type]
 1. [Events]
+1. [Master format]
+1. [Visual select]
 
 [Architecture overview]: app/code/Magento/PageBuilder/docs/architecture-overview.md
 [BlueFoot to PageBuilder data migration]: app/code/Magento/PageBuilder/docs/bluefoot-data-migration.md
@@ -44,6 +46,8 @@ This project repository contains PageBuilder developer documentation on the foll
 [Content type configuration]: app/code/Magento/PageBuilder/docs/content-type-configuration.md
 [How to add a new content type]: app/code/Magento/PageBuilder/docs/how-to-add-new-content-type.md
 [Events]: app/code/Magento/PageBuilder/docs/events.md
+[Master format]: app/code/Magento/PageBuilder/docs/master-format.md
+[Visual select]: app/code/Magento/PageBuilder/docs/visual-select.md
 
 ## Contribute to PageBuilder
 

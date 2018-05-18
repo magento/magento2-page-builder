@@ -14,6 +14,9 @@
     1. [Additional data configuration]
     1. [Content type configuration]
     1. [How to add a new content type]
+    1. [Events]
+    1. [Master format]
+    1. [Visual select] 
 5. [Roadmap and known issues]
 
 **[Architecture overview]** - An overview of the PageBuilder module architecture.
@@ -32,6 +35,12 @@
 
 **[How to add a new content type]** - Instructions for adding a new content type.
 
+**[Events]** - Reference documentation for PageBuilder events.
+
+**[Master format]** - Describes the master format for PageBuilder content types.
+
+**[Visual select]** - Documentation on customizing the visual select field.
+
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
 [Installation guide]: install.md
@@ -43,4 +52,7 @@
 [Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
+[Events]: events.md
+[Master format]: master-format.md
+[Visual select]: visual-select.md
 [Roadmap and known issues]: roadmap.md
