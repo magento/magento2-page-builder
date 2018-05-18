@@ -47,6 +47,7 @@ class Product extends \Magento\Catalog\Block\Product\AbstractProduct
                 $this->setData('product', $this->productRepository->get($this->getSku()));
                 $product = $this->getData('product');
             } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+                // Do nothing, we don't want anything to display on the storefront.
             }
         }
         return $product;
