@@ -7,7 +7,7 @@
 
 1. [Introduction]
 2. [Installation guide]
-3. Contribution guide
+3. [Contribution guide]
 4. [Developer documentation]
     1. [Architecture overview]
     1. [BlueFoot to PageBuilder data migration]
@@ -20,6 +20,7 @@
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
+[Contribution guide]: CONTRIBUTING.md
 [Installation guide]: install.md
 [Developer documentation]: developer-documentation.md
 [Architecture overview]: architecture-overview.md

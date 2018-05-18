@@ -4,7 +4,7 @@
 
 1. [Introduction]
 2. [Installation guide]
-3. Contribution guide
+3. [Contribution guide]
 4. **Developer documentation**
     1. [Architecture overview]
     1. [BlueFoot to PageBuilder data migration]
@@ -33,6 +33,7 @@
 **[How to add a new content type]** - Instructions for adding a new content type.
 
 [Introduction]: README.md
+[Contribution guide]: CONTRIBUTING.md
 [Installation guide]: install.md
 [Architecture overview]: architecture-overview.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
