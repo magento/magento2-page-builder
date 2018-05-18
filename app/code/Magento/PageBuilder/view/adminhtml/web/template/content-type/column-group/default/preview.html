@@ -13,12 +13,12 @@
         <div class="grid-line"></div>
         <div class="grid-line"></div>
     </div>
-    <div class="resize-ghost" data-bind="afterRender: (element) => { bindGhost.call($data, element); }"></div>
-    <div class="drop-placeholder" data-bind="afterRender: (element) => { bindDropPlaceholder.call($data, element); }"></div>
-    <div class="move-placeholder" data-bind="afterRender: (element) => { bindMovePlaceholder.call($data, element); }"></div>
+    <div class="resize-ghost" data-bind="afterRender: function (element) { bindGhost.call($data, element); }"></div>
+    <div class="drop-placeholder" data-bind="afterRender: function (element) { bindDropPlaceholder.call($data, element); }"></div>
+    <div class="move-placeholder" data-bind="afterRender: function (element) { bindMovePlaceholder.call($data, element); }"></div>
     <div class="element-children"
-         each="parent.getChildren()"
-         data-bind="afterRender: (element) => { bindInteractions.call($data, element); }">
+         each="$parent.getChildren()"
+         data-bind="afterRender: function (element) { bindInteractions.call($data, element); }">
         <render args="{name: preview.previewTemplate, data: preview}"/>
     </div>
 </div>

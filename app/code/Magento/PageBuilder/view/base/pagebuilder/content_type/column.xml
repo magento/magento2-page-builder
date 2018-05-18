@@ -22,7 +22,6 @@
             </allowed_parents>
             <appearances>
                 <appearance default="true" name="full-height">
-                    <data name="align_self">stretch</data>
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -39,6 +38,7 @@
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings"/>
+                                    <static_property source="align_self" value="stretch"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -60,7 +60,6 @@
                     <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
                 <appearance name="align-top">
-                    <data name="align_self">flex-start</data>
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -77,6 +76,7 @@
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings"/>
+                                    <static_property source="align_self" value="flex-start"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -114,6 +114,7 @@
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings"/>
+                                    <static_property source="align_self" value="center"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -130,7 +131,6 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <data name="align_self">center</data>
                     <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
                     <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
@@ -152,6 +152,7 @@
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings"/>
+                                    <static_property source="align_self" value="flex-end"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -168,7 +169,6 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <data name="align_self">flex-end</data>
                     <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
                     <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>

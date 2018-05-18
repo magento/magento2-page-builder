@@ -6,11 +6,12 @@
 -->
 
 <div class="pagebuilder-content-type type-container pagebuilder-column children-min-height"
+     attr="data.main.attributes"
      ko-style="data.main.style"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
-     css="{'empty-column': parent.children().length == 0}"
+     css="{'empty-column': $parent.children().length == 0}"
      data-bind="afterRender: initColumn">
-    <div class="pagebuilder-column-resize-handle" data-bind="afterRender: bindResizeHandle, visible: $index() < parent.parent.children().length - 1"></div>
+    <div class="pagebuilder-column-resize-handle" data-bind="afterRender: bindResizeHandle, visible: $index() < $parent.parent.children().length - 1"></div>
     <div class="pagebuilder-resizing" data-bind="css: {active: resizing}"></div>
     <render args="getOptions().template"></render>
     <render args="previewChildTemplate"></render>
@@ -19,6 +20,6 @@
     </div>
     <div class="pagebuilder-empty-container"
          css="{visible: parent.children().length == 0}"
-         i18n="Empty Column">
+         data-bind="i18n: 'Empty Column'">
     </div>
 </div>
