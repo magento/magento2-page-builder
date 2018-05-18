@@ -137,7 +137,7 @@ requirejs([
             comment,
             controls,
             country,
-            zip,
+            zipcode,
             mapOptions = {};
 
         /**
@@ -154,7 +154,7 @@ requirejs([
             city = element.getAttribute('data-city');
             comment = element.getAttribute('data-comment');
             country = element.getAttribute('data-country');
-            zip = element.getAttribute('data-zip');
+            zipcode = element.getAttribute('data-zipcode');
             controls = element.getAttribute('data-show-controls');
             marker = {
                 coordinates: mapPosition,
@@ -163,7 +163,7 @@ requirejs([
                 city: city,
                 comment: comment,
                 country: country,
-                zip: zip
+                zipcode: zipcode
             };
 
             mapOptions.center = mapPosition;

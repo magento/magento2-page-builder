@@ -54,9 +54,9 @@ export default class Preview extends BasePreview {
             mapTypeControl: controls === "true",
         };
         if (position !== "{}") {
-            const pos = this.getMarker();
-            marker = pos.marker;
-            options = pos.options;
+            const mapData = this.getMapData();
+            marker = mapData.marker;
+            options = mapData.options;
         }
         this.map = new GoogleMap(element, marker, options);
     }
@@ -68,8 +68,8 @@ export default class Preview extends BasePreview {
      */
     private updateMap() {
         if (this.data.main.attributes()["data-position"] !== "{}") {
-            const pos = this.getMarker();
-            this.map.onUpdate(pos.marker, pos.options);
+            const mapData = this.getMapData();
+            this.map.onUpdate(mapData.marker, mapData.options);
         }
     }
 
@@ -78,7 +78,7 @@ export default class Preview extends BasePreview {
      *
      * @returns {Object}
      */
-    private getMarker() {
+    private getMapData() {
         const attributes = this.data.main.attributes();
         const location: string = attributes["data-location-name"];
         let position: string = attributes["data-position"];
@@ -87,7 +87,7 @@ export default class Preview extends BasePreview {
         const comment: string = attributes["data-comment"];
         const controls = attributes["data-show-controls"];
         const country: string = attributes["data-country"];
-        const zip: string = attributes["data-zip"];
+        const zipcode: string = attributes["data-zipcode"];
         if (position !== "" && typeof position === "string") {
             position = JSON.parse(position);
         }
@@ -103,7 +103,7 @@ export default class Preview extends BasePreview {
                 city,
                 comment,
                 country,
-                zip,
+                zipcode,
             },
             options: {
                 center: {

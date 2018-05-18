@@ -16,51 +16,37 @@ namespace Magento\PageBuilder\Model\Config\Source;
 class Country implements \Magento\Framework\Option\ArrayInterface
 {
     /**
-     * Countries
-     *
      * @var \Magento\Directory\Model\ResourceModel\Country\Collection
      */
-    private $_countryCollection;
+    private $countryCollection;
 
     /**
-     * Options array
-     *
      * @var array
      */
-    private $_options;
+    private $options;
 
     /**
      * @param \Magento\Directory\Model\ResourceModel\Country\Collection $countryCollection
      */
     public function __construct(\Magento\Directory\Model\ResourceModel\Country\Collection $countryCollection)
     {
-        $this->_countryCollection = $countryCollection;
+        $this->countryCollection = $countryCollection;
     }
-
-
 
     /**
      * Return options array
      *
-     * @param string|array $foregroundCountries
      * @return array
      */
-    public function toOptionArray($foregroundCountries = ''): array
+    public function toOptionArray(): array
     {
-        if (!$this->_options) {
-            $this->_options = $this->_countryCollection->loadData()->setForegroundCountries(
-                $foregroundCountries
-            )->toOptionArray(
-                false
-            );
+        if (!$this->options) {
+            $this->options = $this->countryCollection->loadData()->toOptionArray(false);
+            foreach ($this->options as $optionIndex => $optionData) {
+                $this->options[$optionIndex]['value'] = $optionData['label'];
+            }
         }
 
-        $options = $this->_options;
-
-        for ($i = 0; $i < count($options); $i++) {
-            $options[$i]['value'] = $options[$i]['label'];
-        }
-
-        return $options;
+        return $this->options;
     }
 }

@@ -64,9 +64,9 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
       };
 
       if (position !== "{}") {
-        var pos = this.getMarker();
-        marker = pos.marker;
-        options = pos.options;
+        var mapData = this.getMapData();
+        marker = mapData.marker;
+        options = mapData.options;
       }
 
       this.map = new _map(element, marker, options);
@@ -80,8 +80,8 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
     _proto.updateMap = function updateMap() {
       if (this.data.main.attributes()["data-position"] !== "{}") {
-        var pos = this.getMarker();
-        this.map.onUpdate(pos.marker, pos.options);
+        var mapData = this.getMapData();
+        this.map.onUpdate(mapData.marker, mapData.options);
       }
     };
     /**
@@ -91,7 +91,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
      */
 
 
-    _proto.getMarker = function getMarker() {
+    _proto.getMapData = function getMapData() {
       var attributes = this.data.main.attributes();
       var location = attributes["data-location-name"];
       var position = attributes["data-position"];
@@ -100,7 +100,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
       var comment = attributes["data-comment"];
       var controls = attributes["data-show-controls"];
       var country = attributes["data-country"];
-      var zip = attributes["data-zip"];
+      var zipcode = attributes["data-zipcode"];
 
       if (position !== "" && typeof position === "string") {
         position = JSON.parse(position);
@@ -117,7 +117,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
           city: city,
           comment: comment,
           country: country,
-          zip: zip
+          zipcode: zipcode
         },
         options: {
           center: {

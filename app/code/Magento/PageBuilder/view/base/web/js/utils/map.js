@@ -67,14 +67,14 @@ define([
                 var address = newMarker.address ? newMarker.address + '<br/>' : '';
                 var city = newMarker.city || '';
                 var country = newMarker.country || '';
-                var zip = newMarker.zip ? ',' + newMarker.zip : '';
+                var zipcode = newMarker.zipcode ? ',' + newMarker.zipcode : '';
 
                 var contentString =
                     '<div>' +
                     '<h3><b>' + location + '</b></h3>' +
                     '<p>' + comment + '</p>' +
                     '<p>' + address +
-                    city + zip + '<br/>' +
+                    city + zipcode + '<br/>' +
                     country + '</p>' +
                     '</div>';
 
