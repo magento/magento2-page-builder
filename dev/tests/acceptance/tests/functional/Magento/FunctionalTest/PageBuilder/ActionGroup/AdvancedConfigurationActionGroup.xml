@@ -8,6 +8,23 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateTextAlignments">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="{{AdvancedForm.advancedAlignDefault}}" stepKey="seeAlignDefault"/>
+        <seeElement selector="{{AdvancedForm.advancedAlignLeft}}" stepKey="seeAlignLeft"/>
+        <seeElement selector="{{AdvancedForm.advancedAlignCenter}}" stepKey="seeAlignCenter"/>
+        <seeElement selector="{{AdvancedForm.advancedAlignRight}}" stepKey="seeAlignRight"/>
+    </actionGroup>
+    <actionGroup name="validateTextAlignment">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="//li[@name='{{property.value}}' and contains(@class,'active')]" stepKey="alignmentIsSelected" />
+    </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldMargins">
         <arguments>
             <argument name="property" defaultValue=""/>
@@ -17,7 +34,7 @@
         <fillField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="fillMarginRightField"/>
         <fillField selector="{{AdvancedForm.advancedMarginLeft}}" userInput="{{property.marginLeft}}" stepKey="fillMarginLeftField"/>
         <fillField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="fillMarginBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldPadding">
         <arguments>
@@ -28,7 +45,7 @@
         <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldMarginsAndPadding">
         <arguments>
@@ -36,7 +53,7 @@
         </arguments>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <clearField selector="{{AdvancedForm.advancedMarginTop}}" stepKey="clearMarginTopField"/>
         <clearField selector="{{AdvancedForm.advancedMarginRight}}" stepKey="clearMarginRightField"/>
         <clearField selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="clearMarginLeftField"/>
@@ -45,7 +62,7 @@
         <clearField selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="clearPaddingRightField"/>
         <clearField selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="clearPaddingLeftField"/>
         <clearField selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="clearPaddingBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldMargins">
         <arguments>
@@ -56,7 +73,7 @@
         <clearField selector="{{AdvancedForm.advancedMarginRight}}" stepKey="clearMarginRightField"/>
         <clearField selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="clearMarginLeftField"/>
         <clearField selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="clearMarginBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldPadding">
         <arguments>
@@ -67,7 +84,7 @@
         <clearField selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="clearPaddingRightField"/>
         <clearField selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="clearPaddingLeftField"/>
         <clearField selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="clearPaddingBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldMarginsAndPadding">
         <arguments>
@@ -75,7 +92,7 @@
         </arguments>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <fillField selector="{{AdvancedForm.advancedMarginTop}}" userInput="{{property.marginTop}}" stepKey="fillMarginTopField"/>
         <fillField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="fillMarginRightField"/>
         <fillField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="fillMarginBottomField"/>
@@ -84,7 +101,7 @@
         <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="seeInMarginFieldsSlideOutPanel">
         <arguments>

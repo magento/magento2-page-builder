@@ -33,10 +33,10 @@ export default class Preview extends BasePreview {
     ) {
         super(parent, config, observableUpdater);
         const slider = this.parent.parent;
-        this.displayLabel($t("Slide") + (slider.children().indexOf(this.parent) + 1));
+        this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
         slider.children.subscribe((children) => {
             const index = children.indexOf(this.parent);
-            this.displayLabel($t("Slide") + (index + 1));
+            this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
         });
     }
     /**
