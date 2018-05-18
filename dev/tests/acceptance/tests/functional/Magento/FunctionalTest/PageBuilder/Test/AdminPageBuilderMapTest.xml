@@ -1021,4 +1021,172 @@
         <!-- Verify Map Not In Storefront -->
         <dontSeeElementInDOM selector="{{MapOnStorefront.base('1')}}" stepKey="dontSeeContentBlockInStorefront"/>
     </test>
+    <test name="MapInvalidApiKeyWarningMessage">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-88225: Google Map API Configuration"/>
+            <title value="Map - Invalid Api Key Warning Message"/>
+            <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-91906"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyInvalidKey">
+                <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
+            </actionGroup>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
+                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Message On Configuration -->
+        <comment userInput="Validate Message On Configuration" stepKey="commentValidateMessageOnConfiguration"/>
+        <actionGroup ref="validateWarningMessageOnConfigurationPanel" stepKey="validateWarningMessageOnConfigurationPanel"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <!-- Validate Message On Stage -->
+        <comment userInput="Validate Message On Stage" stepKey="commentValidateMessageOnStage"/>
+        <actionGroup ref="dontSeeWarningMessage" stepKey="dontSeeWarningMessageOnStage">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Message On Stage After Save -->
+        <comment userInput="Validate Message On Stage After Save" stepKey="commentValidateMessageOnStageAfterSave"/>
+        <actionGroup ref="dontSeeWarningMessage" stepKey="dontSeeWarningMessageOnStageAfterSave">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Message On Configuration After Save -->
+        <comment userInput="Validate Message On Configuration After Save" stepKey="commentValidateMessageOnConfigurationAfterSave"/>
+        <actionGroup ref="validateWarningMessageOnConfigurationPanel" stepKey="validateWarningMessageOnConfigurationPanelAfterSave"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Message On Storefront After Save -->
+        <comment userInput="Validate Message On Storefront After Save" stepKey="commentValidateMessageOnStorefrontAfterSave"/>
+        <waitForElement selector="{{MapOnStorefront.emptyMap('1')}}" stepKey="seeInDOMEmptyMapOnFrontend"/>
+        <dontSee userInput="{{googleMapsAPIKey.warningMessage}}" stepKey="dontSeeWarningMessageOnStorefrontAfterSave"/>
+    </test>
+    <test name="MapInvalidApiKeyWarningMessageOnExistingPage">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-88225: Google Map API Configuration"/>
+            <title value="Map - Invalid Api Key Warning Message On Existing Page"/>
+            <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront on existing page."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-91904"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyValidKey"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
+                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="addMapPin" stepKey="addMapPin"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyInvalidKey">
+            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
+        </actionGroup>
+        <actionGroup ref="searchAndViewCmsPage" stepKey="searchAndViewCmsPage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Message On Stage -->
+        <comment userInput="Validate Message On Stage" stepKey="commentValidateMessageOnStage"/>
+        <actionGroup ref="dontSeeWarningMessage" stepKey="dontSeeWarningMessageOnStage">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Message On Configuration -->
+        <comment userInput="Validate Message On Configuration" stepKey="commentValidateMessageOnConfiguration"/>
+        <actionGroup ref="validateWarningMessageOnConfigurationPanel" stepKey="validateWarningMessageOnConfigurationPanel"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Message On Storefront -->
+        <comment userInput="Validate Message On Storefront" stepKey="commentValidateMessageOnStorefront"/>
+        <actionGroup ref="dontSeeWarningMessage" stepKey="dontSeeWarningMessageOnStoreFront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapInvalidApiKeyWarningMessageLink">
+        <annotations>
+            <features value="Pagebuilder: Map"/>
+            <stories value="MAGETWO-88225: Google Map API Configuration"/>
+            <title value="Map - Invalid Api Key Warning Message Link"/>
+            <description value="A user should see a warning message on the configuration panel with a link that takes you to the configuration page."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-91903"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyInvalidKey">
+                <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
+            </actionGroup>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
+                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Warning Message Link -->
+        <comment userInput="Validate Warning Message Link" stepKey="commentValidateWarningMessageLink"/>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.warningMessage}}" stepKey="waitFroWarningMessage"/>
+        <click selector="{{MapOnConfigurationPanel.warningMessageLink}}" stepKey="clickLink"/>
+        <waitForElementVisible selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="waitForAdvancedContentTools"/>
+    </test>
 </tests>
