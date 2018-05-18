@@ -70,8 +70,8 @@ To help you prepare for these changes, we are publishing a [roadmap] of features
 We want to hear what you think of PageBuilder!
 We are particularly interested on your thoughts on the following:
 
-* [How would you customize PageBuilder and what do you need to accomplish this task?](magento/magento2-page-builder#57)
-* [What web content API do you use or would like to see in PageBuilder?](magento/magento2-page-builder#58)
+* [How would you customize PageBuilder and what do you need to accomplish this task?](https://github.com/magento/magento2-page-builder/issues/57)
+* [What web content API do you use or would like to see in PageBuilder?](https://github.com/magento/magento2-page-builder/issues/58)
 
 To participate in technical discussions and ask questions, join us in [Slack].
 
