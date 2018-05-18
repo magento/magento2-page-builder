@@ -26,6 +26,7 @@ define([
                         conditions_encoded: null
                     },
                     result = model.toDom('n/a', data);
+
                 expect(result).toBe('');
             });
             it('Should return an empty string when conditions_encoded is false', function () {
@@ -34,6 +35,7 @@ define([
                         conditions_encoded: false
                     },
                     result = model.toDom('n/a', data);
+
                 expect(result).toBe('');
             });
             it('Should return an empty string when conditions_encoded is empty string', function () {
@@ -42,6 +44,7 @@ define([
                         conditions_encoded: ''
                     },
                     result = model.toDom('n/a', data);
+
                 expect(result).toBe('');
             });
             it('Should return an empty string when conditions_encoded is empty undefined', function () {
@@ -58,6 +61,7 @@ define([
                         conditions_encoded: '[]'
                     },
                     result = model.toDom('n/a', data);
+
                 expect(result).toMatch(/^\{\{widget\s.*\}\}$/);
                 expect(result).toContain(' products_count="123"');
                 expect(result).toContain(' conditions_encoded="[]"');
@@ -75,6 +79,7 @@ define([
                     },
                     result = model.toDom('n/a', data),
                     matchText = '^[`1`:^[`type`:`My||Type`,`aggregator`:`all`^]^]';
+
                 expect(result).toContain(' conditions_encoded="' + matchText + '"');
                 expect(result).toContain(' type="Magento\\CatalogWidget\\Block\\Product\\ProductsList"');
                 expect(result).toContain(' template="Magento_CatalogWidget::product/widget/content/grid.phtml"');
@@ -92,6 +97,7 @@ define([
                     },
                     input = '{{widget products_count="123"}}',
                     result = model.fromDom(input);
+
                 expect(result.products_count).toBe(expected.products_count);
                 expect(result.conditions_encoded).toBe(expected.conditions_encoded);
             });
@@ -104,6 +110,7 @@ define([
                         'products_count="123" ' +
                         'conditions_encoded="^[`1`:^[`type`:`My||Type`,`aggregator`:`all`^]^]"}}',
                     result = model.fromDom(input);
+
                 expect(result.products_count).toBe(expected.products_count);
                 expect(result.conditions_encoded).toBe(expected.conditions_encoded);
             });
