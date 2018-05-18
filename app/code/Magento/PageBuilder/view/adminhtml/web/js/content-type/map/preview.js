@@ -55,21 +55,21 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.generateMap = function generateMap(element) {
-      var position = this.data.main.attributes()["data-markers"] || "[]";
+      var position = this.data.main.attributes()["data-position"] || "{}";
       var controls = this.data.main.attributes()["data-show-controls"] || "true";
-      var markers = [];
+      var marker = {};
       var options = {
         disableDefaultUI: controls !== "true",
         mapTypeControl: controls === "true"
       };
 
-      if (position !== "[]") {
-        var pos = this.getMarkers();
-        markers = pos.markers;
+      if (position !== "{}") {
+        var pos = this.getMarker();
+        marker = pos.marker;
         options = pos.options;
       }
 
-      this.map = new _map(element, markers, options);
+      this.map = new _map(element, marker, options);
     };
     /**
      * Updates map
@@ -79,9 +79,9 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.updateMap = function updateMap() {
-      if (this.data.main.attributes()["data-markers"] !== "[]") {
-        var pos = this.getMarkers();
-        this.map.onUpdate(pos.markers, pos.options);
+      if (this.data.main.attributes()["data-position"] !== "{}") {
+        var pos = this.getMarker();
+        this.map.onUpdate(pos.marker, pos.options);
       }
     };
     /**
@@ -91,10 +91,10 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
      */
 
 
-    _proto.getMarkers = function getMarkers() {
+    _proto.getMarker = function getMarker() {
       var attributes = this.data.main.attributes();
       var location = attributes["data-location-name"];
-      var position = attributes["data-markers"];
+      var position = attributes["data-position"];
       var address = attributes["data-address"];
       var city = attributes["data-city"];
       var comment = attributes["data-comment"];
@@ -107,10 +107,10 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
       }
 
       return {
-        markers: [{
+        marker: {
           coordinates: {
-            lat: parseFloat(position[0].lat),
-            lng: parseFloat(position[0].lng)
+            lat: parseFloat(position.lat),
+            lng: parseFloat(position.lng)
           },
           location: location,
           address: address,
@@ -118,11 +118,11 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
           comment: comment,
           country: country,
           zip: zip
-        }],
+        },
         options: {
           center: {
-            lat: parseFloat(position[0].lat),
-            lng: parseFloat(position[0].lng)
+            lat: parseFloat(position.lat),
+            lng: parseFloat(position.lng)
           },
           disableDefaultUI: controls !== "true",
           mapTypeControl: controls === "true"

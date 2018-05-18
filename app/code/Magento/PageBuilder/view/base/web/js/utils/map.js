@@ -43,65 +43,62 @@ define([
 
         /**
          * Callback function on map config update
-         * @param {Array} newMarkers
+         * @param {Array} newMarker
          * @param {Object} updateOptions
          */
-        this.onUpdate = function (newMarkers, updateOptions) {
+        this.onUpdate = function (newMarker, updateOptions) {
             this.map.setOptions(updateOptions);
-            this.setMarkers(newMarkers);
+            this.setMarker(newMarker);
         };
 
         /**
          * Sets the markers to selected map
-         * @param {Array} newMarkers
+         * @param {} newMarker
          */
-        this.setMarkers = function (newMarkers) {
+        this.setMarker = function (newMarker) {
             this.markers.forEach(function (marker) {
                 marker.setMap(null);
             }, this);
             this.markers = [];
 
-            if (newMarkers) {
-                newMarkers.forEach(function (marker) {
+            if (newMarker && !_.isEmpty(newMarker)) {
+                var location = newMarker.location || '';
+                var comment = newMarker.comment || '';
+                var address = newMarker.address ? newMarker.address + '<br/>' : '';
+                var city = newMarker.city || '';
+                var country = newMarker.country || '';
+                var zip = newMarker.zip ? ',' + newMarker.zip : '';
 
-                    var location = marker.location || '';
-                    var comment = marker.comment || '';
-                    var address = marker.address ? marker.address + '<br/>' : '';
-                    var city = marker.city || '';
-                    var country = marker.country || '';
-                    var zip = marker.zip ? ',' + marker.zip : '';
+                var contentString =
+                    '<div>' +
+                    '<h3><b>' + location + '</b></h3>' +
+                    '<p>' + comment + '</p>' +
+                    '<p>' + address +
+                    city + zip + '<br/>' +
+                    country + '</p>' +
+                    '</div>';
 
-                    var contentString =
-                        '<div>' +
-                        '<h3><b>' + location + '</b></h3>' +
-                        '<p>' + comment + '</p>' +
-                        '<p>' + address +
-                        city + zip + '<br/>' +
-                        country + '</p>' +
-                        '</div>';
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 350
+                });
 
-                    var infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                        maxWidth: 350
-                    });
+                var newCreatedMarker = new google.maps.Marker({
+                    map: this.map,
+                    position: googleLatLng(newMarker.coordinates),
+                    title: newMarker.location
+                });
 
-                    var newMarker = new google.maps.Marker({
-                        map: this.map,
-                        position: googleLatLng(marker.coordinates),
-                        title: marker.location
-                    });
+                if(newMarker.location) {
+                    newCreatedMarker.addListener('click', function() {
+                        infowindow.open(this.map, newCreatedMarker);
+                    }, this);
+                }
 
-                    if(marker.location) {
-                        newMarker.addListener('click', function() {
-                            infowindow.open(this.map, newMarker);
-                        });
-                    }
-                    
-                    this.markers.push(newMarker);
-                }, this);
+                this.markers.push(newCreatedMarker);
             }
         };
 
-        this.setMarkers(markers);
+        this.setMarker(markers);
     };
 });

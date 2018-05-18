@@ -45,20 +45,20 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private generateMap(element: Element) {
-        const position: string = this.data.main.attributes()["data-markers"] || "[]";
+        const position: string = this.data.main.attributes()["data-position"] || "{}";
         const controls = this.data.main.attributes()["data-show-controls"] || "true";
-        let markers: any[] = [];
+        let marker: {} = {};
 
         let options = {
             disableDefaultUI: controls !== "true",
             mapTypeControl: controls === "true",
         };
-        if (position !== "[]") {
-            const pos = this.getMarkers();
-            markers = pos.markers;
+        if (position !== "{}") {
+            const pos = this.getMarker();
+            marker = pos.marker;
             options = pos.options;
         }
-        this.map = new GoogleMap(element, markers, options);
+        this.map = new GoogleMap(element, marker, options);
     }
 
     /**
@@ -67,9 +67,9 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private updateMap() {
-        if (this.data.main.attributes()["data-markers"] !== "[]") {
-            const pos = this.getMarkers();
-            this.map.onUpdate(pos.markers, pos.options);
+        if (this.data.main.attributes()["data-position"] !== "{}") {
+            const pos = this.getMarker();
+            this.map.onUpdate(pos.marker, pos.options);
         }
     }
 
@@ -78,10 +78,10 @@ export default class Preview extends BasePreview {
      *
      * @returns {Object}
      */
-    private getMarkers() {
+    private getMarker() {
         const attributes = this.data.main.attributes();
         const location: string = attributes["data-location-name"];
-        let position: string = attributes["data-markers"];
+        let position: string = attributes["data-position"];
         const address: string = attributes["data-address"];
         const city: string = attributes["data-city"];
         const comment: string = attributes["data-comment"];
@@ -93,10 +93,10 @@ export default class Preview extends BasePreview {
         }
 
         return {
-            markers: [{
-                coordinates : {
-                    lat: parseFloat(position[0].lat),
-                    lng: parseFloat(position[0].lng),
+            marker: {
+                coordinates: {
+                    lat: parseFloat(position.lat),
+                    lng: parseFloat(position.lng),
                 },
                 location,
                 address,
@@ -104,11 +104,11 @@ export default class Preview extends BasePreview {
                 comment,
                 country,
                 zip,
-            }],
+            },
             options: {
                 center: {
-                    lat: parseFloat(position[0].lat),
-                    lng: parseFloat(position[0].lng),
+                    lat: parseFloat(position.lat),
+                    lng: parseFloat(position.lng),
                 },
                 disableDefaultUI: controls !== "true",
                 mapTypeControl: controls === "true",

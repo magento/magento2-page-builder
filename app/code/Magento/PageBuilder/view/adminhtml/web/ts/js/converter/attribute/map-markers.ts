@@ -14,7 +14,7 @@ export default class MapMarkers implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        return value !== "[]" ? JSON.parse(value)[0] : "";
+        return value !== "{}" ? JSON.parse(value) : "";
     }
 
     /**
@@ -25,11 +25,11 @@ export default class MapMarkers implements ConverterInterface {
      * @returns {string}
      */
     public toDom(name: string, data: object): string {
-        let result = "[]";
+        let result = "{}";
         if (typeof data[name] === "object") {
             data[name].lat = parseFloat(data[name].lat);
             data[name].lng = parseFloat(data[name].lng);
-            result = JSON.stringify([data[name]]);
+            result = JSON.stringify(data[name]);
         }
 
         return result;
