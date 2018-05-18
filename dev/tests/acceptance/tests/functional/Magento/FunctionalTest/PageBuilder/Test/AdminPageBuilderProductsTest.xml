@@ -687,17 +687,19 @@
             <features value="Pagebuilder: Products"/>
             <stories value="MAGETWO-71425: Product list configuration with Magento Condition Tree"/>
             <title value="Products - Show out of stock"/>
-            <description value=""/>
+            <description value="Products display and respect global configuration settings Show Out Of Stock products"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-90015"/>
+            <testCaseId value="MAGETWO-91579"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-products"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
-            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <actionGroup ref="displayOutOfStockProduct" stepKey="displayOutOfStockProduct"/>
+            <createData entity="_defaultCmsPage" stepKey="createdCMSPage" />
+            <createData entity="PageBuilderProductsSubCategory" stepKey="createPreReqCategory"/>
             <createData entity="SimpleProduct3" stepKey="createPreReqProductA">
                 <requiredEntity createDataKey="createPreReqCategory"/>
             </createData>
@@ -709,13 +711,15 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <!--<deleteData createDataKey="createPreReqProduct" stepKey="deletePreReqProduct"/>-->
-            <!--<deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>-->
-            <!--<actionGroup ref="DisabledWYSIWYG" stepKey="disabledWYSIWYG"/>-->
-            <!--<actionGroup ref="logout" stepKey="logout"/>-->
+            <deleteData createDataKey="createPreReqProductA" stepKey="deletePreReqProductA"/>
+            <deleteData createDataKey="createPreReqProductB" stepKey="deletePreReqProductB"/>
+            <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory"/>
+            <deleteData createDataKey="createdCMSPage" stepKey="deleteCreatedCMSPage"/>
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disabledWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderProductsContentBlock"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSBPage1">
+            <argument name="CMSPage" value="$$createdCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderProductsContentBlock"/>
@@ -730,25 +734,34 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage After Save Setting -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage">
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage1">
             <argument name="page" value="ProductsOnStage"/>
             <argument name="count" value="2"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="validateProductInProductsOnStage" stepKey="validateProductsStage">
-            <argument name="page" value="ProductsOnStage"/>
-        </actionGroup>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderProductsContentBlock"/>
-        </actionGroup>
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront1"/>
+        <amOnPage url="$$createdCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
         <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront">
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront1">
             <argument name="page" value="ProductsOnStorefront"/>
             <argument name="count" value="2"/>
         </actionGroup>
-        <actionGroup ref="dontDisplayOutOfStockProduct" stepKey="dontDisplayOutOfStockProduct"/>
-
+        <actionGroup ref="noDisplayOutOfStockProduct" stepKey="dontDisplayOutOfStockProduct"/>
+        <actionGroup ref="ClearCacheActionGroup" stepKey="clearMagentoCache"/>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSBPage2">
+            <argument name="CMSPage" value="$$createdCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <comment userInput="Validate Stage" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductsCountStage2">
+            <argument name="page" value="ProductsOnStage"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront2"/>
+        <actionGroup ref="validateProductCountInProducts" stepKey="validateProductCountStorefront2">
+            <argument name="page" value="ProductsOnStorefront"/>
+            <argument name="count" value="1"/>
+        </actionGroup>
     </test>
 </tests>
