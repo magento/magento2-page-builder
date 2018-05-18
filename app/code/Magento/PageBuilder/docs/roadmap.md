@@ -4,7 +4,7 @@
 
 1. [Introduction]
 2. [Installation guide]
-3. Contribution guide
+3. [Contribution guide]
 4. [Developer documentation]
 5. **Roadmap and Known Issues**
    1. [Overview](#overview)
@@ -14,6 +14,7 @@
 
 [Introduction]: README.md
 [Installation guide]: install.md
+[Contribution guide]: CONTRIBUTING.md
 [Developer documentation]: developer-documentation.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
 [Third-party content type migration]: new-content-type-example.md

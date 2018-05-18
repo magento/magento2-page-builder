@@ -1,5 +1,36 @@
 # Contributing to Magento 2 code
 
+## Navigation
+
+1. [Introduction]
+2. [Installation guide]
+3. **Contribution guide**
+    1. [Overview](#overview)
+    1. [Contribution requirements](#contribution-requirements)
+    1. [Contribution process](#contribution-process)
+    1. [Code of Conduct](#code-of-conduct)
+4. [Developer documentation]
+5. [Roadmap and known issues]
+
+[Introduction]: README.md
+[Installation Guide]: install.md
+[Contribution guide]: CONTRIBUTING.md
+[Developer documentation]: developer-documentation.md
+[Architecture overview]: architecture-overview.md
+[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
+[Third-party content type migration]: new-content-type-example.md
+[Iconography]: iconography.md
+[Module integration]: module-integration.md
+[Additional data configuration]: custom-configuration.md
+[Content type configuration]: content-type-configuration.md
+[How to add a new content type]: how-to-add-new-content-type.md
+[Events]: events.md
+[Master format]: master-format.md
+[Visual select]: visual-select.md
+[Roadmap and Known Issues]: roadmap.m
+
+## Overview
+
 Contributions to the Magento 2 codebase are done using the fork & pull model.
 This contribution model has contributors maintaining their own copy of the forked codebase (which can easily be synced with the main copy). The forked repository is then used to submit a request to the base repository to “pull” a set of changes (hence the phrase “pull request”).
 

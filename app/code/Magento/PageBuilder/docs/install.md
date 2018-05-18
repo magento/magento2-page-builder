@@ -8,11 +8,12 @@
     1. [Composer installation](#composer-installation)
     1. [GitHub installation](#github-installation)
     1. [Activation](#activation)
-3. Contribution guide
+3. [Contribution guide]
 4. [Developer documentation]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
+[Contribution guide]: CONTRIBUTING.md
 [Developer documentation]: developer-documentation.md
 [Roadmap and known issues]: roadmap.md
 
