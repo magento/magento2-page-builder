@@ -64,7 +64,7 @@ class MapContainer extends \Magento\Ui\Component\Container
     {
         parent::prepare();
         $config = $this->getData('config');
-        $apiKey = $this->scopeConfig->getValue(self::GOOGLE_MAPS_API_KEY_PATH);
+        $apiKey = $this->scopeConfig->getValue(self::GOOGLE_MAPS_API_KEY_PATH) ?: "";
         $response = $this->keyValidator->validate($apiKey);
         if (!$response['success']) {
             $config['visible'] = true;
