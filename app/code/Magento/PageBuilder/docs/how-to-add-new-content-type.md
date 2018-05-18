@@ -103,7 +103,8 @@ In the `simple.xml` above we defined border attributes and form for component. L
             <collapsible>true</collapsible>
             <opened>true</opened>
             <imports>
-                <link name="appearancesHidden">${$.name}.appearance:options</link>
+                <link name="hideFieldset">${$.name}.appearance:options</link>
+                <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
         <field name="appearance" sortOrder="10" formElement="select" component="Magento_PageBuilder/js/form/element/dependent-select">
