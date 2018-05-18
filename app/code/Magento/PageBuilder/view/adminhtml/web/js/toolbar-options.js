@@ -10,13 +10,13 @@ define(["knockout"], function (_knockout) {
     /**
      * Toolbar Options constructor
      *
-     * @param parent
+     * @param preview
      * @param options
      */
-    function ToolbarOptions(parent, options) {
+    function ToolbarOptions(preview, options) {
       this.options = _knockout.observableArray([]);
-      this.parent = void 0;
-      this.parent = parent;
+      this.preview = void 0;
+      this.preview = preview;
       this.options(options);
     }
 
@@ -30,13 +30,13 @@ define(["knockout"], function (_knockout) {
      * @param {ToolbarOptionsValueInterface} value
      */
     _proto.onClickOption = function onClickOption(option, value) {
-      var defaultValue = this.parent.config.fields[option.key].default;
-      var currentValue = this.parent.previewData[option.key]();
+      var defaultValue = this.preview.config.fields[option.key].default;
+      var currentValue = this.preview.previewData[option.key]();
 
       if (currentValue === value.value) {
-        this.parent.updateData(option.key, defaultValue);
+        this.preview.updateData(option.key, defaultValue);
       } else {
-        this.parent.updateData(option.key, value.value);
+        this.preview.updateData(option.key, value.value);
       }
     };
 

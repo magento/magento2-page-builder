@@ -8,16 +8,16 @@ import Preview from "./content-type/preview";
 
 export class ToolbarOptions {
     public options: KnockoutObservableArray<ToolbarOptionsInterface> = ko.observableArray([]);
-    private parent: Preview;
+    private preview: Preview;
 
     /**
      * Toolbar Options constructor
      *
-     * @param parent
+     * @param preview
      * @param options
      */
-    constructor(parent: Preview, options: ToolbarOptionsInterface[]) {
-        this.parent = parent;
+    constructor(preview: Preview, options: ToolbarOptionsInterface[]) {
+        this.preview = preview;
         this.options(options);
     }
 
@@ -33,12 +33,12 @@ export class ToolbarOptions {
      * @param {ToolbarOptionsValueInterface} value
      */
     public onClickOption(option: ToolbarOptionsInterface, value: ToolbarOptionsValueInterface) {
-        const defaultValue: string = this.parent.config.fields[option.key].default;
-        const currentValue: string = this.parent.previewData[option.key]();
+        const defaultValue: string = this.preview.config.fields[option.key].default;
+        const currentValue: string = this.preview.previewData[option.key]();
         if (currentValue === value.value) {
-            this.parent.updateData(option.key, defaultValue);
+            this.preview.updateData(option.key, defaultValue);
         } else {
-            this.parent.updateData(option.key, value.value);
+            this.preview.updateData(option.key, value.value);
         }
     }
 }
