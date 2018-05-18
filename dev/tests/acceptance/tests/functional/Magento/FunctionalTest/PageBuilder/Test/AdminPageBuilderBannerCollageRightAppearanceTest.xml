@@ -106,15 +106,13 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeBannerButtonTypePropertyIsDisabled">
             <argument name="property" value="PageBuilderBannerButtonTypePrimaryProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
-        </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldOpenInNewTab" stepKey="enterBannerNewTab">
-            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
             <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
@@ -321,6 +319,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
@@ -411,6 +410,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
@@ -492,6 +492,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerShowOverlayAlways">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
@@ -590,9 +591,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
-        </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldOpenInNewTab" stepKey="enterBannerNewTab">
-            <argument name="property" value="PageBuilderBannerNewTabProperty"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeSecondaryProperty">
             <argument name="property" value="PageBuilderBannerButtonTypeSecondaryProperty"/>
@@ -721,6 +720,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeBannerButtonTypePropertyIsDisabled">
             <argument name="property" value="PageBuilderBannerButtonTypePrimaryProperty"/>
@@ -827,6 +827,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayNeverShow">
             <argument name="property" value="PageBuilderBannerShowContentOverlayNeverShowProperty"/>
@@ -919,6 +920,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBannerOverlayShowOnHover">
             <argument name="property" value="PageBuilderBannerShowContentOverlayOnHoverProperty"/>
@@ -1028,6 +1030,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterBannerLinkUrl">
             <argument name="property" value="PageBuilderBannerLinkUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeBannerNewTabDefaultIsDisabled">
             <argument name="property" value="PageBuilderBannerNewTabDefaultProperty"/>
@@ -1135,9 +1138,9 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElementInDOM selector="{{BannerOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
-        <click selector="{{BannerOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{BannerOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <seeElementInDOM selector="{{BannerOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{BannerOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{BannerOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
