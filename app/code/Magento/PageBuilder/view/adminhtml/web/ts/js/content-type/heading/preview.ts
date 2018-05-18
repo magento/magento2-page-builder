@@ -4,7 +4,6 @@
  */
 
 import $ from "jquery";
-import ko from "knockout";
 import events from "uiEvents";
 import _ from "underscore";
 import {ToolbarOptions, ToolbarOptionsInterface} from "../../toolbar-options";
@@ -12,7 +11,6 @@ import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-pa
 import BasePreview from "../preview";
 
 export default class Heading extends BasePreview {
-    public hasFocus: KnockoutObservable<boolean> = ko.observable(false);
     private element: Element;
 
     /**
@@ -29,7 +27,11 @@ export default class Heading extends BasePreview {
 
         // When a heading is dropped for the first time show heading toolbar
         events.on("heading:block:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
-            this.hasFocus(true);
+            if (args.id === this.parent.id) {
+                _.delay(() => {
+                    $(this.element).focus();
+                }, 100); // 100 ms delay to allow for heading to render
+            }
         });
     }
 

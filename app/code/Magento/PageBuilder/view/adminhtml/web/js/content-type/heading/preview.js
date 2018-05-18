@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "uiEvents", "Magento_PageBuilder/js/toolbar-options", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _uiEvents, _toolbarOptions, _preview) {
+define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar-options", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _uiEvents, _underscore, _toolbarOptions, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Heading =
@@ -14,7 +14,7 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/toolbar-options", "Magen
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.hasFocus = _knockout.observable(false), _this.element = void 0, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.element = void 0, _temp) || _this;
     }
 
     var _proto = Heading.prototype;
@@ -35,7 +35,12 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/toolbar-options", "Magen
 
 
       _uiEvents.on("heading:block:dropped:create", function (args) {
-        _this2.hasFocus(true);
+        if (args.id === _this2.parent.id) {
+          _underscore.delay(function () {
+            (0, _jquery)(_this2.element).focus();
+          }, 100); // 100 ms delay to allow for heading to render
+
+        }
       });
     };
     /**
