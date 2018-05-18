@@ -6,6 +6,7 @@
 2. [Installation guide]
 3. Contribution guide
 4. [Developer documentation]
+    1. [Architecture overview]
     1. [BlueFoot to PageBuilder data migration]
     1. [Third-party content type migration]
     1. **Iconography**
@@ -18,6 +19,7 @@
 [Introduction]: README.md
 [Installation guide]: install.md
 [Developer documentation]: developer-documentation.md
+[Architecture overview]: architecture-overview.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
 [Third-party content type migration]: new-content-type-example.md
 [Iconography]: iconography.md

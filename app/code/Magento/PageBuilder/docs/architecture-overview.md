@@ -1,36 +1,78 @@
 # Architecture overview
 
-## What is Page Builder?
+## Navigation
 
-PageBuilder is tool that simplifies content creation. It allows to grag and drop content types and configure them. Changes are immediately displayed in the preview in admin and it matches to what user will see on the storefront.
+1. [Introduction]
+2. [Installation guide]
+3. Contribution guide
+4. [Developer documentation]
+    1. **Architecture overview**
+    1. [BlueFoot to PageBuilder data migration]
+    1. [Third-party content type migration]
+    1. [Iconography]
+    1. [Module integration]
+    1. [Additional data configuration]
+    1. [Content type configuration]
+    1. [How to add a new content type]
+5. [Roadmap and known issues]
 
-## What is Page Builder?
+[Introduction]: README.md
+[Installation Guide]: install.md
+[Developer documentation]: developer-documentation.md
+[Architecture overview]: architecture-overview.md
+[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
+[Third-party content type migration]: new-content-type-example.md
+[Iconography]: iconography.md
+[Module integration]: module-integration.md
+[Additional data configuration]: custom-configuration.md
+[Content type configuration]: content-type-configuration.md
+[How to add a new content type]: how-to-add-new-content-type.md
+[Roadmap and Known Issues]: roadmap.md
 
-PageBuilder is tool that simplifies content creation. It allows to grag and drop content types and configure them. Changes are immediately displayed in the preview in admin and it matches to what user will see on the storefront.
+## What is PageBuilder?
+
+PageBuilder is tool that simplifies content creation by letting you drag and drop content types and configure them without writing a line of code.
+Changes appear in real time in the preview area in the Admin and matches what users see on the storefront.
 
 ## Technologies
 
-Page Builder written in TypeScript, however it comes with compiled JavaScript. You don't need to worry about compiling TypeScript or use it TypeScript your module.
+PageBuilder is written in [TypeScript], a superset of JavaScript, that is compiled down to JavaScript prior to a release.
+Use the TypeScript components in the module as reference to understand the flow information.
 
-Page Builder also uses Knockout.js, UI components for building forms and different libraries like slick.
+**Note:**
+*You do not need to use TypeScript in your module to work with the PageBuilder code.*
+
+PageBuilder also uses core Magento technologies such as jQuery, Knockout & UI Components.
+It also uses additional libraries to help with various content types shipped with the module.
 
 ## Storage format 
 
-For storage (later master format) Page Builder uses XHTML with inline styles and data attributes. The idea is that is that content can be displayed with minimum changes on Magento storefront and also by third party systems.
+PageBuilder uses XHTML with inline stlyes and data attributes for storage and as the [master format].
+This allows the content to be displayed with minimum changes to the Magento storefront and other third-party systems.
 
 To display Page Builder content on storefront Magento and third party systems need to do the following
 
-1. Replace Magento directives (for instance {{image url=path/to/image.png}}).
-2. Add custom stylesheet to provide base styles that user can't edit (this includes styles for the content types like `slider`, `tabs`, `accordion`, etc).
-3. After content is rendered, on the frontend find all of content types that need to have widgets initialized (for instance, slider, tabs, etc) and load and initialize these widgets.
+Use the following steps to display PageBuilder content on a Magento storefront or third-party system:
 
-See more on [master format](master-format.md)
+1. Replace all Magento directives such as `{{image url=path/to/image.png}}`
+2. Add custom stylesheet to provide the base styles that user can't edit.
+   This includes styles for the content types such as `slider`, `tabs`, `accordion`, etc.
+3. After the content renders, load and initialze the widgets and libraries on the frontend that need initalization, such as slider, tabs, etc.
 
 ## Integration with Magento and custom modules
 
-PageBuilder replaces WYSIWYG on all forms. You can enable/disable Page Builder for product attributes.
+When PageBuilder is enabled in the system configuration, it replaces all WYSIWYG instances.
+It does this by intercepting the WYSIWYG UI Component field and replacing the traditional WYSIWYG editor with the PageBuilder editor.
 
-Page Builder also would be enabled in custom extensions where WYSIWYG is used.
+This means that any custom extension that utilises the WYSIWYG field UI Component automatically supports the PageBuilder editor.
+
+To revert back to using the default WYSIWYG, add the following entry to the field configuration in the XML configuration file:
+
+```
+<item name="wysiwygConfigData" xsi:type="array">
+    <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
+</item>
+```
 
 ## Big picture
 
@@ -52,43 +94,52 @@ Page Builder also would be enabled in custom extensions where WYSIWYG is used.
 
 ![Page Builder data flow](images/data-flow.png)
 
-Here is simplified data flow:
-1. Data read by reader `Magento_PageBuilder/js/master-format/read/configurable`.
-2. Data for each element (`border`, `border_color`, `border_width` etc) converted to internal format by element converters.
-3. Data converted by mass converters, for more details see [converter interface](content-type-configuration.md).
-4. Content type created and `Magento_PageBuilder/js/data-store` populated with data.
-5. Data in data store modified in the form or using live edit.
-6. Data converted by mass converters.
-7. Converted by element data converters.
-8. Preview and master component observables updated.
-9. Editable with Page Builder entity attribute updated, when user saves the pages master format being saved to the database.
+The following is a simple overview of the data flow:
 
-Mass converter modifies on data for all content type elements. For instance, if content type two elements, main and image. And data for these elements stored in the fields `border`, `border_color`, `border_width`, `background_image`. Mass converter will allow to modify all these fields. See more on how [data stored internally](#Data store).
+1. Data is read by reader `Magento_PageBuilder/js/master-format/read/configurable`.
+2. Data for each element (`border`, `border_color`, `border_width` etc) is converted to an internal format by element converters.
+3. Data is converted by mass converters. For more details see [converter interface](content-type-configuration.md).
+4. Content type is created and `Magento_PageBuilder/js/data-store` is populated with data.
+5. Data in the data store is modified in the form or using live edit.
+6. Data is converted by mass converters.
+7. It is then converted by element data converters.
+8. The preview and master component observables are updated.
+9. When the user saves the page's master format into the database, the editable with the PageBuilder entity attribute is updated.
 
-Element converter modifies single field at a time.
+### Mass converter
+
+A Mass converter modifies data for all content type elements.
+For example, the content type of two elements, main and image has data stored in the fields `border`, `border_color`, `border_width`, `background_image`.
+A mass converter allows you to modify all these fields.
+
+For more information, read about how [data is stored internally](#Data store). 
+
+### Element converter
+
+An element converter modifies a single field at a time.
 
 ## Data store
 
-Data for content type stored in DataStore `Magento_PageBuilder/js/data-store`.
+Data for content types are stored in a simple object called the DataStore `Magento_PageBuilder/js/data-store`.
 
-DataStore is a simple object. `var` from [content type configuration](content-type-configuration.md) is the name of parameter in DataStore.
+`var` from [content type configuration](content-type-configuration.md) is the name of a parameter in the DataStore.
 
-You can use `subscribe` method to subscribe to changes of the data and perform custom action on it.
+You can use the `subscribe` method to subscribe to changes in the data and perform custom action on it.
 
 ## Content type configuration
 
-Please see [content type configuration](content-type-configuration.md#Converter Interfaces) for content type configuration.
+Please see [content type configuration](content-type-configuration.md#Converter Interfaces) for information on content type configuration.
 
 ## Appearances
 
-Appearances allow to customize existing content types.
+Appearances allow you to make the following customization on existing content types:
 
-Appearance allows to make the following customizations to content type:
-1. Add new style properties to existing content types.
+1. Add new style properties to existing content types
 2. Add new attributes to existing content types. This is similar to above.
 3. Change templates
-4. Move data between elements, achieved with data mapping configuration. For example, developer can move margin from one element to another.
-5. Change form for content type.
+4. Move data between elements, achieved with data mapping configuration.
+   For example, a developer can move the `margin` style property from one element to another.
+5. Change the form for a [content type]
 
 ## Module structure
 
@@ -99,4 +150,8 @@ Appearance allows to make the following customizations to content type:
 | Styles                   | `Vendor/ModuleName/view/adminhtml/web/css/source/content-type/content-type-name`               |
 
 **Note:**
-*We also considering introducing appearance component and/or moving initialization of the libraries to bindings. This would allow add custom logic per appearance changes libraries per appearance for content types like slider, tabs, accordion, etc.*
+*We also considered introducing appearance component and/or moving the initialization of the libraries to bindings. This would allow you to add custom logic per appearance changes and libraries per appearance for content types like slider, tabs, accordion, etc.*
+
+[TypeScript]: https://www.typescriptlang.org/
+[master format]: master-format.md
+[content type]: how-to-add-new-content-type.md

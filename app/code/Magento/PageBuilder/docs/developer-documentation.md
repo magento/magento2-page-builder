@@ -6,6 +6,7 @@
 2. [Installation guide]
 3. Contribution guide
 4. **Developer documentation**
+    1. [Architecture overview]
     1. [BlueFoot to PageBuilder data migration]
     1. [Third-party content type migration]
     1. [Iconography]
@@ -14,6 +15,8 @@
     1. [Content type configuration]
     1. [How to add a new content type]
 5. [Roadmap and known issues]
+
+**[Architecture overview]** - An overview of the PageBuilder module architecture.
 
 **[BlueFoot to PageBuilder data migration]** - An overview of how data is migrated from BlueFoot to PageBuilder and a summary of the API available for this process.
 
@@ -31,6 +34,7 @@
 
 [Introduction]: README.md
 [Installation guide]: install.md
+[Architecture overview]: architecture-overview.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
 [Third-party content type migration]: new-content-type-example.md
 [Iconography]: iconography.md
