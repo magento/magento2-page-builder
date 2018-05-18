@@ -11,7 +11,7 @@ namespace Magento\PageBuilder\Component;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\Framework\View\Element\UiComponentInterface;
+use Magento\PageBuilder\Model\GoogleMaps\KeyValidator;
 
 class MapContainer extends \Magento\Ui\Component\Container
 {
@@ -28,7 +28,7 @@ class MapContainer extends \Magento\Ui\Component\Container
     private $scopeConfig;
 
     /**
-     * @var \Magento\PageBuilder\Model\GoogleMaps\KeyValidator $keyValidator
+     * @var KeyValidator $keyValidator
      */
     private $keyValidator;
 
@@ -38,7 +38,7 @@ class MapContainer extends \Magento\Ui\Component\Container
      * @param ContextInterface $context
      * @param UrlInterface $url
      * @param ScopeConfigInterface $scopeConfig
-     * @param \Magento\PageBuilder\Model\GoogleMaps\KeyValidator $keyValidator
+     * @param KeyValidator $keyValidator
      * @param array $components
      * @param array $data
      */
@@ -46,7 +46,7 @@ class MapContainer extends \Magento\Ui\Component\Container
         ContextInterface $context,
         UrlInterface $url,
         ScopeConfigInterface $scopeConfig,
-        \Magento\PageBuilder\Model\GoogleMaps\KeyValidator $keyValidator,
+        KeyValidator $keyValidator,
         array $components = [],
         array $data = []
     ) {
@@ -60,6 +60,11 @@ class MapContainer extends \Magento\Ui\Component\Container
         $this->keyValidator = $keyValidator;
     }
 
+    /**
+     * Prepare component configuration
+     *
+     * @return void
+     */
     public function prepare()
     {
         parent::prepare();
