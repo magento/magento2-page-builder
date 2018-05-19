@@ -4,27 +4,36 @@
 
 1. [Introduction]
 2. [Installation guide]
-3. Contribution guide
+3. [Contribution guide]
 4. [Developer documentation]
+    1. [Architecture overview]
     1. [BlueFoot to PageBuilder data migration]
     1. [Third-party content type migration]
     1. [Iconography]
     1. [Module integration]
-    1. [Additional data capability]
+    1. [Additional data configuration]
     1. [Content type configuration]
     1. **How to add a new content type**
+    1. [Events]
+    1. [Master format]
+    1. [Visual select]   
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
+[Contribution guide]: CONTRIBUTING.md
 [Installation guide]: install.md
 [Developer documentation]: developer-documentation.md
+[Architecture overview]: architecture-overview.md
 [BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
 [Third-party content type migration]: new-content-type-example.md
 [Iconography]: iconography.md
 [Module integration]: module-integration.md
-[Additional data capability]: additional-data.md
+[Additional data configuration]: custom-configuration.md
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
+[Events]: events.md
+[Master format]: master-format.md
+[Visual select]: visual-select.md
 [Roadmap and known issues]: roadmap.md
 
 
@@ -87,6 +96,7 @@ Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content
 ``` HTML
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
     <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
+    <!-- Display context menu options for content type -->
     <render args="getOptions().template" />
 </div>
 ```
@@ -173,6 +183,8 @@ In the `simple.xml` above we defined border attributes and form for component. L
     </fieldset>
 </form>
 ```
+
+Every form should have default appearance to allow other modules to add more appearances.
 
 Attributes that we want to edit as part of the advanced section are defined in `pagebuilder_base_form`, so we can just extend it.
 

@@ -1,9 +1,47 @@
 # Events
 
-This document describes events dispatched in PageBuilder and parameters.
+## Navigation
+
+1. **Introduction**
+2. [Installation guide]
+3. [Contribution guide]
+4. [Developer documentation]
+    1. [Architecture overview]
+    1. [BlueFoot to PageBuilder data migration]
+    1. [Third-party content type migration]
+    1. [Iconography]
+    1. [Module integration]
+    1. [Additional data configuration]
+    1. [Content type configuration]
+    1. [How to add a new content type]
+    1. **Events**
+    1. [Master format]
+    1. [Visual select]
+5. [Roadmap and known issues]
+
+[Introduction]: README.md
+[Contribution guide]: CONTRIBUTING.md
+[Installation Guide]: install.md
+[Developer documentation]: developer-documentation.md
+[Architecture overview]: architecture-overview.md
+[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
+[Third-party content type migration]: new-content-type-example.md
+[Iconography]: iconography.md
+[Module integration]: module-integration.md
+[Additional data configuration]: custom-configuration.md
+[Content type configuration]: content-type-configuration.md
+[How to add a new content type]: how-to-add-new-content-type.md
+[Events]: events.md
+[Master format]: master-format.md
+[Visual select]: visual-select.md
+[Roadmap and Known Issues]: roadmap.md
+
+This document contains reference information for events dispatched in PageBuilder.
 
 **Note:**
 *We are revising naming conventions for events, naming may change.*
+
+## Events list
 
 * [block:dropped](#blockdropped)
 * [block:dropped:create](#blockdroppedcreate)
@@ -42,7 +80,7 @@ This document describes events dispatched in PageBuilder and parameters.
 * [slider:block:ready](#sliderblockready)
 * [stage:error](#stageerror)
 * [stage:ready:{{id}}](#stagereadyid)
-* [stage:renderTrree:{{id}}](#stagerendertrreeid)
+* [stage:renderTree:{{id}}](#stagerendertreeid)
 * [stage:updated](#stageupdated)
 * [state](#state)
 * [tab-item:block:duplicate](#tab-itemblockduplicate)
@@ -268,7 +306,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    column: ContentTypeInterface;
+    column: Column;
     stageId: string;
 }
 ```
@@ -284,9 +322,9 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    column,
+    column: Column,
     handle,
-    parent
+    parent: ColumnGroup
 }
 ```
 
@@ -302,8 +340,8 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    column,
-    stageId
+    column: Column,
+    stageId: string
 }
 ```
 
@@ -319,9 +357,9 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    column,
+    column: Column,
     element,
-    parent
+    parent: ColumnGroup
 }
 ```
 
@@ -405,8 +443,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 **Params**
 
-``` js
-```
+object
 
 ## `image:block:ready`
 
@@ -416,8 +453,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 **Params**
 
-``` js
-```
+Function
 
 [Back to top]
 
@@ -429,11 +465,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 **Params**
 
-``` js
-{
-    callback: (files: object [ ] ) => any
-}
-```
+Function
 
 [Back to top]
 
@@ -543,7 +575,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `ContentTypeFactory::fireBlockReadyEvent`
-* `ContentTypeMountEventParamsInterface`
 
 **Params**
 
@@ -561,7 +592,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `ContentTypeFactory::createContentType`
-* `ContentTypeCreateEventParamsInterface`
 
 **Params**
 
@@ -577,7 +607,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `Stage::onBlockDropped`
-* `ContentTypeReadyEventParamsInterface`
 
 **Params**
 
@@ -615,7 +644,6 @@ This document describes events dispatched in PageBuilder and parameters.
 
 * `ContentTypeCollection::addChild`
 * `Column.Preview::fireMountEvent`
-* `ContentTypeMountEventParamsInterface`
 
 **Params**
 
@@ -652,7 +680,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `ContentTypeFactory::fireBlockReadyEvent`
-* `ContentTypeReadyEventParamsInterface`
 
 **Params**
 
@@ -673,8 +700,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 **Params**
 
-``` js
-```
+Error
 
 [Back to top]
 
@@ -685,7 +711,7 @@ This document describes events dispatched in PageBuilder and parameters.
 * `Stage::ready`
 * `stage instance`
 
-## `stage:renderTrree:{{id}}`
+## `stage:renderTree:{{id}}`
 
 **Triggers**
 
@@ -695,7 +721,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    value
+    value: string
 }
 ```
 
@@ -712,7 +738,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    stageId
+    stageId: number
 }
 ```
 
@@ -728,7 +754,7 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    state
+    state: DataObject
 }
 ```
 
@@ -745,9 +771,9 @@ This document describes events dispatched in PageBuilder and parameters.
 
 ``` js
 {
-    original: originalBlock,
-    duplicateBlock,
-    index,
+    original: ContentTypeInterface,
+    duplicateBlock: ContentTypeInterface,
+    index: number,
 }
 ```
 
@@ -759,7 +785,6 @@ This document describes events dispatched in PageBuilder and parameters.
 
 * `ContentTypeCollection::addChild`
 * `Column.Preview::fireMountEvent`
-* `ContentTypeMountEventParamsInterface`
 
 **Params**
 
@@ -797,7 +822,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `Stage::onBlockDropped`
-* `ContentTypeReadyEventParamsInterface`
 
 **Params**
 
@@ -815,7 +839,6 @@ This document describes events dispatched in PageBuilder and parameters.
 **Triggers**
 
 * `ContentTypeFactory::fireBlockReadyEvent`
-* `ContentTypeReadyEventParamsInterface`
 
 **Params**
 

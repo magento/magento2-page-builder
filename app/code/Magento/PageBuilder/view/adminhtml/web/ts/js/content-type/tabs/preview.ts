@@ -9,6 +9,7 @@ import $t from "mage/translate";
 import "tabs";
 import events from "uiEvents";
 import _ from "underscore";
+import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
@@ -16,20 +17,24 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import BlockRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
-import {ContentTypeCreateEventParamsInterface} from "../content-type-create-event-params.d";
 import {ContentTypeMountEventParamsInterface} from "../content-type-mount-event-params.d";
 import {ContentTypeReadyEventParamsInterface} from "../content-type-ready-event-params.d";
+import {ContentTypeRemovedEventParamsInterface} from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
+import {ActiveOptionsInterface} from "./active-options.d";
+import {SortableOptionsInterface} from "./sortable-options.d";
 
 export default class Preview extends PreviewCollection {
+    public static focusOperationTime: number;
     public focusedTab: KnockoutObservable<number> = ko.observable();
+    private disableInteracting: boolean;
     private element: Element;
 
     /**
      * Assign a debounce and delay to the init of tabs to ensure the DOM has updated
      *
-     * @type {(() => any) & _.Cancelable}
+     * @type {(() => void) & _.Cancelable}
      */
     private buildTabs = _.debounce((activeTabIndex = this.previewData.default_active()) => {
         if (this.element && this.element.children.length > 0) {
@@ -63,31 +68,69 @@ export default class Preview extends PreviewCollection {
                 this.buildTabs();
             }
         });
-        events.on("tab-item:block:create", (args: ContentTypeCreateEventParamsInterface) => {
+        events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
             if (this.element && args.block.parent.id === this.parent.id) {
-                this.buildTabs();
+                this.refreshTabs();
             }
         });
-        events.on("tab-item:block:removed", (args: ContentTypeCreateEventParamsInterface) => {
-            if (this.element && args.block.parent.id === this.parent.id) {
-                this.buildTabs();
+        // Set the active tab to the new position of the sorted tab
+        events.on("tab-item:block:removed", (args: ContentTypeRemovedEventParamsInterface) => {
+            if (args.parent.id === this.parent.id) {
+                this.refreshTabs();
+
+                // We need to wait for the tabs to refresh before executing the focus
+                _.defer(() => {
+                    const newPosition = args.index > 0 ? args.index - 1 : 0;
+                    this.setFocusedTab(newPosition, true);
+                });
             }
         });
-        // Set the stage to interacting when a tab is focused
-        let focusTabValue: number;
-        this.focusedTab.subscribe((value: number) => {
-            focusTabValue = value;
-            // If we're stopping the interaction we need to wait, to ensure any other actions can complete
-            _.delay(() => {
-                if (focusTabValue === value) {
-                    if (value !== null) {
-                        events.trigger("interaction:start");
-                    } else {
-                        events.trigger("interaction:stop");
-                    }
+        // Refresh tab contents and set the focus to the new position of the sorted tab
+        events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
+            this.refreshTabs(args.newPosition, true);
+            /**
+             * Update the default active tab if its position was affected by the sorting
+             */
+            const defaultActiveTab = +args.instance.preview.previewData.default_active();
+            let newDefaultActiveTab = defaultActiveTab;
+            if (args.originalPosition === defaultActiveTab) {
+                newDefaultActiveTab = args.newPosition;
+            } else if (args.originalPosition < defaultActiveTab && args.newPosition >= defaultActiveTab) {
+                // a tab was moved from the left of the default active tab the right of it, changing its index
+                newDefaultActiveTab--;
+            } else if (args.originalPosition > defaultActiveTab && args.newPosition <= defaultActiveTab) {
+                // a tab was moved from the right of the default active tab the left of it, changing its index
+                newDefaultActiveTab++;
+            }
+            this.updateData("default_active", newDefaultActiveTab);
+        });
+    }
+
+    /**
+     * Refresh the tabs instance when new content appears
+     *
+     * @param {number} focusIndex
+     * @param {boolean} forceFocus
+     * @param {number} activeIndex
+     */
+    public refreshTabs(focusIndex?: number, forceFocus?: boolean, activeIndex?: number) {
+        if (this.element) {
+            $(this.element).tabs("refresh");
+            if (focusIndex >= 0) {
+                this.setFocusedTab(focusIndex, forceFocus);
+            } else if (activeIndex) {
+                this.setActiveTab(activeIndex);
+            }
+            // update sortability of tabs
+            const sortableElement = $(this.element).find(".tabs-navigation");
+            if (sortableElement.hasClass("ui-sortable")) {
+                if (this.parent.children().length <= 1) {
+                    sortableElement.sortable("disable");
+                } else {
+                    sortableElement.sortable("enable");
                 }
-            }, (value === null ? 200 : 0));
-        });
+            }
+        }
     }
 
     /**
@@ -96,7 +139,9 @@ export default class Preview extends PreviewCollection {
      * @param {number} index
      */
     public setActiveTab(index: number) {
-        $(this.element).tabs("option", "active", index);
+        if (index !== null) {
+            $(this.element).tabs("option", "active", index);
+        }
     }
 
     /**
@@ -112,19 +157,34 @@ export default class Preview extends PreviewCollection {
         }
         this.focusedTab(index);
 
-        if (this.element) {
-            if (this.element.getElementsByTagName("span")[index]) {
-                this.element.getElementsByTagName("span")[index].focus();
+        if (this.element && index !== null) {
+            if (this.element.getElementsByClassName("tab-name")[index]) {
+                (this.element.getElementsByClassName("tab-name")[index] as HTMLElement).focus();
             }
             _.defer(() => {
                 if ($(":focus").hasClass("tab-name") && $(":focus").prop("contenteditable")) {
                     document.execCommand("selectAll", false, null);
-                } else {
-                    // If the active element isn't the tab title, we're not interacting with the stage
-                    events.trigger("interaction:stop");
                 }
             });
         }
+
+        /**
+         * Record the time the focus operation was completed to ensure the delay doesn't stop interaction when another
+         * interaction has started after.
+         */
+        const focusTime = new Date().getTime();
+        Preview.focusOperationTime = focusTime;
+
+        // Add a 200ms delay after a null set to allow for clicks to be captured
+        _.delay(() => {
+            if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
+                if (index !== null) {
+                    events.trigger("interaction:start");
+                } else {
+                    events.trigger("interaction:stop");
+                }
+            }
+        }, ((index === null) ? 200 : 0));
     }
 
     /**
@@ -212,6 +272,93 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Get the sortable options for the tab heading sorting
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+    public getSortableOptions(): SortableOptionsInterface {
+        const self = this;
+        let borderWidth: number;
+        return {
+            handle: ".tab-drag-handle",
+            tolerance: "pointer",
+            cursor: "grabbing",
+            cursorAt: { left: 8, top: 25 },
+
+            /**
+             * Provide custom helper element
+             *
+             * @param {Event} event
+             * @param {JQueryUI.Sortable} element
+             * @returns {Element}
+             */
+            helper(event: Event, element: JQueryUI.Sortable): Element {
+                const helper = $(element).clone().css("opacity", "0.7");
+                helper[0].querySelector(".pagebuilder-options").remove();
+                return helper[0];
+            },
+
+            /**
+             * Add a padding to the navigation UL to resolve issues of negative margins when sorting
+             *
+             * @param {Event} event
+             * @param {JQueryUI.SortableUIParams} ui
+             */
+            start(event: Event, ui: JQueryUI.SortableUIParams) {
+                /**
+                 * Due to the way we use negative margins to overlap the borders we need to apply a padding to the
+                 * container when we're moving the first item to ensure the tabs remain in the same place.
+                 */
+                if (ui.item.index() === 0) {
+                    borderWidth = parseInt(ui.item.css("borderWidth"), 10) || 1;
+                    $(this).css("paddingLeft", borderWidth);
+                }
+
+                ui.helper.css("width", "");
+                events.trigger("interaction:start");
+                self.disableInteracting = true;
+            },
+
+            /**
+             * Remove the padding once the operation is completed
+             *
+             * @param {Event} event
+             * @param {JQueryUI.SortableUIParams} ui
+             */
+            stop(event: Event, ui: JQueryUI.SortableUIParams) {
+                $(this).css("paddingLeft", "");
+                events.trigger("interaction:stop");
+                self.disableInteracting = false;
+            },
+
+            placeholder: {
+                /**
+                 * Provide custom placeholder element
+                 *
+                 * @param {JQuery<Element>} item
+                 * @returns {JQuery<Element>}
+                 */
+                element(item: JQuery<Element>) {
+                    const placeholder = item
+                        .clone()
+                        .show()
+                        .css({
+                            display: "inline-block",
+                            opacity: "0.3",
+                        })
+                        .removeClass("focused")
+                        .addClass("sortable-placeholder");
+                    placeholder[0].querySelector(".pagebuilder-options").remove();
+                    return placeholder[0];
+                },
+                update() {
+                    return;
+                },
+            },
+        };
+    }
+
+    /**
      * Bind events
      */
     protected bindEvents() {
@@ -226,15 +373,31 @@ export default class Preview extends PreviewCollection {
         // Block being removed from container
         events.on("tab-item:block:removed", (args: BlockRemovedParamsInterface) => {
             if (args.parent.id === this.parent.id) {
-                // Mark the previous slide as active
+                // Mark the previous tab as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
-                this.setFocusedTab(newIndex);
+                this.refreshTabs(newIndex, true);
             }
         });
+        // Capture when a block is duplicated within the container
+        let duplicatedTab: ContentTypeInterface;
+        let duplicatedTabIndex: number;
         events.on("tab-item:block:duplicate", (args: BlockDuplicateEventParams) => {
+            if (this.parent.id === args.duplicateBlock.parent.id) {
+                const tabData = args.duplicateBlock.dataStore.get(args.duplicateBlock.id);
+                args.duplicateBlock.dataStore.update(
+                    tabData.tab_name.toString() + " copy",
+                    "tab_name",
+                );
+                duplicatedTab = args.duplicateBlock;
+                duplicatedTabIndex = args.index;
+            }
             this.buildTabs(args.index);
         });
         events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
+            if (duplicatedTab && args.id === duplicatedTab.id) {
+                this.refreshTabs(duplicatedTabIndex, true);
+                duplicatedTab = duplicatedTabIndex = null;
+            }
             if (this.parent.id === args.block.parent.id) {
                 this.updateTabNamesInDataStore();
                 args.block.dataStore.subscribe(() => {
@@ -248,8 +411,8 @@ export default class Preview extends PreviewCollection {
      * Update data store with active options
      */
     private updateTabNamesInDataStore() {
-        const activeOptions: ActiveOptions[] = [];
-        this.parent.children().forEach((tab: Block, index: number) => {
+        const activeOptions: ActiveOptionsInterface[] = [];
+        this.parent.children().forEach((tab: ContentTypeInterface, index: number) => {
             const tabData = tab.dataStore.get();
             activeOptions.push({
                 label: tabData.tab_name.toString(),
@@ -274,9 +437,3 @@ $.ui.tabs.prototype._tabKeydown = function(event: Event) {
     }
     originalTabKeyDown.call(this, event);
 };
-
-export interface ActiveOptions {
-    label: string;
-    labeltitle: string;
-    value: number;
-}

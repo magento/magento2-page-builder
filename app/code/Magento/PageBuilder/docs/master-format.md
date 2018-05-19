@@ -1,8 +1,42 @@
 # Master format
 
-For storage (later master format) Page Builder uses XHTML with inline styles and data attributes.
+## Navigation
 
-This document describes master format for default Page Builder content types.
+1. [Introduction]
+2. [Installation guide]
+3. [Contribution guide]
+4. [Developer documentation]
+    1. [Architecture overview]
+    1. [BlueFoot to PageBuilder data migration]
+    1. [Third-party content type migration]
+    1. [Iconography]
+    1. [Module integration]
+    1. [Additional data configuration]
+    1. [Content type configuration]
+    1. [How to add a new content type]
+    1. [Events]
+    1. **Master format**
+    1. [Visual select]
+5. [Roadmap and known issues]
+
+[Introduction]: README.md
+[Installation Guide]: install.md
+[Contribution guide]: CONTRIBUTING.md
+[Developer documentation]: developer-documentation.md
+[Architecture overview]: architecture-overview.md
+[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
+[Third-party content type migration]: new-content-type-example.md
+[Iconography]: iconography.md
+[Module integration]: module-integration.md
+[Additional data configuration]: custom-configuration.md
+[Content type configuration]: content-type-configuration.md
+[How to add a new content type]: how-to-add-new-content-type.md
+[Events]: events.md
+[Master format]: master-format.md
+[Visual select]: visual-select.md
+[Roadmap and Known Issues]: roadmap.md
+
+PageBuilder uses XHTML with inline styles and data attributes as the master format for storage.
 
 **Note:**
 *We are still revising master format and it may change.*
@@ -20,7 +54,8 @@ Attributes
 2. data-appearance [default]
 3. data-enable-parallax [1, 0]
 4. data-parallax-speed [0-1]
-5. data-background-color-format [hex, rgb, rgba, hsl, hsla]
+5. data-background-color-format [hex, rgb, hsl, hsv, name, none]
+6. class
 
 Inline styles
 1. background-color
@@ -36,7 +71,6 @@ Inline styles
 11. border-radius
 12. margin
 13. padding
-14. class
 
 ## Column group
 
@@ -57,6 +91,7 @@ Attributes
 Attributes
 1. data-role [column]
 2. data-appearance [full-height, align-top, align-center, align-bottom]
+3. class
 
 Inline styles
 1. background-color
@@ -74,7 +109,6 @@ Inline styles
 13. padding
 14. align-self
 15. min-height
-16. class
 
 ## Tabs
 
@@ -183,6 +217,7 @@ HTML content.
 Attributes
 1. data-role [text]
 2. data-appearance [default]
+3. class
 
 Inline styles
 1. text-align
@@ -192,7 +227,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 ## Heading
 
@@ -204,6 +238,7 @@ Inline styles
 Attributes
 1. data-role [heading]
 2. data-appearance [default]
+3. class
 
 Inline styles
 1. text-align
@@ -213,7 +248,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 ## Buttons
 
@@ -224,6 +258,7 @@ Inline styles
 Attributes
 1. data-role [buttons]
 2. data-appearance [default]
+3. class
 
 Inline styles
 1. text-align
@@ -233,7 +268,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 ## Button item
 
@@ -258,6 +292,7 @@ Attributes
 1. data-link-type
 2. href
 3. target
+4. class
 
 Inline styles
 1. text-align
@@ -267,7 +302,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 ### link_text element
 
@@ -284,6 +318,7 @@ HTML content.
 Attributes
 1. data-role [divider]
 2. data-appearance [default]
+3. class
 
 Inline styles
 1. text-align
@@ -293,7 +328,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 ### link element
 
@@ -311,7 +345,8 @@ Inline styles
 Attributes
 1. data-role [anchor]
 2. data-appearance [default]
-2. id
+3. id
+4. class
 
 Inline styles
 1. text-align
@@ -321,7 +356,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 ## HTML & JS Code
 
@@ -332,6 +366,7 @@ Inline styles
 Attributes
 1. data-role [html]
 2. data-appearance [default]
+3. class
 
 Inline styles
 1. text-align
@@ -341,7 +376,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 HTML & JavaScript content.
 
@@ -351,7 +385,7 @@ HTML & JavaScript content.
 <figure data-role="image" data-appearance="full-width" data-lightbox="false" style="...">
     <a href="" title="">
         <img src="" title="" alt="" class="pagebuilder-mobile-hidden" />
-        <img src="" title="" alt="" class="pagebuilder-desktop-hidden" />
+        <img src="" title="" alt="" class="pagebuilder-mobile-only" />
     </a>
     <figcaption>Image description</figcaption>
 </figure>
@@ -362,6 +396,7 @@ HTML & JavaScript content.
 Attributes
 1. data-role [image]
 2. data-appearance [full-width]
+3. class
 
 Inline styles
 1. text-align
@@ -371,7 +406,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 ### desktop_image element
 
@@ -425,6 +459,7 @@ Inline styles
 
 Attributes
 1. src
+2. class
 
 Inline styles
 1. text-align
@@ -436,7 +471,6 @@ Inline styles
 7. padding
 8. width
 9. height
-10. class
 
 ## Slider
 
@@ -453,6 +487,7 @@ Attributes
 6. data-is-infinite
 7. data-show-arrows
 8. data-show-dots
+9. class
 
 Inline styles
 1. text-align
@@ -463,7 +498,6 @@ Inline styles
 6. margin
 7. padding
 8. min-height
-9. class
 
 ## Slide
 
@@ -572,8 +606,9 @@ Collage Right
 Attributes
 1. data-role [slide]
 2. data-appearance [poster, collage-left, collage-centered, collage-right]
-2. data-show-button
-2. data-show-overlay
+3. data-show-button
+4. data-show-overlay
+5. class
 
 Inline styles
 1. border-style
@@ -581,7 +616,6 @@ Inline styles
 3. border-width
 4. border-radius
 5. margin
-6. class
 
 ### link element
 
@@ -754,8 +788,9 @@ Collage Right
 Attributes
 1. data-role [banner]
 2. data-appearance [poster, collage-left, collage-centered, collage-right]
-2. data-show-button
-2. data-show-overlay
+3. data-show-button
+4. data-show-overlay
+5. class
 
 Inline styles
 1. border-style
@@ -763,7 +798,6 @@ Inline styles
 3. border-width
 4. border-radius
 5. margin
-6. class
 
 ### link element
 
@@ -847,6 +881,7 @@ Attributes
 9. data-country
 10. data-comment
 11. data-show-controls
+12. class
 
 Inline styles
 1. text-align
@@ -858,7 +893,6 @@ Inline styles
 7. padding
 8. width
 9. height
-10. class
 
 ## Block
 
@@ -870,6 +904,7 @@ Attributes
 1. data-role [block]
 2. data-appearance [default]
 3. data-identifier
+4. class
 
 Inline styles
 1. text-align
@@ -879,7 +914,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 ## Product
 
@@ -890,8 +924,9 @@ Inline styles
 Attributes
 1. data-role [product]
 2. data-appearance [default]
-2. data-sku
-2. data-view-mode
+3. data-sku
+4. data-view-mode
+5. class
 
 Inline styles
 1. text-align
@@ -901,7 +936,6 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. class
 
 ## Product List
 
@@ -912,8 +946,8 @@ Inline styles
 Attributes
 1. data-role [product-list]
 2. data-appearance [default]
-2. data-category-id
-2. data-product-count
+3. data-category-id
+4. data-product-count
 
 Inline styles
 1. text-align
