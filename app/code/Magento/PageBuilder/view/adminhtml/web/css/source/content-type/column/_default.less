@@ -3,6 +3,8 @@
 //  * See COPYING.txt for license details.
 //  */
 
+@light-blue: #bfe2f0;
+
 //
 //  Default appearance styles
 //  _____________________________________________
@@ -41,35 +43,35 @@
     }
 
     .pagebuilder-resizing {
-        background: #bfe2f0;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        background: @light-blue;
         height: 100%;
         left: 0;
         opacity: 0;
         position: absolute;
         top: 0;
-        -webkit-touch-callout: none;
         transition: .5s opacity;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
         user-select: none;
         visibility: hidden;
         width: 100%;
         z-index: 8;
 
         * {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
             -khtml-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
             user-select: none;
         }
 
 
         &:hover {
-            border: 1px solid @textColor;
+            border: 1px solid @text-color;
         }
     }
 

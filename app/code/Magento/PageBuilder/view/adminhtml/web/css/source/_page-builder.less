@@ -4,6 +4,7 @@
 //  */
 
 @border-size: 2px;
+@white: #fff;
 
 .pagebuilder-header {
     text-align: right;
@@ -20,7 +21,7 @@
 
 .pagebuilder-stage-wrapper {
     &.stage-full-screen {
-        background: #ffffff;
+        background: @white;
         height: 100%;
         left: 0;
         overflow: scroll;
@@ -38,11 +39,11 @@
     width: 100%;
 
     .pagebuilder-add-row {
-        -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
-        background: @rowColor;
+        -webkit-border-radius: 5px;
+        background: @row-color;
         border-radius: 5px;
-        color: #ffffff;
+        color: @white;
         display: inline-block;
         font-size: 26px;
         height: 50px;
@@ -50,17 +51,17 @@
         width: 50px;
 
         &:hover {
-            background: darken(@rowColor, 15%);
+            background: darken(@row-color, 15%);
         }
     }
 }
 
 .pagebuilder-stage {
-    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
     /* Rules below not implemented in browsers yet */
     -o-user-select: none;
+    -webkit-user-select: none; /* Chrome/Safari */
     font-size: 0;
     margin-left: 170px; // temp
     min-height: 200px;
@@ -68,7 +69,7 @@
     user-select: none;
 
     &.stage-full-screen {
-        background: #000000;
+        background: @black;
     }
 
     &.pagebuilder-no-user-select {

@@ -3,6 +3,11 @@
 //  * See COPYING.txt for license details.
 //  */
 
+@f6: #f6f6f6;
+@ccc: #ccc;
+@black: #000;
+@white: #fff;
+
 //
 //  Default appearance styles
 //  _____________________________________________
@@ -14,13 +19,13 @@ div[data-role='tabs'] {
         margin: 0 0 -1px;
         padding: 0;
 
-        & > :first-child {
+        li:first-child {
             margin-left: 0 !important;
         }
 
         li.tab-header {
-            background: #f6f6f6;
-            border: 1px solid #ccc;
+            background: @f6;
+            border: 1px solid @ccc;
             border-bottom: 0 !important;
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
@@ -35,7 +40,7 @@ div[data-role='tabs'] {
 
             a.tab-title {
                 border-right: 0;
-                color: #000000;
+                color: @black;
                 cursor: pointer !important;
                 display: block;
                 font-size: 14px;
@@ -56,11 +61,11 @@ div[data-role='tabs'] {
             }
 
             &:last-child {
-                border-right: 1px solid #ccc;
+                border-right: 1px solid @ccc;
             }
 
             &.ui-state-active {
-                background: #fff;
+                background: @white;
                 z-index: 19;
 
                 a.tab-title {
@@ -72,7 +77,7 @@ div[data-role='tabs'] {
     }
 
     .tabs-content {
-        border: 1px solid #ccc;
+        border: 1px solid @ccc;
         overflow: hidden;
         position: relative;
         z-index: 9;

@@ -54,9 +54,9 @@
         top: 0;
 
         a {
-            -webkit-border-bottom-right-radius: 2px;
             -moz-border-radius-bottomright: 2px;
             -moz-border-radius-topright: 2px;
+            -webkit-border-bottom-right-radius: 2px;
             -webkit-border-top-right-radius: 2px;
             background: @color-very-dark-grayish-orange;
             border-bottom-right-radius: 2px;
@@ -80,15 +80,15 @@
     }
 
     .pagebuilder-panel {
-        background: @color-very-dark-grayish-orange;
-        -webkit-transition: .4s;
         -moz-transition: .4s;
-        transition: .4s;
-        -webkit-user-select: none; /* Chrome/Safari */
         -moz-user-select: none; /* Firefox */
         -ms-user-select: none; /* IE10+ */
         /* Rules below not implemented in browsers yet */
         -o-user-select: none;
+        -webkit-transition: .4s;
+        -webkit-user-select: none; /* Chrome/Safari */
+        background: @color-very-dark-grayish-orange;
+        transition: .4s;
         user-select: none;
 
         .search-results-empty {
@@ -102,10 +102,10 @@
             position: relative;
 
             label {
+                -webkit-font-smoothing: antialiased;
                 color: @color-gray65-lighten;
                 font-family: @icons-admin__font-name;
                 font-size: 1.5rem;
-                -webkit-font-smoothing: antialiased;
                 font-style: normal;
                 font-weight: normal;
                 left: 12px;
@@ -266,8 +266,7 @@
 
             &.active {
                 .group-title {
-
-                    :before {
+                    &::before {
                         content: @icon-caret-up__content;
                     }
                     h4 {

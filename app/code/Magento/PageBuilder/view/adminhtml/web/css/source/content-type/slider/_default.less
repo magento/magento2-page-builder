@@ -3,6 +3,16 @@
 //  * See COPYING.txt for license details.
 //  */
 
+@gray: #aaa6a0;
+@white: #fff;
+@yellow: #fffbbb;
+@light-gray: #afadac;
+@c-gray: #ccc;
+@dark-gray: #373330;
+@blue: #007bdb;
+@b3: #b3b3b3;
+@darker-gray: #1c1918;
+
 //
 //  Default appearance styles
 //  _____________________________________________
@@ -44,7 +54,7 @@
 
     .slider-empty {
         align-items: flex-end;
-        color: #aaa6a0;
+        color: @gray;
         display: flex;
         font-size: 20px;
         font-weight: lighter;
@@ -81,8 +91,8 @@
                 );
 
                 .tooltip-content {
-                    background: #fffbbb;
-                    border: 1px solid #afadac;
+                    background: @yellow;
+                    border: 1px solid @light-gray;
                     border-radius: 1px;
                     bottom: 97.5%;
                     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
@@ -108,12 +118,12 @@
                         width: 0;
                     }
                     &:before {
-                        border-top-color: #afadac;
+                        border-top-color: @light-gray;
                         margin-top: 1px;
                         z-index: 3;
                     }
                     &:after {
-                        border-top-color: #fffbbb;
+                        border-top-color: @yellow;
                         z-index: 4;
                     }
                 }
@@ -132,8 +142,8 @@
                     }
 
                     &:after {
-                        background: #ffffff;
-                        border: 1px solid #ccc;
+                        background: @white;
+                        border: 1px solid @c-gray;
                         border-radius: 10px;
                         content: ' ';
                         display: inline-block;
@@ -177,7 +187,7 @@
 
                 &.sortable-placeholder {
                     &:after {
-                        background: #373330;
+                        background-color: @dark-gray;
                         border: none;
                         border-radius: 10px;
                         content: ' ';
@@ -195,14 +205,14 @@
 
                 &.active {
                     .navigation-dot-anchor:after {
-                        background: #373330;
+                        background: @dark-gray;
                         border: none;
                         transition: all .3s;
                     }
                 }
 
                 &:focus {
-                    outline: 1px solid #007bdb;
+                    outline: 1px solid @blue;
 
                     .pagebuilder-options {
                         .pagebuilder-options-visible;
@@ -224,11 +234,11 @@
                     }
 
                     .navigation-dot-anchor:after {
-                        border: 1px solid #b3b3b3;
+                        border: 1px solid @b3;
                     }
 
                     &.active .navigation-dot-anchor:after {
-                        background: #1c1918;
+                        background: @darker-gray;
                         border: none;
                     }
                 }

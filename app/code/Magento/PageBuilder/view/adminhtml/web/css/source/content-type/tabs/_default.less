@@ -3,6 +3,11 @@
 //  * See COPYING.txt for license details.
 //  */
 
+@f6: #f6f6f6;
+@ccc: #ccc;
+@black: #000;
+@white: #fff;
+
 //
 //  Default appearance styles
 //  _____________________________________________
@@ -14,13 +19,13 @@
         margin: 0;
         padding: 0;
 
-        & > :first-child {
+        li:first-child {
             margin-left: 0 !important;
         }
 
         li.tab-header {
-            background: #f6f6f6;
-            border: 1px solid #ccc;
+            background: @f6;
+            border: 1px solid @ccc;
             border-bottom: 0 !important;
             border-bottom-left-radius: 0 !important;
             border-bottom-right-radius: 0 !important;
@@ -31,7 +36,7 @@
 
             a.tab-title {
                 border-right: 0;
-                color: #000000;
+                color: @black;
                 cursor: pointer !important;
                 display: block;
                 font-size: 14px;
@@ -73,15 +78,16 @@
                         .abs-icon;
                         color: @color-dark-gray0;
                         content: @icon-gripper__content;
-                        cursor: move; /* fallback if grab cursor is unsupported */
-                        cursor: grab;
-                        cursor: -moz-grab;
-                        cursor: -webkit-grab;
                         display: block;
                         font-size: 16px;
                         position: absolute;
                         top: 50%;
                         transform: translateY(-50%);
+
+                        cursor: move; /* fallback if grab cursor is unsupported */
+                        cursor: grab;
+                        cursor: -moz-grab;
+                        cursor: -webkit-grab;
                     }
 
                     &:active:before {
@@ -109,11 +115,11 @@
             }
 
             &:last-child {
-                border-right: 1px solid #ccc;
+                border-right: 1px solid @ccc;
             }
 
             &.ui-state-active {
-                background: #fff;
+                background: @white;
                 z-index: 19;
 
                 a.tab-title {
