@@ -31,7 +31,7 @@
 
             a.tab-title {
                 border-right: 0;
-                color: black;
+                color: #000000;
                 cursor: pointer !important;
                 display: block;
                 font-size: 14px;
@@ -73,16 +73,15 @@
                         .abs-icon;
                         color: @color-dark-gray0;
                         content: @icon-gripper__content;
+                        cursor: move; /* fallback if grab cursor is unsupported */
+                        cursor: grab;
+                        cursor: -moz-grab;
+                        cursor: -webkit-grab;
                         display: block;
                         font-size: 16px;
                         position: absolute;
                         top: 50%;
                         transform: translateY(-50%);
-
-                        cursor: move; /* fallback if grab cursor is unsupported */
-                        cursor: grab;
-                        cursor: -moz-grab;
-                        cursor: -webkit-grab;
                     }
 
                     &:active:before {
