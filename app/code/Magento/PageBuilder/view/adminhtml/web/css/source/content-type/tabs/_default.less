@@ -5,8 +5,8 @@
 
 @f6: #f6f6f6;
 @ccc: #ccc;
-@black: #000;
-@white: #fff;
+@color-black: #000;
+@color-white: #fff;
 
 //
 //  Default appearance styles
@@ -36,7 +36,7 @@
 
             a.tab-title {
                 border-right: 0;
-                color: @black;
+                color: @color-black;
                 cursor: pointer !important;
                 display: block;
                 font-size: 14px;
@@ -78,16 +78,15 @@
                         .abs-icon;
                         color: @color-dark-gray0;
                         content: @icon-gripper__content;
+                        cursor: move; /* fallback if grab cursor is unsupported */
+                        cursor: grab;
+                        cursor: -moz-grab;
+                        cursor: -webkit-grab;
                         display: block;
                         font-size: 16px;
                         position: absolute;
                         top: 50%;
                         transform: translateY(-50%);
-
-                        cursor: move; /* fallback if grab cursor is unsupported */
-                        cursor: grab;
-                        cursor: -moz-grab;
-                        cursor: -webkit-grab;
                     }
 
                     &:active:before {
@@ -119,7 +118,7 @@
             }
 
             &.ui-state-active {
-                background: @white;
+                background: @color-white;
                 z-index: 19;
 
                 a.tab-title {
