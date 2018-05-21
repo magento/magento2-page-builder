@@ -1,5 +1,44 @@
 # Content Type Configuration
 
+**Note:**
+*We are revising configuration, format will change. We will publish draft of new improved configuration soon to get feedback.*
+
+## Navigation
+
+1. [Introduction]
+2. [Installation guide]
+3. [Contribution guide]
+4. [Developer documentation]
+    1. [Architecture overview]
+    1. [BlueFoot to PageBuilder data migration]
+    1. [Third-party content type migration]
+    1. [Iconography]
+    1. [Module integration]
+    1. [Additional data configuration]
+    1. **Content type configuration**
+    1. [How to add a new content type]
+    1. [Events]
+    1. [Master format]
+    1. [Visual select]    
+5. [Roadmap and known issues]
+
+[Introduction]: README.md
+[Contribution guide]: CONTRIBUTING.md
+[Installation guide]: install.md
+[Developer documentation]: developer-documentation.md
+[Architecture overview]: architecture-overview.md
+[BlueFoot to PageBuilder data migration]: bluefoot-data-migration.md
+[Third-party content type migration]: new-content-type-example.md
+[Iconography]: iconography.md
+[Module integration]: module-integration.md
+[Additional data configuration]: custom-configuration.md
+[Content type configuration]: content-type-configuration.md
+[How to add a new content type]: how-to-add-new-content-type.md
+[Events]: events.md
+[Master format]: master-format.md
+[Visual select]: visual-select.md
+[Roadmap and known issues]: roadmap.md
+
 ## Configuration
 
 Use the content type and group configuration to add new content types, extend existing content types, add groups in the left menu, or rearrange content types in the groups.
@@ -61,10 +100,10 @@ The following is an example of a content type configuration in `view/adminhtml/p
                         </element>
                         <element name="link" path=".//a">
                             <attributes>
-                                <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/default/link" persist="false"/>
-                                <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
-                                <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
-                                <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
+                                <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
+                                <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
+                                <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
+                                <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
                             </attributes>
                         </element>
                         <element name="overlay" path=".//a/div[2]/div">
@@ -209,7 +248,8 @@ It reads data based on the configuration specified in `data_mapping`.
 </appearance>
 ```
 
-Every content type needs a default appearance.
+Every content type requires a default appearance to ensure that other modules are able to easily add more appearances.
+
 Set the `default` attribute to "true" in an `appearance` node to set the default appearance for a content type.
 
 ### `data_mapping` configuration reference
@@ -218,11 +258,11 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
 | ------------------ | ----------------------------------------------------------------------------------------------------- |
 | `elements`         | The container for all the elements of the content type.                                               |
 | `element`          | The name of the element that contains data for the master format and the render and preview template. |
-| `style_properties` | specifies styles properties for the element in the master format                                      |
-| `attributes`       | specifies attributes for the element in master format                                                 |
-| `css`              | specifies whether element has classes and in which variable they should be read                       |
-| `html`             | specifies whether element has html content and in which variable they should be read                  |
-| `tag`              | Allows you to read the tag value of the element and map it back to the master format.                 |
+| `style_properties` | Specifies styles properties for the element in the master format                                      |
+| `attributes`       | Specifies attributes for the element in master format                                                 |
+| `css`              | Specifies whether element has classes and in which variable they should be read                       |
+| `html`             | Specifies whether element has html content and in which variable they should be read                  |
+| `tag`              | Allows you to read the tag name of the element and map it back to the master format.                 |
 
 **Example:**
 ``` xml
@@ -240,10 +280,10 @@ Set the `default` attribute to "true" in an `appearance` node to set the default
     </element>
     <element name="link" path=".//a">
         <attributes>
-            <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/default/link" persist="false"/>
-            <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-href" />
-            <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-target" />
-            <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/default/attribute/link-type" />
+            <complex_attribute name="link_url" reader="Magento_PageBuilder/js/property/link" persist="false"/>
+            <attribute name="link_url" source="href" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-href" />
+            <attribute name="link_url" source="target" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-target" />
+            <attribute name="link_url" source="data-link-type" virtual="true" converter="Magento_PageBuilder/js/converter/attribute/link-type" />
         </attributes>
     </element>
     <element name="overlay" path=".//a/div[2]/div">
@@ -331,7 +371,7 @@ These style properties and attributes are applied in the preview and persisted i
 
 ### Html element
 
-The `html` element allows you to read the value of the element in a property and map it back to the master format.
+The `html` element allows you to read the innerHTML of the element in a property and map it back to the master format.
 
 ``` xml
 <html name="message"/>
@@ -354,7 +394,7 @@ These classes are not read and do not appear on the form.
 
 ### Tag element
 
-The `tag` element allows you to read the tag value of the element and map back to the master format.
+The `tag` element allows you to read the tag name of the element and map back to the master format.
 
 ``` xml
 <tag name="heading_type"/>
@@ -470,3 +510,9 @@ define([], function () {
     return EmptyMobileImage;
 });
 ```
+
+## Preview component settings
+
+| Property                 | Description                                                                                                                         | Example        |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+|`fieldsToIgnoreOnRemove`| array containing field names to ignore when evaluating whether an element has been configured. The default value is an empty array. | `["tab_name"]` |

@@ -582,7 +582,7 @@
             <argument name="property" value="PageBuilderAnchorIdentifier"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
-        <actionGroup ref="selectAlignment" stepKey="enterAlignment">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
@@ -764,13 +764,8 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderAnchorContentBlock"/>
         </actionGroup>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton"/>
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveBtn"/>
-        <grabTextFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderAnchorIdentifier.section, PageBuilderAnchorIdentifier.fieldName)}} + label"  stepKey="seeRequiredMsg"/>
-        <assertEquals stepKey="assert5" message="pass">
-            <expectedResult type="const">"{{PageBuilderAnchorIdentifier_Default.errorMessage}}"</expectedResult>
-            <actualResult type="variable">seeRequiredMsg</actualResult>
-        </assertEquals>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateError">
+            <argument name="property" value="PageBuilderAnchorIdentifier_Empty"/>
+        </actionGroup>
     </test>
 </tests>
