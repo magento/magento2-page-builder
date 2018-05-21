@@ -36,14 +36,15 @@ Use this method if you are testing and evaluating PageBuilder for your Magento s
 
 ### Installation steps
 
-1. Navigate to the root directory of your Magento application
-2. Install 2.3 alpha, run composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.3.0-alpha20
-    Enter keys that you crated in your account (go to Marketplace / My Profile / Access Keys)
-3. Install Page Builder
+1. If you have a previous 2.3.0 alpha or Page Builder alpha version installed, run `composer clearcache` before installing again. If you don’t clear the cache, Composer will not download the latest alpha release from the repo. It will instead use your locally cached packages.
+2. Navigate to the directory where you want to install Magento and Page Builder.
+3. Install 2.3.0 alpha, run composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.3.0-alpha.
+    Enter keys that you created in your account (go to Marketplace / My Profile / Access Keys)
+4. Install Page Builder
     ``` sh
     composer require magento/module-page-builder-commerce
     ```
-4. Enable Page Builder module using the following command:
+5. Enable Page Builder module using the following command:
     ``` sh
     bin/magento setup:upgrade
     ```
@@ -55,7 +56,7 @@ Do not use this installation method for evaluation or production instances.
 
 ### Prerequisites
 
-* A local development installation of Magento 2.3
+* A local development installation of Magento 2.3.0
 * Access to the PageBuilder repository
 * [Yarn package manager]
 
@@ -77,6 +78,10 @@ Do not use this installation method for evaluation or production instances.
     ``` sh
     bin/magento setup:upgrade
     ```
+
+## Update steps
+
+When the new version of Page Builder available, destroy 2.3.0 alpha instance with Page Builder and follow installation steps.
 
 ## Installing Node.js dependencies
 
