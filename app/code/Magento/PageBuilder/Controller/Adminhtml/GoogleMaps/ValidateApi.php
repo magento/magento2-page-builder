@@ -16,20 +16,20 @@ class ValidateApi extends \Magento\Backend\App\Action
     /**
      * @var \Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator
      */
-    private $ApiKeyValidator;
+    private $apiKeyValidator;
 
     /**
      * Constructor
      *
      * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator $ApiKeyValidator
+     * @param \Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator $apiKeyValidator
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator $ApiKeyValidator
+        \Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator $apiKeyValidator
     ) {
         parent::__construct($context);
-        $this->ApiKeyValidator = $ApiKeyValidator;
+        $this->ApiKeyValidator = $apiKeyValidator;
     }
 
     /**

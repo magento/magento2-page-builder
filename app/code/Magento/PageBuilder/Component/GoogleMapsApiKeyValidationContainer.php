@@ -13,24 +13,24 @@ use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator;
 
-class MapContainer extends \Magento\Ui\Component\Container
+class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Container
 {
     const GOOGLE_MAPS_API_KEY_PATH = 'cms/pagebuilder/google_maps_api_key';
 
     /**
-     * @var UrlInterface $url
+     * @var UrlInterface
      */
     private $url;
 
     /**
-     * @var ScopeConfigInterface $scopeConfig
+     * @var ScopeConfigInterface
      */
     private $scopeConfig;
 
     /**
-     * @var ApiKeyValidator $ApiKeyValidator
+     * @var ApiKeyValidator
      */
-    private $ApiKeyValidator;
+    private $apiKeyValidator;
 
     /**
      * Constructor
@@ -38,7 +38,7 @@ class MapContainer extends \Magento\Ui\Component\Container
      * @param ContextInterface $context
      * @param UrlInterface $url
      * @param ScopeConfigInterface $scopeConfig
-     * @param ApiKeyValidator $ApiKeyValidator
+     * @param ApiKeyValidator $apiKeyValidator
      * @param array $components
      * @param array $data
      */
@@ -46,7 +46,7 @@ class MapContainer extends \Magento\Ui\Component\Container
         ContextInterface $context,
         UrlInterface $url,
         ScopeConfigInterface $scopeConfig,
-        ApiKeyValidator $ApiKeyValidator,
+        ApiKeyValidator $apiKeyValidator,
         array $components = [],
         array $data = []
     ) {
@@ -57,7 +57,7 @@ class MapContainer extends \Magento\Ui\Component\Container
         );
         $this->url = $url;
         $this->scopeConfig = $scopeConfig;
-        $this->ApiKeyValidator = $ApiKeyValidator;
+        $this->ApiKeyValidator = $apiKeyValidator;
     }
 
     /**

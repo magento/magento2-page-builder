@@ -5,9 +5,9 @@
  */
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Block\Adminhtml\System\Config;
+namespace Magento\PageBuilder\Block\Adminhtml\System\Config\Form\Field;
 
-class GoogleMapsApiValidator extends \Magento\Config\Block\System\Config\Form\Field
+class GoogleMapsApiKey extends \Magento\Config\Block\System\Config\Form\Field
 {
     /**
      * @inheritdoc
@@ -15,7 +15,7 @@ class GoogleMapsApiValidator extends \Magento\Config\Block\System\Config\Form\Fi
     protected function _prepareLayout()
     {
         parent::_prepareLayout();
-        $this->setTemplate('Magento_PageBuilder::system/config/google_maps_api_validator.phtml');
+        $this->setTemplate('Magento_PageBuilder::system/config/google_maps_api_key.phtml');
         return $this;
     }
 
