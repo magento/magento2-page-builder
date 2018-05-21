@@ -80,7 +80,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       _this.parent.dataStore.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
 
 
-      _uiEvents.on("previewSortable:sortupdate", function (args) {
+      _uiEvents.on("sortableChildren:sortupdate", function (args) {
         if (args.instance.id === _this.parent.id) {
           (0, _jquery)(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
 
