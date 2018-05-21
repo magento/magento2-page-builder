@@ -32,13 +32,13 @@ Use this method if you are testing and evaluating PageBuilder for your Magento s
 
 ### Prerequisites
 
-* You submitted us MAGEID and github username and received access to 2.3 alpha and PageBuilder. If you didn't submit us github username with will send you an email and request it.
+* You submitted us MAGEID and github username and received access to 2.3 alpha and PageBuilder 1.0 alpha. If you didn't submit us github username with will send you an email and request it.
 
 ### Installation steps
 
-1. If you have a previous 2.3.0 alpha or Page Builder alpha version installed, run `composer clearcache` before installing again. If you don’t clear the cache, Composer will not download the latest alpha release from the repo. It will instead use your locally cached packages.
+1. If you have installed 2.3.0 alpha or Page Builder 1.0 alpha version installed, run `composer clearcache` before installing again. If you don’t clear the cache, Composer will not download the latest alpha release from the repo. It will instead use your locally cached packages.
 2. Navigate to the directory where you want to install Magento and Page Builder.
-3. Install 2.3.0 alpha, run composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.3.0-alpha.
+3. Install 2.3.0 alpha Commerce package, run composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.3.0-alpha.
     Enter the access keys for your account (Marketplace / My Profile / Access Keys)
 4. Install Page Builder
     ``` sh
