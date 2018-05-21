@@ -12,7 +12,7 @@ define(['jquery'], function($) {
      * @param {Object} config
      * @param {HTMLElement} el
      */
-    var GoogleMapsApiValidation = function(config, el) {
+    var GoogleMapsApiValidator = function(config, el) {
         var sourceElement = $('#' + config.sourceField),
             initialValue = sourceElement.val(),
             resultElement = $('#' + config.elementId + ' > .result');
@@ -27,7 +27,7 @@ define(['jquery'], function($) {
                 resultHtml;
 
             $.ajax({
-                url: config.validationEndpoint,
+                url: config.validateUrl,
                 showLoader: true,
                 data: { key: sourceElement.val() }
             }).done(function(data) {
@@ -50,5 +50,5 @@ define(['jquery'], function($) {
         })
     };
 
-    return GoogleMapsApiValidation;
+    return GoogleMapsApiValidator;
 });

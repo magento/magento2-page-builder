@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\GoogleMaps;
 
-class KeyValidator
+class ApiKeyValidator
 {
     const GOOGLE_MAPS_EMBED_URL = 'https://www.google.com/maps/embed/v1/place?key=%s&q=Austin+TX';
 
@@ -25,7 +25,6 @@ class KeyValidator
         $result = curl_exec($curl);
         $responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $returnArray = [
-            'responseCode' => $responseCode,
             'responseMessage' => $responseCode !== 200 ? $result : '',
             'success' => $responseCode === 200 ? true : false
         ];

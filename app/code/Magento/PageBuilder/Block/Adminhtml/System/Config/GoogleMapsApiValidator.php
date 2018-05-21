@@ -42,7 +42,7 @@ class GoogleMapsApiValidator extends \Magento\Config\Block\System\Config\Form\Fi
                 'invalid_label' => __($originalData['invalid_label']),
                 'source_field' => $originalData['source_field'],
                 'html_id' => $element->getHtmlId(),
-                'validation_endpoint' => $this->_urlBuilder->getUrl('pagebuilder/googlemaps/validateapi')
+                'validate_url' => $this->_urlBuilder->getUrl('pagebuilder/googlemaps/validateapi')
             ]
         );
 

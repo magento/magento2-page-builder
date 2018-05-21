@@ -11,7 +11,7 @@ namespace Magento\PageBuilder\Component;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
-use Magento\PageBuilder\Model\GoogleMaps\KeyValidator;
+use Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator;
 
 class MapContainer extends \Magento\Ui\Component\Container
 {
@@ -28,9 +28,9 @@ class MapContainer extends \Magento\Ui\Component\Container
     private $scopeConfig;
 
     /**
-     * @var KeyValidator $keyValidator
+     * @var ApiKeyValidator $ApiKeyValidator
      */
-    private $keyValidator;
+    private $ApiKeyValidator;
 
     /**
      * Constructor
@@ -38,7 +38,7 @@ class MapContainer extends \Magento\Ui\Component\Container
      * @param ContextInterface $context
      * @param UrlInterface $url
      * @param ScopeConfigInterface $scopeConfig
-     * @param KeyValidator $keyValidator
+     * @param ApiKeyValidator $ApiKeyValidator
      * @param array $components
      * @param array $data
      */
@@ -46,7 +46,7 @@ class MapContainer extends \Magento\Ui\Component\Container
         ContextInterface $context,
         UrlInterface $url,
         ScopeConfigInterface $scopeConfig,
-        KeyValidator $keyValidator,
+        ApiKeyValidator $ApiKeyValidator,
         array $components = [],
         array $data = []
     ) {
@@ -57,7 +57,7 @@ class MapContainer extends \Magento\Ui\Component\Container
         );
         $this->url = $url;
         $this->scopeConfig = $scopeConfig;
-        $this->keyValidator = $keyValidator;
+        $this->ApiKeyValidator = $ApiKeyValidator;
     }
 
     /**
@@ -70,7 +70,7 @@ class MapContainer extends \Magento\Ui\Component\Container
         parent::prepare();
         $config = $this->getData('config');
         $apiKey = $this->scopeConfig->getValue(self::GOOGLE_MAPS_API_KEY_PATH) ?: "";
-        $response = $this->keyValidator->validate($apiKey);
+        $response = $this->ApiKeyValidator->validate($apiKey);
         if (!$response['success']) {
             $config['visible'] = true;
         }

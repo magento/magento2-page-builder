@@ -7,45 +7,39 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Controller\Adminhtml\GoogleMaps;
 
+use Magento\Framework\Controller\ResultFactory;
+
 class ValidateApi extends \Magento\Backend\App\Action
 {
     const ADMIN_RESOURCE = 'Magento_Backend::content';
 
     /**
-     * @var \Magento\Framework\Controller\Result\JsonFactory
+     * @var \Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator
      */
-    private $resultJsonFactory;
-
-    /**
-     * @var \Magento\PageBuilder\Model\GoogleMaps\KeyValidator
-     */
-    private $keyValidator;
+    private $ApiKeyValidator;
 
     /**
      * Constructor
      *
      * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\PageBuilder\Model\GoogleMaps\KeyValidator $keyValidator
+     * @param \Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator $ApiKeyValidator
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\PageBuilder\Model\GoogleMaps\KeyValidator $keyValidator
+        \Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator $ApiKeyValidator
     ) {
         parent::__construct($context);
-        $this->resultJsonFactory = $resultJsonFactory;
-        $this->keyValidator = $keyValidator;
+        $this->ApiKeyValidator = $ApiKeyValidator;
     }
 
     /**
      * Send test request to Google Maps and return response
      *
-     * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface
+     * @return Json
      */
     public function execute()
     {
         $apiKey = $this->getRequest()->getParam('key');
-        return $this->resultJsonFactory->create()->setData($this->keyValidator->validate($apiKey));
+        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($this->ApiKeyValidator->validate($apiKey));
     }
 }
