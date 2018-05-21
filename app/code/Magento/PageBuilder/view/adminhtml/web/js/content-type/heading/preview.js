@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar-options", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _uiEvents, _underscore, _toolbarOptions, _preview) {
+define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar-options", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/toolbar"], function (_jquery, _uiEvents, _underscore, _toolbarOptions, _preview, _toolbar) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Heading =

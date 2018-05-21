@@ -9,6 +9,7 @@ import _ from "underscore";
 import {ToolbarOptions, ToolbarOptionsInterface} from "../../toolbar-options";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import BasePreview from "../preview";
+import "../toolbar";
 
 export default class Heading extends BasePreview {
     private element: Element;
