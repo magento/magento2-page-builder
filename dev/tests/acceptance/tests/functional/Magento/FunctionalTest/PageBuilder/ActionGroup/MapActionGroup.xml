@@ -88,4 +88,21 @@
         <waitForElement selector="{{page.base(index)}}" stepKey="seeMap"/>
         <dontSee userInput="{{googleMapsAPIKey.warningMessage}}" stepKey="dontSeeWarningMessage"/>
     </actionGroup>
+    <actionGroup name="validateMapErrorMessage">
+        <arguments>
+            <argument name="page" defaultValue="MapOnStage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElement selector="{{page.base(index)}}" stepKey="seeMap"/>
+        <waitForElementVisible selector="{{page.errorContainer(index)}}" stepKey="seeMapErrorContainer"/>
+        <see userInput="{{PageBuilderGoogleMapsAPIKeys.mapErrorTitle}}" selector="{{page.errorTitle(index)}}" stepKey="seeMapErrorTitle"/>
+        <see userInput="{{PageBuilderGoogleMapsAPIKeys.mapErrorMessage}}" selector="{{page.errorMessage(index)}}" stepKey="seeMapErrorMessage"/>
+    </actionGroup>
+    <actionGroup name="dontSeeRenderedMapOnConfigurationPanel">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{MapOnConfigurationPanel.base(index)}}" stepKey="seeMap"/>
+        <dontSeeElementInDOM selector="{{MapOnConfigurationPanel.renderedMap}}" stepKey="dontSeeRenderedMap"/>
+    </actionGroup>
 </actionGroups>
