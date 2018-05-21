@@ -1,0 +1,96 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+//
+//  Toolbar Options Panel
+//  _____________________________________________
+
+.pagebuilder-toolbar-active {
+    &.pagebuilder-content-type {
+        outline: 1px solid rgb(153, 153, 153);
+    }
+
+    .pagebuilder-toolbar-options {
+        opacity: 1;
+        top: -39px;
+        transition-delay: 200ms;
+        visibility: visible;
+    }
+}
+
+.pagebuilder-toolbar-container {
+    overflow: hidden;
+}
+
+.pagebuilder-toolbar-options {
+    -moz-transition: opacity 200ms, top 200ms, visibility 200ms;
+    -o-transition: opacity 200ms, top 200ms, visibility 200ms;
+    -webkit-transition: opacity 200ms, top 200ms, visibility 200ms;
+    background-color: #f0f0f0;
+    border: 1px solid #c0c0c0;
+    height: 38px;
+    left: -2px;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: opacity 200ms, top 200ms, visibility 200ms;
+    visibility: hidden;
+    width: calc(~'100% + 4px');
+    z-index: 32;
+
+    .pagebuilder-toolbar-options-wrapper {
+        display: flex;
+
+        .pagebuilder-toolbar-options-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            vertical-align: middle;
+
+            &:not(:first-child):before {
+                background-color: #dbdbdb;
+                content: '';
+                height: 80%;
+                left: 0;
+                position: relative;
+                top: 10%;
+                width: 1px;
+            }
+
+            .pagebuilder-toolbar-options-link {
+                display: flex;
+                margin: 2px;
+
+                > a {
+                    border: 1px solid transparent;
+                    color: @color-very-dark-grayish-orange;
+                    display: block;
+                    height: 32px;
+                    text-align: center;
+                    text-decoration: none;
+                    width: 34px;
+
+                    &:hover,
+                    &.toolbar-active {
+                        background-color: #dbdbdb;
+                        border: 1px solid #ccc;
+                    }
+
+                    i {
+                        font-size: 18px;
+                        font-style: normal;
+                        line-height: 30px;
+                    }
+
+                    span {
+                        font-size: 15px;
+                        font-weight: 600;
+                        line-height: 32px;
+                    }
+                }
+            }
+        }
+    }
+}
