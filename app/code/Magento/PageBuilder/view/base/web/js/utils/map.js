@@ -5,7 +5,7 @@
 
 define([
     'underscore',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
+    'googleMaps'
 ], function (_) {
     'use strict';
 

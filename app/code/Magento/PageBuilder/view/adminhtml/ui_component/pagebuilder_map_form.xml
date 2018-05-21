@@ -62,7 +62,17 @@
             </formElements>
         </field>
     </fieldset>
-    <fieldset name="general" sortOrder="20">
+    <container sortOrder="20" name="google_map_api_key_check" component="Magento_Ui/js/form/components/html" class="Magento\PageBuilder\Component\MapContainer">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="additionalClasses" xsi:type="string">message message-warning</item>
+                <item name="visible" xsi:type="boolean">false</item>
+                <item name="map_configuration_url" xsi:type="string">admin/system_config/edit/section/cms</item>
+                <item name="content" xsi:type="string" translate="true"><![CDATA[You must provide the <a href="%s">Google Maps API key</a> in order to use the map]]></item>
+            </item>
+        </argument>
+    </container>
+    <fieldset name="general" sortOrder="30">
         <settings>
             <label/>
             <collapsible>true</collapsible>

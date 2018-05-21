@@ -18,6 +18,19 @@
                         <![CDATA[Includes advanced tools to design page layouts, add Magento content (Product and Category data, CMS content and Blocks), and format text.<br /><br />For Product Attributes — Page Builder can be selected as the “input type” to design layouts and create content.]]>
                     </comment>
                 </field>
+                <field id="google_maps_api_key" translate="label comment" type="text" sortOrder="2010" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Google Maps API Key</label>
+                    <comment>
+                        <![CDATA[Enter API key to use the Map content block. <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank">Get API Key</a>.]]>
+                    </comment>
+                </field>
+                <field id="google_maps_api_key_validator" translate="button_label valid_label invalid_label" sortOrder="2011" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <attribute type="button_label">Test Key</attribute>
+                    <attribute type="valid_label">Key is valid</attribute>
+                    <attribute type="invalid_label">Key is invalid. Try different key.</attribute>
+                    <attribute type="source_field">cms_pagebuilder_google_maps_api_key</attribute>
+                    <frontend_model>Magento\PageBuilder\Block\Adminhtml\System\Config\GoogleMapsApiValidator</frontend_model>
+                </field>
             </group>
         </section>
     </system>
