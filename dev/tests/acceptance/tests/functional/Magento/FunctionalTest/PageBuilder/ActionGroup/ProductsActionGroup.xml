@@ -35,9 +35,9 @@
         <waitForElementVisible selector="{{page.productImage(productIndex)}}" stepKey="waitForProductImage"/>
         <waitForElementVisible selector="{{page.productName(productIndex, product.name)}}" stepKey="waitForProductName"/>
         <waitForElementVisible selector="{{page.productPrice(productIndex, product.price)}}" stepKey="waitForProductPrice"/>
-        <dontSee selector="{{page.productAddToCart(productIndex)}}" stepKey="DontSeeProductAddToCart"/>
-        <dontSee selector="{{page.productAddToWishList(productIndex)}}" stepKey="DontSeeProductAddToWishList"/>
-        <dontSee selector="{{page.productAddToCompare(productIndex)}}" stepKey="DontSeeProductAddToCompare"/>
+        <waitForElementVisible selector="{{page.productAddToCart(productIndex)}}" stepKey="waitForProductAddToCart"/>
+        <waitForElementVisible selector="{{page.productAddToWishList(productIndex)}}" stepKey="waitForProductAddToWishList"/>
+        <waitForElementVisible selector="{{page.productAddToCompare(productIndex)}}" stepKey="waitForProductAddToCompare"/>
     </actionGroup>
     <actionGroup name="validateProductInProducts">
         <arguments>
