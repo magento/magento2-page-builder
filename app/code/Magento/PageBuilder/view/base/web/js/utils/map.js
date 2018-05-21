@@ -21,20 +21,20 @@ define([
             return new google.maps.LatLng(latLng.lat, latLng.lng);
         };
 
-    return function (element, markers, centerCoord, options) {
+    return function (element, markers, options) {
         var mapOptions = _.extend({
             zoom: 8,
-            center: googleLatLng(centerCoord),
+            center: googleLatLng({
+                lat: 30.2672,
+                lng: -97.7431,
+            }),
             scrollwheel: false,
             disableDoubleClickZoom: false,
+            disableDefaultUI: false,
             mapTypeControl: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
             },
-            navigationControl: true,
-            navigationControlOptions: {
-                style: google.maps.NavigationControlStyle.DEFAULT
-            }
         }, options);
 
         /* Create the map */
@@ -43,38 +43,62 @@ define([
 
         /**
          * Callback function on map config update
-         * @param {Array} newMarkers
-         * @param {Object} latLng
-         * @param {Number} zoom
+         * @param {Array} newMarker
+         * @param {Object} updateOptions
          */
-        this.onUpdate = function (newMarkers, latLng, zoom) {
-            this.map.setZoom(parseInt(zoom, 10));
-            this.map.setCenter(latLng);
-            this.setMarkers(newMarkers);
+        this.onUpdate = function (newMarker, updateOptions) {
+            this.map.setOptions(updateOptions);
+            this.setMarker(newMarker);
         };
 
         /**
          * Sets the markers to selected map
-         * @param {Array} newMarkers
+         * @param {} newMarker
          */
-        this.setMarkers = function (newMarkers) {
+        this.setMarker = function (newMarker) {
             this.markers.forEach(function (marker) {
                 marker.setMap(null);
             }, this);
             this.markers = [];
 
-            if (newMarkers) {
-                newMarkers.forEach(function (markerCoord) {
-                    this.markers.push(
-                        new google.maps.Marker({
-                            map: this.map,
-                            position: googleLatLng(markerCoord)
-                        })
-                    );
-                }, this);
+            if (newMarker && !_.isEmpty(newMarker)) {
+                var location = newMarker.location || '';
+                var comment = newMarker.comment || '';
+                var address = newMarker.address ? newMarker.address + '<br/>' : '';
+                var city = newMarker.city || '';
+                var country = newMarker.country || '';
+                var zipcode = newMarker.zipcode ? ',' + newMarker.zipcode : '';
+
+                var contentString =
+                    '<div>' +
+                    '<h3><b>' + location + '</b></h3>' +
+                    '<p>' + comment + '</p>' +
+                    '<p>' + address +
+                    city + zipcode + '<br/>' +
+                    country + '</p>' +
+                    '</div>';
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 350
+                });
+
+                var newCreatedMarker = new google.maps.Marker({
+                    map: this.map,
+                    position: googleLatLng(newMarker.coordinates),
+                    title: newMarker.location
+                });
+
+                if(newMarker.location) {
+                    newCreatedMarker.addListener('click', function() {
+                        infowindow.open(this.map, newCreatedMarker);
+                    }, this);
+                }
+
+                this.markers.push(newCreatedMarker);
             }
         };
 
-        this.setMarkers(markers);
+        this.setMarker(markers);
     };
 });
