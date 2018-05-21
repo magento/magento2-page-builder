@@ -3,13 +3,6 @@
 //  * See COPYING.txt for license details.
 //  */
 
-@color-white: #fff;
-@f8f8f8: #f8f8f8;
-@eee: #eee;
-@dark-gray: #534d49;
-@light-gray: #f8f3eb;
-@darker-gray: #2b2625;
-
 .pagebuilder-content-type {
     [contenteditable=true] {
         -webkit-user-select: text;
@@ -128,7 +121,7 @@
 
         &.pagebuilder-image {
             .pagebuilder-image-placeholder {
-                background: @f8f8f8;
+                background: @color-white-fog;
                 cursor: pointer;
                 font-size: 12px;
                 padding: 30px 0 16px;
@@ -416,7 +409,7 @@
             text-decoration: none;
 
             &:hover {
-                background-color: @eee;
+                background-color: @color-gray-darken0;
             }
         }
 
@@ -480,7 +473,7 @@
                     }
 
                     &:hover:not(&.option-title) {
-                        background-color: @eee;
+                        background-color: @color-gray-darken0;
                         color: @color-very-dark-gray-black;
                     }
                 }
@@ -575,11 +568,11 @@
 .pagebuilder-live-edit-wrapper {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
-    background: @darker-gray;
+    background: @color-pagebuilder-darker-gray;
     border: none;
     border-radius: 3px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, .25);
-    color: @light-gray;
+    color: @color-pagebuilder-light-gray;
     display: none;
     left: 10px !important;
     overflow: hidden;
@@ -621,16 +614,16 @@
                         padding: 0 14px;
 
                         &:hover {
-                            background: @dark-gray;
-                            color: @light-gray;
+                            background: @color-pagebuilder-dark-gray;
+                            color: @color-pagebuilder-light-gray;
                             text-decoration: none;
                         }
                     }
 
                     &.active {
                         a {
-                            background: @dark-gray;
-                            color: @light-gray;
+                            background: @color-pagebuilder-dark-gray;
+                            color: @color-pagebuilder-light-gray;
                             text-decoration: none;
                         }
                     }
