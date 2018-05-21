@@ -45,25 +45,20 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private generateMap(element: Element) {
-        let markers: any = typeof this.data.main.attributes()["data-markers"] === "string" ?
-            JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
-        let centerCoord = {
-            lat: 30.2672,
-            lng: -97.7431,
-        };
-        let options = {
-            zoom: 8,
-        };
+        const position: string = this.data.main.attributes()["data-position"] || "{}";
+        const controls = this.data.main.attributes()["data-show-controls"] || "true";
+        let marker: {} = {};
 
-        if (markers && markers !== "" && markers.length && Object.keys(markers[0]).length) {
-            const pos = this.getPosition();
-            markers = pos.markers;
-            centerCoord = pos.latLng;
-            options = {
-                zoom: pos.zoom,
-            };
+        let options = {
+            disableDefaultUI: controls !== "true",
+            mapTypeControl: controls === "true",
+        };
+        if (position !== "{}") {
+            const mapData = this.getMapData();
+            marker = mapData.marker;
+            options = mapData.options;
         }
-        this.map = new GoogleMap(element, markers, centerCoord, options);
+        this.map = new GoogleMap(element, marker, options);
     }
 
     /**
@@ -72,13 +67,9 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private updateMap() {
-        let markers = this.data.main.attributes()["data-markers"];
-        if (typeof markers === "string" && markers !== "") {
-           markers = JSON.parse(this.data.main.attributes()["data-markers"]) ;
-        }
-        if (markers.length) {
-            const pos = this.getPosition();
-            this.map.onUpdate(pos.markers, pos.latLng, pos.zoom);
+        if (this.data.main.attributes()["data-position"] !== "{}") {
+            const mapData = this.getMapData();
+            this.map.onUpdate(mapData.marker, mapData.options);
         }
     }
 
@@ -87,24 +78,41 @@ export default class Preview extends BasePreview {
      *
      * @returns {Object}
      */
-    private getPosition() {
-        const markers: any = typeof this.data.main.attributes()["data-markers"] === "string" ?
-            JSON.parse(this.data.main.attributes()["data-markers"]) : this.data.main.attributes()["data-markers"];
-        let zoom: number = this.data.main.attributes()["data-zoom"];
-        if (typeof zoom !== "number") {
-            zoom = parseInt(zoom, 10);
+    private getMapData() {
+        const attributes = this.data.main.attributes();
+        const location: string = attributes["data-location-name"];
+        let position: string = attributes["data-position"];
+        const address: string = attributes["data-address"];
+        const city: string = attributes["data-city"];
+        const comment: string = attributes["data-comment"];
+        const controls = attributes["data-show-controls"];
+        const country: string = attributes["data-country"];
+        const zipcode: string = attributes["data-zipcode"];
+        if (position !== "" && typeof position === "string") {
+            position = JSON.parse(position);
         }
 
         return {
-            latLng: {
-                lat: parseFloat(markers[0].lat),
-                lng: parseFloat(markers[0].lng),
+            marker: {
+                coordinates: {
+                    lat: parseFloat(position.lat),
+                    lng: parseFloat(position.lng),
+                },
+                location,
+                address,
+                city,
+                comment,
+                country,
+                zipcode,
             },
-            markers: [{
-                lat: parseFloat(markers[0].lat),
-                lng: parseFloat(markers[0].lng),
-            }],
-            zoom,
+            options: {
+                center: {
+                    lat: parseFloat(position.lat),
+                    lng: parseFloat(position.lng),
+                },
+                disableDefaultUI: controls !== "true",
+                mapTypeControl: controls === "true",
+            },
         };
     }
 }

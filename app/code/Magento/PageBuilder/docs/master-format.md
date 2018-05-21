@@ -872,9 +872,16 @@ HTML content.
 Attributes
 1. data-role [map]
 2. data-appearance [default]
-3. data-markers
+3. data-position
 4. data-zoom
-5. class
+5. data-location-name
+6. data-address
+7. data-city
+8. data-zipcode
+9. data-country
+10. data-comment
+11. data-show-controls
+12. class
 
 Inline styles
 1. text-align
