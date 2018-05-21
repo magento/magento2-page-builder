@@ -1301,6 +1301,9 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Load Storefront -->
@@ -1474,6 +1477,9 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Load Storefront -->
@@ -1481,7 +1487,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="verifyMapHasPin" stepKey="validateMap">
+        <actionGroup ref="verifyMapHasPin" stepKey="validateMapStage">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
@@ -1502,13 +1508,12 @@
         <!-- Validate Map Does Not Render On Configuration -->
         <comment userInput="Validate Map Does Not Render On Configuration" stepKey="commentValidateConfiguration"/>
         <actionGroup ref="dontSeeRenderedMapOnConfigurationPanel" stepKey="dontSeeRenderedMapOnConfigurationPanel"/>
-        <!-- Validate Map Does Not Render On Storefront -->
-        <comment userInput="Validate Map Does Not Render On Storefront" stepKey="commentValidateStorefront"/>
+        <!-- Validate Map Still Renders On Storefront -->
+        <comment userInput="Validate Map Still Not Renders On Storefront" stepKey="commentValidateStorefront"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <reloadPage stepKey="reloadPage2"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
-        <actionGroup ref="validateMapErrorMessage" stepKey="validateMapErrorMessageOnStorefront">
+        <actionGroup ref="verifyMapHasPin" stepKey="validateMapStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
     </test>
