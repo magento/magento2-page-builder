@@ -29,7 +29,7 @@ class ValidateApi extends \Magento\Backend\App\Action
         \Magento\PageBuilder\Model\GoogleMaps\ApiKeyValidator $apiKeyValidator
     ) {
         parent::__construct($context);
-        $this->ApiKeyValidator = $apiKeyValidator;
+        $this->apiKeyValidator = $apiKeyValidator;
     }
 
     /**
@@ -40,6 +40,6 @@ class ValidateApi extends \Magento\Backend\App\Action
     public function execute()
     {
         $apiKey = $this->getRequest()->getParam('key');
-        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($this->ApiKeyValidator->validate($apiKey));
+        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($this->apiKeyValidator->validate($apiKey));
     }
 }

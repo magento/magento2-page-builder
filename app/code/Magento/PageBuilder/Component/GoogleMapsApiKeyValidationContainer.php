@@ -57,7 +57,7 @@ class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Containe
         );
         $this->url = $url;
         $this->scopeConfig = $scopeConfig;
-        $this->ApiKeyValidator = $apiKeyValidator;
+        $this->apiKeyValidator = $apiKeyValidator;
     }
 
     /**
@@ -70,7 +70,7 @@ class GoogleMapsApiKeyValidationContainer extends \Magento\Ui\Component\Containe
         parent::prepare();
         $config = $this->getData('config');
         $apiKey = $this->scopeConfig->getValue(self::GOOGLE_MAPS_API_KEY_PATH) ?: "";
-        $response = $this->ApiKeyValidator->validate($apiKey);
+        $response = $this->apiKeyValidator->validate($apiKey);
         if (!$response['success']) {
             $config['visible'] = true;
         }
