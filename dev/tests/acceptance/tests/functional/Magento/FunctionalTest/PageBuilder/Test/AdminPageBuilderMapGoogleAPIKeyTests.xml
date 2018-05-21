@@ -12,7 +12,7 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Google Maps API Key"/>
-            <title value="Map - Validate Can Save Valid Google Maps API Key"/>
+            <title value="Validate Can Save Valid Google Maps API Key"/>
             <description value="Tests that a user can save a valid Google Maps API Key."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
@@ -25,7 +25,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
                 <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
@@ -43,7 +43,7 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Google Maps API Key"/>
-            <title value="Map - Validate Can Save Invalid Google Maps API Key"/>
+            <title value="Validate Can Save Invalid Google Maps API Key"/>
             <description value="Tests that a user can save an invalid Google Maps API Key."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
@@ -56,7 +56,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
                 <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
@@ -74,7 +74,7 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Google Maps API Key"/>
-            <title value="Map - Validate Can Save Empty Google Maps API Key"/>
+            <title value="Validate Can Save Empty Google Maps API Key"/>
             <description value="Tests that a user can save an empty Google Maps API Key."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
@@ -87,7 +87,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
                 <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
@@ -164,9 +164,6 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
-                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
@@ -193,9 +190,6 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
-                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
@@ -240,7 +234,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
                 <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
@@ -289,7 +283,7 @@
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled5"/>
         <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
-        <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}/div/div" userInput="{{googleMapsAPIKey.valid}}" stepKey="seeKeyValid"/>
+        <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.valid}}" stepKey="seeKeyValid"/>
     </test>
     <test name="GoogleMapsAPIKeyTestKeyButtonChangesMessageCorrectly">
         <annotations>
@@ -308,7 +302,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="applyGoogleMapsAPIKey">
+            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
                 <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>

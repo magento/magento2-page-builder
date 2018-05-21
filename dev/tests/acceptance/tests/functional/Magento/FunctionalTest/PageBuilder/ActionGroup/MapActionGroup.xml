@@ -76,10 +76,6 @@
         <seeElementInDOM selector="{{MapOnStorefront.width(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="seeInDOMEmptyMapWidthOnFrontend"/>
         <dontSeeElement selector="{{MapOnStorefront.width(index, PageBuilderMapWidthDefaultProperty.value)}}" stepKey="dontSeeEmptyMapWidthOnFrontend"/>
     </actionGroup>
-    <actionGroup name="validateWarningMessageOnConfigurationPanel">
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.warningMessage}}" stepKey="waitFroWarningMessage"/>
-        <see userInput="{{googleMapsAPIKey.warningMessage}}" selector="{{MapOnConfigurationPanel.warningMessage}}" stepKey="seeWarningMessage"/>
-    </actionGroup>
     <actionGroup name="dontSeeWarningMessage">
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
@@ -95,8 +91,8 @@
         </arguments>
         <waitForElement selector="{{page.base(index)}}" stepKey="seeMap"/>
         <waitForElementVisible selector="{{page.errorContainer(index)}}" stepKey="seeMapErrorContainer"/>
-        <see userInput="{{PageBuilderGoogleMapsAPIKeys.mapErrorTitle}}" selector="{{page.errorTitle(index)}}" stepKey="seeMapErrorTitle"/>
-        <see userInput="{{PageBuilderGoogleMapsAPIKeys.mapErrorMessage}}" selector="{{page.errorMessage(index)}}" stepKey="seeMapErrorMessage"/>
+        <see userInput="{{PageBuilderMapCommonData.mapErrorTitle}}" selector="{{page.errorTitle(index)}}" stepKey="seeMapErrorTitle"/>
+        <see userInput="{{PageBuilderMapCommonData.mapErrorMessage}}" selector="{{page.errorMessage(index)}}" stepKey="seeMapErrorMessage"/>
     </actionGroup>
     <actionGroup name="dontSeeRenderedMapOnConfigurationPanel">
         <arguments>
