@@ -5,6 +5,8 @@
 
 import ko from "knockout";
 import Preview from "./content-type/preview";
+import ToolbarOptionsValueInterface from "./toolbar-options-value.d";
+import ToolbarOptionsInterface from "./toolbar-options.d";
 
 export class ToolbarOptions {
     public options: KnockoutObservableArray<ToolbarOptionsInterface> = ko.observableArray([]);
@@ -41,15 +43,4 @@ export class ToolbarOptions {
             this.preview.updateData(option.key, value.value);
         }
     }
-}
-
-export interface ToolbarOptionsInterface {
-    key: string;
-    type: string;
-    options: ToolbarOptionsValueInterface[];
-}
-export interface ToolbarOptionsValueInterface {
-    value: string;
-    label: string;
-    icon: string;
 }
