@@ -202,8 +202,8 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterLinkProperty">
             <argument name="property" value="PageBuilderImageLinkProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderImageNewTab_True"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.panelFieldControlSwitch(PageBuilderImageTargetProperty.fieldName)}}" stepKey="clickImageTargetProperty"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterImageCaptionProperty">
             <argument name="property" value="PageBuilderImageCaptionProperty"/>
         </actionGroup>
@@ -224,7 +224,7 @@
         <waitForElementVisible selector="{{ImageOnStorefront.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource4"/>
         <assertElementContainsAttribute selector="{{ImageOnStorefront.imageElement('1')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertImageHasFullWidthStyle"/>
         <seeElementInDOM selector="{{ImageOnStorefront.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
-        <seeElementInDOM selector="{{ImageOnStorefront.imageLinkTarget(PageBuilderImageTargetProperty.value)}}" stepKey="seeImageTargetInDOM"/>
+        <seeElementInDOM selector="{{ImageOnStorefront.imageLinkTarget(PageBuilderImageNewTab_True.stageValue)}}" stepKey="seeImageTargetInDOM"/>
         <seeElementInDOM selector="{{ImageOnStorefront.imageHasAltText(PageBuilderImageAltTextProperty.value)}}" stepKey="seeImageAltText"/>
         <seeElementInDOM selector="{{ImageOnStorefront.imageHasTitleTag(PageBuilderImageTitleAttributeProperty.value)}}" stepKey="seeImageAltText2"/>
         <seeElementInDOM selector="{{ImageOnStorefront.imageSource(PageBuilderMobileImagePropertyGif.fileName)}}" stepKey="seeMainImageSource5"/>

@@ -46,22 +46,21 @@ class Map implements RendererInterface
             'data-role' => 'map',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? '',
-            'data-markers' => '[]',
+            'data-show-controls' => 'true',
+            'data-position' => '{}',
         ];
 
         if (isset($eavData['map'])) {
             $map = explode(',', $eavData['map']);
-            $rootElementAttributes['data-markers'] = '[{&quot;lat&quot;:'
+            $rootElementAttributes['data-position'] = '{&quot;lat&quot;:'
                 . $map[0]
                 . ',&quot;lng&quot;:'
                 . $map[1]
-                . '}]';
-            $rootElementAttributes['data-zoom'] = $map[2];
+                . '}';
         }
 
         if (isset($itemData['formData'])) {
             $formData = $itemData['formData'];
-            $formData['width'] = $eavData['map_width'] ?? '100%';
             $formData['height'] = $eavData['map_height'] ?? '300px';
 
             $style = $this->styleExtractor->extractStyle($formData);
