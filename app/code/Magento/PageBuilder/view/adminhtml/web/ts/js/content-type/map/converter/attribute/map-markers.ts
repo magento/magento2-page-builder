@@ -5,7 +5,8 @@
 
 import {ConverterInterface} from "../../../../converter/converter-interface";
 
-export default class Zoom implements ConverterInterface {
+export default class MapMarkers implements ConverterInterface {
+
     /**
      * Convert value to internal format
      *
@@ -13,7 +14,7 @@ export default class Zoom implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        return value;
+        return value !== "{}" ? JSON.parse(value) : "";
     }
 
     /**
@@ -21,16 +22,16 @@ export default class Zoom implements ConverterInterface {
      *
      * @param name string
      * @param data Object
-     * @returns {string | object}
+     * @returns {string}
      */
-    public toDom(name: string, data: object): string | object {
-        if (data[name]) {
-            let content = data[name];
-            if (typeof content === "string") {
-                content = JSON.parse(content);
-            }
-            return content.zoom;
+    public toDom(name: string, data: object): string {
+        let result = "{}";
+        if (typeof data[name] === "object") {
+            data[name].lat = parseFloat(data[name].lat);
+            data[name].lng = parseFloat(data[name].lng);
+            result = JSON.stringify(data[name]);
         }
-        return "";
+
+        return result;
     }
 }

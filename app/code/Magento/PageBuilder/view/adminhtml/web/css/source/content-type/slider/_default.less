@@ -1,17 +1,17 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
 
 //
 //  Default appearance styles
 //  _____________________________________________
 
 .pagebuilder-content-type.pagebuilder-slider {
-    border: none;
-    -webkit-transition: none;
     -moz-transition: none;
     -o-transition: none;
+    -webkit-transition: none;
+    border: none;
     transition: none;
 
     .slider-container {
@@ -31,10 +31,10 @@
     }
 
     &.pagebuilder-content-type-active:hover {
-        outline: 0;
-        -webkit-transition: none;
         -moz-transition: none;
         -o-transition: none;
+        -webkit-transition: none;
+        outline: 0;
         transition: none;
 
         .slider-container {
@@ -44,7 +44,7 @@
 
     .slider-empty {
         align-items: flex-end;
-        color: #aaa6a0;
+        color: @color-gray65-lighten;
         display: flex;
         font-size: 20px;
         font-weight: lighter;
@@ -77,12 +77,12 @@
 
                 .lib-tooltip(
                     @_tooltip-position: top,
-                    @_tooltip-color: "#CCCCCC"
+                    @_tooltip-color: @color-gray80
                 );
 
                 .tooltip-content {
-                    background: #fffbbb;
-                    border: 1px solid #afadac;
+                    background: @color-lazy-sun;
+                    border: 1px solid @color-dark-grayish-orange;
                     border-radius: 1px;
                     bottom: 97.5%;
                     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
@@ -108,12 +108,12 @@
                         width: 0;
                     }
                     &:before {
-                        border-top-color: #afadac;
+                        border-top-color: @color-dark-grayish-orange;
                         margin-top: 1px;
                         z-index: 3;
                     }
                     &:after {
-                        border-top-color: #fffbbb;
+                        border-top-color: @color-lazy-sun;
                         z-index: 4;
                     }
                 }
@@ -132,8 +132,8 @@
                     }
 
                     &:after {
-                        background: white;
-                        border: 1px solid #ccc;
+                        background: @color-white;
+                        border: 1px solid @color-gray80;
                         border-radius: 10px;
                         content: ' ';
                         display: inline-block;
@@ -177,7 +177,7 @@
 
                 &.sortable-placeholder {
                     &:after {
-                        background: #373330;
+                        background-color: @color-very-dark-grayish-orange;
                         border: none;
                         border-radius: 10px;
                         content: ' ';
@@ -195,14 +195,14 @@
 
                 &.active {
                     .navigation-dot-anchor:after {
-                        background: #373330;
+                        background: @color-very-dark-grayish-orange;
                         border: none;
                         transition: all .3s;
                     }
                 }
 
                 &:focus {
-                    outline: 1px solid #007bdb;
+                    outline: 1px solid @color-blue-pure;
 
                     .pagebuilder-options {
                         .pagebuilder-options-visible;
@@ -224,11 +224,11 @@
                     }
 
                     .navigation-dot-anchor:after {
-                        border: 1px solid #b3b3b3;
+                        border: 1px solid @color-gray75;
                     }
 
                     &.active .navigation-dot-anchor:after {
-                        background: #1c1918;
+                        background: @color-pagebuilder-darkest-gray;
                         border: none;
                     }
                 }
@@ -273,7 +273,10 @@
     }
 }
 
-// Don't show tooltip when interacting
+//
+//  Don't show tooltip when interacting
+//  ______________________________________
+
 .pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-slider .slider-controls .navigation-dot .tooltip-content {
     display: none;
 }

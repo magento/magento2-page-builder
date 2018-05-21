@@ -857,8 +857,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'metric' => '{\"margin\":\"0px 0px 0px 0px\",\"padding\":\"0px 0px 0px 0px\"}',
                             'align' => 'center',
                             'map' => '50.821392,-0.139439,8',
-                            'map_height' => '300px',
-                            'map_width' => '300px'
+                            'map_height' => '300px'
                         ]
                     ]
                 ],
@@ -872,8 +871,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                             'entity_id' => 1,
                             'css_classes' => 'one two',
                             'map' => '',
-                            'map_height' => '300px',
-                            'map_width' => '300px'
+                            'map_height' => '300px'
                         ]
                     ]
                 ],
@@ -886,8 +884,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
                         [
                             'entity_id' => 1,
                             'css_classes' => 'one two',
-                            'map_height' => '300px',
-                            'map_width' => '300px'
+                            'map_height' => '300px'
                         ]
                     ]
                 ],

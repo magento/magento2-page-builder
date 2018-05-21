@@ -167,7 +167,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
                 </data_mapping>
                 <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
                 <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
-                <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
+                <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
             </appearance>
             <appearance name="collage-left">
                 <!-- Collage left appearance configuration -->
@@ -235,7 +235,7 @@ It controls the templates, how data is read from the master format, and how to a
 | `render_template`   | Template used to render the content type to the master format                          |
 | `reader`            | Reads data for the content type from the master format                                 |
 
-The default reader is `Magento_PageBuilder/js/master-format/read/configurable`.
+The default reader is `Magento_PageBuilder/js/component/format/read/configurable`.
 It reads data based on the configuration specified in `data_mapping`.
 
 **Example:**
@@ -244,7 +244,7 @@ It reads data based on the configuration specified in `data_mapping`.
     <data_mapping/>
     <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
     <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
-    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
+    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
 </appearance>
 ```
 
