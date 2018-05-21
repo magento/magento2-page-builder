@@ -35,9 +35,17 @@
         <waitForElementVisible selector="{{page.productImage(productIndex)}}" stepKey="waitForProductImage"/>
         <waitForElementVisible selector="{{page.productName(productIndex, product.name)}}" stepKey="waitForProductName"/>
         <waitForElementVisible selector="{{page.productPrice(productIndex, product.price)}}" stepKey="waitForProductPrice"/>
-        <dontSee selector="{{page.productAddToCart(productIndex)}}" stepKey="DontSeeProductAddToCart"/>
-        <dontSee selector="{{page.productAddToWishList(productIndex)}}" stepKey="DontSeeProductAddToWishList"/>
-        <dontSee selector="{{page.productAddToCompare(productIndex)}}" stepKey="DontSeeProductAddToCompare"/>
+        <waitForElementVisible selector="{{page.productAddToCart(productIndex)}}" stepKey="waitForProductAddToCart"/>
+        <waitForElementVisible selector="{{page.productAddToWishList(productIndex)}}" stepKey="waitForProductAddToWishList"/>
+        <waitForElementVisible selector="{{page.productAddToCompare(productIndex)}}" stepKey="waitForProductAddToCompare"/>
+        <executeJS function="return getComputedStyle(document.evaluate(&quot;{{page.productName(productIndex, product.name)}}&quot;, document.body).iterateNext()).pointerEvents" stepKey="getProductNamePointerEvents"/>
+        <assertEquals expected="none" expectedType="string" actualType="variable" actual="getProductNamePointerEvents" stepKey="assertProductNameNotClickable"/>
+        <executeJS function="return getComputedStyle(document.evaluate(&quot;{{page.productAddToCart(productIndex)}}&quot;, document.body).iterateNext()).pointerEvents" stepKey="getAddToCartPointerEvents"/>
+        <assertEquals expected="none" expectedType="string" actualType="variable" actual="getAddToCartPointerEvents" stepKey="assertAddToCartNotClickable"/>
+        <executeJS function="return getComputedStyle(document.evaluate(&quot;{{page.productAddToWishList(productIndex)}}&quot;, document.body).iterateNext()).pointerEvents" stepKey="getWishlistPointerEvents"/>
+        <assertEquals expected="none" expectedType="string" actualType="variable" actual="getWishlistPointerEvents" stepKey="assertWishlistNotClickable"/>
+        <executeJS function="return getComputedStyle(document.evaluate(&quot;{{page.productAddToCompare(productIndex)}}&quot;, document.body).iterateNext()).pointerEvents" stepKey="getAddToComparePointerEvents"/>
+        <assertEquals expected="none" expectedType="string" actualType="variable" actual="getAddToComparePointerEvents" stepKey="assertAddToCompareNotClickable"/>
     </actionGroup>
     <actionGroup name="validateProductInProducts">
         <arguments>
