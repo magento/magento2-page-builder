@@ -123,17 +123,47 @@ requirejs([
 
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {
-        var markers = [],
-            centerCoord = '',
-            mapOptions = {},
-            zoom;
+        var mapPosition = {},
+            marker = {},
+            location,
+            address,
+            city,
+            comment,
+            controls,
+            country,
+            zipcode,
+            mapOptions = {};
 
-        if (element.hasAttribute('data-markers') && element.getAttribute('data-markers') !== '[]') {
-            markers = JSON.parse(element.getAttribute('data-markers'));
-            zoom = element.getAttribute('data-zoom');
-            centerCoord = markers[0];
-            mapOptions.zoom = parseInt(zoom, 10);
-            new GoogleMap(element, markers, centerCoord, mapOptions);
+        /**
+         * Sets height to 300px as default if no height input. But will not be saved to database
+         */
+        if ($(element).context.style.height === '') {
+            $(element).height('300px');
+        }
+
+        if (element.hasAttribute('data-position') && element.getAttribute('data-position') !== '{}') {
+            mapPosition = JSON.parse(element.getAttribute('data-position'));
+            location = element.getAttribute('data-location-name');
+            address = element.getAttribute('data-address');
+            city = element.getAttribute('data-city');
+            comment = element.getAttribute('data-comment');
+            country = element.getAttribute('data-country');
+            zipcode = element.getAttribute('data-zipcode');
+            controls = element.getAttribute('data-show-controls');
+            marker = {
+                coordinates: mapPosition,
+                location: location,
+                address: address,
+                city: city,
+                comment: comment,
+                country: country,
+                zipcode: zipcode
+            };
+
+            mapOptions.center = mapPosition;
+            mapOptions.disableDefaultUI = controls !== 'true';
+            mapOptions.mapTypeControl = controls === 'true';
+            new GoogleMap(element, marker, mapOptions);
         }
     });
 

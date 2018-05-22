@@ -5,9 +5,9 @@
  */
 -->
 
-<div id="pagebuilder-panel-wrapper"
+<div id="pagebuilder-panel-wrapper" class="pagebuilder-panel-wrapper"
     css="visible: isVisible, collapsed: isCollapsed">
-    <div id="pagebuilder-panel">
+    <div id="pagebuilder-panel" class="pagebuilder-panel">
         <div class="search-blocks">
             <label for="search-blocks-input"></label>
             <a href="" class="close" click="clearSearch" attr="title: searchTitle" visible="searching"></a>
@@ -26,7 +26,7 @@
         <div class="search-results-empty" visible="searching() && !searchResults().length">
             <div translate="searchNoResult"></div>
         </div>
-        <ul id="pagebuilder-panel-groups" visible="!searching()" each="groups">
+        <ul id="pagebuilder-panel-groups" class="pagebuilder-panel-groups" visible="!searching()" each="groups">
             <li attr="id: 'group-' + id()" event="click: toggle" css="active: active">
                 <div class="group-title">
                     <h4 translate="label"></h4>

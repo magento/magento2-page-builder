@@ -1,7 +1,7 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
 
 //
 //  Default appearance styles
@@ -60,29 +60,6 @@
             }
         }
 
-        .resize-ghost {
-            border-right: 15px solid #bfe2f0;
-            box-sizing: border-box;
-            height: 100%;
-            left: 0;
-            opacity: 0;
-            pointer-events: none;
-            position: absolute;
-            top: 0;
-            transition: .5s opacity;
-            visibility: hidden;
-            z-index: 10;
-
-            .no-user-select;
-            .no-pointer-events;
-
-            &.active {
-                opacity: 1;
-                transition: .5s opacity;
-                visibility: visible;
-            }
-        }
-
         .resize-grid {
             display: flex;
             height: 100%;
@@ -104,6 +81,29 @@
                 box-sizing: border-box;
                 height: 100%;
                 width: 16.66666667%;
+            }
+        }
+
+        .resize-ghost {
+            border-right: 15px solid @color-pagebuilder-light-blue;
+            box-sizing: border-box;
+            height: 100%;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            transition: .5s opacity;
+            visibility: hidden;
+            z-index: 10;
+
+            .no-user-select;
+            .no-pointer-events;
+
+            &.active {
+                opacity: 1;
+                transition: .5s opacity;
+                visibility: visible;
             }
         }
 
