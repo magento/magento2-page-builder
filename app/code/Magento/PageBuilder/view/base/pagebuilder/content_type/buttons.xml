@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="buttons" type="restricted-container" sortOrder="40" translate="label">
+        <type name="buttons" sortOrder="40" translate="label">
             <label>Buttons</label>
             <icon>icon-pagebuilder-button</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
@@ -15,9 +15,11 @@
             <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
             <form>pagebuilder_buttons_form</form>
             <group>general</group>
-            <accepts>
-                <type name="button-item" />
-            </accepts>
+            <allowed_parents>
+                <parent name="row"/>
+                <parent name="column"/>
+                <parent name="tab-item"/>
+            </allowed_parents>
             <appearances>
                 <appearance default="true" name="default">
                     <data_mapping>

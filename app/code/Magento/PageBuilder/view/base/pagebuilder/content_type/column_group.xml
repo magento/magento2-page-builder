@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="column-group" type="restricted-container" sortOrder="10" translate="label">
+        <type name="column-group" sortOrder="10" translate="label">
             <label>Column Group</label>
             <icon>icon-pagebuilder-column</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
@@ -15,9 +15,10 @@
             <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
             <form/>
             <group>general</group>
-            <accepts>
-                <type name="column" />
-            </accepts>
+            <allowed_parents>
+                <parent name="row"/>
+                <parent name="tab-item"/>
+            </allowed_parents>
             <is_visible>false</is_visible>
             <appearances>
                 <appearance default="true" name="default">

@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="row" type="container" sortOrder="1" translate="label">
+        <type name="row" sortOrder="1" translate="label">
             <label>Row</label>
             <icon>icon-pagebuilder-row</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
@@ -15,6 +15,9 @@
             <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
             <form>pagebuilder_row_form</form>
             <group>general</group>
+            <allowed_parents>
+                <parent name="stage"/>
+            </allowed_parents>
             <appearances>
                 <appearance default="true" name="default">
                     <data_mapping>

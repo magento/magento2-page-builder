@@ -60,13 +60,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private function convertTypes(\DOMDocument $source): array
     {
         $typesData = [];
-        $xpath = new \DOMXPath($source);
         /** @var \DOMNodeList $contentTypes */
-        $contentTypes = $xpath->query("//config/content_types/type");
+        $contentTypes = $source->getElementsByTagName('type');
         /** @var \DOMNode $contentType */
         foreach ($contentTypes as $contentType) {
             $name = $contentType->attributes->getNamedItem('name')->nodeValue;
-            $typesData[$name]['type'] = $this->getAttributeValue($contentType, 'type');
             /** @var \DOMElement $childNode */
             foreach ($contentType->childNodes as $childNode) {
                 if ($this->isConfigNode($childNode)) {
@@ -74,12 +72,12 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
                         $typesData[$name][$childNode->nodeName] = $this->convertAppearancesData($childNode);
                     } elseif ('additional_data' === $childNode->nodeName) {
                         $typesData[$name][$childNode->nodeName] = $this->convertAdditionalData($childNode);
-                    } elseif ('accepts' === $childNode->nodeName) {
-                        $accepts = [];
-                        foreach ($childNode->getElementsByTagName('type') as $parentNode) {
-                            $accepts[] = $parentNode->attributes->getNamedItem('name')->nodeValue;
+                    } elseif ('allowed_parents' === $childNode->nodeName) {
+                        $parents = [];
+                        foreach ($childNode->getElementsByTagName('parent') as $parentNode) {
+                            $parents[] = $parentNode->attributes->getNamedItem('name')->nodeValue;
                         }
-                        $typesData[$name][$childNode->nodeName] = $accepts;
+                        $typesData[$name][$childNode->nodeName] = $parents;
                     } else {
                         $typesData[$name][$childNode->nodeName] = $childNode->nodeValue;
                     }
@@ -87,7 +85,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             }
             $typesData[$name]['sortOrder'] = $this->getAttributeValue($contentType, 'sortOrder');
         }
-
         uasort($typesData, function ($firstElement, $secondElement) {
             return (int)$firstElement['sortOrder'] <=> (int)$secondElement['sortOrder'];
         });

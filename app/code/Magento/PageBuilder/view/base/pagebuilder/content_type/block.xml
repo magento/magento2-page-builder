@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="block" type="static" sortOrder="1" translate="label">
+        <type name="block" sortOrder="1" translate="label">
             <label>Block</label>
             <icon>icon-pagebuilder-block</icon>
             <component>Magento_PageBuilder/js/content-type</component>
@@ -15,6 +15,11 @@
             <form>pagebuilder_block_form</form>
             <group>magento</group>
             <backend_block>Magento\PageBuilder\Block\ContentType\Block</backend_block>
+            <allowed_parents>
+                <parent name="row"/>
+                <parent name="column"/>
+                <parent name="tab-item"/>
+            </allowed_parents>
             <appearances>
                 <appearance default="true" name="default">
                     <data_mapping>

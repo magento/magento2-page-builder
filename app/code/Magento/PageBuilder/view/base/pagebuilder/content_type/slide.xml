@@ -5,9 +5,9 @@
  * See COPYING.txt for license details.
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_types.xsd">
     <content_types>
-        <type name="slide" type="restricted-static" translate="label">
+        <type name="slide" translate="label">
             <label>Slide</label>
             <icon>icon-pagebuilder-slider</icon>
             <component>Magento_PageBuilder/js/content-type</component>
@@ -15,6 +15,9 @@
             <content_component>Magento_PageBuilder/js/content-type/slide/content</content_component>
             <form>pagebuilder_slide_form</form>
             <group>media</group>
+            <allowed_parents>
+                <parent name="slider"/>
+            </allowed_parents>
             <appearances>
                 <appearance name="collage-left">
                     <preview_template>Magento_PageBuilder/content-type/slide/collage-left/preview</preview_template>

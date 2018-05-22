@@ -7,13 +7,18 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="image" type="static" sortOrder="1" translate="label">
+        <type name="image" sortOrder="1" translate="label">
             <label>Image</label>
             <icon>icon-pagebuilder-image</icon>
             <component>Magento_PageBuilder/js/content-type</component>
             <preview_component>Magento_PageBuilder/js/content-type/image/preview</preview_component>
             <form>pagebuilder_image_form</form>
             <group>media</group>
+            <allowed_parents>
+                <parent name="row"/>
+                <parent name="column"/>
+                <parent name="tab-item"/>
+            </allowed_parents>
             <appearances>
                 <appearance default="true" name="full-width">
                     <data_mapping>
