@@ -14,7 +14,6 @@ export default {
      * @param {Preview} context
      * @param {Event} event
      */
-
     onToolbarFocusIn(context: Preview, event: Event): void {
         const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
         $(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
