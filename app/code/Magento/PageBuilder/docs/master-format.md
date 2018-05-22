@@ -918,7 +918,7 @@ Inline styles
 ## Products
 
 ```
-<div data-role="products" data-appearance="grid" data-products-count="4" data-conditions-encoded="">widget type="Magento\CatalogWidget\Block\Product\ProductsList" template="Magento_CatalogWidget::product/widget/content/grid.phtml" anchor_text="" id_path="" show_pager="0" products_count="4" type_name="Catalog Products List" conditions_encoded=""</div>
+<div data-role="products" data-appearance="grid" data-products-count="4" data-conditions-encoded="">{{widget type="Magento\CatalogWidget\Block\Product\ProductsList" template="Magento_CatalogWidget::product/widget/content/grid.phtml" anchor_text="" id_path="" show_pager="0" products_count="4" type_name="Catalog Products List" conditions_encoded=""}}</div>
 ```
 
 Attributes
