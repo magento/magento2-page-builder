@@ -118,6 +118,8 @@ Follow these steps to activate PageBuilder in the Admin:
 
 ## Troubleshooting
 
+### Common access problems
+
 If you are having trouble installing PageBuilder, please verify that the `MAGEID` account you provided for the Early Access Program (EAP) belongs to an active Magento partner account.
 
 **Note:**
@@ -133,3 +135,19 @@ you will not be able to access PageBuilder.
 
 If you provided incorrect `MAGEID` by mistake and have another one that is valid, please resubmit this form:
 https://goo.gl/forms/unvuDikl9wydmKt12
+
+### Errors
+
+If you run into any of the following errors:
+
+```
+Could not find package magento/project-enterprise-edition with version 2.3.0-alpha.
+```
+```
+Could not find a matching version of package magento/module-page-builder-commerce. Check the package spelling, your version constraint and that the package is available in a stability which matches your minimum-stability (stable).
+```
+
+Check your composer keys in the `auth.json` file.
+If these keys are correct and you still encounter these errors, please contact [Olena Tkacheva].
+
+[Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB
