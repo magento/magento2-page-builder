@@ -7,7 +7,6 @@ import ConfigFieldInterface from "./config-field.d";
 
 export default interface ContentTypeConfigInterface {
     name: string;
-    type: "container" | "restricted-container" | "static";
     label: string;
     icon: string;
     form: string;
@@ -21,8 +20,6 @@ export default interface ContentTypeConfigInterface {
     component: string;
     appearances: string[];
     readers: string[];
-    accepts: string[];
-    generate_allowed_containers: string;
     allowed_parents: string[];
     is_visible: boolean;
 }

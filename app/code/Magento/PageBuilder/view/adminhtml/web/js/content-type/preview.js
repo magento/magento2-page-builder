@@ -274,10 +274,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.getSortableOptions = function getSortableOptions() {
-      if (this.parent.config.type === "restricted-container") {
-        return null;
-      }
-
       return (0, _sortable2.getSortableOptions)(this);
     };
     /**

@@ -318,75 +318,12 @@ export interface AcceptedMatrix {
 const acceptedMatrix: AcceptedMatrix = {};
 
 /**
- * Build a matrix of which containers each content type can go into, these are calculated by the type given to the
- * content type in it's declaration.
- *
- * Types:
- * static - can go into any container (not into restricted containers)
- * container - can contain any static item
- * restricted-static - can only go into containers which declare it <accepts /> them
- * restricted-container - can only contain items which it declares it <accepts />
+ * Build a matrix of which containers each content type can go into, these are determined by the allowed_parents
+ * node within the content types configuration
  */
 export function generateContainerAcceptedMatrix(): void {
-    getContentTypesArray().forEach((contentType: ContentTypeConfigInterface) => {
-        // Iterate over restricted containers to calculate their allowed children first
-        if (contentType.accepts && contentType.accepts.length > 0) {
-            contentType.accepts.forEach((accepted: string) => {
-                if (!acceptedMatrix[accepted]) {
-                    acceptedMatrix[accepted] = [];
-                }
-                acceptedMatrix[accepted].push(contentType.name);
-            });
-        }
-
-        // Any static / restricted-container content type can go in all unrestricted containers
-        if (contentType.type === "static" || contentType.type === "restricted-container") {
-            if (!acceptedMatrix[contentType.name]) {
-                acceptedMatrix[contentType.name] = [];
-            }
-            acceptedMatrix[contentType.name] = acceptedMatrix[contentType.name].concat(getAllContainers());
-        }
-
-        // Does the content type have a specific generator for the containers?
-        if (contentType.generate_allowed_containers) {
-            createAllowedContainersGenerator(contentType.generate_allowed_containers).then(
-                (generator: AllowedContainersGenerator) => {
-                    acceptedMatrix[contentType.name] = generator.generate(acceptedMatrix[contentType.name]);
-                },
-            );
-        }
-    });
-}
-
-/**
- * Retrieve the content type configuration as an array
- *
- * @returns {({name: string; type: string; accepts: string[]} | any)[]}
- */
-export function getContentTypesArray() {
-    return [
-        // @todo move stage config into XML
-        {
-            name: "stage",
-            type: "restricted-container",
-            accepts: [
-                "row",
-            ],
-        },
-        ..._.values(Config.getConfig("content_types")),
-    ];
-}
-
-/**
- * Get all container content type names
- *
- * @returns {string[]}
- */
-export function getAllContainers() {
-    return getContentTypesArray().filter((config: ContentTypeConfigInterface) => {
-        return config.type === "container";
-    }).map((config: ContentTypeConfigInterface) => {
-        return config.name;
+    _.values(Config.getConfig("content_types")).forEach((contentType: ContentTypeConfigInterface) => {
+        acceptedMatrix[contentType.name] = contentType.allowed_parents.slice();
     });
 }
 

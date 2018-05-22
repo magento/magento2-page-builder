@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/js/interactions/allowed-containers-factory"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _contentTypeFactory, _registry, _createStylesheet, _allowedContainersFactory) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/utils/create-stylesheet"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _contentTypeFactory, _registry, _createStylesheet) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -304,73 +304,13 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
   var acceptedMatrix = {};
   /**
-   * Build a matrix of which containers each content type can go into, these are calculated by the type given to the
-   * content type in it's declaration.
-   *
-   * Types:
-   * static - can go into any container (not into restricted containers)
-   * container - can contain any static item
-   * restricted-static - can only go into containers which declare it <accepts /> them
-   * restricted-container - can only contain items which it declares it <accepts />
+   * Build a matrix of which containers each content type can go into, these are determined by the allowed_parents
+   * node within the content types configuration
    */
 
   function generateContainerAcceptedMatrix() {
-    getContentTypesArray().forEach(function (contentType) {
-      // Iterate over restricted containers to calculate their allowed children first
-      if (contentType.accepts && contentType.accepts.length > 0) {
-        contentType.accepts.forEach(function (accepted) {
-          if (!acceptedMatrix[accepted]) {
-            acceptedMatrix[accepted] = [];
-          }
-
-          acceptedMatrix[accepted].push(contentType.name);
-        });
-      } // Any static / restricted-container content type can go in all unrestricted containers
-
-
-      if (contentType.type === "static" || contentType.type === "restricted-container") {
-        if (!acceptedMatrix[contentType.name]) {
-          acceptedMatrix[contentType.name] = [];
-        }
-
-        acceptedMatrix[contentType.name] = acceptedMatrix[contentType.name].concat(getAllContainers());
-      } // Does the content type have a specific generator for the containers?
-
-
-      if (contentType.generate_allowed_containers) {
-        (0, _allowedContainersFactory.createAllowedContainersGenerator)(contentType.generate_allowed_containers).then(function (generator) {
-          acceptedMatrix[contentType.name] = generator.generate(acceptedMatrix[contentType.name]);
-        });
-      }
-    });
-  }
-  /**
-   * Retrieve the content type configuration as an array
-   *
-   * @returns {({name: string; type: string; accepts: string[]} | any)[]}
-   */
-
-
-  function getContentTypesArray() {
-    return [// @todo move stage config into XML
-    {
-      name: "stage",
-      type: "restricted-container",
-      accepts: ["row"]
-    }].concat(_underscore.values(_config.getConfig("content_types")));
-  }
-  /**
-   * Get all container content type names
-   *
-   * @returns {string[]}
-   */
-
-
-  function getAllContainers() {
-    return getContentTypesArray().filter(function (config) {
-      return config.type === "container";
-    }).map(function (config) {
-      return config.name;
+    _underscore.values(_config.getConfig("content_types")).forEach(function (contentType) {
+      acceptedMatrix[contentType.name] = contentType.allowed_parents.slice();
     });
   }
   /**
@@ -408,8 +348,6 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     showDropIndicators: showDropIndicators,
     hideDropIndicators: hideDropIndicators,
     generateContainerAcceptedMatrix: generateContainerAcceptedMatrix,
-    getContentTypesArray: getContentTypesArray,
-    getAllContainers: getAllContainers,
     getContainersFor: getContainersFor,
     getAllowedContainersClasses: getAllowedContainersClasses
   };

@@ -280,10 +280,6 @@ export default class Preview {
      * @returns {JQueryUI.SortableOptions}
      */
     public getSortableOptions(): JQueryUI.SortableOptions | any {
-        if (this.parent.config.type === "restricted-container") {
-            return null;
-        }
-
         return getSortableOptions(this);
     }
 
