@@ -11,7 +11,7 @@ import _ from "underscore";
 import "./binding/draggable";
 import Config from "./config";
 import ContentTypeConfigInterface from "./content-type-config.d";
-import {hideDropIndicators, showDropIndicators} from "./interactions/sortable";
+import {hideDropIndicators, showDropIndicators} from "./interactions/drop-indicators";
 import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";

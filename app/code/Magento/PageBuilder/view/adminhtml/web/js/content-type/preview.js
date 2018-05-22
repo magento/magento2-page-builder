@@ -328,8 +328,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
 
-      _uiEvents.on("block:sortStart", this.onSortStart.bind(this.parent));
-
       this.parent.dataStore.subscribe(function (data) {
         _this4.updateObservables();
       });
@@ -463,26 +461,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       _uiEvents.trigger("previewObservables:updated", {
         preview: this
       });
-    };
-    /**
-     * Event called when starting starts on this element
-     *
-     * @param {Event} event
-     * @param {SortParamsInterface} params
-     */
-
-
-    _proto.onSortStart = function onSortStart(event, params) {
-      if (params.block.id === this.parent.id) {
-        var originalEle = (0, _jquery)(params.originalEle);
-        originalEle.show();
-        originalEle.addClass("pagebuilder-sorting-original"); // Reset the width & height of the helper
-
-        (0, _jquery)(params.helper).css({
-          width: "",
-          height: ""
-        }).html((0, _jquery)("<h3 />").text(this.title).html());
-      }
     };
 
     _createClass(Preview, [{

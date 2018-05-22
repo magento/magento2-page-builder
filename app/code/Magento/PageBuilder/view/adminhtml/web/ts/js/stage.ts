@@ -13,10 +13,10 @@ import ContentTypeConfigInterface from "./content-type-config";
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
 import ContentTypeInterface from "./content-type.d";
 import DataStore from "./data-store";
-import {generateContainerAcceptedMatrix, getSortableOptions} from "./interactions/sortable";
+import {generateContainerAcceptedMatrix} from "./interactions/matrix";
+import {getSortableOptions} from "./interactions/sortable";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
-import SortParamsInterface from "./sort-params.d";
 import buildStage from "./stage-builder";
 
 export default class Stage {
@@ -150,18 +150,6 @@ export default class Stage {
             }
         });
 
-        // Observe sorting actions
-        events.on("block:sortStart", (args: SortParamsInterface) => {
-            if (args.stageId === this.id) {
-                this.onSortingStart(args);
-            }
-        });
-        events.on("block:sortStop", (args: SortParamsInterface) => {
-            if (args.stageId === this.id) {
-                this.onSortingStop(args);
-            }
-        });
-
         // Any store state changes trigger a stage update event
         this.dataStore.subscribe(() => events.trigger("stage:updated", {stageId: this.id}));
 
@@ -190,23 +178,5 @@ export default class Stage {
      */
     private onBlockRemoved(params: ContentTypeRemovedParamsInterface): void {
         params.parent.removeChild(params.block);
-    }
-
-    /**
-     * On sorting start
-     *
-     * @param {SortParamsInterface} params
-     */
-    private onSortingStart(params: SortParamsInterface): void {
-        this.showBorders(true);
-    }
-
-    /**
-     * On sorting stop
-     *
-     * @param {SortParamsInterface} params
-     */
-    private onSortingStop(params: SortParamsInterface): void {
-        this.showBorders(false);
     }
 }

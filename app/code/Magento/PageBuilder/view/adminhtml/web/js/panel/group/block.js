@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/interactions/sortable"], function (_knockout, _sortable) {
+define(["knockout", "Magento_PageBuilder/js/interactions/matrix"], function (_knockout, _matrix) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -43,7 +43,7 @@ define(["knockout", "Magento_PageBuilder/js/interactions/sortable"], function (_
 
     _proto.getDraggableOptions = function getDraggableOptions() {
       return {
-        connectToSortable: (0, _sortable.getAllowedContainersClasses)(this.config.name)
+        connectToSortable: (0, _matrix.getAllowedContainersClasses)(this.config.name)
       };
     };
 

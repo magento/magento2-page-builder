@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/utils/create-stylesheet"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _contentTypeFactory, _registry, _createStylesheet) {
+define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/interactions/drop-indicators", "Magento_PageBuilder/js/interactions/matrix", "Magento_PageBuilder/js/interactions/move-content-type"], function (_jquery, _knockout, _uiEvents, _contentTypeFactory, _registry, _dropIndicators, _matrix, _moveContentType) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -12,18 +12,6 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
    * @returns {JQueryUI.SortableOptions | any}
    */
   function getSortableOptions(preview) {
-    /**
-     * @todo resolve issue with stage not conforming to the content type interface. e.g. not having a preview class
-     * This corrects the paths to various things we require for the stage.
-     */
-    if (preview.config.name === "stage") {
-      preview.stageId = preview.id;
-      preview = {
-        canReceiveDrops: preview.canReceiveDrops,
-        parent: preview
-      };
-    }
-
     return {
       cursor: "-webkit-grabbing",
       tolerance: "pointer",
@@ -63,6 +51,37 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       }
     };
   }
+  /**
+   * Get the stage ID from the preview
+   *
+   * @param {Preview | Stage} preview
+   * @returns {string}
+   */
+
+
+  function getPreviewStageIdProxy(preview) {
+    if (preview.config.name === "stage") {
+      return preview.id;
+    }
+
+    return preview.parent.stageId;
+  }
+  /**
+   * Retrieve the parent from the preview
+   *
+   * @param {Preview | Stage} preview
+   * @returns {any}
+   */
+
+
+  function getPreviewParentProxy(preview) {
+    if (preview.config.name === "stage") {
+      // @todo our usage of types for Stage are wrong, this requires refactoring outside of the scope of this story
+      return preview;
+    }
+
+    return preview.parent;
+  }
 
   var sortedContentType;
   /**
@@ -82,9 +101,9 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         // Ensure the original item is displayed but with reduced opacity
         ui.item.show().addClass("pagebuilder-sorting-original");
         sortedContentType = contentTypeInstance;
-        showDropIndicators(contentTypeInstance.config.name); // Dynamically change the connect with option to restrict content types
+        (0, _dropIndicators.showDropIndicators)(contentTypeInstance.config.name); // Dynamically change the connect with option to restrict content types
 
-        (0, _jquery)(this).sortable("option", "connectWith", getAllowedContainersClasses(contentTypeInstance.config.name));
+        (0, _jquery)(this).sortable("option", "connectWith", (0, _matrix.getAllowedContainersClasses)(contentTypeInstance.config.name));
         (0, _jquery)(this).sortable("refresh");
       }
     }
@@ -113,7 +132,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
   function onSortStop(preview, event, ui) {
     sortedContentType = null;
     ui.item.removeClass("pagebuilder-sorting-original");
-    hideDropIndicators();
+    (0, _dropIndicators.hideDropIndicators)();
     (0, _registry.setDraggedBlockConfig)(null);
   }
   /**
@@ -149,8 +168,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         return element.classList.contains("pagebuilder-draggable-block");
       }); // Create the new content type and insert it into the parent
 
-      (0, _contentTypeFactory)(blockConfig, preview.parent, preview.parent.stageId).then(function (block) {
-        preview.parent.addChild(block, index);
+      (0, _contentTypeFactory)(blockConfig, getPreviewParentProxy(preview), getPreviewStageIdProxy(preview)).then(function (block) {
+        getPreviewParentProxy(preview).addChild(block, index);
 
         _uiEvents.trigger("block:dropped:create", {
           id: block.id,
@@ -205,7 +224,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           (0, _jquery)(el).remove();
         }
 
-        moveContentType(contentTypeInstance, targetIndex, targetParent);
+        (0, _moveContentType.moveContentType)(contentTypeInstance, targetIndex, targetParent);
 
         if (contentTypeInstance.parent !== targetParent) {
           ui.item.remove();
@@ -213,143 +232,9 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       }
     }
   }
-  /**
-   * Move a content type to a new index, with the option to move to a new container
-   *
-   * @param {ContentType} contentType
-   * @param {number} targetIndex
-   * @param {ContentTypeCollection} targetParent
-   */
-
-
-  function moveContentType(contentType, targetIndex, targetParent) {
-    if (targetParent === void 0) {
-      targetParent = null;
-    }
-
-    var sourceParent = contentType.parent;
-    var sourceIndex = contentType.parent.children().indexOf(contentType);
-    var sourceParentChildren = sourceParent.getChildren();
-
-    if (targetParent && sourceParent !== targetParent) {
-      contentType.parent = targetParent; // Handle dragging between sortable elements
-
-      sourceParentChildren.splice(sourceIndex, 1);
-      targetParent.getChildren().splice(targetIndex, 0, contentType);
-    } else {
-      // Retrieve the children from the source parent
-      var children = _knockout.utils.unwrapObservable(sourceParentChildren); // Inform KO that this value is about to mutate
-
-
-      if (sourceParentChildren.valueWillMutate) {
-        sourceParentChildren.valueWillMutate();
-      } // Perform the mutation
-
-
-      children.splice(sourceIndex, 1);
-      children.splice(targetIndex, 0, contentType); // Inform KO that the mutation is complete
-
-      if (sourceParentChildren.valueHasMutated) {
-        sourceParentChildren.valueHasMutated();
-      }
-    } // Process any deferred bindings
-
-
-    if (_knockout.processAllDeferredBindingUpdates) {
-      _knockout.processAllDeferredBindingUpdates();
-    } // @todo fire generic move event
-
-  }
-
-  var headDropIndicatorStyles;
-  /**
-   * Show the drop indicators for a specific content type
-   *
-   * We do this by creating a style sheet and injecting it into the head. It's dramatically quicker to allow the browsers
-   * CSS engine to display these for us than manually iterating through the DOM and applying a class to the elements.
-   *
-   * @param {string} contentType
-   * @returns {HTMLStyleElement}
-   */
-
-  function showDropIndicators(contentType) {
-    var acceptedContainers = getContainersFor(contentType);
-
-    if (acceptedContainers.length > 0) {
-      var _createStyleSheet;
-
-      var classNames = acceptedContainers.map(function (container) {
-        return ".content-type-container." + container + "-container > .pagebuilder-drop-indicator";
-      });
-      var styles = (0, _createStylesheet.createStyleSheet)((_createStyleSheet = {}, _createStyleSheet[classNames.join(", ")] = {
-        opacity: 1,
-        visibility: "visible"
-      }, _createStyleSheet));
-      document.head.appendChild(styles);
-      headDropIndicatorStyles = styles;
-      return styles;
-    }
-  }
-  /**
-   * Hide the drop indicators
-   */
-
-
-  function hideDropIndicators() {
-    if (headDropIndicatorStyles) {
-      headDropIndicatorStyles.remove();
-      headDropIndicatorStyles = null;
-    }
-  }
-
-  var acceptedMatrix = {};
-  /**
-   * Build a matrix of which containers each content type can go into, these are determined by the allowed_parents
-   * node within the content types configuration
-   */
-
-  function generateContainerAcceptedMatrix() {
-    _underscore.values(_config.getConfig("content_types")).forEach(function (contentType) {
-      acceptedMatrix[contentType.name] = contentType.allowed_parents.slice();
-    });
-  }
-  /**
-   * Retrieve the containers a specific content type can be contained in
-   *
-   * @param {string} contentType
-   * @returns {any}
-   */
-
-
-  function getContainersFor(contentType) {
-    if (acceptedMatrix[contentType]) {
-      return acceptedMatrix[contentType];
-    }
-
-    return [];
-  }
-  /**
-   * Generate classes of containers the content type is allowed within
-   *
-   * @param {string} contentType
-   * @returns {string}
-   */
-
-
-  function getAllowedContainersClasses(contentType) {
-    return getContainersFor(contentType).map(function (value) {
-      return ".content-type-container." + value + "-container";
-    }).join(", ");
-  }
 
   return {
-    getSortableOptions: getSortableOptions,
-    moveContentType: moveContentType,
-    showDropIndicators: showDropIndicators,
-    hideDropIndicators: hideDropIndicators,
-    generateContainerAcceptedMatrix: generateContainerAcceptedMatrix,
-    getContainersFor: getContainersFor,
-    getAllowedContainersClasses: getAllowedContainersClasses
+    getSortableOptions: getSortableOptions
   };
 });
 //# sourceMappingURL=sortable.js.map

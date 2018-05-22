@@ -368,7 +368,6 @@ export default class Preview {
      * Bind events
      */
     protected bindEvents() {
-        events.on("block:sortStart", this.onSortStart.bind(this.parent));
         this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
@@ -498,24 +497,5 @@ export default class Preview {
         );
         this.afterObservablesUpdated();
         events.trigger("previewObservables:updated", {preview: this});
-    }
-
-    /**
-     * Event called when starting starts on this element
-     *
-     * @param {Event} event
-     * @param {SortParamsInterface} params
-     */
-    private onSortStart(event: Event, params: SortParamsInterface): void {
-        if (params.block.id === this.parent.id) {
-            const originalEle = $(params.originalEle);
-            originalEle.show();
-            originalEle.addClass("pagebuilder-sorting-original");
-
-            // Reset the width & height of the helper
-            $(params.helper)
-                .css({width: "", height: ""})
-                .html($("<h3 />").text(this.title).html());
-        }
     }
 }

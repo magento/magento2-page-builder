@@ -1,0 +1,53 @@
+/*eslint-disable */
+define(["underscore", "Magento_PageBuilder/js/config"], function (_underscore, _config) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+  var acceptedMatrix = {};
+  /**
+   * Build a matrix of which containers each content type can go into, these are determined by the allowed_parents
+   * node within the content types configuration
+   */
+
+  function generateContainerAcceptedMatrix() {
+    _underscore.values(_config.getConfig("content_types")).forEach(function (contentType) {
+      acceptedMatrix[contentType.name] = contentType.allowed_parents.slice();
+    });
+  }
+  /**
+   * Retrieve the containers a specific content type can be contained in
+   *
+   * @param {string} contentType
+   * @returns {any}
+   */
+
+
+  function getContainersFor(contentType) {
+    if (acceptedMatrix[contentType]) {
+      return acceptedMatrix[contentType];
+    }
+
+    return [];
+  }
+  /**
+   * Generate classes of containers the content type is allowed within
+   *
+   * @param {string} contentType
+   * @returns {string}
+   */
+
+
+  function getAllowedContainersClasses(contentType) {
+    return getContainersFor(contentType).map(function (value) {
+      return ".content-type-container." + value + "-container";
+    }).join(", ");
+  }
+
+  return {
+    generateContainerAcceptedMatrix: generateContainerAcceptedMatrix,
+    getContainersFor: getContainersFor,
+    getAllowedContainersClasses: getAllowedContainersClasses
+  };
+});
+//# sourceMappingURL=matrix.js.map

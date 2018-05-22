@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/interactions/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _dataStore, _sortable, _render, _stageBuilder) {
+define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/interactions/matrix", "Magento_PageBuilder/js/interactions/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _dataStore, _matrix, _sortable, _render, _stageBuilder) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -31,7 +31,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       this.id = parent.id;
       this.initListeners();
       (0, _stageBuilder)(this, parent.initialValue).then(this.ready.bind(this));
-      (0, _sortable.generateContainerAcceptedMatrix)();
+      (0, _matrix.generateContainerAcceptedMatrix)();
     }
     /**
      * Get template.
@@ -145,19 +145,6 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
         if (args.stageId === _this.id) {
           _this.onBlockRemoved(args);
         }
-      }); // Observe sorting actions
-
-
-      _uiEvents.on("block:sortStart", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onSortingStart(args);
-        }
-      });
-
-      _uiEvents.on("block:sortStop", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onSortingStop(args);
-        }
       }); // Any store state changes trigger a stage update event
 
 
@@ -198,26 +185,6 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
 
     _proto.onBlockRemoved = function onBlockRemoved(params) {
       params.parent.removeChild(params.block);
-    };
-    /**
-     * On sorting start
-     *
-     * @param {SortParamsInterface} params
-     */
-
-
-    _proto.onSortingStart = function onSortingStart(params) {
-      this.showBorders(true);
-    };
-    /**
-     * On sorting stop
-     *
-     * @param {SortParamsInterface} params
-     */
-
-
-    _proto.onSortingStop = function onSortingStop(params) {
-      this.showBorders(false);
     };
 
     _createClass(Stage, [{
