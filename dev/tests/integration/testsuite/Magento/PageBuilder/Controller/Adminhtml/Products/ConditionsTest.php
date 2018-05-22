@@ -45,7 +45,7 @@ class ConditionsTest extends \Magento\TestFramework\TestCase\AbstractBackendCont
             ],
             '1--2--1' => [
                 'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
-                'attribute' => 'giftcard_amounts',
+                'attribute' => 'amounts',
                 'operator' => '==',
                 'value' => '123',
             ],
