@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block;
 
+/**
+ * @api
+ */
 class GoogleMapsApiBlock extends \Magento\Framework\View\Element\Template
 {
     const GOOGLE_MAPS_API_KEY_PATH = 'cms/pagebuilder/google_maps_api_key';

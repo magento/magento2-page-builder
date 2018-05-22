@@ -35,11 +35,12 @@ class ValidateApi extends \Magento\Backend\App\Action
     /**
      * Send test request to Google Maps and return response
      *
-     * @return Json
+     * @return \Magento\Framework\Controller\Result\Json
      */
     public function execute()
     {
         $apiKey = $this->getRequest()->getParam('key');
-        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($this->apiKeyValidator->validate($apiKey));
+        $validationResult = $this->apiKeyValidator->validate($apiKey);
+        return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($validationResult);
     }
 }
