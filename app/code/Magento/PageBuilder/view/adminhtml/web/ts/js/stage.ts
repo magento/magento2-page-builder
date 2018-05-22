@@ -5,6 +5,7 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
+import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import _ from "underscore";

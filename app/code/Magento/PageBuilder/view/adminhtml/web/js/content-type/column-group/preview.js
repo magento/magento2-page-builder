@@ -210,8 +210,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     _proto.registerResizeHandle = function registerResizeHandle(column, handle) {
       var _this2 = this;
 
-      handle.off("mousedown");
-      handle.on("mousedown", function (event) {
+      handle.off("mousedown touchstart");
+      handle.on("mousedown touchstart", function (event) {
         event.preventDefault();
 
         var groupPosition = _this2.getGroupPosition(_this2.groupElement);
@@ -371,15 +371,30 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     _proto.initMouseMove = function initMouseMove(group) {
       var _this4 = this;
 
-      group.mousemove(function (event) {
-        var groupPosition = _this4.getGroupPosition(group);
+      (0, _jquery)(document).on("mousemove touchmove", function (event) {
+        var groupPosition = _this4.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
 
-        _this4.onResizingMouseMove(event, group, groupPosition);
 
-        _this4.onDraggingMouseMove(event, group, groupPosition);
+        if (event.type === "touchmove") {
+          event.pageX = event.originalEvent.pageX;
+          event.pageY = event.originalEvent.pageY;
+        }
 
-        _this4.onDroppingMouseMove(event, group, groupPosition);
-      }).mouseleave(function () {
+        if (_this4.eventIntersectsGroup(event, groupPosition)) {
+          _this4.onResizingMouseMove(event, group, groupPosition);
+
+          _this4.onDraggingMouseMove(event, group, groupPosition);
+
+          _this4.onDroppingMouseMove(event, group, groupPosition);
+        } else {
+          _this4.groupPositionCache = null;
+          _this4.dropPosition = null;
+
+          _this4.dropPlaceholder.removeClass("left right");
+
+          _this4.movePlaceholder.css("left", "").removeClass("active");
+        }
+      }).on("touchend", function () {
         _this4.groupPositionCache = null;
         _this4.dropPosition = null;
 
@@ -388,9 +403,21 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         _this4.movePlaceholder.css("left", "").removeClass("active");
       }); // As the mouse might be released outside of the group, attach to the body
 
-      (0, _jquery)("body").mouseup(function () {
+      (0, _jquery)("body").on("mouseup touchend", function () {
         _this4.endAllInteractions();
       });
+    };
+    /**
+     * Does the current event intersect with the group?
+     *
+     * @param {JQuery.Event} event
+     * @param {GroupPositionCache} groupPosition
+     * @returns {boolean}
+     */
+
+
+    _proto.eventIntersectsGroup = function eventIntersectsGroup(event, groupPosition) {
+      return event.pageY > groupPosition.top && event.pageY < groupPosition.top + groupPosition.outerHeight && event.pageX > groupPosition.left && event.pageX < groupPosition.left + groupPosition.outerWidth;
     };
     /**
      * Cache the groups positions

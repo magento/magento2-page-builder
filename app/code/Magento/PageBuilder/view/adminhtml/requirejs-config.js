@@ -33,7 +33,7 @@ var config = {
         'pagebuilder/ko-sortable': {
             deps: ['jquery', 'jquery/ui', 'Magento_PageBuilder/js/resource/jquery-ui/jquery.ui.touch-punch.min']
         },
-        'Magento_PageBuilder/js/resource/jquery-ui/jquery.ui.touch-punch.min': {
+        'Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min': {
             deps: ['jquery/ui']
         }
     },

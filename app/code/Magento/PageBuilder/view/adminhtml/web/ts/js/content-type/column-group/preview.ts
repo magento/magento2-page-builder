@@ -243,8 +243,8 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery<HTMLElement>} handle
      */
     public registerResizeHandle(column: Column, handle: JQuery<HTMLElement>) {
-        handle.off("mousedown");
-        handle.on("mousedown", (event) => {
+        handle.off("mousedown touchstart");
+        handle.on("mousedown touchstart", (event) => {
             event.preventDefault();
             const groupPosition = this.getGroupPosition(this.groupElement);
             this.resizing(true);
@@ -382,13 +382,26 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery<HTMLElement>} group
      */
     private initMouseMove(group: JQuery<HTMLElement>) {
-        group.mousemove((event: JQuery.Event) => {
+        $(document).on("mousemove touchmove", (event: JQuery.Event) => {
             const groupPosition = this.getGroupPosition(group);
 
-            this.onResizingMouseMove(event, group, groupPosition);
-            this.onDraggingMouseMove(event, group, groupPosition);
-            this.onDroppingMouseMove(event, group, groupPosition);
-        }).mouseleave(() => {
+            // If we're handling a touch event we need to pass through the page X & Y
+            if (event.type === "touchmove") {
+                event.pageX = (event.originalEvent as any).pageX;
+                event.pageY = (event.originalEvent as any).pageY;
+            }
+
+            if (this.eventIntersectsGroup(event, groupPosition)) {
+                this.onResizingMouseMove(event, group, groupPosition);
+                this.onDraggingMouseMove(event, group, groupPosition);
+                this.onDroppingMouseMove(event, group, groupPosition);
+            } else {
+                this.groupPositionCache = null;
+                this.dropPosition = null;
+                this.dropPlaceholder.removeClass("left right");
+                this.movePlaceholder.css("left", "").removeClass("active");
+            }
+        }).on("touchend", () => {
             this.groupPositionCache = null;
             this.dropPosition = null;
             this.dropPlaceholder.removeClass("left right");
@@ -396,9 +409,23 @@ export default class Preview extends PreviewCollection {
         });
 
         // As the mouse might be released outside of the group, attach to the body
-        $("body").mouseup(() => {
+        $("body").on("mouseup touchend", () => {
             this.endAllInteractions();
         });
+    }
+
+    /**
+     * Does the current event intersect with the group?
+     *
+     * @param {JQuery.Event} event
+     * @param {GroupPositionCache} groupPosition
+     * @returns {boolean}
+     */
+    private eventIntersectsGroup(event: JQuery.Event, groupPosition: GroupPositionCache) {
+        return event.pageY > groupPosition.top &&
+            event.pageY < (groupPosition.top + groupPosition.outerHeight) &&
+            event.pageX > groupPosition.left &&
+            event.pageX < (groupPosition.left + groupPosition.outerWidth);
     }
 
     /**
