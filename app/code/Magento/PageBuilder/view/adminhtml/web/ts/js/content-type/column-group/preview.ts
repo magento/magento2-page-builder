@@ -11,7 +11,7 @@ import Config from "../../config";
 import ConfigContentBlock from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
-import {moveContentType} from "../../interactions/move";
+import {moveContentType} from "../../interactions/move-content-type";
 import {getDraggedBlockConfig} from "../../panel/registry";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
@@ -98,14 +98,9 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle a new column being dropped into the group
      *
-     * @param {Event} event
-     * @param {JQueryUI.DroppableEventUIParam} ui
      * @param {DropPosition} dropPosition
      */
-    public onNewColumnDrop(event: Event, ui: JQueryUI.DroppableEventUIParam, dropPosition: DropPosition) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-
+    public onNewColumnDrop(dropPosition: DropPosition) {
         // Create our new column
         createColumn(
             this.parent,
@@ -123,14 +118,11 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle an existing column being dropped into a new column group
      *
-     * @param {Event} event
      * @param {DropPosition} movePosition
      */
-    public onExistingColumnDrop(event: Event, movePosition: DropPosition) {
+    public onExistingColumnDrop(movePosition: DropPosition) {
         const column: Column = getDragColumn();
         let modifyOldNeighbour;
-        event.preventDefault();
-        event.stopImmediatePropagation();
 
         // Determine which old neighbour we should modify
         const oldWidth = getColumnWidth(column);
@@ -369,7 +361,7 @@ export default class Preview extends PreviewCollection {
         $("body").css("cursor", "");
 
         this.dropPlaceholder.removeClass("left right");
-        this.movePlaceholder.removeClass("active");
+        this.movePlaceholder.css("left", "").removeClass("active");
         this.resizeGhost.removeClass("active");
 
         // Reset the group positions cache
@@ -401,17 +393,28 @@ export default class Preview extends PreviewCollection {
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.css("left", "").removeClass("active");
             }
-        }).on("touchend", () => {
-            this.groupPositionCache = null;
-            this.dropPosition = null;
-            this.dropPlaceholder.removeClass("left right");
-            this.movePlaceholder.css("left", "").removeClass("active");
-        });
+        }).on("mouseup touchend", () => {
+            this.handleMouseUp();
 
-        // As the mouse might be released outside of the group, attach to the body
-        $("body").on("mouseup touchend", () => {
+            this.dropPosition = null;
             this.endAllInteractions();
         });
+    }
+
+    /**
+     * Handle the mouse up action, either adding a new column or moving an existing
+     */
+    private handleMouseUp() {
+        if (this.dropOverElement && this.dropPosition) {
+            this.onNewColumnDrop(this.dropPosition);
+            this.dropOverElement = null;
+        }
+
+        const column: Column = getDragColumn();
+
+        if (this.movePosition && column && column.parent !== this.parent) {
+            this.onExistingColumnDrop(this.movePosition);
+        }
     }
 
     /**
@@ -695,18 +698,7 @@ export default class Preview extends PreviewCollection {
                     group.parents(".element-children").sortable("option", "disabled", false);
                 });
             },
-            drop(event: Event, ui: JQueryUI.DroppableEventUIParam) {
-                if (self.dropOverElement && self.dropPosition) {
-                    self.onNewColumnDrop(event, ui, self.dropPosition);
-                    self.dropOverElement = null;
-                }
-
-                const column: Column = getDragColumn();
-
-                if (self.movePosition && column && column.parent !== self.parent) {
-                    self.onExistingColumnDrop(event, self.movePosition);
-                }
-
+            drop() {
                 self.dropPositions = [];
                 self.dropPlaceholder.removeClass("left right");
             },

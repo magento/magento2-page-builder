@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/move", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _move, _registry, _previewCollection, _dragAndDrop, _factory, _registry2, _resizing) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/move-content-type", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _moveContentType, _registry, _previewCollection, _dragAndDrop, _factory, _registry2, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -67,18 +67,14 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Handle a new column being dropped into the group
      *
-     * @param {Event} event
-     * @param {JQueryUI.DroppableEventUIParam} ui
      * @param {DropPosition} dropPosition
      */
 
 
     var _proto = Preview.prototype;
 
-    _proto.onNewColumnDrop = function onNewColumnDrop(event, ui, dropPosition) {
-      event.preventDefault();
-      event.stopImmediatePropagation(); // Create our new column
-
+    _proto.onNewColumnDrop = function onNewColumnDrop(dropPosition) {
+      // Create our new column
       (0, _factory.createColumn)(this.parent, (0, _resizing.getSmallestColumnWidth)(), dropPosition.insertIndex).then(function () {
         var newWidth = (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(dropPosition.affectedColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()); // Reduce the affected columns width by the smallest column width
 
@@ -88,16 +84,13 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Handle an existing column being dropped into a new column group
      *
-     * @param {Event} event
      * @param {DropPosition} movePosition
      */
 
 
-    _proto.onExistingColumnDrop = function onExistingColumnDrop(event, movePosition) {
+    _proto.onExistingColumnDrop = function onExistingColumnDrop(movePosition) {
       var column = (0, _registry2.getDragColumn)();
-      var modifyOldNeighbour;
-      event.preventDefault();
-      event.stopImmediatePropagation(); // Determine which old neighbour we should modify
+      var modifyOldNeighbour; // Determine which old neighbour we should modify
 
       var oldWidth = (0, _resizing.getColumnWidth)(column); // Retrieve the adjacent column either +1 or -1
 
@@ -110,7 +103,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
       (0, _resizing.updateColumnWidth)(column, (0, _resizing.getSmallestColumnWidth)()); // Move the content type
 
-      (0, _move.moveContentType)(column, movePosition.insertIndex, this.parent); // Modify the old neighbour
+      (0, _moveContentType.moveContentType)(column, movePosition.insertIndex, this.parent); // Modify the old neighbour
 
       if (modifyOldNeighbour) {
         var oldNeighbourWidth = (0, _resizing.getAcceptedColumnWidth)((oldWidth + (0, _resizing.getColumnWidth)(modifyOldNeighbour)).toString());
@@ -140,7 +133,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         } // Move the content type
 
 
-        (0, _move.moveContentType)(column, newIndex);
+        (0, _moveContentType.moveContentType)(column, newIndex);
       }
     };
     /**
@@ -356,7 +349,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
       (0, _jquery)("body").css("cursor", "");
       this.dropPlaceholder.removeClass("left right");
-      this.movePlaceholder.removeClass("active");
+      this.movePlaceholder.css("left", "").removeClass("active");
       this.resizeGhost.removeClass("active"); // Reset the group positions cache
 
       this.groupPositionCache = null;
@@ -394,18 +387,30 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
           _this4.movePlaceholder.css("left", "").removeClass("active");
         }
-      }).on("touchend", function () {
-        _this4.groupPositionCache = null;
+      }).on("mouseup touchend", function () {
+        _this4.handleMouseUp();
+
         _this4.dropPosition = null;
 
-        _this4.dropPlaceholder.removeClass("left right");
-
-        _this4.movePlaceholder.css("left", "").removeClass("active");
-      }); // As the mouse might be released outside of the group, attach to the body
-
-      (0, _jquery)("body").on("mouseup touchend", function () {
         _this4.endAllInteractions();
       });
+    };
+    /**
+     * Handle the mouse up action, either adding a new column or moving an existing
+     */
+
+
+    _proto.handleMouseUp = function handleMouseUp() {
+      if (this.dropOverElement && this.dropPosition) {
+        this.onNewColumnDrop(this.dropPosition);
+        this.dropOverElement = null;
+      }
+
+      var column = (0, _registry2.getDragColumn)();
+
+      if (this.movePosition && column && column.parent !== this.parent) {
+        this.onExistingColumnDrop(this.movePosition);
+      }
     };
     /**
      * Does the current event intersect with the group?
@@ -654,18 +659,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
             group.parents(".element-children").sortable("option", "disabled", false);
           });
         },
-        drop: function drop(event, ui) {
-          if (self.dropOverElement && self.dropPosition) {
-            self.onNewColumnDrop(event, ui, self.dropPosition);
-            self.dropOverElement = null;
-          }
-
-          var column = (0, _registry2.getDragColumn)();
-
-          if (self.movePosition && column && column.parent !== self.parent) {
-            self.onExistingColumnDrop(event, self.movePosition);
-          }
-
+        drop: function drop() {
           self.dropPositions = [];
           self.dropPlaceholder.removeClass("left right");
         },
