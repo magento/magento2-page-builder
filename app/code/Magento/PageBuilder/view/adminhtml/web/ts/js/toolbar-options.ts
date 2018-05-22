@@ -23,6 +23,11 @@ export class ToolbarOptions {
         this.options(options);
     }
 
+    /**
+     * Toolbar template
+     *
+     * @returns {string}
+     */
     get template(): string {
          return "Magento_PageBuilder/content-type/toolbar";
     }

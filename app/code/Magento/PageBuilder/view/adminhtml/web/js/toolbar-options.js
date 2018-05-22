@@ -19,6 +19,12 @@ define(["knockout"], function (_knockout) {
       this.preview = preview;
       this.options(options);
     }
+    /**
+     * Toolbar template
+     *
+     * @returns {string}
+     */
+
 
     var _proto = ToolbarOptions.prototype;
 
