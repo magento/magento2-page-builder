@@ -11,6 +11,7 @@
         <render args="previewChildTemplate" />
     </div>
     <div class="slider-controls focus-options">
+<<<<<<< HEAD
         <div if="$parent.children().length > 0"
              class="slider-navigation"
              each="$parent.getChildren()"
@@ -19,6 +20,14 @@
                 <with args="preview">
                     <render with="preview" args="getOptions().template" />
                 </with>
+=======
+        <!-- ko if: $parent.children().length > 0 -->
+        <div class="slider-navigation" data-bind="sortableChildren: {handle: '.navigation-dot-anchor', containment: 'parent', placeholder: 'navigation-dot sortable-placeholder', tolerance: 'pointer', start: function () { onSortStart.apply($parent.preview, arguments); }, stop: function () { onSortStop.apply($parent.preview, arguments); } }, foreach: $parent.getChildren()">
+            <div class="navigation-dot" data-bind="css: {active: $parent.activeSlide() === $index()}, attr: {id: 'navigation-' + parent.id, tabindex: $index}, hasFocusNoScroll: $parent.focusedSlide() === $index(), event: { focusin: function () { $parent.setFocusedSlide($index()) }, focusout: function () { $parent.setFocusedSlide(null) } }">
+                <!-- ko with: preview -->
+                    <!-- ko template: getOptions().template --><!-- /ko -->
+                <!-- /ko -->
+>>>>>>> develop
                 <a class="navigation-dot-anchor" href="#" data-bind="click: function () { $parent.navigateToSlide($index()); $parent.setFocusedSlide($index()); }"></a>
                 <span if="preview.previewData.slide_name() !== ''"
                       class="tooltip-content"
