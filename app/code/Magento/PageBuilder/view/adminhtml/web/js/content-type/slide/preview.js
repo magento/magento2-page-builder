@@ -174,12 +174,20 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/
 
 
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
-      if (this.previewData.show_overlay() === "on_hover") {
-        this.showOverlayHover(true);
+      if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+        this.data.overlay.attributes(Object.assign(this.data.overlay.attributes(), {
+          "data-background-color-orig": this.data.overlay.style().backgroundColor
+        }));
+        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+          backgroundColor: this.data.overlay.attributes()["data-overlay-color"]
+        }));
       }
 
-      if (this.previewData.show_button() === "on_hover") {
-        this.showButtonHover(true);
+      if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+        this.data.button.style(Object.assign(this.data.button.style(), {
+          opacity: 1,
+          visibility: "visible"
+        }));
       }
     };
     /**
@@ -188,12 +196,17 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/
 
 
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
-      if (this.previewData.show_overlay() === "on_hover") {
-        this.showOverlayHover(false);
+      if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+          backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]
+        }));
       }
 
-      if (this.previewData.show_button() === "on_hover") {
-        this.showButtonHover(false);
+      if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+        this.data.button.style(Object.assign(this.data.button.style(), {
+          opacity: 0,
+          visibility: "hidden"
+        }));
       }
     };
     /**
