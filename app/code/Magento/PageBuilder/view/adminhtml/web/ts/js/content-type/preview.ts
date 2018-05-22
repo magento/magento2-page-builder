@@ -266,12 +266,13 @@ export default class Preview {
     }
 
     /**
-     * Determine if the container can receive drop events?
+     * Determine if the container can receive drop events? With the current matrix system everything can unless
+     * specified in an inherited preview instance.
      *
      * @returns {boolean}
      */
     public canReceiveDrops() {
-        return this.parent.config.type !== "restricted-container";
+        return true;
     }
 
     /**
@@ -284,13 +285,13 @@ export default class Preview {
     }
 
     /**
-     * Get the CSS classes for the children element
+     * Get the CSS classes for the children element, as we dynamically create this class name it can't sit in the DOM
+     * without causing browser issues
      *
      * @returns {{[p: string]: boolean}}
      */
     public getChildrenCss() {
         return {
-            "content-type-drop": this.canReceiveDrops(),
             [this.config.name + "-container"]: true,
         };
     }

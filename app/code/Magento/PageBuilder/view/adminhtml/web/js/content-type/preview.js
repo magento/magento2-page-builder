@@ -257,14 +257,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       }
     };
     /**
-     * Determine if the container can receive drop events?
+     * Determine if the container can receive drop events? With the current matrix system everything can unless
+     * specified in an inherited preview instance.
      *
      * @returns {boolean}
      */
 
 
     _proto.canReceiveDrops = function canReceiveDrops() {
-      return this.parent.config.type !== "restricted-container";
+      return true;
     };
     /**
      * Return the sortable options
@@ -277,7 +278,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       return (0, _sortable2.getSortableOptions)(this);
     };
     /**
-     * Get the CSS classes for the children element
+     * Get the CSS classes for the children element, as we dynamically create this class name it can't sit in the DOM
+     * without causing browser issues
      *
      * @returns {{[p: string]: boolean}}
      */
@@ -286,9 +288,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     _proto.getChildrenCss = function getChildrenCss() {
       var _ref;
 
-      return _ref = {
-        "content-type-drop": this.canReceiveDrops()
-      }, _ref[this.config.name + "-container"] = true, _ref;
+      return _ref = {}, _ref[this.config.name + "-container"] = true, _ref;
     };
     /**
      * Return an array of options
