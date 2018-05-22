@@ -393,6 +393,11 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         _this4.dropPosition = null;
 
         _this4.endAllInteractions();
+
+        _underscore.defer(function () {
+          // Re-enable any disabled sortable areas
+          group.find(".ui-sortable").sortable("option", "disabled", false);
+        });
       });
     };
     /**
@@ -655,9 +660,14 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           self.dropPlaceholder.removeClass("left right");
 
           _underscore.defer(function () {
-            // Re-enable the parent sortable instance
+            // Re-enable the parent sortable instance & all children sortable instances
             group.parents(".element-children").sortable("option", "disabled", false);
           });
+        },
+        activate: function activate() {
+          if ((0, _registry.getDraggedBlockConfig)() === _config.getContentTypeConfig("column")) {
+            group.find(".ui-sortable").sortable("option", "disabled", true);
+          }
         },
         drop: function drop() {
           self.dropPositions = [];

@@ -398,6 +398,11 @@ export default class Preview extends PreviewCollection {
 
             this.dropPosition = null;
             this.endAllInteractions();
+
+            _.defer(() => {
+                // Re-enable any disabled sortable areas
+                group.find(".ui-sortable").sortable("option", "disabled", false);
+            });
         });
     }
 
@@ -694,9 +699,14 @@ export default class Preview extends PreviewCollection {
                 self.dropPlaceholder.removeClass("left right");
 
                 _.defer(() => {
-                    // Re-enable the parent sortable instance
+                    // Re-enable the parent sortable instance & all children sortable instances
                     group.parents(".element-children").sortable("option", "disabled", false);
                 });
+            },
+            activate() {
+                if (getDraggedBlockConfig() === Config.getContentTypeConfig("column")) {
+                    group.find(".ui-sortable").sortable("option", "disabled", true);
+                }
             },
             drop() {
                 self.dropPositions = [];
