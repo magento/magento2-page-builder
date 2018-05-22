@@ -7,23 +7,31 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar-opti
   function (_BasePreview) {
     _inheritsLoose(Heading, _BasePreview);
 
-    function Heading() {
-      var _temp, _this;
+    /**
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    function Heading(parent, config, observableUpdater) {
+      var _this;
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.element = void 0, _temp) || _this;
+      _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
+      _this.element = void 0;
+      _this.onToolbarFocusIn = void 0;
+      _this.onToolbarFocusOut = void 0;
+      _this.onToolbarFocusIn = _toolbar.onToolbarFocusIn;
+      _this.onToolbarFocusOut = _toolbar.onToolbarFocusOut;
+      return _this;
     }
-
-    var _proto = Heading.prototype;
-
     /**
      * On render init the tabs widget
      *
      * @param {Element} element
      */
+
+
+    var _proto = Heading.prototype;
+
     _proto.onHeadingRender = function onHeadingRender(element) {
       this.element = element;
     };

@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import events from "uiEvents";
+import Preview from "./preview";
 
 export default {
     /**
@@ -14,7 +15,7 @@ export default {
      * @param {Event} event
      */
 
-    onToolbarFocusIn(context: Preview, event: Event) {
+    onToolbarFocusIn(context: Preview, event: Event): void {
         const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
         $(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
         events.trigger("interaction:start");
@@ -26,7 +27,7 @@ export default {
      * @param {Preview} context
      * @param {Event} event
      */
-    onToolbarFocusOut(context: Preview, event: Event) {
+    onToolbarFocusOut(context: Preview, event: Event): void {
         const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
         $(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
         events.trigger("interaction:stop");

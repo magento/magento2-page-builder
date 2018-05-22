@@ -162,31 +162,6 @@ export default class Preview {
     }
 
     /**
-     * Set state based on toolbar focusin event for the preview
-     *
-     * @param {Preview} context
-     * @param {Event} event
-     */
-    public onToolbarFocusIn(context: Preview, event: Event) {
-        const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
-        $(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
-        events.trigger("interaction:start");
-    }
-
-    /**
-     * Set state based on toolbar focusout event for the preview
-     *
-     * @param {Preview} context
-     * @param {Event} event
-     */
-    public onToolbarFocusOut(context: Preview, event: Event) {
-        const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
-        $(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
-        events.trigger("interaction:stop");
-
-    }
-
-    /**
      * After children render fire an event
      *
      * @param {Element} element

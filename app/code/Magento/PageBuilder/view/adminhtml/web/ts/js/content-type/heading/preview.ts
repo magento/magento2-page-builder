@@ -6,13 +6,34 @@
 import $ from "jquery";
 import events from "uiEvents";
 import _ from "underscore";
+import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeInterface from "../../content-type.d";
 import {ToolbarOptions, ToolbarOptionsInterface} from "../../toolbar-options";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
+import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
-import "../toolbar";
+import Toolbar from "../toolbar";
 
 export default class Heading extends BasePreview {
     private element: Element;
+    private onToolbarFocusIn;
+    private onToolbarFocusOut;
+
+    /**
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(parent, config, observableUpdater);
+
+        this.onToolbarFocusIn = Toolbar.onToolbarFocusIn;
+        this.onToolbarFocusOut = Toolbar.onToolbarFocusOut;
+    }
 
     /**
      * On render init the tabs widget
