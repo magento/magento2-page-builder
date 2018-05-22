@@ -22,6 +22,7 @@ define(["Magento_PageBuilder/js/property/link", "Magento_PageBuilder/js/utils/co
      */
     _proto.read = function read(element) {
       var bgMobileImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[0].style.backgroundImage;
+      var slideName = element.getAttribute("data-slide-name");
       var linkUrl = element.querySelector("a");
       var bgImage = element.querySelectorAll(".pagebuilder-slide-wrapper")[1].style.backgroundImage;
       var overlayColor = element.querySelector(".pagebuilder-poster-overlay").getAttribute("data-overlay-color");
@@ -36,6 +37,7 @@ define(["Magento_PageBuilder/js/property/link", "Magento_PageBuilder/js/utils/co
       var buttonText = button ? button.textContent : "";
       var buttonType = button ? button.classList[1] : "pagebuilder-button-primary";
       var response = {
+        slide_name: slideName ? slideName : "",
         background_image: (0, _image.decodeUrl)(bgImage),
         background_size: element.style.backgroundSize,
         button_text: buttonText,
