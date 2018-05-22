@@ -11,7 +11,7 @@ define(["jquery", "uiEvents"], function (_jquery, _uiEvents) {
      * @param {Preview} context
      * @param {Event} event
      */
-    onToolbarFocusIn: function onToolbarFocusIn(context, event) {
+    onFocusIn: function onFocusIn(context, event) {
       var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
 
@@ -24,7 +24,7 @@ define(["jquery", "uiEvents"], function (_jquery, _uiEvents) {
      * @param {Preview} context
      * @param {Event} event
      */
-    onToolbarFocusOut: function onToolbarFocusOut(context, event) {
+    onFocusOut: function onFocusOut(context, event) {
       var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
 

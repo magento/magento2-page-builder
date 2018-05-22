@@ -14,7 +14,7 @@ export default {
      * @param {Preview} context
      * @param {Event} event
      */
-    onToolbarFocusIn(context: Preview, event: Event): void {
+    onFocusIn(context: Preview, event: Event): void {
         const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
         $(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
         events.trigger("interaction:start");
@@ -26,7 +26,7 @@ export default {
      * @param {Preview} context
      * @param {Event} event
      */
-    onToolbarFocusOut(context: Preview, event: Event): void {
+    onFocusOut(context: Preview, event: Event): void {
         const currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
         $(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
         events.trigger("interaction:stop");

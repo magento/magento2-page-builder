@@ -32,8 +32,8 @@ export default class Heading extends BasePreview {
     ) {
         super(parent, config, observableUpdater);
 
-        this.onToolbarFocusIn = Toolbar.onToolbarFocusIn;
-        this.onToolbarFocusOut = Toolbar.onToolbarFocusOut;
+        this.onToolbarFocusIn = Toolbar.onFocusIn;
+        this.onToolbarFocusOut = Toolbar.onFocusOut;
     }
 
     /**
@@ -41,7 +41,7 @@ export default class Heading extends BasePreview {
      *
      * @param {Element} element
      */
-    public onHeadingRender(element: Element) {
+    public onRender(element: Element) {
         this.element = element;
     }
 

@@ -19,8 +19,8 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type
       _this.element = void 0;
       _this.onToolbarFocusIn = void 0;
       _this.onToolbarFocusOut = void 0;
-      _this.onToolbarFocusIn = _toolbar.onToolbarFocusIn;
-      _this.onToolbarFocusOut = _toolbar.onToolbarFocusOut;
+      _this.onToolbarFocusIn = _toolbar.onFocusIn;
+      _this.onToolbarFocusOut = _toolbar.onFocusOut;
       return _this;
     }
     /**
@@ -32,7 +32,7 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type
 
     var _proto = Heading.prototype;
 
-    _proto.onHeadingRender = function onHeadingRender(element) {
+    _proto.onRender = function onRender(element) {
       this.element = element;
     };
 
