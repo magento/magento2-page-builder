@@ -31,15 +31,19 @@
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
-                                    <property name="width" source="width"/>
-                                    <property name="height" source="height"/>
+                                    <property name="height" source="height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
                                     <attribute name="appearance" source="data-appearance"/>
-                                    <attribute name="position" source="data-markers" virtual="true" converter="Magento_PageBuilder/js/content-type/map/converter/attribute/markers"/>
-                                    <attribute name="position" source="data-zoom" virtual="true" converter="Magento_PageBuilder/js/content-type/map/converter/attribute/zoom"/>
-                                    <complex_attribute name="position" reader="Magento_PageBuilder/js/content-type/map/property/position" persist="false"/>
+                                    <attribute name="location_name" source="data-location-name"/>
+                                    <attribute name="address" source="data-address"/>
+                                    <attribute name="city" source="data-city"/>
+                                    <attribute name="zipcode" source="data-zipcode"/>
+                                    <attribute name="country" source="data-country"/>
+                                    <attribute name="comment" source="data-comment"/>
+                                    <attribute name="show_controls" source="data-show-controls"/>
+                                    <attribute name="position" source="data-position" converter="Magento_PageBuilder/js/content-type/map/converter/attribute/map-markers"/>
                                 </attributes>
                                 <css name="css_classes"/>
                             </element>

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["mage/translate", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _preview) {
+define(["mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview"], function (_translate, _option, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -20,8 +20,35 @@ define(["mage/translate", "Magento_PageBuilder/js/content-type/preview"], functi
     var _proto = Preview.prototype;
 
     /**
+     * Return an array of options
+     *
+     * @returns {Array<Option>}
+     */
+    _proto.retrieveOptions = function retrieveOptions() {
+      var options = _BasePreview.prototype.retrieveOptions.call(this);
+
+      var newOptions = options.filter(function (option) {
+        return option.code !== "remove";
+      });
+      var removeClasses = ["remove-structural"];
+      var removeFn = this.onOptionRemove;
+
+      if (this.parent.parent.children().length < 2) {
+        removeFn = function removeFn() {
+          return;
+        };
+
+        removeClasses.push("disabled");
+      }
+
+      newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
+      return newOptions;
+    };
+    /**
      * Focus out of the element
      */
+
+
     _proto.onFocusOut = function onFocusOut() {
       this.parent.parent.preview.isLiveEditing(null);
     };

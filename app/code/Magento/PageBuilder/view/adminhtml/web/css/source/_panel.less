@@ -1,11 +1,11 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
 
-/**
- * _panel contains {less} for the left panel
- */
+//
+//  _panel contains less for the left panel
+//  _____________________________________________
 
 .pagebuilder-draggable-block {
     display: block;
@@ -37,7 +37,7 @@
     }
 }
 
-#pagebuilder-panel-wrapper {
+.pagebuilder-panel-wrapper {
     display: none;
     float: left;
     position: relative;
@@ -54,12 +54,12 @@
         top: 0;
 
         a {
-            background: @color-very-dark-grayish-orange;
-            -webkit-border-bottom-right-radius: 2px;
-            border-bottom-right-radius: 2px;
             -moz-border-radius-bottomright: 2px;
             -moz-border-radius-topright: 2px;
+            -webkit-border-bottom-right-radius: 2px;
             -webkit-border-top-right-radius: 2px;
+            background: @color-very-dark-grayish-orange;
+            border-bottom-right-radius: 2px;
             border-top-right-radius: 2px;
             color: @color-gray65-lighten;
             display: block;
@@ -79,16 +79,16 @@
         }
     }
 
-    #pagebuilder-panel {
-        background: @color-very-dark-grayish-orange;
-        -webkit-transition: .4s;
+    .pagebuilder-panel {
         -moz-transition: .4s;
-        transition: .4s;
-        -webkit-user-select: none; /* Chrome/Safari */
         -moz-user-select: none; /* Firefox */
         -ms-user-select: none; /* IE10+ */
         /* Rules below not implemented in browsers yet */
         -o-user-select: none;
+        -webkit-transition: .4s;
+        -webkit-user-select: none; /* Chrome/Safari */
+        background: @color-very-dark-grayish-orange;
+        transition: .4s;
         user-select: none;
 
         .search-results-empty {
@@ -102,10 +102,10 @@
             position: relative;
 
             label {
+                -webkit-font-smoothing: antialiased;
                 color: @color-gray65-lighten;
                 font-family: @icons-admin__font-name;
                 font-size: 1.5rem;
-                -webkit-font-smoothing: antialiased;
                 font-style: normal;
                 font-weight: normal;
                 left: 12px;
@@ -217,7 +217,7 @@
 
 
 
-    #pagebuilder-panel-groups {
+    .pagebuilder-panel-groups {
         list-style: none;
         margin: 0;
         padding: 0;
@@ -266,11 +266,12 @@
 
             &.active {
                 .group-title {
-                    :before {
-                        content: @icon-caret-up__content;
-                    }
                     h4 {
                         color: @color-ivory;
+                    }
+
+                    :before {
+                        content: @icon-caret-up__content;
                     }
                 }
                 .pagebuilder-panel-groups-child {
