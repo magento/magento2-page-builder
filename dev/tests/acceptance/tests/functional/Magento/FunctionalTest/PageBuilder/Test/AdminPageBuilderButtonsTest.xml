@@ -1102,6 +1102,40 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
+    <test name="ButtonGroupNoRequiredAttributes">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Button Group"/>
+            <title value="Button Group - Validate No Required Attributes"/>
+            <description value="A user should be able to save a Button Group edit form without inputting data into any attribute field."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-90473"/>
+            <testCaseId value="MAGETWO-92014"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Validate No Required Fields -->
+        <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
+    </test>
     <test name="ButtonItemValidateContentSectionFields">
         <annotations>
             <features value="PageBuilder"/>
