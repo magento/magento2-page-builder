@@ -118,7 +118,7 @@ Follow these steps to activate PageBuilder in the Admin:
 
 ## Troubleshooting
 
-If you are having trouble installing PageBuilder, please verify that the `mageID` account you provided for the Early Access Program (EAP) belongs to an active Magento partner account.
+If you are having trouble installing PageBuilder, please verify that the `MAGEID` account you provided for the Early Access Program (EAP) belongs to an active Magento partner account.
 
 **Note:**
 *Your company may have multiple Magento accounts, and only one or two may be active.*
@@ -131,5 +131,5 @@ Log into www.magento.com and see if the **Support** and **Downloads** tabs are a
 If these tabs do not appear in your Magento account, it is not an active Magento partner account, and
 you will not be able to access PageBuilder.
 
-If you provided incorrect `mageID` by mistake and have another one that is valid, please resubmit this form:
+If you provided incorrect `MAGEID` by mistake and have another one that is valid, please resubmit this form:
 https://goo.gl/forms/unvuDikl9wydmKt12
