@@ -7,12 +7,13 @@ import $ from "jquery";
 import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
+import ToolbarOption from "../../content-type-toolbar/option";
+import OptionInterface from "../../content-type-toolbar/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import {ToolbarOptions, ToolbarOptionsInterface} from "../../toolbar-options";
+import Toolbar from "../../toolbar";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
-import Toolbar from "../toolbar";
 
 export default class Heading extends BasePreview {
     private element: Element;
@@ -60,10 +61,10 @@ export default class Heading extends BasePreview {
     /**
      * Build and return the tool bar options for heading
      *
-     * @returns {ToolbarOptions}
+     * @returns {ToolbarOption}
      */
-    public getHeadingToolbar(): ToolbarOptions {
-        const options: ToolbarOptionsInterface[] = [
+    public getHeadingToolbar(): ToolbarOption {
+        const options: OptionInterface[] = [
             {
                 key: "heading_type",
                 type: "select",
@@ -123,6 +124,6 @@ export default class Heading extends BasePreview {
             },
         ];
 
-        return new ToolbarOptions(this, options);
+        return new ToolbarOption(this, options);
     }
 }

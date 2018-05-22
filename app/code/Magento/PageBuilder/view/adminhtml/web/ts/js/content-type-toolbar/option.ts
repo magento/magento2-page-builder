@@ -5,11 +5,11 @@
 
 import ko from "knockout";
 import Preview from "./content-type/preview";
-import ToolbarOptionsValueInterface from "./toolbar-options-value.d";
-import ToolbarOptionsInterface from "./toolbar-options.d";
+import OptionInterface from "./option.d";
+import ValueInterface from "./value.d";
 
-export class ToolbarOptions {
-    public options: KnockoutObservableArray<ToolbarOptionsInterface> = ko.observableArray([]);
+export default class ToolbarOption {
+    public options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
     private preview: Preview;
 
     /**
@@ -18,7 +18,7 @@ export class ToolbarOptions {
      * @param preview
      * @param options
      */
-    constructor(preview: Preview, options: ToolbarOptionsInterface[]) {
+    constructor(preview: Preview, options: OptionInterface[]) {
         this.preview = preview;
         this.options(options);
     }
@@ -36,10 +36,10 @@ export class ToolbarOptions {
      * Upon clicking the option update the value as directed
      * When user toggles the option off, set the value back to default
      *
-     * @param {ToolbarOptionsInterface} option
-     * @param {ToolbarOptionsValueInterface} value
+     * @param {OptionInterface} option
+     * @param {ValueInterface} value
      */
-    public onClickOption(option: ToolbarOptionsInterface, value: ToolbarOptionsValueInterface) {
+    public onClickOption(option: OptionInterface, value: ValueInterface) {
         const defaultValue: string = this.preview.config.fields[option.key].default;
         const currentValue: string = this.preview.previewData[option.key]();
         if (currentValue === value.value) {

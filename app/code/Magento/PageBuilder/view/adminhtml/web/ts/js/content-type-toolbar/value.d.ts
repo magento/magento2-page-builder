@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-export interface ToolbarOptionsValueInterface {
+export interface ValueInterface {
     value: string;
     label: string;
     icon: string;

@@ -5,7 +5,7 @@
 
 import $ from "jquery";
 import events from "uiEvents";
-import Preview from "./preview";
+import Preview from "./content-type/preview";
 
 export default {
     /**

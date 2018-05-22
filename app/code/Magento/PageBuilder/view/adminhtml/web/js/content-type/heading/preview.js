@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar-options", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/toolbar"], function (_jquery, _uiEvents, _underscore, _toolbarOptions, _preview, _toolbar) {
+define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-toolbar/option", "Magento_PageBuilder/js/toolbar", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _uiEvents, _underscore, _option, _toolbar, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Heading =
@@ -54,7 +54,7 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar-opti
     /**
      * Build and return the tool bar options for heading
      *
-     * @returns {ToolbarOptions}
+     * @returns {ToolbarOption}
      */
 
 
@@ -104,7 +104,7 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar-opti
           icon: "icon-pagebuilder-text-right"
         }]
       }];
-      return new _toolbarOptions.ToolbarOptions(this, options);
+      return new _option(this, options);
     };
 
     return Heading;
