@@ -23,7 +23,6 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
         return helper[0];
       },
       appendTo: document.body,
-      containment: "document",
       placeholder: {
         element: function element() {
           return (0, _jquery)("<div />").addClass("pagebuilder-sortable-placeholder")[0];

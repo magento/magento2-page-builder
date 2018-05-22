@@ -33,7 +33,6 @@ export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableO
             return helper[0];
         },
         appendTo: document.body,
-        containment: "document",
         placeholder: {
             element() {
                 return $("<div />").addClass("pagebuilder-sortable-placeholder")[0];
