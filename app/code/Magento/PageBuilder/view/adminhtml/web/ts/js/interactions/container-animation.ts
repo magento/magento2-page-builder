@@ -44,7 +44,7 @@ export function bindAfterRenderForAnimation(
         // Wait for mount then animate the container
         const ns = block.id + ".afterRender.container.animate";
         events.on("block:afterRender", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.block === block) {
+            if (args.block.parent === block.parent) {
                 animateContainerHeight(true, element);
                 events.off(ns);
             }

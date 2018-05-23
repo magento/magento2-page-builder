@@ -264,13 +264,7 @@ export default class Preview {
      */
     public onOptionRemove(): void {
         const removeBlock = () => {
-            const parentContainerElement = $(this.wrapperElement).parents(".type-container");
-            const containerLocked =
-                (this.parent.parent as ContentTypeCollectionInterface).getChildren()().length === 1 &&
-                lockContainerHeight(parentContainerElement);
-
-            // Fade out the content type
-            $(this.wrapperElement).fadeOut(animationTime / 2, () => {
+            const dispatchRemoveEvent = () => {
                 const params = {
                     block: this.parent,
                     index: (this.parent.parent as ContentTypeCollectionInterface).getChildren().indexOf(this.parent),
@@ -279,10 +273,23 @@ export default class Preview {
                 };
                 events.trigger("block:removed", params);
                 events.trigger(this.parent.config.name + ":block:removed", params);
+            };
 
-                // Prepare the event handler to animate the container height on render
-                animateContainerHeight(containerLocked, parentContainerElement);
-            });
+            if (this.wrapperElement) {
+                const parentContainerElement = $(this.wrapperElement).parents(".type-container");
+                const containerLocked =
+                    (this.parent.parent as ContentTypeCollectionInterface).getChildren()().length === 1 &&
+                    lockContainerHeight(parentContainerElement);
+
+                // Fade out the content type
+                $(this.wrapperElement).fadeOut(animationTime / 2, () => {
+                    dispatchRemoveEvent();
+                    // Prepare the event handler to animate the container height on render
+                    animateContainerHeight(containerLocked, parentContainerElement);
+                });
+            } else {
+                dispatchRemoveEvent();
+            }
         };
 
         if (this.isConfigured()) {

@@ -373,6 +373,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     _proto.initMouseMove = function initMouseMove(group) {
       var _this4 = this;
 
+      var intersects = false;
       (0, _jquery)(document).on("mousemove touchmove", function (event) {
         var groupPosition = _this4.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
 
@@ -383,12 +384,15 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         }
 
         if (_this4.eventIntersectsGroup(event, groupPosition)) {
+          intersects = true;
+
           _this4.onResizingMouseMove(event, group, groupPosition);
 
           _this4.onDraggingMouseMove(event, group, groupPosition);
 
           _this4.onDroppingMouseMove(event, group, groupPosition);
         } else {
+          intersects = false;
           _this4.groupPositionCache = null;
           _this4.dropPosition = null;
 
@@ -397,8 +401,11 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           _this4.movePlaceholder.css("left", "").removeClass("active");
         }
       }).on("mouseup touchend", function () {
-        _this4.handleMouseUp();
+        if (intersects) {
+          _this4.handleMouseUp();
+        }
 
+        intersects = false;
         _this4.dropPosition = null;
 
         _this4.endAllInteractions();

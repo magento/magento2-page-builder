@@ -256,10 +256,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       var _this3 = this;
 
       var removeBlock = function removeBlock() {
-        var parentContainerElement = (0, _jquery)(_this3.wrapperElement).parents(".type-container");
-        var containerLocked = _this3.parent.parent.getChildren()().length === 1 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Fade out the content type
-
-        (0, _jquery)(_this3.wrapperElement).fadeOut(_containerAnimation.animationTime / 2, function () {
+        var dispatchRemoveEvent = function dispatchRemoveEvent() {
           var params = {
             block: _this3.parent,
             index: _this3.parent.parent.getChildren().indexOf(_this3.parent),
@@ -269,11 +266,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
           _uiEvents.trigger("block:removed", params);
 
-          _uiEvents.trigger(_this3.parent.config.name + ":block:removed", params); // Prepare the event handler to animate the container height on render
+          _uiEvents.trigger(_this3.parent.config.name + ":block:removed", params);
+        };
 
+        if (_this3.wrapperElement) {
+          var parentContainerElement = (0, _jquery)(_this3.wrapperElement).parents(".type-container");
+          var containerLocked = _this3.parent.parent.getChildren()().length === 1 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Fade out the content type
 
-          (0, _containerAnimation.animateContainerHeight)(containerLocked, parentContainerElement);
-        });
+          (0, _jquery)(_this3.wrapperElement).fadeOut(_containerAnimation.animationTime / 2, function () {
+            dispatchRemoveEvent(); // Prepare the event handler to animate the container height on render
+
+            (0, _containerAnimation.animateContainerHeight)(containerLocked, parentContainerElement);
+          });
+        } else {
+          dispatchRemoveEvent();
+        }
       };
 
       if (this.isConfigured()) {

@@ -381,6 +381,7 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery<HTMLElement>} group
      */
     private initMouseMove(group: JQuery<HTMLElement>) {
+        let intersects: boolean = false;
         $(document).on("mousemove touchmove", (event: JQuery.Event) => {
             const groupPosition = this.getGroupPosition(group);
 
@@ -391,17 +392,22 @@ export default class Preview extends PreviewCollection {
             }
 
             if (this.eventIntersectsGroup(event, groupPosition)) {
+                intersects = true;
                 this.onResizingMouseMove(event, group, groupPosition);
                 this.onDraggingMouseMove(event, group, groupPosition);
                 this.onDroppingMouseMove(event, group, groupPosition);
             } else {
+                intersects = false;
                 this.groupPositionCache = null;
                 this.dropPosition = null;
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.css("left", "").removeClass("active");
             }
         }).on("mouseup touchend", () => {
-            this.handleMouseUp();
+            if (intersects) {
+                this.handleMouseUp();
+            }
+            intersects = false;
 
             this.dropPosition = null;
             this.endAllInteractions();
