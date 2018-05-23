@@ -1,17 +1,27 @@
-/* Slider */
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+@color-slick-dark-gray: #3d3d3d;
+@color-slick-middle-gray: #5b5b5b;
+
+//
+//  _slick slider LESS styles
+//  ___________________________________________________________________
 
 .slick-slider {
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-touch-action: pan-y;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
     box-sizing: border-box;
     display: block;
     position: relative;
-    -webkit-tap-highlight-color: transparent;
-    -ms-touch-action: pan-y;
     touch-action: pan-y;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 }
 .slick-list {
@@ -98,10 +108,10 @@
 
 .slick-slider .slick-track,
 .slick-slider .slick-list {
-    -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0);
     -o-transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 }
 
@@ -112,7 +122,7 @@
 .slick-prev:before,
 .slick-next:before {
     .abs-icon;
-    color: #5b5b5b;
+    color: @color-slick-middle-gray;
     font-size: 38px;
     opacity: 1;
 }
@@ -135,6 +145,8 @@
 
 .slick-prev,
 .slick-next {
+    -ms-transform: translate(0, -50%);
+    -webkit-transform: translate(0, -50%);
     background: rgba(252, 252, 252, .4);
     border: none;
     color: transparent;
@@ -147,8 +159,6 @@
     padding: 0;
     position: absolute;
     top: 50%;
-    -webkit-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
     transform: translate(0, -50%);
     width: 60px;
     z-index: 101;
@@ -161,7 +171,7 @@
     &:focus {
         background: rgba(252, 252, 252, .8);
         &:before {
-            color: #3d3d3d;
+            color: @color-slick-dark-gray;
         }
         &.slick-disabled {
             background: rgba(252, 252, 252, .4);

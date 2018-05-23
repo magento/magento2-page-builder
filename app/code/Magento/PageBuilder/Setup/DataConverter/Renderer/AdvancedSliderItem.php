@@ -75,13 +75,15 @@ class AdvancedSliderItem implements RendererInterface
         $overlayDivElementAttributes['class'] = 'pagebuilder-overlay pagebuilder-poster-overlay';
         $style = $this->styleExtractor->extractStyle($formData, ['padding']);
 
+        $overlayColor = 'transparent';
         if (isset($eavData['has_overlay']) && $eavData['has_overlay'] == 1) {
-            $overlayDivElementAttributes['data-overlay-color'] = 'rgba(0,0,0,0.5)';   // default overlay style
+            $overlayColor = 'rgba(0,0,0,0.5)';
             if ($style) {
                 $style .= ' ';
             }
             $style .= 'background-color: rgba(0,0,0,0.5);';
         }
+        $overlayDivElementAttributes['data-overlay-color'] = $overlayColor;
         if ($style) {
             $overlayDivElementAttributes['style'] = $style;
         }
