@@ -238,13 +238,17 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
             const parentContainerElement = $(event.target).parents(".type-container");
             const parentContainerLocked = targetParent.getChildren()().length === 0 &&
                 lockContainerHeight(parentContainerElement);
-            const sourceContainerElement = $(sourceParent.preview.wrapperElement);
-            const sourceContainerLocked = sourceParent.getChildren()().length === 1 &&
-                lockContainerHeight(sourceContainerElement);
 
             // Bind the event handler before the move operation
             bindAfterRenderForAnimation(parentContainerLocked, contentTypeInstance, parentContainerElement);
-            bindAfterRenderForAnimation(sourceContainerLocked, contentTypeInstance, sourceContainerElement);
+
+            // Also check if we need to handle animations on the source container
+            if (sourceParent.preview.wrapperElement) {
+                const sourceContainerElement = $(sourceParent.preview.wrapperElement);
+                const sourceContainerLocked = sourceParent.getChildren()().length === 1 &&
+                    lockContainerHeight(sourceContainerElement);
+                bindAfterRenderForAnimation(sourceContainerLocked, contentTypeInstance, sourceContainerElement);
+            }
 
             moveContentType(contentTypeInstance, targetIndex, targetParent);
 

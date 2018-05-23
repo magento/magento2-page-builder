@@ -232,12 +232,16 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
         }
 
         var parentContainerElement = (0, _jquery)(event.target).parents(".type-container");
-        var parentContainerLocked = targetParent.getChildren()().length === 0 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement);
-        var sourceContainerElement = (0, _jquery)(sourceParent.preview.wrapperElement);
-        var sourceContainerLocked = sourceParent.getChildren()().length === 1 && (0, _containerAnimation.lockContainerHeight)(sourceContainerElement); // Bind the event handler before the move operation
+        var parentContainerLocked = targetParent.getChildren()().length === 0 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Bind the event handler before the move operation
 
-        (0, _containerAnimation.bindAfterRenderForAnimation)(parentContainerLocked, contentTypeInstance, parentContainerElement);
-        (0, _containerAnimation.bindAfterRenderForAnimation)(sourceContainerLocked, contentTypeInstance, sourceContainerElement);
+        (0, _containerAnimation.bindAfterRenderForAnimation)(parentContainerLocked, contentTypeInstance, parentContainerElement); // Also check if we need to handle animations on the source container
+
+        if (sourceParent.preview.wrapperElement) {
+          var sourceContainerElement = (0, _jquery)(sourceParent.preview.wrapperElement);
+          var sourceContainerLocked = sourceParent.getChildren()().length === 1 && (0, _containerAnimation.lockContainerHeight)(sourceContainerElement);
+          (0, _containerAnimation.bindAfterRenderForAnimation)(sourceContainerLocked, contentTypeInstance, sourceContainerElement);
+        }
+
         (0, _moveContentType.moveContentType)(contentTypeInstance, targetIndex, targetParent);
 
         if (contentTypeInstance.parent !== targetParent) {
