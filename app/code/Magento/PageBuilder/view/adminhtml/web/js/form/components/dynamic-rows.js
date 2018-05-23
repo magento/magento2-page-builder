@@ -49,7 +49,7 @@ define([
          */
         reInitData: function (data) {
             var recordData = this.recordData().slice(),
-                prop = this.identificationProperty,
+                prop = "record_id",
                 isExists = false;
 
             _.each(recordData, function (elem, index) {
