@@ -12,6 +12,7 @@ import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
+import ContentTypeCollectionInterface from "../content-type-collection";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
@@ -21,10 +22,10 @@ import OptionInterface from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
+import {animateContainerHeight, animationTime, lockContainerHeight} from "../interactions/container-animation";
 import {getSortableOptions} from "../interactions/sortable";
 import StyleAttributeFilter from "../master-format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
-import SortParamsInterface from "../sort-params.d";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
@@ -34,6 +35,8 @@ export default class Preview {
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
+    public wrapperElement: Element;
+
     /**
      * @deprecated
      */
@@ -181,6 +184,30 @@ export default class Preview {
     }
 
     /**
+     * Dispatch an after render event for individual content types
+     *
+     * @param {Element[]} elements
+     */
+    public dispatchAfterRenderEvent(elements: Element[]): void {
+        const elementNodes = elements.filter((renderedElement: Element) => {
+            return renderedElement.nodeType === Node.ELEMENT_NODE;
+        });
+        if (elementNodes.length > 0) {
+            const element = elementNodes[0];
+            this.wrapperElement = element;
+            events.trigger("block:afterRender", {id: this.parent.id, block: this.parent, element});
+            events.trigger(
+                this.parent.config.name + ":block:afterRender",
+                {
+                    block: this.parent,
+                    element,
+                    id: this.parent.id,
+                },
+            );
+        }
+    }
+
+    /**
      * Get the options instance
      *
      * @returns {ContentTypeMenu}
@@ -237,14 +264,25 @@ export default class Preview {
      */
     public onOptionRemove(): void {
         const removeBlock = () => {
-            const params = {
-                block: this.parent,
-                index: this.parent.parent.getChildren().indexOf(this.parent),
-                parent: this.parent.parent,
-                stageId: this.parent.stageId,
-            };
-            events.trigger("block:removed", params);
-            events.trigger(this.parent.config.name + ":block:removed", params);
+            const parentContainerElement = $(this.wrapperElement).parents(".type-container");
+            const containerLocked =
+                (this.parent.parent as ContentTypeCollectionInterface).getChildren()().length === 1 &&
+                lockContainerHeight(parentContainerElement);
+
+            // Fade out the content type
+            $(this.wrapperElement).fadeOut(animationTime / 2, () => {
+                const params = {
+                    block: this.parent,
+                    index: (this.parent.parent as ContentTypeCollectionInterface).getChildren().indexOf(this.parent),
+                    parent: this.parent.parent,
+                    stageId: this.parent.stageId,
+                };
+                events.trigger("block:removed", params);
+                events.trigger(this.parent.config.name + ":block:removed", params);
+
+                // Prepare the event handler to animate the container height on render
+                animateContainerHeight(containerLocked, parentContainerElement);
+            });
         };
 
         if (this.isConfigured()) {

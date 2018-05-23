@@ -174,7 +174,6 @@ export default class Stage {
     /**
      * On block removed
      *
-     * @param event
      * @param params
      */
     private onBlockRemoved(params: ContentTypeRemovedParamsInterface): void {

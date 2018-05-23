@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/move-content-type", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _moveContentType, _registry, _previewCollection, _dragAndDrop, _factory, _registry2, _resizing) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/container-animation", "Magento_PageBuilder/js/interactions/move-content-type", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _containerAnimation, _moveContentType, _registry, _previewCollection, _dragAndDrop, _factory, _registry2, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -75,7 +75,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
     _proto.onNewColumnDrop = function onNewColumnDrop(dropPosition) {
       // Create our new column
-      (0, _factory.createColumn)(this.parent, (0, _resizing.getSmallestColumnWidth)(), dropPosition.insertIndex).then(function () {
+      (0, _factory.createColumn)(this.parent, (0, _resizing.getSmallestColumnWidth)(), dropPosition.insertIndex).then(function (column) {
         var newWidth = (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(dropPosition.affectedColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()); // Reduce the affected columns width by the smallest column width
 
         (0, _resizing.updateColumnWidth)(dropPosition.affectedColumn, newWidth);
@@ -317,6 +317,9 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
       columns.forEach(function (column) {
         column.preview.resizing(true);
+        column.element.css({
+          transition: "width " + _containerAnimation.animationTime + "ms ease-in-out"
+        });
       });
     };
     /**
@@ -327,6 +330,12 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     _proto.unsetResizingColumns = function unsetResizingColumns() {
       this.parent.children().forEach(function (column) {
         column.preview.resizing(false);
+
+        if (column.element) {
+          column.element.css({
+            transition: ""
+          });
+        }
       });
     };
     /**

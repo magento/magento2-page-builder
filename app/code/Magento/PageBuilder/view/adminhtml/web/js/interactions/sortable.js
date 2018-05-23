@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/interactions/drop-indicators", "Magento_PageBuilder/js/interactions/matrix", "Magento_PageBuilder/js/interactions/move-content-type"], function (_jquery, _knockout, _uiEvents, _contentTypeFactory, _registry, _dropIndicators, _matrix, _moveContentType) {
+define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/interactions/container-animation", "Magento_PageBuilder/js/interactions/drop-indicators", "Magento_PageBuilder/js/interactions/matrix", "Magento_PageBuilder/js/interactions/move-content-type"], function (_jquery, _knockout, _uiEvents, _contentTypeFactory, _registry, _containerAnimation, _dropIndicators, _matrix, _moveContentType) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -169,9 +169,13 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
       // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
       var index = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
         return element.classList.contains("pagebuilder-draggable-block");
-      }); // Create the new content type and insert it into the parent
+      });
+      var parentContainerElement = (0, _jquery)(event.target).parents(".type-container");
+      var containerLocked = getParentProxy(preview).getChildren()().length === 0 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Create the new content type and insert it into the parent
 
       (0, _contentTypeFactory)(blockConfig, getParentProxy(preview), getPreviewStageIdProxy(preview)).then(function (block) {
+        // Prepare the event handler to animate the container height on render
+        (0, _containerAnimation.bindAfterRenderForAnimation)(containerLocked, block, parentContainerElement);
         getParentProxy(preview).addChild(block, index);
 
         _uiEvents.trigger("block:dropped:create", {
@@ -227,6 +231,13 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
           (0, _jquery)(el).remove();
         }
 
+        var parentContainerElement = (0, _jquery)(event.target).parents(".type-container");
+        var parentContainerLocked = targetParent.getChildren()().length === 0 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement);
+        var sourceContainerElement = (0, _jquery)(sourceParent.preview.wrapperElement);
+        var sourceContainerLocked = sourceParent.getChildren()().length === 1 && (0, _containerAnimation.lockContainerHeight)(sourceContainerElement); // Bind the event handler before the move operation
+
+        (0, _containerAnimation.bindAfterRenderForAnimation)(parentContainerLocked, contentTypeInstance, parentContainerElement);
+        (0, _containerAnimation.bindAfterRenderForAnimation)(sourceContainerLocked, contentTypeInstance, sourceContainerElement);
         (0, _moveContentType.moveContentType)(contentTypeInstance, targetIndex, targetParent);
 
         if (contentTypeInstance.parent !== targetParent) {

@@ -9,8 +9,10 @@ import events from "uiEvents";
 import _ from "underscore";
 import Config from "../../config";
 import ConfigContentBlock from "../../config";
+import ContentTypeInterface from "../../content-type";
 import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
+import {animationTime} from "../../interactions/container-animation";
 import {moveContentType} from "../../interactions/move-content-type";
 import {getDraggedBlockConfig} from "../../panel/registry";
 import {default as ColumnGroupPreview} from "../column-group/preview";
@@ -21,8 +23,8 @@ import {createColumn} from "./factory";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import {
     calculateGhostWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth,
-    findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
-    getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
+    getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth, getMaxColumns,
+    getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./resizing";
 
 interface BlockRemovedParams {
@@ -106,10 +108,11 @@ export default class Preview extends PreviewCollection {
             this.parent,
             getSmallestColumnWidth(),
             dropPosition.insertIndex,
-        ).then(() => {
+        ).then((column: Column) => {
             const newWidth = getAcceptedColumnWidth(
                 (getColumnWidth(dropPosition.affectedColumn) - getSmallestColumnWidth()).toString(),
             );
+
             // Reduce the affected columns width by the smallest column width
             updateColumnWidth(dropPosition.affectedColumn, newWidth);
         });
@@ -327,9 +330,10 @@ export default class Preview extends PreviewCollection {
      *
      * @param {Column} columns
      */
-    private setColumnsAsResizing(...columns: Column[]) {
-        columns.forEach((column) => {
+    private setColumnsAsResizing(...columns: ContentTypeInterface[]) {
+        columns.forEach((column: ContentTypeInterface) => {
             column.preview.resizing(true);
+            column.element.css({transition: `width ${animationTime}ms ease-in-out`});
         });
     }
 
@@ -337,8 +341,11 @@ export default class Preview extends PreviewCollection {
      * Unset resizing flag on all child columns
      */
     private unsetResizingColumns() {
-        (this.parent as ContentTypeCollectionInterface).children().forEach((column: Column) => {
+        (this.parent as ContentTypeCollectionInterface).children().forEach((column: ContentTypeInterface) => {
             column.preview.resizing(false);
+            if (column.element) {
+                column.element.css({transition: ""});
+            }
         });
     }
 

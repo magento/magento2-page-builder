@@ -178,7 +178,6 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
     /**
      * On block removed
      *
-     * @param event
      * @param params
      */
 

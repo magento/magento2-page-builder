@@ -17,7 +17,7 @@
         <if args="$parent.canReceiveDrops()">
             <div class="pagebuilder-drop-indicator"></div>
         </if>
-        <div class="pagebuilder-content-type-wrapper" template="{ name: preview.previewTemplate, data: preview }" attr="{ id: id }"></div>
+        <div class="pagebuilder-content-type-wrapper" template="{ name: preview.previewTemplate, data: preview, afterRender: function () { preview.dispatchAfterRenderEvent.apply(preview, arguments); } }" attr="{ id: id }"></div>
         <if args="$parent.canReceiveDrops() && $index() === $parent.parent.getChildren()().length - 1">
             <div class="pagebuilder-drop-indicator"></div>
         </if>
