@@ -16,6 +16,7 @@ define([
     return dynamicRows.extend({
         defaults: {
             modules: {
+                insertForm: '${ $.insertFormProvider }',
                 modal: '${$.modalProvider}'
             }
         },
@@ -29,6 +30,16 @@ define([
             }.bind(this), this.name);
 
             return this;
+        },
+
+        /**
+         * Open the location modal and insert form with the data from selected record
+         *
+         * @param {Object} record
+         */
+        edit: function (record) {
+            this.modal().openModal();
+            this.insertForm().edit(record.data());
         },
 
         /**

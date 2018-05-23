@@ -61,6 +61,7 @@
                 <label translate="true">Location Name</label>
                 <dataScope>location_name</dataScope>
                 <validation>
+                    <rule name="required-entry-location-name" xsi:type="boolean">true</rule>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
             </settings>
@@ -83,9 +84,9 @@
                         <class name="admin__field-small">true</class>
                     </additionalClasses>
                     <validation>
-                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                        <rule name="required-entry-latitude" xsi:type="boolean">true</rule>
                         <rule name="validate-number" xsi:type="boolean">true</rule>
-                        <rule name="validate-number-range" xsi:type="string">-85.05-85.05</rule>
+                        <rule name="validate-latitude" xsi:type="boolean">true</rule>
                     </validation>
                     <placeholder translate="true">Latitude</placeholder>
                 </settings>
@@ -98,36 +99,43 @@
                         <class name="admin__field-small">true</class>
                     </additionalClasses>
                     <validation>
-                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                        <rule name="required-entry-longitude" xsi:type="boolean">true</rule>
                         <rule name="validate-number" xsi:type="boolean">true</rule>
-                        <rule name="validate-number-range" xsi:type="string">-180.05-180.05</rule>
+                        <rule name="validate-longitude" xsi:type="boolean">true</rule>
                     </validation>
                     <placeholder translate="true">Longitude</placeholder>
                 </settings>
             </field>
         </container>
-        <field name="address" sortOrder="40" formElement="input">
+        <field name="phone" sortOrder="40" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Phone Number</label>
+                <dataScope>phone</dataScope>
+            </settings>
+        </field>
+        <field name="address" sortOrder="50" formElement="input">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Street Address</label>
                 <dataScope>address</dataScope>
             </settings>
         </field>
-        <field name="city" sortOrder="50" formElement="input">
+        <field name="city" sortOrder="60" formElement="input">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">City</label>
                 <dataScope>city</dataScope>
             </settings>
         </field>
-        <field name="zipcode" sortOrder="60" formElement="input">
+        <field name="zipcode" sortOrder="70" formElement="input">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Zip/Postal Code</label>
                 <dataScope>zipcode</dataScope>
             </settings>
         </field>
-        <field name="country" component="Magento_Ui/js/form/element/ui-select" sortOrder="70" formElement="select">
+        <field name="country" component="Magento_Ui/js/form/element/ui-select" sortOrder="80" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filterOptions" xsi:type="boolean">true</item>
@@ -152,7 +160,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="comment" sortOrder="80" formElement="textarea">
+        <field name="comment" sortOrder="90" formElement="textarea">
             <settings>
                 <label translate="true">Comment</label>
                 <dataType>text</dataType>

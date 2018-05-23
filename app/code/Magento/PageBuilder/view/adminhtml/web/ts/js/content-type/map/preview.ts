@@ -45,20 +45,21 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private generateMap(element: Element) {
-        const position: string = this.data.main.attributes()["data-position"] || "{}";
+        const locations: string = this.data.main.attributes()["data-location-listing"] || "[]";
         const controls = this.data.main.attributes()["data-show-controls"] || "true";
-        let marker: {} = {};
+        let markers = [];
 
         let options = {
             disableDefaultUI: controls !== "true",
             mapTypeControl: controls === "true",
         };
-        if (position !== "{}") {
+        if (locations !== "[]") {
             const mapData = this.getMapData();
-            marker = mapData.marker;
+
+            markers = mapData.markers;
             options = mapData.options;
         }
-        this.map = new GoogleMap(element, marker, options);
+        this.map = new GoogleMap(element, markers, options);
     }
 
     /**
@@ -67,10 +68,8 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private updateMap() {
-        if (this.data.main.attributes()["data-position"] !== "{}") {
-            const mapData = this.getMapData();
-            this.map.onUpdate(mapData.marker, mapData.options);
-        }
+        const mapData = this.getMapData();
+        this.map.onUpdate(mapData.markers, mapData.options);
     }
 
     /**
@@ -80,39 +79,32 @@ export default class Preview extends BasePreview {
      */
     private getMapData() {
         const attributes = this.data.main.attributes();
-        const location: string = attributes["data-location-name"];
-        let position: string = attributes["data-position"];
-        const address: string = attributes["data-address"];
-        const city: string = attributes["data-city"];
-        const comment: string = attributes["data-comment"];
-        const controls = attributes["data-show-controls"];
-        const country: string = attributes["data-country"];
-        const zipcode: string = attributes["data-zipcode"];
-        if (position !== "" && typeof position === "string") {
-            position = JSON.parse(position);
+        const controls: string = attributes["data-show-controls"];
+        const options: any = {
+            disableDefaultUI: controls !== "true",
+            mapTypeControl: controls === "true",
+        };
+        let markers: any = attributes["data-location-listing"];
+
+        if (markers !== "" && typeof markers === "string") {
+            markers = JSON.parse(markers);
+        }
+
+        markers.forEach((marker: any) => {
+            marker.position.lat = parseFloat(marker.position.lat);
+            marker.position.lng = parseFloat(marker.position.lng);
+        });
+
+        if (markers[0]) {
+            options.center = {
+                lat: markers[0].position.lat,
+                lng: markers[0].position.lng,
+            };
         }
 
         return {
-            marker: {
-                coordinates: {
-                    lat: parseFloat(position.lat),
-                    lng: parseFloat(position.lng),
-                },
-                location,
-                address,
-                city,
-                comment,
-                country,
-                zipcode,
-            },
-            options: {
-                center: {
-                    lat: parseFloat(position.lat),
-                    lng: parseFloat(position.lng),
-                },
-                disableDefaultUI: controls !== "true",
-                mapTypeControl: controls === "true",
-            },
+            markers,
+            options,
         };
     }
 }

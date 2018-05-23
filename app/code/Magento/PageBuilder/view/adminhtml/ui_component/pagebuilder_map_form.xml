@@ -113,9 +113,10 @@
                 </argument>
             </button>
         </container>
-        <dynamicRows name="location_listing" sortOrder="20" component="Magento_PageBuilder/js/form/components/dynamic-rows" template="ui/dynamic-rows/templates/grid">
+        <dynamicRows name="location_listing" sortOrder="20" component="Magento_PageBuilder/js/form/components/dynamic-rows" template="Magento_PageBuilder/dynamic-rows/edit-form-on-click-grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
+                    <item name="insertFormProvider" xsi:type="string">index = location_insert_form</item>
                     <item name="modalProvider" xsi:type="string">index=location_modal</item>
                 </item>
             </argument>
@@ -147,7 +148,6 @@
                         <dataScope>location_name</dataScope>
                         <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
                     </settings>
-
                 </field>
                 <field name="address" component="Magento_Ui/js/form/element/text" formElement="input">
                     <settings>
@@ -190,6 +190,7 @@
                         <item name="config" xsi:type="array">
                             <item name="insertFormProvider" xsi:type="string">index = location_insert_form</item>
                             <item name="modalProvider" xsi:type="string">index = location_modal</item>
+                            <item name="noClickEdit" xsi:type="boolean">true</item>
                             <item name="actions" xsi:type="array">
                                 <item name="0" xsi:type="array">
                                     <item name="targetName" xsi:type="string">${ $.name }</item>

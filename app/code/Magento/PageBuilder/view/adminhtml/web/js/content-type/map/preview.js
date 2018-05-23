@@ -55,21 +55,21 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.generateMap = function generateMap(element) {
-      var position = this.data.main.attributes()["data-position"] || "{}";
+      var locations = this.data.main.attributes()["data-location-listing"] || "[]";
       var controls = this.data.main.attributes()["data-show-controls"] || "true";
-      var marker = {};
+      var markers = [];
       var options = {
         disableDefaultUI: controls !== "true",
         mapTypeControl: controls === "true"
       };
 
-      if (position !== "{}") {
+      if (locations !== "[]") {
         var mapData = this.getMapData();
-        marker = mapData.marker;
+        markers = mapData.markers;
         options = mapData.options;
       }
 
-      this.map = new _map(element, marker, options);
+      this.map = new _map(element, markers, options);
     };
     /**
      * Updates map
@@ -79,10 +79,8 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.updateMap = function updateMap() {
-      if (this.data.main.attributes()["data-position"] !== "{}") {
-        var mapData = this.getMapData();
-        this.map.onUpdate(mapData.marker, mapData.options);
-      }
+      var mapData = this.getMapData();
+      this.map.onUpdate(mapData.markers, mapData.options);
     };
     /**
      * Get markers, center coordinates, and zoom from data.position
@@ -93,40 +91,32 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
     _proto.getMapData = function getMapData() {
       var attributes = this.data.main.attributes();
-      var location = attributes["data-location-name"];
-      var position = attributes["data-position"];
-      var address = attributes["data-address"];
-      var city = attributes["data-city"];
-      var comment = attributes["data-comment"];
       var controls = attributes["data-show-controls"];
-      var country = attributes["data-country"];
-      var zipcode = attributes["data-zipcode"];
+      var options = {
+        disableDefaultUI: controls !== "true",
+        mapTypeControl: controls === "true"
+      };
+      var markers = attributes["data-location-listing"];
 
-      if (position !== "" && typeof position === "string") {
-        position = JSON.parse(position);
+      if (markers !== "" && typeof markers === "string") {
+        markers = JSON.parse(markers);
+      }
+
+      markers.forEach(function (marker) {
+        marker.position.lat = parseFloat(marker.position.lat);
+        marker.position.lng = parseFloat(marker.position.lng);
+      });
+
+      if (markers[0]) {
+        options.center = {
+          lat: markers[0].position.lat,
+          lng: markers[0].position.lng
+        };
       }
 
       return {
-        marker: {
-          coordinates: {
-            lat: parseFloat(position.lat),
-            lng: parseFloat(position.lng)
-          },
-          location: location,
-          address: address,
-          city: city,
-          comment: comment,
-          country: country,
-          zipcode: zipcode
-        },
-        options: {
-          center: {
-            lat: parseFloat(position.lat),
-            lng: parseFloat(position.lng)
-          },
-          disableDefaultUI: controls !== "true",
-          mapTypeControl: controls === "true"
-        }
+        markers: markers,
+        options: options
       };
     };
 

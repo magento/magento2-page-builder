@@ -129,15 +129,8 @@ requirejs([
 
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {
-        var mapPosition = {},
-            marker = {},
-            location,
-            address,
-            city,
-            comment,
+        var markers,
             controls,
-            country,
-            zipcode,
             mapOptions = {};
 
         /**
@@ -147,29 +140,17 @@ requirejs([
             $(element).height('300px');
         }
 
-        if (element.hasAttribute('data-position') && element.getAttribute('data-position') !== '{}') {
-            mapPosition = JSON.parse(element.getAttribute('data-position'));
-            location = element.getAttribute('data-location-name');
-            address = element.getAttribute('data-address');
-            city = element.getAttribute('data-city');
-            comment = element.getAttribute('data-comment');
-            country = element.getAttribute('data-country');
-            zipcode = element.getAttribute('data-zipcode');
+        if (element.hasAttribute('data-location-listing') && element.getAttribute('data-location-listing') !== '[]') {
+            markers = JSON.parse(element.getAttribute('data-location-listing'));
+            markers.forEach(function (marker) {
+                marker.position.lat = parseFloat(marker.position.lat);
+                marker.position.lng = parseFloat(marker.position.lng);
+            });
             controls = element.getAttribute('data-show-controls');
-            marker = {
-                coordinates: mapPosition,
-                location: location,
-                address: address,
-                city: city,
-                comment: comment,
-                country: country,
-                zipcode: zipcode
-            };
-
-            mapOptions.center = mapPosition;
+            mapOptions.center = markers[0].position;
             mapOptions.disableDefaultUI = controls !== 'true';
             mapOptions.mapTypeControl = controls === 'true';
-            new GoogleMap(element, marker, mapOptions);
+            new GoogleMap(element, markers, mapOptions);
         }
     });
 

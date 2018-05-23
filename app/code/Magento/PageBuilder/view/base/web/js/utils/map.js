@@ -37,68 +37,105 @@ define([
             },
         }, options);
 
+
         /* Create the map */
         this.map = new google.maps.Map(element, mapOptions);
         this.markers = [];
 
         /**
          * Callback function on map config update
-         * @param {Array} newMarker
+         * @param {Array} newMarkers
          * @param {Object} updateOptions
          */
-        this.onUpdate = function (newMarker, updateOptions) {
+        this.onUpdate = function (newMarkers, updateOptions) {
             this.map.setOptions(updateOptions);
-            this.setMarker(newMarker);
+            this.setMarkers(newMarkers);
         };
 
         /**
          * Sets the markers to selected map
-         * @param {} newMarker
+         * @param {} newMarkers
          */
-        this.setMarker = function (newMarker) {
+        this.setMarkers = function (newMarkers) {
+            var activeInfoWindow;
+            var latlngbounds = new google.maps.LatLngBounds();
             this.markers.forEach(function (marker) {
                 marker.setMap(null);
             }, this);
+
             this.markers = [];
+            this.bounds = [];
 
-            if (newMarker && !_.isEmpty(newMarker)) {
-                var location = newMarker.location || '';
-                var comment = newMarker.comment || '';
-                var address = newMarker.address ? newMarker.address + '<br/>' : '';
-                var city = newMarker.city || '';
-                var country = newMarker.country || '';
-                var zipcode = newMarker.zipcode ? ',' + newMarker.zipcode : '';
+            /**
+             * Creates and set listener for markers
+             */
+            if (newMarkers && newMarkers.length) {
+                newMarkers.forEach((newMarker) => {
+                    var location = newMarker['location_name'] || '';
+                    var comment = newMarker.comment ? '<p>' + newMarker.comment + '</p>' : '';
+                    var phone = newMarker.phone ? '<p>Phone: ' + newMarker.phone + '</p>' : '';
+                    var address = newMarker.address ? newMarker.address + '<br/>' : '';
+                    var city = newMarker.city || '';
+                    var country = newMarker.country ? newMarker.country : '';
+                    var zipCode = newMarker.zipcode ? newMarker.zipcode : '';
+                    var zipCodeComma = city !== '' && zipCode !== '' ? ',' : '';
+                    var lineBreak = city !== '' || zipCode !== '' ? '<br/>' : '';
 
-                var contentString =
-                    '<div>' +
-                    '<h3><b>' + location + '</b></h3>' +
-                    '<p>' + comment + '</p>' +
-                    '<p>' + address +
-                    city + zipcode + '<br/>' +
-                    country + '</p>' +
-                    '</div>';
+                    var contentString =
+                        '<div>' +
+                        '<h3><b>' + location + '</b></h3>' +
+                        comment +
+                        phone +
+                        '<span>' + address +
+                        city + zipCodeComma + zipCode + lineBreak +
+                        country + '</span>' +
+                        '</div>';
 
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    maxWidth: 350
+                    var infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                        maxWidth: 350
+                    });
+
+                    var newCreatedMarker = new google.maps.Marker({
+                        map: this.map,
+                        position: googleLatLng(newMarker.position),
+                        title: location
+                    });
+
+                    if(location) {
+                        newCreatedMarker.addListener('click', function() {
+                            if (activeInfoWindow) {
+                                activeInfoWindow.close();
+                            }
+
+                            infowindow.open(this.map, newCreatedMarker);
+                            activeInfoWindow = infowindow;
+                        }, this);
+                    }
+
+                    this.markers.push(newCreatedMarker);
+                    this.bounds.push(googleLatLng(newMarker.position));
                 });
+            }
 
-                var newCreatedMarker = new google.maps.Marker({
-                    map: this.map,
-                    position: googleLatLng(newMarker.coordinates),
-                    title: newMarker.location
+            /**
+             * This sets the bounds of the map for multiple locations
+             */
+            if(this.bounds.length > 1) {
+                this.bounds.forEach(function(bound) {
+                    latlngbounds.extend(bound);
                 });
+                this.map.fitBounds(latlngbounds);
+            }
 
-                if(newMarker.location) {
-                    newCreatedMarker.addListener('click', function() {
-                        infowindow.open(this.map, newCreatedMarker);
-                    }, this);
-                }
-
-                this.markers.push(newCreatedMarker);
+            /**
+             * Zoom to 8 if there is only a single location
+             */
+            if(this.bounds.length === 1) {
+                this.map.setZoom(8);
             }
         };
 
-        this.setMarker(markers);
+        this.setMarkers(markers);
     };
 });
