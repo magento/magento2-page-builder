@@ -106,10 +106,10 @@
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
         <!-- Validate and Update Nav Alignment -->
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateNavAlignment">
+        <actionGroup ref="validateTextAlignment" stepKey="validateNavAlignment">
             <argument name="property" value="PageBuilderTabsAlignmentLeft"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterNavAlignmentCenter">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterNavAlignmentCenter">
             <argument name="property" value="PageBuilderTabsAlignmentCenter"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -155,10 +155,10 @@
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
         <!-- Validate and Update Nav Alignment -->
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateNavAlignment">
+        <actionGroup ref="validateTextAlignment" stepKey="validateNavAlignment">
             <argument name="property" value="PageBuilderTabsAlignmentLeft"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterNavAlignmentRight">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterNavAlignmentRight">
             <argument name="property" value="PageBuilderTabsAlignmentRight"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -311,7 +311,7 @@
         <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedSection"/>
         <!-- Fill All Advanced Fields -->
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="selectAlignment" stepKey="enterTextAlignmentCenter">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterTextAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBorder">
@@ -343,6 +343,7 @@
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeaderItemAdvancedStylesInStorefront"/>
         <waitForElementVisible selector="{{TabsOnFrontend.tabsContentAdvancedStyles('1')}}" stepKey="seeTabContentAdvancedStylesInStorefront"/>
+        <waitForElementVisible selector="{{TabsOnFrontend.tabsAlignment('center')}}" stepKey="seeTabAlignCenterInStorefront"/>
     </test>
     <test name="TabsDuplicateDefaultEmptyStateTab">
         <annotations>
