@@ -37,7 +37,6 @@ define([
             },
         }, options);
 
-
         /* Create the map */
         this.map = new google.maps.Map(element, mapOptions);
         this.markers = [];
@@ -54,7 +53,7 @@ define([
 
         /**
          * Sets the markers to selected map
-         * @param {} newMarkers
+         * @param {Object} newMarkers
          */
         this.setMarkers = function (newMarkers) {
             var activeInfoWindow;
