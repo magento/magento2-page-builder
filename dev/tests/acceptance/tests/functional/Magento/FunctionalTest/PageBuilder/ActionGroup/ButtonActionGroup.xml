@@ -41,4 +41,31 @@
         <waitForElementVisible selector="{{page.buttonItemUrl(index, url.value)}}" stepKey="waitForButtonUrl"/>
         <waitForElementVisible selector="{{page.buttonItemNewTab(index, newTab.stageValue)}}" stepKey="waitForButtonNewTab"/>
     </actionGroup>
+    <actionGroup name="inlineEditButton">
+        <arguments>
+            <argument name="text"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="inlineEditButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(index)}}" stepKey="waitForButton"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" stepKey="waitForButtonEditable"/>
+        <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
+    </actionGroup>
+    <actionGroup name="moveButton">
+        <arguments>
+            <argument name="targetSelector" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+            <argument name="buttonIndexToMove" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="moveButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton1"/>
+        <click selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockMoveByIndex(PageBuilderButtonItemContentBlock.role, buttonIndexToMove)}}" stepKey="waitForMoveButton"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.contentBlockMoveByIndex(PageBuilderButtonItemContentBlock.role, buttonIndexToMove)}}" selector2="{{targetSelector}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton2"/>
+    </actionGroup>
 </actionGroups>
