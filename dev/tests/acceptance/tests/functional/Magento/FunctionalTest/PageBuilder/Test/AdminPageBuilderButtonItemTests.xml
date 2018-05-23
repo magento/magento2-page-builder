@@ -825,12 +825,12 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="ButtonItemValidateContentSectionFields">
+    <test name="ButtonItemValidateGeneralSectionFields">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
-            <title value="Button Item - Validate Content Section Fields"/>
-            <description value="Check if button items have the required fields and the correct default values."/>
+            <title value="Button Item - Validate General Section Fields"/>
+            <description value="Check if button items have the correct default values."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-91302"/>
             <useCaseId value="MAGETWO-86971"/>
@@ -927,6 +927,51 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemType('1', PageBuilderButtonItemType_Primary.value)}}" stepKey="waitForButtonTypeStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonUrlStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
+    </test>
+    <test name="ButtonItemNoRequiredFields">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - No Required Fields"/>
+            <description value="Verify that the button has no required attributes on the edit form."/>
+            <severity value="AVERAGE"/>
+            <testCaseId value="MAGETWO-92053"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Empty All Edit Form Fields -->
+        <comment userInput="Empty All Edit Form Fields" stepKey="commentEmptyFields"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonTextField">
+            <argument name="property" value="PageBuilderButtonItemText_Empty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonTypeField">
+            <argument name="property" value="PageBuilderButtonItemType_Primary"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButtonLinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_Empty"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+        </actionGroup>
+        <!-- Verify Successful Save -->
+        <comment userInput="Verify Successful Save" stepKey="commentVerifySave"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
     <test name="ButtonItemCanBeEditedInline">
         <annotations>
