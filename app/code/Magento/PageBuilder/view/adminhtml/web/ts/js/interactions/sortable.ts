@@ -77,15 +77,15 @@ function getPreviewStageIdProxy(preview: Preview | Stage): string {
 /**
  * Retrieve the parent from the preview
  *
- * @param {Preview | Stage} preview
+ * @param {Preview | Stage | ContentTypeInterface} instance
  * @returns {any}
  */
-function getPreviewParentProxy(preview: Preview | Stage): ContentTypeCollectionInterface {
-    if (preview.config.name === "stage") {
+function getParentProxy(instance: Preview | Stage | ContentTypeInterface): ContentTypeCollectionInterface {
+    if (instance.config.name === "stage") {
         // @todo our usage of types for Stage are wrong, this requires refactoring outside of the scope of this story
-        return (preview as any);
+        return (instance as any);
     }
-    return (preview.parent as ContentTypeCollectionInterface);
+    return (instance.parent as ContentTypeCollectionInterface);
 }
 
 let sortedContentType: ContentTypeInterface;
@@ -176,9 +176,9 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
             });
 
         // Create the new content type and insert it into the parent
-        createContentType(blockConfig, getPreviewParentProxy(preview), getPreviewStageIdProxy(preview))
+        createContentType(blockConfig, getParentProxy(preview), getPreviewStageIdProxy(preview))
             .then((block: ContentTypeInterface) => {
-                getPreviewParentProxy(preview).addChild(block, index);
+                getParentProxy(preview).addChild(block, index);
                 events.trigger("block:dropped:create", {id: block.id, block});
                 events.trigger(blockConfig.name + ":block:dropped:create", {id: block.id, block});
                 return block;
@@ -211,7 +211,7 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
         if (target && contentTypeInstance) {
             // Calculate the source and target index
             const sourceParent: ContentTypeCollectionInterface = contentTypeInstance.parent;
-            const targetParent: ContentTypeCollectionInterface = target.parent;
+            const targetParent: ContentTypeCollectionInterface = getParentProxy(target);
 
             const targetIndex = $(event.target)
                 .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")

@@ -68,18 +68,18 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
   /**
    * Retrieve the parent from the preview
    *
-   * @param {Preview | Stage} preview
+   * @param {Preview | Stage | ContentTypeInterface} instance
    * @returns {any}
    */
 
 
-  function getPreviewParentProxy(preview) {
-    if (preview.config.name === "stage") {
+  function getParentProxy(instance) {
+    if (instance.config.name === "stage") {
       // @todo our usage of types for Stage are wrong, this requires refactoring outside of the scope of this story
-      return preview;
+      return instance;
     }
 
-    return preview.parent;
+    return instance.parent;
   }
 
   var sortedContentType;
@@ -171,8 +171,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
         return element.classList.contains("pagebuilder-draggable-block");
       }); // Create the new content type and insert it into the parent
 
-      (0, _contentTypeFactory)(blockConfig, getPreviewParentProxy(preview), getPreviewStageIdProxy(preview)).then(function (block) {
-        getPreviewParentProxy(preview).addChild(block, index);
+      (0, _contentTypeFactory)(blockConfig, getParentProxy(preview), getPreviewStageIdProxy(preview)).then(function (block) {
+        getParentProxy(preview).addChild(block, index);
 
         _uiEvents.trigger("block:dropped:create", {
           id: block.id,
@@ -216,7 +216,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
       if (target && contentTypeInstance) {
         // Calculate the source and target index
         var sourceParent = contentTypeInstance.parent;
-        var targetParent = target.parent;
+        var targetParent = getParentProxy(target);
         var targetIndex = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
           return element === el;
         });
