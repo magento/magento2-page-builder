@@ -94,6 +94,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
   function onSortStart(preview, event, ui) {
     // Verify we're sorting an already created item
     if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
+      _uiEvents.trigger("interaction:start");
+
       var contentTypeInstance = _knockout.dataFor(ui.item[0]);
 
       if (contentTypeInstance) {
@@ -133,6 +135,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
     ui.item.removeClass("pagebuilder-sorting-original");
     (0, _dropIndicators.hideDropIndicators)();
     (0, _registry.setDraggedBlockConfig)(null);
+
+    _uiEvents.trigger("interaction:stop");
   }
   /**
    * Handle receiving a block from the left panel

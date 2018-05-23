@@ -100,6 +100,7 @@ let sortedContentType: ContentTypeInterface;
 function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     // Verify we're sorting an already created item
     if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
+        events.trigger("interaction:start");
         const contentTypeInstance: ContentTypeInterface = ko.dataFor(ui.item[0]);
         if (contentTypeInstance) {
             // Ensure the original item is displayed but with reduced opacity
@@ -138,6 +139,7 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
     ui.item.removeClass("pagebuilder-sorting-original");
     hideDropIndicators();
     setDraggedBlockConfig(null);
+    events.trigger("interaction:stop");
 }
 
 /**
