@@ -59,7 +59,7 @@ class PresentationPlugin
         array $result
     ) {
         $result['is_pagebuilder_enabled'] = 0;
-        if ($result['frontend_input'] === 'pagebuilder') {
+        if (isset($result['frontend_input']) && $result['frontend_input'] === 'pagebuilder') {
             $result['is_wysiwyg_enabled'] = 1;
             $result['is_pagebuilder_enabled'] = 1;
             $result['frontend_input'] = 'textarea';

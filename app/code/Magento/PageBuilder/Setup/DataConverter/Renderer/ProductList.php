@@ -9,6 +9,9 @@ use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
 use Magento\PageBuilder\Setup\DataConverter\EavAttributeLoaderInterface;
 use Magento\PageBuilder\Setup\DataConverter\StyleExtractorInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Widget\Helper\Conditions;
+use Magento\Framework\Escaper;
+use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Render product list to PageBuilder format
@@ -25,12 +28,41 @@ class ProductList implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * @var \Magento\Widget\Helper\Conditions
+     */
+    private $conditionsHelper;
+
+    /**
+     * @var Escaper
+     */
+    private $escaper;
+
+    /**
+     * @var Json
+     */
+    private $jsonEncoder;
+
+    /**
+     * ProductList constructor.
+     * @param StyleExtractorInterface $styleExtractor
+     * @param EavAttributeLoaderInterface $eavAttributeLoader
+     * @param Conditions $conditionsHelper
+     * @param Escaper $escaper
+     * @param Json $jsonEncoder
+     */
     public function __construct(
         StyleExtractorInterface $styleExtractor,
-        EavAttributeLoaderInterface $eavAttributeLoader
+        EavAttributeLoaderInterface $eavAttributeLoader,
+        Conditions $conditionsHelper,
+        Escaper $escaper,
+        Json $jsonEncoder
     ) {
         $this->styleExtractor = $styleExtractor;
         $this->eavAttributeLoader = $eavAttributeLoader;
+        $this->conditionsHelper = $conditionsHelper;
+        $this->escaper = $escaper;
+        $this->jsonEncoder = $jsonEncoder;
     }
 
     /**
@@ -44,13 +76,37 @@ class ProductList implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
+        $categoryId = $eavData['category_id'] ?? '';
+        $conditions = [
+            '1' => [
+                'type' => \Magento\CatalogWidget\Model\Rule\Condition\Combine::class,
+                'aggregator' => 'all',
+                'value' => '1',
+                'new_child' => [
+                    '1--1' => [
+                        'type' => \Magento\CatalogWidget\Model\Rule\Condition\Product::class,
+                        'attribute' => 'category_ids',
+                        'operator' => '==',
+                        'value' => $categoryId,
+                    ]
+
+                ],
+            ],
+        ];
+
+        $productsCount = $eavData['product_count'] ?? 5;
+        $conditionsEncoded = $this->conditionsHelper->encode($conditions);
+        $widgetString = "{{widget type=\"Magento\CatalogWidget\Block\Product\ProductsList\" " .
+            "template=\"Magento_CatalogWidget::product/widget/content/grid.phtml\" " .
+            "type_name=\"Catalog Products List\" anchor_text=\"\" id_path=\"\" show_pager=\"0\" " .
+            "products_count=\"$productsCount\" conditions_encoded=\"$conditionsEncoded\"}}";
+
         $rootElementAttributes = [
-            'data-role' => 'product-list',
-            'data-appearance' => 'default',
+            'data-role' => 'products',
+            'data-appearance' => 'grid',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'data-category-id' => $eavData['category_id'] ?? '',
-            'data-product-count' => $eavData['product_count'] ?? 4,
-            'data-hide-out-of-stock' => $eavData['hide_out_of_stock'] ?? 0,
+            'data-products-count' => $productsCount,
+            'data-conditions-encoded' => $this->escaper->escapeHtml($this->jsonEncoder->serialize($conditions))
         ];
 
         if (isset($itemData['formData'])) {
@@ -65,8 +121,7 @@ class ProductList implements RendererInterface
             $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
         }
 
-        $rootElementHtml .= '></div>';
-
+        $rootElementHtml .= ">$widgetString</div>";
         return $rootElementHtml;
     }
 }

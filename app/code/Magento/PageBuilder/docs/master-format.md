@@ -915,18 +915,17 @@ Inline styles
 6. margin
 7. padding
 
-## Product
+## Products
 
 ```
-<div data-role="product" data-appearance="default" data-sku="product1-sku" data-view-mode="list" style="" class="pagebuilder-product"></div>
+<div data-role="products" data-appearance="grid" data-products-count="4" data-conditions-encoded="">{{widget type="Magento\CatalogWidget\Block\Product\ProductsList" template="Magento_CatalogWidget::product/widget/content/grid.phtml" anchor_text="" id_path="" show_pager="0" products_count="4" type_name="Catalog Products List" conditions_encoded=""}}</div>
 ```
 
 Attributes
-1. data-role [product]
-2. data-appearance [default]
-3. data-sku
-4. data-view-mode
-5. class
+1. data-role [products]
+2. data-appearance [grid]
+3. data-products-count
+4. data-conditions-encoded
 
 Inline styles
 1. text-align
@@ -936,25 +935,3 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-
-## Product List
-
-```
-<div data-role="product-list" data-appearance="default" data-category-id="1" data-product-count="4" style="..." class="pagebuilder-product-list"></div>
-```
-
-Attributes
-1. data-role [product-list]
-2. data-appearance [default]
-3. data-category-id
-4. data-product-count
-
-Inline styles
-1. text-align
-2. border-style
-3. border-color
-4. border-width
-5. border-radius
-6. margin
-7. padding
-8. class
