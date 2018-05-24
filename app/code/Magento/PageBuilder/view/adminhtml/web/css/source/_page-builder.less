@@ -38,9 +38,9 @@
     width: 100%;
 
     .pagebuilder-add-row {
+        background: @row-color;
         -moz-border-radius: 5px;
         -webkit-border-radius: 5px;
-        background: @row-color;
         border-radius: 5px;
         color: @color-white;
         display: inline-block;
@@ -56,15 +56,15 @@
 }
 
 .pagebuilder-stage {
+    font-size: 0;
+    margin-left: 170px; // temp
+    min-height: 200px;
+    padding: 0 0 60px; // 60px to include the add row button
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
     /* Rules below not implemented in browsers yet */
     -o-user-select: none;
     -webkit-user-select: none; /* Chrome/Safari */
-    font-size: 0;
-    margin-left: 170px; // temp
-    min-height: 200px;
-    padding: 0 0 60px; // 60px to include the add row button
     user-select: none;
 
     &.stage-full-screen {
@@ -98,10 +98,10 @@
     }
 
     .pagebuilder-canvas {
+        opacity: 0;
+        padding-bottom: 60px;
         -moz-transition: 1s ease-in-out;
         -webkit-transition: 1s ease-in-out;
-        padding-bottom: 60px;
-        opacity: 0;
         transition: 1s ease-in-out;
         visibility: hidden;
 
