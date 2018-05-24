@@ -17,6 +17,7 @@ define([
 
     return Uploader.extend({
         defaults: {
+            showImageUploadInstructionsInitially: true,
             classes: {
                 dragging: 'dragging',
                 draggingInside: 'dragging-inside',
