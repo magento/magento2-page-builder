@@ -449,7 +449,7 @@ export default class Preview {
                 if (JSON.stringify(field.default) !== fieldValue) {
                     hasDataChanges = true;
                 }
-            } else if (field.default !== fieldValue) {
+            } else if (field.default !== fieldValue && fieldValue !== "default") {
                 hasDataChanges = true;
             }
             return;
