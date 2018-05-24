@@ -236,7 +236,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
 
         (0, _containerAnimation.bindAfterRenderForAnimation)(parentContainerLocked, contentTypeInstance, parentContainerElement); // Also check if we need to handle animations on the source container
 
-        if (sourceParent.preview.wrapperElement) {
+        if (sourceParent.preview && sourceParent.preview.wrapperElement) {
           var sourceContainerElement = (0, _jquery)(sourceParent.preview.wrapperElement);
           var sourceContainerLocked = sourceParent.getChildren()().length === 1 && (0, _containerAnimation.lockContainerHeight)(sourceContainerElement);
           (0, _containerAnimation.bindAfterRenderForAnimation)(sourceContainerLocked, contentTypeInstance, sourceContainerElement);

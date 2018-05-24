@@ -243,7 +243,7 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
             bindAfterRenderForAnimation(parentContainerLocked, contentTypeInstance, parentContainerElement);
 
             // Also check if we need to handle animations on the source container
-            if (sourceParent.preview.wrapperElement) {
+            if (sourceParent.preview && sourceParent.preview.wrapperElement) {
                 const sourceContainerElement = $(sourceParent.preview.wrapperElement);
                 const sourceContainerLocked = sourceParent.getChildren()().length === 1 &&
                     lockContainerHeight(sourceContainerElement);
