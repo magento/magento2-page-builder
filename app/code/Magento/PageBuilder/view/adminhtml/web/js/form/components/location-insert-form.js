@@ -17,7 +17,6 @@ define([
             this.destroyInserted();
             this.render();
             this.setData(data);
-
         },
 
         /**

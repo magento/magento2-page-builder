@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="admin__field"
+<div class="admin__field edit-form-on-click-grid"
      visible="visible"
      disable="disabled"
      css="$data.setClasses($data)"
@@ -49,6 +49,9 @@
                 </thead>
 
                 <tbody>
+                <tr if="elems().length === 0 && emptyContentPlaceholder">
+                    <td attr="{'colspan': labels().length, 'align': 'center'}" class="pagebuilder-empty-dynamic-row" text="emptyContentPlaceholder"></td>
+                </tr>
                 <tr repeat="foreach: elems, item: '$record'"
                     class="data-row"
                     css="'_odd-row': $index % 2">
@@ -57,29 +60,24 @@
                         template="name: dndConfig.template, data: dnd"/>
 
                     <!-- ko foreach: { data: $record().elems(), as: 'elem'}  -->
-                        <!-- ko if: elem.noClickEdit -->
-                        <td if="elem.template"
+                        <td if="elem.template && elem.noClickEdit"
                             visible="elem.visible"
                             disable="elem.disabled"
                             css="$parent.setClasses(elem)"
                             template="elem.template"
                             attr="'data-index': index"/>
-                        <!-- /ko -->
-                        <!-- ko ifnot: elem.noClickEdit -->
-                        <td if="elem.template"
+                        <td if="elem.template && !elem.noClickEdit"
                             visible="elem.visible"
                             disable="elem.disabled"
                             css="$parent.setClasses(elem)"
                             template="elem.template"
                             attr="'data-index': index"
                             click="$parent.edit.bind($parent, $record())"/>
-                        <!-- /ko -->
                     <!-- /ko -->
                 </tr>
                 </tbody>
             </table>
         </div>
-
         <div class="admin__control-table-action" if="$data.addButton">
             <button attr="{disabled: disabled}"
                     type="button"

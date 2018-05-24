@@ -113,18 +113,19 @@
                 </argument>
             </button>
         </container>
-        <dynamicRows name="location_listing" sortOrder="20" component="Magento_PageBuilder/js/form/components/dynamic-rows" template="Magento_PageBuilder/dynamic-rows/edit-form-on-click-grid">
+        <dynamicRows name="location_listing" sortOrder="20" component="Magento_PageBuilder/js/form/components/dynamic-rows" template="Magento_PageBuilder/form/components/dynamic-rows/edit-form-on-click-grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="insertFormProvider" xsi:type="string">index = location_insert_form</item>
                     <item name="modalProvider" xsi:type="string">index=location_modal</item>
+                    <item name="emptyContentPlaceholder" xsi:type="string">No locations found. Click "Add Location"</item>
                 </item>
             </argument>
             <settings>
                 <dndConfig>
                     <param name="enabled" xsi:type="boolean">false</param>
                 </dndConfig>
-                <identificationProperty>id</identificationProperty>
+                <identificationProperty>record_id</identificationProperty>
                 <addButton>false</addButton>
                 <visible>true</visible>
                 <additionalClasses>
@@ -185,7 +186,7 @@
                         <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
                     </settings>
                 </field>
-                <button name="actions" component="Magento_PageBuilder/js/form/components/action-button" template="Magento_PageBuilder/dynamic-rows/actions-list">
+                <button name="actions" component="Magento_PageBuilder/js/form/components/action-button" template="Magento_PageBuilder/form/components/dynamic-rows/actions-list">
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
                             <item name="insertFormProvider" xsi:type="string">index = location_insert_form</item>

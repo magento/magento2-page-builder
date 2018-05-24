@@ -3,9 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-/**
- * @api
- */
 define([
     'Magento_Ui/js/dynamic-rows/dynamic-rows',
     'uiEvents',
@@ -49,7 +46,7 @@ define([
          */
         reInitData: function (data) {
             var recordData = this.recordData().slice(),
-                prop = "record_id",
+                prop = this.identificationProperty,
                 isExists = false;
 
             _.each(recordData, function (elem, index) {

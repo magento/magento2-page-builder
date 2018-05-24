@@ -38,7 +38,7 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <fieldset name="general" sortOrder="20">
+    <fieldset name="general" sortOrder="10">
         <settings>
             <label/>
         </settings>
@@ -121,14 +121,21 @@
                 <dataScope>city</dataScope>
             </settings>
         </field>
-        <field name="zipcode" sortOrder="70" formElement="input">
+        <field name="state" sortOrder="70" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Region/State</label>
+                <dataScope>state</dataScope>
+            </settings>
+        </field>
+        <field name="zipcode" sortOrder="80" formElement="input">
             <settings>
                 <dataType>text</dataType>
                 <label translate="true">Zip/Postal Code</label>
                 <dataScope>zipcode</dataScope>
             </settings>
         </field>
-        <field name="country" component="Magento_Ui/js/form/element/ui-select" sortOrder="80" formElement="select">
+        <field name="country" component="Magento_Ui/js/form/element/ui-select" sortOrder="90" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filterOptions" xsi:type="boolean">true</item>
@@ -153,7 +160,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="comment" sortOrder="90" formElement="textarea">
+        <field name="comment" sortOrder="100" formElement="textarea">
             <settings>
                 <label translate="true">Comment</label>
                 <dataType>text</dataType>
