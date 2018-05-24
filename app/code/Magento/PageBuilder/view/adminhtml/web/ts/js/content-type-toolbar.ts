@@ -31,7 +31,7 @@ export default class Toolbar {
      * @returns {string}
      */
     get template(): string {
-         return "Magento_PageBuilder/toolbar";
+         return "Magento_PageBuilder/content-type-toolbar";
     }
 
     /**

@@ -72,7 +72,7 @@ define(["jquery", "knockout", "uiEvents"], function (_jquery, _knockout, _uiEven
     _createClass(Toolbar, [{
       key: "template",
       get: function get() {
-        return "Magento_PageBuilder/toolbar";
+        return "Magento_PageBuilder/content-type-toolbar";
       }
     }]);
 
@@ -81,4 +81,4 @@ define(["jquery", "knockout", "uiEvents"], function (_jquery, _knockout, _uiEven
 
   return Toolbar;
 });
-//# sourceMappingURL=toolbar.js.map
+//# sourceMappingURL=content-type-toolbar.js.map

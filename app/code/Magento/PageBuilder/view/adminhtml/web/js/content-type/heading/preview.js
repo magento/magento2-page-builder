@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _uiEvents, _underscore, _toolbar, _preview) {
+define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-toolbar", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _uiEvents, _underscore, _contentTypeToolbar, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Heading =
@@ -18,7 +18,7 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar", "M
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
       _this.toolbar = void 0;
       _this.element = void 0;
-      _this.toolbar = new _toolbar(_this, _this.getToolbarOptions());
+      _this.toolbar = new _contentTypeToolbar(_this, _this.getToolbarOptions());
       return _this;
     }
     /**
