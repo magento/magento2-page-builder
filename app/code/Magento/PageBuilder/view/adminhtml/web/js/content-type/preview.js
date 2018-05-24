@@ -408,7 +408,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
           if (JSON.stringify(field.default) !== fieldValue) {
             hasDataChanges = true;
           }
-        } else if (field.default !== fieldValue) {
+        } else if (field.default !== fieldValue && fieldValue !== "default") {
           hasDataChanges = true;
         }
 
