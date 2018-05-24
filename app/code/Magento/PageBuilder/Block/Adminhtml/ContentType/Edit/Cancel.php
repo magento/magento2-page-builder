@@ -32,7 +32,7 @@ class Cancel implements ButtonProviderInterface
      *
      * @return array
      */
-    public function getButtonData() : array
+    public function getButtonData(): array
     {
         return [
             'label' => __('Cancel'),
