@@ -6,8 +6,8 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-slide" event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
-    <div attr="data.main.attributes" ko-style="Object.assign({}, data.main.style(), data.overlay.style(), data.desktop_image.style(), {paddingLeft: 'calc(50% + ' + data.desktop_image.style().paddingLeft + ')'})" css="data.main.css" event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
-        <div class="pagebuilder-collage-overlay" ko-style="data.overlay.style()">
+    <div attr="data.main.attributes" ko-style="Object.assign(data.main.style(), data.desktop_image.style(), getBackgroundStyles()), {paddingLeft: 'calc(50% + ' + data.desktop_image.style().paddingLeft + ')'})" css="data.main.css" event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
+        <div class="pagebuilder-collage-overlay" ko-style="data.overlay.style">
             <div if="data.content.html()" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" html="data.content.html"></div>
             <div ifnot="data.content.html()" class="pagebuilder-empty-slide" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" translate="'Edit Slide Text'"></div>
             <a if="data.main.attributes()['data-show-button'] !== 'never_show'"
