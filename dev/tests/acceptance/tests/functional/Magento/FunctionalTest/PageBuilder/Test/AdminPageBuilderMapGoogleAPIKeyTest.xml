@@ -106,7 +106,7 @@
             <features value="Pagebuilder"/>
             <stories value="Google Maps API Key"/>
             <title value="Validate Google Maps Get API Key Field Appearance"/>
-            <description value="Tests the following for  Google Maps API Key field: 1) Global config key, 2) Helper text, 3) Default is empty, 4) Default Test Key button is disabled, 5) Correct Get API Key link."/>
+            <description value="Tests the following for  Google Maps API Key field: 1) Global config key, 2) Helper text, 3) Default Test Key button is disabled, 4) Correct Get API Key link."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
             <testCaseId value="MAGETWO-91918"/>
@@ -131,10 +131,6 @@
         <comment userInput="Validate Helper Text" stepKey="commentValidateHelperText"/>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyHelperText}}" stepKey="waitForHelperText"/>
         <see selector="{{ContentManagementSection.GoogleMapsAPIKeyHelperText}}" userInput="Enter API key to use the Map content block. Get API Key." stepKey="seeHelperText"/>
-        <!-- Validate Default Value -->
-        <comment userInput="Validate Default Value" stepKey="commentValidateDefaultValue"/>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" stepKey="waitForGoogleMapsAPIKeyInputField"/>
-        <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.default}}" stepKey="seeDefaultValue"/>
         <!-- Validate Disabled Test Key Button -->
         <comment userInput="Validate Disabled Test Key Button" stepKey="commentValidateDisabledTestKeyButton"/>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}[disabled='disabled']" stepKey="waitForTestKeyButtonDisabled"/>
