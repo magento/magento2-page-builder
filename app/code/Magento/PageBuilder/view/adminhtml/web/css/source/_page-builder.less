@@ -38,6 +38,9 @@
     width: 100%;
 
     .pagebuilder-add-row {
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+
         background: @row-color;
         border-radius: 5px;
         color: @color-white;
@@ -47,9 +50,6 @@
         line-height: 50px;
         width: 50px;
 
-        -moz-border-radius: 5px;
-        -webkit-border-radius: 5px;
-
         &:hover {
             background: darken(@row-color, 15%);
         }
@@ -57,17 +57,17 @@
 }
 
 .pagebuilder-stage {
-    font-size: 0;
-    margin-left: 170px; // temp
-    min-height: 200px;
-    padding: 0 0 60px; // 60px to include the add row button
-
-    user-select: none;
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
     /* Rules below not implemented in browsers yet */
     -o-user-select: none;
     -webkit-user-select: none; /* Chrome/Safari */
+
+    font-size: 0;
+    margin-left: 170px; // temp
+    min-height: 200px;
+    padding: 0 0 60px; // 60px to include the add row button
+    user-select: none;
 
     &.stage-full-screen {
         background: @color-black;
@@ -100,13 +100,13 @@
     }
 
     .pagebuilder-canvas {
+        -moz-transition: 1s ease-in-out;
+        -webkit-transition: 1s ease-in-out;
+
         opacity: 0;
         padding-bottom: 60px;
         transition: 1s ease-in-out;
         visibility: hidden;
-
-        -moz-transition: 1s ease-in-out;
-        -webkit-transition: 1s ease-in-out;
 
         &.active {
             opacity: 1;
