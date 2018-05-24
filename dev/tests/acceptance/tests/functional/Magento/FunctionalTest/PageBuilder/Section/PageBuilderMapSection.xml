@@ -19,8 +19,9 @@
         <element name="tooltipWindow" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']" parameterized="true"/>
         <element name="tooltipWindowClose" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']/../div/img[contains(@src,'mapcnt6.png')]/.." parameterized="true"/>
         <element name="locationName" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/h3/b[.='{{arg2}}']" parameterized="true"/>
-        <element name="addressCityZipCountry" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/p[2][.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}']" parameterized="true"/>
-        <element name="comment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/p[1][.='{{arg2}}']" parameterized="true"/>
+        <element name="comment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='{{arg2}}']" parameterized="true"/>
+        <element name="phoneNumber" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='Phone: {{arg2}}']" parameterized="true"/>
+        <element name="addressCityZipCountry" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}']" parameterized="true"/>
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-map > div:first-child')).height)"/>
@@ -60,8 +61,9 @@
         <element name="tooltipWindow" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']" parameterized="true"/>
         <element name="tooltipWindowClose" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']/../div/img[contains(@src,'mapcnt6.png')]/.." parameterized="true"/>
         <element name="locationName" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/h3/b[.='{{arg2}}']" parameterized="true"/>
-        <element name="addressCityZipCountry" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/p[2][.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}']" parameterized="true"/>
-        <element name="comment" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/p[1][.='{{arg2}}']" parameterized="true"/>
+        <element name="comment" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='{{arg2}}']" parameterized="true"/>
+        <element name="phoneNumber" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='Phone: {{arg2}}']" parameterized="true"/>
+        <element name="addressCityZipCountry" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}']" parameterized="true"/>
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
         <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('[data-role=map]')).height)"/>
@@ -87,7 +89,14 @@
         <element name="zoomIn" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//button[@title='Zoom in']" parameterized="true"/>
         <element name="zoomOut" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//button[@title='Zoom out']" parameterized="true"/>
     </section>
-    <section name="MapOnConfigurationPanel">
+    <section name="EditMapForm">
+        <element name="addLocationButton" type="button" selector="//button[@data-index='add_location_button']"/>
+    </section>
+    <section name="AddLocationForm">
+        <element name="form" type="text" selector="aside  div.pagebuilder_map_form_pagebuilder_map_form_general_location_modal_location_insert_form"/>
+        <element name="formTitle" type="text" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_location_modal h1.modal-title[data-role='title']"/>
+        <element name="cancelButton" type="button" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_location_modal  button#cancel"/>
+        <element name="saveButton" type="button" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_location_modal  button#save"/>
         <element name="base" type="button" selector="//div[@data-index='position']//div[@class='map-field']"/>
         <element name="baseJS" type="text" selector="document.querySelector('div[data-index=\'position\'] div.map-field')"/>
         <element name="clickablePin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gmnoprint']//map//area"/>

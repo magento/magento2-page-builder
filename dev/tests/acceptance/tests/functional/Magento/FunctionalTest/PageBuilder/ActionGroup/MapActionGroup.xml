@@ -8,14 +8,54 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="clickAddLocationButton">
+        <comment userInput="clickAddLocationButton" stepKey="comment"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{EditMapForm.addLocationButton}}" stepKey="waitForAddLocationButton"/>
+        <click selector="{{EditMapForm.addLocationButton}}" stepKey="clickAddLocationButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
+        <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
+        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
+        <waitForElementVisible selector="{{AddLocationForm.pegman('1')}}" stepKey="waitForLocationMapPegman"/>
+    </actionGroup>
+    <actionGroup name="saveAddLocationForm">
+        <comment userInput="saveAddLocationForm" stepKey="comment"/>
+        <waitForElementVisible selector="{{AddLocationForm.saveButton}}" stepKey="waitForSaveButton"/>
+        <click selector="{{AddLocationForm.saveButton}}" stepKey="clickSaveButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementNotVisible selector="{{AddLocationForm.form}}" stepKey="waitForAddLocationFormNotVisible"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveEditMapFormButton"/>
+    </actionGroup>
+    <actionGroup name="closeAddLocationForm">
+        <comment userInput="closeAddLocationForm" stepKey="comment"/>
+        <waitForElementVisible selector="{{AddLocationForm.cancelButton}}" stepKey="waitForCancelButton"/>
+        <click selector="{{AddLocationForm.cancelButton}}" stepKey="clickCancelButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementNotVisible selector="{{AddLocationForm.form}}" stepKey="waitForAddLocationFormNotVisible"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveEditMapFormButton"/>
+    </actionGroup>
+    <actionGroup name="clickLocationGridRow">
+        <arguments>
+            <argument name="locationName"/>
+        </arguments>
+        <comment userInput="clickEditOnLocationGridRow" stepKey="comment"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridRow(locationName.fieldName, locationName.value)}}" stepKey="waitForGridRow"/>
+        <click selector="{{PageBuilderDataGrid.gridRow(locationName.fieldName, locationName.value)}}" stepKey="clickGridRow"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
+        <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
+        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
+        <waitForElementVisible selector="{{AddLocationForm.pegman('1')}}" stepKey="waitForLocationMapPegman"/>
+    </actionGroup>
     <actionGroup name="clickMapToAddOrMovePin">
         <arguments>
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.base}}" stepKey="waitForMapVisible"/>
-        <clickWithLeftButton selector="{{MapOnConfigurationPanel.base}}" x="{{x}}" y="{{y}}" stepKey="clickMapToMovePin"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.pin}}" stepKey="waitForPinVisible"/>
+        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForMapVisible"/>
+        <clickWithLeftButton selector="{{AddLocationForm.base}}" x="{{x}}" y="{{y}}" stepKey="clickMapToMovePin"/>
+        <waitForElementVisible selector="{{AddLocationForm.pin}}" stepKey="waitForPinVisible"/>
         <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
     <actionGroup name="moveMapPinByDraggingAndDroppingPin">
@@ -23,8 +63,8 @@
             <argument name="x" defaultValue="null" type="string"/>
             <argument name="y" defaultValue="null" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.clickablePin}}" stepKey="waitForMapVisible"/>
-        <dragAndDrop selector1="{{MapOnConfigurationPanel.clickablePin}}" selector2="{{MapOnConfigurationPanel.clickablePin}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropOnMapToMovePin"/>
+        <waitForElementVisible selector="{{AddLocationForm.clickablePin}}" stepKey="waitForMapVisible"/>
+        <dragAndDrop selector1="{{AddLocationForm.clickablePin}}" selector2="{{AddLocationForm.clickablePin}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropOnMapToMovePin"/>
         <wait time="2" stepKey="waitForPinMove"/>
     </actionGroup>
     <actionGroup name="verifyMapHasPin">
@@ -71,7 +111,7 @@
         <dontSeeElementInDOM selector="{{page.zoomOut(index)}}" stepKey="dontSeeMapZoomOut"/>
     </actionGroup>
     <actionGroup name="validateMapHelperText">
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.helperText}}" stepKey="seeMapHelperText"/>
+        <waitForElementVisible selector="{{AddLocationForm.helperText}}" stepKey="seeMapHelperText"/>
     </actionGroup>
     <actionGroup name="validateMapSettings">
         <arguments>
@@ -103,11 +143,12 @@
         <arguments>
             <argument name="page"/>
             <argument name="locationName" defaultValue="PageBuilderMapLocationName_Default"/>
+            <argument name="comment" defaultValue="PageBuilderMapComment_Default"/>
+            <argument name="phoneNumber" defaultValue="PageBuilderMapPhoneNumber_Default"/>
             <argument name="address" defaultValue="PageBuilderMapStreetAddress_Default"/>
             <argument name="city" defaultValue="PageBuilderMapCity_Default"/>
             <argument name="zip" defaultValue="PageBuilderMapZipCode_Default"/>
             <argument name="country" defaultValue="PageBuilderMapCountry_Default"/>
-            <argument name="comment" defaultValue="PageBuilderMapComment_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateMapPinLocationData" stepKey="comment1"/>
@@ -115,12 +156,13 @@
         <click selector="{{page.clickablePin(index)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltip"/>
         <waitForElementVisible selector="{{page.locationName(index, locationName.value)}}" stepKey="waitForLocationName"/>
-        <waitForElementVisible selector="{{page.addressCityZipCountry(index, address.value, city.value, zip.tooltipValue, country.tooltipValue)}}" stepKey="waitForAddress"/>
         <waitForElementVisible selector="{{page.comment(index, comment.value)}}" stepKey="waitForComment"/>
+        <waitForElementVisible selector="{{page.phoneNumber(index, phoneNumber.value)}}" stepKey="waitForPhoneNumber"/>
+        <waitForElementVisible selector="{{page.addressCityZipCountry(index, address.value, city.value, zip.tooltipValue, country.tooltipValue)}}" stepKey="waitForAddress"/>
         <click selector="{{page.tooltipWindowClose(index)}}" stepKey="closePinTooltip"/>
         <waitForElementNotVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>
-    <actionGroup name="validateMapPinLocationDataWithNoComment">
+    <actionGroup name="validateMapPinLocationDataWithNoCommentOrPhoneNumber">
         <arguments>
             <argument name="page"/>
             <argument name="locationName" defaultValue="PageBuilderMapLocationName_Default"/>
@@ -130,22 +172,24 @@
             <argument name="country" defaultValue="PageBuilderMapCountry_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <comment userInput="validateMapPinLocationDataWithNoComment" stepKey="comment1"/>
+        <comment userInput="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="comment1"/>
         <waitForElementVisible selector="{{page.clickablePin(index)}}" stepKey="waitForPin"/>
         <click selector="{{page.clickablePin(index)}}" stepKey="clickPin"/>
         <waitForElementVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltip"/>
         <waitForElementVisible selector="{{page.locationName(index, locationName.value)}}" stepKey="waitForLocationName"/>
-        <waitForElementVisible selector="{{page.addressCityZipCountry(index, address.value, city.value, zip.tooltipValue, country.tooltipValue)}}" stepKey="waitForAddress"/>
         <waitForElement selector="{{page.comment(index, PageBuilderMapComment_Default.value)}}" stepKey="waitForComment"/>
         <dontSeeElement selector="{{page.comment(index, PageBuilderMapComment_Default.value)}}" stepKey="dontSeeComment"/>
+        <waitForElement selector="{{page.phoneNumber(index, PageBuilderMapPhoneNumber_Default.value)}}" stepKey="waitForPhoneNumber"/>
+        <dontSeeElement selector="{{page.phoneNumber(index, PageBuilderMapPhoneNumber_Default.value)}}" stepKey="dontSeePhoneNumber"/>
+        <waitForElementVisible selector="{{page.addressCityZipCountry(index, address.value, city.value, zip.tooltipValue, country.tooltipValue)}}" stepKey="waitForAddress"/>
         <click selector="{{page.tooltipWindowClose(index)}}" stepKey="closePinTooltip"/>
         <waitForElementNotVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>
     <actionGroup name="validateNoPinTooltip">
         <comment userInput="validateNoPinTooltip" stepKey="comment"/>
-        <waitForElementVisible selector="{{MapOnConfigurationPanel.clickablePin}}" stepKey="waitForPin"/>
-        <click selector="{{MapOnConfigurationPanel.clickablePin}}" stepKey="clickPin"/>
-        <dontSeeElementInDOM selector="{{MapOnConfigurationPanel.tooltipWindow}}" stepKey="dontSeeTooltip"/>
+        <waitForElementVisible selector="{{AddLocationForm.clickablePin}}" stepKey="waitForPin"/>
+        <click selector="{{AddLocationForm.clickablePin}}" stepKey="clickPin"/>
+        <dontSeeElementInDOM selector="{{AddLocationForm.tooltipWindow}}" stepKey="dontSeeTooltip"/>
     </actionGroup>
     <actionGroup name="verifyPinLocationEqual">
         <arguments>
