@@ -8,7 +8,6 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../../../../magento2ce/dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-        <!--xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">-->
     <test name="MapPinTooltipAllLocationData">
         <annotations>
             <features value="Pagebuilder"/>
@@ -39,13 +38,15 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <!-- Add Pin To Map -->
-        <comment userInput="Add Map Pin" stepKey="commentAddMapPin"/>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
-        <!-- Update General Section -->
-        <comment userInput="Update General Section" stepKey="commentUpdateGeneralSection"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterPhoneNumber">
+            <argument name="property" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterStreetAddress">
             <argument name="property" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
@@ -62,17 +63,19 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment">
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
         <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage1">
             <argument name="page" value="MapOnStage"/>
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
             <argument name="city" value="PageBuilderMapCity_FakeCity"/>
             <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
-            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
@@ -83,16 +86,20 @@
         <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
             <argument name="city" value="PageBuilderMapCity_FakeCity"/>
             <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
-            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
         <!-- Verify No Tooltip On Edit Panel -->
         <comment userInput="Verify No Tooltip On Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="validateNoPinTooltip" stepKey="verifyNoTooltip"/>
         <!-- Validate Storefront -->
@@ -103,11 +110,12 @@
         <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
+            <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
             <argument name="city" value="PageBuilderMapCity_FakeCity"/>
             <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
-            <argument name="comment" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
     </test>
     <test name="MapLocationNameCommonCharacters">
@@ -140,18 +148,20 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <!-- Add Pin To Map -->
-        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Location Name: Common -->
         <comment userInput="Enter Location Name: Common" stepKey="commentLocationName"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage1">
+        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStage1">
             <argument name="page" value="MapOnStage"/>
             <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
@@ -161,7 +171,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage2">
+        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
@@ -169,6 +179,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapLocationName_CommonCharacters"/>
@@ -178,7 +191,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
@@ -213,18 +226,20 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <!-- Add Pin To Map -->
-        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Location Name: Special Characters -->
         <comment userInput="Location Name: Special Characters" stepKey="commentLocationName"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage1">
+        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStage1">
             <argument name="page" value="MapOnStage"/>
             <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
@@ -234,7 +249,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage2">
+        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStage2">
             <argument name="page" value="MapOnStage"/>
             <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
@@ -242,6 +257,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapLocationName_SpecialCharacters"/>
@@ -251,7 +269,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStorefront">
             <argument name="page" value="MapOnStorefront"/>
             <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
@@ -283,8 +301,9 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <!-- Add Pin To Map -->
-        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Location Name: Empty -->
         <comment userInput="Location Name: Empty" stepKey="commentLocationNameEmpty"/>
@@ -292,6 +311,7 @@
             <argument name="property" value="PageBuilderMapLocationName_Empty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorEmpty">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLocationName_Empty"/>
         </actionGroup>
         <!-- Location Name: Space -->
@@ -300,6 +320,7 @@
             <argument name="property" value="PageBuilderMapLocationName_Space"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorSpace">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLocationName_Space"/>
         </actionGroup>
     </test>
