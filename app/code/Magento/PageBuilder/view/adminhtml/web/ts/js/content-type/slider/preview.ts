@@ -265,7 +265,7 @@ export default class Preview extends PreviewCollection {
      *
      * @returns {boolean}
      */
-    public canReceiveDrops() {
+    public isContainer() {
         return false;
     }
 

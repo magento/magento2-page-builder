@@ -316,7 +316,7 @@ export default class Preview {
      *
      * @returns {boolean}
      */
-    public canReceiveDrops() {
+    public isContainer() {
         return true;
     }
 

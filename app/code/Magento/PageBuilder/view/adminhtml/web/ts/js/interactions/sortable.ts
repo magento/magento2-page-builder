@@ -9,18 +9,20 @@ import ContentTypeInterface from "../content-type";
 import ContentTypeCollectionInterface from "../content-type-collection";
 import createContentType from "../content-type-factory";
 import Preview from "../content-type/preview";
-import {getDraggedBlockConfig, setDraggedBlockConfig} from "../panel/registry";
 import Stage from "../stage";
 import {bindAfterRenderForAnimation, lockContainerHeight} from "./container-animation";
 import {hideDropIndicators, showDropIndicators} from "./drop-indicators";
 import {getAllowedContainersClasses} from "./matrix";
 import {moveContentType} from "./move-content-type";
+import {getDraggedBlockConfig, setDraggedBlockConfig} from "./registry";
 
 /**
  * Return the sortable options for an instance which requires sorting / dropping functionality
  *
  * @param {Preview} preview
  * @returns {JQueryUI.SortableOptions | any}
+ *
+ * @todo we shouldn't allow multiple different types, stage requires refactoring
  */
 export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableOptions | any {
     return {
@@ -67,6 +69,8 @@ export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableO
  *
  * @param {Preview | Stage} preview
  * @returns {string}
+ *
+ * @todo we shouldn't allow multiple different types, stage requires refactoring
  */
 function getPreviewStageIdProxy(preview: Preview | Stage): string {
     if (preview.config.name === "stage") {
@@ -80,6 +84,8 @@ function getPreviewStageIdProxy(preview: Preview | Stage): string {
  *
  * @param {Preview | Stage | ContentTypeInterface} instance
  * @returns {any}
+ *
+ * @todo we shouldn't allow multiple different types, stage requires refactoring
  */
 function getParentProxy(instance: Preview | Stage | ContentTypeInterface): ContentTypeCollectionInterface {
     if (instance.config.name === "stage") {
@@ -161,7 +167,7 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
     }
 
     // If the parent can't receive drops we need to cancel the operation
-    if (!preview.canReceiveDrops()) {
+    if (!preview.isContainer()) {
         $(this).sortable("cancel");
         return;
     }

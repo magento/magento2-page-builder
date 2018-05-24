@@ -264,7 +264,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
      */
 
 
-    _proto.canReceiveDrops = function canReceiveDrops() {
+    _proto.isContainer = function isContainer() {
       return false;
     };
     /**

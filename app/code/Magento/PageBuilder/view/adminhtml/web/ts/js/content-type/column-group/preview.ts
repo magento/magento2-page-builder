@@ -14,7 +14,7 @@ import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import {animationTime} from "../../interactions/container-animation";
 import {moveContentType} from "../../interactions/move-content-type";
-import {getDraggedBlockConfig} from "../../panel/registry";
+import {getDraggedBlockConfig} from "../../interactions/registry";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
 import PreviewCollection from "../preview-collection";

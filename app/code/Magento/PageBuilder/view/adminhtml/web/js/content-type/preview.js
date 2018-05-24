@@ -309,7 +309,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
      */
 
 
-    _proto.canReceiveDrops = function canReceiveDrops() {
+    _proto.isContainer = function isContainer() {
       return true;
     };
     /**

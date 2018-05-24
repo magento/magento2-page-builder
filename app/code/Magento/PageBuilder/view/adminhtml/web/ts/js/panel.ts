@@ -12,11 +12,11 @@ import "./binding/draggable";
 import Config from "./config";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import {hideDropIndicators, showDropIndicators} from "./interactions/drop-indicators";
+import {setDraggedBlockConfig} from "./interactions/registry";
 import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
 import {Block as GroupBlock} from "./panel/group/block";
-import {setDraggedBlockConfig} from "./panel/registry";
 
 export default class Panel implements PanelInterface {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);

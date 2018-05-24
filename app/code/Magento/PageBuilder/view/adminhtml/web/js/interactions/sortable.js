@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/panel/registry", "Magento_PageBuilder/js/interactions/container-animation", "Magento_PageBuilder/js/interactions/drop-indicators", "Magento_PageBuilder/js/interactions/matrix", "Magento_PageBuilder/js/interactions/move-content-type"], function (_jquery, _knockout, _uiEvents, _contentTypeFactory, _registry, _containerAnimation, _dropIndicators, _matrix, _moveContentType) {
+define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/interactions/container-animation", "Magento_PageBuilder/js/interactions/drop-indicators", "Magento_PageBuilder/js/interactions/matrix", "Magento_PageBuilder/js/interactions/move-content-type", "Magento_PageBuilder/js/interactions/registry"], function (_jquery, _knockout, _uiEvents, _contentTypeFactory, _containerAnimation, _dropIndicators, _matrix, _moveContentType, _registry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -10,6 +10,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
    *
    * @param {Preview} preview
    * @returns {JQueryUI.SortableOptions | any}
+   *
+   * @todo we shouldn't allow multiple different types, stage requires refactoring
    */
   function getSortableOptions(preview) {
     return {
@@ -55,6 +57,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
    *
    * @param {Preview | Stage} preview
    * @returns {string}
+   *
+   * @todo we shouldn't allow multiple different types, stage requires refactoring
    */
 
 
@@ -70,6 +74,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
    *
    * @param {Preview | Stage | ContentTypeInterface} instance
    * @returns {any}
+   *
+   * @todo we shouldn't allow multiple different types, stage requires refactoring
    */
 
 
@@ -158,7 +164,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
     } // If the parent can't receive drops we need to cancel the operation
 
 
-    if (!preview.canReceiveDrops()) {
+    if (!preview.isContainer()) {
       (0, _jquery)(this).sortable("cancel");
       return;
     }

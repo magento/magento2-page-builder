@@ -123,7 +123,7 @@ export default class Stage {
      *
      * @returns {boolean}
      */
-    public canReceiveDrops() {
+    public isContainer() {
         return true;
     }
 
