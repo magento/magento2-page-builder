@@ -128,6 +128,15 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
           var block = _knockout.dataFor(this);
 
           if (block && block.config) {
+            /**
+             * Swap all sortable instances to use intersect, as the item from the left panel is a predictable
+             * size this yields better results when dragging
+             */
+            (0, _jquery)(".content-type-container.ui-sortable").each(function () {
+              if ((0, _jquery)(this).data("sortable")) {
+                (0, _jquery)(this).sortable("option", "tolerance", "intersect");
+              }
+            });
             (0, _dropIndicators.showDropIndicators)(block.config.name);
             (0, _registry.setDraggedBlockConfig)(block.config);
 
@@ -137,6 +146,11 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
           }
         },
         stop: function stop() {
+          (0, _jquery)(".content-type-container.ui-sortable").each(function () {
+            if ((0, _jquery)(this).data("sortable")) {
+              (0, _jquery)(this).sortable("option", "tolerance", "pointer");
+            }
+          });
           (0, _dropIndicators.hideDropIndicators)();
 
           _uiEvents.trigger("interaction:stop", {

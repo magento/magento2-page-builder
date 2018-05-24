@@ -134,12 +134,26 @@ export default class Panel implements PanelInterface {
             start() {
                 const block = ko.dataFor(this);
                 if (block && block.config) {
+                    /**
+                     * Swap all sortable instances to use intersect, as the item from the left panel is a predictable
+                     * size this yields better results when dragging
+                     */
+                    $(".content-type-container.ui-sortable").each(function() {
+                        if ($(this).data("sortable")) {
+                            $(this).sortable("option", "tolerance", "intersect");
+                        }
+                    });
                     showDropIndicators(block.config.name);
                     setDraggedBlockConfig(block.config);
                     events.trigger("interaction:start", {stage: self.parent.stage});
                 }
             },
             stop() {
+                $(".content-type-container.ui-sortable").each(function() {
+                    if ($(this).data("sortable")) {
+                        $(this).sortable("option", "tolerance", "pointer");
+                    }
+                });
                 hideDropIndicators();
                 events.trigger("interaction:stop", {stage: self.parent.stage});
             },
