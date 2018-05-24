@@ -8,5 +8,5 @@ import ValueInterface from "./value.d";
 export interface OptionInterface {
     key: string;
     type: string;
-    options: ValueInterface[];
+    values: ValueInterface[];
 }

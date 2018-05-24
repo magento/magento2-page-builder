@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-toolbar/option", "Magento_PageBuilder/js/toolbar", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _uiEvents, _underscore, _option, _toolbar, _preview) {
+define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/toolbar", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _uiEvents, _underscore, _toolbar, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Heading =
@@ -16,11 +16,9 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type
       var _this;
 
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
+      _this.toolbar = void 0;
       _this.element = void 0;
-      _this.onToolbarFocusIn = void 0;
-      _this.onToolbarFocusOut = void 0;
-      _this.onToolbarFocusIn = _toolbar.onFocusIn;
-      _this.onToolbarFocusOut = _toolbar.onFocusOut;
+      _this.toolbar = new _toolbar(_this, _this.getToolbarOptions());
       return _this;
     }
     /**
@@ -32,7 +30,7 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type
 
     var _proto = Heading.prototype;
 
-    _proto.onRender = function onRender(element) {
+    _proto.afterRender = function afterRender(element) {
       this.element = element;
     };
 
@@ -54,15 +52,15 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type
     /**
      * Build and return the tool bar options for heading
      *
-     * @returns {ToolbarOption}
+     * @returns {ToolbarOptionInterface[]}
      */
 
 
-    _proto.getHeadingToolbar = function getHeadingToolbar() {
-      var options = [{
+    _proto.getToolbarOptions = function getToolbarOptions() {
+      return [{
         key: "heading_type",
         type: "select",
-        options: [{
+        values: [{
           value: "h1",
           label: "H1",
           icon: ""
@@ -90,21 +88,20 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type
       }, {
         key: "text_align",
         type: "select",
-        options: [{
+        values: [{
           value: "left",
           label: "Left",
-          icon: "icon-pagebuilder-text-left"
+          icon: "icon-pagebuilder-align-left"
         }, {
           value: "center",
           label: "Center",
-          icon: "icon-pagebuilder-text-center"
+          icon: "icon-pagebuilder-align-center"
         }, {
           value: "right",
           label: "Right",
-          icon: "icon-pagebuilder-text-right"
+          icon: "icon-pagebuilder-align-right"
         }]
       }];
-      return new _option(this, options);
     };
 
     return Heading;

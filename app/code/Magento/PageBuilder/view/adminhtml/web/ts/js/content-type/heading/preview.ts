@@ -7,18 +7,16 @@ import $ from "jquery";
 import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
-import ToolbarOption from "../../content-type-toolbar/option";
-import OptionInterface from "../../content-type-toolbar/option.d";
-import ContentTypeInterface from "../../content-type.d";
+import ToolbarOptionInterface from "../../content-type-toolbar/option.d";
 import Toolbar from "../../toolbar";
+import ContentTypeInterface from "../../content-type.d";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
 export default class Heading extends BasePreview {
+    public toolbar: Toolbar;
     private element: Element;
-    private onToolbarFocusIn;
-    private onToolbarFocusOut;
 
     /**
      * @param {ContentTypeInterface} parent
@@ -31,9 +29,10 @@ export default class Heading extends BasePreview {
         observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
-
-        this.onToolbarFocusIn = Toolbar.onFocusIn;
-        this.onToolbarFocusOut = Toolbar.onFocusOut;
+        this.toolbar = new Toolbar(
+            this,
+            this.getToolbarOptions(),
+        );
     }
 
     /**
@@ -41,7 +40,7 @@ export default class Heading extends BasePreview {
      *
      * @param {Element} element
      */
-    public onRender(element: Element) {
+    public afterRender(element: Element): void {
         this.element = element;
     }
 
@@ -61,14 +60,14 @@ export default class Heading extends BasePreview {
     /**
      * Build and return the tool bar options for heading
      *
-     * @returns {ToolbarOption}
+     * @returns {ToolbarOptionInterface[]}
      */
-    public getHeadingToolbar(): ToolbarOption {
-        const options: OptionInterface[] = [
+    private getToolbarOptions(): ToolbarOptionInterface[] {
+        return [
             {
                 key: "heading_type",
                 type: "select",
-                options: [
+                values: [
                     {
                         value: "h1",
                         label: "H1",
@@ -104,26 +103,24 @@ export default class Heading extends BasePreview {
             {
                 key: "text_align",
                 type: "select",
-                options: [
+                values: [
                     {
                         value: "left",
                         label: "Left",
-                        icon: "icon-pagebuilder-text-left",
+                        icon: "icon-pagebuilder-align-left",
                     },
                     {
                         value: "center",
                         label: "Center",
-                        icon: "icon-pagebuilder-text-center",
+                        icon: "icon-pagebuilder-align-center",
                     },
                     {
                         value: "right",
                         label: "Right",
-                        icon: "icon-pagebuilder-text-right",
+                        icon: "icon-pagebuilder-align-right",
                     },
                 ],
             },
         ];
-
-        return new ToolbarOption(this, options);
     }
 }
