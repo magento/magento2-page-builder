@@ -99,8 +99,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     _proto.onMouseOver = function onMouseOver(context, event) {
       if (this.mouseover) {
         return;
-      }
+      } // Ensure no other options panel is displayed
 
+
+      (0, _jquery)(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
       this.mouseover = true;
       this.mouseoverContext = context;
       var currentTarget = event.currentTarget;

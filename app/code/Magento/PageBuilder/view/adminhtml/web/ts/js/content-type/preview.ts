@@ -129,6 +129,9 @@ export default class Preview {
             return;
         }
 
+        // Ensure no other options panel is displayed
+        $(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
+
         this.mouseover = true;
         this.mouseoverContext = context;
         const currentTarget = event.currentTarget;

@@ -331,6 +331,7 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
+        <wait time="0.5" stepKey="waitForShrinkAnimation" />
         <!-- Assert row height has changed when content added -->
         <comment userInput="Assert row height has changed when content added" stepKey="comment2"/>
         <executeJS function="document.querySelectorAll('{{RowOnStage.baseCss}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCss}}')[0].clientHeight)" stepKey="setNewRowHeight"/>
@@ -346,6 +347,7 @@
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeHeaderFromRow">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
+        <wait time="0.5" stepKey="waitForShrinkAnimationAfterRemove" />
         <!-- Assert row height is 320px after removing children -->
         <comment userInput="Assert row height is 320px after removing children" stepKey="comment3"/>
         <executeJS function="document.querySelectorAll('{{RowOnStage.baseCss}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCss}}')[0].clientHeight)" stepKey="setNewRowHeight2"/>
