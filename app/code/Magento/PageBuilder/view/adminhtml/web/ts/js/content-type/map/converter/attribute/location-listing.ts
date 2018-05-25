@@ -33,6 +33,12 @@ export default class LocationListing implements ConverterInterface {
             content = JSON.parse(content);
         }
         if (content && Object.keys(content).length) {
+            content.each((marker: any) => {
+                if (marker.position) {
+                    marker.position.lat = parseFloat(marker.position.lat);
+                    marker.position.lng = parseFloat(marker.position.lng);
+                }
+            });
             return JSON.stringify(content);
         }
         return JSON.stringify([]);
