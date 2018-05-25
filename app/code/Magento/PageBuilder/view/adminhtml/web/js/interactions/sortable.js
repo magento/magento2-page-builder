@@ -10,8 +10,6 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
    *
    * @param {Preview} preview
    * @returns {JQueryUI.SortableOptions | any}
-   *
-   * @todo we shouldn't allow multiple different types, stage requires refactoring
    */
   function getSortableOptions(preview) {
     return {
@@ -57,8 +55,6 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
    *
    * @param {Preview | Stage} preview
    * @returns {string}
-   *
-   * @todo we shouldn't allow multiple different types, stage requires refactoring
    */
 
 
@@ -74,14 +70,11 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
    *
    * @param {Preview | Stage | ContentTypeInterface} instance
    * @returns {any}
-   *
-   * @todo we shouldn't allow multiple different types, stage requires refactoring
    */
 
 
   function getParentProxy(instance) {
     if (instance.config.name === "stage") {
-      // @todo our usage of types for Stage are wrong, this requires refactoring outside of the scope of this story
       return instance;
     }
 
@@ -107,6 +100,12 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
       if (contentTypeInstance) {
         // Ensure the original item is displayed but with reduced opacity
         ui.item.show().addClass("pagebuilder-sorting-original");
+        (0, _jquery)(".pagebuilder-drop-indicator.hidden-drop-indicator").show().removeClass("hidden-drop-indicator"); // If we're the first item in the container we need to hide the first drop indicator
+
+        if (contentTypeInstance.parent.getChildren().indexOf(contentTypeInstance) === 0) {
+          ui.item.prev(".pagebuilder-drop-indicator").hide().addClass("hidden-drop-indicator");
+        }
+
         sortedContentType = contentTypeInstance;
         (0, _dropIndicators.showDropIndicators)(contentTypeInstance.config.name); // Dynamically change the connect with option to restrict content types
 

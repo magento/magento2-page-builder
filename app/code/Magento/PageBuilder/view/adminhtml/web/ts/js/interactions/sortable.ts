@@ -21,8 +21,6 @@ import {getDraggedBlockConfig, setDraggedBlockConfig} from "./registry";
  *
  * @param {Preview} preview
  * @returns {JQueryUI.SortableOptions | any}
- *
- * @todo we shouldn't allow multiple different types, stage requires refactoring
  */
 export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableOptions | any {
     return {
@@ -69,8 +67,6 @@ export function getSortableOptions(preview: Preview | Stage): JQueryUI.SortableO
  *
  * @param {Preview | Stage} preview
  * @returns {string}
- *
- * @todo we shouldn't allow multiple different types, stage requires refactoring
  */
 function getPreviewStageIdProxy(preview: Preview | Stage): string {
     if (preview.config.name === "stage") {
@@ -84,12 +80,9 @@ function getPreviewStageIdProxy(preview: Preview | Stage): string {
  *
  * @param {Preview | Stage | ContentTypeInterface} instance
  * @returns {any}
- *
- * @todo we shouldn't allow multiple different types, stage requires refactoring
  */
 function getParentProxy(instance: Preview | Stage | ContentTypeInterface): ContentTypeCollectionInterface {
     if (instance.config.name === "stage") {
-        // @todo our usage of types for Stage are wrong, this requires refactoring outside of the scope of this story
         return (instance as any);
     }
     return (instance.parent as ContentTypeCollectionInterface);
@@ -112,6 +105,14 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
         if (contentTypeInstance) {
             // Ensure the original item is displayed but with reduced opacity
             ui.item.show().addClass("pagebuilder-sorting-original");
+
+            $(".pagebuilder-drop-indicator.hidden-drop-indicator").show().removeClass("hidden-drop-indicator");
+
+            // If we're the first item in the container we need to hide the first drop indicator
+            if ((contentTypeInstance.parent as ContentTypeCollectionInterface)
+                    .getChildren().indexOf(contentTypeInstance) === 0) {
+                ui.item.prev(".pagebuilder-drop-indicator").hide().addClass("hidden-drop-indicator");
+            }
 
             sortedContentType = contentTypeInstance;
             showDropIndicators(contentTypeInstance.config.name);
