@@ -34,10 +34,14 @@
     <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
             <label translate="true">Appearance</label>
-            <collapsible>true</collapsible>
+            <additionalClasses>
+                <class name="admin__fieldset-visual-select-large">true</class>
+            </additionalClasses>
+            <collapsible>false</collapsible>
             <opened>true</opened>
             <imports>
-                <link name="appearancesHidden">${$.name}.appearance:options</link>
+                <link name="hideFieldset">${$.name}.appearance:options</link>
+                <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
         <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
@@ -47,21 +51,20 @@
                 </item>
             </argument>
             <settings>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                    <class name="admin__field-visual-select-container">true</class>
+                </additionalClasses>
                 <dataType>text</dataType>
-                <label translate="true">Appearance</label>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
             </settings>
             <formElements>
                 <select>
                     <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">default</item>
-                                <item name="label" xsi:type="string" translate="true">Default</item>
-                            </option>
-                        </options>
+                        <options class="AppearanceSourceVideo" />
                     </settings>
                 </select>
             </formElements>
