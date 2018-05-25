@@ -15,6 +15,7 @@
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
+    1. [Bindings]
     1. [Master format]
     1. **Visual select**
 5. [Roadmap and known issues]
@@ -32,6 +33,7 @@
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
+[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Roadmap and Known Issues]: roadmap.md
