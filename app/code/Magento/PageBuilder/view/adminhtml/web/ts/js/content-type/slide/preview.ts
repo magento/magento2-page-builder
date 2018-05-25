@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import events from "uiEvents";
 import ko from "knockout";
 import $t from "mage/translate";
 import ContentTypeConfigInterface from "../../content-type-config.d";
@@ -15,11 +16,17 @@ import {fromHex} from "../../utils/color-converter";
 import {percentToDecimal} from "../../utils/number-converter";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
+import Uploader from "../uploader";
 
 export default class Preview extends BasePreview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
     private showButtonHover: KnockoutObservable<boolean> =  ko.observable(false);
     private buttonPlaceholder: string = $t("Edit Button Text");
+
+    /**
+     * Uploader instance
+     */
+    private uploader: Uploader;
 
     /**
      * @param {ContentTypeInterface} parent
@@ -270,6 +277,45 @@ export default class Preview extends BasePreview {
     }
 
     /**
+     * @inheritDoc
+     */
+    protected bindEvents() {
+        super.bindEvents();
+
+        events.on(`${this.parent.id}:updated`, () => {
+            const imageDataStore = this.parent.dataStore.get();
+            const imageObject = imageDataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            events.trigger(`image:assigned:${this.parent.id}`, imageObject);
+        });
+
+        events.on(`${this.config.name}:block:ready`, () => {
+            const imageDataStore = this.parent.dataStore.get();
+            const initialImageValue = imageDataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+
+            // Create uploader
+            this.uploader = new Uploader(
+                this.parent.id,
+                "imageuploader_" + this.parent.id,
+                Object.assign({}, this.config.additional_data.uploaderConfig, {
+                    value: initialImageValue,
+                }),
+            );
+
+            // Register listener when image gets uploaded from uploader UI component
+            this.uploader.onUploaded(this.onImageUploaded.bind(this));
+        });
+    }
+
+    /**
+     * Get registry callback reference to uploader UI component
+     *
+     * @returns {Uploader}
+     */
+    public getUploader() {
+        return this.uploader;
+    }
+
+    /**
      * Return an array of options
      *
      * @returns {Array<Option>}
@@ -310,5 +356,17 @@ export default class Preview extends BasePreview {
             styles.mobileImage = "url(" + data.mobile_image()[0].url + ")";
         }
         return styles;
+    }
+
+    /**
+     * Update image data inside data store
+     *
+     * @param {Array} data - list of each files' data
+     */
+    private onImageUploaded(data: object[]) {
+        this.parent.dataStore.update(
+            data,
+            this.config.additional_data.uploaderConfig.dataScope,
+        );
     }
 }
