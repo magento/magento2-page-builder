@@ -29,10 +29,14 @@
     <fieldset name="appearance_fieldset" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-fieldset">
         <settings>
             <label translate="true">Appearance</label>
-            <collapsible>true</collapsible>
+            <additionalClasses>
+                <class name="admin__fieldset-visual-select-large">true</class>
+            </additionalClasses>
+            <collapsible>false</collapsible>
             <opened>true</opened>
             <imports>
-                <link name="appearancesHidden">${$.name}.appearance:options</link>
+                <link name="hideFieldset">${$.name}.appearance:options</link>
+                <link name="hideLabel">${$.name}.appearance:options</link>
             </imports>
         </settings>
         <field name="appearance" formElement="select" sortOrder="10" component="Magento_PageBuilder/js/form/element/dependent-select">
@@ -42,27 +46,36 @@
                 </item>
             </argument>
             <settings>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                    <class name="admin__field-visual-select-container">true</class>
+                </additionalClasses>
                 <dataType>text</dataType>
-                <label translate="true">Appearance</label>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
             </settings>
             <formElements>
                 <select>
                     <settings>
-                        <options>
-                            <option name="0" xsi:type="array">
-                                <item name="value" xsi:type="string">default</item>
-                                <item name="label" xsi:type="string" translate="true">Default</item>
-                            </option>
-                        </options>
+                        <options class="AppearanceSourceMap" />
                     </settings>
                 </select>
             </formElements>
         </field>
     </fieldset>
-    <fieldset name="general" sortOrder="20">
+    <container sortOrder="20" name="google_map_api_key_check" component="Magento_Ui/js/form/components/html" class="Magento\PageBuilder\Component\GoogleMapsApiKeyValidationContainer">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="additionalClasses" xsi:type="string">message message-warning</item>
+                <item name="visible" xsi:type="boolean">false</item>
+                <item name="map_configuration_url" xsi:type="string">admin/system_config/edit/section/cms</item>
+                <item name="content" xsi:type="string" translate="true"><![CDATA[You must provide the <a href="%s">Google Maps API key</a> in order to use the map]]></item>
+            </item>
+        </argument>
+    </container>
+    <fieldset name="general" sortOrder="30">
         <settings>
             <label/>
             <collapsible>true</collapsible>
@@ -179,7 +192,7 @@
             </settings>
         </field>
     </fieldset>
-    <fieldset name="map_settings" sortOrder="30">
+    <fieldset name="map_settings" sortOrder="40">
         <settings>
             <label translate="true">Map Settings</label>
             <collapsible>true</collapsible>
