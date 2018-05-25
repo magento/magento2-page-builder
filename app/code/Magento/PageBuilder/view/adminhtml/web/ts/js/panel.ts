@@ -155,6 +155,7 @@ export default class Panel implements PanelInterface {
                     }
                 });
                 hideDropIndicators();
+                setDraggedBlockConfig(null);
                 events.trigger("interaction:stop", {stage: self.parent.stage});
             },
         };

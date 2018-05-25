@@ -26,6 +26,7 @@ import {
     getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth, getMaxColumns,
     getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./resizing";
+import {createStyleSheet} from "../../utils/create-stylesheet";
 
 interface BlockRemovedParams {
     parent: ColumnGroup;
@@ -414,7 +415,11 @@ export default class Preview extends PreviewCollection {
 
             _.defer(() => {
                 // Re-enable any disabled sortable areas
-                group.find(".ui-sortable").sortable("option", "disabled", false);
+                group.find(".ui-sortable").each(function() {
+                    if ($(this).data("sortable")) {
+                        $(this).sortable("option", "disabled", false);
+                    }
+                });
             });
         });
     }
@@ -705,6 +710,7 @@ export default class Preview extends PreviewCollection {
      */
     private initDroppable(group: JQuery<HTMLElement>) {
         const self = this;
+        let headStyles: HTMLStyleElement;
 
         group.droppable({
             deactivate() {
@@ -713,12 +719,31 @@ export default class Preview extends PreviewCollection {
 
                 _.defer(() => {
                     // Re-enable the parent sortable instance & all children sortable instances
-                    group.parents(".element-children").sortable("option", "disabled", false);
+                    group.parents(".element-children").each(function() {
+                        if ($(this).data("sortable")) {
+                            $(this).sortable("option", "disabled", false);
+                        }
+                    });
                 });
             },
             activate() {
                 if (getDraggedBlockConfig() === Config.getContentTypeConfig("column")) {
-                    group.find(".ui-sortable").sortable("option", "disabled", true);
+                    group.find(".ui-sortable").each(function() {
+                        if ($(this).data("sortable")) {
+                            $(this).sortable("option", "disabled", true);
+                        }
+                    });
+
+                    // Ensure we don't display any drop indicators inside the column
+                    headStyles = createStyleSheet({
+                        ".pagebuilder-content-type.pagebuilder-column .pagebuilder-drop-indicator": {
+                            display: "none!important",
+                        },
+                    });
+                    document.head.appendChild(headStyles);
+                } else if (headStyles) {
+                    headStyles.remove();
+                    headStyles = null;
                 }
             },
             drop() {

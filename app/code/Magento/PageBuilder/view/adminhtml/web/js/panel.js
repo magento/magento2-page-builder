@@ -152,6 +152,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
             }
           });
           (0, _dropIndicators.hideDropIndicators)();
+          (0, _registry.setDraggedBlockConfig)(null);
 
           _uiEvents.trigger("interaction:stop", {
             stage: self.parent.stage

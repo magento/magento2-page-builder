@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/container-animation", "Magento_PageBuilder/js/interactions/move-content-type", "Magento_PageBuilder/js/interactions/registry", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _containerAnimation, _moveContentType, _registry, _previewCollection, _dragAndDrop, _factory, _registry2, _resizing) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/container-animation", "Magento_PageBuilder/js/interactions/move-content-type", "Magento_PageBuilder/js/interactions/registry", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing", "Magento_PageBuilder/js/utils/create-stylesheet"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _containerAnimation, _moveContentType, _registry, _previewCollection, _dragAndDrop, _factory, _registry2, _resizing, _createStylesheet) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -412,7 +412,11 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
         _underscore.defer(function () {
           // Re-enable any disabled sortable areas
-          group.find(".ui-sortable").sortable("option", "disabled", false);
+          group.find(".ui-sortable").each(function () {
+            if ((0, _jquery)(this).data("sortable")) {
+              (0, _jquery)(this).sortable("option", "disabled", false);
+            }
+          });
         });
       });
     };
@@ -670,6 +674,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
     _proto.initDroppable = function initDroppable(group) {
       var self = this;
+      var headStyles;
       group.droppable({
         deactivate: function deactivate() {
           self.dropOverElement = null;
@@ -677,12 +682,30 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
           _underscore.defer(function () {
             // Re-enable the parent sortable instance & all children sortable instances
-            group.parents(".element-children").sortable("option", "disabled", false);
+            group.parents(".element-children").each(function () {
+              if ((0, _jquery)(this).data("sortable")) {
+                (0, _jquery)(this).sortable("option", "disabled", false);
+              }
+            });
           });
         },
         activate: function activate() {
           if ((0, _registry.getDraggedBlockConfig)() === _config.getContentTypeConfig("column")) {
-            group.find(".ui-sortable").sortable("option", "disabled", true);
+            group.find(".ui-sortable").each(function () {
+              if ((0, _jquery)(this).data("sortable")) {
+                (0, _jquery)(this).sortable("option", "disabled", true);
+              }
+            }); // Ensure we don't display any drop indicators inside the column
+
+            headStyles = (0, _createStylesheet.createStyleSheet)({
+              ".pagebuilder-content-type.pagebuilder-column .pagebuilder-drop-indicator": {
+                display: "none!important"
+              }
+            });
+            document.head.appendChild(headStyles);
+          } else if (headStyles) {
+            headStyles.remove();
+            headStyles = null;
           }
         },
         drop: function drop() {
