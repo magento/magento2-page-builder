@@ -5,9 +5,9 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-no-blur pagebuilder-live-edit pagebuilder-buttons" data-bind="event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <div data-bind="attr: data.main.attributes, style: data.main.style, css: data.main.css">
-        <render args="getOptions().template" />
-        <render args="previewChildTemplate" />
+<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview pagebuilder-no-blur pagebuilder-live-edit pagebuilder-buttons" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <render args="getOptions().template" />
+    <div class="element-children" each="parent.getChildren()" attr="Object.assign({}, data.main.attributes(), { id: parent.id + '-children' })" ko-style="data.main.style" css="data.main.css" data-bind="sortable: { sortableClass: config.name + '-container', handle: '.move-structural', items: '.pagebuilder-content-type-wrapper', connectWith: '.element-children' }">
+        <div class="pagebuilder-content-type-wrapper" template="{ name: preview.previewTemplate, data: preview }" attr="{ id: id }"></div>
     </div>
 </div>
