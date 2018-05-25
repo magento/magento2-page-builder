@@ -40,6 +40,7 @@
             <argument name="locationName"/>
         </arguments>
         <comment userInput="clickEditOnLocationGridRow" stepKey="comment"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridRow(locationName.fieldName, locationName.value)}}" stepKey="waitForGridRow"/>
         <click selector="{{PageBuilderDataGrid.gridRow(locationName.fieldName, locationName.value)}}" stepKey="clickGridRow"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
@@ -47,6 +48,24 @@
         <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
         <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
         <waitForElementVisible selector="{{AddLocationForm.pegman('1')}}" stepKey="waitForLocationMapPegman"/>
+    </actionGroup>
+    <actionGroup name="validateLocationGridData">
+        <arguments>
+            <argument name="locationName"/>
+            <argument name="address" defaultValue="PageBuilderMapStreetAddress_Default"/>
+            <argument name="city" defaultValue="PageBuilderMapCity_Default"/>
+            <argument name="zip" defaultValue="PageBuilderMapZipCode_Default"/>
+            <argument name="country" defaultValue="PageBuilderMapCountry_Default"/>
+            <argument name="rowIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="validateLocationGridData" stepKey="comment"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, locationName.fieldName, locationName.value)}}" stepKey="waitForLocationName"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, address.fieldName, address.value)}}" stepKey="waitForAddress"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, city.fieldName, city.value)}}" stepKey="waitForCity"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, zip.fieldName, zip.value)}}" stepKey="waitForZip"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, country.fieldName, country.value)}}" stepKey="waitForCountry"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridSelectButtonByIndex(rowIndex)}}" stepKey="waitForSelectButton"/>
     </actionGroup>
     <actionGroup name="clickMapToAddOrMovePin">
         <arguments>

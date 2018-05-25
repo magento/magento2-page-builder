@@ -20,7 +20,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -43,7 +42,7 @@
         </actionGroup>
         <!-- Validate Edit Panel: Empty Locations Grid -->
         <comment userInput="Validate Edit Panel: Empty Locations Grid" stepKey="commentValidateEditPanelEmptyLocationsGrid"/>
-        <!--todo: validate grid data-->
+        <waitForElementVisible selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="waitForEmptyGrid"/>
         <!-- Validate Edit Panel: Map Settings Section -->
         <comment userInput="Validate Edit Panel: Map Settings Section" stepKey="commentValidateEditPanelMapSettingsSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeightAttributeValue">
@@ -526,7 +525,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -579,6 +577,13 @@
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
         <!-- Update Map Settings Section -->
         <comment userInput="Update Map Settings Section" stepKey="commentUpdateMapSettingsSection"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMapHeight">
@@ -654,6 +659,13 @@
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
         <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
@@ -698,7 +710,6 @@
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
         <actionGroup ref="closeLocationForm" stepKey="closeLocationForm"/>
-        <!--todo: validate grid data-->
         <!-- Edit Panel: Verify Map Settings Section -->
         <comment userInput="Edit Panel: Verify Map Settings Section" stepKey="commentVerifyMapSettingsSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight">
@@ -959,6 +970,13 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
         <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow1">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
@@ -1003,7 +1021,6 @@
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
         <actionGroup ref="closeLocationForm" stepKey="closeLocationForm"/>
-        <!--todo: validate grid data-->
         <!-- Edit Panel: Verify Map Settings Section -->
         <comment userInput="Edit Panel: Verify Map Settings Section" stepKey="commentVerifyMapSettingsSection"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight">
@@ -1092,6 +1109,13 @@
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+            <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
+            <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
+            <argument name="country" value="PageBuilderMapCountry_USA"/>
+        </actionGroup>
         <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
             <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
@@ -1136,7 +1160,6 @@
             <argument name="property" value="PageBuilderMapComment_TestComment"/>
         </actionGroup>
         <actionGroup ref="closeLocationForm" stepKey="closeAddLocationForm2"/>
-        <!--todo: validate grid data-->
         <!-- Edit Panel: Verify Map Settings Section After Save -->
         <comment userInput="Edit Panel: Verify Map Settings Section After Save" stepKey="commentVerifyMapSettingsSectionAfterSave"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight2">

@@ -8,6 +8,16 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
+    <!-- Map Grid -->
+    <entity name="PageBuilderMapGrid" type="pagebuilder_map_grid">
+        <data key="col1">Location Name</data>
+        <data key="col2">Address</data>
+        <data key="col3">City</data>
+        <data key="col4">Zip</data>
+        <data key="col5">Country</data>
+        <data key="col6">Select</data>
+        <data key="emptyMessage">No locations found. Click "Add Location"</data>
+    </entity>
     <!-- Postition -->
     <entity name="PageBuilderMapPositionDefaultProperty" type="pagebuilder_map_position_property">
         <data key="name">Position</data>
@@ -112,14 +122,14 @@
         <data key="section">general</data>
         <data key="fieldName">position[lat]</data>
         <data key="value">-85.05000000001</data>
-        <data key="errorMessage">The value is not within the specified range.</data>
+        <data key="errorMessage">Please enter a number between -85 and 85</data>
     </entity>
     <entity name="PageBuilderMapLatitude_PositiveBoundary" type="pagebuilder_map_latitude_property">
         <data key="name">Coordinates</data>
         <data key="section">general</data>
         <data key="fieldName">position[lat]</data>
         <data key="value">85.05000000001</data>
-        <data key="errorMessage">The value is not within the specified range.</data>
+        <data key="errorMessage">Please enter a number between -85 and 85</data>
     </entity>
     <!-- Longitude -->
     <entity name="PageBuilderMapLongitude_Default" type="pagebuilder_map_longitude_property">
@@ -179,14 +189,14 @@
         <data key="section">general</data>
         <data key="fieldName">position[lng]</data>
         <data key="value">-180.05000000001</data>
-        <data key="errorMessage">The value is not within the specified range.</data>
+        <data key="errorMessage">Please enter a number between -180 and 180</data>
     </entity>
     <entity name="PageBuilderMapLongitude_PositiveBoundary" type="pagebuilder_map_longitude_property">
         <data key="name">Coordinates</data>
         <data key="section">general</data>
         <data key="fieldName">position[lng]</data>
         <data key="value">180.05000000001</data>
-        <data key="errorMessage">The value is not within the specified range.</data>
+        <data key="errorMessage">Please enter a number between -180 and 180</data>
     </entity>
     <!-- Phone Number -->
     <entity name="PageBuilderMapPhoneNumber_Default" type="pagebuilder_map_phone_number_property">
