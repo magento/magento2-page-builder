@@ -161,20 +161,16 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_CommonCharacters.value)}}" stepKey="waitForLocationNameStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_CommonCharacters.value)}}" stepKey="waitForLocationNameStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -191,10 +187,10 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_CommonCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_CommonCharacters.value)}}" stepKey="waitForLocationNameStorefront"/>
     </test>
     <test name="MapLocationNameSpecialCharacters">
         <annotations>
@@ -239,20 +235,16 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_SpecialCharacters.value)}}" stepKey="waitForLocationNameStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_SpecialCharacters.value)}}" stepKey="waitForLocationNameStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -269,10 +261,10 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithOnlyLocationName" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_SpecialCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_SpecialCharacters.value)}}" stepKey="waitForLocationNameStorefront"/>
     </test>
     <test name="MapLocationNameInvalidInputs">
         <annotations>
@@ -336,7 +328,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -455,7 +446,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -574,7 +564,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -930,7 +919,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -967,22 +955,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="address" value="PageBuilderMapStreetAddress_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_CommonCharacters.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForAddressStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="address" value="PageBuilderMapStreetAddress_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_CommonCharacters.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForAddressStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -999,11 +983,11 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="address" value="PageBuilderMapStreetAddress_CommonCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.addressCityZipCountry('1', PageBuilderMapStreetAddress_CommonCharacters.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForAddressStorefront"/>
     </test>
     <test name="MapStreetAddressSpecialCharacters">
         <annotations>
@@ -1017,7 +1001,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1054,22 +1037,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="address" value="PageBuilderMapStreetAddress_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_SpecialCharacters.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForAddressStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="address" value="PageBuilderMapStreetAddress_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_SpecialCharacters.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForAddressStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1086,12 +1065,13 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="address" value="PageBuilderMapStreetAddress_SpecialCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.addressCityZipCountry('1', PageBuilderMapStreetAddress_SpecialCharacters.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForAddressStorefront"/>
     </test>
+    <!--todo: emtpy address-->
     <test name="MapCityCommonCharacters">
         <annotations>
             <features value="Pagebuilder"/>
@@ -1104,7 +1084,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1141,22 +1120,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="city" value="PageBuilderMapCity_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_CommonCharacters.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForCityStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="city" value="PageBuilderMapCity_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_CommonCharacters.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForCityStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1173,11 +1148,11 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="city" value="PageBuilderMapCity_CommonCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_CommonCharacters.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForCityStorefront"/>
     </test>
     <test name="MapCitySpecialCharacters">
         <annotations>
@@ -1191,7 +1166,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1228,22 +1202,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="city" value="PageBuilderMapCity_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_SpecialCharacters.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForCityStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="city" value="PageBuilderMapCity_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_SpecialCharacters.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForCityStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1260,12 +1230,13 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="city" value="PageBuilderMapCity_SpecialCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_SpecialCharacters.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForCityStorefront"/>
     </test>
+    <!--todo: empty city-->
     <test name="MapZipCommonCharacters">
         <annotations>
             <features value="Pagebuilder"/>
@@ -1278,7 +1249,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1315,22 +1285,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="zip" value="PageBuilderMapZipCode_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_CommonCharacters.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForZipStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="zip" value="PageBuilderMapZipCode_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_CommonCharacters.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForZipStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1347,11 +1313,11 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="zip" value="PageBuilderMapZipCode_CommonCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_CommonCharacters.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForZipStorefront"/>
     </test>
     <test name="MapZipSpecialCharacters">
         <annotations>
@@ -1365,7 +1331,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1402,22 +1367,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="zip" value="PageBuilderMapZipCode_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_SpecialCharacters.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForZipStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="zip" value="PageBuilderMapZipCode_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_SpecialCharacters.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForZipStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1434,12 +1395,13 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="zip" value="PageBuilderMapZipCode_SpecialCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_SpecialCharacters.value, PageBuilderMapCountry_Default.value)}}" stepKey="waitForZipStorefront"/>
     </test>
+    <!--todo: zip empty-->
     <test name="MapCountryCommonCase">
         <annotations>
             <features value="Pagebuilder"/>
@@ -1452,7 +1414,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1489,22 +1450,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="country" value="PageBuilderMapCountry_USA"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_USA.value)}}" stepKey="waitForCountryStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="country" value="PageBuilderMapCountry_USA"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_USA.value)}}" stepKey="waitForCountryStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1521,11 +1478,11 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationDataWithNoCommentOrPhoneNumber" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="country" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.addressCityZipCountry('1', PageBuilderMapStreetAddress_Default.value, PageBuilderMapCity_Default.value, PageBuilderMapZipCode_Default.value, PageBuilderMapCountry_USA.value)}}" stepKey="waitForCountryStorefront"/>
     </test>
     <test name="MapCommentCommonCharacters">
         <annotations>
@@ -1539,7 +1496,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1576,22 +1532,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="comment" value="PageBuilderMapComment_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.comment('1', PageBuilderMapComment_CommonCharacters.value)}}" stepKey="waitForCommentStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="comment" value="PageBuilderMapComment_CommonCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.comment('1', PageBuilderMapComment_CommonCharacters.value)}}" stepKey="waitForCommentStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1608,11 +1560,11 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="comment" value="PageBuilderMapComment_CommonCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.comment('1', PageBuilderMapComment_CommonCharacters.value)}}" stepKey="waitForCommentStorefront"/>
     </test>
     <test name="MapCommentSpecialCharacters">
         <annotations>
@@ -1626,7 +1578,6 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
-            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1663,22 +1614,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage1">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="comment" value="PageBuilderMapComment_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.comment('1', PageBuilderMapComment_SpecialCharacters.value)}}" stepKey="waitForCommentStage1"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStageAfterSave"/>
-        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStage2">
-            <argument name="page" value="MapOnStage"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="comment" value="PageBuilderMapComment_SpecialCharacters"/>
-        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStage2"/>
+        <waitForElementVisible selector="{{MapOnStage.comment('1', PageBuilderMapComment_SpecialCharacters.value)}}" stepKey="waitForCommentStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
@@ -1695,15 +1642,17 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateMapPinLocationData" stepKey="validateMapPinLocationDataStorefront">
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
-            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
-            <argument name="comment" value="PageBuilderMapComment_SpecialCharacters"/>
         </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForLocationNameStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.comment('1', PageBuilderMapComment_SpecialCharacters.value)}}" stepKey="waitForCommentStorefront"/>
     </test>
+    <!--todo: comment empty-->
 </tests>
 
 <!--todo: get lat, lng selectors working on stage & storefront-->
 <!--todo: add grid validation to each test-->
 <!--todo: add tests for grid click row to edit and select>edit, select>delete-->
 <!--todo: add test for grid layout-->
+<!--todo: phone number common, special, empty-->
