@@ -18,8 +18,6 @@
             <testCaseId value="MAGETWO-89375"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-image"/>
-            <!-- Skipped: See MAGETWO-91060 -->
-            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -149,9 +147,9 @@
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <waitForElement selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="waitForImageAppearanceField"/>
-        <dontSeeElement selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
-        <grabValueFrom selector="select[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
+        <waitForElement selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="waitForImageAppearanceField"/>
+        <dontSeeElement selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
+        <grabValueFrom selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
         <assertEquals expected="full-width" expectedType="string" actual="defaultAppearanceValue" actualType="variable" message="pass" stepKey="assertDefaultAppearanceValue"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
@@ -431,7 +429,7 @@
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="selectAlignment" stepKey="enterAlignment">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">

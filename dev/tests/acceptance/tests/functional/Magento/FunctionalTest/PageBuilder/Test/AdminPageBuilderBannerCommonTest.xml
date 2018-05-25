@@ -106,7 +106,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditPoster">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceCollageLeftProperty">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageLeftProperty">
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageLeft"/>
@@ -135,7 +135,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditCollageLeft">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceCollageCenteredProperty">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageCenteredProperty">
             <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageCentered"/>
@@ -164,7 +164,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStageToEditCollageCentered">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAppearanceCollageRightProperty">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceCollageRightProperty">
             <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsCollageRight"/>
@@ -561,8 +561,11 @@
         </actionGroup>
         <!-- Validate Edit Panel Fields -->
         <comment userInput="Validate Edit Panel Fields" stepKey="commentValidateEditPanelFields"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAppearanceProperty">
-            <argument name="property" value="PageBuilderBannerAppearanceDefaultProperty"/>
+        <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
+            <argument name="property1" value="PageBuilderBannerAppearanceDefaultProperty"/>
+            <argument name="property2" value="PageBuilderBannerCollageLeftProperty"/>
+            <argument name="property3" value="PageBuilderBannerCollageRightProperty"/>
+            <argument name="property4" value="PageBuilderBannerCollageCenteredProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeMinimumHeightProperty">
             <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
