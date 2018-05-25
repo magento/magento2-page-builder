@@ -336,6 +336,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -354,6 +355,7 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <!-- Input Coordinates -->
         <comment userInput="Input Coordinates" stepKey="commentAddMapPin"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
@@ -371,6 +373,7 @@
         <!-- Get Pin Location -->
         <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Verify Map Has Pin -->
         <comment userInput="Stage: Verify Map Has Pin" stepKey="commentVerifyPinStage1"/>
@@ -402,6 +405,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Edit Panel: Verify Coordinates After Save -->
         <comment userInput="Edit Panel: Verify Coordinates After Save" stepKey="commentVerifyCoordinates2"/>
@@ -449,6 +455,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -467,6 +474,7 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <!-- Input Coordinates -->
         <comment userInput="Input Coordinates" stepKey="commentAddMapPin"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
@@ -484,6 +492,7 @@
         <!-- Get Pin Location -->
         <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Verify Map Has Pin -->
         <comment userInput="Stage: Verify Map Has Pin" stepKey="commentVerifyPinStage1"/>
@@ -515,6 +524,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Edit Panel: Verify Coordinates After Save -->
         <comment userInput="Edit Panel: Verify Coordinates After Save" stepKey="commentVerifyCoordinates2"/>
@@ -562,6 +574,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -580,6 +593,7 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <!-- Input Coordinates To Add Pin To Map -->
         <comment userInput="Input Coordinates To Add Pin To Map" stepKey="commentAddMapPin"/>
         <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin">
@@ -600,6 +614,7 @@
         <!-- Get Pin Location -->
         <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Verify Map Has Pin -->
         <comment userInput="Stage: Verify Map Has Pin" stepKey="commentVerifyPinStage1"/>
@@ -631,6 +646,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Edit Panel: Verify Coordinates After Save -->
         <comment userInput="Edit Panel: Verify Coordinates After Save" stepKey="commentVerifyCoordinates2"/>
@@ -678,6 +696,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -695,6 +714,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -713,6 +733,7 @@
             <argument name="property" value="PageBuilderMapLatitude_Empty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorEmpty">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_Empty"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel2">
@@ -724,6 +745,7 @@
             <argument name="property" value="PageBuilderMapLatitude_Space"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorSpace">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_Space"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel3">
@@ -735,6 +757,7 @@
             <argument name="property" value="PageBuilderMapLatitude_NonNumeric"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNonNumeric">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_NonNumeric"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel4">
@@ -746,6 +769,7 @@
             <argument name="property" value="PageBuilderMapLatitude_NegativeBoundary"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNegativeBoundary">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_NegativeBoundary"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel5">
@@ -757,6 +781,7 @@
             <argument name="property" value="PageBuilderMapLatitude_PositiveBoundary"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorPositiveBoundary">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_PositiveBoundary"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel6">
@@ -770,6 +795,7 @@
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel7">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage">
             <argument name="page" value="MapOnStage"/>
@@ -787,6 +813,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -804,6 +831,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -822,6 +850,7 @@
             <argument name="property" value="PageBuilderMapLongitude_Empty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorEmpty">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_Empty"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel2">
@@ -833,6 +862,7 @@
             <argument name="property" value="PageBuilderMapLongitude_Space"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorSpace">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_Space"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel3">
@@ -844,6 +874,7 @@
             <argument name="property" value="PageBuilderMapLongitude_NonNumeric"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNonNumeric">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_NonNumeric"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel4">
@@ -855,6 +886,7 @@
             <argument name="property" value="PageBuilderMapLongitude_NegativeBoundary"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorNegativeBoundary">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_NegativeBoundary"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel5">
@@ -866,6 +898,7 @@
             <argument name="property" value="PageBuilderMapLongitude_PositiveBoundary"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorPositiveBoundary">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_PositiveBoundary"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel6">
@@ -879,6 +912,7 @@
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel7">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage">
             <argument name="page" value="MapOnStage"/>
@@ -896,6 +930,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -913,6 +948,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -931,9 +967,11 @@
             <argument name="property" value="PageBuilderMapLongitude_Empty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorLatitudeEmpty">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLatitude_Empty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorLongitudeEmpty">
+            <argument name="form" value="AddLocationForm"/>
             <argument name="property" value="PageBuilderMapLongitude_Empty"/>
         </actionGroup>
         <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin">
@@ -942,6 +980,7 @@
         <!-- Add Pin To Map After Error -->
         <comment userInput="Add Pin To Map After Error" stepKey="commentAddPinToMap2"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin2"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinStage">
             <argument name="page" value="MapOnStage"/>
@@ -959,6 +998,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -979,6 +1019,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -990,6 +1031,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAddress">
             <argument name="property" value="PageBuilderMapStreetAddress_CommonCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
@@ -1013,6 +1055,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapStreetAddress_CommonCharacters"/>
@@ -1040,6 +1085,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1060,6 +1106,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -1071,6 +1118,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAddress">
             <argument name="property" value="PageBuilderMapStreetAddress_SpecialCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
@@ -1094,6 +1142,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapStreetAddress_SpecialCharacters"/>
@@ -1121,6 +1172,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1141,6 +1193,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -1152,6 +1205,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
             <argument name="property" value="PageBuilderMapCity_CommonCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
@@ -1175,6 +1229,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapCity_CommonCharacters"/>
@@ -1202,6 +1259,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1222,6 +1280,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -1233,6 +1292,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
             <argument name="property" value="PageBuilderMapCity_SpecialCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
@@ -1256,6 +1316,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapCity_SpecialCharacters"/>
@@ -1283,6 +1346,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1303,6 +1367,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -1314,6 +1379,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
             <argument name="property" value="PageBuilderMapZipCode_CommonCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
@@ -1337,6 +1403,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapZipCode_CommonCharacters"/>
@@ -1364,6 +1433,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1384,6 +1454,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -1395,6 +1466,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
             <argument name="property" value="PageBuilderMapZipCode_SpecialCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
@@ -1418,6 +1490,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapZipCode_SpecialCharacters"/>
@@ -1445,6 +1520,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <!--<group value="dh"/>-->
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1465,6 +1541,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -1476,6 +1553,7 @@
         <actionGroup ref="fillSlideOutPanelMultiSelectField" stepKey="enterCountry">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
@@ -1499,6 +1577,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="seeInSlideOutMultiSelectField" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapCountry_USA"/>
@@ -1526,6 +1607,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1546,6 +1628,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -1557,6 +1640,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment">
             <argument name="property" value="PageBuilderMapComment_CommonCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
@@ -1580,6 +1664,9 @@
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapComment_CommonCharacters"/>
@@ -1607,6 +1694,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapLocation"/>
+            <group value="dh"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1627,6 +1715,7 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
         <!-- Enter Required Fields -->
         <comment userInput="Enter Required Fields" stepKey="commentEnterRequiredFields"/>
@@ -1638,6 +1727,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterComment">
             <argument name="property" value="PageBuilderMapComment_SpecialCharacters"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
@@ -1662,6 +1752,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
             <argument name="property" value="PageBuilderMapComment_SpecialCharacters"/>
         </actionGroup>
@@ -1677,3 +1770,8 @@
         </actionGroup>
     </test>
 </tests>
+
+<!--todo: get lat, lng selectors working on stage & storefront-->
+<!--todo: add grid validation to each test-->
+<!--todo: add tests for grid click row to edit and select>edit, select>delete-->
+<!--todo: add test for grid layout-->

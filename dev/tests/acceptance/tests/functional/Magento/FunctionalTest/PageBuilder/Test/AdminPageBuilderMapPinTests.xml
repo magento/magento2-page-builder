@@ -38,6 +38,7 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <!-- Add Pin To Map By Clicking -->
         <comment userInput="Add Pin To Map By Clicking" stepKey="commentAddMapPin"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
@@ -66,6 +67,7 @@
             <expectedResult type="string">{{PageBuilderMapLongitude_ClickedPin.value}}</expectedResult>
             <actualResult type="variable">longitudeEditPanel</actualResult>
         </assertRegExp>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Verify Map Has Pin -->
         <comment userInput="Stage: Verify Map Has Pin" stepKey="commentVerifyPinStage1"/>
@@ -95,6 +97,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <actionGroup ref="verifyMapHasPin" stepKey="verifyMapHasPinEditPanel2">
             <argument name="page" value="AddLocationForm"/>
@@ -163,6 +168,7 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <!-- Input Coordinates To Add Pin To Map -->
         <comment userInput="Input Coordinates To Add Pin To Map" stepKey="commentAddMapPin"/>
         <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin">
@@ -183,6 +189,7 @@
         <!-- Get Pin Location -->
         <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Verify Map Has Pin -->
         <comment userInput="Stage: Verify Map Has Pin" stepKey="commentVerifyPinStage1"/>
@@ -204,6 +211,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Edit Panel: Verify Coordinates After Save -->
         <comment userInput="Edit Panel: Verify Coordinates After Save" stepKey="commentVerifyCoordinates2"/>
@@ -273,11 +283,13 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForMapVisibleEditPanel"/>
         <!-- Check Edit Panel -->
         <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPinEditPanel">
             <argument name="page" value="AddLocationForm"/>
         </actionGroup>
+        <actionGroup ref="closeLocationForm" stepKey="closeLocationForm"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -320,7 +332,7 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddMapPin"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
@@ -335,6 +347,7 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
         <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
         <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
@@ -356,6 +369,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
         <!-- Move Map Pin By Click -->
         <comment userInput="Move Map Pin By Click" stepKey="commentMoveMapPin"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="moveMapPinByClick">
@@ -376,6 +392,7 @@
             <argument name="page" value="AddLocationForm"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Stage: Verify Pin Location Moved -->
         <comment userInput="Stage: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStage"/>
@@ -393,6 +410,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Edit Panel: Verify Pin Location Moved After Save -->
         <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
@@ -450,7 +470,7 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddMapPin"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
@@ -465,6 +485,7 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
         <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
         <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
@@ -486,6 +507,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
         <!-- Move Map Pin By Changing Coordinates -->
         <comment userInput="Move Map Pin By Changing Coordinates" stepKey="commentMoveMapPin"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLatitude">
@@ -500,6 +524,7 @@
             <argument name="page" value="AddLocationForm"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Stage: Verify Pin Location Moved -->
         <comment userInput="Stage: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStage"/>
@@ -517,6 +542,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Edit Panel: Verify Pin Location Moved After Save -->
         <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
@@ -566,7 +594,7 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddMapPin"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
@@ -581,6 +609,7 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
         <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
         <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
@@ -602,6 +631,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
         <!-- Move Map Pin By Dragging And Dropping Pin -->
         <comment userInput="Move Map Pin By Dragging And Dropping Pin" stepKey="commentMoveMapPin"/>
         <actionGroup ref="moveMapPinByDraggingAndDroppingPin" stepKey="moveMapPinByDraggingAndDroppingPin">
@@ -614,6 +646,7 @@
             <argument name="page" value="AddLocationForm"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Stage: Verify Pin Location Moved -->
         <comment userInput="Stage: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStage"/>
@@ -631,6 +664,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Edit Panel: Verify Pin Location Moved After Save -->
         <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
@@ -680,7 +716,7 @@
         <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddMapPin"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
@@ -695,6 +731,7 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
         <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
         <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
         <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
@@ -716,6 +753,9 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
         <!-- Move Map Pin By Dragging And Dropping Pin Off Of Map-->
         <comment userInput="Move Map Pin By Dragging And Dropping Pin Off Of Map" stepKey="commentMoveMapPin"/>
         <executeJS function="return {{AddLocationForm.baseJS}}.clientWidth" stepKey="mapWidth"/>
@@ -728,6 +768,7 @@
             <argument name="page" value="AddLocationForm"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Stage: Verify Pin Location Moved -->
         <comment userInput="Stage: Verify Pin Location Moved" stepKey="commentVerifyPinMoveStage"/>
@@ -745,6 +786,9 @@
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Edit Panel: Verify Pin Location Moved After Save -->
         <comment userInput="Edit Panel: Verify Pin Location Moved After Save" stepKey="commentVerifyPinMoveEditPanel2"/>
