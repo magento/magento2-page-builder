@@ -1091,9 +1091,6 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -1102,6 +1099,7 @@
         </actionGroup>
         <!-- Validate No Required Fields -->
         <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
+        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.editFormAllRequiredFields}}" stepKey="dontSeeRequiredClassInEditForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
