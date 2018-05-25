@@ -124,6 +124,8 @@ function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIPara
     }
 }
 
+let placeholderContainer: Element;
+
 /**
  * On a sort action hide the placeholder if disabled
  *
@@ -137,6 +139,12 @@ function onSort(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     } else {
         ui.placeholder.show();
     }
+
+    /**
+     * We record the position of the placeholder on sort so we can ensure we place the content type in the correct place
+     * as jQuery UI's events aren't reliable.
+     */
+    placeholderContainer = ui.placeholder.parents(".content-type-container")[0];
 }
 
 /**
@@ -162,11 +170,6 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
         return;
     }
 
-    // If the sortable instance is disabled don't complete this operation
-    if ($(this).sortable("option", "disabled")) {
-        return;
-    }
-
     // If the parent can't receive drops we need to cancel the operation
     if (!preview.isContainer()) {
         $(this).sortable("cancel");
@@ -175,6 +178,11 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
 
     const blockConfig = getDraggedBlockConfig();
     if (blockConfig) {
+        // If the sortable instance is disabled don't complete this operation
+        if ($(this).sortable("option", "disabled")) {
+            return;
+        }
+
         // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
         const index = $(event.target)
             .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")
@@ -219,17 +227,25 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
         return;
     }
 
-    if (sortedContentType && (this === ui.item.parent()[0])) {
+    /**
+     * Validate the event is coming from the exact instance or a child instance, we validate on the child instance
+     * as the event is sometimes annoyingly caught by the parent rather than the child it's dropped into. Combining this
+     * with placeholderContainer logic we can ensure we always do the right operation.
+     */
+    if (
+        sortedContentType &&
+        (this === ui.item.parent()[0] || (placeholderContainer && $(this).find(ui.item.parent()).length > 0))
+    ) {
         const el = ui.item[0];
         const contentTypeInstance = ko.dataFor(el);
-        const target = ko.dataFor(ui.item.parents(".content-type-container")[0]);
+        const target = ko.dataFor(placeholderContainer);
 
         if (target && contentTypeInstance) {
             // Calculate the source and target index
             const sourceParent: ContentTypeCollectionInterface = contentTypeInstance.parent;
             const targetParent: ContentTypeCollectionInterface = getParentProxy(target);
 
-            const targetIndex = $(event.target)
+            const targetIndex = $(placeholderContainer)
                 .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")
                 .toArray()
                 .findIndex((element: Element) => {

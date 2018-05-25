@@ -114,6 +114,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
       }
     }
   }
+
+  var placeholderContainer;
   /**
    * On a sort action hide the placeholder if disabled
    *
@@ -122,13 +124,19 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
    * @param {JQueryUI.SortableUIParams} ui
    */
 
-
   function onSort(preview, event, ui) {
     if ((0, _jquery)(this).sortable("option", "disabled")) {
       ui.placeholder.hide();
     } else {
       ui.placeholder.show();
     }
+    /**
+     * We record the position of the placeholder on sort so we can ensure we place the content type in the correct place
+     * as jQuery UI's events aren't reliable.
+     */
+
+
+    placeholderContainer = ui.placeholder.parents(".content-type-container")[0];
   }
   /**
    * On sort stop hide any indicators
@@ -155,11 +163,6 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
   function onSortReceive(preview, event, ui) {
     if ((0, _jquery)(event.target)[0] !== this) {
       return;
-    } // If the sortable instance is disabled don't complete this operation
-
-
-    if ((0, _jquery)(this).sortable("option", "disabled")) {
-      return;
     } // If the parent can't receive drops we need to cancel the operation
 
 
@@ -171,7 +174,12 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
     var blockConfig = (0, _registry.getDraggedBlockConfig)();
 
     if (blockConfig) {
-      // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
+      // If the sortable instance is disabled don't complete this operation
+      if ((0, _jquery)(this).sortable("option", "disabled")) {
+        return;
+      } // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
+
+
       var index = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
         return element.classList.contains("pagebuilder-draggable-block");
       });
@@ -214,19 +222,25 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
       ui.item.remove();
       return;
     }
+    /**
+     * Validate the event is coming from the exact instance or a child instance, we validate on the child instance
+     * as the event is sometimes annoyingly caught by the parent rather than the child it's dropped into. Combining this
+     * with placeholderContainer logic we can ensure we always do the right operation.
+     */
 
-    if (sortedContentType && this === ui.item.parent()[0]) {
+
+    if (sortedContentType && (this === ui.item.parent()[0] || placeholderContainer && (0, _jquery)(this).find(ui.item.parent()).length > 0)) {
       var el = ui.item[0];
 
       var contentTypeInstance = _knockout.dataFor(el);
 
-      var target = _knockout.dataFor(ui.item.parents(".content-type-container")[0]);
+      var target = _knockout.dataFor(placeholderContainer);
 
       if (target && contentTypeInstance) {
         // Calculate the source and target index
         var sourceParent = contentTypeInstance.parent;
         var targetParent = getParentProxy(target);
-        var targetIndex = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
+        var targetIndex = (0, _jquery)(placeholderContainer).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
           return element === el;
         });
 

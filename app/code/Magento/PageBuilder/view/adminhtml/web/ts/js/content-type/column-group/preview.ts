@@ -15,6 +15,7 @@ import ContentTypeConfigInterface from "../../content-type-config.d";
 import {animationTime} from "../../interactions/container-animation";
 import {moveContentType} from "../../interactions/move-content-type";
 import {getDraggedBlockConfig} from "../../interactions/registry";
+import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
 import PreviewCollection from "../preview-collection";
@@ -26,7 +27,6 @@ import {
     getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth, getMaxColumns,
     getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./resizing";
-import {createStyleSheet} from "../../utils/create-stylesheet";
 
 interface BlockRemovedParams {
     parent: ColumnGroup;
