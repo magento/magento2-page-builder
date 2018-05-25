@@ -45,6 +45,9 @@ var config = {
             'Magento_Ui/js/form/element/abstract': {
                 'Magento_PageBuilder/js/form/element/conditional-disable-mixin': true
             },
+            'Magento_Ui/js/form/components/button': {
+                'Magento_PageBuilder/js/form/components/button-conditional-disable-mixin': true
+            },
             'Magento_Ui/js/lib/validation/validator': {
                 'Magento_PageBuilder/js/form/element/validator-rules-mixin': true
             }
