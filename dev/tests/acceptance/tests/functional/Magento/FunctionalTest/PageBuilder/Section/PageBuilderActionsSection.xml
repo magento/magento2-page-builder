@@ -89,6 +89,7 @@
         <element name="editFormUploadedImage" type="button" selector="//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//..//img" parameterized="true"/>
         <element name="editFormNoUploadedImage" type="button" selector="//span[text()='{{arg1}}']//parent::label//following-sibling::div//p[text()='Browse to find or drag image here']" parameterized="true"/>
         <element name="editFormUploadedImageSource" type="button" selector="//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//..//img[contains(@src,'{{arg3}}') and contains(@src,'{{arg4}}')]" parameterized="true"/>
+        <element name="computedHeightOnStage" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-{{arg1}}:nth-of-type({{arg2}})')).height)" parameterized="true"/>
     </section>
     <section name="AdvancedForm">
         <element name="sectionName" type="button" selector="//div[@data-index='advanced']"/>

@@ -55,7 +55,7 @@
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
         <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoad"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <waitForElementVisible time="10" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow" />
     </actionGroup>
     <actionGroup name="expandConfigurationSection">
@@ -77,7 +77,7 @@
             <argument name="contentBlockType" defaultValue=""/>
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
     </actionGroup>
     <actionGroup name="dragContentBlockToStageByIndex">
@@ -86,7 +86,7 @@
             <argument name="contentBlockNumber" defaultValue="1" type="string"/>
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForContentBlockInStage" />
     </actionGroup>
     <actionGroup name="dragContentBlockToStageAndExpectEditPanel">
@@ -95,7 +95,7 @@
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentBlockNameInEditFormTitle" />
         <see userInput="Edit {{contentBlockType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
         <waitForPageLoad stepKey="waitForEditFormLoad" time="30"/>
@@ -109,6 +109,7 @@
         </arguments>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanel">
@@ -153,6 +154,7 @@
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, targetIndex)}}" stepKey="onMouseOverContentBlockStage"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, targetIndex)}}" stepKey="waitForOptionsMenu"/>
         <click selector="{{PageBuilderActionsSection.contentBlockDuplicate(contentBlockType.role, targetIndex)}}" stepKey="clickDuplicateContentBlock"/>
+        <waitForPageLoad time="30" stepKey="waitForAnimation" />
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, expectedIndex)}}" stepKey="waitForDuplicateContentBlock"/>
     </actionGroup>
     <actionGroup name="openPageBuilderOptionsByIndex">
@@ -217,7 +219,7 @@
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
         <waitForElementVisible time="5" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow" />
-        <wait time="0.5" stepKey="waitForRemoveAnimation"/>
+        <waitForPageLoad time="30" stepKey="waitForRemoveAnimation" />
     </actionGroup>
     <actionGroup name="validateSlideOutPanelField">
         <arguments>
@@ -729,5 +731,20 @@
         <waitForElementVisible selector="{{ColorPicker.inputField}}" stepKey="waitForColorPicker"/>
         <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHexCodeIntoInputField1" />
         <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{colorCode.value}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+    </actionGroup>
+    <actionGroup name="validateContentBlockHeightOnStage">
+        <arguments>
+            <argument name="contentBlock" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="containerDefaultHeight" defaultValue="1"/>
+            <argument name="expectedPaddingTop" defaultValue="1"/>
+            <argument name="expectedPaddingBottom" defaultValue="1"/>
+        </arguments>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(contentBlock.role,index)}}" stepKey="actualStageContentBlockHeight"/>
+        <executeJS function="return Math.round({{containerDefaultHeight.value}}+{{expectedPaddingTop.paddingTop}}+{{expectedPaddingBottom.paddingBottom}})" stepKey="expectedContentBlockHeightWithPadding"/>
+        <assertEquals stepKey="assertHeightOnStageMatchesExpected">
+            <expectedResult type="variable">actualStageContentBlockHeight</expectedResult>
+            <actualResult type="variable">expectedContentBlockHeightWithPadding</actualResult>
+        </assertEquals>
     </actionGroup>
 </actionGroups>
