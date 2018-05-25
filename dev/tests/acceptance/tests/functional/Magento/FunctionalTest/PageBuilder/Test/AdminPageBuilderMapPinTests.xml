@@ -874,6 +874,93 @@
             <argument name="page" value="MapOnStage"/>
         </actionGroup>
     </test>
+    <test name="MapPinTooltipWindowFunctionality">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map - Open and Close Map Pin Tooltip"/>
+            <description value="Verify that the user can open and close the map pin tooltip window and that the tooltip window stays open as a user moves the map."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MAGETWO-92220"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapPinTests"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
+        <!-- Stage: Tooltip Stays Open When Map Moves -->
+        <comment userInput="Stage: Tooltip Stays Open When Map Moves" stepKey="commentMoveStage1"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocation('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <executeJS function="return Math.round({{MapOnStage.computedHeight}}/4)" stepKey="quarterMapHeightStage"/>
+        <dragAndDrop selector1="{{MapOnStage.base('1')}}" selector2="{{MapOnStage.base('1')}}" x="$quarterMapHeightStage" stepKey="moveMapStage1"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStage1">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <seeElement selector="{{MapOnStage.tooltipWindow('1')}}" stepKey="seeTooltipWindowStage1"/>
+        <actionGroup ref="closeMapPinTooltipWindow" stepKey="closeMapPinTooltipWindowStage1"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage2"/>
+        <!-- Stage: Tooltip Stays Open When Map Moves After Save -->
+        <comment userInput="Stage: Tooltip Stays Open When Map Moves After Save" stepKey="commentMoveStage2"/>
+        <dragAndDrop selector1="{{MapOnStage.base('1')}}" selector2="{{MapOnStage.base('1')}}" x="$quarterMapHeightStage" stepKey="moveMapStage2"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStage2">
+            <argument name="page" value="MapOnStage"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStage"/>
+        </actionGroup>
+        <seeElement selector="{{MapOnStage.tooltipWindow('1')}}" stepKey="seeTooltipWindowStage2"/>
+        <actionGroup ref="closeMapPinTooltipWindow" stepKey="closeMapPinTooltipWindowStage2"/>
+        <!-- Storefront: Tooltip Stays Open When Map Moves After Save -->
+        <comment userInput="Storefront: Tooltip Stays Open When Map Moves After Save" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStorefront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <executeJS function="return Math.round({{MapOnStorefront.computedHeight}}/4)" stepKey="quarterMapHeightStorefront"/>
+        <dragAndDrop selector1="{{MapOnStorefront.base('1')}}" selector2="{{MapOnStorefront.base('1')}}" x="$quarterMapHeightStorefront" stepKey="moveMapStorefront"/>
+        <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+            <argument name="comparedPinLocation" value="initialPinLocationStorefront"/>
+        </actionGroup>
+        <seeElement selector="{{MapOnStorefront.tooltipWindow('1')}}" stepKey="seeTooltipWindowStorefront"/>
+        <actionGroup ref="closeMapPinTooltipWindow" stepKey="closeMapPinTooltipWindowStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+    </test>
     <test name="MapPinTooltipAllLocationData">
         <annotations>
             <features value="Pagebuilder"/>
@@ -985,5 +1072,3 @@
         </actionGroup>
     </test>
 </tests>
-
-<!--todo: need test for opening & closing pin tooltip-->

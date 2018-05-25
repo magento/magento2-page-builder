@@ -170,7 +170,7 @@
     </actionGroup>
     <actionGroup name="closeMapPinTooltipWindow">
         <arguments>
-            <argument name="page"/>
+            <argument name="page" defaultValue="MapOnStage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="closeMapPinTooltipWindow" stepKey="comment"/>
@@ -225,6 +225,7 @@
             <argument name="comparedPinLocation" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <wait time="2" stepKey="waitForPageLoad"/>
         <waitForElement selector="{{page.pinLocation(index)}}" stepKey="waitForPinLocation"/>
         <grabAttributeFrom selector="{{page.pinLocation(index)}}" userInput="style" stepKey="pinLocation"/>
         <assertNotEquals stepKey="assertPinPositionNotEqual">

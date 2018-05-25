@@ -24,7 +24,7 @@
         <element name="addressCityZipCountry" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}']" parameterized="true"/>
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-map > div:first-child')).height)"/>
+        <element name="computedHeight" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-map > div:first-child')).height)"/>
         <element name="showControls" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and @data-show-controls='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
@@ -66,7 +66,7 @@
         <element name="addressCityZipCountry" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}']" parameterized="true"/>
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('[data-role=map]')).height)"/>
+        <element name="computedHeight" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=map]')).height)"/>
         <element name="showControls" type="text" selector="(//div[@data-role='map'])[{{arg1}}][@data-show-controls='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
