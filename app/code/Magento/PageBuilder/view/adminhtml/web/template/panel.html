@@ -14,8 +14,8 @@
             <input type="text" id="search-blocks-input" name="search" ko-value="searchValue" event="keyup: search" attr="placeholder: searchPlaceholder"/>
         </div>
         <ul id="search-results" visible="searching() && searchResults().length" each="searchResults">
-            <li class="pagebuilder-draggable-block" attr="id: 'block-' + identifier()" data-bind="draggable: Object.assign($parent.getDraggableOptions(), getDraggableOptions())">
-                <a class="pagebuilder-panel-block">
+            <li class="pagebuilder-draggable-content-type" attr="id: 'block-' + identifier()" data-bind="draggable: Object.assign($parent.getDraggableOptions(), getDraggableOptions())">
+                <a class="pagebuilder-panel-content-type">
                     <span class="block-icon">
                         <i attr="class: icon"></i>
                     </span>
@@ -34,10 +34,10 @@
                 <div class="pagebuilder-panel-groups-child" css="hidden: hidden">
                     <div class="pagebuilder-panel-groups-blocks-wrapper">
                         <ul class="pagebuilder-panel-groups-blocks" each="blocks">
-                            <li class="pagebuilder-draggable-block"
+                            <li class="pagebuilder-draggable-content-type"
                                 data-bind="draggable: Object.assign($parents[1].getDraggableOptions(), getDraggableOptions())"
                                 attr="id: 'block-' + identifier()">
-                                <a class="pagebuilder-panel-block">
+                                <a class="pagebuilder-panel-content-type">
                                     <span class="block-icon">
                                         <i attr="class: icon"></i>
                                     </span>

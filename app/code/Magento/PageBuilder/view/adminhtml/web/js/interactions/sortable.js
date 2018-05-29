@@ -180,8 +180,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
       } // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
 
 
-      var index = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
-        return element.classList.contains("pagebuilder-draggable-block");
+      var index = (0, _jquery)(event.target).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-content-type").toArray().findIndex(function (element) {
+        return element.classList.contains("pagebuilder-draggable-content-type");
       });
       var parentContainerElement = (0, _jquery)(event.target).parents(".type-container");
       var containerLocked = getParentProxy(preview).getChildren()().length === 0 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Create the new content type and insert it into the parent
@@ -204,7 +204,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
         return block;
       }); // Remove the DOM element, as this is a drop event we can't just remove the ui.item
 
-      (0, _jquery)(event.target).find(".pagebuilder-draggable-block").remove();
+      (0, _jquery)(event.target).find(".pagebuilder-draggable-content-type").remove();
     }
   }
   /**
@@ -240,7 +240,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
         // Calculate the source and target index
         var sourceParent = contentTypeInstance.parent;
         var targetParent = getParentProxy(target);
-        var targetIndex = (0, _jquery)(placeholderContainer).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block").toArray().findIndex(function (element) {
+        var targetIndex = (0, _jquery)(placeholderContainer).children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-content-type").toArray().findIndex(function (element) {
           return element === el;
         });
 

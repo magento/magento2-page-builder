@@ -185,10 +185,10 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
 
         // jQuery's index method doesn't work correctly here, so use Array.findIndex instead
         const index = $(event.target)
-            .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")
+            .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-content-type")
             .toArray()
             .findIndex((element: Element) => {
-                return element.classList.contains("pagebuilder-draggable-block");
+                return element.classList.contains("pagebuilder-draggable-content-type");
             });
 
         const parentContainerElement = $(event.target).parents(".type-container");
@@ -209,7 +209,7 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
             });
 
         // Remove the DOM element, as this is a drop event we can't just remove the ui.item
-        $(event.target).find(".pagebuilder-draggable-block").remove();
+        $(event.target).find(".pagebuilder-draggable-content-type").remove();
     }
 }
 
@@ -246,7 +246,7 @@ function onSortUpdate(preview: Preview, event: Event, ui: JQueryUI.SortableUIPar
             const targetParent: ContentTypeCollectionInterface = getParentProxy(target);
 
             const targetIndex = $(placeholderContainer)
-                .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-block")
+                .children(".pagebuilder-content-type-wrapper, .pagebuilder-draggable-content-type")
                 .toArray()
                 .findIndex((element: Element) => {
                     return element === el;
