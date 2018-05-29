@@ -8,6 +8,7 @@
     1. [Composer installation](#composer-installation)
     1. [GitHub installation](#github-installation)
     1. [Activation](#activation)
+    1. [Troubleshooting](#troubleshooting)
 3. [Contribution guide]
 4. [Developer documentation]
 5. [Roadmap and known issues]
@@ -32,13 +33,22 @@ Use this method if you are testing and evaluating PageBuilder for your Magento s
 
 ### Prerequisites
 
-* You submitted us MAGEID and github username and received access to 2.3 alpha and PageBuilder 100.0.0 alpha. If you didn't submit us github username with will send you an email and request it.
+* You submitted your MAGEID and github username and received access to 2.3 alpha and PageBuilder 100.0.0 alpha.
+  If you didn't submit this information, send us an email to request access.
 
 ### Installation steps
 
-1. If you have installed 2.3.0 alpha or Page Builder 100.0.0 alpha version installed, run `composer clearcache` before installing again. If you don’t clear the cache, Composer will not download the latest alpha release from the repo. It will instead use your locally cached packages.
+1. If you already have 2.3.0 alpha or Page Builder 100.0.0 alpha version installed, run the following command before installing again:
+    ``` sh
+    composer clearcache
+    ```
+    If you don’t clear the cache, Composer will not download the latest alpha release from the repo and will use the local, cached packages instead.
 2. Navigate to the directory where you want to install Magento and Page Builder.
-3. Install 2.3.0 alpha Commerce package, run composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.3.0-alpha.
+3. Install the 2.3.0 alpha Commerce package using the following command: 
+    ``` sh
+    composer create-project --repository-url=https://repo.magento.com/ magento/project-enterprise-edition=2.3.0-alpha
+    ```
+
     Enter the access keys for your account (Marketplace / My Profile / Access Keys)
 4. Install Page Builder
     ``` sh
@@ -81,7 +91,7 @@ Do not use this installation method for evaluation or production instances.
 
 ## Update steps
 
-When a new version of Page Builder is available, destroy your existing 2.3.0-alpha instance and follow the [composer](install.md#Composer installation) or [GitHub](install.md#GitHub installation) installation steps.
+When a new version of Page Builder is available, destroy your existing 2.3.0-alpha instance and follow the [composer](install.md#composer-installation) or [GitHub](install.md#github-installation) installation steps.
 
 ## Installing Node.js dependencies
 
@@ -105,3 +115,39 @@ Follow these steps to activate PageBuilder in the Admin:
 3. In the **General** group on the page, select **Content Management**.
 4. Under **Advanced Content Tools**, select **Yes** for **Enable Page Builder**.
 5. Click **Save Config**
+
+## Troubleshooting
+
+### Common access problems
+
+If you are having trouble installing PageBuilder, please verify that the `MAGEID` account you provided for the Early Access Program (EAP) belongs to an active Magento partner account.
+
+**Note:**
+*Your company may have multiple Magento accounts, and only one or two may be active.*
+*Ask your company to provide you with an active Magento account.*
+
+Log into www.magento.com and see if the **Support** and **Downloads** tabs are available.
+
+![Support and downloads tabs](images/support-downloads-tab.png)
+
+If these tabs do not appear in your Magento account, it is not an active Magento partner account, and
+you will not be able to access PageBuilder.
+
+If you provided incorrect `MAGEID` by mistake and have another one that is valid, please resubmit this form:
+https://goo.gl/forms/unvuDikl9wydmKt12
+
+### Errors
+
+If you run into any of the following errors:
+
+```
+Could not find package magento/project-enterprise-edition with version 2.3.0-alpha.
+```
+```
+Could not find a matching version of package magento/module-page-builder-commerce. Check the package spelling, your version constraint and that the package is available in a stability which matches your minimum-stability (stable).
+```
+
+Check your composer keys in the `auth.json` file.
+If these keys are correct and you still encounter these errors, please contact [Olena Tkacheva].
+
+[Olena Tkacheva]: https://magentocommeng.slack.com/messages/@UAFV915FB

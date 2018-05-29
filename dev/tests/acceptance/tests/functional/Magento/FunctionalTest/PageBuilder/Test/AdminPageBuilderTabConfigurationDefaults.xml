@@ -193,8 +193,11 @@
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Text Alignment -->
         <comment userInput="Text Alignment: dropdown defaults to Default and available values Default, Left, Center, Right" stepKey="AC0" />
-        <actionGroup ref="validateTextAlignments" stepKey="seeTextAlignmentAttribute">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+        <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
+            <argument name="property1" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="property2" value="PageBuilderAdvancedAlignmentPropertyLeft"/>
+            <argument name="property3" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+            <argument name="property4" value="PageBuilderAdvancedAlignmentPropertyRight"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateTextAlignmentAttributeNotRequired">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
