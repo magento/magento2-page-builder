@@ -18,6 +18,7 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
+    1. [Bindings]
     1. [Master format]
     1. [Visual select]
 5. [Roadmap and known issues]
