@@ -15,8 +15,10 @@
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
+    1. [Bindings]
     1. [Master format]
     1. [Visual select] 
+    1. [Bindings] 
 5. [Roadmap and known issues]
 
 **[Architecture overview]** - An overview of the PageBuilder module architecture.
@@ -37,6 +39,8 @@
 
 **[Events]** - Reference documentation for PageBuilder events.
 
+**[Bindings]** - Reference documentation for PageBuilder bindings.
+
 **[Master format]** - Describes the master format for PageBuilder content types.
 
 **[Visual select]** - Documentation on customizing the visual select field.
@@ -56,3 +60,4 @@
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Roadmap and known issues]: roadmap.md
+[Bindings]: bindings.md
