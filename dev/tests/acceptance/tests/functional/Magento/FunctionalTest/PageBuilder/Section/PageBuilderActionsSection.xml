@@ -66,7 +66,7 @@
         <element name="editFormClose" type="button" selector=".modal-header .page-main-actions [data-form-role='close']" timeout="30"/>
         <element name="editFormReset" type="button" selector=".modal-header .page-main-actions [data-form-role='reset']" timeout="30"/>
         <element name="editFormSave" type="button" selector=".modal-header .page-main-actions [data-form-role='save']" timeout="30"/>
-        <element name="panelFieldLabel" type="text" selector='//aside//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/label | //aside//div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label"]/span[text()="{{arg4}}"]' parameterized="true" />
+        <element name="panelFieldLabel" type="text" selector='//aside//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/label | //aside//div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label" or @class="title"]/span[text()="{{arg4}}"]' parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelSectionError" type="text" selector="[data-index='{{arg1}}'] span._error .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelFieldControl" type="input" selector='//aside//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
@@ -116,10 +116,12 @@
         <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
         <element name="advancedPaddingLeft" type="input" selector="//input[@name='paddingLeft']"/>
         <element name="advancedMarginAndPaddingPlaceholderText" type="input" selector="//input[@name='{{arg1}}' and @placeholder='{{arg2}}']" parameterized="true"/>
-        <element name="advancedAlignDefault" type="input" selector="//div[@data-index='advanced']/descendant::*[@name='default']"/>
-        <element name="advancedAlignLeft" type="input" selector="//div[@data-index='advanced']/descendant::*[@name='left']"/>
-        <element name="advancedAlignCenter" type="input" selector="//div[@data-index='advanced']/descendant::*[@name='center']"/>
-        <element name="advancedAlignRight" type="input" selector="//div[@data-index='advanced']/descendant::*[@name='right']"/>
+    </section>
+    <section name="VisualSelectComponent">
+        <element name="firstSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+        <element name="secondSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+        <element name="thirdSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+        <element name="fourthSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
     </section>
     <section name="ColorPicker">
         <element name="colorSwatch" type="button" selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]"/>

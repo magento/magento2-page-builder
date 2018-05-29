@@ -7,7 +7,7 @@
 
 define([
     'Magento_Ui/js/form/element/abstract',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
+    'googleMaps'
 ], function (AbstractField) {
     'use strict';
 
