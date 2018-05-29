@@ -22,7 +22,7 @@ define(["Magento_PageBuilder/js/utils/create-stylesheet", "Magento_PageBuilder/j
       var _createStyleSheet;
 
       var classNames = acceptedContainers.map(function (container) {
-        return ".content-type-container." + container + "-container > .pagebuilder-drop-indicator";
+        return ".content-type-container." + container + "-container > .pagebuilder-drop-indicator, " + ".pagebuilder-content-type.type-container.empty-container > .content-type-container." + container + "-container:before";
       });
       var styles = (0, _createStylesheet.createStyleSheet)((_createStyleSheet = {}, _createStyleSheet[classNames.join(", ")] = {
         opacity: 1,

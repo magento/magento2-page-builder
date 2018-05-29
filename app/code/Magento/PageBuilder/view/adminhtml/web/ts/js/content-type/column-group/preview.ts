@@ -734,9 +734,14 @@ export default class Preview extends PreviewCollection {
                         }
                     });
 
+                    const classes = [
+                        ".pagebuilder-content-type.pagebuilder-column .pagebuilder-drop-indicator",
+                        ".pagebuilder-content-type.pagebuilder-column .empty-container .content-type-container:before",
+                    ];
+
                     // Ensure we don't display any drop indicators inside the column
                     headStyles = createStyleSheet({
-                        ".pagebuilder-content-type.pagebuilder-column .pagebuilder-drop-indicator": {
+                        [classes.join(", ")]: {
                             display: "none!important",
                         },
                     });

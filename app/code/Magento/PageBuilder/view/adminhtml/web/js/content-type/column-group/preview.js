@@ -691,17 +691,18 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         },
         activate: function activate() {
           if ((0, _registry.getDraggedBlockConfig)() === _config.getContentTypeConfig("column")) {
+            var _createStyleSheet;
+
             group.find(".ui-sortable").each(function () {
               if ((0, _jquery)(this).data("sortable")) {
                 (0, _jquery)(this).sortable("option", "disabled", true);
               }
-            }); // Ensure we don't display any drop indicators inside the column
-
-            headStyles = (0, _createStylesheet.createStyleSheet)({
-              ".pagebuilder-content-type.pagebuilder-column .pagebuilder-drop-indicator": {
-                display: "none!important"
-              }
             });
+            var classes = [".pagebuilder-content-type.pagebuilder-column .pagebuilder-drop-indicator", ".pagebuilder-content-type.pagebuilder-column .empty-container .content-type-container:before"]; // Ensure we don't display any drop indicators inside the column
+
+            headStyles = (0, _createStylesheet.createStyleSheet)((_createStyleSheet = {}, _createStyleSheet[classes.join(", ")] = {
+              display: "none!important"
+            }, _createStyleSheet));
             document.head.appendChild(headStyles);
           } else if (headStyles) {
             headStyles.remove();
