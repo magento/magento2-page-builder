@@ -68,7 +68,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
   /**
    * Retrieve the parent from the preview
    *
-   * @param {Preview | Stage | ContentTypeInterface} instance
+   * @param {Preview | Stage} instance
    * @returns {any}
    */
 

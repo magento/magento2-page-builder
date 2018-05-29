@@ -14,23 +14,11 @@ define([], function () {
   function createStyleSheet(blocks) {
     var style = document.createElement("style");
     var text = Object.keys(blocks).map(function (selector) {
-      return processRuleSet(selector, blocks[selector]);
+      return selector + (" {\n" + processDeclarationBlock(blocks[selector]) + "\n}");
     }).join("\n");
     style.setAttribute("type", "text/css");
     style.appendChild(document.createTextNode(text));
     return style;
-  }
-  /**
-   * Process an individual rule set
-   *
-   * @param {string} selector
-   * @param {StyleBlock} block
-   * @returns {string}
-   */
-
-
-  function processRuleSet(selector, block) {
-    return selector + (" {\n" + processDeclarationBlock(block) + "\n}");
   }
   /**
    * Process a declaration block from the rule set
@@ -41,32 +29,32 @@ define([], function () {
 
 
   function processDeclarationBlock(block) {
-    return Object.keys(block).map(function (prop) {
-      return processDeclaration(prop, block[prop]);
+    return Object.keys(block).map(function (property) {
+      return processDeclaration(property, block[property]);
     }).join("\n");
   }
   /**
    * Process a declaration, creating the property: value syntax
    *
-   * @param {string} prop
+   * @param {string} property
    * @param {string | number} value
    * @returns {string}
    */
 
 
-  function processDeclaration(prop, value) {
-    return hyphenate(prop) + (": " + value + ";");
+  function processDeclaration(property, value) {
+    return hyphenate(property) + (": " + value + ";");
   }
   /**
-   * Hyphenate style properties, from textAlign to text-align
+   * Hyphenate style property, from textAlign to text-align
    *
-   * @param {string} prop
+   * @param {string} property
    * @returns {string}
    */
 
 
-  function hyphenate(prop) {
-    return prop.replace(/[A-Z]/g, function (match) {
+  function hyphenate(property) {
+    return property.replace(/[A-Z]/g, function (match) {
       return "-" + match.toLowerCase();
     });
   }

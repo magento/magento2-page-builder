@@ -78,10 +78,10 @@ function getPreviewStageIdProxy(preview: Preview | Stage): string {
 /**
  * Retrieve the parent from the preview
  *
- * @param {Preview | Stage | ContentTypeInterface} instance
+ * @param {Preview | Stage} instance
  * @returns {any}
  */
-function getParentProxy(instance: Preview | Stage | ContentTypeInterface): ContentTypeCollectionInterface {
+function getParentProxy(instance: Preview | Stage): ContentTypeCollectionInterface {
     if (instance.config.name === "stage") {
         return (instance as any);
     }
