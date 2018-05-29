@@ -304,14 +304,15 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Row"/>
-            <title value="Row height adjusts to content"/>
-            <description value="A user should see the row height adjust to be smaller when content is added to the row"/>
+            <title value="Row height shrinks to fit small content"/>
+            <description value="A user should see the row height adjust to be smaller when Heading is added to the row"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-75136"/>
             <testCaseId value="MAGETWO-88297"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowGeneral"/>
+            <group value="pagebuilder-heading"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -332,7 +333,7 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <wait time="0.5" stepKey="waitForShrinkAnimation" />
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <!-- Assert row height has changed when content added -->
         <comment userInput="Assert row height has changed when content added" stepKey="comment2"/>
         <executeJS function="document.querySelectorAll('{{RowOnStage.baseCss}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCss}}')[0].clientHeight)" stepKey="setNewRowHeight"/>
@@ -348,7 +349,7 @@
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeHeaderFromRow">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <wait time="0.5" stepKey="waitForShrinkAnimationAfterRemove" />
+        <waitForPageLoad time="30" stepKey="waitForShrinkAnimationAfterRemove"/>
         <!-- Assert row height is 320px after removing children -->
         <comment userInput="Assert row height is 320px after removing children" stepKey="comment3"/>
         <executeJS function="document.querySelectorAll('{{RowOnStage.baseCss}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCss}}')[0].clientHeight)" stepKey="setNewRowHeight2"/>
@@ -356,6 +357,60 @@
         <assertEquals stepKey="assertNewRowHeight3">
             <expectedResult type="variable">getEmptyRowHeight</expectedResult>
             <actualResult type="variable">getNewRowHeight2</actualResult>
+        </assertEquals>
+    </test>
+    <test name="RowHeightAdjustsToContentWhenContentIsLarger">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Row"/>
+            <title value="Row height grows to fit large content"/>
+            <description value="A user should see the row height adjust to be larger when Slider is added to the row"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86953"/>
+            <testCaseId value="MAGETWO-92203"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
+            <group value="pagebuilder-slider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Validate Initial Row Height" stepKey="commentValidateRowHeight"/>
+        <actionGroup ref="validateContentBlockHeightOnStage" stepKey="assertInitialRowHeightMatchesExpected">
+            <argument name="contentBlock" value="PageBuilderRowContentBlock"/>
+            <argument name="index" value="1"/>
+            <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
+            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
+            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <comment userInput="Validate Initial Slider Height On Stage Matches Expected" stepKey="commentValidateSliderHeight"/>
+        <actionGroup ref="validateContentBlockHeightOnStage" stepKey="assertInitialSliderHeightMatchesExpected">
+            <argument name="contentBlock" value="PageBuilderSliderContentBlock"/>
+            <argument name="index" value="1"/>
+            <argument name="containerDefaultHeight" value="PageBuilderEmptySliderContainerHeightProperty"/>
+            <argument name="expectedPaddingTop" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
+            <argument name="expectedPaddingBottom" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
+        </actionGroup>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentBlock.role,'1')}}" stepKey="actualStageInitialSliderHeight"/>
+        <comment userInput="Validate Row Height adjusts to Slider Height" stepKey="commentValidateRowHeightAdjustToSlider"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentBlock.role,'1')}}" stepKey="actualStageRowHeightWithSlider"/>
+        <executeJS function="return Math.round({$actualStageInitialSliderHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndSlider"/>
+        <assertEquals stepKey="assertRowHeightAdjustsToSliderHeight">
+            <expectedResult type="variable">expectedRowHeightWithPaddingAndSlider</expectedResult>
+            <actualResult type="variable">actualStageRowHeightWithSlider</actualResult>
         </assertEquals>
     </test>
     <test name="RowValidateAdvancedConfigurationDefaultValues">
