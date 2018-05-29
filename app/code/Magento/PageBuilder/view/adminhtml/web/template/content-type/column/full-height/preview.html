@@ -10,8 +10,10 @@
      ko-style="Object.assign(data.main.style(), {width: previewData.width()})"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
      css="{'empty-column': $parent.children().length == 0}"
-     data-bind="afterRender: initColumn">
-    <div class="pagebuilder-column-resize-handle" data-bind="afterRender: bindResizeHandle, visible: $index() < $parent.parent.children().length - 1"></div>
+     afterRender="initColumn">
+    <div class="pagebuilder-column-resize-handle"
+         afterRender="bindResizeHandle"
+         data-bind="visible: $index() < $parent.parent.children().length - 1"></div>
     <div class="pagebuilder-resizing" css="{active: resizing}"></div>
     <render args="getOptions().template"></render>
     <render args="previewChildTemplate"></render>
