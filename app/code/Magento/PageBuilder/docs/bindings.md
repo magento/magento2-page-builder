@@ -70,7 +70,7 @@ app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/preview.ht
 app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/binding/draggable.ts
 ``` 
 
-The options provided in this binding are passed through the jQuery UI draggable instance. All options and their descriptions are available on the jQuery UI site: http://api.jqueryui.com/draggable/.
+The options provided in this binding are passed to the jQuery UI draggable instance. All options and their descriptions are available on the jQuery UI site: http://api.jqueryui.com/draggable/.
 
 Within Page Builder, we use this binding for the left panel's content types. The configuration and usage of the `draggable` binding can be seen in the Panel component:
 
