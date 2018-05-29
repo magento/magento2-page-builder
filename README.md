@@ -47,7 +47,7 @@ This project repository contains PageBuilder developer documentation on the foll
 [Content type configuration]: app/code/Magento/PageBuilder/docs/content-type-configuration.md
 [How to add a new content type]: app/code/Magento/PageBuilder/docs/how-to-add-new-content-type.md
 [Events]: app/code/Magento/PageBuilder/docs/events.md
-[bindings]: app/code/Magento/PageBuilder/docs/bindings.md
+[Bindings]: app/code/Magento/PageBuilder/docs/bindings.md
 [Master format]: app/code/Magento/PageBuilder/docs/master-format.md
 [Visual select]: app/code/Magento/PageBuilder/docs/visual-select.md
 

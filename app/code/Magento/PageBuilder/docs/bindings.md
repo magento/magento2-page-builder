@@ -39,11 +39,11 @@
 
 ## Summary
 
-As part of the PageBuilder application, we provide new Knockout bindings you can use in your custom components:
+As part of the Page Builder application, we provide new Knockout bindings you can use in your custom content types:
 
 | Name           | Description                                                    | Usage                                  |
 | -------------- | -------------------------------------------------------------- | -------------------------------------  |
-| sortable       | Defines content options used to control drag-and-drop actions. | \<div data-bind="sortable: {}"></div>  |
+| sortable       | Enables sorting the children of a bound element.               | \<div data-bind="sortable: {}"></div>  |
 | draggable      | Enables draggable functionality on DOM elements.               | \<div data-bind="draggable: {}"></div> |
 
 ### Sortable binding
@@ -51,9 +51,9 @@ As part of the PageBuilder application, we provide new Knockout bindings you can
 app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/binding/sortable.ts
 ```
 
-The options in this binding are passed through the jQuery UI sortable instance. All options and their descriptions are available on the jQuery UI site: http://api.jqueryui.com/sortable/.
+The options in this binding are passed to the jQuery UI sortable instance. All options and their descriptions are available on the jQuery UI site: http://api.jqueryui.com/sortable/.
 
-Within PageBuilder, we use the `sortable` binding to pass preview-component options to the drag-and-drop binding. We bind multiple options and events to the `sortable` instance so we can correctly respond to user actions when dragging and dropping content. Configuration and usage of the `sortable` binding can be seen in the Preview component:
+Within Page Builder, we use the `sortable` binding to pass preview-component options to the drag-and-drop binding. We bind multiple options and events to the `sortable` instance so we can correctly respond to user actions when dragging and dropping content. Configuration and usage of the `sortable` binding can be seen in the Preview component:
 
 Example Configuration: 
 ```
