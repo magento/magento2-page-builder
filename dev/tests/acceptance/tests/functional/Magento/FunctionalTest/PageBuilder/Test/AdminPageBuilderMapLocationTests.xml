@@ -69,9 +69,55 @@
         <seeInField selector="{{PageBuilderDataGrid.gridPaginationPage}}" userInput="1" stepKey="seePaginationPage"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridPaginationTotalPages('1')}}" stepKey="waitForPaginationTotalPages"/>
     </test>
+    <test name="MapVerifyEditButtonOnLocationsGrid">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map - Verify Edit Button On Locations Grid"/>
+            <description value="Verify that the edit button on the locations grid takes user to the edit location form."/>
+            <severity value="AVERAGE"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MAGETWO-92257"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-mapLocation"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Click Edit Button -->
+        <comment userInput="Click Edit Button" stepKey="commentClickEditButton"/>
+        <actionGroup ref="clickEditButtonOnLocationGrid" stepKey="clickEditButtonOnLocationGrid">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+    </test>
 </tests>
 
-<!--todo: add tests for grid click row to edit and select>edit-->
 <!--todo: add tests for edit location-->
 <!--todo: add test to delete location (1 normal, 1 delete, save form, dont save page, reload page, verify location back)-->
 <!--todo: add multi location tests (normal locations, same coordinates, & on opposite sides of world locations)-->

@@ -49,6 +49,21 @@
         <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
         <waitForElementVisible selector="{{AddLocationForm.pegman('1')}}" stepKey="waitForLocationMapPegman"/>
     </actionGroup>
+    <actionGroup name="clickEditButtonOnLocationGrid">
+        <arguments>
+            <argument name="locationName"/>
+        </arguments>
+        <comment userInput="clickEditButtonOnLocationGrid" stepKey="comment"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridSelectButton(locationName.fieldName, locationName.value)}}" stepKey="waitForSelectButton"/>
+        <click selector="{{PageBuilderDataGrid.gridSelectButton(locationName.fieldName, locationName.value)}}" stepKey="clickSelectButton"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridSelectEditButton(locationName.fieldName, locationName.value)}}" stepKey="waitForEditButton"/>
+        <click selector="{{PageBuilderDataGrid.gridSelectEditButton(locationName.fieldName, locationName.value)}}" stepKey="clickEditButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
+        <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
+        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
+        <waitForElementVisible selector="{{AddLocationForm.pegman('1')}}" stepKey="waitForLocationMapPegman"/>
+    </actionGroup>
     <actionGroup name="deleteLocationFromGrid">
         <arguments>
             <argument name="locationName"/>
