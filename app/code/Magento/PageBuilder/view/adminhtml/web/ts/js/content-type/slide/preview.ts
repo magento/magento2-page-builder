@@ -283,14 +283,14 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         events.on(`${this.parent.id}:updated`, () => {
-            const imageDataStore = this.parent.dataStore.get();
-            const imageObject = imageDataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            const dataStore = this.parent.dataStore.get();
+            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
             events.trigger(`image:assigned:${this.parent.id}`, imageObject);
         });
 
         events.on(`${this.config.name}:block:ready`, () => {
-            const imageDataStore = this.parent.dataStore.get();
-            const initialImageValue = imageDataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+            const dataStore = this.parent.dataStore.get();
+            const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
 
             // Create uploader
             this.uploader = new Uploader(

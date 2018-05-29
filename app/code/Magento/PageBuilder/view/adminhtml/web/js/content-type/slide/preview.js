@@ -301,17 +301,17 @@ define(["uiEvents", "knockout", "mage/translate", "Magento_PageBuilder/js/conten
       _BasePreview.prototype.bindEvents.call(this);
 
       _uiEvents.on(this.parent.id + ":updated", function () {
-        var imageDataStore = _this2.parent.dataStore.get();
+        var dataStore = _this2.parent.dataStore.get();
 
-        var imageObject = imageDataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
 
         _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
       });
 
       _uiEvents.on(this.config.name + ":block:ready", function () {
-        var imageDataStore = _this2.parent.dataStore.get();
+        var dataStore = _this2.parent.dataStore.get();
 
-        var initialImageValue = imageDataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
         _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
           value: initialImageValue
