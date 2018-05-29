@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addImageToStage">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <comment userInput="Attach image A to PageBuilder stage" stepKey="commentAttach"/>
+        <attachFile userInput="{{property.value}}" selector="{{ImageOnStage.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{ImageOnStage.imagePreview}}" stepKey="waitForImagePreview"/>
+        <waitForElementVisible selector="{{ImageOnStage.imageSourceOnStage(property.fileName)}}" stepKey="waitForImageSource"/>
+    </actionGroup>
+    <actionGroup name="verifyUploadImageButtons">
+        <comment userInput="Hover uploaded image to check Upload New Image button and Select From Gallery button" stepKey="commentHover"/>
+        <moveMouseOver selector="{{ImageOnStage.imageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" x="10" y="0" stepKey="onMouseOverUploadedImage"/>
+        <waitForElementVisible selector="{{ImageOnStage.uploadNewImageBtn}}" stepKey="waitForUploadNewImageBtn" />
+        <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
+    </actionGroup>
+    <actionGroup name="verifyImageOnSlideout">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <comment userInput="Verify image A display on preview of slide-out" stepKey="commentVerifyImage"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(property.value)}}" stepKey="seeImageNameOnPreview"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(property.fileName)}}" stepKey="seeMainImageSource"/>
+    </actionGroup>
+</actionGroups>
