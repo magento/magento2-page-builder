@@ -12,6 +12,11 @@
         <element name="emptyGridMessage" type="text" selector="//table[@data-role='grid']//td[@class='pagebuilder-empty-dynamic-row' and @align='center' and .='{{arg1}}']" parameterized="true"/>
         <element name="gridBase" type="text" selector="//table[@data-role='grid']"/>
         <element name="gridColumnHeader" type="text" selector="//table[@data-role='grid']//thead//th[{{arg1}}]//span[.='{{arg2}}']" parameterized="true"/>
+        <element name="gridPagination" type="text" selector=".admin__data-grid-pager"/>
+        <element name="gridPaginationLeftButton" type="button" selector=".admin__data-grid-pager button.action-previous"/>
+        <element name="gridPaginationRightButton" type="button" selector=".admin__data-grid-pager button.action-next"/>
+        <element name="gridPaginationPage" type="input" selector=".admin__data-grid-pager input.admin__control-text"/>
+        <element name="gridPaginationTotalPages" type="text" selector="//div[@class='admin__data-grid-pager']//label[@class='admin__control-support-text' and .='of {{arg1}}']" parameterized="true"/>
         <element name="gridRow" type="text" selector="//table[@data-role='grid']//tbody//tr[descendant::span[@data-index='{{arg1}}' and .='{{arg2}}']]" parameterized="true"/>
         <element name="gridRowByIndex" type="text" selector="//table[@data-role='grid']//tbody//tr[{{arg1}}][descendant::span[@data-index='{{arg2}}' and .='{{arg3}}']]" parameterized="true"/>
         <element name="gridCell" type="text" selector="//table[@data-role='grid']//tbody//span[@data-index='{{arg1}}' and .='{{arg2}}']" parameterized="true"/>
