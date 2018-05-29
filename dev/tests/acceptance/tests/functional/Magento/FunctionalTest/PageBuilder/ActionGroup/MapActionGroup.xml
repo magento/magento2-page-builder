@@ -198,6 +198,7 @@
             <argument name="phoneNumber" defaultValue="PageBuilderMapPhoneNumber_Default"/>
             <argument name="address" defaultValue="PageBuilderMapStreetAddress_Default"/>
             <argument name="city" defaultValue="PageBuilderMapCity_Default"/>
+            <argument name="state" defaultValue="PageBuilderMapState_Default"/>
             <argument name="zip" defaultValue="PageBuilderMapZipCode_Default"/>
             <argument name="country" defaultValue="PageBuilderMapCountry_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -209,7 +210,7 @@
         <waitForElementVisible selector="{{page.locationName(index, locationName.value)}}" stepKey="waitForLocationName"/>
         <waitForElementVisible selector="{{page.comment(index, comment.value)}}" stepKey="waitForComment"/>
         <waitForElementVisible selector="{{page.phoneNumber(index, phoneNumber.value)}}" stepKey="waitForPhoneNumber"/>
-        <waitForElementVisible selector="{{page.addressCityZipCountry(index, address.value, city.value, zip.tooltipValue, country.tooltipValue)}}" stepKey="waitForAddress"/>
+        <waitForElementVisible selector="{{page.addressCityStateZipCountry(index, address.value, city.value, state.tooltipValue, zip.tooltipValue, country.tooltipValue)}}" stepKey="waitForAddress"/>
         <click selector="{{page.tooltipWindowClose(index)}}" stepKey="closePinTooltip"/>
         <waitForElementNotVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>

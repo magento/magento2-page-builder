@@ -9,7 +9,6 @@
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="MapDefaultState">
-        <!--todo: state-->
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Map"/>
@@ -90,6 +89,9 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCityValue">
             <argument name="property" value="PageBuilderMapCity_Default"/>
         </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeStateValue">
+            <argument name="property" value="PageBuilderMapState_Default"/>
+        </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeZipCodeValue">
             <argument name="property" value="PageBuilderMapZipCode_Default"/>
         </actionGroup>
@@ -161,6 +163,9 @@
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeCityValue2">
             <argument name="property" value="PageBuilderMapCity_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeStateValue2">
+            <argument name="property" value="PageBuilderMapState_Default"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeZipCodeValue2">
             <argument name="property" value="PageBuilderMapZipCode_Default"/>
@@ -515,7 +520,6 @@
         </actionGroup>
     </test>
     <test name="MapAddAllAttributes">
-        <!--todo: state-->
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Map"/>
@@ -527,6 +531,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -568,6 +573,9 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState">
+            <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
@@ -649,6 +657,7 @@
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
             <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="state" value="PageBuilderMapState_Texas"/>
             <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
@@ -701,6 +710,9 @@
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState">
+            <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
@@ -775,6 +787,7 @@
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
             <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="state" value="PageBuilderMapState_Texas"/>
             <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
@@ -810,12 +823,12 @@
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
             <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="state" value="PageBuilderMapState_Texas"/>
             <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
         </actionGroup>
     </test>
     <test name="MapDuplicate">
-        <!--todo: state-->
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Map"/>
@@ -827,6 +840,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
             <group value="pagebuilder-mapCommon"/>
+            <group value="pagebuilder"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -868,6 +882,9 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterCity">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterState">
+            <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterZip">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
@@ -962,6 +979,7 @@
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
             <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="state" value="PageBuilderMapState_Texas"/>
             <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
             <argument name="index" value="2"/>
@@ -1012,6 +1030,9 @@
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState">
+            <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
@@ -1101,6 +1122,7 @@
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
             <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="state" value="PageBuilderMapState_Texas"/>
             <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
             <argument name="index" value="2"/>
@@ -1151,6 +1173,9 @@
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCity2">
             <argument name="property" value="PageBuilderMapCity_FakeCity"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateState2">
+            <argument name="property" value="PageBuilderMapState_Texas"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateZip2">
             <argument name="property" value="PageBuilderMapZipCode_12345_6789"/>
@@ -1239,6 +1264,7 @@
             <argument name="phoneNumber" value="PageBuilderMapPhoneNumber_TestPhoneNumber"/>
             <argument name="address" value="PageBuilderMapStreetAddress_1234FakeDrive"/>
             <argument name="city" value="PageBuilderMapCity_FakeCity"/>
+            <argument name="state" value="PageBuilderMapState_Texas"/>
             <argument name="zip" value="PageBuilderMapZipCode_12345_6789"/>
             <argument name="country" value="PageBuilderMapCountry_USA"/>
             <argument name="index" value="2"/>
