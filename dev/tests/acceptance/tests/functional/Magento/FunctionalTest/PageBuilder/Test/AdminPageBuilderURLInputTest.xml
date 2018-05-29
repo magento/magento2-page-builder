@@ -41,6 +41,7 @@
         <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('button_link')}}" userInput="URL" stepKey="seeButtonLinkSelectedByDefault" />
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
             <argument name="property" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
@@ -67,6 +68,7 @@
         <click selector="//div[@class='element-children buttons-container ui-sortable']//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1SecureLinkField">
             <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
