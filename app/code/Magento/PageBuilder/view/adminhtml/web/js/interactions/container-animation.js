@@ -19,11 +19,15 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
    */
 
   function lockContainerHeight(element) {
-    element.css({
-      minHeight: element.height(),
-      transition: "min-height " + animationTime + "ms ease-in-out"
-    });
-    return true;
+    if (element[0].style.minHeight === "") {
+      element.css({
+        minHeight: element.height(),
+        transition: "min-height " + animationTime + "ms ease-in-out"
+      });
+      return true;
+    }
+
+    return false;
   }
   /**
    * Animate the containers height to it's actual height
@@ -46,7 +50,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
           _uiEvents.off(ns);
         }
       }, ns);
-    } else {
+    } else if (element[0] && element[0].style.transition !== "") {
       element.css({
         minHeight: "",
         transition: ""
@@ -75,7 +79,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
           });
         }, animationTime + 150);
       });
-    } else {
+    } else if (element[0] && element[0].style.transition !== "") {
       element.css({
         minHeight: "",
         transition: ""

@@ -20,12 +20,15 @@ export const animationTime = 350;
  * @param {JQuery<Element>} element
  * @returns {boolean}
  */
-export function lockContainerHeight(element: JQuery<Element>): boolean {
-    element.css({
-        minHeight: element.height(),
-        transition: `min-height ${animationTime}ms ease-in-out`,
-    });
-    return true;
+export function lockContainerHeight(element: JQuery<HTMLElement>): boolean {
+    if (element[0].style.minHeight === "") {
+        element.css({
+            minHeight: element.height(),
+            transition: `min-height ${animationTime}ms ease-in-out`,
+        });
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -38,7 +41,7 @@ export function lockContainerHeight(element: JQuery<Element>): boolean {
 export function bindAfterRenderForAnimation(
     containerLocked: boolean,
     block: ContentTypeInterface,
-    element: JQuery<Element>,
+    element: JQuery<HTMLElement>,
 ) {
     if (containerLocked) {
         // Wait for mount then animate the container
@@ -49,7 +52,7 @@ export function bindAfterRenderForAnimation(
                 events.off(ns);
             }
         }, ns);
-    } else {
+    } else if (element[0] && element[0].style.transition !== "") {
         element.css({minHeight: "", transition: ""});
     }
 }
@@ -60,7 +63,7 @@ export function bindAfterRenderForAnimation(
  * @param {boolean} containerLocked
  * @param {JQuery<Element>} element
  */
-export function animateContainerHeight(containerLocked: boolean, element: JQuery<Element>) {
+export function animateContainerHeight(containerLocked: boolean, element: JQuery<HTMLElement>) {
     if (containerLocked) {
         _.defer(() => {
             element.css({
@@ -72,7 +75,7 @@ export function animateContainerHeight(containerLocked: boolean, element: JQuery
                 element.css({minHeight: "", transition: ""});
             }, animationTime + 150);
         });
-    } else {
+    } else if (element[0] && element[0].style.transition !== "") {
         element.css({minHeight: "", transition: ""});
     }
 }
