@@ -28,36 +28,6 @@ define(["mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type/previ
       return this.uploader;
     };
     /**
-     * @inheritDoc
-     */
-
-
-    _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
-
-      _BasePreview.prototype.bindEvents.call(this);
-
-      _uiEvents.on(this.parent.id + ":updated", function () {
-        var dataStore = _this2.parent.dataStore.get();
-
-        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
-
-        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
-      });
-
-      _uiEvents.on(this.config.name + ":block:ready", function () {
-        var dataStore = _this2.parent.dataStore.get();
-
-        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
-
-        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
-          value: initialImageValue
-        })); // Register listener when image gets uploaded from uploader UI component
-
-        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
-      });
-    };
-    /**
      * Set state based on overlay mouseover event for the preview
      */
 
@@ -97,6 +67,36 @@ define(["mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type/previ
           visibility: "hidden"
         }));
       }
+    };
+    /**
+     * @inheritDoc
+     */
+
+
+    _proto.bindEvents = function bindEvents() {
+      var _this2 = this;
+
+      _BasePreview.prototype.bindEvents.call(this);
+
+      _uiEvents.on(this.parent.id + ":updated", function () {
+        var dataStore = _this2.parent.dataStore.get();
+
+        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
+
+        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
+      });
+
+      _uiEvents.on(this.config.name + ":block:ready", function () {
+        var dataStore = _this2.parent.dataStore.get();
+
+        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+
+        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
+          value: initialImageValue
+        })); // Register listener when image gets uploaded from uploader UI component
+
+        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
+      });
     };
     /**
      * Update image data inside data store

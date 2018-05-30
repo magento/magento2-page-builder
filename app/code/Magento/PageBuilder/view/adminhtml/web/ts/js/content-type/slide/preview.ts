@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import events from "uiEvents";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "uiEvents";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Options from "../../content-type-menu";
 import Option from "../../content-type-menu/option";
@@ -277,36 +277,6 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * @inheritDoc
-     */
-    protected bindEvents() {
-        super.bindEvents();
-
-        events.on(`${this.parent.id}:updated`, () => {
-            const dataStore = this.parent.dataStore.get();
-            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
-            events.trigger(`image:assigned:${this.parent.id}`, imageObject);
-        });
-
-        events.on(`${this.config.name}:block:ready`, () => {
-            const dataStore = this.parent.dataStore.get();
-            const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
-
-            // Create uploader
-            this.uploader = new Uploader(
-                this.parent.id,
-                "imageuploader_" + this.parent.id,
-                Object.assign({}, this.config.additional_data.uploaderConfig, {
-                    value: initialImageValue,
-                }),
-            );
-
-            // Register listener when image gets uploaded from uploader UI component
-            this.uploader.onUploaded(this.onImageUploaded.bind(this));
-        });
-    }
-
-    /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Uploader}
@@ -342,6 +312,37 @@ export default class Preview extends BasePreview {
         ));
         return newOptions;
     }
+
+    /**
+     * @inheritDoc
+     */
+    protected bindEvents() {
+        super.bindEvents();
+
+        events.on(`${this.parent.id}:updated`, () => {
+            const dataStore = this.parent.dataStore.get();
+            const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
+            events.trigger(`image:assigned:${this.parent.id}`, imageObject);
+        });
+
+        events.on(`${this.config.name}:block:ready`, () => {
+            const dataStore = this.parent.dataStore.get();
+            const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
+
+            // Create uploader
+            this.uploader = new Uploader(
+                this.parent.id,
+                "imageuploader_" + this.parent.id,
+                Object.assign({}, this.config.additional_data.uploaderConfig, {
+                    value: initialImageValue,
+                }),
+            );
+
+            // Register listener when image gets uploaded from uploader UI component
+            this.uploader.onUploaded(this.onImageUploaded.bind(this));
+        });
+    }
+
     protected afterStyleMapped(styles: StyleAttributeMapperResult): StyleAttributeMapperResult {
         // Extract data values our of observable functions
         // The style attribute mapper converts images to directives, override it to include the correct URL

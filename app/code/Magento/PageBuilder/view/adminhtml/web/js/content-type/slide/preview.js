@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents", "knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_uiEvents, _knockout, _translate, _option, _colorConverter, _numberConverter, _preview, _uploader) {
+define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_knockout, _translate, _uiEvents, _option, _colorConverter, _numberConverter, _preview, _uploader) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -291,36 +291,6 @@ define(["uiEvents", "knockout", "mage/translate", "Magento_PageBuilder/js/conten
       };
     };
     /**
-     * @inheritDoc
-     */
-
-
-    _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
-
-      _BasePreview.prototype.bindEvents.call(this);
-
-      _uiEvents.on(this.parent.id + ":updated", function () {
-        var dataStore = _this2.parent.dataStore.get();
-
-        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
-
-        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
-      });
-
-      _uiEvents.on(this.config.name + ":block:ready", function () {
-        var dataStore = _this2.parent.dataStore.get();
-
-        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
-
-        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
-          value: initialImageValue
-        })); // Register listener when image gets uploaded from uploader UI component
-
-        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
-      });
-    };
-    /**
      * Get registry callback reference to uploader UI component
      *
      * @returns {Uploader}
@@ -356,6 +326,36 @@ define(["uiEvents", "knockout", "mage/translate", "Magento_PageBuilder/js/conten
 
       newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
       return newOptions;
+    };
+    /**
+     * @inheritDoc
+     */
+
+
+    _proto.bindEvents = function bindEvents() {
+      var _this2 = this;
+
+      _BasePreview.prototype.bindEvents.call(this);
+
+      _uiEvents.on(this.parent.id + ":updated", function () {
+        var dataStore = _this2.parent.dataStore.get();
+
+        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
+
+        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
+      });
+
+      _uiEvents.on(this.config.name + ":block:ready", function () {
+        var dataStore = _this2.parent.dataStore.get();
+
+        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+
+        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
+          value: initialImageValue
+        })); // Register listener when image gets uploaded from uploader UI component
+
+        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
+      });
     };
 
     _proto.afterStyleMapped = function afterStyleMapped(styles) {
