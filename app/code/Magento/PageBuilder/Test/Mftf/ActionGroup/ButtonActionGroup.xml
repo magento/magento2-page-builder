@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="addButton">
+        <arguments>
+            <argument name="buttonGroupIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="Adding Button" stepKey="comment"/>
+        <executeJS function="return Math.round(document.getElementsByClassName('pagebuilder-button-item').length+1)" stepKey="initialNumberOfButtonsPlusOne"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderButtonsContentBlock.role, buttonGroupIndex)}}" stepKey="mouseOverButtonsGroup"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderButtonsContentBlock.role)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible time="10" selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="seeAddButton"/>
+        <click selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="clickAddButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <executeJS function="return document.getElementsByClassName('pagebuilder-button-item').length" stepKey="numberOfButtonsAfterAdd"/>
+        <assertEquals stepKey="assertOneMoreButton">
+            <expectedResult type="variable">initialNumberOfButtonsPlusOne</expectedResult>
+            <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateButtonItemContent">
+        <arguments>
+            <argument name="page"/>
+            <argument name="text" defaultValue="PageBuilderButtonItemText_Empty"/>
+            <argument name="type" defaultValue="PageBuilderButtonItemType_Primary"/>
+            <argument name="url" defaultValue="PageBuilderButtonItemLink_Empty"/>
+            <argument name="newTab" defaultValue="PageBuilderButtonItemOpenInNewTab_False"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForButtonElement"/>
+        <waitForElementVisible selector="{{page.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
+        <waitForElementVisible selector="{{page.buttonItemType(index, type.value)}}" stepKey="waitForButtonType"/>
+        <waitForElementVisible selector="{{page.buttonItemUrl(index, url.value)}}" stepKey="waitForButtonUrl"/>
+        <waitForElementVisible selector="{{page.buttonItemNewTab(index, newTab.stageValue)}}" stepKey="waitForButtonNewTab"/>
+    </actionGroup>
+    <actionGroup name="inlineEditButton">
+        <arguments>
+            <argument name="text"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="inlineEditButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(index)}}" stepKey="waitForButton"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" stepKey="waitForButtonEditable"/>
+        <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
+    </actionGroup>
+    <actionGroup name="moveButton">
+        <arguments>
+            <argument name="targetSelector" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+            <argument name="buttonIndexToMove" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="moveButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton1"/>
+        <click selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockMoveByIndex(PageBuilderButtonItemContentBlock.role, buttonIndexToMove)}}" stepKey="waitForMoveButton"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.contentBlockMoveByIndex(PageBuilderButtonItemContentBlock.role, buttonIndexToMove)}}" selector2="{{targetSelector}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton2"/>
+    </actionGroup>
+</actionGroups>
