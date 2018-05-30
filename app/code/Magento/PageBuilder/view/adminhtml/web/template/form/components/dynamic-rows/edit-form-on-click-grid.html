@@ -39,10 +39,11 @@
                         class="data-grid-draggable-row-cell"/>
 
                     <th repeat="foreach: labels, item: '$label'"
-                        class="data-grid-th"
+                        class="data-grid-th _sortable"
                         visible="$label().visible"
                         disable="$label().disabled"
-                        css="$label().columnsHeaderClasses">
+                        css="$label().columnsHeaderClasses"
+                        click="sortByHeader.bind($data, $label)">
                         <span translate="$label().label"/>
                     </th>
                 </tr>

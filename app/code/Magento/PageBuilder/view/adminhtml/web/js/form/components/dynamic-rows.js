@@ -61,8 +61,77 @@ define([
             }
 
             this.recordData(recordData);
+
+            _.each(this.labels(), function(label) {
+                if (label.columnsHeaderClasses) {
+                    this.sortRecord(label.name, label.columnsHeaderClasses === "_ascend");
+                }
+            }.bind(this));
+
             this.reload();
         },
+
+        sortByHeader: function(property) {
+            var ascend;
+
+            if (property().name === "actions") {
+                return;
+            }
+
+            if (property().columnsHeaderClasses) {
+                var activeLabel = jQuery.extend({}, property());
+                if (property().columnsHeaderClasses === "_ascend") {
+                    activeLabel.columnsHeaderClasses = "_descend";
+                } else {
+                    activeLabel.columnsHeaderClasses = "_ascend";
+                }
+                ascend = activeLabel.columnsHeaderClasses === "_ascend";
+                property(activeLabel);
+            } else {
+                var allLabels = this.labels().slice();
+                allLabels.forEach(function(label) {
+                    if (label.name === property().name) {
+                        label.columnsHeaderClasses = "_ascend";
+                    } else {
+                        label.columnsHeaderClasses = "";
+                    }
+                });
+                ascend = true;
+                this.labels(allLabels);
+            }
+
+            if (this.recordData().length) {
+                var placeholder = this.emptyContentPlaceholder;
+                this.emptyContentPlaceholder = false;
+                this.sortRecord(property().name, ascend);
+                this.reload();
+                this.emptyContentPlaceholder = placeholder;
+            }
+        },
+
+        /**
+         * Sorting of dynamic row records.
+         *
+         * @param {String} sortBy
+         * @param {Boolean} ascend
+         */
+        sortRecord: function(sortBy, ascend) {
+            this.recordData.sort(function(left, right){
+                var rec1 = left;
+                var rec2 = right;
+
+                if (!ascend) {
+                    rec1 = right;
+                    rec2 = left;
+                }
+
+                rec1 = rec1[sortBy];
+                rec2 = rec2[sortBy];
+
+                return rec1 === rec2 ? 0 : rec1 < rec2 ? -1 : 1;
+            })
+        }
+        ,
 
         /** @inheritdoc */
         destroy: function () {
