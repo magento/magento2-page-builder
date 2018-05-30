@@ -27,6 +27,7 @@
 [Events]: events.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Custom Toolbar]: toolbar.md
 [Roadmap and Known Issues]: roadmap.m
 
 ## Overview
