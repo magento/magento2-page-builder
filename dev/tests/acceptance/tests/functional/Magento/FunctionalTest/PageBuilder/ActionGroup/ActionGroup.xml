@@ -79,6 +79,7 @@
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToStageByIndex">
         <arguments>
@@ -86,8 +87,9 @@
             <argument name="contentBlockNumber" defaultValue="1" type="string"/>
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForContentBlockInStage" />
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToStageAndExpectEditPanel">
         <arguments>
@@ -109,7 +111,24 @@
         </arguments>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
+    </actionGroup>
+    <actionGroup name="dragContentBlockNextToExistingContentBlock">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="existingContentBlock" defaultValue=""/>
+            <argument name="existingContentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="offsetXCoordinate" defaultValue="0" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
+        </arguments>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockInStageByIndex(existingContentBlock.role, existingContentBlockIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>
@@ -138,10 +157,10 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForEditButton"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickEditContentBlock"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation"/>
+        <waitForPageLoad stepKey="waitForAnimation1" time="30"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation2"/>
+        <waitForPageLoad stepKey="waitForAnimation2" time="30"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanelSmallByIndex">
         <arguments>
