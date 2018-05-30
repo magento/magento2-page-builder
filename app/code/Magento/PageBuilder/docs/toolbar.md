@@ -50,133 +50,12 @@ To add a custom toolbar to a Page Builder content block:
 
 ## Add a toolbar configuration
 
-To add a Toolbar configuration to your content block, you need to create a new instance of the `Toolbar` class, then add configuration options to it. Page Builder's Heading content block (`app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/heading/preview.ts`) provides an example of what you can do in your own content block:
+To add a Toolbar configuration to your content block, you need to create a new instance of the `Toolbar` class, then add configuration options to it. 
 
-```typescript
-import $ from "jquery";
-import events from "uiEvents";
-import _ from "underscore";
-import ContentTypeConfigInterface from "../../content-type-config.d";
-import Toolbar from "../../content-type-toolbar";
-import ToolbarOptionInterface from "../../content-type-toolbar/option.d";
-import ContentTypeInterface from "../../content-type.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
-import ObservableUpdater from "../observable-updater";
-import BasePreview from "../preview";
- 
-export default class Heading extends BasePreview {
-    public toolbar: Toolbar;
-    private element: Element;
- 
-    /**
-     * @param {ContentTypeInterface} parent
-     * @param {ContentTypeConfigInterface} config
-     * @param {ObservableUpdater} observableUpdater
-     */
-    constructor(
-        parent: ContentTypeInterface,
-        config: ContentTypeConfigInterface,
-        observableUpdater: ObservableUpdater,
-    ) {
-        super(parent, config, observableUpdater);
-        this.toolbar = new Toolbar(
-            this,
-            this.getToolbarOptions(),
-        );
-    }
- 
-    /**
-     * On render init the tabs widget
-     *
-     * @param {Element} element
-     */
-    public afterRender(element: Element): void {
-        this.element = element;
-    }
- 
-    public bindEvents() {
-        super.bindEvents();
- 
-        // When a heading is dropped for the first time show heading toolbar
-        events.on("heading:block:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.parent.id) {
-                _.delay(() => {
-                    $(this.element).focus();
-                }, 100); // 100 ms delay to allow for heading to render
-            }
-        });
-    }
- 
-    /**
-     * Build and return the tool bar options for heading
-     *
-     * @returns {ToolbarOptionInterface[]}
-     */
-    private getToolbarOptions(): ToolbarOptionInterface[] {
-        return [
-            {
-                key: "heading_type",
-                type: "select",
-                values: [
-                    {
-                        value: "h1",
-                        label: "H1",
-                        icon: "",
-                    },
-                    {
-                        value: "h2",
-                        label: "H2",
-                        icon: "",
-                    },
-                    {
-                        value: "h3",
-                        label: "H3",
-                        icon: "",
-                    },
-                    {
-                        value: "h4",
-                        label: "H4",
-                        icon: "",
-                    },
-                    {
-                        value: "h5",
-                        label: "H5",
-                        icon: "",
-                    },
-                    {
-                        value: "h6",
-                        label: "H6",
-                        icon: "",
-                    },
-                ],
-            },
-            {
-                key: "text_align",
-                type: "select",
-                values: [
-                    {
-                        value: "left",
-                        label: "Left",
-                        icon: "icon-pagebuilder-align-left",
-                    },
-                    {
-                        value: "center",
-                        label: "Center",
-                        icon: "icon-pagebuilder-align-center",
-                    },
-                    {
-                        value: "right",
-                        label: "Right",
-                        icon: "icon-pagebuilder-align-right",
-                    },
-                ],
-            },
-        ];
-    }
-}
-```
+An example implementation can be found in the Heading content block:
+`app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/heading/preview.ts`
 
-In the Heading example, the `Toolbar` constructor requires its parent preview and the toolbar options you want to include:
+In the Heading example, the `Toolbar` constructor requires its parent preview and the toolbar options you want to include as follows:
 
 ```javascript
 new Toolbar(this, this.getToolbarOptions());
@@ -229,5 +108,8 @@ In your content block template, add the toolbar events to your main toolbar cont
     </with>
 </div>
 ```
+
+An example implementation can be found in the Heading content block:
+`app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/heading/default/preview.html`
 
 
