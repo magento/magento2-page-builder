@@ -134,6 +134,7 @@ export default class Preview {
         }
 
         optionsMenu.parent().addClass("pagebuilder-options-visible");
+
         $(currentTarget).addClass("pagebuilder-content-type-active");
     }
 

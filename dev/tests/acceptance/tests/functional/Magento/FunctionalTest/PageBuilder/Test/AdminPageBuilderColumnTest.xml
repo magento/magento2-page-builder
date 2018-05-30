@@ -779,7 +779,6 @@
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAdvancedMarginsAndPaddingProperty">
             <argument name="property" value="PageBuilderAdvancedMarginsAndPaddingProperty"/>
         </actionGroup>
-
         <!-- Check border fields become enabled when changing border -->
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDotted"/>
@@ -792,7 +791,6 @@
         </actionGroup>
         <!-- Validate the default values in the fields -->
         <seeElement selector="{{AdvancedForm.advancedBorderWidthDefault}}" stepKey="assertBorderWidthDefaultValue"/>
-
         <!-- Add test data into form -->
         <comment userInput="I fill out Border Color into Border Color using Color Picker" stepKey="comment"/>
         <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
@@ -899,13 +897,15 @@
     </test>
     <test name="ColumnFullHeightShowsOnFrontend">
         <annotations>
-            <features value="Pagebuilder: Column"/>
-            <stories value="MAGETWO-71365: Bluefoot Columns to be the same height in the row"/>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
             <title value="Bluefoot columns to be the same height in the row"/>
             <description value="Validate columns are the same height on the frontend"/>
+            <useCaseId value="MAGETWO-71365"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
+            <group value="pagebuilder-heading"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -930,17 +930,28 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeading2ToFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="2"/>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading1">
+            <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeading3ToFirstColumn">
+        <actionGroup ref="dragContentBlockNextToExistingContentBlock" stepKey="dragHeading2ToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="2"/>
+            <argument name="existingContentBlock" value="PageBuilderHeadingContentBlock"/>
+            <argument name="existingContentBlockIndex" value="1"/>
+            <argument name="offsetYCoordinate" value="25"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading2">
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockNextToExistingContentBlock" stepKey="dragHeading3ToFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
             <argument name="contentBlockIndex" value="3"/>
+            <argument name="existingContentBlock" value="PageBuilderHeadingContentBlock"/>
+            <argument name="existingContentBlockIndex" value="2"/>
+            <argument name="offsetYCoordinate" value="25"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading3">
+            <argument name="index" value="3"/>
         </actionGroup>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>

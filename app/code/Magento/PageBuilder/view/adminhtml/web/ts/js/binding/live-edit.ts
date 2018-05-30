@@ -101,9 +101,9 @@ ko.bindingHandlers.liveEdit = {
         };
 
         /**
-         * Key up event on element
+         * Input event on element
          */
-        const onKeyUp = () => {
+        const onInput = () => {
             handlePlaceholderClass(element);
         };
         element.setAttribute("data-placeholder", placeholder);
@@ -113,7 +113,7 @@ ko.bindingHandlers.liveEdit = {
         element.addEventListener("blur", onBlur);
         element.addEventListener("click", onClick);
         element.addEventListener("keydown", onKeyDown);
-        element.addEventListener("keyup", onKeyUp);
+        element.addEventListener("input", onInput);
 
         $(element).parent().css("cursor", "text");
         handlePlaceholderClass(element);
