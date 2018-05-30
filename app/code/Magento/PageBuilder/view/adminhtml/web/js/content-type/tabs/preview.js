@@ -72,26 +72,28 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
 
       _uiEvents.on("sortableChildren:sortupdate", function (args) {
-        _this.refreshTabs(args.newPosition, true);
-        /**
-         * Update the default active tab if its position was affected by the sorting
-         */
+        if (args.instance.id === _this.parent.id) {
+          _this.refreshTabs(args.newPosition, true);
+          /**
+           * Update the default active tab if its position was affected by the sorting
+           */
 
 
-        var defaultActiveTab = +args.instance.preview.previewData.default_active();
-        var newDefaultActiveTab = defaultActiveTab;
+          var defaultActiveTab = +args.instance.preview.previewData.default_active();
+          var newDefaultActiveTab = defaultActiveTab;
 
-        if (args.originalPosition === defaultActiveTab) {
-          newDefaultActiveTab = args.newPosition;
-        } else if (args.originalPosition < defaultActiveTab && args.newPosition >= defaultActiveTab) {
-          // a tab was moved from the left of the default active tab the right of it, changing its index
-          newDefaultActiveTab--;
-        } else if (args.originalPosition > defaultActiveTab && args.newPosition <= defaultActiveTab) {
-          // a tab was moved from the right of the default active tab the left of it, changing its index
-          newDefaultActiveTab++;
+          if (args.originalPosition === defaultActiveTab) {
+            newDefaultActiveTab = args.newPosition;
+          } else if (args.originalPosition < defaultActiveTab && args.newPosition >= defaultActiveTab) {
+            // a tab was moved from the left of the default active tab the right of it, changing its index
+            newDefaultActiveTab--;
+          } else if (args.originalPosition > defaultActiveTab && args.newPosition <= defaultActiveTab) {
+            // a tab was moved from the right of the default active tab the left of it, changing its index
+            newDefaultActiveTab++;
+          }
+
+          _this.updateData("default_active", newDefaultActiveTab);
         }
-
-        _this.updateData("default_active", newDefaultActiveTab);
       });
 
       return _this;
