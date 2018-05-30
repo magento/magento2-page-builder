@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/interactions/drop-indicators", "Magento_PageBuilder/js/interactions/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block"], function (_jquery, _knockout, _translate, _uiEvents, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _block) {
+define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block"], function (_jquery, _knockout, _translate, _uiEvents, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _block) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

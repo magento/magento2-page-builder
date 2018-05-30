@@ -5,17 +5,17 @@
 import _ from "underscore";
 import Config from "../config";
 import ContentTypeConfigInterface from "../content-type-config";
-import {AcceptedMatrix} from "./accepted-matrix.d";
+import {AllowedParents} from "./allowed-parents.d";
 
-const acceptedMatrix: AcceptedMatrix = {};
+const allowedParents: AllowedParents = {};
 
 /**
  * Build a matrix of which containers each content type can go into, these are determined by the allowed_parents
  * node within the content types configuration
  */
-export function generateContainerAcceptedMatrix(): void {
+export function generateAllowedParents(): void {
     _.values(Config.getConfig("content_types")).forEach((contentType: ContentTypeConfigInterface) => {
-        acceptedMatrix[contentType.name] = contentType.allowed_parents.slice();
+        allowedParents[contentType.name] = contentType.allowed_parents.slice();
     });
 }
 
@@ -26,8 +26,8 @@ export function generateContainerAcceptedMatrix(): void {
  * @returns {any}
  */
 export function getContainersFor(contentType: string): string[] {
-    if (acceptedMatrix[contentType]) {
-        return acceptedMatrix[contentType];
+    if (allowedParents[contentType]) {
+        return allowedParents[contentType];
     }
 
     return [];

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "Magento_PageBuilder/js/interactions/matrix"], function (_knockout, _matrix) {
+define(["knockout", "Magento_PageBuilder/js/drag-drop/matrix"], function (_knockout, _matrix) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

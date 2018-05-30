@@ -3,6 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-export interface AcceptedMatrix {
+export interface AllowedParents {
     [key: string]: string[];
 }

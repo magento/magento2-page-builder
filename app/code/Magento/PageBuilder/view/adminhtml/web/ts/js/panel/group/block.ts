@@ -5,7 +5,7 @@
 
 import ko from "knockout";
 import ContentTypeConfigInterface from "../../content-type-config.d";
-import {getAllowedContainersClasses} from "../../interactions/matrix";
+import {getAllowedContainersClasses} from "../../drag-drop/matrix";
 
 export class Block {
     public droppable: boolean = true;

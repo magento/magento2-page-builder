@@ -4,15 +4,15 @@ define(["underscore", "Magento_PageBuilder/js/config"], function (_underscore, _
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var acceptedMatrix = {};
+  var allowedParents = {};
   /**
    * Build a matrix of which containers each content type can go into, these are determined by the allowed_parents
    * node within the content types configuration
    */
 
-  function generateContainerAcceptedMatrix() {
+  function generateAllowedParents() {
     _underscore.values(_config.getConfig("content_types")).forEach(function (contentType) {
-      acceptedMatrix[contentType.name] = contentType.allowed_parents.slice();
+      allowedParents[contentType.name] = contentType.allowed_parents.slice();
     });
   }
   /**
@@ -24,8 +24,8 @@ define(["underscore", "Magento_PageBuilder/js/config"], function (_underscore, _
 
 
   function getContainersFor(contentType) {
-    if (acceptedMatrix[contentType]) {
-      return acceptedMatrix[contentType];
+    if (allowedParents[contentType]) {
+      return allowedParents[contentType];
     }
 
     return [];
@@ -45,7 +45,7 @@ define(["underscore", "Magento_PageBuilder/js/config"], function (_underscore, _
   }
 
   return {
-    generateContainerAcceptedMatrix: generateContainerAcceptedMatrix,
+    generateAllowedParents: generateAllowedParents,
     getContainersFor: getContainersFor,
     getAllowedContainersClasses: getAllowedContainersClasses
   };
