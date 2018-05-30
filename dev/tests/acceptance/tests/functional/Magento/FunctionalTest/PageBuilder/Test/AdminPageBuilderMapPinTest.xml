@@ -49,8 +49,8 @@
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Get Pin Location -->
-        <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
-        <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
         <actionGroup ref="verifyPinLocationEqual" stepKey="verifyPinLocationEditPanel1">
             <argument name="page" value="AddLocationForm"/>
             <argument name="comparedPinLocation" value="initialPinLocationEditPanel"/>
@@ -187,8 +187,8 @@
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
         <!-- Get Pin Location -->
-        <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
-        <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Verify Map Has Pin -->
@@ -345,14 +345,14 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="initialLatitudeEditPanel"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude1"/>
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
-        <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
-        <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
         <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
-        <waitForElementVisible selector="{{MapOnStage.pinLocation('1')}}" stepKey="waitForPinLocationStage"/>
-        <grabAttributeFrom selector="{{MapOnStage.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Storefront: Get Initial Pin Location -->
         <comment userInput="Storefront: Get Initial Pin Location" stepKey="commentStorefrontGetPinLocation"/>
@@ -360,8 +360,8 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStoreFront"/>
-        <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
@@ -483,14 +483,14 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="initialLatitudeEditPanel"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude1"/>
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
-        <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
-        <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
         <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
-        <waitForElementVisible selector="{{MapOnStage.pinLocation('1')}}" stepKey="waitForPinLocationStage"/>
-        <grabAttributeFrom selector="{{MapOnStage.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Storefront: Get Initial Pin Location -->
         <comment userInput="Storefront: Get Initial Pin Location" stepKey="commentStorefrontGetPinLocation"/>
@@ -498,8 +498,8 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStoreFront"/>
-        <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
@@ -607,14 +607,14 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="initialLatitudeEditPanel"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude1"/>
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
-        <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
-        <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
         <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
-        <waitForElementVisible selector="{{MapOnStage.pinLocation('1')}}" stepKey="waitForPinLocationStage"/>
-        <grabAttributeFrom selector="{{MapOnStage.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Storefront: Get Initial Pin Location -->
         <comment userInput="Storefront: Get Initial Pin Location" stepKey="commentStorefrontGetPinLocation"/>
@@ -622,8 +622,8 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStoreFront"/>
-        <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
@@ -729,14 +729,14 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLatitude_ClickedPin.section, PageBuilderMapLatitude_ClickedPin.fieldName)}}" stepKey="initialLatitudeEditPanel"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="waitForLongitude1"/>
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderMapLongitude_ClickedPin.section, PageBuilderMapLongitude_ClickedPin.fieldName)}}" stepKey="initialLongitudeEditPanel"/>
-        <waitForElement selector="{{AddLocationForm.pinLocation('1')}}" stepKey="waitForPinLocationEditPanel1"/>
-        <grabAttributeFrom selector="{{AddLocationForm.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
+        <waitForElement selector="{{AddLocationForm.pinLocations('1')}}" stepKey="waitForPinLocationEditPanel1"/>
+        <grabAttributeFrom selector="{{AddLocationForm.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationEditPanel"/>
         <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Get Initial Pin Location -->
         <comment userInput="Stage: Get Initial Pin Location" stepKey="commentStageGetPinLocation"/>
-        <waitForElementVisible selector="{{MapOnStage.pinLocation('1')}}" stepKey="waitForPinLocationStage"/>
-        <grabAttributeFrom selector="{{MapOnStage.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Storefront: Get Initial Pin Location -->
         <comment userInput="Storefront: Get Initial Pin Location" stepKey="commentStorefrontGetPinLocation"/>
@@ -744,8 +744,8 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStoreFront"/>
-        <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStoreFront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
         <!-- Switch Back To Backend -->
         <comment userInput="Switch Back To Backend" stepKey="commentSwitchToBackend"/>
         <switchToNextTab stepKey="switchToNextTab"/>
@@ -916,8 +916,8 @@
         <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage1"/>
         <!-- Stage: Tooltip Stays Open When Map Moves -->
         <comment userInput="Stage: Tooltip Stays Open When Map Moves" stepKey="commentMoveStage1"/>
-        <waitForElementVisible selector="{{MapOnStage.pinLocation('1')}}" stepKey="waitForPinLocationStage"/>
-        <grabAttributeFrom selector="{{MapOnStage.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
+        <waitForElementVisible selector="{{MapOnStage.pinLocations('1')}}" stepKey="waitForPinLocationStage"/>
+        <grabAttributeFrom selector="{{MapOnStage.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStage"/>
         <executeJS function="return Math.round({{MapOnStage.computedHeight}}/4)" stepKey="quarterMapHeightStage"/>
         <dragAndDrop selector1="{{MapOnStage.base('1')}}" selector2="{{MapOnStage.base('1')}}" x="$quarterMapHeightStage" stepKey="moveMapStage1"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStage1">
@@ -948,8 +948,8 @@
         <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MapOnStorefront.pinLocation('1')}}" stepKey="waitForPinLocationStorefront"/>
-        <grabAttributeFrom selector="{{MapOnStorefront.pinLocation('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
+        <waitForElementVisible selector="{{MapOnStorefront.pinLocations('1')}}" stepKey="waitForPinLocationStorefront"/>
+        <grabAttributeFrom selector="{{MapOnStorefront.pinLocations('1')}}" userInput="style" stepKey="initialPinLocationStorefront"/>
         <executeJS function="return Math.round({{MapOnStorefront.computedHeight}}/4)" stepKey="quarterMapHeightStorefront"/>
         <dragAndDrop selector1="{{MapOnStorefront.base('1')}}" selector2="{{MapOnStorefront.base('1')}}" x="$quarterMapHeightStorefront" stepKey="moveMapStorefront"/>
         <actionGroup ref="verifyPinLocationNotEqual" stepKey="verifyPinLocationMovedStorefront">
@@ -1078,3 +1078,5 @@
         </actionGroup>
     </test>
 </tests>
+
+<!--todo: add multi location tests (normal locations, same coordinates, & on opposite sides of world locations)-->

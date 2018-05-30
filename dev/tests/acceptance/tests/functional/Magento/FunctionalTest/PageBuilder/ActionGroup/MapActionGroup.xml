@@ -125,6 +125,16 @@
         </arguments>
         <waitForElementVisible selector="{{page.pin(index)}}" stepKey="waitForMapWithPin"/>
     </actionGroup>
+    <actionGroup name="verifyNumberOfPinsOnMap">
+        <arguments>
+            <argument name="page" defaultValue="MapOnStage"/>
+            <argument name="mapIndex" defaultValue="1" type="string"/>
+            <argument name="count" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(mapIndex)}}" stepKey="waitForMap"/>
+        <waitForElementVisible selector="{{page.pin(mapIndex)}}" stepKey="waitForMapPin"/>
+        <seeNumberOfElements selector="{{page.pin(mapIndex)}}" userInput="{{count}}" stepKey="seeNumberOfPins"/>
+    </actionGroup>
     <actionGroup name="dontSeeMapPin">
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
@@ -193,21 +203,22 @@
     <actionGroup name="openMapPinTooltipWindow">
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
-            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="mapIndex" defaultValue="1" type="string"/>
+            <argument name="pinIndex" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="openMapPinTooltipWindow" stepKey="comment"/>
-        <waitForElementVisible selector="{{page.clickablePin(index)}}" stepKey="waitForPin"/>
-        <click selector="{{page.clickablePin(index)}}" stepKey="clickPin"/>
-        <waitForElementVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltip"/>
+        <waitForElementVisible selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
+        <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
+        <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
     </actionGroup>
     <actionGroup name="closeMapPinTooltipWindow">
         <arguments>
             <argument name="page" defaultValue="MapOnStage"/>
-            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="mapIndex" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="closeMapPinTooltipWindow" stepKey="comment"/>
-        <click selector="{{page.tooltipWindowClose(index)}}" stepKey="closePinTooltip"/>
-        <waitForElementNotVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltipGone"/>
+        <click selector="{{page.tooltipWindowClose(mapIndex)}}" stepKey="closePinTooltip"/>
+        <waitForElementNotVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>
     <actionGroup name="validateMapPinLocationData">
         <arguments>
@@ -220,18 +231,19 @@
             <argument name="state" defaultValue="PageBuilderMapState_Default"/>
             <argument name="zip" defaultValue="PageBuilderMapZipCode_Default"/>
             <argument name="country" defaultValue="PageBuilderMapCountry_Default"/>
-            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="mapIndex" defaultValue="1" type="string"/>
+            <argument name="pinIndex" defaultValue="1" type="string"/>
         </arguments>
         <comment userInput="validateMapPinLocationData" stepKey="comment1"/>
-        <waitForElementVisible selector="{{page.clickablePin(index)}}" stepKey="waitForPin"/>
-        <click selector="{{page.clickablePin(index)}}" stepKey="clickPin"/>
-        <waitForElementVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltip"/>
-        <waitForElementVisible selector="{{page.locationName(index, locationName.value)}}" stepKey="waitForLocationName"/>
-        <waitForElementVisible selector="{{page.comment(index, comment.value)}}" stepKey="waitForComment"/>
-        <waitForElementVisible selector="{{page.phoneNumber(index, phoneNumber.value)}}" stepKey="waitForPhoneNumber"/>
-        <waitForElementVisible selector="{{page.addressCityStateZipCountry(index, address.value, city.value, state.tooltipValue, zip.value, country.tooltipValue)}}" stepKey="waitForAddress"/>
-        <click selector="{{page.tooltipWindowClose(index)}}" stepKey="closePinTooltip"/>
-        <waitForElementNotVisible selector="{{page.tooltipWindow(index)}}" stepKey="waitForPinTooltipGone"/>
+        <waitForElementVisible selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="waitForPin"/>
+        <click selector="{{page.clickablePin(mapIndex, pinIndex)}}" stepKey="clickPin"/>
+        <waitForElementVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltip"/>
+        <waitForElementVisible selector="{{page.locationName(mapIndex, locationName.value)}}" stepKey="waitForLocationName"/>
+        <waitForElementVisible selector="{{page.comment(mapIndex, comment.value)}}" stepKey="waitForComment"/>
+        <waitForElementVisible selector="{{page.phoneNumber(mapIndex, phoneNumber.value)}}" stepKey="waitForPhoneNumber"/>
+        <waitForElementVisible selector="{{page.addressCityStateZipCountry(mapIndex, address.value, city.value, state.tooltipValue, zip.value, country.tooltipValue)}}" stepKey="waitForAddress"/>
+        <click selector="{{page.tooltipWindowClose(mapIndex)}}" stepKey="closePinTooltip"/>
+        <waitForElementNotVisible selector="{{page.tooltipWindow(mapIndex)}}" stepKey="waitForPinTooltipGone"/>
     </actionGroup>
     <actionGroup name="validateNoPinTooltip">
         <comment userInput="validateNoPinTooltip" stepKey="comment"/>
@@ -245,11 +257,11 @@
             <argument name="comparedPinLocation" type="string"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElement selector="{{page.pinLocation(index)}}" stepKey="waitForPinLocation"/>
-        <grabAttributeFrom selector="{{page.pinLocation(index)}}" userInput="style" stepKey="pinLocation"/>
+        <waitForElement selector="{{page.pinLocations(index)}}" stepKey="waitForPinLocation"/>
+        <grabAttributeFrom selector="{{page.pinLocations(index)}}" userInput="style" stepKey="pinLocations"/>
         <assertEquals stepKey="assertPinPositionEqual">
             <expectedResult type="variable">{{comparedPinLocation}}</expectedResult>
-            <actualResult type="variable">pinLocation</actualResult>
+            <actualResult type="variable">pinLocations</actualResult>
         </assertEquals>
     </actionGroup>
     <actionGroup name="verifyPinLocationNotEqual">
@@ -259,11 +271,11 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <wait time="2" stepKey="waitForPageLoad"/>
-        <waitForElement selector="{{page.pinLocation(index)}}" stepKey="waitForPinLocation"/>
-        <grabAttributeFrom selector="{{page.pinLocation(index)}}" userInput="style" stepKey="pinLocation"/>
+        <waitForElement selector="{{page.pinLocations(index)}}" stepKey="waitForPinLocation"/>
+        <grabAttributeFrom selector="{{page.pinLocations(index)}}" userInput="style" stepKey="pinLocations"/>
         <assertNotEquals stepKey="assertPinPositionNotEqual">
             <expectedResult type="variable">{{comparedPinLocation}}</expectedResult>
-            <actualResult type="variable">pinLocation</actualResult>
+            <actualResult type="variable">pinLocations</actualResult>
         </assertNotEquals>
     </actionGroup>
     <actionGroup name="verifyCoordinatesNotEqual">
