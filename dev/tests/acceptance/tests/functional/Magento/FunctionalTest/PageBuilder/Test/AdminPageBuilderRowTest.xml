@@ -186,13 +186,14 @@
         </after>
         <waitForElementVisible selector="{{RowOnStage.base('1')}}" stepKey="seeElementRow"/>
     </test>
-    <test name="RowCanAddAdditionalRow">
+    <test name="RowAddAdditionalRowBelowInitialRow">
         <annotations>
-            <features value="Pagebuilder: Row"/>
-            <stories value="MAGETWO-72398: Bluefoot Row Interaction"/>
-            <title value="Can add an additional row"/>
-            <description value="The user should be able to add additional rows."/>
+            <features value="Pagebuilder"/>
+            <stories value="Row"/>
+            <title value="Can add an additional row below the initial row on stage"/>
+            <description value="If user drags Row below the stage Droppable area is still registered and new row is added to the bottom"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-72398"/>
             <testCaseId value="MAGETWO-82857"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
@@ -206,10 +207,91 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
         </actionGroup>
+        <comment userInput="Modify initial row background color" stepKey="commentEdit"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragRowIntoStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="2"/>
+            <argument name="dropZoneIndex" value="2"/>
+        </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeElementRow"/>
+        <comment userInput="Stage: Check Background Color is present for first row" stepKey="commentStageCheckBackground"/>
+        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <comment userInput="Stage: Check Background Color not present for new row" stepKey="commentStageCheckNoBackground"/>
+        <actionGroup ref="validateRowNoBackgroundColor" stepKey="validateNewRowNoColor">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <comment userInput="Stage: Check Drop Zones still present before, between, and after rows" stepKey="commentDropZones"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
+        <seeElementInDOM selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
+        <seeElementInDOM selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
+    </test>
+    <test name="RowAddAdditionalRowAboveInitialRow">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Row"/>
+            <title value="Can add an additional row above the initial row on stage"/>
+            <description value="If user drags Row above the stage Droppable area is still registered and new row is added to the top"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-72398"/>
+            <testCaseId value="MAGETWO-82857"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-row"/>
+            <group value="pagebuilder-rowGeneral"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        </actionGroup>
+        <comment userInput="Modify initial row background color" stepKey="commentEdit"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragRowIntoStage">
+            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderStage"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="2"/>
+            <argument name="dropZoneIndex" value="1"/>
+            <argument name="offsetXCoordinate" value="0"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeElementRow"/>
+        <comment userInput="Stage: Check Background Color is present for existing row" stepKey="commentStageCheckBackground"/>
+        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <comment userInput="Stage: Check Background Color not present for new row" stepKey="commentStageCheckNoBackground"/>
+        <actionGroup ref="validateRowNoBackgroundColor" stepKey="validateNewRowNoColor">
+            <argument name="page" value="RowOnStage"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <comment userInput="Stage: Check Drop Zones still present before, between, and after rows" stepKey="commentDropZones"/>
+        <seeElementInDOM selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '1')}}" stepKey="waitForFirstDropZone" />
+        <seeElementInDOM selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '2')}}" stepKey="waitForSecondDropZone" />
+        <seeElementInDOM selector="{{PageBuilderActionsSection.dropZone(PageBuilderStage.role, '1', '3')}}" stepKey="waitForThirdDropZone" />
     </test>
     <test name="RowRemoveRowFromStage">
         <annotations>
@@ -301,11 +383,11 @@
         </actionGroup>
         <dontSee selector="{{RowOnStage.empty('1')}}" stepKey="dontSeeRowPlaceholder"/>
     </test>
-    <test name="RowHeightAdjustsToContentWhenContentIsSmaller">
+    <test name="RowHeightAdjustsToContentWhenContentIsSmallerHeading">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Row"/>
-            <title value="Row height shrinks to fit small content"/>
+            <title value="Row height shrinks to fit Heading"/>
             <description value="A user should see the row height adjust to be smaller when Heading is added to the row"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-75136"/>
@@ -362,11 +444,11 @@
             <actualResult type="variable">getNewRowHeight2</actualResult>
         </assertEquals>
     </test>
-    <test name="RowHeightAdjustsToContentWhenContentIsLarger">
+    <test name="RowHeightAdjustsToContentWhenContentIsLargerSlider">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Row"/>
-            <title value="Row height grows to fit large content"/>
+            <title value="Row height grows to fit Slider"/>
             <description value="A user should see the row height adjust to be larger when Slider is added to the row"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-86953"/>
@@ -408,7 +490,7 @@
             <argument name="expectedPaddingBottom" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
         </actionGroup>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentBlock.role,'1')}}" stepKey="actualStageInitialSliderHeight"/>
-        <comment userInput="Validate Row Height adjusts to Slider Height" stepKey="commentValidateRowHeightAdjustToSlider"/>
+        <comment userInput="Validate Row Height adjusts to Slider Height on Stage" stepKey="commentValidateRowHeightAdjustToSlider"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentBlock.role,'1')}}" stepKey="actualStageRowHeightWithSlider"/>
         <executeJS function="return Math.round({$actualStageInitialSliderHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndSlider"/>
         <assertEquals stepKey="assertRowHeightAdjustsToSliderHeight">

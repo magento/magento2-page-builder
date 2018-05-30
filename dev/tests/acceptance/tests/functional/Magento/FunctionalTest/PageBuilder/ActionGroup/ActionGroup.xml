@@ -113,6 +113,22 @@
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
     </actionGroup>
+    <actionGroup name="dragContentBlockToDropZone">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType" defaultValue=""/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="dropZoneIndex" defaultValue="1" type="string"/>
+            <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
+        </arguments>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.stageActive}}" stepKey="waitForStageActive" />
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropZone(containerTargetType.role, containerTargetIndex, dropZoneIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
+    </actionGroup>
     <actionGroup name="dragContentBlockNextToExistingContentBlock">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
@@ -582,7 +598,8 @@
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
         <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
         <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton" />
+        <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton" />
+        <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
     </actionGroup>
     <actionGroup name="saveEditPanelAndValidateFieldError">
         <arguments>
