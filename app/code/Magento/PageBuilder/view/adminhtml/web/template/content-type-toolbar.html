@@ -1,0 +1,23 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<div class="pagebuilder-toolbar-options">
+    <div class="pagebuilder-toolbar-options-wrapper" each="options">
+        <ul class="pagebuilder-toolbar-options-links" css="key" each="values">
+            <li class="pagebuilder-toolbar-options-link">
+                <a href="#" click="function () { $parents[1].onOptionClick($parents[0], $data); }" css="'toolbar-active': value == $parents[2].previewData[$parents[0].key]()">
+                    <if args="icon">
+                    <i css="icon"></i>
+                    </if>
+                    <ifnot args="icon">
+                    <span text="label"></span>
+                    </ifnot>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
