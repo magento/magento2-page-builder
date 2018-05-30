@@ -1,4 +1,4 @@
-# Visual Select
+# Custom Toolbar
 
 ## Navigation
 
@@ -50,135 +50,89 @@ To add toolbar customization to a Page Builder content block:
 
 ## Add toolbar configuration
 
-Add configuration options to your content block preview, and pass to a new instance of Toolbar.
+Add configuration options to your content block preview. This is an array of options:
 
-An example can be found in the Heading content block:
-`app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/heading/preview.ts`
+| Element             | Description                                                              |
+| ------------------- | ------------------------------------------------------------------------ |
+| `key`               | Describes the group name in the menu.                                    |
+| `type`              | Describes the element type.                                              |
+| `values`            | Array of values for each option.                                         |
+| `value`             | Value referenced in the dataStore.                                       |
+| `label`             | Label of the option. If no icon is specified, this will be displayed     |
+| `icon`              | Name of CSS class to use for the icon.                                   |
 
 
-```typescript
-import $ from "jquery";
-import events from "uiEvents";
-import _ from "underscore";
-import ContentTypeConfigInterface from "../../content-type-config.d";
-import Toolbar from "../../content-type-toolbar";
-import ToolbarOptionInterface from "../../content-type-toolbar/option.d";
-import ContentTypeInterface from "../../content-type.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
-import ObservableUpdater from "../observable-updater";
-import BasePreview from "../preview";
- 
-export default class Heading extends BasePreview {
-    public toolbar: Toolbar;
-    private element: Element;
- 
-    /**
-     * @param {ContentTypeInterface} parent
-     * @param {ContentTypeConfigInterface} config
-     * @param {ObservableUpdater} observableUpdater
-     */
-    constructor(
-        parent: ContentTypeInterface,
-        config: ContentTypeConfigInterface,
-        observableUpdater: ObservableUpdater,
-    ) {
-        super(parent, config, observableUpdater);
-        this.toolbar = new Toolbar(
-            this,
-            this.getToolbarOptions(),
-        );
-    }
- 
-    /**
-     * On render init the tabs widget
-     *
-     * @param {Element} element
-     */
-    public afterRender(element: Element): void {
-        this.element = element;
-    }
- 
-    public bindEvents() {
-        super.bindEvents();
- 
-        // When a heading is dropped for the first time show heading toolbar
-        events.on("heading:block:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.parent.id) {
-                _.delay(() => {
-                    $(this.element).focus();
-                }, 100); // 100 ms delay to allow for heading to render
-            }
-        });
-    }
- 
-    /**
-     * Build and return the tool bar options for heading
-     *
-     * @returns {ToolbarOptionInterface[]}
-     */
-    private getToolbarOptions(): ToolbarOptionInterface[] {
-        return [
-            {
-                key: "heading_type",
-                type: "select",
-                values: [
-                    {
-                        value: "h1",
-                        label: "H1",
-                        icon: "",
-                    },
-                    {
-                        value: "h2",
-                        label: "H2",
-                        icon: "",
-                    },
-                    {
-                        value: "h3",
-                        label: "H3",
-                        icon: "",
-                    },
-                    {
-                        value: "h4",
-                        label: "H4",
-                        icon: "",
-                    },
-                    {
-                        value: "h5",
-                        label: "H5",
-                        icon: "",
-                    },
-                    {
-                        value: "h6",
-                        label: "H6",
-                        icon: "",
-                    },
-                ],
-            },
-            {
-                key: "text_align",
-                type: "select",
-                values: [
-                    {
-                        value: "left",
-                        label: "Left",
-                        icon: "icon-pagebuilder-align-left",
-                    },
-                    {
-                        value: "center",
-                        label: "Center",
-                        icon: "icon-pagebuilder-align-center",
-                    },
-                    {
-                        value: "right",
-                        label: "Right",
-                        icon: "icon-pagebuilder-align-right",
-                    },
-                ],
-            },
-        ];
-    }
+```javascript
+private getToolbarOptions(): ToolbarOptionInterface[] {
+    return [
+        {
+            key: "heading_type",
+            type: "select",
+            values: [
+                {
+                    value: "h1",
+                    label: "H1",
+                    icon: "",
+                },
+                {
+                    value: "h2",
+                    label: "H2",
+                    icon: "",
+                },
+                {
+                    value: "h3",
+                    label: "H3",
+                    icon: "",
+                },
+                {
+                    value: "h4",
+                    label: "H4",
+                    icon: "",
+                },
+                {
+                    value: "h5",
+                    label: "H5",
+                    icon: "",
+                },
+                {
+                    value: "h6",
+                    label: "H6",
+                    icon: "",
+                },
+            ],
+        },
+        {
+            key: "text_align",
+            type: "select",
+            values: [
+                {
+                    value: "left",
+                    label: "Left",
+                    icon: "icon-pagebuilder-align-left",
+                },
+                {
+                    value: "center",
+                    label: "Center",
+                    icon: "icon-pagebuilder-align-center",
+                },
+                {
+                    value: "right",
+                    label: "Right",
+                    icon: "icon-pagebuilder-align-right",
+                },
+            ],
+        },
+    ];
 }
 ```
+ 
+Pass toolbar configuration to a new instance of Toolbar.
+```javascript
+new Toolbar(this, this.getToolbarOptions());
+```
+
+An example implementation can be found in the Heading content block:
+`app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/heading/preview.ts`
 
 ## Add toolbar template
 
@@ -191,5 +145,7 @@ In your content block template, add the toolbar events to your main toolbar cont
 </div>
 ```
 
+An example implementation can be found in the Heading content block:
+`app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/heading/default/preview.html`
 
 
