@@ -81,7 +81,9 @@
         <arguments>
             <argument name="locationName"/>
             <argument name="address" defaultValue="PageBuilderMapStreetAddress_Default"/>
+            <argument name="phoneNumber" defaultValue="PageBuilderMapPhoneNumber_Default"/>
             <argument name="city" defaultValue="PageBuilderMapCity_Default"/>
+            <argument name="state" defaultValue="PageBuilderMapState_Default"/>
             <argument name="zip" defaultValue="PageBuilderMapZipCode_Default"/>
             <argument name="country" defaultValue="PageBuilderMapCountry_Empty"/>
             <argument name="rowIndex" defaultValue="1" type="string"/>
@@ -89,8 +91,10 @@
         <comment userInput="validateLocationGridData" stepKey="comment"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, locationName.fieldName, locationName.value)}}" stepKey="waitForLocationName"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, phoneNumber.fieldName, phoneNumber.value)}}" stepKey="waitForPhoneNumber"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, address.fieldName, address.value)}}" stepKey="waitForAddress"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, city.fieldName, city.value)}}" stepKey="waitForCity"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, state.fieldName, state.value)}}" stepKey="waitForState"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, zip.fieldName, zip.value)}}" stepKey="waitForZip"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridCellByRowIndex(rowIndex, country.fieldName, country.value)}}" stepKey="waitForCountry"/>
         <waitForElementVisible selector="{{PageBuilderDataGrid.gridSelectButtonByIndex(rowIndex)}}" stepKey="waitForSelectButton"/>
