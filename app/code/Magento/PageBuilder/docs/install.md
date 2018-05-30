@@ -91,7 +91,7 @@ Do not use this installation method for evaluation or production instances.
 
 ## Update steps
 
-When a new version of Page Builder is available, destroy your existing 2.3.0-alpha instance and follow the [composer](install.md#Composer installation) or [GitHub](install.md#GitHub installation) installation steps.
+When a new version of Page Builder is available, destroy your existing 2.3.0-alpha instance and follow the [composer](install.md#composer-installation) or [GitHub](install.md#github-installation) installation steps.
 
 ## Installing Node.js dependencies
 
