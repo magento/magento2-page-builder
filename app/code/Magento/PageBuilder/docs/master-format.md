@@ -252,12 +252,12 @@ Inline styles
 ## Buttons
 
 ```
-<div data-role="buttons" data-appearance="default" style="..."></div>
+<div data-role="buttons" data-appearance="inline" style="..."></div>
 ```
 
 Attributes
 1. data-role [buttons]
-2. data-appearance [default]
+2. data-appearance [inline, stacked]
 3. class
 
 Inline styles
@@ -268,6 +268,8 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
+8. display (only on stacked appearance)
+9. flex-direction (only on stacked appearance)
 
 ## Button item
 
