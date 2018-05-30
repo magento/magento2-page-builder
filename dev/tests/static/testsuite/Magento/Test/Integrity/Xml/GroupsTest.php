@@ -34,13 +34,14 @@ class GroupsTest extends \PHPUnit\Framework\TestCase
                 $dom = new \DOMDocument();
                 $dom->loadXML(file_get_contents($filename));
 
-                $contentTypeGroup = $dom->getElementsByTagName('group')->item(0)->nodeValue;
-
-                $this->assertContains(
-                    $contentTypeGroup,
-                    $groups,
-                    'Invalid group "' . $contentTypeGroup . '" in XML File ' . $filename
-                );
+                $contentTypeGroup = $dom->getElementsByTagName('group')->item(0);
+                if ($contentTypeGroup) {
+                    $this->assertContains(
+                        $contentTypeGroup->nodeValue,
+                        $groups,
+                        'Invalid group "' . $contentTypeGroup->nodeValue . '" in XML File ' . $filename
+                    );
+                }
             },
             $this->getXmlFiles()
         );
@@ -57,10 +58,14 @@ class GroupsTest extends \PHPUnit\Framework\TestCase
 
         $groups = $this->getContentTypeGroups();
 
+        $this->assertNotEmpty($groups, 'No groups were found');
+
         $files = $this->componentDirSearch->collectFiles(
             ComponentRegistrar::MODULE,
-            'etc/content_types/*.xml'
+            'view/{adminhtml,base}/pagebuilder/content_type/*.xml'
         );
+
+        $this->assertNotEmpty($files, 'No content types were found');
 
         foreach ($files as $file) {
             $data[] = [$file, $groups];
@@ -80,7 +85,7 @@ class GroupsTest extends \PHPUnit\Framework\TestCase
 
         $files = $this->componentDirSearch->collectFiles(
             ComponentRegistrar::MODULE,
-            'etc/groups.xml'
+            'view/{adminhtml,base}/pagebuilder/group.xml'
         );
 
         foreach ($files as $filename) {

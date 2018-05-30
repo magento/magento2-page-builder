@@ -79,6 +79,7 @@
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage" />
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToStageByIndex">
         <arguments>
@@ -86,8 +87,9 @@
             <argument name="contentBlockNumber" defaultValue="1" type="string"/>
         </arguments>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropAreaInStage}}" stepKey="dropContentBlockIntoStage"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForContentBlockInStage" />
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToStageAndExpectEditPanel">
         <arguments>
@@ -109,7 +111,24 @@
         </arguments>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
         <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
+    </actionGroup>
+    <actionGroup name="dragContentBlockNextToExistingContentBlock">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="existingContentBlock" defaultValue=""/>
+            <argument name="existingContentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="offsetXCoordinate" defaultValue="0" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
+        </arguments>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockInStageByIndex(existingContentBlock.role, existingContentBlockIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
+        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>
@@ -117,7 +136,7 @@
         </arguments>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStageVisible"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
-        <wait time="2" stepKey="waitForMouseOverAnimation"/>
+        <wait time="4" stepKey="waitForMouseOverAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(contentBlockType.role)}}" stepKey="waitForOptions"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEdit(contentBlockType.role)}}" stepKey="clickEditContentBlock"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
@@ -138,10 +157,10 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForEditButton"/>
         <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickEditContentBlock"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation"/>
+        <waitForPageLoad stepKey="waitForAnimation1" time="30"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation2"/>
+        <waitForPageLoad stepKey="waitForAnimation2" time="30"/>
     </actionGroup>
     <actionGroup name="duplicateContentBlock">
         <arguments>
@@ -179,10 +198,12 @@
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
             <argument name="contentBlockNumber" defaultValue="2" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
         </arguments>
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="seeContentTypeInStage" />
         <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockNumber)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentBlockStage"/>
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockRemoveByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="clickRemoveContentBlock"/>
@@ -194,6 +215,7 @@
         <wait time="1" stepKey="waitForModalEventBinding" />
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
 
     <!-- Remove a content block which has been configured with data or has children -->
@@ -218,7 +240,7 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <seeElementInDOM selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="seePropertyControl"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelFieldIsDisabled">
@@ -277,12 +299,26 @@
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <fillField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
-        <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
-        <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
+    </actionGroup>
+    <actionGroup name="fillSlideOutPanelMultiSelectField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.panelMultiSelectFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <click selector="{{PageBuilderActionsSection.panelMultiSelectFieldControl(property.section, property.fieldName)}}" stepKey="clickField"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchField"/>
+        <fillField selector="{{PageBuilderActionsSection.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="inputSearchField"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelMultiSelectFieldControlResult(property.section, property.fieldName, property.value)}}" stepKey="waitForResult"/>
+        <click selector="{{PageBuilderActionsSection.panelMultiSelectFieldControlResult(property.section, property.fieldName, property.value)}}" stepKey="clickResult"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.panelMultiSelectFieldControlInput(property.section, property.fieldName)}}" stepKey="waitForSearchFieldNotVisible"/>
+        <see selector="{{PageBuilderActionsSection.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeResultInField"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
         <arguments>
@@ -290,9 +326,9 @@
         </arguments>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <fillField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
-        <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
         <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionErrorIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldAlternate">
@@ -302,45 +338,44 @@
         </arguments>
         <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement"/>
         <fillField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{input}}" stepKey="fillPropertyField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldGeneral">
+        <!-- This action group does not assert against the section changed icon since this doesn't exist for General sections -->
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <fillField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
-    </actionGroup>
-    <actionGroup name="fillSlideOutPanelDropdownField">
-        <arguments>
-            <argument name="property" defaultValue=""/>
-            <argument name="selection" defaultValue=""/>
-        </arguments>
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="5" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
-        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="selectOption" />
-        <fillField selector="{{PageBuilderButtonLinkSection.ButtonLinkInput}}" userInput="{{property.value}}" stepKey="inputURLLink"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelLinkUrlField">
         <arguments>
             <argument name="property" defaultValue=""/>
             <argument name="selection" defaultValue=""/>
-            <argument name="linkType" defaultValue="URL" type="string"/>
+            <argument name="newTab" defaultValue=""/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="waitForLinkSelect"/>
-        <seeElement selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="seeLinkSelect"/>
-        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" userInput="{{linkType}}" stepKey="seeLinkSelectedByDefault" />
-        <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="5" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
-        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="selectOption" />
-        <fillField selector="{{PageBuilderSection.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="inputURLLink"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="waitForLinkSelect"/>
+        <waitForElement time="10" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="selectOption"/>
+        <fillField selector="{{PageBuilderSection.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="inputLink"/>
+        <conditionalClick selector="{{PageBuilderActionsSection.panelFieldControlSwitch(newTab.fieldName)}}" dependentSelector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" visible="false" stepKey="conditionalClickNewTab"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" stepKey="waitForNewTabStateChange"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel((property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="validateSlideOutPanelLinkUrlField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+            <argument name="selection" defaultValue=""/>
+            <argument name="newTab" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderSection.LinkSelect(property.fieldName)}}" stepKey="waitForLinkSelect"/>
+        <waitForElement time="10" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <seeInField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{selection.value}}" stepKey="seeOptionIsSelected"/>
+        <seeInField selector="{{PageBuilderSection.LinkInput(property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInField"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(newTab.fieldName, newTab.value)}}" stepKey="waitForNewTab"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldGeneral">
         <arguments>
@@ -348,19 +383,34 @@
         </arguments>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <clearField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="clearPropertyField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="selectSlideOutPanelFieldGeneral">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="seePropertyLabel"/>
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <selectOption selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="selectPropertyField"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+    </actionGroup>
+    <actionGroup name="chooseVisualSelectOption">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector='//li[@name="{{property.value}}"]' stepKey="seeVisualSelect"/>
+        <click selector='//div[@data-index="{{property.section}}" and contains(@class,"_show")]//li[@name="{{property.value}}"]' stepKey="chooseVisualSelectOption"/>
+    </actionGroup>
+    <actionGroup name="validateAlignmentFieldIsNotDisabled">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <dontSeeElement selector='//div[@data-index="{{property.section}}"]/descendant::div[@name="{{property.value}}" and contains(@class, "_disabled")]' stepKey="seeAlignmentNotDisabled"/>
     </actionGroup>
     <actionGroup name="pickColorSwatchCell">
         <arguments>
@@ -382,6 +432,14 @@
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachImageFile"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
+    </actionGroup>
+    <actionGroup name="conditionalClickSlideOutPanelFieldGeneral">
+    <arguments>
+        <argument name="property" defaultValue=""/>
+    </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <conditionalClick selector="{{PageBuilderActionsSection.panelFieldControlSwitch(property.fieldName)}}" dependentSelector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(property.fieldName, property.value)}}" visible="false" stepKey="conditionalClickAttribute"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelFieldControlCheckboxState(property.fieldName, property.value)}}" stepKey="waitForAttributeStateChange"/>
     </actionGroup>
     <actionGroup name="clickSlideOutPanelFieldGeneral">
         <arguments>
@@ -412,8 +470,8 @@
         </arguments>
         <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <selectOption selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="selectPropertyField"/>
-        <click selector="{{PageBuilderColumnSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
-        <waitForElementVisible time="2" selector="{{PageBuilderColumnSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
+        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.panelSectionChangedIcon(property.section)}}" stepKey="waitForSectionChangedIcon" />
     </actionGroup>
     <actionGroup name="seeImageUploadedOnSlideOut">
         <arguments>
@@ -434,6 +492,7 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
     <actionGroup name="seeInFieldSlideOutPropertyAlternate">
@@ -442,7 +501,16 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.editPanelValue}}" stepKey="seeInFieldProperty"/>
+    </actionGroup>
+    <actionGroup name="seeInSlideOutMultiSelectField">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelMultiSelectFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <see selector="{{PageBuilderActionsSection.panelMultiSelectFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeInFieldProperty"/>
     </actionGroup>
     <actionGroup name="seeInFieldSlideOutIsZeroProperty">
         <!-- must have this instead of using seeInFieldSlideOutProperty w/ argument of 0 because of MFTF bug -->
@@ -525,6 +593,16 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.panelFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.panelSectionError(property.section)}}" stepKey="waitForSectionError"/>
     </actionGroup>
+    <actionGroup name="saveEditPanelAndValidateFieldErrorGeneralSection">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelFieldValidationError(property.section, property.fieldName)}}" stepKey="waitForErrorField"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
+    </actionGroup>
     <actionGroup name="closeEditPanelSettings">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForCloseButton" />
@@ -563,41 +641,12 @@
         <click selector="{{CmsPagesPageActionsSection.firstItemEditButton}}" stepKey="clickSelectEditOnFirstItem"/>
         <waitForPageLoad stepKey="waitForEditCmsPage" />
     </actionGroup>
-    <actionGroup name="enablePageBuilderSetting">
-        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
-        <waitForPageLoad stepKey="wait1"/>
-        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
-        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder" />
-        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
-        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions" />
-        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
-        <waitForPageLoad stepKey="wait2"/>
-    </actionGroup>
-    <actionGroup name="disablePageBuilderSetting">
-        <!-- Enable first since it's dependent on disable Disclaimer modal showing -->
-        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage1" />
-        <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <conditionalClick stepKey="expandWYSIWYGOptions" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilder"/>
-        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectOption1"/>
-        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapsePageBuilderOptions"/>
-        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig"/>
-        <!-- NOW disable -->
-        <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage2" />
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNo"/>
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="waitForTurnOffButton"/>
-        <click selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="selectTurnOff" />
-        <waitForElementNotVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="waitForPopupClose2"/>
-        <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="verifyNoSelected"/>
-        <click selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" stepKey="collapseAdvancedContentToolsTab" />
-        <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig2" />
-        <waitForPageLoad stepKey="waitForPageLoad3"/>
-    </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnPage">
+        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
+        <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
+    </actionGroup>
+    <actionGroup name="verifyPageBuilderVisibleOnStaging">
+        <scrollTo selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="scrollToIdentifyPageBuilder"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible" />
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>

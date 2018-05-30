@@ -343,7 +343,6 @@
             <argument name="additionalEavAttributes" xsi:type="array">
                 <item name="map" xsi:type="string">map</item>
                 <item name="map_height" xsi:type="string">map_height</item>
-                <item name="map_width" xsi:type="string">map_width</item>
             </argument>
         </arguments>
     </virtualType>
@@ -464,9 +463,29 @@
     <type name="Magento\PageBuilder\Model\Config\CompositeReader">
         <arguments>
             <argument name="readers" xsi:type="array">
-                <item name="contentTypesReader" xsi:type="object" sortOrder="10">Magento\PageBuilder\Model\Config\ContentTypes\Reader</item>
-                <item name="groupsReader" xsi:type="object" sortOrder="20">Magento\PageBuilder\Model\Config\Groups\Reader</item>
+                <item name="contentTypeReader" xsi:type="object" sortOrder="10">Magento\PageBuilder\Model\Config\ContentType\Reader</item>
+                <item name="groupReader" xsi:type="object" sortOrder="20">Magento\PageBuilder\Model\Config\Group\Reader</item>
             </argument>
         </arguments>
     </type>
+    <type name="Magento\PageBuilder\Model\Config\FileResolver">
+        <arguments>
+            <argument name="baseFiles" xsi:type="object">pageBuilderComponentAggregatedSourceBaseSorted</argument>
+        </arguments>
+    </type>
+    <virtualType name="pageBuilderComponentAggregatedSourceBase" type="Magento\Framework\View\File\Collector\Base">
+        <arguments>
+            <argument name="subDir" xsi:type="string">pagebuilder</argument>
+        </arguments>
+    </virtualType>
+    <virtualType shared="false" name="pageBuilderComponentAggregatedSourceBaseFiltered" type="Magento\Framework\View\File\Collector\Decorator\ModuleOutput">
+        <arguments>
+            <argument name="subject" xsi:type="object">pageBuilderComponentAggregatedSourceBase</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="pageBuilderComponentAggregatedSourceBaseSorted" type="Magento\Framework\View\File\Collector\Decorator\ModuleDependency">
+        <arguments>
+            <argument name="subject" xsi:type="object">pageBuilderComponentAggregatedSourceBaseFiltered</argument>
+        </arguments>
+    </virtualType>
 </config>

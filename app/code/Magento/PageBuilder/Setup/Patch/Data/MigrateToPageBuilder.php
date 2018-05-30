@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\PageBuilder\Setup\MoveImages;
 
 class MigrateToPageBuilder implements DataPatchInterface
 {
@@ -24,17 +25,33 @@ class MigrateToPageBuilder implements DataPatchInterface
     private $moduleDataSetup;
 
     /**
+     * @var \Magento\Framework\App\State
+     */
+    private $appState;
+
+    /**
+     * @var MoveImages $moveImages
+     */
+    private $moveImages;
+
+    /**
      * Constructor
      *
      * @param \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory
      * @param ModuleDataSetupInterface $moduleDataSetup
+     * @param \Magento\Framework\App\State $appState
+     * @param MoveImages $moveImages
      */
     public function __construct(
         \Magento\PageBuilder\Setup\ConvertBlueFootToPageBuilderFactory $convertBlueFootToPageBuilderFactory,
-        ModuleDataSetupInterface $moduleDataSetup
+        ModuleDataSetupInterface $moduleDataSetup,
+        \Magento\Framework\App\State $appState,
+        MoveImages $moveImages
     ) {
         $this->convertBlueFootToPageBuilderFactory = $convertBlueFootToPageBuilderFactory;
         $this->moduleDataSetup = $moduleDataSetup;
+        $this->appState = $appState;
+        $this->moveImages = $moveImages;
     }
 
     /**
@@ -46,7 +63,15 @@ class MigrateToPageBuilder implements DataPatchInterface
     {
         if ($this->moduleDataSetup->tableExists('gene_bluefoot_entity')) {
             $this->updateEavConfiguration();
+            $convertBlueFootToPageBuilder = $this->convertBlueFootToPageBuilderFactory->create(
+                ['setup' => $this->moduleDataSetup]
+            );
+            $this->appState->emulateAreaCode(
+                \Magento\Framework\App\Area::AREA_ADMINHTML,
+                [$convertBlueFootToPageBuilder, 'convert']
+            );
             $this->convertBlueFootToPageBuilderFactory->create(['setup' => $this->moduleDataSetup])->convert();
+            $this->moveImages->move();
         }
     }
 

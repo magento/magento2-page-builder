@@ -21,7 +21,7 @@
         <element name="firstSection" type="button" selector='//*[@id="pagebuilder-panel-groups"]/li[1]' timeout="30"/>
         <element name="panelGroup" type="button" selector="//div[@id='pagebuilder-panel']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="panelGroupActive" type="button" selector="//div[@id='pagebuilder-panel']//li[@class='active']//h4[.='{{arg1}}']" parameterized="true"/>
-        <element name="generalGroup" type="button" selector='//*[@id="group-general"]'/>
+        <element name="generalGroup" type="button" selector='//*[@id="group-general"]' timeout="10"/>
         <element name="generalGroupBlock" type="button" selector='//*[@id="group-general"]/div/div/ul/li/a/span[2]'/>
         <element name="mediaGroup" type="button" selector='//*[@id="group-media"]'/>
         <element name="mediaGroupBlock" type="button" selector='//*[@id="group-media"]/div/div/ul/li/a/span[2]'/>
@@ -36,6 +36,8 @@
         <element name="nothingFound" type="text" selector='//*[@id="pagebuilder-panel"]/div[2]/div' timeout="30"/>
         <element name="modal" type="text" selector='body._has-modal div.modals-wrapper aside.modal-popup.prompt._show'/>
         <element name="modalOk" type="button" selector=".modal-popup button.action-primary.action-accept"/>
+        <element name="modalCancel" type="button" selector="//aside[contains(@class,'modal-popup')]//button[contains(@class,'action-dismiss')]//span[.='Cancel']"/>
+        <element name="modalX" type="button" selector=".modal-popup button.action-close"/>
         <!-- It's safer to click the label, as Selenium will complain if it's not clicking the exact element -->
         <element name="modalDoNotShowThisAgain" type="input" selector=".modal-popup input[name='modal-dnsa'] + label"/>
         <element name="unableToRemoveTitle" type="text" selector='//aside[contains(@class, "modal-popup")]/div[@class="modal-inner-wrap"]/header/h1[contains(text(), "Unable to Remove")]'/>
@@ -64,15 +66,19 @@
         <element name="editFormClose" type="button" selector=".modal-header .page-main-actions [data-form-role='close']" timeout="30"/>
         <element name="editFormReset" type="button" selector=".modal-header .page-main-actions [data-form-role='reset']" timeout="30"/>
         <element name="editFormSave" type="button" selector=".modal-header .page-main-actions [data-form-role='save']" timeout="30"/>
-        <element name="panelFieldLabel" type="text" selector="div.modals-wrapper [data-index='{{arg1}}'] div.admin__field[data-index='{{arg2}}'] label.admin__field-label span" parameterized="true" />
+        <element name="panelFieldLabel" type="text" selector='//aside//div[@data-index="{{arg1}}"]/descendant::div[@data-index="{{arg2}}"]/label | //aside//div[@data-index="{{arg3}}"]/descendant::*[@class="admin__field-label" or @class="title"]/span[text()="{{arg4}}"]' parameterized="true" />
         <element name="panelSectionChangedIcon" type="text" selector="[data-index='{{arg1}}'] ._changed .admin__page-nav-item-message-icon" parameterized="true"/>
         <element name="panelSectionError" type="text" selector="[data-index='{{arg1}}'] span._error .admin__page-nav-item-message-icon" parameterized="true"/>
-        <element name="panelFieldControl" type="input" selector=".pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form [data-index='{{arg1}}'] .admin__field-control [name='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldControl" type="input" selector='//aside//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}"]' parameterized="true"/>
         <element name="panelFieldControlInput" type="input" selector=".pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form [data-index='{{arg1}}'] .admin__field-control [name='{{arg2}}']" parameterized="true"/>
-        <element name="panelFieldControlCheckbox" type="input" selector="//input[@name='{{arg1}}']" parameterized="true"/>
+        <element name="panelFieldControlCheckbox" type="input" selector="//input[@type='checkbox' and @name='{{arg1}}']" parameterized="true"/>
+        <element name="panelFieldControlCheckboxState" type="input" selector="//input[@type='checkbox' and @name='{{arg1}}' and @value='{{arg2}}']" parameterized="true"/>
         <element name="panelFieldControlSwitch" type="input" selector="//*[@name='{{arg1}}']/parent::*/label" parameterized="true"/>
+        <element name="panelMultiSelectFieldControl" type="input" selector=".pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form [data-index='{{arg1}}'] [data-index='{{arg2}}'] [data-role='advanced-select']" parameterized="true"/>
+        <element name="panelMultiSelectFieldControlInput" type="input" selector=".pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form [data-index='{{arg1}}'] [data-index='{{arg2}}'] .admin__action-multiselect-search" parameterized="true"/>
+        <element name="panelMultiSelectFieldControlResult" type="input" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}']//div[contains(@class,'action-menu-item')]//span[.='{{arg3}}']" parameterized="true"/>
         <element name="panelFieldUploadSummary" type="input" selector='.file-uploader-summary .file-uploader-preview .preview-image.preview-link[title="{{arg1}}"] img' parameterized="true"/>
-        <element name="panelFieldValidationError" type="input" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}']//div[contains(@class,'')]//input[@name='{{arg2}}']" parameterized="true"/>
+        <element name="panelFieldValidationError" type="input" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[@data-index='{{arg2}}' and contains(@class,'_error')]//div[contains(@class,'')]//input[@name='{{arg2}}']" parameterized="true"/>
         <element name="panelFieldValidationErrorMessage" type="button" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//../label[.='{{arg3}}']" parameterized="true"/>
         <element name="panelEmptyColorSwatch" type="button" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[contains(@class,'sp-clear-display')]" parameterized="true"/>
         <element name="panelColorSwatch" type="button" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='{{arg1}}']//div[contains(@class,'admin__field-control')]//input[@name='{{arg2}}']//..//div[@class='sp-preview']" parameterized="true"/>
@@ -109,6 +115,12 @@
         <element name="advancedPaddingBottom" type="input" selector="//input[@name='paddingBottom']"/>
         <element name="advancedPaddingLeft" type="input" selector="//input[@name='paddingLeft']"/>
         <element name="advancedMarginAndPaddingPlaceholderText" type="input" selector="//input[@name='{{arg1}}' and @placeholder='{{arg2}}']" parameterized="true"/>
+    </section>
+    <section name="VisualSelectComponent">
+        <element name="firstSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+        <element name="secondSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+        <element name="thirdSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
+        <element name="fourthSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
     </section>
     <section name="ColorPicker">
         <element name="colorSwatch" type="button" selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]"/>

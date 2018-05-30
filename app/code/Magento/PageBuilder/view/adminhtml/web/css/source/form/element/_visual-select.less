@@ -1,0 +1,110 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+//
+//  Visual Select less
+//  _____________________________________________
+
+.admin__fieldset-visual-select-large {
+    border-bottom: 1px solid @color-gray80;
+
+    .fieldset-wrapper-title {
+        border-bottom: 0;
+        padding-bottom: 4px;
+    }
+
+    .title {
+        .__collapsible-title-pattern();
+
+        cursor: auto;
+
+        &:before {
+            content: '';
+        }
+    }
+
+    .admin__fieldset {
+        padding-bottom: 4rem;
+        padding-top: 0;
+    }
+
+    .admin__field-visual-select-container {
+        margin-top: 0;
+    }
+}
+
+.admin__field-visual-select {
+    box-sizing: border-box;
+
+    ol {
+        display: block;
+        font-size: 0;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            border: 1px solid @color-gray68;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            padding: 12px;
+            text-align: center;
+            vertical-align: top;
+
+            &:last-child {
+                margin-right: 0;
+            }
+
+            &:hover {
+                border-color: @field-control__active__border-color;
+            }
+
+            &.active {
+                border-color: @field-control__active__border-color;
+                box-sizing: border-box;
+                outline: 2px solid @field-control__active__border-color;
+            }
+        }
+    }
+
+    input[type='text'] {
+        display: none;
+    }
+}
+
+.admin__field-visual-select-large {
+    min-height: 150px;
+    width: 220px;
+
+    img {
+        max-height: 100px;
+        max-width: 100%;
+        object-fit: contain;
+    }
+}
+
+.admin__field-visual-select-small {
+    height: 46px;
+    min-width: 120px;
+
+    img {
+        margin-right: 6px;
+        width: 20px;
+    }
+
+    span {
+        vertical-align: top;
+    }
+}
+
+.admin__field-visual-select-spacer {
+    font-size: 0;
+    height: 85px;
+    line-height: 0;
+    width: 100px;
+}

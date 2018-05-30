@@ -22,38 +22,31 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <amOnPage url="admin/admin/auth/logout" stepKey="amOnLogoutPage"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+            <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added Tabs container with one Tab to the stage and save" stepKey="AC1"/>
         <!-- Set the page title, as we'll be saving the page -->
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="tabs" stepKey="fillSearch"/>
         <see userInput="Tabs" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-
         <waitForPageLoad stepKey="waitForTabsToLoad"/>
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-
         <comment userInput="When I view options menu for single Tab" stepKey="AC2"/>
         <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForContentBlockInStageVisible" />
         <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader('1')}}"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-
         <!-- Verify Remove option is disabled -->
         <comment userInput="User sees that removing last tab from the Tabs content block is disabled" stepKey="AC3"/>
         <seeElement selector="{{TabOnStage.tabOptionsRemoveDisabled}}" stepKey="seeTabRemoveOptionDisabled"/>
@@ -63,7 +56,6 @@
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-
         <comment userInput="No Tabs shown on the stage after save nor on the storefront" stepKey="AC5"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
@@ -86,12 +78,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added Tabs content block to the stage with a second Tab in default state" stepKey="AC1"/>
@@ -114,7 +104,6 @@
         <actionGroup ref="addTab" stepKey="addSecondTab"/>
         <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="confirmSecondTab"/>
-
         <comment userInput="When I delete second default state Tab from the stage" stepKey="AC2"/>
         <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForContentBlockInStageVisible" />
         <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader('2')}}"/>
@@ -122,11 +111,9 @@
         <!-- Remove second tab -->
         <click selector="{{TabOnStage.tabOptionsRemove}}" stepKey="clickRemoveOption"/>
         <comment userInput="Removal confirmation modal not displayed when removing default state individual Tab" stepKey="AC3"/>
-
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
         <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
         <comment userInput="Tabs with single Tab shown on the stage after save and on the storefront" stepKey="AC4"/>
-
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
@@ -136,7 +123,6 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <dontSeeElement selector="{{TabOnStorefront.tabHeader('2')}}" stepKey="dontSeeSecondTabOnStorefront"/>
         <seeElement selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeFirstTabOnStorefront"/>
-
     </test>
     <test name="TabsRemoveConfiguredSecondTabWithConfirmation">
         <annotations>
@@ -152,12 +138,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added a second Tab on the stage and customized it" stepKey="AC1"/>
@@ -195,7 +179,6 @@
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
         <seeElement selector="{{TabOnStage.tabHeader('1')}}" stepKey="seeFirstTabOnStage"/>
-
     </test>
     <test name="TabsRemoveSecondTabContainingTextWithConfirmation">
         <annotations>
@@ -211,13 +194,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added Tabs with a second Tab" stepKey="AC1"/>
@@ -229,19 +209,16 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-
         <actionGroup ref="addTab" stepKey="addSecondTab"/>
         <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="confirmSecondTab"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentBlock"/>
-
         <comment userInput="Given I have added a Text content block to the second Tab" stepKey="AC2"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextOntoTab">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
             <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
-
         <comment userInput="User deletes tab with content from Tabs, user sees warning message" stepKey="AC3"/>
         <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader('2')}}"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
@@ -251,13 +228,11 @@
         <comment userInput="User confirms deleting tab with content, it disappears from Admin preview" stepKey="AC4"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
         <comment userInput="Tabs with single Tab shown on the stage after save" stepKey="AC5"/>
-
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab2"/>
         <seeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="seeTabsInStage"/>
         <comment userInput="User goes to the storefront and sees 2 tabs not being displayed" stepKey="AC6"/>
-
         <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
@@ -278,12 +253,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Given I have customized the Edit Tabs container advanced settings" stepKey="AC1"/>
@@ -295,7 +268,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterNavAlignmentCenter">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterNavAlignmentCenter">
             <argument name="property" value="PageBuilderTabsAlignmentCenter"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -322,12 +295,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added Tabs container with 3 Tabs to the stage" stepKey="AC1"/>
@@ -367,12 +338,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Given I have customized a Tab on the stage and copied it" stepKey="AC1"/>
@@ -454,9 +423,7 @@
         </actionGroup>
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeaderAfterHeader"/>
         <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeaderAfterHeader" />
-
         <!-- Validate the items are removed -->
         <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="dontSeeHeaderInStage"/>
-
     </test>
 </tests>

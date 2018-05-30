@@ -9,13 +9,45 @@ define([
     'use strict';
 
     return Fieldset.extend({
+        defaults: {
+            originalLabelValue: ''
+        },
+
         /**
-         * Hide fieldset
+         * Observe label
+         * {@inheritDoc}
+         */
+        initObservable: function () {
+            this._super().observe('label');
+
+            return this;
+        },
+
+        /**
+         * Store original label value
+         * {@inheritDoc}
+         */
+        initConfig: function () {
+            this._super();
+            this.originalLabelValue = this.label;
+        },
+
+        /**
+         * Hide fieldset if number of field options is <= 1 and it is the only element in the group
          *
          * @param {Array} options
          */
-        appearancesHidden: function (options) {
-            this.visible(options.length > 1);
+        hideFieldset: function (options) {
+            this.visible(options.length > 1 || this.elems().length > 1);
+        },
+
+        /**
+         * Hide label if number of field options is <= 1
+         *
+         * @param {Array} options
+         */
+        hideLabel: function (options) {
+            this.label(options.length > 1 ? this.originalLabelValue : '');
         }
     });
 });

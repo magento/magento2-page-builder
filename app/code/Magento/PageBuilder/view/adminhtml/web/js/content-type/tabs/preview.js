@@ -115,6 +115,17 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
           this.setFocusedTab(focusIndex, forceFocus);
         } else if (activeIndex) {
           this.setActiveTab(activeIndex);
+        } // update sortability of tabs
+
+
+        var sortableElement = (0, _jquery)(this.element).find(".tabs-navigation");
+
+        if (sortableElement.hasClass("ui-sortable")) {
+          if (this.parent.children().length <= 1) {
+            sortableElement.sortable("disable");
+          } else {
+            sortableElement.sortable("enable");
+          }
         }
       }
     };

@@ -22,13 +22,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -42,18 +39,14 @@
         </actionGroup>
         <!-- Verify default and available values on Appearance section of Add Slide form -->
         <comment userInput="Appearance defaults to Poster" stepKey="AC0" />
-        <seeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" userInput="Poster" stepKey="seePosterAppearanceDefault"/>
-        <comment userInput="User sees 4 appearances displayed: Poster, Collage Left, Collage Center, Collage Right." stepKey="AC1" />
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderSlideAppearanceDefaultProperty.section, PageBuilderSlideAppearanceDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabAppearanceDropdownValues"/>
-        <assertEquals stepKey="assertAppearanceDropdown" message="Verify 4 appearances displayed">
-            <expectedResult type="array">[Poster, Collage Left, Collage Center, Collage Right]</expectedResult>
-            <actualResult type="variable">grabAppearanceDropdownValues</actualResult>
-        </assertEquals>
+        <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
+            <argument name="property1" value="PageBuilderSlideAppearanceDefaultProperty"/>
+            <argument name="property2" value="PageBuilderSlideCollageLeftProperty"/>
+            <argument name="property3" value="PageBuilderSlideCollageCenteredProperty"/>
+            <argument name="property4" value="PageBuilderSlideCollageRightProperty"/>
+        </actionGroup>
         <comment userInput="User doesn't see Advanced Content appearance" stepKey="AC2"/>
-        <assertNotContains stepKey="assertNotContains" message="Advanced Content appearance not present">
-            <expectedResult type="string">Advanced Content</expectedResult>
-            <actualResult type="variable">grabAppearanceDropdownValues</actualResult>
-        </assertNotContains>
+        <dontSeeElement selector="//li[@name='advanced content']" stepKey="advancedContentAppearanceNotPresent"/>
         <comment userInput="User sees Name: input defaults to empty" stepKey="AC3"/>
         <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderSlideItemName1.section, PageBuilderSlideItemName1.fieldName)}}" stepKey="grabNameDefaultValue"/>
         <assertEmpty stepKey="assertEmptyName" message="Name has text: $grabNameDefaultValue">
@@ -78,13 +71,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -147,13 +137,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -229,13 +216,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -265,9 +249,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
-        </actionGroup>
-        <actionGroup ref="clickSlideOutPanelFieldOpenInNewTab" stepKey="enterSlideNewTab">
-            <argument name="property" value="PageBuilderSlideNewTabProperty"/>
+            <argument name="newTab" value="PageBuilderSlideNewTabProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectButtonTypeSecondaryProperty">
             <argument name="property" value="PageBuilderSlideButtonTypeSecondaryProperty"/>
@@ -350,13 +332,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -391,6 +370,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideNewTabDefaultIsDisabled">
             <argument name="property" value="PageBuilderSlideNewTabDefaultProperty"/>
@@ -460,13 +440,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -495,6 +472,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideOverlayNeverShow">
             <argument name="property" value="PageBuilderSlideShowContentOverlayNeverShowProperty"/>
@@ -547,13 +525,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -582,6 +557,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideOverlayShowOnHover">
             <argument name="property" value="PageBuilderSlideShowContentOverlayOnHoverProperty"/>
@@ -645,13 +621,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="enableWYSIWYG"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -689,6 +662,7 @@
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
             <argument name="selection" value="ExternalLink"/>
+            <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="seeSlideNewTabDefaultIsDisabled">
             <argument name="property" value="PageBuilderSlideNewTabDefaultProperty"/>
@@ -766,13 +740,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -792,9 +763,9 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="seeButtonIsEditable"/>
-        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" stepKey="clickButtonToEdit"/>
-        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemTypePrimaryProperty.value)}}" userInput="{{PageBuilderButtonItemTextProperty2.value}}" stepKey="enterButtonText"/>
+        <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonIsEditable"/>
+        <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="clickButtonToEdit"/>
+        <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
         <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>

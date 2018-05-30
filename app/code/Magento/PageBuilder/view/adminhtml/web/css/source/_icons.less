@@ -1,11 +1,12 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
 
 //
 //  Source -> Icons
 //  _____________________________________________
+
 @icon-pagebuilder-accordian__content: '\e900';
 @icon-pagebuilder-add__content: '\e919';
 @icon-pagebuilder-anchor__content: '\e901';
@@ -30,6 +31,9 @@
 @icon-pagebuilder-special-characters__content: '\e914';
 @icon-pagebuilder-tabs__content: '\e915';
 @icon-pagebuilder-text__content: '\e916';
+@icon-pagebuilder-align-center__content: '\e91a';
+@icon-pagebuilder-align-left__content: '\e91b';
+@icon-pagebuilder-align-right__content: '\e91c';
 @icon-pagebuilder-variable__content: '\e917';
 @icon-pagebuilder-widgets__content: '\e918';
 
@@ -135,6 +139,18 @@
     content: @icon-pagebuilder-text__content;
 }
 
+.icon-pagebuilder-align-center:before {
+    content: @icon-pagebuilder-align-center__content;
+}
+
+.icon-pagebuilder-align-left:before {
+    content: @icon-pagebuilder-align-left__content;
+}
+
+.icon-pagebuilder-align-right:before {
+    content: @icon-pagebuilder-align-right__content;
+}
+
 .icon-pagebuilder-variable:before {
     content: @icon-pagebuilder-variable__content;
 }
@@ -168,5 +184,21 @@
     .abs-icon;
     &:before {
         content: @icon-systems__content;
+    }
+}
+
+.icon-admin-pagebuilder-success {
+    .abs-icon;
+    &:before {
+        color: @success__color;
+        content: @icon-check-mage__content;
+    }
+}
+
+.icon-admin-pagebuilder-error {
+    .abs-icon;
+    &:before {
+        color: @error__color;
+        content: @icon-error__content;
     }
 }

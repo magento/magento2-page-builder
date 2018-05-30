@@ -7,7 +7,7 @@
 
 define([
     'Magento_Ui/js/form/element/abstract',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw'
+    'googleMaps'
 ], function (AbstractField) {
     'use strict';
 
@@ -35,14 +35,13 @@ define([
             }
 
             mapOptions = {
-                zoom: startValue.zoom ? parseInt(startValue.zoom, 10) : 8,
+                zoom: 8,
                 center: new google.maps.LatLng(
-                    startValue.lat ? startValue.lat : 30.2672,
-                    startValue.lng ? startValue.lng : -97.7431
+                    !isNaN(startValue.lat) && startValue.lat !== '' ? startValue.lat : 30.2672,
+                    !isNaN(startValue.lng) && startValue.lng !== '' ? startValue.lng : -97.7431
                 ),
                 scrollwheel: false,
                 disableDoubleClickZoom: false,
-                // mapTypeId: google.maps.MapTypeId.ROADMAP,
                 mapTypeControl: true,
                 mapTypeControlOptions: {
                     style: google.maps.MapTypeControlStyle.DEFAULT
@@ -64,7 +63,6 @@ define([
             // After click, add and update both Lat and Lng.
             google.maps.event.addListener(this.map, 'click', this.onClick.bind(this));
             google.maps.event.addListener(this.map, 'dblclick', this.onDblClick.bind(this));
-            this.map.addListener('zoom_changed', this.onZoomChange.bind(this));
             google.maps.event.trigger(this.marker, 'click');
         },
 
@@ -112,22 +110,23 @@ define([
         },
 
         /**
-         * Event for on zoom change to update zoom value
-         */
-        onZoomChange: function () {
-            this.value(this.exportValue());
-        },
-
-        /**
          * Callback after an update to map
          */
         onUpdate: function () {
             this._super();
             var content = this.value(),
-                latLng,
-                zoom;
+                latLng;
 
-            if (!this.map || this.value() === '' || this.value() === this.exportValue()) {
+            if (this.marker && content.lat === '' && content.lng === '') {
+                this.marker.setMap(null);
+                delete this.marker;
+                return;
+            }
+
+            if (!this.validateCoordinate(content)
+                || !this.map
+                || this.value() === ''
+                || this.value() === this.exportValue()) {
                 return;
             }
 
@@ -135,15 +134,30 @@ define([
                 content = JSON.parse(this.value());
             }
 
-            latLng = new google.maps.LatLng(content.lat, content.lng);
-            zoom = content.zoom;
+            latLng = new google.maps.LatLng(parseFloat(content.lat), parseFloat(content.lng));
 
-            if (typeof zoom !== 'number') {
-                zoom = parseInt(zoom, 10);
+            if (!this.marker) {
+                this.addMarker(latLng.lat(),latLng.lng());
             }
+
             this.marker.setPosition(latLng);
-            this.map.setZoom(zoom);
             this.map.setCenter(latLng);
+        },
+
+        validateCoordinate: function(coordinates) {
+            var valid = true;
+            if( coordinates.lng === ''
+                || coordinates.lat === ''
+                || isNaN(coordinates.lng)
+                || isNaN(coordinates.lat)
+                || parseFloat(coordinates.lng) < -180
+                || parseFloat(coordinates.lng) > 180
+                || parseFloat(coordinates.lat) < -90
+                || parseFloat(coordinates.lat) > 90
+            ) {
+                valid = false;
+            }
+            return valid;
         },
 
         /**
@@ -157,11 +171,10 @@ define([
                 this.marker.getPosition() : new google.maps.LatLng(this.map.center.lat(), this.map.center.lng()),
                 curLatLng = latLng ? latLng : position;
 
-            return JSON.stringify({
+            return {
                 lat: curLatLng.lat(),
                 lng: curLatLng.lng(),
-                zoom: this.map.getZoom()
-            });
+            };
         }
     });
 });

@@ -9,6 +9,7 @@ import $t from "mage/translate";
 import "tabs";
 import events from "uiEvents";
 import _ from "underscore";
+import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
@@ -16,7 +17,6 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import BlockRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
-import {PreviewSortableSortUpdateEventParams} from "../../sortable-children";
 import {ContentTypeMountEventParamsInterface} from "../content-type-mount-event-params.d";
 import {ContentTypeReadyEventParamsInterface} from "../content-type-ready-event-params.d";
 import {ContentTypeRemovedEventParamsInterface} from "../content-type-removed-event-params.d";
@@ -120,6 +120,15 @@ export default class Preview extends PreviewCollection {
                 this.setFocusedTab(focusIndex, forceFocus);
             } else if (activeIndex) {
                 this.setActiveTab(activeIndex);
+            }
+            // update sortability of tabs
+            const sortableElement = $(this.element).find(".tabs-navigation");
+            if (sortableElement.hasClass("ui-sortable")) {
+                if (this.parent.children().length <= 1) {
+                    sortableElement.sortable("disable");
+                } else {
+                    sortableElement.sortable("enable");
+                }
             }
         }
     }

@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="HeadingDefaultState">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Heading - Default Heading State"/>
             <description value="Tests default state of a Heading content block in the stage and storefront"/>
             <severity value="CRITICAL"/>
@@ -21,13 +21,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -38,12 +35,15 @@
         </actionGroup>
         <!-- Verify Default Heading in Stage -->
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType"/>
-        <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText"/>
+        <comment userInput="Validate Heading Placeholder" stepKey="CommentHeadingPlaceholder"/>
+        <seeElement selector="{{HeadingOnStage.headingPlaceholder(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText"/>
+        <grabValueFrom selector="{{HeadingOnStage.headingOnStage(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="getHeadingText"/>
+        <assertEmpty actual="getHeadingText" actualType="variable" message="Heading has text: getHeadingText" stepKey="assertGetTextFromHeadingTextAttribute"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Verify Default Heading in Stage After Page Save -->
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType2"/>
-        <seeElement selector="{{HeadingOnStage.headingText(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText2"/>
+        <seeElement selector="{{HeadingOnStage.headingPlaceholder(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
@@ -54,8 +54,8 @@
     </test>
     <test name="HeadingEditPanelGeneralSectionVisual">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Heading - Edit Panel General Section Visual"/>
             <description value="Tests the following for each attribute under General Section: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
@@ -65,13 +65,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -79,6 +76,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -128,8 +128,8 @@
     </test>
     <test name="HeadingValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Heading - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Heading."/>
             <severity value="CRITICAL"/>
@@ -139,13 +139,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -153,6 +150,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -266,8 +266,8 @@
     </test>
     <test name="HeadingUpdateAdvancedConfigurationValues">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-89915: [Tech Debt] Add Tests to Update Advanced Configuration For Each Content Type"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Heading - Update Advanced Configuration Values"/>
             <description value="Validate that updating every attribute in the Advanced Configuration form for Heading will update the Stage and Storefront correctly."/>
             <severity value="CRITICAL"/>
@@ -277,13 +277,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -292,13 +289,16 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAlignment">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterBorder">
@@ -434,8 +434,8 @@
     </test>
     <test name="HeadingVerifyOnHoverOptionMenu">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Verify Heading On Hover Option Menu"/>
             <description value="Test verifies that on hover option menu for Heading content block contains all buttons"/>
             <severity value="CRITICAL"/>
@@ -445,13 +445,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -459,6 +456,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="waitForHeadingInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="onMouseOverHeadingStage"/>
@@ -471,8 +471,8 @@
     </test>
     <test name="HeadingEditText">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Edit Heading Text"/>
             <description value="Edit Heading Text field in PageBuilder and view the rendered content block in stage and storefront"/>
             <severity value="CRITICAL"/>
@@ -482,13 +482,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -496,6 +493,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -515,8 +515,8 @@
     </test>
     <test name="HeadingEditTypeH1">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Edit Heading Type H1"/>
             <description value="Edit Heading Type field to value H1 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -526,13 +526,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -540,6 +537,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -566,8 +566,8 @@
     </test>
     <test name="HeadingEditTypeH2">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Edit Heading Type H2"/>
             <description value="Edit Heading Type field to value H2 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -577,13 +577,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -591,6 +588,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -617,8 +617,8 @@
     </test>
     <test name="HeadingEditTypeH3">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Edit Heading Type H3"/>
             <description value="Edit Heading Type field to value H3 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -628,13 +628,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -642,6 +639,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -668,8 +668,8 @@
     </test>
     <test name="HeadingEditTypeH4">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Edit Heading Type H4"/>
             <description value="Edit Heading Type field to value H4 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -679,13 +679,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -693,6 +690,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -719,8 +719,8 @@
     </test>
     <test name="HeadingEditTypeH5">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Edit Heading Type H5"/>
             <description value="Edit Heading Type field to value H5 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -730,13 +730,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -744,6 +741,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -770,8 +770,8 @@
     </test>
     <test name="HeadingEditTypeH6">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Edit Heading Type H6"/>
             <description value="Edit Heading Type field to value H6 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
@@ -781,13 +781,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -795,6 +792,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -821,8 +821,8 @@
     </test>
     <test name="HeadingVerifyNoRequiredAttributes">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="No Required Attributes For Heading"/>
             <description value="Verify that no attributes are required by clearing all fields and verifying user can save."/>
             <severity value="CRITICAL"/>
@@ -832,13 +832,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -846,6 +843,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -875,8 +875,8 @@
     </test>
     <test name="HeadingDuplicate">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Duplicate a heading content block in stage"/>
             <description value="A user should be able to duplicate a heading block in a row."/>
             <severity value="CRITICAL"/>
@@ -886,13 +886,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -900,6 +897,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
@@ -913,7 +913,7 @@
         </actionGroup>
         <!-- Fill All Advanced Fields -->
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterTextAlignment">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBorder">
@@ -972,7 +972,7 @@
             <argument name="property" value="PageBuilderHeadingTypeProperty_H3"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="seeTextAlignment">
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter2">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBorder">
@@ -1023,8 +1023,8 @@
     </test>
     <test name="HeadingDelete">
         <annotations>
-            <features value="Pagebuilder: Heading"/>
-            <stories value="MAGETWO-87072: Empty Heading Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Heading"/>
             <title value="Delete Heading Content Block"/>
             <description value="A user should be able to delete a heading block from a row. Verify on Stage amd Storefront"/>
             <severity value="CRITICAL"/>
@@ -1034,13 +1034,10 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1048,6 +1045,9 @@
         </actionGroup>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
