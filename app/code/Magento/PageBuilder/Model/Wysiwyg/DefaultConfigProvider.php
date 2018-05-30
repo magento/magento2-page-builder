@@ -3,11 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 declare(strict_types=1);
-
 namespace Magento\PageBuilder\Model\Wysiwyg;
-
 /**
  * This DefaultConfigProvider overrides existing configuration provided from the cms module
  */
@@ -17,12 +14,10 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
      * @var \Magento\Framework\View\Asset\Repository
      */
     private $assetRepo;
-
     /**
      * @var array
      */
     private $additionalSettings;
-
     /**
      * @param \Magento\Framework\View\Asset\Repository $assetRepo
      * @param array $additionalSettings
@@ -34,7 +29,6 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
         $this->assetRepo = $assetRepo;
         $this->additionalSettings = $additionalSettings;
     }
-
     /**
      * {@inheritdoc}
      */
@@ -43,7 +37,7 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
         $config->addData([
             'tinymce4' => [
                 'toolbar' => 'undo redo | styleselect | fontsizeselect | forecolor backcolor | bold italic underline' .
-                ' | alignleft aligncenter alignright | numlist bullist | link image table charmap | widgets variables',
+                    ' | alignleft aligncenter alignright | numlist bullist | link image table charmap | widgets variables',
                 'plugins' => implode(
                     ' ',
                     [
