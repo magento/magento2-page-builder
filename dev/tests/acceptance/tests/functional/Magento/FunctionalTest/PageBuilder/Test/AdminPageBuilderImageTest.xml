@@ -67,7 +67,9 @@
             <argument name="property" value="PageBuilderImageOnStage"/>
         </actionGroup>
         <!-- Hover uploaded image to check Upload New Image button and Select From Gallery button -->
-        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButton" />
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        </actionGroup>
         <!-- Duplicate Image Content Block -->
         <comment userInput="Duplicate Image Content Block" stepKey="commentDuplicate"/>
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">

@@ -1092,32 +1092,30 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" stepKey="onMouseOverSliderStage"/>
-        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" />
-        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
-            <argument name="property" value="PageBuilderImageOnStage"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverBannerContentBlockStage"/>
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImageOnStage.value)}}" stepKey="waitForImageUploaed" />
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageInSource"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
-        <!-- Overwrite uploaded image by selecting another image from Media Gallery Storage -->
-        <comment userInput="Verify image A stored in the root folder of Magento Media Gallery" stepKey="commentVerifyImage2"/>
-        <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
+        <!--Upload image from Media Gallery Storage -->
+        <comment userInput="Upload image from Media Gallery Storage" stepKey="commentVerifyImage"/>
+        <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />
         <waitForPageLoad stepKey="waitForPageLoad2" />
         <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
-            <argument name="FolderName" value="wysiwyg"/>
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderImageOnStage.value)}}" stepKey="wait" />
-        <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut"/>
-        <!-- Upload image B to replace image A -->
-        <comment userInput="Upload image B to replace image A" stepKey="commentUpload"/>
-        <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderLocalImagePropertyJpg"/>
+        <actionGroup ref="attachImage" stepKey="attachImageFile1">
+            <argument name="Image" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
+        <actionGroup name="saveImage"/>
+        <waitForElementVisible selector="{{ImageOnStage.imageContentBlockByIndex(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seePageBuilderBannerBackgroundImageOnStage"/>
+        <comment userInput="Go to Banner slide-out to verify uploaded image" stepKey="commentGoToBannerSlideOut"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBannerContentBlock.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerContentBlock.fileName)}}" stepKey="seeMainImageSource400"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageContentBlockByIndex(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeLocalImagePropertyOnStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
