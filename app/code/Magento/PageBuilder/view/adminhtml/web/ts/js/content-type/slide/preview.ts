@@ -45,22 +45,42 @@ export default class Preview extends BasePreview {
      * @returns {any}
      */
     public getBackgroundStyles() {
-        const data = this.previewData;
-        let backgroundImage: string = "none";
-        if (data.background_image() && data.background_image() !== "" &&
-            data.background_image() !== undefined &&
-            data.background_image()[0] !== undefined) {
-            backgroundImage = "url(" + data.background_image()[0].url + ")";
+        const previewData = this.previewData;
+        const appearance = this.data.main.attributes()["data-appearance"];
+        const paddingData: any =  {};
+        switch (appearance) {
+            case "collage-centered":
+                paddingData.paddingLeft = `calc(25% + ${this.data.desktop_image.style().paddingLeft})`;
+                paddingData.paddingRight = `calc(25% + ${this.data.desktop_image.style().paddingRight})`;
+                break;
+            case "collage-left":
+                paddingData.paddingRight = `calc(50% + ${this.data.desktop_image.style().paddingRight})`;
+                break;
+            case "collage-right":
+                paddingData.paddingLeft = `calc(50% + ${this.data.desktop_image.style().paddingLeft})`;
+                break;
+            default:
+                break;
         }
-        return {
+        let backgroundImage: string = "none";
+        if (previewData.background_image() && previewData.background_image() !== "" &&
+            previewData.background_image() !== undefined &&
+            previewData.background_image()[0] !== undefined) {
+            backgroundImage = "url(" + previewData.background_image()[0].url + ")";
+        }
+        const styles =  {
             backgroundImage,
-            backgroundSize: data.background_size(),
-            minHeight: data.min_height() ? data.min_height() + "px" : "300px",
+            backgroundSize: previewData.background_size(),
+            minHeight: previewData.min_height() ? previewData.min_height() + "px" : "300px",
             overflow: "hidden",
             paddingBottom: "",
             paddingLeft: "",
             paddingRight: "",
             paddingTop: "",
+        }
+        return {
+            ...styles,
+            ...paddingData,
         };
     }
 
@@ -164,6 +184,7 @@ export default class Preview extends BasePreview {
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOverWrapper() {
+        // Triggers the visibility of the overlay content to show
         if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
             this.data.overlay.attributes(
                 Object.assign(
@@ -192,6 +213,7 @@ export default class Preview extends BasePreview {
      * Set state based on overlay mouseout event for the preview
      */
     public onMouseOutWrapper() {
+        // Triggers the visibility of the overlay content to hide
         if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
             this.data.overlay.style(
                 Object.assign(
