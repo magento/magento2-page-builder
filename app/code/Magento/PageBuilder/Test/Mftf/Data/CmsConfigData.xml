@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor///magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
+    <entity name="enablePageBuilderAndWYSIWYGForm" type="config">
+        <data key="config_state[cms_wysiwyg]">true</data>
+        <data key="groups[wysiwyg][fields][enabled][value]">enabled</data>
+        <data key="groups[wysiwyg][fields][editor][inherit]">true</data>
+        <data key="groups[wysiwyg][fields][use_static_urls_in_catalog][value]">false</data>
+        <data key="config_state[cms_pagebuilder]">true</data>
+        <data key="groups[pagebuilder][fields][enabled][value]">true</data>
+    </entity>
+    <entity name="disableWYSYWYGForm" type="config">
+        <data key="config_state[cms_wysiwyg]">false</data>
+        <data key="groups[wysiwyg][fields][enabled][value]">disabled</data>
+        <data key="groups[wysiwyg][fields][editor][inherit]">true</data>
+        <data key="groups[wysiwyg][fields][use_static_urls_in_catalog][value]">false</data>
+        <data key="config_state[cms_pagebuilder]">false</data>
+        <data key="groups[pagebuilder][fields][enabled][value]">true</data>
+    </entity>
+    <entity name="googleMapsAPIKey" type="config">
+        <data key="section">cms_pagebuilder</data>
+        <data key="row">row_cms_pagebuilder_google_maps_api_key</data>
+        <data key="label">Google Maps API Key</data>
+        <data key="default"/>
+        <data key="valid">AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw</data>
+        <data key="invalidOneCharacter">a</data>
+        <data key="invalidOneCharacterOffOfValid">aIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw</data>
+        <data key="empty"/>
+        <data key="warningMessage">You must provide the Google Maps API key in order to use the map</data>
+    </entity>
+</entities>
