@@ -19,6 +19,7 @@
             <useCaseId value="MAGETWO-83922"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -28,11 +29,11 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -59,6 +60,7 @@
             <useCaseId value="MAGETWO-83922"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -68,11 +70,11 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -92,7 +94,7 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
             <argument name="property" value="PageBuilderButtonItemLink_NotSecure"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -110,7 +112,7 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton2LinkField">
             <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
@@ -150,7 +152,7 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelLinkUrlField" stepKey="seeButtonLink1">
             <argument name="property" value="PageBuilderButtonItemLink_NotSecure"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
@@ -168,7 +170,7 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelLinkUrlField" stepKey="seeButtonLink2">
             <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -206,6 +208,7 @@
             <useCaseId value="MAGETWO-87059"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -218,11 +221,13 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <!-- Add Buttons -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
+        <!-- Add 2nd Button -->
+        <comment userInput="Add 2nd Button" stepKey="commentAddButton"/>
         <actionGroup ref="addButton" stepKey="addButton1"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.allButtons}}" userInput="2" stepKey="seeButtonsStage1"/>
         <!-- Remove Button Before Page Save (No Confirmation Modal) -->
@@ -232,7 +237,8 @@
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStage.allButtons}}" userInput="1" stepKey="seeButtonsStage2"/>
-        <!-- Add Button -->
+        <!-- Add Button Again -->
+        <comment userInput="Add Button Again" stepKey="commentAddButtonAgain"/>
         <actionGroup ref="addButton" stepKey="addButton2"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.allButtons}}" userInput="2" stepKey="seeButtonsStage3"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -266,6 +272,7 @@
             <useCaseId value="MAGETWO-87059"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -278,8 +285,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -312,17 +319,18 @@
         </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStorefront.allButtons}}" userInput="1" stepKey="seeButtonsStorefront"/>
     </test>
-    <test name="ButtonGroupDuplicate">
+    <test name="ButtonItemDuplicate">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Button Group"/>
-            <title value="Buttons - Duplicate Button Group"/>
-            <description value="A user should be able to duplicate a Button Group content block. Verify on Stage amd Storefront."/>
+            <stories value="Buttons"/>
+            <title value="Buttons - Duplicate Button Item"/>
+            <description value="A user should be able to duplicate a Button Item content block. Verify on Stage amd Storefront."/>
             <severity value="AVERAGE"/>
-            <useCaseId value="MAGETWO-90473"/>
-            <testCaseId value="MAGETWO-92013"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <testCaseId value="MAGETWO-92020"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -335,14 +343,27 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
         <!-- Fill All Fields -->
         <comment userInput="Fill All Fields" stepKey="commentEdit"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
+            <argument name="property" value="PageBuilderButtonItemText_Common2"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButton1TypeField">
+            <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
+        </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -368,36 +389,15 @@
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="addButton" stepKey="addButton2"/>
-        <!-- Edit 1st button -->
-        <comment userInput="Edit 1st Button" stepKey="commentEditButton"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
-            <argument name="property" value="PageBuilderButtonItemText_Common2"/>
-        </actionGroup>
-        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButton1TypeField">
-            <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
-            <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
-            <argument name="selection" value="ExternalLink"/>
-            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
-        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Duplicate and Validate Stage -->
         <comment userInput="Duplicate" stepKey="commentDuplicate"/>
-        <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="duplicateSmallContentBlock" stepKey="duplicateContentBlock">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
         </actionGroup>
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
-            <argument name="page" value="ButtonGroupOnStage"/>
+            <argument name="page" value="ButtonItemOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -408,26 +408,31 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <!-- 1st Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton2Stage1">
             <argument name="page" value="ButtonItemOnStage"/>
             <argument name="text" value="PageBuilderButtonItemText_Common2"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
             <argument name="url" value="PageBuilderButtonItemLink_Secure"/>
-            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
-            <argument name="index" value="3"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
+            <argument name="index" value="2"/>
         </actionGroup>
-        <!-- 2nd Button -->
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Stage1">
-            <argument name="page" value="ButtonItemOnStage"/>
-            <argument name="index" value="4"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
             <argument name="contentBlockIndex" value="2"/>
         </actionGroup>
         <!-- Validate Edit Panel For Duplicate -->
         <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEdit"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonTextValue1">
+            <argument name="property" value="PageBuilderButtonItemText_Common2"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateButtonTypeValue1">
+            <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelLinkUrlField" stepKey="validateButtonLink1">
+            <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
+        </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -459,7 +464,7 @@
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
-            <argument name="page" value="ButtonGroupOnStage"/>
+            <argument name="page" value="ButtonItemOnStage"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -476,13 +481,50 @@
             <argument name="text" value="PageBuilderButtonItemText_Common2"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
             <argument name="url" value="PageBuilderButtonItemLink_Secure"/>
-            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
-            <argument name="index" value="3"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
+            <argument name="index" value="2"/>
         </actionGroup>
-        <!-- 2nd Button -->
-        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Stage2">
-            <argument name="page" value="ButtonItemOnStage"/>
-            <argument name="index" value="4"/>
+        <!-- Validate Edit Panel For Duplicate After Save -->
+        <comment userInput="Validate Edit Panel For Duplicate After Save" stepKey="commentValidateEdit2"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage3">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+            <argument name="contentBlockIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateButtonTextValue2">
+            <argument name="property" value="PageBuilderButtonItemText_Common2"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateButtonTypeValue2">
+            <argument name="property" value="PageBuilderButtonItemType_Secondary"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelLinkUrlField" stepKey="validateButtonLink2">
+            <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
+        </actionGroup>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        </actionGroup>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -490,7 +532,7 @@
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
-            <argument name="page" value="ButtonGroupOnStorefront"/>
+            <argument name="page" value="ButtonItemOnStorefront"/>
             <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
             <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
             <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
@@ -507,60 +549,9 @@
             <argument name="text" value="PageBuilderButtonItemText_Common2"/>
             <argument name="type" value="PageBuilderButtonItemType_Secondary"/>
             <argument name="url" value="PageBuilderButtonItemLink_Secure"/>
-            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
-            <argument name="index" value="3"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
+            <argument name="index" value="2"/>
         </actionGroup>
-        <!-- 2nd Button -->
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.base('4')}}" stepKey="waitForButton2"/>
-        <waitForElement selector="{{ButtonItemOnStorefront.emptyButtonItemElement('4')}}" stepKey="waitForButton2Empty"/>
-    </test>
-    <test name="ButtonGroupDelete">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Buttons"/>
-            <title value="Remove Button Group"/>
-            <description value="A user should be able to remove a button group."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91299"/>
-            <useCaseId value="MAGETWO-87059"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-buttons"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ButtonGroupOnStage.base('1')}}" stepKey="waitForButtons"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Remove Button -->
-        <comment userInput="Remove Button" stepKey="commentRemoveButton"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeButtonFromStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <dontSeeElementInDOM selector="{{ButtonGroupOnStage.base('1')}}" stepKey="dontSeeButtonsStage"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="dontSeeButtonsStorefront"/>
     </test>
     <test name="ButtonItemValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -573,6 +564,7 @@
             <useCaseId value="MAGETWO-83415"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -585,8 +577,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -625,119 +617,6 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.defaultStyle('1')}}" stepKey="waitForButtonItemStage1"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage After Save -->
-        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{ButtonItemOnStage.defaultStyle('1')}}" stepKey="waitForButtonItemStage2"/>
-        <!-- Validate Edit Panel After Save -->
-        <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty_Empty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
-        </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
-            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
-        </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
-            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
-        </actionGroup>
-        <!-- Validate Storefront -->
-        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.defaultStyle('1')}}" stepKey="waitForButtonItemStorefront"/>
-    </test>
-    <test name="ButtonGroupValidateAdvancedConfigurationDefaultValues">
-        <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Buttons"/>
-            <title value="Button Group - Validate Advanced Configuration Default Values"/>
-            <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for a Button group."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-89418"/>
-            <useCaseId value="MAGETWO-83415"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-buttons"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <!-- Validate Edit Panel -->
-        <comment userInput="Validate Edit Panel" stepKey="CommentValidateEditPanel"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
-            <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
-        </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
-            <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
-        </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderPaddingPropertyButtons"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings2"/>
-        <!-- Validate Stage -->
-        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStage">
-            <argument name="page" value="ButtonGroupOnStage"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" value="PageBuilderPaddingPropertyButtons"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
@@ -819,6 +698,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -873,46 +754,29 @@
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
-            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+            <argument name="property" value="PageBuilderAdvancedAlignmentPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
-            <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
-            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding">
-            <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
-        </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <!-- Validate Stage After Save -->
-        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage2">
-            <argument name="page" value="ButtonGroupOnStage"/>
-            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
-            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
-            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
-            <argument name="index" value="1"/>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
@@ -920,28 +784,28 @@
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment3">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder3">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDouble"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor2">
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderColor3">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth3">
             <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius3">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses2">
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateCssClasses3">
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
-        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
+        <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins3">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
-        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding2">
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="validatePadding3">
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -949,18 +813,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
-            <argument name="page" value="ButtonGroupOnStorefront"/>
-            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertyDouble"/>
-            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
-            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
-            <argument name="index" value="1"/>
-        </actionGroup>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.defaultStyle('1')}}" stepKey="waitForButtonItemStorefront"/>
     </test>
     <test name="ButtonItemUpdateAdvancedConfigurationValues">
         <annotations>
@@ -973,6 +826,7 @@
             <useCaseId value="MAGETWO-87059"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -985,6 +839,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -1131,49 +987,18 @@
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
-    <test name="ButtonGroupNoRequiredAttributes">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Button Group"/>
-            <title value="Button Group - Validate No Required Attributes"/>
-            <description value="A user should be able to save a Button Group edit form without inputting data into any attribute field."/>
-            <severity value="AVERAGE"/>
-            <useCaseId value="MAGETWO-90473"/>
-            <testCaseId value="MAGETWO-92014"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-buttons"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-        </actionGroup>
-        <!-- Validate No Required Fields -->
-        <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
-        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.editFormAllRequiredFields}}" stepKey="dontSeeRequiredClassInEditForm"/>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
-    </test>
-    <test name="ButtonItemValidateContentSectionFields">
+    <test name="ButtonItemValidateGeneralSectionFields">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
-            <title value="Button Item - Validate Content Section Fields"/>
-            <description value="Check if button items have the required fields and the correct default values."/>
+            <title value="Button Item - Validate General Section Fields"/>
+            <description value="Check if button items have the correct default values."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-91302"/>
             <useCaseId value="MAGETWO-86971"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1186,8 +1011,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -1211,7 +1036,7 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelLinkUrlField" stepKey="seeButtonLink1">
             <argument name="property" value="PageBuilderButtonItemLink_Empty"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
@@ -1251,7 +1076,7 @@
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelLinkUrlField" stepKey="seeButtonLink2">
             <argument name="property" value="PageBuilderButtonItemLink_Empty"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -1265,6 +1090,54 @@
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemUrl('1', PageBuilderButtonItemLink_Empty.value)}}" stepKey="waitForButtonUrlStorefront"/>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemNewTab('1', PageBuilderButtonItemOpenInNewTab_False.stageValue)}}" stepKey="waitForButtonNewTabStorefront"/>
     </test>
+    <test name="ButtonItemNoRequiredFields">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item - No Required Fields"/>
+            <description value="Verify that the button has no required attributes on the edit form."/>
+            <severity value="AVERAGE"/>
+            <testCaseId value="MAGETWO-92053"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Empty All Edit Form Fields -->
+        <comment userInput="Empty All Edit Form Fields" stepKey="commentEmptyFields"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButtonTextField">
+            <argument name="property" value="PageBuilderButtonItemText_Empty"/>
+        </actionGroup>
+        <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="fillButtonTypeField">
+            <argument name="property" value="PageBuilderButtonItemType_Primary"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButtonLinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_Empty"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+        </actionGroup>
+        <!-- Validate No Required Fields -->
+        <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
+        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.editFormAllRequiredFields}}" stepKey="dontSeeRequiredClassInEditForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
+    </test>
     <test name="ButtonItemCanBeEditedInline">
         <annotations>
             <features value="PageBuilder"/>
@@ -1276,6 +1149,7 @@
             <useCaseId value="MAGETWO-87988"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1288,8 +1162,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
@@ -1331,17 +1205,18 @@
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Common .value)}}" stepKey="seeButtonTextOnStorefront"/>
     </test>
-    <test name="ButtonGroupNoMoreOldAddButtonButton">
+    <test name="ButtonItemChangeButtonOrderWithTwoButtons">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
-            <title value="Button Group - No More Old Add Button Button"/>
-            <description value="The old add button button should be gone on button group hover."/>
+            <title value="Button Item: Change Button Order With Two Buttons"/>
+            <description value="A user should be able to change the order of buttons."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-91303"/>
-            <useCaseId value="MAGETWO-83922"/>
+            <testCaseId value="MAGETWO-92057"/>
+            <useCaseId value="MAGETWO-90474"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1351,16 +1226,158 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <!-- Add Button -->
-        <comment userInput="Add Button" stepKey="commentAddButton"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
         <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <!-- Validate Don't See Old Add Button -->
-        <comment userInput="Validate Don't See Old Add Button" stepKey="commentValidate"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderRowContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage1"/>
-        <dontSeeElement selector="{{ButtonGroupOnStage.oldAddNewButtonItem}}" stepKey="dontSeeOldAddButton"/>
-        <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
+        <!-- Add 2nd Button -->
+        <comment userInput="Add 2nd Button" stepKey="commentAddButton"/>
+        <actionGroup ref="addButton" stepKey="addButton"/>
+        <!-- Edit 1st button -->
+        <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Edit 2nd Button -->
+        <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Stage: Validate Initial Button Order -->
+        <comment userInput="Stage: Validate Initial Button Order" stepKey="commentValidateStage1"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage1"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage1"/>
+        <!-- Move Button -->
+        <comment userInput="Move Button" stepKey="commentMoveButton"/>
+        <!-- Get Width Of 1st Button Time 1/4 -->
+        <executeJS function="return Math.round(document.querySelectorAll('.pagebuilder-button-item')[0].clientWidth * (1/4))" stepKey="xCoordinateToMoveTo"/>
+        <comment userInput="xCoordinateToMoveTo: $xCoordinateToMoveTo" stepKey="commentXCoordinate"/>
+        <executeJS function="return Math.round(document.querySelectorAll('.pagebuilder-button-item')[0].clientHeight * (1/2))" stepKey="yCoordinateToMoveTo"/>
+        <comment userInput="yCoordinateToMoveTo: $yCoordinateToMoveTo" stepKey="commentYCoordinate"/>
+        <actionGroup ref="moveButton" stepKey="moveButton">
+            <argument name="targetSelector" value="{{ButtonItemOnStage.base('1')}}"/>
+            <argument name="x" value="$xCoordinateToMoveTo"/>
+            <argument name="y" value="$yCoordinateToMoveTo"/>
+            <argument name="buttonIndexToMove" value="2"/>
+        </actionGroup>
+        <!-- Stage: Validate Changed Button Order -->
+        <comment userInput="Stage: Validate Changed Button Order" stepKey="commentValidateStage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage2"/>
+        <!-- Save Page -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Stage: Validate Changed Button Order After Save -->
+        <comment userInput="Stage: Validate Changed Button Order After Save" stepKey="commentValidateStage3"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage3"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Stage3"/>
+        <!-- Storefront: Validate Changed Button Order -->
+        <comment userInput="Storefront: Validate Changed Button Order" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Storefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton2Storefront"/>
+    </test>
+    <test name="ButtonItemMoveButtonToAnotherButtonGroup">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Item: Move Button To Another Button Group"/>
+            <description value="A user should be able to move a button item to another button group."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92098"/>
+            <useCaseId value="MAGETWO-90474"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonItem"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Add Button Group -->
+        <comment userInput="Add Button Group" stepKey="commentAddButtonGroup"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Add 2nd Button Group -->
+        <comment userInput="Add 2nd Button Group" stepKey="commentAddButtonGroup2"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage2">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Add 2nd Button To 1st Group -->
+        <comment userInput="Add 2nd Button To 1st Group" stepKey="commentAddButton"/>
+        <actionGroup ref="addButton" stepKey="addButton"/>
+        <!-- Edit 1st button -->
+        <comment userInput="Edit 1st Button" stepKey="commentEditButton1"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <!-- Edit 2nd Button -->
+        <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <!-- Edit 3rd Button -->
+        <comment userInput="Edit 3rd Button" stepKey="commentEditButton3"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton3">
+            <argument name="text" value="PageBuilderButtonItemText_Third"/>
+            <argument name="index" value="3"/>
+        </actionGroup>
+        <!-- Stage: Validate Initial Button Order -->
+        <comment userInput="Stage: Validate Initial Button Order: First, Second, Third" stepKey="commentValidateStage1"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage1"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage1"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton3Stage1"/>
+        <!-- Move First Button To Last -->
+        <comment userInput="Move First Button To Last" stepKey="commentMoveButton"/>
+        <!-- Get Width Of 3rd Button Time 3/4 -->
+        <executeJS function="return Math.round(document.querySelectorAll('.pagebuilder-button-item')[2].clientWidth * (3/4))" stepKey="xCoordinateToMoveTo"/>
+        <comment userInput="xCoordinateToMoveTo: $xCoordinateToMoveTo" stepKey="commentXCoordinate"/>
+        <executeJS function="return Math.round(document.querySelectorAll('.pagebuilder-button-item')[2].clientHeight * (1/2))" stepKey="yCoordinateToMoveTo"/>
+        <comment userInput="yCoordinateToMoveTo: $yCoordinateToMoveTo" stepKey="commentYCoordinate"/>
+        <actionGroup ref="moveButton" stepKey="moveButton">
+            <argument name="targetSelector" value="{{ButtonItemOnStage.base('3')}}"/>
+            <argument name="x" value="$xCoordinateToMoveTo"/>
+            <argument name="y" value="$yCoordinateToMoveTo"/>
+            <argument name="buttonIndexToMove" value="1"/>
+        </actionGroup>
+        <!-- Stage: Validate Changed Button Order -->
+        <comment userInput="Stage: Validate Changed Button Order: Second, Third, First" stepKey="commentValidateStage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton2Stage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Stage2"/>
+        <!-- Save Page -->
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Stage: Validate Changed Button Order After Save -->
+        <comment userInput="Stage: Validate Changed Button Order After Save: Second, Third, First" stepKey="commentValidateStage3"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Stage3"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton2Stage3"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('3', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Stage3"/>
+        <!-- Storefront: Validate Changed Button Order -->
+        <comment userInput="Storefront: Validate Changed Button Order: Second, Third, First" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton1Storefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_Third.value)}}" stepKey="waitForButton2Storefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('3', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton3Storefront"/>
     </test>
 </tests>

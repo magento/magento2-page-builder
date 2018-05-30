@@ -8,22 +8,6 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="openPageBuilderEditPanelSmallByIndex">
-        <arguments>
-            <argument name="contentBlockType" defaultValue=""/>
-            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForButtonElement"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickButtonElement"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForEditButton"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickEditButton"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-    </actionGroup>
     <actionGroup name="addButton">
         <arguments>
             <argument name="buttonGroupIndex" defaultValue="1" type="string"/>
@@ -42,19 +26,6 @@
             <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="removeContentBlockFromStageSmallByIndex">
-        <arguments>
-            <argument name="contentBlockType" defaultValue=""/>
-            <argument name="contentBlockIndex" defaultValue="2" type="string"/>
-        </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForButtonElement"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickButtonElement"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockRemoveByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForRemoveButton"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockRemoveByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickRemoveContentBlock"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-    </actionGroup>
     <actionGroup name="validateButtonItemContent">
         <arguments>
             <argument name="page"/>
@@ -70,5 +41,32 @@
         <waitForElementVisible selector="{{page.buttonItemType(index, type.value)}}" stepKey="waitForButtonType"/>
         <waitForElementVisible selector="{{page.buttonItemUrl(index, url.value)}}" stepKey="waitForButtonUrl"/>
         <waitForElementVisible selector="{{page.buttonItemNewTab(index, newTab.stageValue)}}" stepKey="waitForButtonNewTab"/>
+    </actionGroup>
+    <actionGroup name="inlineEditButton">
+        <arguments>
+            <argument name="text"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="inlineEditButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(index)}}" stepKey="waitForButton"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" stepKey="waitForButtonEditable"/>
+        <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
+    </actionGroup>
+    <actionGroup name="moveButton">
+        <arguments>
+            <argument name="targetSelector" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+            <argument name="buttonIndexToMove" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="moveButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton1"/>
+        <click selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockMoveByIndex(PageBuilderButtonItemContentBlock.role, buttonIndexToMove)}}" stepKey="waitForMoveButton"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.contentBlockMoveByIndex(PageBuilderButtonItemContentBlock.role, buttonIndexToMove)}}" selector2="{{targetSelector}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton2"/>
     </actionGroup>
 </actionGroups>
