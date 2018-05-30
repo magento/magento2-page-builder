@@ -15,6 +15,7 @@
         <waitForPageLoad stepKey="waitForMouseOverAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderTabsContentBlock.role)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockAdd(PageBuilderTabsContentBlock.role)}}" stepKey="clickAddContentBlock"/>
+        <waitForPageLoad stepKey="waitForNewTab" time="30"/>
     </actionGroup>
     <actionGroup name="addTabAndOpenNewTabOptions">
         <arguments>
@@ -24,9 +25,10 @@
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentBlock"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
-        <waitForPageLoad stepKey="waitForMouseOverAnimation" />
+        <waitForPageLoad stepKey="waitForMouseOverAnimation" time="30"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderTabsContentBlock.role)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockAdd(PageBuilderTabsContentBlock.role)}}" stepKey="clickAddContentBlock"/>
+        <waitForPageLoad stepKey="waitForNewTab" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabContent(to)}}" stepKey="waitForNewTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader(to)}}" stepKey="waitForNewTabHeader"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsByIndex(to)}}" stepKey="waitForTabOptionsPanel"/>
@@ -34,7 +36,7 @@
         <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock2"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="duplicateTabByIndex">
@@ -56,7 +58,7 @@
         <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
-        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="switchTabsAdmin">
@@ -65,7 +67,7 @@
             <argument name="to" defaultValue="2" type="string"/>
         </arguments>
         <click selector="{{TabOnStage.tabHeader(to)}}" stepKey="switchToTab"/>
-        <waitForPageLoad stepKey="waitForTabChangeAnimation" />
+        <waitForPageLoad stepKey="waitForTabChangeAnimation" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
@@ -76,9 +78,10 @@
             <argument name="to" defaultValue="2" type="string"/>
         </arguments>
         <click selector="{{TabOnStorefront.tabHeader(to)}}" stepKey="switchToTab"/>
+        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront1" time="30"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
         <wait time="1" stepKey="waitForTabRender"/>
-        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront" time="30"/>
+        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront2" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
