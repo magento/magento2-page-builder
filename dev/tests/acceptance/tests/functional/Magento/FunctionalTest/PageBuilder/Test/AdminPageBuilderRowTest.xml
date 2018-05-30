@@ -283,6 +283,7 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-row"/>
             <group value="pagebuilder-rowGeneral"/>
+            <group value="pagebuilder-heading"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -333,7 +334,9 @@
         <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
+            <argument name="index" value="1"/>
+        </actionGroup>
         <!-- Assert row height has changed when content added -->
         <comment userInput="Assert row height has changed when content added" stepKey="comment2"/>
         <executeJS function="document.querySelectorAll('{{RowOnStage.baseCss}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCss}}')[0].clientHeight)" stepKey="setNewRowHeight"/>
