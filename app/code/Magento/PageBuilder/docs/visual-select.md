@@ -88,7 +88,7 @@ Use a virtual type of `Magento\PageBuilder\Model\Source\VisualSelect` in your mo
            <argument name="optionsSize" xsi:type="string">small</argument>
            <argument name="optionsData" xsi:type="array">
                <item name="0" xsi:type="array">
-                   <item name="value" xsi:type="string">default</item>
+                   <item name="value" xsi:type="string"/>
                    <item name="title" xsi:type="string" translate="true">Default</item>
                </item>
                <item name="1" xsi:type="array">
