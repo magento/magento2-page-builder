@@ -12,8 +12,8 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Column"/>
-            <title value="Add a column into a row"/>
-            <description value="A user should be able to add a column into a row."/>
+            <title value="Add column into a row and row height adjusts"/>
+            <description value="A user should be able to add a column group into a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82860"/>
             <group value="pagebuilder"/>
@@ -56,14 +56,15 @@
             <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
         </assertEquals>
     </test>
-    <test name="RemoveColumnFromStage">
+    <test name="RemoveColumnFromStageAndRowShrinks">
         <annotations>
-            <features value="Pagebuilder: Column"/>
-            <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
-            <title value="Remove a column from a row"/>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Remove all columns from row and row shrinks to initial size"/>
             <description value="A user should be able to remove columns from rows."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82861"/>
+            <useCaseId value="MAGETWO-66176"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
         </annotations>
@@ -82,15 +83,21 @@
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeColumn1">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="1" stepKey="seeOneColumnInGroup" />
         <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
         <actionGroup ref="removeContentBlockFromStage" stepKey="removeColumn2">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
         </actionGroup>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask1"/>
         <dontSeeElement selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
         <dontSeeElement selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="dontSeeColumnGroup"/>
+        <comment userInput="Validate Row Height shrinks with removal of columns" stepKey="commentValidateRowHeight"/>
+        <actionGroup ref="validateContentBlockHeightOnStage" stepKey="assertRowHeightMatchesExpectedAfterDeleteColumns">
+            <argument name="contentBlock" value="PageBuilderRowContentBlock"/>
+            <argument name="index" value="1"/>
+            <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
+            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
+            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
+        </actionGroup>
     </test>
     <test name="SlideOutPanelWithSettingsContainRequiredFields">
         <annotations>

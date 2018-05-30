@@ -101,6 +101,22 @@
         <see userInput="Edit {{contentBlockType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
         <waitForPageLoad stepKey="waitForEditFormLoad" time="30"/>
     </actionGroup>
+    <actionGroup name="dragContentBlockToContainerAndExpectEditPanel">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType" defaultValue=""/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentBlockIntoStage"/>
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInContainer"/>
+        <waitForPageLoad time="30" stepKey="waitForEditPanel"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentBlockNameInEditFormTitle" />
+        <see userInput="Edit {{contentBlockType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <waitForPageLoad stepKey="waitForEditFormLoad" time="30"/>
+    </actionGroup>
     <actionGroup name="dragContentBlockToContainer">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
@@ -208,7 +224,7 @@
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, '1')}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockRemove(contentBlockType.role)}}" stepKey="clickRemoveContentBlock"/>
-        <wait time="0.5" stepKey="waitForRemoveAnimation"/>
+        <waitForPageLoad time="30" stepKey="waitForRemoveAnimation" />
     </actionGroup>
     <actionGroup name="removeContentBlockFromStageByIndex">
         <arguments>
@@ -223,7 +239,7 @@
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentBlockRemoveByIndex(contentBlockType.role, contentBlockNumber)}}" stepKey="clickRemoveContentBlock"/>
-        <wait time="0.5" stepKey="waitForRemoveAnimation"/>
+        <waitForPageLoad time="30" stepKey="waitForRemoveAnimation" />
     </actionGroup>
     <actionGroup name="confirmRemovalModal">
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal" />
@@ -232,9 +248,8 @@
         <wait time="1" stepKey="waitForModalEventBinding" />
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad time="30" stepKey="waitForRemoveAnimation"/>
     </actionGroup>
-
     <!-- Remove a content block which has been configured with data or has children -->
     <actionGroup name="removeContentBlockFromStage">
         <arguments>
@@ -251,7 +266,7 @@
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
         <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
         <waitForElementVisible time="5" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow" />
-        <waitForPageLoad time="30" stepKey="waitForRemoveAnimation" />
+        <waitForPageLoad time="30" stepKey="waitForRemoveAnimation"/>
     </actionGroup>
     <actionGroup name="validateSlideOutPanelField">
         <arguments>
@@ -707,7 +722,7 @@
             <argument name="contentBlockType" defaultValue=""/>
         </arguments>
         <amOnPage url="{{contentBlockType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnStoreFrontPage"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad time="30" stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="validateOnHoverOptionMenu">
         <arguments>
@@ -745,5 +760,23 @@
             <expectedResult type="variable">actualStageContentBlockHeight</expectedResult>
             <actualResult type="variable">expectedContentBlockHeightWithPadding</actualResult>
         </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateContentBlockInsideContainerStage">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType" defaultValue=""/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInsideContainerStage(containerTargetType.role, containerTargetIndex, contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockStage" />
+    </actionGroup>
+    <actionGroup name="validateContentBlockInsideContainerStorefront">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType" defaultValue=""/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockStorefront" />
     </actionGroup>
 </actionGroups>
