@@ -85,15 +85,15 @@
                     <option name="title" xsi:type="string" translate="true">Add Location</option>
                 </options>
             </settings>
-            <insertForm name="location_insert_form" component="Magento_PageBuilder/js/form/components/location-insert-form">
+            <insertForm name="map_location_insert_form" component="Magento_PageBuilder/js/form/components/map-location-insert-form">
                 <settings>
                     <toolbarContainer>${ $.parentName }</toolbarContainer>
                     <renderUrl path="mui/index/render_handle">
                         <param name="buttons">1</param>
-                        <param name="handle">pagebuilder_location_form</param>
+                        <param name="handle">pagebuilder_map_location_form</param>
                     </renderUrl>
-                    <externalProvider>${ $.ns}.pagebuilder_location_form_data_source</externalProvider>
-                    <ns>pagebuilder_location_form</ns>
+                    <externalProvider>${ $.ns}.pagebuilder_map_location_form_data_source</externalProvider>
+                    <ns>pagebuilder_map_location_form</ns>
                 </settings>
             </insertForm>
         </modal>
@@ -109,7 +109,7 @@
                     <item name="config" xsi:type="array">
                         <item name="actions" xsi:type="array">
                             <item name="0" xsi:type="array">
-                                <item name="targetName" xsi:type="string">index=location_insert_form</item>
+                                <item name="targetName" xsi:type="string">index=map_location_insert_form</item>
                                 <item name="actionName" xsi:type="string">destroyInserted</item>
                             </item>
                             <item name="1" xsi:type="array">
@@ -117,7 +117,7 @@
                                 <item name="actionName" xsi:type="string">openModal</item>
                             </item>
                             <item name="2" xsi:type="array">
-                                <item name="targetName" xsi:type="string">index=location_insert_form</item>
+                                <item name="targetName" xsi:type="string">index=map_location_insert_form</item>
                                 <item name="actionName" xsi:type="string">render</item>
                             </item>
                         </item>
@@ -131,10 +131,10 @@
                 </settings>
             </button>
         </container>
-        <dynamicRows name="location_listing" sortOrder="20" component="Magento_PageBuilder/js/form/components/dynamic-rows" template="Magento_PageBuilder/form/components/dynamic-rows/edit-form-on-click-grid">
+        <dynamicRows name="locations" sortOrder="20" component="Magento_PageBuilder/js/form/components/dynamic-rows" template="Magento_PageBuilder/form/components/dynamic-rows/edit-form-on-click-grid">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="insertFormProvider" xsi:type="string">index = location_insert_form</item>
+                    <item name="insertFormProvider" xsi:type="string">index = map_location_insert_form</item>
                     <item name="modalProvider" xsi:type="string">index=location_modal</item>
                     <item name="emptyContentPlaceholder" xsi:type="string">No locations found. Click "Add Location"</item>
                 </item>
@@ -222,10 +222,10 @@
                         <elementTmpl>ui/dynamic-rows/cells/text</elementTmpl>
                     </settings>
                 </field>
-                <button name="actions" component="Magento_PageBuilder/js/form/components/action-button" template="Magento_PageBuilder/form/components/dynamic-rows/actions-list">
+                <button name="actions" component="Magento_PageBuilder/js/form/components/action-button" template="Magento_PageBuilder/form/components/dynamic-rows/actions">
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
-                            <item name="insertFormProvider" xsi:type="string">index = location_insert_form</item>
+                            <item name="insertFormProvider" xsi:type="string">index = map_location_insert_form</item>
                             <item name="modalProvider" xsi:type="string">index = location_modal</item>
                             <item name="noClickEdit" xsi:type="boolean">true</item>
                             <item name="actions" xsi:type="array">

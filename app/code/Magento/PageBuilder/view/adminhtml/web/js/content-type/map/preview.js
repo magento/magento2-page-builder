@@ -55,7 +55,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.generateMap = function generateMap(element) {
-      var locations = this.data.main.attributes()["data-location-listing"] || "[]";
+      var locations = this.data.main.attributes()["data-locations"] || "[]";
       var controls = this.data.main.attributes()["data-show-controls"] || "true";
       var markers = [];
       var options = {
@@ -96,7 +96,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
         disableDefaultUI: controls !== "true",
         mapTypeControl: controls === "true"
       };
-      var markers = attributes["data-location-listing"];
+      var markers = attributes["data-locations"];
 
       if (markers !== "" && typeof markers === "string") {
         markers = JSON.parse(markers);

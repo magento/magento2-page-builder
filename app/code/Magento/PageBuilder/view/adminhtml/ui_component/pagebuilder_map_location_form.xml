@@ -8,7 +8,7 @@
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">pagebuilder_location_form.pagebuilder_location_form_data_source</item>
+            <item name="provider" xsi:type="string">pagebuilder_map_location_form.pagebuilder_map_location_form_data_source</item>
         </item>
         <item name="template" xsi:type="string">templates/form/collapsible</item>
         <item name="label" xsi:type="string" translate="true">Location</item>
@@ -16,22 +16,22 @@
     <settings>
         <dataScope>data</dataScope>
         <deps>
-            <dep>pagebuilder_location_form.pagebuilder_location_form_data_source</dep>
+            <dep>pagebuilder_map_location_form.pagebuilder_map_location_form_data_source</dep>
         </deps>
-        <namespace>pagebuilder_location_form</namespace>
+        <namespace>pagebuilder_map_location_form</namespace>
         <buttons>
             <button name="save" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\SaveButton"/>
             <button name="cancel" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Edit\CancelButton"/>
         </buttons>
         <selectorPrefix>.block-location-form</selectorPrefix>
     </settings>
-    <dataSource name="pagebuilder_location_form_data_source">
+    <dataSource name="pagebuilder_map_location_form_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/location-provider</item>
             </item>
         </argument>
-        <dataProvider name="pagebuilder_location_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
+        <dataProvider name="pagebuilder_map_location_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>

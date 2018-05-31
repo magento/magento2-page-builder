@@ -868,14 +868,14 @@ HTML content.
 ## Map
 
 ```
-<div data-role="map" data-appearance="default" data-show-controls="true" data-location-listing="[{&quot;id&quot;:&quot;XD45W1M&quot;,&quot;position&quot;:{&quot;lat&quot;:30.243475338635417,&quot;lng&quot;:-97.73760683593753},&quot;location_name&quot;:&quot;Location Name 1&quot;,&quot;phone&quot;:&quot;512-111-1111&quot;,&quot;address&quot;:&quot;11501 Domain Dr #150&quot;,&quot;city&quot;:&quot;Austin&quot;,&quot;state&quot;:&quot;TX&quot;,&quot;zipcode&quot;:&quot;78758&quot;,&quot;country&quot;:&quot;United States&quot;,&quot;comment&quot;:&quot;Comment 1&quot;,&quot;record_id&quot;:0,&quot;initialize&quot;:true},{&quot;id&quot;:&quot;Q1NHHS8&quot;,&quot;position&quot;:{&quot;lat&quot;:29.404737046411704,&quot;lng&quot;:-98.48467714843753},&quot;location_name&quot;:&quot;Location Name 2&quot;,&quot;phone&quot;:&quot;512-222-2222&quot;,&quot;address&quot;:&quot;849 E Commerce St&quot;,&quot;city&quot;:&quot;San Antonio&quot;,&quot;zipcode&quot;:&quot;78205&quot;,&quot;country&quot;:&quot;United States&quot;,&quot;comment&quot;:&quot;Comment 2&quot;,&quot;record_id&quot;:1}]" style="display: inline-block; border-style: none; border-width: 1px; border-radius: 0px; height: 300px; margin: 0px; padding: 0px;"></div>
+<div data-role="map" data-appearance="default" data-show-controls="true" data-locations=<locations-json-format> style="display: inline-block; border-style: none; border-width: 1px; border-radius: 0px; height: 300px; margin: 0px; padding: 0px;"></div>
 ```
 
 Attributes
 1. data-role [map]
 2. data-appearance [default]
 3. data-show-controls
-4. data-location-listing
+4. data-locations
 5. class
 
 Inline styles
@@ -888,6 +888,46 @@ Inline styles
 7. padding
 8. width
 9. height
+
+### Example of locations json format
+###### Note*: The locations attribute needs to be JSON.stringify() before storing in database
+
+```
+[
+    {
+        "id":"XD45W1M",
+        "position":{
+            "lat":30.243475338635417,
+            "lng":-97.73760683593753
+        },
+        "location_name":"Location Name 1",
+        "phone":"512-111-1111",
+        "address":"11501 Domain Dr #150",
+        "city":"Austin",
+        "state":"TX",
+        "zipcode":"78758",
+        "country":"United States",
+        "comment":"Comment 1",
+        "record_id":0,
+        "initialize":true
+    },
+    {
+        "id":"Q1NHHS8",
+        "position":{
+            "lat":29.404737046411704,
+            "lng":-98.48467714843753
+        },
+        "location_name":"Location Name 2",
+        "phone":"512-222-2222",
+        "address":"849 E Commerce St",
+        "city":"San Antonio",
+        "zipcode":"78205",
+        "country":"United States",
+        "comment":"Comment 2",
+        "record_id":1
+    }
+]
+```
 
 ## Block
 

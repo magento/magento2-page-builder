@@ -120,13 +120,14 @@ define([
             if (this.marker && content.lat === '' && content.lng === '') {
                 this.marker.setMap(null);
                 delete this.marker;
+
                 return;
             }
 
-            if (!this.validateCoordinate(content)
-                || !this.map
-                || this.value() === ''
-                || this.value() === this.exportValue()) {
+            if (!this.validateCoordinate(content) ||
+                !this.map ||
+                this.value() === '' ||
+                this.value() === this.exportValue()) {
                 return;
             }
 
@@ -137,26 +138,34 @@ define([
             latLng = new google.maps.LatLng(parseFloat(content.lat), parseFloat(content.lng));
 
             if (!this.marker) {
-                this.addMarker(latLng.lat(),latLng.lng());
+                this.addMarker(latLng.lat(), latLng.lng());
             }
 
             this.marker.setPosition(latLng);
             this.map.setCenter(latLng);
         },
 
-        validateCoordinate: function(coordinates) {
+        /**
+         * Coordinate validation
+         *
+         * @param {Object} coordinates
+         * @return {Boolean}
+         */
+        validateCoordinate: function (coordinates) {
             var valid = true;
-            if( coordinates.lng === ''
-                || coordinates.lat === ''
-                || isNaN(coordinates.lng)
-                || isNaN(coordinates.lat)
-                || parseFloat(coordinates.lng) < -180
-                || parseFloat(coordinates.lng) > 180
-                || parseFloat(coordinates.lat) < -90
-                || parseFloat(coordinates.lat) > 90
+
+            if (coordinates.lng === '' ||
+                coordinates.lat === '' ||
+                isNaN(coordinates.lng) ||
+                isNaN(coordinates.lat) ||
+                parseFloat(coordinates.lng) < -180 ||
+                parseFloat(coordinates.lng) > 180 ||
+                parseFloat(coordinates.lat) < -90 ||
+                parseFloat(coordinates.lat) > 90
             ) {
                 valid = false;
             }
+
             return valid;
         },
 
@@ -173,7 +182,7 @@ define([
 
             return {
                 lat: curLatLng.lat(),
-                lng: curLatLng.lng(),
+                lng: curLatLng.lng()
             };
         }
     });

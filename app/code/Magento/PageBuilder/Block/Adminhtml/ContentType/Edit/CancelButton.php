@@ -10,7 +10,7 @@ namespace Magento\PageBuilder\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-class Cancel implements ButtonProviderInterface
+class CancelButton implements ButtonProviderInterface
 {
     /**
      * @var string

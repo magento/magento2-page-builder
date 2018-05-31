@@ -5,7 +5,7 @@
 
 import {ConverterInterface} from "../../../../converter/converter-interface";
 
-export default class LocationListing implements ConverterInterface {
+export default class Locations implements ConverterInterface {
 
     /**
      * Convert value to internal format

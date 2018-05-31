@@ -5,8 +5,7 @@
 
 define([
     'jquery',
-    'Magento_Ui/js/lib/validation/utils'
-], function ($, utils) {
+], function ($) {
     'use strict';
 
     /**
@@ -17,7 +16,7 @@ define([
      * @param {Number} max
      * @return {Boolean}
      */
-    function validateNumberBetween (value, min, max) {
+    function validateNumberBetween(value, min, max) {
         var numValue;
 
         if ($.mage.isEmptyNoTrim(value)) {
@@ -34,34 +33,30 @@ define([
     }
 
     return function (validator) {
+        var requiredInputRuleHandler = validator.getRule('require-entry').handler;
+
         validator.addRule(
             'required-entry-location-name',
-            function (value) {
-                return !utils.isEmpty(value);
-            },
+            requiredInputRuleHandler,
             $.mage.__('Please enter the location name.')
         );
 
         validator.addRule(
             'required-entry-latitude',
-            function (value) {
-                return !utils.isEmpty(value);
-            },
+            requiredInputRuleHandler,
             $.mage.__('Enter Latitude')
         );
 
         validator.addRule(
             'required-entry-longitude',
-            function (value) {
-                return !utils.isEmpty(value);
-            },
+            requiredInputRuleHandler,
             $.mage.__('Enter Longitude')
         );
 
         validator.addRule(
             'validate-latitude',
             function (v) {
-                return validateNumberBetween(v, -85, 85)
+                return validateNumberBetween(v, -85, 85);
             },
             $.mage.__('Please enter a number between -85 and 85')
         );
@@ -69,11 +64,11 @@ define([
         validator.addRule(
             'validate-longitude',
             function (v) {
-                return validateNumberBetween(v, -180, 180)
+                return validateNumberBetween(v, -180, 180);
             },
             $.mage.__('Please enter a number between -180 and 180')
         );
 
         return validator;
-    }
+    };
 });

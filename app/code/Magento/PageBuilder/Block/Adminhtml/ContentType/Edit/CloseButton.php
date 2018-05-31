@@ -7,7 +7,7 @@ namespace Magento\PageBuilder\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-class Close implements ButtonProviderInterface
+class CloseButton implements ButtonProviderInterface
 {
     /**
      * @var string

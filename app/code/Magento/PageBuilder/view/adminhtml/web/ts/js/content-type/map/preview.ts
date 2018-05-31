@@ -45,7 +45,7 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private generateMap(element: Element) {
-        const locations: string = this.data.main.attributes()["data-location-listing"] || "[]";
+        const locations: string = this.data.main.attributes()["data-locations"] || "[]";
         const controls = this.data.main.attributes()["data-show-controls"] || "true";
         let markers = [];
 
@@ -84,7 +84,7 @@ export default class Preview extends BasePreview {
             disableDefaultUI: controls !== "true",
             mapTypeControl: controls === "true",
         };
-        let markers: any = attributes["data-location-listing"];
+        let markers: any = attributes["data-locations"];
 
         if (markers !== "" && typeof markers === "string") {
             markers = JSON.parse(markers);

@@ -47,12 +47,12 @@ class Map implements RendererInterface
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? '',
             'data-show-controls' => 'true',
-            'data-location-listing' => '[]',
+            'data-locations' => '[]',
         ];
 
         if (isset($eavData['map'])) {
             $map = explode(',', $eavData['map']);
-            $rootElementAttributes['data-location-listing'] = '[{&quot;position&quot;:{&quot;lat&quot;:'
+            $rootElementAttributes['data-locations'] = '[{&quot;position&quot;:{&quot;lat&quot;:'
                 . $map[0]
                 . ',&quot;lng&quot;:'
                 . $map[1]

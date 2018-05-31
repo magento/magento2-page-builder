@@ -21,6 +21,7 @@ define([
 
         /**
          * Set data for new form
+         *
          * @param {Object} data
          */
         setData: function (data) {

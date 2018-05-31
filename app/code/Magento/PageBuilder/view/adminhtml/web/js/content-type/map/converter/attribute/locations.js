@@ -4,12 +4,12 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var LocationListing =
+  var Locations =
   /*#__PURE__*/
   function () {
-    function LocationListing() {}
+    function Locations() {}
 
-    var _proto = LocationListing.prototype;
+    var _proto = Locations.prototype;
 
     /**
      * Convert value to internal format
@@ -53,9 +53,9 @@ define([], function () {
       return JSON.stringify([]);
     };
 
-    return LocationListing;
+    return Locations;
   }();
 
-  return LocationListing;
+  return Locations;
 });
-//# sourceMappingURL=location-listing.js.map
+//# sourceMappingURL=locations.js.map

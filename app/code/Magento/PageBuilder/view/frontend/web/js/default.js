@@ -129,7 +129,7 @@ requirejs([
 
     /* Google Maps */
     $('div[data-role="map"]').each(function (index, element) {
-        var markers,
+        var locations,
             controls,
             mapOptions = {};
 
@@ -140,17 +140,17 @@ requirejs([
             $(element).height('300px');
         }
 
-        if (element.hasAttribute('data-location-listing') && element.getAttribute('data-location-listing') !== '[]') {
-            markers = JSON.parse(element.getAttribute('data-location-listing'));
-            markers.forEach(function (marker) {
+        if (element.hasAttribute('data-locations') && element.getAttribute('data-locations') !== '[]') {
+            locations = JSON.parse(element.getAttribute('data-locations'));
+            locations.forEach(function (marker) {
                 marker.position.lat = parseFloat(marker.position.lat);
                 marker.position.lng = parseFloat(marker.position.lng);
             });
             controls = element.getAttribute('data-show-controls');
-            mapOptions.center = markers[0].position;
+            mapOptions.center = locations[0].position;
             mapOptions.disableDefaultUI = controls !== 'true';
             mapOptions.mapTypeControl = controls === 'true';
-            new GoogleMap(element, markers, mapOptions);
+            new GoogleMap(element, locations, mapOptions);
         }
     });
 
