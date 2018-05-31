@@ -30,15 +30,21 @@
         }
     }
 
-    &.pagebuilder-content-type-active:hover {
-        -moz-transition: none;
-        -o-transition: none;
-        -webkit-transition: none;
-        outline: 0;
-        transition: none;
+    &.pagebuilder-content-type-active {
+        .slick-active .pagebuilder-options {
+            &:extend(.pagebuilder-options-visible all);
+        }
 
-        .slider-container {
-            .pagebuilder-system-border-hover;
+        &:hover {
+            -moz-transition: none;
+            -o-transition: none;
+            -webkit-transition: none;
+            outline: 0;
+            transition: none;
+
+            .slider-container {
+                .pagebuilder-system-border-hover;
+            }
         }
     }
 
