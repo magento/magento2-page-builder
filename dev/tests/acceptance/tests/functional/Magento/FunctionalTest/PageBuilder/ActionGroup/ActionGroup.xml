@@ -447,6 +447,13 @@
         <seeElement selector='//li[@name="{{property.value}}"]' stepKey="seeVisualSelect"/>
         <click selector='//div[@data-index="{{property.section}}" and contains(@class,"_show")]//li[@name="{{property.value}}"]' stepKey="chooseVisualSelectOption"/>
     </actionGroup>
+    <actionGroup name="validateVisualSelectOptionIsSelected">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector='//li[@name="{{property.value}}" and contains(@class, "active")]' stepKey="seeVisualSelectActive"/>
+    </actionGroup>
     <actionGroup name="validateAlignmentFieldIsNotDisabled">
         <arguments>
             <argument name="property" defaultValue=""/>
