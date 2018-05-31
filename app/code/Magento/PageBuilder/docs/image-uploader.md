@@ -113,7 +113,7 @@ protected bindEvents() {
 }
 ```
 
-4. Add needed logic to `imageUploaded`:
+4. Add needed logic to `onImageUploaded`:
 
 ``` ts
 /**
