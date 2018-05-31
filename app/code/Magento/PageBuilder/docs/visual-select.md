@@ -17,6 +17,7 @@
     1. [Events]
     1. [Master format]
     1. **Visual select**
+    1. [Custom Toolbar]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -34,6 +35,7 @@
 [Events]: events.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Custom Toolbar]: toolbar.md
 [Roadmap and Known Issues]: roadmap.md
 
 ## What's in this topic
@@ -88,7 +90,7 @@ Use a virtual type of `Magento\PageBuilder\Model\Source\VisualSelect` in your mo
            <argument name="optionsSize" xsi:type="string">small</argument>
            <argument name="optionsData" xsi:type="array">
                <item name="0" xsi:type="array">
-                   <item name="value" xsi:type="string">default</item>
+                   <item name="value" xsi:type="string"/>
                    <item name="title" xsi:type="string" translate="true">Default</item>
                </item>
                <item name="1" xsi:type="array">

@@ -19,7 +19,8 @@
     1. [How to add a new content type]
     1. [Events]
     1. [Master format]
-    1. [Visual select]    
+    1. [Visual select]   
+    1. [Custom Toolbar] 
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -37,6 +38,7 @@
 [Events]: events.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Custom Toolbar]: toolbar.md
 [Roadmap and known issues]: roadmap.md
 
 ## Configuration
