@@ -1071,4 +1071,48 @@
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
         </actionGroup>
     </test>
+    <test name="SliderCannotHaveContentDroppedInside">
+        <annotations>
+            <features value="Pagebuilder: Slider"/>
+            <title value="Slider doesn't receive new content when drop ontop of self"/>
+            <description value="Any new content dropped into the slider should be added either above or below depending on position"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92307"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <comment userInput="Attempt to drag heading block onto top part of slider" stepKey="commentValidateAboveSlider"/>
+        <actionGroup ref="dragContentBlockToContentBlock" stepKey="dragHeadingOntoSliderTop">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="targetBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="offsetXCoordinate" value="50"/>
+            <argument name="offsetYCoordinate" value="50"/>
+        </actionGroup>
+        <comment userInput="Attempt to drag heading block onto bottom part of slider" stepKey="commentValidateBelowSlider"/>
+        <actionGroup ref="dragContentBlockToContentBlock" stepKey="dragHeadingOntoSliderBottom">
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="targetBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="offsetXCoordinate" value="50"/>
+            <argument name="offsetYCoordinate" value="300"/>
+        </actionGroup>
+        <seeElement selector="{{SliderInAdmin.sliderHeadingOrder('1', PageBuilderHeadingContentBlock.role)}}" stepKey="seeHeadingInFirstIndex"/>
+        <seeElement selector="{{SliderInAdmin.sliderHeadingOrder('2', PageBuilderSliderContentBlock.role)}}" stepKey="seeSliderInSecondIndex"/>
+        <seeElement selector="{{SliderInAdmin.sliderHeadingOrder('3', PageBuilderHeadingContentBlock.role)}}" stepKey="seeHeadingInThirdIndex"/>
+    </test>
 </tests>
