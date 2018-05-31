@@ -10,6 +10,7 @@
         xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="HeadingOnStage">
         <element name="base" type="text" selector="(//{{arg1}})[{{arg2}}]" parameterized="true"/>
+        <element name="allHeadingsInContainer" type="button" selector="(//div[contains(@class, '{{arg1}}-container')])[{{arg2}}]//div[contains(@class,'pagebuilder-heading')]" parameterized="true"/>
         <element name="headingText" type="button" selector="(//{{arg1}}[.= '{{arg2}}'])[{{arg3}}]" parameterized="true"/>
         <element name="headingPlaceholder" type="button" selector="(//{{arg1}}[contains(@data-placeholder,'{{arg2}}')])[{{arg3}}]" parameterized="true"/>
         <element name="headingOnStage" type="text" selector="(//{{arg1}}[contains(@data-bind,'heading_text')])[{{arg2}}]" parameterized="true"/>

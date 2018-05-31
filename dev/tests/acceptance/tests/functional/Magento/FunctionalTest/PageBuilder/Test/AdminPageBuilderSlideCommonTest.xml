@@ -1067,8 +1067,28 @@
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextOntoStage">
+        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragTextIntoRowAboveSlider">
             <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentBlockIndex" value="1"/>
+            <argument name="dropZoneIndex" value="1"/>
+            <argument name="offsetXCoordinate" value="0"/>
+        </actionGroup>
+        <comment userInput="User sees Text displayed in row above Slider on Stage" stepKey="confirmContentBlocksOnStage"/>
+        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="checkTextPositionInRow">
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="1"/>
+            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="checkSliderPositionInRow">
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="2"/>
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
     </test>
     <test name="SliderCannotHaveContentDroppedInside">

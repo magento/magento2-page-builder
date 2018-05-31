@@ -158,21 +158,6 @@
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
     </actionGroup>
-    <actionGroup name="dragContentBlockNextToExistingContentBlock">
-        <arguments>
-            <argument name="contentBlockType" defaultValue=""/>
-            <argument name="existingContentBlock" defaultValue=""/>
-            <argument name="existingContentBlockIndex" defaultValue="1" type="string"/>
-            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
-            <argument name="offsetXCoordinate" defaultValue="0" type="string"/>
-            <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
-        </arguments>
-        <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockInStageByIndex(existingContentBlock.role, existingContentBlockIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentBlockIntoStage"/>
-        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
-        <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
-    </actionGroup>
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
@@ -780,8 +765,9 @@
             <argument name="contentBlockIndex" defaultValue="1" type="string"/>
             <argument name="containerTargetType" defaultValue=""/>
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+            <argument name="positionInContainer" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInsideContainerStage(containerTargetType.role, containerTargetIndex, contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockStage" />
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockStage" />
     </actionGroup>
     <actionGroup name="validateContentBlockInsideContainerStorefront">
         <arguments>

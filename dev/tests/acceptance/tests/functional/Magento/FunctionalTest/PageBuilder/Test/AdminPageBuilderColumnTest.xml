@@ -931,8 +931,8 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Column"/>
-            <title value="Bluefoot columns to be the same height in the row"/>
-            <description value="Validate columns are the same height on the frontend"/>
+            <title value="Columns are the same height in the row when one column contains multiple content blocks"/>
+            <description value="Validate columns are the same height on the frontend when one contains content blocks"/>
             <useCaseId value="MAGETWO-71365"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -965,26 +965,28 @@
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading1">
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockNextToExistingContentBlock" stepKey="dragHeading2ToFirstColumn">
+        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragHeading2ToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
             <argument name="contentBlockIndex" value="2"/>
-            <argument name="existingContentBlock" value="PageBuilderHeadingContentBlock"/>
-            <argument name="existingContentBlockIndex" value="1"/>
-            <argument name="offsetYCoordinate" value="25"/>
+            <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading2">
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockNextToExistingContentBlock" stepKey="dragHeading3ToFirstColumn">
+        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragHeading3ToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
             <argument name="contentBlockIndex" value="3"/>
-            <argument name="existingContentBlock" value="PageBuilderHeadingContentBlock"/>
-            <argument name="existingContentBlockIndex" value="2"/>
-            <argument name="offsetYCoordinate" value="25"/>
+            <argument name="dropZoneIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading3">
             <argument name="index" value="3"/>
         </actionGroup>
+        <comment userInput="User sees 3 Heading content blocks displayed in first column on Stage" stepKey="confirmContentBlocksOnStage"/>
+        <seeNumberOfElements selector="{{HeadingOnStage.allHeadingsInContainer(PageBuilderColumnContentBlock.role, '1')}}" userInput="3" stepKey="see3HeadingsInFirstColumn"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ColumnsOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
