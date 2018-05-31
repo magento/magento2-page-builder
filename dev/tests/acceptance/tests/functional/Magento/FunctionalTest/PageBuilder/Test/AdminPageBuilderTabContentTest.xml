@@ -953,4 +953,54 @@
         </actionGroup>
         <dontSeeElement selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-tabs')])[1]//div[contains(@class, 'pagebuilder-row')]" stepKey="dontSeeNewRowOnStage"/>
     </test>
+    <test name="CannotAddColumnToTabInsideColumn">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Tabs: Add Content Inside Tab"/>
+            <useCaseId value="MAGETWO-88269"/>
+            <title value="Cannot add column to Tab that is already inside a column"/>
+            <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92248"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-tabs-content"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        </actionGroup>
+        <!-- Add Columns to Stage -->
+        <comment userInput="Drag Columns to Stage" stepKey="commentDragColumnsToStage"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
+        <!-- Add Tabs to Column -->
+        <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
+        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTabsIntoFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <!-- Validate Tabs default state On Stage -->
+        <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsInColumn"/>
+        <waitForPageLoad stepKey="waitForTabsToLoad" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
+        <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
+        <!-- Try to drag Column onto Tab -->
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragColumnOntoTab">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <dontSeeElement selector="{{TabOnStage.tabColumnContent}}" stepKey="dontSeeNewColumnsInTabs"/>
+    </test>
 </tests>
