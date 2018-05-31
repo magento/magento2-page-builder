@@ -6,8 +6,9 @@
 define([
     'Magento_Ui/js/dynamic-rows/dynamic-rows',
     'uiEvents',
-    'underscore'
-], function (dynamicRows, Events, _) {
+    'underscore',
+    'jquery'
+], function (dynamicRows, Events, _, $) {
     'use strict';
 
     return dynamicRows.extend({
@@ -73,22 +74,23 @@ define([
 
         sortByHeader: function(property) {
             var ascend;
+            var activeLabel;
+            var allLabels;
+            var placeholder;
 
             if (property().name === "actions") {
                 return;
             }
 
             if (property().columnsHeaderClasses) {
-                var activeLabel = jQuery.extend({}, property());
-                if (property().columnsHeaderClasses === "_ascend") {
-                    activeLabel.columnsHeaderClasses = "_descend";
-                } else {
-                    activeLabel.columnsHeaderClasses = "_ascend";
-                }
+                activeLabel = $.extend({}, property());
+                activeLabel.columnsHeaderClasses =
+                    property().columnsHeaderClasses === '_ascend' ? '_descend' : '_ascend';
                 ascend = activeLabel.columnsHeaderClasses === "_ascend";
                 property(activeLabel);
             } else {
-                var allLabels = this.labels().slice();
+                allLabels = this.labels().slice();
+                
                 allLabels.forEach(function(label) {
                     if (label.name === property().name) {
                         label.columnsHeaderClasses = "_ascend";
@@ -101,7 +103,8 @@ define([
             }
 
             if (this.recordData().length) {
-                var placeholder = this.emptyContentPlaceholder;
+                placeholder = this.emptyContentPlaceholder;
+
                 this.emptyContentPlaceholder = false;
                 this.sortRecord(property().name, ascend);
                 this.reload();
@@ -117,21 +120,15 @@ define([
          */
         sortRecord: function(sortBy, ascend) {
             this.recordData.sort(function(left, right){
-                var rec1 = left;
-                var rec2 = right;
+                var record1 = ascend ? left : right;
+                var record2 = ascend ? right: left;
 
-                if (!ascend) {
-                    rec1 = right;
-                    rec2 = left;
-                }
+                record1 = record1[sortBy].toLowerCase();
+                record2 = record2[sortBy].toLowerCase();
 
-                rec1 = rec1[sortBy];
-                rec2 = rec2[sortBy];
-
-                return rec1 === rec2 ? 0 : rec1 < rec2 ? -1 : 1;
-            })
-        }
-        ,
+                return record1 === record2 ? 0 : record1 < record2 ? -1 : 1;
+            });
+        },
 
         /** @inheritdoc */
         destroy: function () {
