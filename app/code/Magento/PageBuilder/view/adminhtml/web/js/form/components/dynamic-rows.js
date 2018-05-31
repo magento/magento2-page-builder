@@ -63,22 +63,27 @@ define([
 
             this.recordData(recordData);
 
-            _.each(this.labels(), function(label) {
+            _.each(this.labels(), function (label) {
                 if (label.columnsHeaderClasses) {
-                    this.sortRecord(label.name, label.columnsHeaderClasses === "_ascend");
+                    this.sortRecord(label.name, label.columnsHeaderClasses === '_ascend');
                 }
             }.bind(this));
 
             this.reload();
         },
 
-        sortByHeader: function(property) {
-            var ascend;
-            var activeLabel;
-            var allLabels;
-            var placeholder;
+        /**
+         * Logic to toggle ascend and descend sorting for headers
+         *
+         * @param {KnockoutObservableArray} property
+         */
+        sortByHeader: function (property) {
+            var ascend,
+                activeLabel,
+                allLabels,
+                placeholder;
 
-            if (property().name === "actions") {
+            if (property().name === 'actions') {
                 return;
             }
 
@@ -86,16 +91,15 @@ define([
                 activeLabel = $.extend({}, property());
                 activeLabel.columnsHeaderClasses =
                     property().columnsHeaderClasses === '_ascend' ? '_descend' : '_ascend';
-                ascend = activeLabel.columnsHeaderClasses === "_ascend";
+                ascend = activeLabel.columnsHeaderClasses === '_ascend';
                 property(activeLabel);
             } else {
                 allLabels = this.labels().slice();
-                
-                allLabels.forEach(function(label) {
+                allLabels.forEach(function (label) {
                     if (label.name === property().name) {
-                        label.columnsHeaderClasses = "_ascend";
+                        label.columnsHeaderClasses = '_ascend';
                     } else {
-                        label.columnsHeaderClasses = "";
+                        label.columnsHeaderClasses = '';
                     }
                 });
                 ascend = true;
@@ -118,10 +122,10 @@ define([
          * @param {String} sortBy
          * @param {Boolean} ascend
          */
-        sortRecord: function(sortBy, ascend) {
-            this.recordData.sort(function(left, right){
-                var record1 = ascend ? left : right;
-                var record2 = ascend ? right: left;
+        sortRecord: function (sortBy, ascend) {
+            this.recordData.sort(function (left, right) {
+                var record1 = ascend ? left : right,
+                    record2 = ascend ? right : left;
 
                 record1 = record1[sortBy].toLowerCase();
                 record2 = record2[sortBy].toLowerCase();
