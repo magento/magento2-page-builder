@@ -9,7 +9,7 @@ import events from "uiEvents";
 import _ from "underscore";
 import Config from "../../config";
 import ConfigContentBlock from "../../config";
-import ContentTypeInterface from "../../content-type";
+import ContentTypeInterface, {default as ContentType} from "../../content-type";
 import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import {animationTime} from "../../drag-drop/container-animation";
@@ -36,6 +36,16 @@ interface BlockRemovedParams {
 
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
+    public hasEmptyChild: KnockoutComputed<boolean> = ko.computed(() => {
+        let empty: boolean = false;
+        (this.parent as ContentTypeCollectionInterface).getChildren()()
+            .forEach((column: ContentTypeCollectionInterface) => {
+                if (column.getChildren()().length === 0) {
+                    empty = true;
+                }
+            });
+        return empty;
+    });
     private dropPlaceholder: JQuery<HTMLElement>;
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;

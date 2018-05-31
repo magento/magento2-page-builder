@@ -17,6 +17,17 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
       _this = _PreviewCollection.call(this, parent, config, stageId) || this;
       _this.resizing = _knockout.observable(false);
+      _this.hasEmptyChild = _knockout.computed(function () {
+        var empty = false;
+
+        _this.parent.getChildren()().forEach(function (column) {
+          if (column.getChildren()().length === 0) {
+            empty = true;
+          }
+        });
+
+        return empty;
+      });
       _this.dropPlaceholder = void 0;
       _this.movePlaceholder = void 0;
       _this.groupElement = void 0;

@@ -10,7 +10,6 @@
 .pagebuilder-content-type.children-min-height.pagebuilder-column {
     margin-right: 1px;
     > .element-children {
-        min-height: inherit;
         padding: 0;
     }
 }
@@ -85,4 +84,8 @@
 }
 .pagebuilder-stage .pagebuilder-column-group.resizing .pagebuilder-content-type.pagebuilder-column .pagebuilder-column-resize-handle {
     display: block;
+}
+
+.pagebuilder-column-group:not(.empty-child) .pagebuilder-content-type.children-min-height.pagebuilder-column > .element-children {
+    min-height: inherit;
 }
