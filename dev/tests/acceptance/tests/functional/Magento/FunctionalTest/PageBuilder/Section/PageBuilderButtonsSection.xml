@@ -48,8 +48,8 @@
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
         <element name="emptyButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@class,'placeholder-text') and not(text())]" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@contenteditable,'true')]" parameterized="true"/>
-        <element name="xCoordinate" type="text" selector="return document.querySelectorAll('.pagebuilder-button-item')[{{arg1}}].getBoundingClientRect().x" parameterized="true"/>
-        <element name="yCoordinate" type="text" selector="return document.querySelectorAll('.pagebuilder-button-item')[{{arg1}}].getBoundingClientRect().y" parameterized="true"/>
+        <element name="xCoordinate" type="text" selector="return document.querySelectorAll('.pagebuilder-button-item')[{{arg1}}-1].getBoundingClientRect().x" parameterized="true"/>
+        <element name="yCoordinate" type="text" selector="return document.querySelectorAll('.pagebuilder-button-item')[{{arg1}}-1].getBoundingClientRect().y" parameterized="true"/>
         <!-- Content Configuration -->
         <element name="buttonItemText" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="buttonItemType" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[@class='{{arg2}}']" parameterized="true"/>
@@ -70,8 +70,8 @@
         <element name="allButtons" type="button" selector="//div[@data-role='button-item']"/>
         <element name="base" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]" parameterized="true"/>
         <element name="emptyButtonItemElement" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a//span[not(text())]" parameterized="true"/>
-        <element name="xCoordinate" type="text" selector="return document.querySelectorAll('div[data-role=\'button-item\']')[{{arg1}}].getBoundingClientRect().x" parameterized="true"/>
-        <element name="yCoordinate" type="text" selector="return document.querySelectorAll('div[data-role=\'button-item\']')[{{arg1}}].getBoundingClientRect().y" parameterized="true"/>
+        <element name="xCoordinate" type="text" selector="return document.querySelectorAll('div[data-role=\'button-item\']')[{{arg1}}-1].getBoundingClientRect().x" parameterized="true"/>
+        <element name="yCoordinate" type="text" selector="return document.querySelectorAll('div[data-role=\'button-item\']')[{{arg1}}-1].getBoundingClientRect().y" parameterized="true"/>
         <!-- Content Configuration -->
         <element name="buttonItemText" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a//span[contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="buttonItemType" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a[@class='{{arg2}}']" parameterized="true"/>

@@ -74,35 +74,58 @@
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
             <argument name="index" defaultValue="1" type="string"/>
+            <argument name="firstButtonIndex" defaultValue="1" type="string"/>
+            <argument name="secondButtonIndex" defaultValue="2" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{buttonGroupPage.base(index)}}" stepKey="waitForButtonGroup"/>
         <seeElementInDOM selector="{{buttonGroupPage.appearance(index, PageBuilderAppearancePropertyInline.value)}}" stepKey="seeButtonAppearance"/>
-        <waitForElementVisible selector="{{buttonItemPage.base('1')}}" stepKey="waitForButton1"/>
-        <executeJS function="{{buttonItemPage.xCoordinate('0')}}" stepKey="xCoordinate1"/>
-        <executeJS function="{{buttonItemPage.yCoordinate('0')}}" stepKey="yCoordinate1"/>
-        <waitForElementVisible selector="{{buttonItemPage.base('2')}}" stepKey="waitForButton2"/>
-        <executeJS function="{{buttonItemPage.xCoordinate('1')}}" stepKey="xCoordinate2"/>
-        <executeJS function="{{buttonItemPage.yCoordinate('1')}}" stepKey="yCoordinate2"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
+        <executeJS function="{{buttonItemPage.xCoordinate(firstButtonIndex)}}" stepKey="xCoordinate1"/>
+        <executeJS function="{{buttonItemPage.yCoordinate(firstButtonIndex)}}" stepKey="yCoordinate1"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
+        <executeJS function="{{buttonItemPage.xCoordinate(secondButtonIndex)}}" stepKey="xCoordinate2"/>
+        <executeJS function="{{buttonItemPage.yCoordinate(secondButtonIndex)}}" stepKey="yCoordinate2"/>
         <assertGreaterThan expected="$xCoordinate1" actual="$xCoordinate2" stepKey="checkXCoordinates"/>
         <assertEquals stepKey="checkYCoordinates">
             <expectedResult type="variable">yCoordinate1</expectedResult>
             <actualResult type="variable">yCoordinate2</actualResult>
         </assertEquals>
     </actionGroup>
+    <actionGroup name="validateButtonGroupInlineAppearanceWraps">
+        <arguments>
+            <argument name="buttonGroupPage"/>
+            <argument name="buttonItemPage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="firstButtonIndex" defaultValue="1" type="string"/>
+            <argument name="secondButtonIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{buttonGroupPage.base(index)}}" stepKey="waitForButtonGroup"/>
+        <seeElementInDOM selector="{{buttonGroupPage.appearance(index, PageBuilderAppearancePropertyInline.value)}}" stepKey="seeButtonAppearance"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
+        <executeJS function="{{buttonItemPage.xCoordinate(firstButtonIndex)}}" stepKey="xCoordinate1"/>
+        <executeJS function="{{buttonItemPage.yCoordinate(firstButtonIndex)}}" stepKey="yCoordinate1"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
+        <executeJS function="{{buttonItemPage.xCoordinate(secondButtonIndex)}}" stepKey="xCoordinate2"/>
+        <executeJS function="{{buttonItemPage.yCoordinate(secondButtonIndex)}}" stepKey="yCoordinate2"/>
+        <assertGreaterThan expected="$xCoordinate1" actual="$xCoordinate2" stepKey="checkXCoordinates"/>
+        <assertGreaterThan expected="$yCoordinate1" actual="$yCoordinate2" stepKey="checkYCoordinates"/>
+    </actionGroup>
     <actionGroup name="validateButtonGroupStackedAppearance">
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
             <argument name="index" defaultValue="1" type="string"/>
+            <argument name="firstButtonIndex" defaultValue="1" type="string"/>
+            <argument name="secondButtonIndex" defaultValue="2" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{buttonGroupPage.base(index)}}" stepKey="waitForButtonGroup"/>
         <seeElementInDOM selector="{{buttonGroupPage.appearance(index, PageBuilderAppearancePropertyStacked.value)}}" stepKey="seeButtonAppearance"/>
-        <waitForElementVisible selector="{{buttonItemPage.base('1')}}" stepKey="waitForButton1"/>
-        <executeJS function="{{buttonItemPage.xCoordinate('0')}}" stepKey="xCoordinate1"/>
-        <executeJS function="{{buttonItemPage.yCoordinate('0')}}" stepKey="yCoordinate1"/>
-        <waitForElementVisible selector="{{buttonItemPage.base('2')}}" stepKey="waitForButton2"/>
-        <executeJS function="{{buttonItemPage.xCoordinate('1')}}" stepKey="xCoordinate2"/>
-        <executeJS function="{{buttonItemPage.yCoordinate('1')}}" stepKey="yCoordinate2"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
+        <executeJS function="{{buttonItemPage.xCoordinate(firstButtonIndex)}}" stepKey="xCoordinate1"/>
+        <executeJS function="{{buttonItemPage.yCoordinate(firstButtonIndex)}}" stepKey="yCoordinate1"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
+        <executeJS function="{{buttonItemPage.xCoordinate(secondButtonIndex)}}" stepKey="xCoordinate2"/>
+        <executeJS function="{{buttonItemPage.yCoordinate(secondButtonIndex)}}" stepKey="yCoordinate2"/>
         <assertEquals stepKey="checkXCoordinates">
             <expectedResult type="variable">xCoordinate1</expectedResult>
             <actualResult type="variable">xCoordinate2</actualResult>
