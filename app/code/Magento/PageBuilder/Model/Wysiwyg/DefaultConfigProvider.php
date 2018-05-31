@@ -5,6 +5,7 @@
  */
 declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Wysiwyg;
+
 /**
  * This DefaultConfigProvider overrides existing configuration provided from the cms module
  */
@@ -37,7 +38,8 @@ class DefaultConfigProvider implements \Magento\Framework\Data\Wysiwyg\ConfigPro
         $config->addData([
             'tinymce4' => [
                 'toolbar' => 'undo redo | styleselect | fontsizeselect | forecolor backcolor | bold italic underline' .
-                    ' | alignleft aligncenter alignright | numlist bullist | link image table charmap | widgets variables',
+                    ' | alignleft aligncenter alignright | numlist bullist | link image table charmap' .
+                    ' | widgets variables',
                 'plugins' => implode(
                     ' ',
                     [
