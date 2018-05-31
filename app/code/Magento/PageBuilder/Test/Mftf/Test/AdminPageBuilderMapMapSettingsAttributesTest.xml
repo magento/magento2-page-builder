@@ -53,7 +53,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <executeJS function="{{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight1"/>
+        <executeJS function="return {{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight1"/>
         <executeJS function="return Math.round(({$actualStageMapHeight1}/{{PageBuilderMapHeightProperty500px.value}})*100)/100" stepKey="actualStageMapHeightRatio1"/>
         <assertEquals stepKey="assertStageMapHeight1">
             <expectedResult type="int">1</expectedResult>
@@ -72,7 +72,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <executeJS function="{{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight2"/>
+        <executeJS function="return {{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight2"/>
         <executeJS function="return Math.round(({$actualStageMapHeight2}/{{PageBuilderMapHeightProperty500px.value}})*100)/100" stepKey="actualStageMapHeightRatio2"/>
         <assertEquals stepKey="assertStageMapHeight2">
             <expectedResult type="int">1</expectedResult>
@@ -91,7 +91,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
         </actionGroup>
-        <executeJS function="{{MapOnStorefront.computedHeight}}" stepKey="actualStorefrontMapHeight"/>
+        <executeJS function="return {{MapOnStorefront.computedHeight}}" stepKey="actualStorefrontMapHeight"/>
         <executeJS function="return Math.round(({$actualStorefrontMapHeight}/{{PageBuilderMapHeightProperty500px.value}})*100)/100" stepKey="actualStorefrontMapHeightRatio"/>
         <assertEquals stepKey="assertStorefrontMapHeight">
             <expectedResult type="int">1</expectedResult>
