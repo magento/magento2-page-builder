@@ -268,7 +268,7 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. display (only on stacked appearance)
+8. display
 9. flex-direction (only on stacked appearance)
 
 ## Button item
