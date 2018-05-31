@@ -9,7 +9,7 @@ import events from "uiEvents";
 import _ from "underscore";
 import Config from "../../config";
 import ConfigContentBlock from "../../config";
-import ContentTypeInterface, {default as ContentType} from "../../content-type";
+import ContentTypeInterface from "../../content-type";
 import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import {animationTime} from "../../drag-drop/container-animation";
