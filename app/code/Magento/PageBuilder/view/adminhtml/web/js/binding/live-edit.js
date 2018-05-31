@@ -112,11 +112,11 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
         }
       };
       /**
-       * Key up event on element
+       * Input event on element
        */
 
 
-      var onKeyUp = function onKeyUp() {
+      var onInput = function onInput() {
         handlePlaceholderClass(element);
       };
 
@@ -127,7 +127,7 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
       element.addEventListener("blur", onBlur);
       element.addEventListener("click", onClick);
       element.addEventListener("keydown", onKeyDown);
-      element.addEventListener("keyup", onKeyUp);
+      element.addEventListener("input", onInput);
       (0, _jquery.default)(element).parent().css("cursor", "text");
       handlePlaceholderClass(element); // Create a subscription onto the original data to update the internal value
 
