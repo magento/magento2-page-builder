@@ -17,6 +17,7 @@
     1. [Events]
     1. [Master format]
     1. [Visual select] 
+    1. [Custom Toolbar] 
 5. [Roadmap and known issues]
 
 **[Architecture overview]** - An overview of the PageBuilder module architecture.
@@ -41,6 +42,8 @@
 
 **[Visual select]** - Documentation on customizing the visual select field.
 
+**[Custom Toolbar]** - Documentation on adding a custom toolbar.
+
 [Introduction]: README.md
 [Contribution guide]: CONTRIBUTING.md
 [Installation guide]: install.md
@@ -55,4 +58,5 @@
 [Events]: events.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Custom Toolbar]: toolbar.md
 [Roadmap and known issues]: roadmap.md
