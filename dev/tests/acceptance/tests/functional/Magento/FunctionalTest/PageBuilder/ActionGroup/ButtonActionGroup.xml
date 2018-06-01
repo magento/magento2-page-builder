@@ -85,7 +85,10 @@
         <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
         <executeJS function="{{buttonItemPage.xCoordinate(secondButtonIndex)}}" stepKey="xCoordinate2"/>
         <executeJS function="{{buttonItemPage.yCoordinate(secondButtonIndex)}}" stepKey="yCoordinate2"/>
-        <assertGreaterThan expected="$xCoordinate1" actual="$xCoordinate2" stepKey="checkXCoordinates"/>
+        <assertGreaterThan stepKey="checkXCoordinates">
+            <expectedResult type="variable">xCoordinate1</expectedResult>
+            <actualResult type="variable">xCoordinate2</actualResult>
+        </assertGreaterThan>
         <assertEquals stepKey="checkYCoordinates">
             <expectedResult type="variable">yCoordinate1</expectedResult>
             <actualResult type="variable">yCoordinate2</actualResult>
@@ -107,8 +110,14 @@
         <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
         <executeJS function="{{buttonItemPage.xCoordinate(secondButtonIndex)}}" stepKey="xCoordinate2"/>
         <executeJS function="{{buttonItemPage.yCoordinate(secondButtonIndex)}}" stepKey="yCoordinate2"/>
-        <assertGreaterThan expected="$xCoordinate1" actual="$xCoordinate2" stepKey="checkXCoordinates"/>
-        <assertGreaterThan expected="$yCoordinate1" actual="$yCoordinate2" stepKey="checkYCoordinates"/>
+        <assertGreaterThan stepKey="checkXCoordinates">
+            <expectedResult type="variable">xCoordinate1</expectedResult>
+            <actualResult type="variable">xCoordinate2</actualResult>
+        </assertGreaterThan>
+        <assertGreaterThan stepKey="checkYCoordinates">
+            <expectedResult type="variable">yCoordinate1</expectedResult>
+            <actualResult type="variable">yCoordinate2</actualResult>
+        </assertGreaterThan>
     </actionGroup>
     <actionGroup name="validateButtonGroupStackedAppearance">
         <arguments>
@@ -130,6 +139,9 @@
             <expectedResult type="variable">xCoordinate1</expectedResult>
             <actualResult type="variable">xCoordinate2</actualResult>
         </assertEquals>
-        <assertGreaterThan expected="$yCoordinate1" actual="$yCoordinate2" stepKey="checkYCoordinates"/>
+        <assertGreaterThan stepKey="checkYCoordinates">
+            <expectedResult type="variable">yCoordinate1</expectedResult>
+            <actualResult type="variable">yCoordinate2</actualResult>
+        </assertGreaterThan>
     </actionGroup>
 </actionGroups>
