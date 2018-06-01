@@ -35,8 +35,8 @@ export default class Locations implements ConverterInterface {
         if (content && Object.keys(content).length) {
             content.each((marker: any) => {
                 if (marker.position) {
-                    marker.position.lat = parseFloat(marker.position.lat);
-                    marker.position.lng = parseFloat(marker.position.lng);
+                    marker.position.latitude = parseFloat(marker.position.latitude);
+                    marker.position.longitude = parseFloat(marker.position.longitude);
                 }
             });
             return JSON.stringify(content);

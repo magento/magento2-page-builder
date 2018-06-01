@@ -37,8 +37,8 @@ define([
             mapOptions = {
                 zoom: 8,
                 center: new google.maps.LatLng(
-                    !isNaN(startValue.lat) && startValue.lat !== '' ? startValue.lat : 30.2672,
-                    !isNaN(startValue.lng) && startValue.lng !== '' ? startValue.lng : -97.7431
+                    !isNaN(startValue.latitude) && startValue.latitude !== '' ? startValue.latitude : 30.2672,
+                    !isNaN(startValue.longitude) && startValue.longitude !== '' ? startValue.longitude : -97.7431
                 ),
                 scrollwheel: false,
                 disableDoubleClickZoom: false,
@@ -57,10 +57,10 @@ define([
 
             // Add marker if there is a start value
             if (this.value()) {
-                this.addMarker(startValue.lat, startValue.lng);
+                this.addMarker(startValue.latitude, startValue.longitude);
             }
 
-            // After click, add and update both Lat and Lng.
+            // After click, add and update both Latitude and Longitude.
             google.maps.event.addListener(this.map, 'click', this.onClick.bind(this));
             google.maps.event.addListener(this.map, 'dblclick', this.onDblClick.bind(this));
             google.maps.event.trigger(this.marker, 'click');
@@ -117,7 +117,7 @@ define([
             var content = this.value(),
                 latitudeLongitude;
 
-            if (this.marker && content.lat === '' && content.lng === '') {
+            if (this.marker && content.latitude === '' && content.longitude === '') {
                 this.marker.setMap(null);
                 delete this.marker;
 
@@ -135,7 +135,7 @@ define([
                 content = JSON.parse(this.value());
             }
 
-            latitudeLongitude = new google.maps.LatLng(parseFloat(content.lat), parseFloat(content.lng));
+            latitudeLongitude = new google.maps.LatLng(parseFloat(content.latitude), parseFloat(content.longitude));
 
             if (!this.marker) {
                 this.addMarker(latitudeLongitude.lat(), latitudeLongitude.lng());
@@ -154,14 +154,14 @@ define([
         validateCoordinate: function (coordinates) {
             var valid = true;
 
-            if (coordinates.lng === '' ||
-                coordinates.lat === '' ||
-                isNaN(coordinates.lng) ||
-                isNaN(coordinates.lat) ||
-                parseFloat(coordinates.lng) < -180 ||
-                parseFloat(coordinates.lng) > 180 ||
-                parseFloat(coordinates.lat) < -90 ||
-                parseFloat(coordinates.lat) > 90
+            if (coordinates.longitude === '' ||
+                coordinates.latitude === '' ||
+                isNaN(coordinates.longitude) ||
+                isNaN(coordinates.latitude) ||
+                parseFloat(coordinates.longitude) < -180 ||
+                parseFloat(coordinates.longitude) > 180 ||
+                parseFloat(coordinates.latitude) < -90 ||
+                parseFloat(coordinates.latitude) > 90
             ) {
                 valid = false;
             }
@@ -170,7 +170,7 @@ define([
         },
 
         /**
-         * Returns current lat, lng, and zoom level as a single string
+         * Returns current latitude and longitude as an object
          *
          * @param {Object} coordinate
          * @return {Object}
@@ -181,8 +181,8 @@ define([
                 currentCoordinate = coordinate ? coordinate : position;
 
             return {
-                lat: currentCoordinate.lat(),
-                lng: currentCoordinate.lng()
+                latitude: currentCoordinate.lat(),
+                longitude: currentCoordinate.lng()
             };
         }
     });

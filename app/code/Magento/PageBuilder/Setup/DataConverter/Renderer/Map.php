@@ -92,9 +92,9 @@ class Map implements RendererInterface
     {
         if (isset($eavData['map'])) {
             $map = explode(',', $eavData['map']);
-            $this->rootElementAttributes['data-locations'] = '[{&quot;position&quot;:{&quot;lat&quot;:'
+            $this->rootElementAttributes['data-locations'] = '[{&quot;position&quot;:{&quot;latitude&quot;:'
                 . $map[0]
-                . ',&quot;lng&quot;:'
+                . ',&quot;longitude&quot;:'
                 . $map[1]
                 . '}}]';
         }

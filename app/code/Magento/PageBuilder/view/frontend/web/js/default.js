@@ -143,8 +143,8 @@ requirejs([
         if (element.hasAttribute('data-locations') && element.getAttribute('data-locations') !== '[]') {
             locations = JSON.parse(element.getAttribute('data-locations'));
             locations.forEach(function (location) {
-                location.position.lat = parseFloat(location.position.lat);
-                location.position.lng = parseFloat(location.position.lng);
+                location.position.latitude = parseFloat(location.position.latitude);
+                location.position.longitude = parseFloat(location.position.longitude);
             });
             controls = element.getAttribute('data-show-controls');
             mapOptions.center = locations[0].position;

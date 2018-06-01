@@ -12,21 +12,21 @@ define([
     var google = window.google || {},
 
         /**
-         * Generates a google map usuable lat and lng object
+         * Generates a google map usuable latitude and longitude object
          *
          * @param {Object} position
          * @return {google.maps.LatLng}
          */
         getGoogleLatitudeLongitude = function (position) {
-            return new google.maps.LatLng(position.lat, position.lng);
+            return new google.maps.LatLng(position.latitude, position.longitude);
         };
 
     return function (element, markers, options) {
         var mapOptions = _.extend({
             zoom: 8,
             center: getGoogleLatitudeLongitude({
-                lat: 30.2672,
-                lng: -97.7431
+                latitude: 30.2672,
+                longitude: -97.7431
             }),
             scrollwheel: false,
             disableDoubleClickZoom: false,
@@ -71,7 +71,7 @@ define([
              */
             if (newMarkers && newMarkers.length) {
                 newMarkers.forEach(function (newMarker) {
-                    var location = newMarker['location_name'] || '',
+                    var name = newMarker.name || '',
                     comment = newMarker.comment ?
                         '<p>' + newMarker.comment.replace(/(?:\r\n|\r|\n)/g, '<br/>') + '</p>'
                         : '',
@@ -85,7 +85,7 @@ define([
                     lineBreak = city !== '' || zipCode !== '' ? '<br/>' : '',
                     contentString =
                         '<div>' +
-                        '<h3><b>' + location + '</b></h3>' +
+                        '<h3><b>' + name + '</b></h3>' +
                         comment +
                         phone +
                         '<p><span>' + address +
@@ -99,10 +99,10 @@ define([
                     newCreatedMarker = new google.maps.Marker({
                         map: this.map,
                         position: getGoogleLatitudeLongitude(newMarker.position),
-                        title: location
+                        title: name
                     });
 
-                    if (location) {
+                    if (name) {
                         newCreatedMarker.addListener('click', function () {
                             if (activeInfoWindow) {
                                 activeInfoWindow.close();
