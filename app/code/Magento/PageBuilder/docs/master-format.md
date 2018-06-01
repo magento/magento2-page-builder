@@ -890,41 +890,38 @@ Inline styles
 9. height
 
 ### Example of locations json format
-###### Note*: The locations attribute needs to be JSON.stringify() before storing in database
-
-```
+**Note:**
+*The locations attribute needs to be turned into a string using `JSON.stringify()` before storing it to the database.
+``` json
 [
     {
-        "id":"XD45W1M",
-        "position":{
+        "position": {
             "lat":30.243475338635417,
             "lng":-97.73760683593753
         },
-        "location_name":"Location Name 1",
-        "phone":"512-111-1111",
-        "address":"11501 Domain Dr #150",
-        "city":"Austin",
-        "state":"TX",
-        "zipcode":"78758",
-        "country":"United States",
-        "comment":"Comment 1",
-        "record_id":0,
-        "initialize":true
+        "location_name": "Location Name 1",
+        "phone": "512-111-1111",
+        "address": "11501 Domain Dr #150",
+        "city": "Austin",
+        "state": "TX",
+        "zipcode": "78758",
+        "country": "United States",
+        "comment": "Comment 1",
+        "record_id": 0
     },
     {
-        "id":"Q1NHHS8",
-        "position":{
+        "position": {
             "lat":29.404737046411704,
             "lng":-98.48467714843753
         },
-        "location_name":"Location Name 2",
-        "phone":"512-222-2222",
-        "address":"849 E Commerce St",
-        "city":"San Antonio",
-        "zipcode":"78205",
-        "country":"United States",
-        "comment":"Comment 2",
-        "record_id":1
+        "location_name": "Location Name 2",
+        "phone": "512-222-2222",
+        "address": "849 E Commerce St",
+        "city": "San Antonio",
+        "zipcode": "78205",
+        "country": "United States",
+        "comment": "Comment 2",
+        "record_id": 1
     }
 ]
 ```

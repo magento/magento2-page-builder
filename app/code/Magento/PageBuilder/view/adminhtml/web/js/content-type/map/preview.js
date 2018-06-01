@@ -55,21 +55,21 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
 
     _proto.generateMap = function generateMap(element) {
-      var locations = this.data.main.attributes()["data-locations"] || "[]";
+      var currentLocations = this.data.main.attributes()["data-locations"] || "[]";
       var controls = this.data.main.attributes()["data-show-controls"] || "true";
-      var markers = [];
+      var locations = [];
       var options = {
         disableDefaultUI: controls !== "true",
         mapTypeControl: controls === "true"
       };
 
-      if (locations !== "[]") {
+      if (currentLocations !== "[]") {
         var mapData = this.getMapData();
-        markers = mapData.markers;
+        locations = mapData.locations;
         options = mapData.options;
       }
 
-      this.map = new _map(element, markers, options);
+      this.map = new _map(element, locations, options);
     };
     /**
      * Updates map
@@ -80,10 +80,10 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
     _proto.updateMap = function updateMap() {
       var mapData = this.getMapData();
-      this.map.onUpdate(mapData.markers, mapData.options);
+      this.map.onUpdate(mapData.locations, mapData.options);
     };
     /**
-     * Get markers, center coordinates, and zoom from data.position
+     * Get locations, center coordinates, and zoom from data.position
      *
      * @returns {Object}
      */
@@ -96,26 +96,26 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
         disableDefaultUI: controls !== "true",
         mapTypeControl: controls === "true"
       };
-      var markers = attributes["data-locations"];
+      var locations = attributes["data-locations"];
 
-      if (markers !== "" && typeof markers === "string") {
-        markers = JSON.parse(markers);
+      if (locations !== "" && typeof locations === "string") {
+        locations = JSON.parse(locations);
       }
 
-      markers.forEach(function (marker) {
-        marker.position.lat = parseFloat(marker.position.lat);
-        marker.position.lng = parseFloat(marker.position.lng);
+      locations.forEach(function (location) {
+        location.position.lat = parseFloat(location.position.lat);
+        location.position.lng = parseFloat(location.position.lng);
       });
 
-      if (markers[0]) {
+      if (locations[0]) {
         options.center = {
-          lat: markers[0].position.lat,
-          lng: markers[0].position.lng
+          lat: locations[0].position.lat,
+          lng: locations[0].position.lng
         };
       }
 
       return {
-        markers: markers,
+        locations: locations,
         options: options
       };
     };

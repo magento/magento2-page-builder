@@ -14,17 +14,17 @@ define([
         /**
          * Generates a google map usuable lat and lng object
          *
-         * @param {Object} latLng
+         * @param {Object} position
          * @return {google.maps.LatLng}
          */
-        googleLatLng = function (latLng) {
-            return new google.maps.LatLng(latLng.lat, latLng.lng);
+        getGoogleLatitudeLongitude = function (position) {
+            return new google.maps.LatLng(position.lat, position.lng);
         };
 
     return function (element, markers, options) {
         var mapOptions = _.extend({
             zoom: 8,
-            center: googleLatLng({
+            center: getGoogleLatitudeLongitude({
                 lat: 30.2672,
                 lng: -97.7431
             }),
@@ -57,7 +57,7 @@ define([
          */
         this.setMarkers = function (newMarkers) {
             var activeInfoWindow,
-                latlngbounds = new google.maps.LatLngBounds();
+                latitudeLongitudeBounds = new google.maps.LatLngBounds();
 
             this.markers.forEach(function (marker) {
                 marker.setMap(null);
@@ -88,9 +88,9 @@ define([
                         '<h3><b>' + location + '</b></h3>' +
                         comment +
                         phone +
-                        '<span>' + address +
+                        '<p><span>' + address +
                         city + cityComma + state + zipCode + lineBreak +
-                        country + '</span>' +
+                        country + '</span></p>' +
                         '</div>',
                     infowindow = new google.maps.InfoWindow({
                         content: contentString,
@@ -98,7 +98,7 @@ define([
                     }),
                     newCreatedMarker = new google.maps.Marker({
                         map: this.map,
-                        position: googleLatLng(newMarker.position),
+                        position: getGoogleLatitudeLongitude(newMarker.position),
                         title: location
                     });
 
@@ -114,7 +114,7 @@ define([
                     }
 
                     this.markers.push(newCreatedMarker);
-                    this.bounds.push(googleLatLng(newMarker.position));
+                    this.bounds.push(getGoogleLatitudeLongitude(newMarker.position));
                 }, this);
             }
 
@@ -123,9 +123,9 @@ define([
              */
             if (this.bounds.length > 1) {
                 this.bounds.forEach(function (bound) {
-                    latlngbounds.extend(bound);
+                    latitudeLongitudeBounds.extend(bound);
                 });
-                this.map.fitBounds(latlngbounds);
+                this.map.fitBounds(latitudeLongitudeBounds);
             }
 
             /**

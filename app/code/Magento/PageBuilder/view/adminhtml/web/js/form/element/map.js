@@ -69,14 +69,14 @@ define([
         /**
          * Adds a map marker
          *
-         * @param {String} lat
-         * @param {String} lng
+         * @param {String} latitude
+         * @param {String} longitude
          */
-        addMarker: function (lat, lng) {
+        addMarker: function (latitude, longitude) {
             this.marker = new google.maps.Marker({
                 draggable: true,
                 map: this.map,
-                position: new google.maps.LatLng(lat, lng)
+                position: new google.maps.LatLng(latitude, longitude)
             });
             google.maps.event.addListener(this.marker, 'dragend', this.onDragEnd.bind(this));
         },
@@ -115,7 +115,7 @@ define([
         onUpdate: function () {
             this._super();
             var content = this.value(),
-                latLng;
+                latitudeLongitude;
 
             if (this.marker && content.lat === '' && content.lng === '') {
                 this.marker.setMap(null);
@@ -135,14 +135,14 @@ define([
                 content = JSON.parse(this.value());
             }
 
-            latLng = new google.maps.LatLng(parseFloat(content.lat), parseFloat(content.lng));
+            latitudeLongitude = new google.maps.LatLng(parseFloat(content.lat), parseFloat(content.lng));
 
             if (!this.marker) {
-                this.addMarker(latLng.lat(), latLng.lng());
+                this.addMarker(latitudeLongitude.lat(), latitudeLongitude.lng());
             }
 
-            this.marker.setPosition(latLng);
-            this.map.setCenter(latLng);
+            this.marker.setPosition(latitudeLongitude);
+            this.map.setCenter(latitudeLongitude);
         },
 
         /**
@@ -172,17 +172,17 @@ define([
         /**
          * Returns current lat, lng, and zoom level as a single string
          *
-         * @param {Object} latLng
+         * @param {Object} coordinate
          * @return {Object}
          */
-        exportValue: function (latLng) {
+        exportValue: function (coordinate) {
             var position = this.marker ?
                 this.marker.getPosition() : new google.maps.LatLng(this.map.center.lat(), this.map.center.lng()),
-                curLatLng = latLng ? latLng : position;
+                currentCoordinate = coordinate ? coordinate : position;
 
             return {
-                lat: curLatLng.lat(),
-                lng: curLatLng.lng()
+                lat: currentCoordinate.lat(),
+                lng: currentCoordinate.lng()
             };
         }
     });

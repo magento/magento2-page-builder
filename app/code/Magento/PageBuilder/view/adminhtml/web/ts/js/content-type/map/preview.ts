@@ -45,21 +45,21 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private generateMap(element: Element) {
-        const locations: string = this.data.main.attributes()["data-locations"] || "[]";
+        const currentLocations: string = this.data.main.attributes()["data-locations"] || "[]";
         const controls = this.data.main.attributes()["data-show-controls"] || "true";
-        let markers = [];
+        let locations = [];
 
         let options = {
             disableDefaultUI: controls !== "true",
             mapTypeControl: controls === "true",
         };
-        if (locations !== "[]") {
+        if (currentLocations !== "[]") {
             const mapData = this.getMapData();
 
-            markers = mapData.markers;
+            locations = mapData.locations;
             options = mapData.options;
         }
-        this.map = new GoogleMap(element, markers, options);
+        this.map = new GoogleMap(element, locations, options);
     }
 
     /**
@@ -69,11 +69,11 @@ export default class Preview extends BasePreview {
      */
     private updateMap() {
         const mapData = this.getMapData();
-        this.map.onUpdate(mapData.markers, mapData.options);
+        this.map.onUpdate(mapData.locations, mapData.options);
     }
 
     /**
-     * Get markers, center coordinates, and zoom from data.position
+     * Get locations, center coordinates, and zoom from data.position
      *
      * @returns {Object}
      */
@@ -84,26 +84,26 @@ export default class Preview extends BasePreview {
             disableDefaultUI: controls !== "true",
             mapTypeControl: controls === "true",
         };
-        let markers: any = attributes["data-locations"];
+        let locations: any = attributes["data-locations"];
 
-        if (markers !== "" && typeof markers === "string") {
-            markers = JSON.parse(markers);
+        if (locations !== "" && typeof locations === "string") {
+            locations = JSON.parse(locations);
         }
 
-        markers.forEach((marker: any) => {
-            marker.position.lat = parseFloat(marker.position.lat);
-            marker.position.lng = parseFloat(marker.position.lng);
+        locations.forEach((location: any) => {
+            location.position.lat = parseFloat(location.position.lat);
+            location.position.lng = parseFloat(location.position.lng);
         });
 
-        if (markers[0]) {
+        if (locations[0]) {
             options.center = {
-                lat: markers[0].position.lat,
-                lng: markers[0].position.lng,
+                lat: locations[0].position.lat,
+                lng: locations[0].position.lng,
             };
         }
 
         return {
-            markers,
+            locations,
             options,
         };
     }
