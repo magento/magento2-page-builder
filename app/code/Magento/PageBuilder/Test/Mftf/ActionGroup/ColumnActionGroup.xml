@@ -21,4 +21,18 @@
         <waitForElementVisible time="1" selector="{{PageBuilderColumnSection.column}}" stepKey="waitForColumn" />
         <seeElement selector="{{PageBuilderColumnSection.column}}" stepKey="seeElementColumn"/>
     </actionGroup>
+    <actionGroup name="dragColumnToAnotherColumnGroup">
+        <arguments>
+            <argument name="contentBlockType" defaultValue="PageBuilderColumnContentBlock"/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType" defaultValue="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <waitForPageLoad time="30" stepKey="waitForMouseOverAnimation"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.columnMoveByIndex(contentBlockIndex)}}" stepKey="waitForMoveHandle"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnMoveByIndex(contentBlockIndex)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(contentBlockType.role, containerTargetIndex)}}" stepKey="moveContentTypeIntoContainer"/>
+    </actionGroup>
 </actionGroups>
