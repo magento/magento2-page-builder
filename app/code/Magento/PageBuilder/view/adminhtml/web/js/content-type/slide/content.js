@@ -2,6 +2,8 @@
 define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attribute/link-href", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/content"], function (_translate, _underscore, _linkHref, _colorConverter, _directives, _numberConverter, _content) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Content =
@@ -30,9 +32,9 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attrib
     _proto.getAttributes = function getAttributes(element) {
       var attributes = _underscore.clone(_BaseContent.prototype.getAttributes.call(this, element));
 
-      return { ...attributes,
+      return _extends({}, attributes, {
         "data-slide-name": this.getData(element).slide_name
-      };
+      });
     };
     /**
      * Get the slide wrapper styles for the storefront
