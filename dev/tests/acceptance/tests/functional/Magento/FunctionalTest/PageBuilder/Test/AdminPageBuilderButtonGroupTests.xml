@@ -68,6 +68,7 @@
             <testCaseId value="MAGETWO-92014"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -100,6 +101,7 @@
             <testCaseId value="MAGETWO-92013"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -121,6 +123,9 @@
         <!-- Fill All Fields -->
         <comment userInput="Fill All Fields" stepKey="commentEdit"/>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderAppearancePropertyStacked"/>
+        </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -149,8 +154,8 @@
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
         <actionGroup ref="addButton" stepKey="addButton2"/>
-        <!-- Edit 1st button -->
-        <comment userInput="Edit 1st Button" stepKey="commentEditButton"/>
+        <!-- Edit buttons -->
+        <comment userInput="Edit Buttons" stepKey="commentEditButtons"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
             <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
             <argument name="contentBlockIndex" value="1"/>
@@ -163,10 +168,14 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
             <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <!-- Duplicate and Validate Stage -->
         <comment userInput="Duplicate" stepKey="commentDuplicate"/>
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
@@ -185,6 +194,11 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <!-- 1st Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton2Stage1">
             <argument name="page" value="ButtonItemOnStage"/>
@@ -197,6 +211,7 @@
         <!-- 2nd Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Stage1">
             <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
@@ -206,6 +221,9 @@
         <!-- Validate Edit Panel For Duplicate -->
         <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEdit"/>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
+        <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAppearance">
+            <argument name="property" value="PageBuilderAppearancePropertyStacked"/>
+        </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -247,6 +265,11 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <!-- 1st Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton2Stage2">
             <argument name="page" value="ButtonItemOnStage"/>
@@ -259,6 +282,7 @@
         <!-- 2nd Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Stage2">
             <argument name="page" value="ButtonItemOnStage"/>
+            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
             <argument name="index" value="4"/>
         </actionGroup>
         <!-- Validate Storefront -->
@@ -278,6 +302,11 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
         <!-- 1st Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateButton2Storefront">
             <argument name="page" value="ButtonItemOnStorefront"/>
@@ -288,8 +317,11 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <!-- 2nd Button -->
-        <waitForElementVisible selector="{{ButtonItemOnStorefront.base('4')}}" stepKey="waitForButton2"/>
-        <waitForElement selector="{{ButtonItemOnStorefront.emptyButtonItemElement('4')}}" stepKey="waitForButton2Empty"/>
+        <actionGroup ref="validateButtonItemContent" stepKey="validateButton1Storefront2">
+            <argument name="page" value="ButtonItemOnStorefront"/>
+            <argument name="text" value="PageBuilderButtonItemText_Common2"/>
+            <argument name="index" value="4"/>
+        </actionGroup>
     </test>
     <test name="ButtonGroupValidateAdvancedConfigurationDefaultValues">
         <annotations>
