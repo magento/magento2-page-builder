@@ -1131,8 +1131,26 @@
             <argument name="offsetXCoordinate" value="50"/>
             <argument name="offsetYCoordinate" value="300"/>
         </actionGroup>
-        <seeElement selector="{{SliderInAdmin.sliderHeadingOrder('1', PageBuilderHeadingContentBlock.role)}}" stepKey="seeHeadingInFirstIndex"/>
-        <seeElement selector="{{SliderInAdmin.sliderHeadingOrder('2', PageBuilderSliderContentBlock.role)}}" stepKey="seeSliderInSecondIndex"/>
-        <seeElement selector="{{SliderInAdmin.sliderHeadingOrder('3', PageBuilderHeadingContentBlock.role)}}" stepKey="seeHeadingInThirdIndex"/>
+        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="validateHeadingFirst">
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="1"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="validateSliderSecond">
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="2"/>
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="validateHeadingThird">
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="3"/>
+            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+        </actionGroup>
     </test>
 </tests>
