@@ -77,7 +77,7 @@ export default class Preview extends BasePreview {
             paddingLeft: "",
             paddingRight: "",
             paddingTop: "",
-        }
+        };
         return {
             ...styles,
             ...paddingData,
