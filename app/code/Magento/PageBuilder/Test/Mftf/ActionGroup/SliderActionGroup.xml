@@ -16,6 +16,11 @@
         <click selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="clickSliderButton"/>
         <waitForElementVisible selector="{{SlideOnFrontend.slide(index)}}" stepKey="waitForSlide"/>
     </actionGroup>
+    <actionGroup name="unfocusSlideOptions">
+        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <dontSeeElement selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="dontSeeHeadingTypeToolbar"/>
+    </actionGroup>
     <actionGroup name="openSlideOptions">
         <comment userInput="Open slide options" stepKey="commentOpen"/>
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />

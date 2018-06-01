@@ -1153,4 +1153,42 @@
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
     </test>
+    <test name="SliderCanBeDeletedAfterAccidentalDrag">
+        <annotations>
+            <features value="Pagebuilder: Slider"/>
+            <title value="After accidental drag slider should still be removable"/>
+            <description value="You should still be able to remove a slider after accidentally moving it within the same container"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92364"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="unfocusSlideOptions" stepKey="unfocusSlideOptions"/>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveSliderIntoExistingRow">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentBlockIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="removeContentBlockFromStage" stepKey="removeSliderFromStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <dontSee selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeSliderInContent" />
+    </test>
 </tests>
