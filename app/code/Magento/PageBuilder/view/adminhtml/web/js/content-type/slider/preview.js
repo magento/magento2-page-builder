@@ -337,7 +337,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
         dots: false,
         // We have our own dots implemented
         fade: data.fade === "1",
-        infinite: data.is_infinite === "1"
+        infinite: data.is_infinite === "1",
+        waitForAnimate: false
       };
     };
 
