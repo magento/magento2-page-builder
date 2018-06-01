@@ -20,11 +20,12 @@
     <actionGroup name="verifyUploadImageButtons">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
+            <argument name="section" defaultValue=""/>
         </arguments>
         <comment userInput="Hover uploaded image to check Upload New Image button and Select From Gallery button" stepKey="commentHover"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="0" stepKey="onMouseOverBannerContentBlockStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.uploadNewImageBtn}}" stepKey="waitForUploadNewImageBtn" />
-        <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
+        <waitForElementVisible selector="{{section.uploadNewImageBtn}}" stepKey="waitForUploadNewImageBtn" />
+        <waitForElementVisible selector="{{section.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
     </actionGroup>
     <actionGroup name="verifyImageOnSlideout">
         <arguments>
