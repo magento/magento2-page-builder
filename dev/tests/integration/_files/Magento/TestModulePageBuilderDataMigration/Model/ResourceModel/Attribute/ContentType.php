@@ -5,7 +5,7 @@
  */
 namespace Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute;
 
-class ContentBlock extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
+class ContentType extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
 {
     /**
      * @var \Magento\PageBuilder\Model\ResourceModel\Entity

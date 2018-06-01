@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group/block", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _block, _array, _previewCollection, _dragAndDrop, _factory, _registry, _resizing) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group/content-type", "Magento_PageBuilder/js/utils/array", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/drag-and-drop", "Magento_PageBuilder/js/content-type/column-group/factory", "Magento_PageBuilder/js/content-type/column-group/registry", "Magento_PageBuilder/js/content-type/column-group/resizing"], function (_jquery, _knockout, _uiEvents, _underscore, _config, _contentType, _array, _previewCollection, _dragAndDrop, _factory, _registry, _resizing) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -38,7 +38,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.dropPosition = void 0;
       _this.movePosition = void 0;
 
-      _uiEvents.on("block:removed", function (args) {
+      _uiEvents.on("contentType:removed", function (args) {
         if (args.parent.id === _this.parent.id) {
           _this.spreadWidth(event, args);
         }
@@ -110,8 +110,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       (0, _resizing.updateColumnWidth)(column, (0, _resizing.getSmallestColumnWidth)());
       column.parent.removeChild(column);
 
-      _uiEvents.trigger("block:instanceDropped", {
-        blockInstance: column,
+      _uiEvents.trigger("contentType:instanceDropped", {
+        contentTypeInstance: column,
         index: movePosition.insertIndex,
         parent: this,
         stageId: this.parent.stageId
@@ -580,10 +580,10 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     _proto.initDroppable = function initDroppable(group) {
       var _this6 = this;
 
-      var currentDraggedBlock;
+      var currentDraggedContentType;
       group.droppable({
         activate: function activate(event) {
-          currentDraggedBlock = _knockout.dataFor(event.currentTarget);
+          currentDraggedContentType = _knockout.dataFor(event.currentTarget);
         },
         deactivate: function deactivate() {
           _this6.dropOverElement = null;
@@ -617,7 +617,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           // Always calculate drop positions when an element is dragged over
           _this6.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this6.parent); // Is the element currently being dragged a column?
 
-          if (currentDraggedBlock instanceof _block.Block && currentDraggedBlock.getConfig() === _config.getContentTypeConfig("column")) {
+          if (currentDraggedContentType instanceof _contentType.ContentType && currentDraggedContentType.getConfig() === _config.getContentTypeConfig("column")) {
             _this6.dropOverElement = true;
           }
         }
@@ -627,7 +627,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
      * Spread any empty space across the other columns
      *
      * @param {Event} event
-     * @param {BlockRemovedParams} params
+     * @param {ContentTypeRemovedParams} params
      */
 
 

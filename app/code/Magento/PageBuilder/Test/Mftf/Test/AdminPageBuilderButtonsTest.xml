@@ -31,10 +31,10 @@
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -44,11 +44,11 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <waitForElement selector="{{ButtonItemOnStorefront.emptyButtonItemElement('1')}}" stepKey="seeEmptyButtonOnStorefront"/>
     </test>
-    <test name="AddButtonsContentBlockToCMSPage">
+    <test name="AddButtonsContentTypeToCMSPage">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Buttons"/>
@@ -71,18 +71,18 @@
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add 2nd Button -->
         <actionGroup ref="addButton" stepKey="addButton"/>
         <!-- Edit 1st button -->
         <comment userInput="Edit 1st Button" stepKey="commentEditButton"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
             <argument name="property" value="PageBuilderButtonItemText_Common"/>
@@ -99,8 +99,8 @@
         <!-- Edit 2nd Button -->
         <comment userInput="Edit 2nd Button" stepKey="commentEditButton2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton2TextField">
             <argument name="property" value="PageBuilderButtonItemText_Common2"/>
@@ -139,8 +139,8 @@
         <!-- Validate Edit Panel For 1st Button -->
         <comment userInput="Validate Edit Panel For 1st Button" stepKey="commentValidateEditPanel1"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonText1">
             <argument name="property" value="PageBuilderButtonItemText_Common"/>
@@ -157,8 +157,8 @@
         <!-- Validate Edit Panel For 2nd Button -->
         <comment userInput="Validate Edit Panel For 2nd Button" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonText2">
             <argument name="property" value="PageBuilderButtonItemText_Common2"/>
@@ -174,7 +174,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- 1st Button -->
         <actionGroup ref="validateButtonItemContent" stepKey="validateStorefront3">
@@ -216,20 +216,20 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Buttons -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="addButton" stepKey="addButton1"/>
         <seeNumberOfElements selector="{{ButtonItemOnStage.allButtons}}" userInput="2" stepKey="seeButtonsStage1"/>
         <!-- Remove Button Before Page Save (No Confirmation Modal) -->
         <comment userInput="Remove Button Before Page Save" stepKey="commentRemoveButton1"/>
-        <actionGroup ref="removeContentBlockFromStageSmallByIndex" stepKey="removeButtonFromStage1">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButtonFromStage1">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStage.allButtons}}" userInput="1" stepKey="seeButtonsStage2"/>
         <!-- Add Button -->
@@ -239,9 +239,9 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Remove Button After Page Save (Confirmation Modal) -->
         <comment userInput="Remove Button After Page Save" stepKey="commentRemoveButton2"/>
-        <actionGroup ref="removeContentBlockFromStageSmallByIndex" stepKey="removeButtonFromStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButtonFromStage2">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
         <!-- Validate Stage -->
@@ -251,7 +251,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStorefront.allButtons}}" userInput="1" stepKey="seeButtonsStorefront"/>
     </test>
@@ -276,19 +276,19 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStage.allButtons}}" userInput="1" stepKey="seeButtonsStage1"/>
         <!-- Attempt To Remove -->
         <comment userInput="Attempt To Remove" stepKey="commentAttemptToRemove"/>
-        <actionGroup ref="removeContentBlockFromStageSmallByIndex" stepKey="removeButtonFromStage1">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButtonFromStage1">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <!-- Verify Button Still Exists -->
         <comment userInput="Verify Button Still Exists" stepKey="commentVerifyButton"/>
@@ -298,9 +298,9 @@
         <seeNumberOfElements selector="{{ButtonItemOnStage.allButtons}}" userInput="1" stepKey="seeButtonsStage3"/>
         <!-- Attempt To Remove After Page Save -->
         <comment userInput="Attempt To Remove After Page Save" stepKey="commentAttemptToRemove2"/>
-        <actionGroup ref="removeContentBlockFromStageSmallByIndex" stepKey="removeButtonFromStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeButtonFromStage2">
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <!-- Verify Button Still Exists After Page Save-->
         <comment userInput="Verify Button Still Exists After Page Save" stepKey="commentVerifyButton2"/>
@@ -308,7 +308,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ButtonItemOnStorefront.allButtons}}" userInput="1" stepKey="seeButtonsStorefront"/>
     </test>
@@ -333,20 +333,20 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{ButtonGroupOnStage.base('1')}}" stepKey="waitForButtons"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Remove Button -->
         <comment userInput="Remove Button" stepKey="commentRemoveButton"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeButtonFromStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeButtonFromStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
         <!-- Validate Stage -->
@@ -356,7 +356,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="dontSeeButtonsStorefront"/>
     </test>
@@ -381,18 +381,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="CommentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -431,8 +431,8 @@
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -462,7 +462,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{ButtonItemOnStorefront.defaultStyle('1')}}" stepKey="waitForButtonItemStorefront"/>
     </test>
@@ -487,17 +487,17 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="CommentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -552,7 +552,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStorefront">
             <argument name="page" value="ButtonGroupOnStorefront"/>
@@ -585,13 +585,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
@@ -638,7 +638,7 @@
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -685,7 +685,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStorefront">
             <argument name="page" value="ButtonGroupOnStorefront"/>
@@ -721,14 +721,14 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
@@ -775,8 +775,8 @@
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -821,8 +821,8 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
@@ -852,7 +852,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -890,18 +890,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="CommentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeButtonText1">
             <argument name="property" value="PageBuilderButtonItemText_Common"/>
@@ -946,8 +946,8 @@
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextValue2">
             <argument name="property" value="PageBuilderButtonItemText_Empty"/>
@@ -961,7 +961,7 @@
             <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -992,12 +992,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Enter Text On Stage -->
         <comment userInput="Enter Text On Stage" stepKey="commentEnterText"/>
@@ -1009,8 +1009,8 @@
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel1"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonText">
             <argument name="property" value="PageBuilderButtonItemText_Common"/>
@@ -1024,8 +1024,8 @@
         <!-- Validate Edit Panel After Page Save -->
         <comment userInput="Validate Edit Panel After Page Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderButtonItemContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonText2">
             <argument name="property" value="PageBuilderButtonItemText_Common"/>
@@ -1033,7 +1033,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <seeElement selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_Common .value)}}" stepKey="seeButtonTextOnStorefront"/>
     </test>
@@ -1059,13 +1059,13 @@
         </after>
         <!-- Add Button -->
         <comment userInput="Add Button" stepKey="commentAddButton"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
         </actionGroup>
         <!-- Validate Don't See Old Add Button -->
         <comment userInput="Validate Don't See Old Add Button" stepKey="commentValidate"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderRowContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderButtonsContentBlock.role)}}" stepKey="onMouseOverButtonsContentBlockStage1"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderRowContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderButtonsContentType.role)}}" stepKey="onMouseOverButtonsContentTypeStage1"/>
         <dontSeeElement selector="{{ButtonGroupOnStage.oldAddNewButtonItem}}" stepKey="dontSeeOldAddButton"/>
         <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
     </test>

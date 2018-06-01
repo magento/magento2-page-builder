@@ -8,10 +8,10 @@ import ko from "knockout";
 import events from "uiEvents";
 import _ from "underscore";
 import Config from "../../config";
-import ConfigContentBlock from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
-import {Block as GroupBlock} from "../../panel/group/block";
+import ColumnGroup from "../../content-type-collection";
+import {ContentType as GroupContentType} from "../../panel/group/content-type";
 import {moveArrayItem} from "../../utils/array";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
@@ -21,13 +21,13 @@ import {createColumn} from "./factory";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import {
     calculateGhostWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth,
-    findShrinkableColumn, getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
+    getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
     getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./resizing";
 
-interface BlockRemovedParams {
+interface ContentTypeRemovedParams {
     parent: ColumnGroup;
-    block: Column;
+    contentType: Column;
     index: number;
 }
 
@@ -61,12 +61,12 @@ export default class Preview extends PreviewCollection {
      */
     constructor(
         parent: EditableArea,
-        config: ConfigContentBlock,
+        config: Config,
         stageId,
     ) {
         super(parent, config, stageId);
 
-        events.on("block:removed", (args: BlockRemovedParams) => {
+        events.on("contentType:removed", (args: ContentTypeRemovedParams) => {
             if (args.parent.id === this.parent.id) {
                 this.spreadWidth(event, args);
             }
@@ -146,8 +146,8 @@ export default class Preview extends PreviewCollection {
 
         column.parent.removeChild(column);
 
-        events.trigger("block:instanceDropped", {
-            blockInstance: column,
+        events.trigger("contentType:instanceDropped", {
+            contentTypeInstance: column,
             index: movePosition.insertIndex,
             parent: this,
             stageId: this.parent.stageId,
@@ -299,7 +299,7 @@ export default class Preview extends PreviewCollection {
                 const columnInstance: Column = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
                 setDragColumn(columnInstance.parent);
-                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
+                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupContentType));
 
                 events.trigger("column:drag:start", {
                     column: columnInstance,
@@ -347,7 +347,7 @@ export default class Preview extends PreviewCollection {
      * Unset resizing flag on all child columns
      */
     private unsetResizingColumns() {
-        (this.parent as ColumnGroupBlock).children().forEach((column: Column) => {
+        (this.parent as ColumnGroupContentType).children().forEach((column: Column) => {
             column.preview.resizing(false);
         });
     }
@@ -529,7 +529,7 @@ export default class Preview extends PreviewCollection {
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
             if (this.dropPositions.length === 0) {
-                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
+                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupContentType));
             }
             const columnInstance = dragColumn;
             const currentX = event.pageX - $(group).offset().left;
@@ -614,11 +614,11 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery<HTMLElement>} group
      */
     private initDroppable(group: JQuery<HTMLElement>) {
-        let currentDraggedBlock: GroupBlock;
+        let currentDraggedContentType: GroupContentType;
 
         group.droppable({
             activate: (event: Event) => {
-                currentDraggedBlock = ko.dataFor(event.currentTarget);
+                currentDraggedContentType = ko.dataFor(event.currentTarget);
             },
             deactivate: () => {
                 this.dropOverElement = null;
@@ -626,14 +626,14 @@ export default class Preview extends PreviewCollection {
             },
             drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
                 if (this.dropOverElement && this.dropPosition) {
-                    (this as ColumnGroupBlock).onNewColumnDrop(event, ui, this.dropPosition);
+                    (this as ColumnGroupContentType).onNewColumnDrop(event, ui, this.dropPosition);
                     this.dropOverElement = null;
                 }
 
                 const column: Column = getDragColumn();
 
                 if (this.movePosition && column && column.parent !== this.parent) {
-                    (this as ColumnGroupBlock).onExistingColumnDrop(event, this.movePosition);
+                    (this as ColumnGroupContentType).onExistingColumnDrop(event, this.movePosition);
                 }
 
                 this.dropPositions = [];
@@ -646,11 +646,11 @@ export default class Preview extends PreviewCollection {
             },
             over: () => {
                 // Always calculate drop positions when an element is dragged over
-                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupBlock));
+                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupContentType));
 
                 // Is the element currently being dragged a column?
-                if (currentDraggedBlock instanceof GroupBlock &&
-                    currentDraggedBlock.getConfig() === Config.getContentTypeConfig("column")
+                if (currentDraggedContentType instanceof GroupContentType &&
+                    currentDraggedContentType.getConfig() === Config.getContentTypeConfig("column")
                 ) {
                     this.dropOverElement = true;
                 }
@@ -662,9 +662,9 @@ export default class Preview extends PreviewCollection {
      * Spread any empty space across the other columns
      *
      * @param {Event} event
-     * @param {BlockRemovedParams} params
+     * @param {ContentTypeRemovedParams} params
      */
-    private spreadWidth(event: Event, params: BlockRemovedParams) {
+    private spreadWidth(event: Event, params: ContentTypeRemovedParams) {
         if (this.parent.children().length === 0) {
             return;
         }

@@ -22,16 +22,16 @@
         <element name="panelGroup" type="button" selector="//div[@id='pagebuilder-panel']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="panelGroupActive" type="button" selector="//div[@id='pagebuilder-panel']//li[@class='active']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="generalGroup" type="button" selector='//*[@id="group-general"]' timeout="10"/>
-        <element name="generalGroupBlock" type="button" selector='//*[@id="group-general"]/div/div/ul/li/a/span[2]'/>
+        <element name="generalGroupContentType" type="button" selector='//*[@id="group-general"]/div/div/ul/li/a/span[2]'/>
         <element name="mediaGroup" type="button" selector='//*[@id="group-media"]'/>
-        <element name="mediaGroupBlock" type="button" selector='//*[@id="group-media"]/div/div/ul/li/a/span[2]'/>
+        <element name="mediaGroupContentType" type="button" selector='//*[@id="group-media"]/div/div/ul/li/a/span[2]'/>
         <element name="interactiveGroup" type="button" selector='//*[@id="group-interactive"]'/>
-        <element name="interactiveGroupBlock" type="button" selector='//*[@id="group-interactive"]/div/div/ul/li/a/span[2]'/>
+        <element name="interactiveGroupContentType" type="button" selector='//*[@id="group-interactive"]/div/div/ul/li/a/span[2]'/>
         <element name="magentoGroup" type="button" selector='//*[@id="group-magento"]'/>
-        <element name="magentoGroupBlock" type="button" selector='//*[@id="group-magento"]/div/div/ul/li/a/span[2]'/>
+        <element name="magentoGroupContentType" type="button" selector='//*[@id="group-magento"]/div/div/ul/li/a/span[2]'/>
         <element name="otherGroup" type="button" selector='//*[@id="group-other"]'/>
-        <element name="otherGroupBlock" type="button" selector='//*[@id="group-other"]/div/div/ul/li/a/span[2]'/>
-        <element name="searchPanel" type="input" selector='//*[@id="search-blocks-input"]' timeout="30"/>
+        <element name="otherGroupContentType" type="button" selector='//*[@id="group-other"]/div/div/ul/li/a/span[2]'/>
+        <element name="searchPanel" type="input" selector='//*[@id="search-content-types-input"]' timeout="30"/>
         <element name="searchResults" type="text" selector='//*[@id="search-results"]' timeout="30"/>
         <element name="nothingFound" type="text" selector='//*[@id="pagebuilder-panel"]/div[2]/div' timeout="30"/>
         <element name="modal" type="text" selector='body._has-modal div.modals-wrapper aside.modal-popup.prompt._show'/>
@@ -41,25 +41,25 @@
         <!-- It's safer to click the label, as Selenium will complain if it's not clicking the exact element -->
         <element name="modalDoNotShowThisAgain" type="input" selector=".modal-popup input[name='modal-dnsa'] + label"/>
         <element name="unableToRemoveTitle" type="text" selector='//aside[contains(@class, "modal-popup")]/div[@class="modal-inner-wrap"]/header/h1[contains(text(), "Unable to Remove")]'/>
-        <element name="draggableContentBlockInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
+        <element name="draggableContentTypeInPanel" type="button" selector='//*[text()="{{arg1}}"]/ancestor::*[contains(@class, "ui-draggable")]' parameterized="true"/>
         <element name="dropAreaInStage" type="button" selector='(//div[contains(@class, "type-container") and contains(@class, "pagebuilder-row")])[1]//div[contains(@class,"pagebuilder-empty-container")][1]'/>
         <element name="stageLoading" type="button" selector="div.pagebuilder-stage-loading"/>
-        <element name="contentBlockInStage" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]' parameterized="true"/>
-        <element name="contentBlockInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
-        <element name="contentBlockContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
-        <element name="contentBlockPreviewInStage" type="button" selector="div.pagebuilder-{{arg1}}.pagebuilder-content-type" parameterized="true"/>
-        <element name="contentBlockOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options' parameterized="true"/>
-        <element name="contentBlockOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
-        <element name="contentBlockMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]' parameterized="true"/>
-        <element name="contentBlockAdd" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.add-child"  parameterized="true"/>
-        <element name="contentBlockEdit" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.edit-block"  parameterized="true"/>
-        <element name="contentBlockEditByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-block"]' parameterized="true"/>
-        <element name="contentBlockDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Duplicate"]' parameterized="true"/>
-        <element name="contentBlockRemove" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.remove-structural" parameterized="true"/>
-        <element name="contentBlockRemoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Remove"]' parameterized="true"/>
-        <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-block"]'/>
-        <element name="contentBlockDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
-        <element name="contentBlockDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
+        <element name="contentTypeInStage" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]' parameterized="true"/>
+        <element name="contentTypeInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
+        <element name="contentTypeContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
+        <element name="contentTypePreviewInStage" type="button" selector="div.pagebuilder-{{arg1}}.pagebuilder-content-type" parameterized="true"/>
+        <element name="contentTypeOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options' parameterized="true"/>
+        <element name="contentTypeOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
+        <element name="contentTypeMove" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]' parameterized="true"/>
+        <element name="contentTypeAdd" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.add-child"  parameterized="true"/>
+        <element name="contentTypeEdit" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.edit-content-type"  parameterized="true"/>
+        <element name="contentTypeEditByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-content-type"]' parameterized="true"/>
+        <element name="contentTypeDuplicate" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Duplicate"]' parameterized="true"/>
+        <element name="contentTypeRemove" type="button" selector="div.pagebuilder-content-type.pagebuilder-{{arg1}} div.pagebuilder-options li.pagebuilder-options-link a.remove-structural" parameterized="true"/>
+        <element name="contentTypeRemoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]//a[@title="Remove"]' parameterized="true"/>
+        <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-content-type"]'/>
+        <element name="contentTypeDelete" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"]'/>
+        <element name="contentTypeDeleteDisabled" type="button" selector='.pagebuilder-options .remove-structural[title="Remove"].disabled'/>
         <element name="editForm" type="text" selector='//div[contains(@class, "pagebuilder_modal_form_pagebuilder_modal_form_modal")]'/>
         <element name="editFormCancel" type="button" selector="button.action-.scalable.close[title='Close'][type='button'][data-form-role='close']"/>
         <element name="editFormTitle" type="text" selector=".modal-title[data-role='title']"/>

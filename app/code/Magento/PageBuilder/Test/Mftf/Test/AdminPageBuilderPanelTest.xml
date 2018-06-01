@@ -42,8 +42,8 @@
         <annotations>
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
-            <title value="Display Existing PageBuilder Panel Content Block Groups"/>
-            <description value="The PageBuilder panel should display existing content block groups, and open the first section by default."/>
+            <title value="Display Existing PageBuilder Panel Content Type Groups"/>
+            <description value="The PageBuilder panel should display existing content type groups, and open the first section by default."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81826"/>
             <group value="pagebuilder"/>
@@ -65,7 +65,7 @@
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
             <title value="Search for one character in PageBuilder Panel"/>
-            <description value="When typing one letter into the panel search box, I see Content Blocks that contains words that start with letter entered."/>
+            <description value="When typing one letter into the panel search box, I see Content Types that contains words that start with letter entered."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81827"/>
             <group value="pagebuilder"/>
@@ -80,16 +80,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="b" stepKey="fillSearch"/>
-        <see userInput="Buttons" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockButtons"/>
-        <see userInput="Banner" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockBanner"/>
-        <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockStaticBlock"/>
+        <see userInput="Buttons" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateContentTypeButtons"/>
+        <see userInput="Banner" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateContentTypeBanner"/>
+        <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateContentTypeStaticBlock"/>
     </test>
-    <test name="SearchRemovedContentBlock">
+    <test name="SearchRemovedContentType">
         <annotations>
             <features value="Pagebuilder: Panel"/>
-            <stories value="MAGETWO-66517: Bluefoot Search Blocks removal"/>
-            <title value="Search for removed content block on PageBuilder Panel"/>
-            <description value="When typing Search/Code into the panel search box, I shouldn't see Code/Search Content Blocks displays"/>
+            <stories value="MAGETWO-66517: Bluefoot Search ContentTypes removal"/>
+            <title value="Search for removed content type on PageBuilder Panel"/>
+            <description value="When typing Search/Code into the panel search box, I shouldn't see Code/Search Content Types displays"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88637"/>
             <group value="pagebuilder"/>
@@ -113,7 +113,7 @@
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
             <title value="Search for three characters in PageBuilder Panel"/>
-            <description value="When typing three letters into the panel search box, I see content blocks that contains words that start with letters entered."/>
+            <description value="When typing three letters into the panel search box, I see content types that contains words that start with letters entered."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81827"/>
             <group value="pagebuilder"/>
@@ -128,7 +128,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="blo" stepKey="fillSearch"/>
-        <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateBlockButtons"/>
+        <see userInput="Block" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateStaticBlock"/>
     </test>
     <test name="SearchNoMatchesInPanel">
         <annotations>
@@ -157,7 +157,7 @@
             <features value="Pagebuilder: Panel"/>
             <stories value="MAGETWO-71566: Filtering Bluefoot content elements on the Panel"/>
             <title value="Clear search in PageBuilder Panel using clear search button and backspace"/>
-            <description value="The clear search button is displayed only when I start typing in the search field. When a search is cleared, content block groups are displayed."/>
+            <description value="The clear search button is displayed only when I start typing in the search field. When a search is cleared, content type groups are displayed."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-81828"/>
             <group value="pagebuilder"/>
@@ -177,7 +177,7 @@
         <seeElement selector='{{PageBuilderActionsSection.searchField}}' stepKey="seeClearSearch"/>
         <see userInput="Image" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateImageAppears"/>
         <dontSee userInput="Row" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateRowDoesNotAppear"/>
-        <comment userInput="Use Clear Search button to show all content blocks on Pagebuilder panel" stepKey="commentClearSearch"/>
+        <comment userInput="Use Clear Search button to show all content types on Pagebuilder panel" stepKey="commentClearSearch"/>
         <click selector="{{PageBuilderActionsSection.clearSearch}}" stepKey="clickClearSearch"/>
         <dontSee userInput="i" selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="validateInputClearedAfterClickClear"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypesAfterClickClear"/>
@@ -185,7 +185,7 @@
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="r" stepKey="fillSearchFieldr"/>
         <see userInput="Row" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateRowAppears"/>
         <dontSee userInput="Column" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateColumnDoesNotAppear"/>
-        <comment userInput="Clear input field using backspace to show all content blocks on Pagebuilder panel" stepKey="commentDeleteSearch"/>
+        <comment userInput="Clear input field using backspace to show all content types on Pagebuilder panel" stepKey="commentDeleteSearch"/>
         <pressKey selector="{{PageBuilderActionsSection.searchPanel}}" parameterArray="[\WebDriverKeys::BACKSPACE]" stepKey="enterSearchInput"/>
         <dontSee userInput="r" selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypesAfterClearField"/>

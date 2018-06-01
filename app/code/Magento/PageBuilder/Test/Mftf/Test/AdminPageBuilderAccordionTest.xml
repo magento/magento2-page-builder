@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddAccordionContentBlockToCMSPage">
+    <test name="AddAccordionContentTypeToCMSPage">
         <annotations>
             <features value="Pagebuilder: Accordion"/>
             <stories value="MAGETWO-83940: Accordion"/>
@@ -28,14 +28,14 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragAccordionOntoStage">
-            <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionOntoStage">
+            <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
         <actionGroup ref="addAccordionItem" stepKey="addAccordionItem"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -49,7 +49,7 @@
         <annotations>
             <features value="Pagebuilder: Accordion"/>
             <stories value="MAGETWO-83940: Accordion"/>
-            <title value="Accordion - Remove accordion content block from stage"/>
+            <title value="Accordion - Remove accordion content type from stage"/>
             <description value="A user should be able to remove accordion block from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
@@ -66,18 +66,18 @@
         </after>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="accordion" stepKey="fillSearch"/>
         <see userInput="Accordion" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockIntoStage">
-            <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderAccordionContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderAccordionContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="AccordionValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Accordion"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Accordion - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Accordion."/>
             <severity value="CRITICAL"/>
@@ -94,11 +94,11 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragAccordionOntoStage">
-            <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionOntoStage">
+            <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
+            <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
         <actionGroup ref="addAccordionItem" stepKey="addAccordionItem"/>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>

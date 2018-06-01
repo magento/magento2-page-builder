@@ -45,7 +45,7 @@ define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_Page
         _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
       });
 
-      _uiEvents.on("image:block:ready", function () {
+      _uiEvents.on("image:contentType:ready", function () {
         var imageDataStore = _this2.parent.dataStore.get();
 
         var initialImageValue = imageDataStore.image || ""; // Create uploader

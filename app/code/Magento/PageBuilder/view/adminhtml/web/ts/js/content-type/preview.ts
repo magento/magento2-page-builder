@@ -168,11 +168,11 @@ export default class Preview {
      * @deprecated
      */
     public afterChildrenRender(element: Element): void {
-        events.trigger("block:childrenRendered", {id: this.parent.id, block: this.parent, element});
+        events.trigger("contentType:childrenRendered", {id: this.parent.id, contentType: this.parent, element});
         events.trigger(
-            this.parent.config.name + ":block:childrenRendered",
+            this.parent.config.name + ":contentType:childrenRendered",
             {
-                block: this.parent,
+                contentType: this.parent,
                 element,
                 id: this.parent.id,
             },
@@ -210,7 +210,7 @@ export default class Preview {
      * @returns {Promise<ContentTypeInterface>}
      */
     public clone(contentType: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
-        const contentBlockData = contentType.dataStore.get();
+        const contentContentTypeData = contentType.dataStore.get();
         const index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
 
         return new Promise((resolve, reject) => {
@@ -218,32 +218,32 @@ export default class Preview {
                 contentType.config,
                 contentType.parent,
                 contentType.stageId,
-                contentBlockData,
-            ).then((duplicateBlock: ContentTypeInterface) => {
+                contentContentTypeData,
+            ).then((duplicateContentType: ContentTypeInterface) => {
                 if (autoAppend) {
-                    contentType.parent.addChild(duplicateBlock, index);
+                    contentType.parent.addChild(duplicateContentType, index);
                 }
 
-                this.dispatchContentTypeCloneEvents(contentType, duplicateBlock, index);
+                this.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index);
 
-                resolve(duplicateBlock);
+                resolve(duplicateContentType);
             });
         });
     }
 
     /**
-     * Handle block removal
+     * Handle content type removal
      */
     public onOptionRemove(): void {
-        const removeBlock = () => {
+        const removeContentType = () => {
             const params = {
-                block: this.parent,
+                contentType: this.parent,
                 index: this.parent.parent.getChildren().indexOf(this.parent),
                 parent: this.parent.parent,
                 stageId: this.parent.stageId,
             };
-            events.trigger("block:removed", params);
-            events.trigger(this.parent.config.name + ":block:removed", params);
+            events.trigger("contentType:removed", params);
+            events.trigger(this.parent.config.name + ":contentType:removed", params);
         };
 
         if (this.isConfigured()) {
@@ -251,7 +251,7 @@ export default class Preview {
                 actions: {
                     confirm: () => {
                         // Call the parent to remove the child element
-                        removeBlock();
+                        removeContentType();
                     },
                 },
                 content: $t("Are you sure you want to remove this item? The data within this item is not recoverable once removed."), // tslint:disable-line:max-line-length
@@ -260,7 +260,7 @@ export default class Preview {
                 title: $t("Confirm Item Removal"),
             });
         } else {
-            removeBlock();
+            removeContentType();
         }
     }
 
@@ -287,7 +287,7 @@ export default class Preview {
                 "<i class='icon-admin-pagebuilder-systems'></i>",
                 $t("Edit"),
                 this.onOptionEdit,
-                ["edit-block"],
+                ["edit-content-type"],
                 30,
             ),
             new Option(
@@ -314,30 +314,30 @@ export default class Preview {
     /**
      * Dispatch content type clone events
      *
-     * @param {ContentTypeInterface} originalBlock
-     * @param {ContentTypeInterface} duplicateBlock
+     * @param {ContentTypeInterface} originalContentType
+     * @param {ContentTypeInterface} duplicateContentType
      * @param {number} index
      */
     protected dispatchContentTypeCloneEvents(
-        originalBlock: ContentTypeInterface,
-        duplicateBlock: ContentTypeInterface,
+        originalContentType: ContentTypeInterface,
+        duplicateContentType: ContentTypeInterface,
         index: number,
     ) {
         const duplicateEventParams = {
-            original: originalBlock,
-            duplicateBlock,
+            original: originalContentType,
+            duplicateContentType,
             index,
         };
 
-        events.trigger("block:duplicate", duplicateEventParams);
-        events.trigger(originalBlock.config.name + ":block:duplicate", duplicateEventParams);
+        events.trigger("contentType:duplicate", duplicateEventParams);
+        events.trigger(originalContentType.config.name + ":contentType:duplicate", duplicateEventParams);
     }
 
     /**
      * Bind events
      */
     protected bindEvents() {
-        events.on("block:sortStart", this.onSortStart.bind(this.parent));
+        events.on("contentType:sortStart", this.onSortStart.bind(this.parent));
         this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
@@ -368,7 +368,7 @@ export default class Preview {
             });
         }
 
-        // Subscribe to this blocks data in the store
+        // Subscribe to this content types data in the store
         this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 _.forEach(data, (value, key) => {
@@ -476,7 +476,7 @@ export default class Preview {
      * @param {SortParamsInterface} params
      */
     private onSortStart(event: Event, params: SortParamsInterface): void {
-        if (params.block.id === this.parent.id) {
+        if (params.contentType.id === this.parent.id) {
             const originalEle = $(params.originalEle);
             originalEle.show();
             originalEle.addClass("pagebuilder-sorting-original");

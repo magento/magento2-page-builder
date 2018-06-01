@@ -51,8 +51,8 @@ export default class ContentTypeCollection extends ContentType implements Conten
 
         // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
         _.defer(() => {
-            events.trigger("block:mount", {id: child.id, block: child});
-            events.trigger(child.config.name + ":block:mount", {id: child.id, block: child});
+            events.trigger("contentType:mount", {id: child.id, contentType: child});
+            events.trigger(child.config.name + ":contentType:mount", {id: child.id, contentType: child});
         });
     }
 

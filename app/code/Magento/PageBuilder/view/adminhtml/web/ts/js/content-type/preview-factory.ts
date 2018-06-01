@@ -22,9 +22,9 @@ export default function create(
 ): Promise<ContentTypeInterface> {
     return new Promise((resolve: (previewComponent: any) => void) => {
         observableUpdaterFactory(config, previewConverterResolver).then((observableUpdater) => {
-            loadModule([config.preview_component], (ContentComponent) => {
+            loadModule([config.preview_component], (PreviewComponent) => {
                 resolve(
-                    new ContentComponent(
+                    new PreviewComponent(
                         contentType,
                         config,
                         observableUpdater,

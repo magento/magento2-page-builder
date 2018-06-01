@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Model\ContentBlock;
+namespace Magento\PageBuilder\Model\ContentType;
 
 /**
  * We populate our forms in the browser using JavaScript

@@ -35,16 +35,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderBlockContentBlock"/>
+            <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
             <argument name="property" value="PageBuilderBlockIdentifierProperty"/>
@@ -55,7 +55,7 @@
         <waitForElementVisible selector="{{BlockOnStage.hr('1')}}" stepKey="waitForHrElementVisible" />
         <waitForElementVisible selector="{{BlockOnStage.identifier('1', PageBuilderBlockIdentifierProperty.value)}}" stepKey="waitForIdentifier" />
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <seeElement selector="{{BlockOnStorefront.hr('1')}}" stepKey="seeBlockContentFrontend"/>
     </test>
@@ -64,7 +64,7 @@
             <features value="Pagebuilder: Block"/>
             <stories value="MAGETWO-83941: Static Block"/>
             <title value="Block - Delete Block"/>
-            <description value="A user should be able to delete an Block content block. Verify on Stage amd Storefront."/>
+            <description value="A user should be able to delete an Block content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89885"/>
             <group value="pagebuilder"/>
@@ -86,20 +86,20 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderBlockContentBlock"/>
+            <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBlockContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderBlockContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="BlockValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Block"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Block - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Block."/>
             <severity value="CRITICAL"/>
@@ -121,16 +121,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderBlockContentBlock"/>
+            <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBlockIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
             <argument name="property" value="PageBuilderBlockIdentifierProperty"/>
@@ -186,7 +186,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
@@ -214,7 +214,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -255,16 +255,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBlockContentBlock"/>
+            <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
             <argument name="property" value="PageBuilderBlockIdentifierProperty"/>
@@ -312,7 +312,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
@@ -359,7 +359,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
@@ -389,7 +389,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

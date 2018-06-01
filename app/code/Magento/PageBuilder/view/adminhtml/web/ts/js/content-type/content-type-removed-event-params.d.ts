@@ -5,8 +5,8 @@
 
 import ContentTypeInterface from "../content-type.d";
 
-export interface ContentTypeRemovedEventParamsInterface {
-    block: ContentTypeInterface;
+export default interface ContentTypeRemovedEventParamsInterface {
+    contentType: ContentTypeInterface;
     index: number;
     parent: ContentTypeInterface;
     stageId: string;

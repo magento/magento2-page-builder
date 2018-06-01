@@ -57,8 +57,8 @@ class Attribute extends AbstractInstall
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
         \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
-        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
+        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory $contentTypeFactory,
+        \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType $contentTypeResource,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
@@ -68,8 +68,8 @@ class Attribute extends AbstractInstall
             $registry,
             $entitySetupFactory,
             $entity,
-            $contentBlockFactory,
-            $contentBlockResource,
+            $contentTypeFactory,
+            $contentTypeResource,
             $resource,
             $resourceCollection,
             $data
@@ -121,9 +121,9 @@ class Attribute extends AbstractInstall
             }
 
             // If the attribute has an entity_allowed_block_type, we need to update the additional_data if the
-            // content block will exist once the installation is finished
+            // content type will exist once the installation is finished
             if (isset($attributeData['entity_allowed_block_type']) && $attributeData['entity_allowed_block_type']) {
-                if ($this->contentBlockWillExist($attributeData['entity_allowed_block_type'])) {
+                if ($this->contentTypeWillExist($attributeData['entity_allowed_block_type'])) {
                     $attributeData['additional_data']['entity_allowed_block_type']
                         = $attributeData['entity_allowed_block_type'];
                     $this->unresolvedAdditionalData[] = $attributeCode;
@@ -194,11 +194,11 @@ class Attribute extends AbstractInstall
                     $additionalData = \Zend_Json::decode($attribute->getAdditionalData());
                     if (isset($additionalData['entity_allowed_block_type'])) {
                         try {
-                            $contentBlock = $this->contentBlockRepository->getByIdentifier(
+                            $contentType = $this->contentTypeRepository->getByIdentifier(
                                 $additionalData['entity_allowed_block_type']
                             );
-                            if ($contentBlock->getId()) {
-                                $additionalData['entity_allowed_block_type'] = $contentBlock->getId();
+                            if ($contentType->getId()) {
+                                $additionalData['entity_allowed_block_type'] = $contentType->getId();
                             }
                         } catch (\Exception $e) {
                             unset($additionalData['entity_allowed_block_type']);

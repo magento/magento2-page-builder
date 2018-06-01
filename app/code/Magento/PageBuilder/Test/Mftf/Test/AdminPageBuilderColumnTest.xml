@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddColumnContentBlockToCMSPage">
+    <test name="AddColumnContentTypeToCMSPage">
         <annotations>
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-66176: Bluefoot Column Configuration"/>
@@ -27,8 +27,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
     </test>
@@ -51,18 +51,18 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeColumn1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="1" stepKey="seeOneColumnInGroup" />
         <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeColumn2">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeColumn2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask1"/>
         <dontSeeElement selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
@@ -87,8 +87,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
@@ -131,7 +131,7 @@
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-87068: Empty Column Admin Preview"/>
             <title value="Column placeholder in admin preview"/>
-            <description value="A user should see the column placeholder that suggests any content blocks can be dragged there"/>
+            <description value="A user should see the column placeholder that suggests any content types can be dragged there"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88296"/>
             <group value="pagebuilder"/>
@@ -145,11 +145,11 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <waitForElementVisible time="5" selector="{{PageBuilderColumnSection.empty}}" stepKey="waitForEmptyColumn"/>
         <seeElementInDOM selector="{{PageBuilderColumnSection.empty}}" stepKey="seeEmptyColumn"/>
@@ -175,18 +175,18 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <waitForElement selector="{{PageBuilderColumnSection.displayLabel('3/6')}}" stepKey="findBeforeLabel"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <waitForElement selector="{{PageBuilderColumnSection.displayLabel('1/6')}}" stepKey="findAfterLabel"/>
     </test>
@@ -209,12 +209,12 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns}}" userInput="2" stepKey="seeElementColumn"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeElement selector="{{PageBuilderActionsSection.editForm}}" stepKey="seeEditForm"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
@@ -242,8 +242,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceAlignmentProperty">
@@ -301,13 +301,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -336,8 +336,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -380,23 +380,23 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearancePropertyBottom">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
@@ -407,8 +407,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearancePropertyCentered">
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
@@ -419,8 +419,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -463,13 +463,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -497,8 +497,8 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="PageBuilderAppearanceMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -538,11 +538,11 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -571,10 +571,10 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
         <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty">
@@ -609,24 +609,24 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragSecondColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1" />
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty1">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
@@ -640,8 +640,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty2">
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
@@ -655,8 +655,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty_200"/>
@@ -686,8 +686,8 @@
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seePageBuilderAppearanceProperty">
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
@@ -716,7 +716,7 @@
     <test name="ColumnValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Column"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Column - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Column."/>
             <severity value="CRITICAL"/>
@@ -733,13 +733,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <!-- Validate Default Values -->
@@ -822,7 +822,7 @@
 
         <!-- Validate form data has been persisted in the advanced section -->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openSavedEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="validateTextAlignment" stepKey="seeOptionIsSelected">
@@ -873,23 +873,23 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstTwoColumns">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstTwoColumns">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragThirdColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragThirdColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneSixth)}}" stepKey="seeFirstColumnWidth"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthOneThird)}}" stepKey="seeSecondColumnWidth"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeColumn1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeColumn1">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
@@ -916,38 +916,38 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeading1ToFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeading1ToFirstColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading1">
             <argument name="index" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockNextToExistingContentBlock" stepKey="dragHeading2ToFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
-            <argument name="existingContentBlock" value="PageBuilderHeadingContentBlock"/>
-            <argument name="existingContentBlockIndex" value="1"/>
+        <actionGroup ref="dragContentTypeNextToExistingContentType" stepKey="dragHeading2ToFirstColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
+            <argument name="existingContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="existingContentTypeIndex" value="1"/>
             <argument name="offsetYCoordinate" value="25"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading2">
             <argument name="index" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockNextToExistingContentBlock" stepKey="dragHeading3ToFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
-            <argument name="existingContentBlock" value="PageBuilderHeadingContentBlock"/>
-            <argument name="existingContentBlockIndex" value="2"/>
+        <actionGroup ref="dragContentTypeNextToExistingContentType" stepKey="dragHeading3ToFirstColumn">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
+            <argument name="existingContentType" value="PageBuilderHeadingContentType"/>
+            <argument name="existingContentTypeIndex" value="2"/>
             <argument name="offsetYCoordinate" value="25"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading3">
@@ -962,7 +962,7 @@
         <annotations>
             <features value="Pagebuilder: Column"/>
             <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
-            <title value="Add an image content block into column"/>
+            <title value="Add an image content type into column"/>
             <description value="A user should be able to add an image into a column."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -1037,11 +1037,11 @@
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <fillField selector="{{TextOnConfiguration.textArea}}" userInput="Text from Column" stepKey="addTextToEditor"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>

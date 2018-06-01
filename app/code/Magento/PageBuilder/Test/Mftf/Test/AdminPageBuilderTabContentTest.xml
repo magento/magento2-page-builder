@@ -29,12 +29,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -42,13 +42,13 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Text to Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextOntoTab">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextOntoTab">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForEditPanelSpinner"/>
         <executeJS function="tinymce.activeEditor.setContent(tinymce.activeEditor.getContent() + 'This is some text')" stepKey="addTextToWYSIWYG"/>
@@ -62,12 +62,12 @@
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <see userInput="This is some text" stepKey="assertTextOnStorefront"/>
     </test>
-    <test name="CanAddBlockToTab">
+    <test name="CanAddContentTypeToTab">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Tabs: Add Content Inside Tab"/>
             <useCaseId value="MAGETWO-88269"/>
-            <title value="Add Block to Tabs container and view on Admin and Storefront"/>
+            <title value="Add ContentType to Tabs container and view on Admin and Storefront"/>
             <description value="As a Content Manager I want tab to be a container so that I can add any content inside the Tab, not only text"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89955"/>
@@ -89,12 +89,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -103,15 +103,15 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Block to Tab -->
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderBlockContentBlock"/>
+            <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextOntoTab">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextOntoTab">
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBlockContentBlock"/>
+            <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
             <argument name="property" value="PageBuilderBlockIdentifierProperty"/>
@@ -121,7 +121,7 @@
         <!-- Verify Block in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{TabOnStorefront.tabContentBlock('1')}}" stepKey="seeBlockContentFrontend"/>
+        <seeElement selector="{{TabOnStorefront.tabContentType('1')}}" stepKey="seeBlockContentFrontend"/>
     </test>
     <test name="CanAddNewsletterToTab">
         <annotations>
@@ -144,12 +144,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -157,9 +157,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Newsletter to Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragNewsletterOntoTab">
-            <argument name="contentBlockType" value="PageBuilderNewsletterContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewsletterOntoTab">
+            <argument name="contentType" value="PageBuilderNewsletterContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -189,12 +189,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -202,9 +202,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Button to Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragButtonOntoTab">
-            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragButtonOntoTab">
+            <argument name="contentType" value="PageBuilderButtonsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -235,12 +235,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -249,11 +249,11 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Image to Tab -->
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderImageContentBlock"/>
+            <argument name="group" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragImageOntoTab">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragImageOntoTab">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
@@ -264,7 +264,7 @@
         <waitForElementVisible selector="{{ImageOnStage.imagePreview}}" stepKey="waitForImagePreview"/>
         <waitForElementVisible selector="{{ImageOnStage.imageSourceOnStage('magentoStage')}}" stepKey="waitForImageSource"/>
         <seeElement selector="{{ImageOnStage.imageSourceOnStage('magentoStage')}}" stepKey="seeImageSourceOnStage" />
-        <seeElement selector="{{ImageOnStage.imageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageOnStage"/>
+        <seeElement selector="{{ImageOnStage.imageContentTypeByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Image in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
@@ -292,12 +292,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -306,16 +306,16 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Video to Tab -->
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderVideoContentBlock"/>
+            <argument name="group" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragVideoOntoTab">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragVideoOntoTab">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
             <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
@@ -359,12 +359,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -373,16 +373,16 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Banner to Tab -->
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragBannerOntoTab">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragBannerOntoTab">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="addTextToTinyMCE">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
@@ -417,12 +417,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -432,9 +432,9 @@
         <!-- Add Slider to Tab -->
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
         <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragSliderOntoTab">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderOntoTab">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
@@ -496,12 +496,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -509,9 +509,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Map to Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragMapOntoTab">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragMapOntoTab">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
@@ -543,12 +543,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -556,14 +556,14 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Column to Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragColumnOntoTab">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnOntoTab">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -574,8 +574,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
@@ -612,12 +612,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -625,9 +625,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Accordion to Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragAccordionOntoTab">
-            <argument name="contentBlockType" value="PageBuilderAccordionContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragAccordionOntoTab">
+            <argument name="contentType" value="PageBuilderAccordionContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
@@ -658,12 +658,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -671,16 +671,16 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Heading to Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingOntoTab">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingOntoTab">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -713,12 +713,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -727,16 +727,16 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Anchor to Tab -->
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderAnchorContentBlock"/>
+            <argument name="group" value="PageBuilderAnchorContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragAnchorOntoTab">
-            <argument name="contentBlockType" value="PageBuilderAnchorContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragAnchorOntoTab">
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderAnchorContentBlock"/>
+            <argument name="contentType" value="PageBuilderAnchorContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterAnchorIdentifier">
             <argument name="property" value="PageBuilderAnchorIdentifier"/>
@@ -770,12 +770,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -783,14 +783,14 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Divider to Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragDividerOntoTab">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragDividerOntoTab">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterDividerLineColor">
             <argument name="property" value="PageBuilderDividerLineColor_FF5733"/>
@@ -834,12 +834,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -848,16 +848,16 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add HTML to Tab -->
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderHtmlContentBlock"/>
+            <argument name="group" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHtmlOntoTab">
-            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHtmlOntoTab">
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHtmlContentBlock"/>
+            <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHtmlContent">
             <argument name="property" value="PageBuilderHtmlPropertyButton"/>
@@ -891,12 +891,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -904,9 +904,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Try to drag Tabs onto Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTabsOntoTab">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsOntoTab">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <dontSeeElement selector="{{TabOnStage.default('2')}}" stepKey="dontSeeNewTabsOnStage"/>
@@ -932,12 +932,12 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="confirmTabsOnStage"/>
@@ -945,9 +945,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Try to drag Row onto Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragRowOntoTab">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragRowOntoTab">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <dontSeeElement selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-tabs')])[1]//div[contains(@class, 'pagebuilder-row')]" stepKey="dontSeeNewRowOnStage"/>

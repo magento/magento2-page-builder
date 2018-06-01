@@ -34,7 +34,7 @@ export default class ProductsDirective implements ConverterInterface {
      */
     public toDom(name: string, data: object): string {
         const attributes = {
-            type: "Magento\\CatalogWidget\\Block\\Product\\ProductsList",
+            type: "Magento\\CatalogWidget\\ContentType\\Product\\ProductsList",
             template: "Magento_CatalogWidget::product/widget/content/grid.phtml",
             anchor_text: "",
             id_path: "",

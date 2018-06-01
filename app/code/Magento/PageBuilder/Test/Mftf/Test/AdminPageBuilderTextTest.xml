@@ -10,7 +10,7 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="TextAddTextWithCustomTinyMCE">
         <annotations>
-            <features value="[CMS] Drag &amp; Drop, Preview and Access to the Options of the Content Blocks in Bluefoot MAGETWO-83848"/>
+            <features value="[CMS] Drag &amp; Drop, Preview and Access to the Options of the Content Types in Bluefoot MAGETWO-83848"/>
             <stories value="Customized WYSIWYG Toolbar inside Page Builder MAGETWO-86820"/>
             <title value="Custom WYSIWYG inside Pagebuilder"/>
             <description value="Custom buttons on WYSIWYG toolbar inside PageBuilder"/>
@@ -31,11 +31,11 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <seeElement selector="{{WYSIWYGOnPageBuilder.undo}}" stepKey="seeUndo"/>
         <seeElement selector="{{WYSIWYGOnPageBuilder.redo}}" stepKey="seeRedo"/>
@@ -95,7 +95,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-                <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+                <argument name="contentType" value="PageBuilderTextContentType"/>
             </actionGroup>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -103,11 +103,11 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="addVariableToTinyMCE" stepKey="addVariableToTinyMCE">
             <argument name="variable" value="TinyMCEVariableBaseURL"/>
@@ -117,30 +117,30 @@
             <argument name="page" value="text{{PageBuilderPageTitle.pageName}}"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEVariableBaseURL.stageValue)}}" stepKey="waitForVariableStage"/>
         <waitForElementVisible selector="{{TextOnStage.text('1', TinyMCEWidgetCMSPageLink.stageValue)}}" stepKey="waitForWidgetStage"/>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentBlock.value)}}" stepKey="waitForTextStage"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{TextOnStorefront.text('1', _ENV.MAGENTO_BASE_URL)}}" stepKey="waitForVariableStorefront"/>
         <waitForElementVisible selector="div.block-cms-link a[href='{{_ENV.MAGENTO_BASE_URL}}text{{PageBuilderPageTitle.pageName}}']" stepKey="waitForWidgetStorefront"/>
-        <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextContentBlock.value)}}" stepKey="waitForTextStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStorefront"/>
     </test>
     <test name="TextDelete">
         <annotations>
             <features value="Pagebuilder: Text"/>
             <stories value="MAGETWO-83925: Textarea"/>
             <title value="Text - Delete Text"/>
-            <description value="A user should be able to delete a Text content block. Verify on Stage amd Storefront."/>
+            <description value="A user should be able to delete a Text content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
@@ -154,18 +154,18 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTextContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderTextContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="TextValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Text"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Text - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration section on the Edit Form, Stage, and Storefront for Text."/>
             <severity value="CRITICAL"/>
@@ -182,16 +182,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Edit Panel -->
@@ -244,7 +244,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
@@ -272,7 +272,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -306,16 +306,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
@@ -360,7 +360,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
@@ -407,7 +407,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
@@ -437,7 +437,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -459,7 +459,7 @@
             <features value="Pagebuilder: Text"/>
             <stories value="MAGETWO-90461: Add Missing Tests For Text"/>
             <title value="Text - Duplicate Text"/>
-            <description value="A user should be able to duplicate a text content block. Verify on Stage and Storefront."/>
+            <description value="A user should be able to duplicate a text content type. Verify on Stage and Storefront."/>
             <severity value="AVERAGE"/>
             <testCaseId value="MAGETWO-91075"/>
             <group value="pagebuilder"/>
@@ -474,18 +474,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Fill All Fields -->
         <comment userInput="Fill All Fields" stepKey="commentEdit"/>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
@@ -515,8 +515,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Duplicate and Validate Stage -->
         <comment userInput="Duplicate" stepKey="commentDuplicate"/>
-        <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateAllAdvancedStage">
@@ -531,15 +531,15 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentBlock.value)}}" stepKey="waitForTextStage"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <!-- Validate Edit Panel For Duplicate -->
         <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEdit"/>
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE1">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment">
@@ -583,15 +583,15 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentBlock.value)}}" stepKey="waitForTextStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <!-- Validate Edit Panel For Duplicate After Save -->
         <comment userInput="Validate Edit Panel For Duplicate After Save" stepKey="commentValidateEdit2"/>
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE2">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection3"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateAlignment2">
@@ -619,7 +619,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -635,7 +635,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
             <argument name="index" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextContentBlock.value)}}" stepKey="waitForTextStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.text('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStorefront"/>
     </test>
     <test name="TextValidateGeneralDefaultSettings">
         <annotations>
@@ -657,36 +657,36 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE">
-            <argument name="property" value="PageBuilderTextContentBlockEmpty"/>
+            <argument name="property" value="PageBuilderTextContentTypeEmpty"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentBlockDefault.value)}}" stepKey="waitForTextStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentTypeDefault.value)}}" stepKey="waitForTextStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentBlockDefault.value)}}" stepKey="waitForTextStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentTypeDefault.value)}}" stepKey="waitForTextStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel For Duplicate After Save -->
         <comment userInput="Validate Edit Panel For Duplicate After Save" stepKey="commentValidateEdit2"/>
         <actionGroup ref="validateTextInTinyMCE" stepKey="validateTextInTinyMCE2">
-            <argument name="property" value="PageBuilderTextContentBlockEmpty"/>
+            <argument name="property" value="PageBuilderTextContentTypeEmpty"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -711,11 +711,11 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Cannot Save Edit Panel -->
         <comment userInput="Validate Cannot Save Edit Panel" stepKey="commentValidateCannotSave"/>
@@ -749,46 +749,46 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel"/>
-        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentBlock.value}}" stepKey="fillTextField"/>
+        <fillField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentType.value}}" stepKey="fillTextField"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentBlock.value)}}" stepKey="waitForTextStage"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel2"/>
-        <seeInField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentBlock.value}}" stepKey="seeInField"/>
+        <seeInField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentType.value}}" stepKey="seeInField"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentBlock.value)}}" stepKey="waitForTextStage2"/>
+        <waitForElementVisible selector="{{TextOnStage.textAreaText('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStage2"/>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel3"/>
-        <seeInField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentBlock.value}}" stepKey="seeInField2"/>
+        <seeInField selector="{{TextOnConfiguration.textArea}}" userInput="{{PageBuilderTextContentType.value}}" stepKey="seeInField2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextContentBlock.value)}}" stepKey="waitForTextStorefront"/>
+        <waitForElementVisible selector="{{TextOnStorefront.textAreaText('1', PageBuilderTextContentType.value)}}" stepKey="waitForTextStorefront"/>
     </test>
     <test name="TextDisabledWYSIWYGAddWidget">
         <annotations>
@@ -808,7 +808,7 @@
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-                <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+                <argument name="contentType" value="PageBuilderTextContentType"/>
             </actionGroup>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -817,11 +817,11 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="addPageLinkWidgetWYSIWYGDisabled" stepKey="addPageLinkWidgetWYSIWYGDisabled">
             <argument name="widget" value="PageBuilderTextArea_WidgetCMSPageLink"/>
@@ -834,7 +834,7 @@
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel2"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
@@ -848,13 +848,13 @@
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel3"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText2"/>
         <assertContains actual="getText2" actualType="variable" expected="{{PageBuilderTextArea_WidgetCMSPageLink.editPanelValue}}" expectedType="string" stepKey="assertValue2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -878,7 +878,7 @@
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-                <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+                <argument name="contentType" value="PageBuilderTextContentType"/>
             </actionGroup>
             <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
@@ -887,11 +887,11 @@
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="addPageLinkVariableWYSIWYGDisabled" stepKey="addPageLinkVariableWYSIWYGDisabled">
             <argument name="variable" value="PageBuilderTextArea_VariableBaseURL"/>
@@ -903,7 +903,7 @@
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel2"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText"/>
@@ -917,7 +917,7 @@
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TextOnConfiguration.textArea}}" stepKey="waitForTextOnEditPanel3"/>
         <executeJS function="return document.getElementById('{{TextOnConfiguration.textAreaId}}').value;" stepKey="getText2"/>
@@ -925,7 +925,7 @@
         <amOnPage url="" stepKey="goToBaseURL"/>
         <grabFromCurrentUrl stepKey="grabBaseURL"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

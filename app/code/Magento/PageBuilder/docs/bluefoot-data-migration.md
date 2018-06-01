@@ -54,8 +54,8 @@ During the migration, Magento converts old BlueFoot content to its PageBuilder e
 The following content types are deprecated in PageBuilder:
 
 * BlueFoot Slider - The Slider content type will be migrated as Advanced Slider.
-* BlueFoot Search - The content for the Search content block will be converted to HTML during migration.
-* BlueFoot Code - The content for the Code content block will be wrapped with the following tags:
+* BlueFoot Search - The content for the Search content type will be converted to HTML during migration.
+* BlueFoot Code - The content for the Code content type will be wrapped with the following tags:
     ```
     <pre><code></code></pre>
     ```
@@ -94,7 +94,7 @@ Your implementation must return a `string` that is compatible with the target co
 | Name              | Description                                     |
 | ----------------- | ----------------------------------------------- |
 | `$itemData`       | Parsed BlueFoot JSON data ready for processing  |
-| `$additionalData` | Additional data for rendering the content block |
+| `$additionalData` | Additional data for rendering the content type |
 
 **Example: Heading renderer class implementation**
 
@@ -173,13 +173,13 @@ class Heading implements RendererInterface
 ```
 
 
-#### Children content blocks
+#### Children content types
 
 Some BlueFoot content types, such as accordion and slider, can contain child content types.
-This can result in trees with deeply nested content blocks.
+This can result in trees with deeply nested content types.
 
 During rendering, content types are processed from the bottom of the tree to the top.
-In other words, the system renders all child blocks first and makes the results available to the immediate parent for placement.
+In other words, the system renders all child content types first and makes the results available to the immediate parent for placement.
 
 Use a virtual type of the following class to get the rendered content for a content type's children:
 
@@ -197,7 +197,7 @@ This class accepts an array of paths, defined in the [`di.xml`] file, which prov
 </virtualType>
 ```
 
-After the system renders the children blocks, the content is available to the parent renderer through `$additionalData['children']`.
+After the system renders the children content types, the content is available to the parent renderer through `$additionalData['children']`.
 
 **Note:**
 *This only applies to content types that contain children.*

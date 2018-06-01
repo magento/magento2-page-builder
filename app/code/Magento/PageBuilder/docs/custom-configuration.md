@@ -126,7 +126,7 @@ In the `additional_data` XML config there is a `storeId` item with a `storeId` p
 <item name="storeId" xsi:type="object">\Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\StoreId</item>
 ```
 
-Custom configuration is injected into relevant content type block constructors, such as for the image block shown here, and accessed in `config.additional_data` within the content block type in `/app/code/Magento/PageBuilder/view/adminhtml/web/js/content-type/<your-content-type>/preview.js`:
+Custom configuration is injected into relevant content type block constructors, such as for the image block shown here, and accessed in `config.additional_data` within the content type type in `/app/code/Magento/PageBuilder/view/adminhtml/web/js/content-type/<your-content-type>/preview.js`:
 
 ``` js
 var uploaderConfiguration = Object.assign(

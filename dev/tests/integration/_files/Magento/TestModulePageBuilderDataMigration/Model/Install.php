@@ -20,9 +20,9 @@ class Install extends \Magento\Framework\Model\AbstractModel
     private $attributeInstall;
 
     /**
-     * @var \Magento\TestModulePageBuilderDataMigration\Model\Install\ContentBlock
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\Install\ContentType
      */
-    private $contentBlockInstall;
+    private $contentTypeInstall;
 
     /**
      * @var \Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory
@@ -35,7 +35,7 @@ class Install extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Model\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\TestModulePageBuilderDataMigration\Model\Install\Attribute $attribute
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install\ContentBlock $contentBlock
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Install\ContentType $contentType
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
@@ -44,7 +44,7 @@ class Install extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         Install\Attribute $attribute,
-        Install\ContentBlock $contentBlock,
+        Install\ContentType $contentType,
         EntitySetupFactory $entitySetupFactory,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
@@ -53,7 +53,7 @@ class Install extends \Magento\Framework\Model\AbstractModel
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
         $this->attributeInstall = $attribute;
-        $this->contentBlockInstall = $contentBlock;
+        $this->contentTypeInstall = $contentType;
         $this->entitySetupFactory = $entitySetupFactory;
     }
 
@@ -78,9 +78,9 @@ class Install extends \Magento\Framework\Model\AbstractModel
             $this->attributeInstall->createAttributes($this->getAttributes(), $data, $eavSetup);
         }
 
-        // Then any content blocks
-        if ($this->hasContentBlocks()) {
-            $this->contentBlockInstall->createContentBlocks($this->getContentBlocks(), $data, $eavSetup);
+        // Then any content types
+        if ($this->hasContentTypes()) {
+            $this->contentTypeInstall->createContentTypes($this->getContentTypes(), $data, $eavSetup);
         }
 
         // Resolve any unmapped additional data
@@ -110,22 +110,22 @@ class Install extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * Does the data contain content blocks?
+     * Does the data contain content types?
      *
      * @return bool
      */
-    protected function hasContentBlocks()
+    protected function hasContentTypes()
     {
-        return array_key_exists('content_blocks', $this->installData);
+        return array_key_exists('content_types', $this->installData);
     }
 
     /**
-     * Retrieve the content blocks
+     * Retrieve the content types
      *
      * @return mixed
      */
-    protected function getContentBlocks()
+    protected function getContentTypes()
     {
-        return $this->installData['content_blocks'];
+        return $this->installData['content_types'];
     }
 }

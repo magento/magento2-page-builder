@@ -149,14 +149,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
-      _uiEvents.trigger("block:childrenRendered", {
+      _uiEvents.trigger("contentType:childrenRendered", {
         id: this.parent.id,
-        block: this.parent,
+        contentType: this.parent,
         element: element
       });
 
-      _uiEvents.trigger(this.parent.config.name + ":block:childrenRendered", {
-        block: this.parent,
+      _uiEvents.trigger(this.parent.config.name + ":contentType:childrenRendered", {
+        contentType: this.parent,
         element: element,
         id: this.parent.id
       });
@@ -203,39 +203,39 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
         autoAppend = true;
       }
 
-      var contentBlockData = contentType.dataStore.get();
+      var contentContentTypeData = contentType.dataStore.get();
       var index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
       return new Promise(function (resolve, reject) {
-        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentBlockData).then(function (duplicateBlock) {
+        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentContentTypeData).then(function (duplicateContentType) {
           if (autoAppend) {
-            contentType.parent.addChild(duplicateBlock, index);
+            contentType.parent.addChild(duplicateContentType, index);
           }
 
-          _this2.dispatchContentTypeCloneEvents(contentType, duplicateBlock, index);
+          _this2.dispatchContentTypeCloneEvents(contentType, duplicateContentType, index);
 
-          resolve(duplicateBlock);
+          resolve(duplicateContentType);
         });
       });
     };
     /**
-     * Handle block removal
+     * Handle content type removal
      */
 
 
     _proto.onOptionRemove = function onOptionRemove() {
       var _this3 = this;
 
-      var removeBlock = function removeBlock() {
+      var removeContentType = function removeContentType() {
         var params = {
-          block: _this3.parent,
+          contentType: _this3.parent,
           index: _this3.parent.parent.getChildren().indexOf(_this3.parent),
           parent: _this3.parent.parent,
           stageId: _this3.parent.stageId
         };
 
-        _uiEvents.trigger("block:removed", params);
+        _uiEvents.trigger("contentType:removed", params);
 
-        _uiEvents.trigger(_this3.parent.config.name + ":block:removed", params);
+        _uiEvents.trigger(_this3.parent.config.name + ":contentType:removed", params);
       };
 
       if (this.isConfigured()) {
@@ -243,7 +243,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
           actions: {
             confirm: function confirm() {
               // Call the parent to remove the child element
-              removeBlock();
+              removeContentType();
             }
           },
           content: (0, _translate)("Are you sure you want to remove this item? The data within this item is not recoverable once removed."),
@@ -253,7 +253,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
           title: (0, _translate)("Confirm Item Removal")
         });
       } else {
-        removeBlock();
+        removeContentType();
       }
     };
     /**
@@ -264,27 +264,27 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.retrieveOptions = function retrieveOptions() {
-      return [new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title(this, this.config.label, 20), new _option(this, "edit", "<i class='icon-admin-pagebuilder-systems'></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-block"], 30), new _option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 40), new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 50)];
+      return [new _option(this, "move", "<i class='icon-admin-pagebuilder-handle'></i>", (0, _translate)("Move"), null, ["move-structural"], 10), new _title(this, this.config.label, 20), new _option(this, "edit", "<i class='icon-admin-pagebuilder-systems'></i>", (0, _translate)("Edit"), this.onOptionEdit, ["edit-content-type"], 30), new _option(this, "duplicate", "<i class='icon-pagebuilder-copy'></i>", (0, _translate)("Duplicate"), this.onOptionDuplicate, ["duplicate-structural"], 40), new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), this.onOptionRemove, ["remove-structural"], 50)];
     };
     /**
      * Dispatch content type clone events
      *
-     * @param {ContentTypeInterface} originalBlock
-     * @param {ContentTypeInterface} duplicateBlock
+     * @param {ContentTypeInterface} originalContentType
+     * @param {ContentTypeInterface} duplicateContentType
      * @param {number} index
      */
 
 
-    _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(originalBlock, duplicateBlock, index) {
+    _proto.dispatchContentTypeCloneEvents = function dispatchContentTypeCloneEvents(originalContentType, duplicateContentType, index) {
       var duplicateEventParams = {
-        original: originalBlock,
-        duplicateBlock: duplicateBlock,
+        original: originalContentType,
+        duplicateContentType: duplicateContentType,
         index: index
       };
 
-      _uiEvents.trigger("block:duplicate", duplicateEventParams);
+      _uiEvents.trigger("contentType:duplicate", duplicateEventParams);
 
-      _uiEvents.trigger(originalBlock.config.name + ":block:duplicate", duplicateEventParams);
+      _uiEvents.trigger(originalContentType.config.name + ":contentType:duplicate", duplicateEventParams);
     };
     /**
      * Bind events
@@ -294,7 +294,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
 
-      _uiEvents.on("block:sortStart", this.onSortStart.bind(this.parent));
+      _uiEvents.on("contentType:sortStart", this.onSortStart.bind(this.parent));
 
       this.parent.dataStore.subscribe(function (data) {
         _this4.updateObservables();
@@ -325,7 +325,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
         _underscore.keys(this.config.fields).forEach(function (key) {
           _this5.updateDataValue(key, "");
         });
-      } // Subscribe to this blocks data in the store
+      } // Subscribe to this content types data in the store
 
 
       this.parent.dataStore.subscribe(function (data) {
@@ -439,7 +439,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
 
     _proto.onSortStart = function onSortStart(event, params) {
-      if (params.block.id === this.parent.id) {
+      if (params.contentType.id === this.parent.id) {
         var originalEle = (0, _jquery)(params.originalEle);
         originalEle.show();
         originalEle.addClass("pagebuilder-sorting-original"); // Reset the width & height of the helper

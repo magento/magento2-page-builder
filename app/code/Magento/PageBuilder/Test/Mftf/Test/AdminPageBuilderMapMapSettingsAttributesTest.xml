@@ -29,13 +29,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderMapContentBlock"/>
+            <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Update Edit Panel -->
         <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
@@ -60,7 +60,7 @@
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight">
             <argument name="property" value="PageBuilderMapHeightProperty500px"/>
@@ -79,7 +79,7 @@
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateHeight2">
             <argument name="property" value="PageBuilderMapHeightProperty500px"/>
@@ -87,7 +87,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <executeJS function="{{MapOnStorefront.computedHeight}}" stepKey="actualStorefrontMapHeight"/>
         <executeJS function="return Math.round(({$actualStorefrontMapHeight}/{{PageBuilderMapHeightProperty500px.value}})*100)/100" stepKey="actualStorefrontMapHeightRatio"/>
@@ -118,13 +118,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderMapContentBlock"/>
+            <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
@@ -157,7 +157,7 @@
         <!-- Validate Edit Panel After Edit And Save -->
         <comment userInput="Validate Edit Panel After Edit And Save" stepKey="commentValidateEditPanelAfterEditAndSave"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEmptyHeightField">
             <argument name="property" value="PageBuilderMapHeight_Empty"/>
@@ -165,7 +165,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
             <argument name="page" value="MapOnStorefront"/>
@@ -194,10 +194,10 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderMapContentBlock"/>
+            <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
@@ -246,13 +246,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderMapContentBlock"/>
+            <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
@@ -289,7 +289,7 @@
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanelAfterSave"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateShowControlsEnabled">
             <argument name="property" value="PageBuilderMapShowControls_True"/>
@@ -297,7 +297,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
             <argument name="page" value="MapOnStorefront"/>
@@ -329,13 +329,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
-            <argument name="group" value="PageBuilderMapContentBlock"/>
+            <argument name="group" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
@@ -372,7 +372,7 @@
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanelAfterSave"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateShowControlsDisabled">
             <argument name="property" value="PageBuilderMapShowControls_False"/>
@@ -380,7 +380,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="validateMapSettings" stepKey="validateMapStoreFront">
             <argument name="page" value="MapOnStorefront"/>

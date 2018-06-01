@@ -6,11 +6,11 @@
 import ko from "knockout";
 import mageUtils from "mageUtils";
 import events from "uiEvents";
-import Content from "./content";
+import Master from "./content-type/master";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 import DataStore from "./data-store";
-import Preview from "./preview";
+import Preview from "./content-type/preview";
 
 export default class ContentType implements ContentTypeInterface {
     public id: string = mageUtils.uniqueid();
@@ -22,7 +22,7 @@ export default class ContentType implements ContentTypeInterface {
     public element: JQuery<HTMLElement>;
     public dataStore: DataStore = new DataStore();
     public preview: Preview;
-    public content: Content;
+    public content: Master;
 
     /**
      * @param {ContentTypeInterface} parent

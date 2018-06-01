@@ -10,18 +10,18 @@
               xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="openPageBuilderEditPanelSmallByIndex">
         <arguments>
-            <argument name="contentBlockType" defaultValue=""/>
-            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="contentType" defaultValue=""/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForButtonElement"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickButtonElement"/>
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForButtonElement"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickButtonElement"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForEditButton"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockEditByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickEditButton"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickEditButton"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <see userInput="Edit {{contentBlockType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <see userInput="Edit {{contentType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
     <actionGroup name="addButton">
@@ -30,9 +30,9 @@
         </arguments>
         <comment userInput="Adding Button" stepKey="comment"/>
         <executeJS function="return Math.round(document.getElementsByClassName('pagebuilder-button-item').length+1)" stepKey="initialNumberOfButtonsPlusOne"/>
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderButtonsContentBlock.role, buttonGroupIndex)}}" stepKey="mouseOverButtonsGroup"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(PageBuilderButtonsContentType.role, buttonGroupIndex)}}" stepKey="mouseOverButtonsGroup"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderButtonsContentBlock.role)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="waitForOptionsMenu"/>
         <waitForElementVisible time="10" selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="seeAddButton"/>
         <click selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="clickAddButton"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
@@ -42,17 +42,17 @@
             <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="removeContentBlockFromStageSmallByIndex">
+    <actionGroup name="removeContentTypeFromStageSmallByIndex">
         <arguments>
-            <argument name="contentBlockType" defaultValue=""/>
-            <argument name="contentBlockIndex" defaultValue="2" type="string"/>
+            <argument name="contentType" defaultValue=""/>
+            <argument name="contentTypeIndex" defaultValue="2" type="string"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForButtonElement"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickButtonElement"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForButtonElement"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickButtonElement"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockRemoveByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForRemoveButton"/>
-        <click selector="{{PageBuilderActionsSection.contentBlockRemoveByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="clickRemoveContentBlock"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeRemoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForRemoveButton"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeRemoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickRemoveContentType"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
     <actionGroup name="validateButtonItemContent">
