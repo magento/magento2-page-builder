@@ -1264,4 +1264,127 @@
             <argument name="secondButtonIndex" value="3"/>
         </actionGroup>
     </test>
+    <test name="ButtonGroupValidateSwitchingAppearances">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Buttons"/>
+            <title value="Button Group - Validate Switching Appearances"/>
+            <description value="Validate switching between appearances in the Configuration form, on Stage and Storefront for a Button group."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92374"/>
+            <useCaseId value="MAGETWO-66361"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-buttons"/>
+            <group value="pagebuilder-buttonGroup"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Select Inline Appearance -->
+        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterStackedAlignment">
+            <argument name="property" value="PageBuilderAppearancePropertyInline"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton1">
+            <argument name="text" value="PageBuilderButtonItemText_First"/>
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="addButton" stepKey="addButton2"/>
+        <actionGroup ref="inlineEditButton" stepKey="inlineEditButton2">
+            <argument name="text" value="PageBuilderButtonItemText_Second"/>
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Select Stacked Appearance -->
+        <comment userInput="Select Stacked Appearance" stepKey="CommentSelectStackedAppearance"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearance">
+            <argument name="property" value="PageBuilderAppearancePropertyStacked"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage2"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStage2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Storefront"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Storefront"/>
+        <actionGroup ref="validateButtonGroupStackedAppearance" stepKey="seeAppearanceOnStorefront">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
+            <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
+        </actionGroup>
+        <!-- Select Inline Appearance -->
+        <comment userInput="Select Inline Appearance" stepKey="CommentSelectInlineAppearance2"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterInlineAppearance">
+            <argument name="property" value="PageBuilderAppearancePropertyInline"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage3"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage3"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage3"/>
+        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage3">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
+        <!-- Validate Stage After Save -->
+        <comment userInput="Validate Stage After Save" stepKey="commentValidateStage4"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Stage4"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Stage4"/>
+        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStage4">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStage"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStage"/>
+        </actionGroup>
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('1', PageBuilderButtonItemText_First.value)}}" stepKey="waitForButton1Storefront2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStorefront.buttonItemText('2', PageBuilderButtonItemText_Second.value)}}" stepKey="waitForButton2Storefront2"/>
+        <actionGroup ref="validateButtonGroupInlineAppearance" stepKey="seeAppearanceOnStorefront2">
+            <argument name="buttonGroupPage" value="ButtonGroupOnStorefront"/>
+            <argument name="buttonItemPage" value="ButtonItemOnStorefront"/>
+        </actionGroup>
+    </test>
 </tests>
