@@ -35,13 +35,18 @@
                                 <attributes>
                                     <attribute source="data-role" name="name"/>
                                     <attribute source="data-appearance" name="appearance"/>
-                                    <attribute source="data-products-count" name="products_count"/>
-                                    <attribute source="data-conditions-encoded" name="conditions_encoded"/>
                                 </attributes>
-                                <html name="html" converter="Magento_PageBuilder/js/converter/html/products-directive"/>
+                                <html name="html"/>
                                 <css name="css_classes"/>
                             </element>
                         </elements>
+                        <converters>
+                            <converter component="Magento_PageBuilder/js/content-type/products/mass-converter/widget-directive" name="widget_directive">
+                                <config>
+                                    <item name="html_variable" value="html"/>
+                                </config>
+                            </converter>
+                        </converters>
                     </data_mapping>
                     <preview_template>Magento_PageBuilder/content-type/products/grid/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/products/grid/master</render_template>

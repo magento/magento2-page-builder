@@ -105,8 +105,6 @@ class ProductList implements RendererInterface
             'data-role' => 'products',
             'data-appearance' => 'grid',
             'class' => $itemData['formData']['css_classes'] ?? '',
-            'data-products-count' => $productsCount,
-            'data-conditions-encoded' => $this->escaper->escapeHtml($this->jsonEncoder->serialize($conditions))
         ];
 
         if (isset($itemData['formData'])) {

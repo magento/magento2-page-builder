@@ -134,9 +134,6 @@ class Product implements RendererInterface
             'data-role' => 'product',
             'data-appearance' => 'grid',
             'class' => $eavData['css_classes'] ?? '',
-            'data-products-count' => $productsCount,
-            'data-conditions-encoded' => $this->escaper->escapeHtml($this->jsonEncoder->serialize($conditions)),
-            'data-sku' => $productSku
         ];
 
         if (isset($itemData['formData'])) {
