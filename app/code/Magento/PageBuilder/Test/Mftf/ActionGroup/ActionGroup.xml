@@ -158,6 +158,22 @@
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage" />
     </actionGroup>
+
+    <actionGroup name="moveContentTypeToContainer">
+        <arguments>
+            <argument name="contentBlockType" defaultValue=""/>
+            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="containerTargetType" defaultValue=""/>
+            <argument name="containerTargetIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <wait time="0.5" stepKey="waitForMouseOverAnimation"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockMoveByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForEditButton"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.contentBlockMoveByIndex(contentBlockType.role, contentBlockIndex)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="moveContentTypeIntoContainer"/>
+    </actionGroup>
+
     <actionGroup name="openPageBuilderEditPanel">
         <arguments>
             <argument name="contentBlockType" defaultValue=""/>
