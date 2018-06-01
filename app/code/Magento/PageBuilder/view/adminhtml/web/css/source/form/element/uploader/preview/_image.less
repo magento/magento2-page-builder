@@ -15,6 +15,7 @@
 .pagebuilder-image-uploader-container {
     align-items: center;
     display: flex;
+    visibility: hidden;
 
     &.has-data {
         height: 100%;
@@ -79,6 +80,11 @@
         }
     }
 
+    &.dragging,
+    &._loading .file-uploader-spinner {
+        visibility: visible;
+    }
+
     &.dragging .pagebuilder-image-uploader-container-dropzone-overlay {
         align-items: center;
         border-style: dashed;
@@ -108,7 +114,7 @@
         top: 0;
         width: 100%;
     }
-    
+
     &.dragging .file-uploader {
         visibility: hidden;
     }
@@ -143,4 +149,8 @@
     .pagebuilder-options-wrapper {
         padding: 12px 6px;
     }
+}
+
+.pagebuilder-content-type-active .pagebuilder-image-uploader-container .pagebuilder-options {
+    visibility: visible;
 }
