@@ -43,7 +43,8 @@ class Page implements \Magento\Ui\Model\UrlInput\ConfigInterface
             'options' => $this->options->toOptionArray(),
             'filterPlaceholder' => __('Page Name'),
             'missingValuePlaceholder' => __('Page with ID: %s doesn\'t exist'),
-            'isDisplayMissingValuePlaceholder' => true
+            'isDisplayMissingValuePlaceholder' => true,
+            'isRemoveSelectedIcon' => true,
         ];
     }
 }
