@@ -18,6 +18,7 @@
     1. [Bindings]
     1. [Master format]
     1. [Visual select]
+    1. [Custom Toolbar]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -36,6 +37,7 @@
 [Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Custom Toolbar]: toolbar.md
 [Roadmap and Known Issues]: roadmap.md
 
 This document contains reference information for events dispatched in PageBuilder.

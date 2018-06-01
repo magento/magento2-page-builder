@@ -15,8 +15,8 @@
         </div>
         <ul id="search-results" visible="searching() && searchResults().length" each="searchResults">
             <li class="pagebuilder-draggable-content-type" attr="id: 'block-' + identifier()" data-bind="draggable: Object.assign($parent.getDraggableOptions(), getDraggableOptions())">
-                <a class="pagebuilder-panel-content-type">
-                    <span class="block-icon">
+                <a>
+                    <span>
                         <i attr="class: icon"></i>
                     </span>
                     <span translate="label"></span>
@@ -32,12 +32,12 @@
                     <h4 translate="label"></h4>
                 </div>
                 <div class="pagebuilder-panel-groups-child" css="hidden: hidden">
-                    <div class="pagebuilder-panel-groups-blocks-wrapper">
+                    <div>
                         <ul class="pagebuilder-panel-groups-blocks" each="blocks">
                             <li class="pagebuilder-draggable-content-type"
                                 data-bind="draggable: Object.assign($parents[1].getDraggableOptions(), getDraggableOptions())"
                                 attr="id: 'block-' + identifier()">
-                                <a class="pagebuilder-panel-content-type">
+                                <a>
                                     <span class="block-icon">
                                         <i attr="class: icon"></i>
                                     </span>

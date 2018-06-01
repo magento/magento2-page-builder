@@ -18,6 +18,7 @@
     1. [Bindings]
     1. [Master format]
     1. [Visual select]   
+    1. [Custom Toolbar]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -36,6 +37,7 @@
 [Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Custom Toolbar]: toolbar.md
 [Roadmap and known issues]: roadmap.md
 
 
@@ -96,7 +98,7 @@ Optional: For template knockout bindings, you can use the original data-bind syn
 Preview template `app/code/Vendor/ModuleName/view/adminhtml/web/template/content-type/simple/default/preview.html`.
 
 ``` HTML
-<div class="pagebuilder-content-type pagebuilder-entity pagebuilder-entity-preview" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
+<div class="pagebuilder-content-type" event="{mouseover: onMouseOver, mouseout: onMouseOut}, mouseoverBubble: false">
     <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
     <!-- Display context menu options for content type -->
     <render args="getOptions().template" />

@@ -21,6 +21,7 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
     1. [Bindings]
     1. [Master format]
     1. [Visual select]
+    1. [Custom Toolbar]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -38,4 +39,5 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 [Events]: events.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Custom Toolbar]: toolbar.md
 [Roadmap and Known Issues]: roadmap.md
