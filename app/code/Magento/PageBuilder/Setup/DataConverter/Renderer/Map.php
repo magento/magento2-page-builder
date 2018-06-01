@@ -24,6 +24,11 @@ class Map implements RendererInterface
      */
     private $eavAttributeLoader;
 
+    /**
+     * @var array
+     */
+    private $rootElementAttributes;
+
     public function __construct(
         StyleExtractorInterface $styleExtractor,
         EavAttributeLoaderInterface $eavAttributeLoader
@@ -42,7 +47,7 @@ class Map implements RendererInterface
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
 
-        $rootElementAttributes = [
+        $this->rootElementAttributes = [
             'data-role' => 'map',
             'data-appearance' => 'default',
             'class' => $eavData['css_classes'] ?? '',
@@ -50,14 +55,7 @@ class Map implements RendererInterface
             'data-locations' => '[]',
         ];
 
-        if (isset($eavData['map'])) {
-            $map = explode(',', $eavData['map']);
-            $rootElementAttributes['data-locations'] = '[{&quot;position&quot;:{&quot;lat&quot;:'
-                . $map[0]
-                . ',&quot;lng&quot;:'
-                . $map[1]
-                . '}}]';
-        }
+        $this->renderMapLocations($eavData);
 
         if (isset($itemData['formData'])) {
             $formData = $itemData['formData'];
@@ -72,16 +70,33 @@ class Map implements RendererInterface
                 } else {
                     $style .= ' display: none;';
                 }
-                $rootElementAttributes['style'] = $style;
+                $this->rootElementAttributes['style'] = $style;
             }
         }
 
         $rootElementHtml = '<div';
-        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
+        foreach ($this->rootElementAttributes as $attributeName => $attributeValue) {
             $rootElementHtml .= $attributeValue !== '' ? " $attributeName=\"$attributeValue\"" : '';
         }
         $rootElementHtml .= '></div>';
 
         return $rootElementHtml;
+    }
+
+    /**
+     * Extract and render Map Location data from EAV
+     *
+     * @param array $eavData
+     */
+    private function renderMapLocations($eavData)
+    {
+        if (isset($eavData['map'])) {
+            $map = explode(',', $eavData['map']);
+            $this->rootElementAttributes['data-locations'] = '[{&quot;position&quot;:{&quot;lat&quot;:'
+                . $map[0]
+                . ',&quot;lng&quot;:'
+                . $map[1]
+                . '}}]';
+        }
     }
 }
