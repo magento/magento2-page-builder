@@ -110,10 +110,10 @@
         <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
         <executeJS function="{{buttonItemPage.xCoordinate(secondButtonIndex)}}" stepKey="xCoordinate2"/>
         <executeJS function="{{buttonItemPage.yCoordinate(secondButtonIndex)}}" stepKey="yCoordinate2"/>
-        <assertGreaterThan stepKey="checkXCoordinates">
+        <assertGreaterThanOrEqual stepKey="checkXCoordinates">
             <expectedResult type="variable">xCoordinate1</expectedResult>
             <actualResult type="variable">xCoordinate2</actualResult>
-        </assertGreaterThan>
+        </assertGreaterThanOrEqual>
         <assertGreaterThan stepKey="checkYCoordinates">
             <expectedResult type="variable">yCoordinate1</expectedResult>
             <actualResult type="variable">yCoordinate2</actualResult>
