@@ -775,6 +775,19 @@
             <actualResult type="variable">expectedContentBlockHeightWithPadding</actualResult>
         </assertEquals>
     </actionGroup>
+    <actionGroup name="validateContentBlockHeightOnStageFromInteger">
+        <arguments>
+            <argument name="contentBlock" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="expectedHeight" defaultValue="1" type="string"/>
+        </arguments>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(contentBlock.role,index)}}" stepKey="actualStageContentBlockHeight"/>
+        <executeJS function="return Math.round({{expectedHeight}})" stepKey="expectedContentBlockHeight"/>
+        <assertEquals stepKey="assertHeightOnStageMatchesExpected">
+            <expectedResult type="variable">actualStageContentBlockHeight</expectedResult>
+            <actualResult type="variable">expectedContentBlockHeight</actualResult>
+        </assertEquals>
+    </actionGroup>
     <actionGroup name="validateContentBlockHeightOnStageWithoutPadding">
         <arguments>
             <argument name="contentBlock" defaultValue=""/>
