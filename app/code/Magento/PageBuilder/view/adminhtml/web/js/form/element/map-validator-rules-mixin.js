@@ -4,7 +4,7 @@
  */
 
 define([
-    'jquery',
+    'jquery'
 ], function ($) {
     'use strict';
 
@@ -33,7 +33,7 @@ define([
     }
 
     return function (validator) {
-        var requiredInputRuleHandler = validator.getRule('require-entry').handler;
+        var requiredInputRuleHandler = validator.getRule('required-entry').handler;
 
         validator.addRule(
             'required-entry-location-name',
@@ -44,27 +44,27 @@ define([
         validator.addRule(
             'required-entry-latitude',
             requiredInputRuleHandler,
-            $.mage.__('Enter Latitude')
+            $.mage.__('Enter latitude')
         );
 
         validator.addRule(
             'required-entry-longitude',
             requiredInputRuleHandler,
-            $.mage.__('Enter Longitude')
+            $.mage.__('Enter longitude')
         );
 
         validator.addRule(
             'validate-latitude',
-            function (v) {
-                return validateNumberBetween(v, -85, 85);
+            function (value) {
+                return validateNumberBetween(value, -85, 85);
             },
             $.mage.__('Please enter a number between -85 and 85')
         );
 
         validator.addRule(
             'validate-longitude',
-            function (v) {
-                return validateNumberBetween(v, -180, 180);
+            function (value) {
+                return validateNumberBetween(value, -180, 180);
             },
             $.mage.__('Please enter a number between -180 and 180')
         );
