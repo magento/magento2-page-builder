@@ -1043,7 +1043,7 @@
     </test>
     <test name="AddImageToSliderStage">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
+            <features value="Pagebuilder"/>
             <stories value="MAGETWO-75104: Add image into Slider, Banner from the Stage"/>
             <title value="Add image into Slider from the Stage"/>
             <description value="A user should be able to add image to Slider stage."/>
@@ -1055,8 +1055,6 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
         </before>
         <after>
@@ -1078,11 +1076,11 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="section" value="SlideOnBackend"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
-        <attachFile userInput="{{PageBuilderLocalImagePropertyJpg.value}}" selector="{{SlideOnBackend.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <attachFile userInput="{{PageBuilderLocalImagePropertyJpg.value}}" selector="{{PageBuilderActionsSection.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
         <!--Upload image from Media Gallery Storage -->
         <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
@@ -1095,30 +1093,29 @@
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="attachImageFile1">
-            <argument name="Image" value="PageBuilderImagePropertyJpg"/>
+            <argument name="Image" value="PageBuilderSliderBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource2"/>
-        <comment userInput="Go to Banner slide-out to verify uploaded image" stepKey="commentGoToBannerSlideOut"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource2"/>
         <!--Verify uploaded image is displayed on slide-out-->
         <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
         <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
             <argument name="index" value="1"/>
         </actionGroup>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource3"/>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
+            <argument name="property" value="PageBuilderSliderBackgroundImageProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <openNewTab stepKey="openNewTab"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnSliderStageDependOnEachTypeOfAppearance">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
+            <features value="Pagebuilder"/>
             <stories value="MAGETWO-75104: Add image into Slider, Banner from the Stage"/>
             <title value="Add image into Slider from the Stage"/>
             <description value="A user should be able to add image to Slider stage when switching between appearance type."/>
@@ -1130,8 +1127,6 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
         </before>
         <after>
@@ -1149,14 +1144,14 @@
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Left-->
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty1">
-            <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
+            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <click selector="{{SlideOnBackend.collageOverlay}}" stepKey="clickSliderInStage1"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons1" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1" >
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="section" value="SlideOnBackend"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Center-->
         <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions2">
@@ -1170,14 +1165,14 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons2" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2" >
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="section" value="SlideOnBackend"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Right-->
         <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions3">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty3">
-            <argument name="property" value="PageBuilderBannerCollageRightProperty"/>
+            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!--Verify there are 2 buttons when hovering-->
@@ -1185,7 +1180,7 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons3" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3" >
             <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="section" value="SlideOnBackend"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
     </test>
 </tests>

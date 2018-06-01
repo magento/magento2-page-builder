@@ -982,7 +982,7 @@
     </test>
     <test name="BannerCanAddImageToBanner">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
+            <features value="Pagebuilder"/>
             <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
             <title value="Add an image content block into banner"/>
             <description value="A user should be able to add an image into a banner."/>
@@ -1068,7 +1068,7 @@
     </test>
     <test name="AddImageToBannerStage">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
+            <features value="Pagebuilder"/>
             <stories value="MAGETWO-75104: Add image into Slide, Banner from the Stage"/>
             <title value="Add image into Banner from the Stage"/>
             <description value="A user should be able to add image to Banner stage."/>
@@ -1080,8 +1080,6 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
         </before>
         <after>
@@ -1099,14 +1097,14 @@
         </actionGroup>
         <!--Verify there are 2 buttons when hovering-->
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverBannerContentBlockStage"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" stepKey="onMouseOverBannerContentBlockStage"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
-            <argument name="section" value="BannerOnBackend"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
-        <attachFile userInput="{{PageBuilderLocalImagePropertyJpg.value}}" selector="{{BannerOnBackend.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <attachFile userInput="{{PageBuilderLocalImagePropertyJpg.value}}" selector="{{PageBuilderActionsSection.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
         <!--Upload image from Media Gallery Storage -->
         <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
@@ -1117,30 +1115,30 @@
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="attachImageFile1">
-            <argument name="Image" value="PageBuilderImagePropertyJpg"/>
+            <argument name="Image" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource2"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource2"/>
         <comment userInput="Go to Banner slide-out to verify uploaded image" stepKey="commentGoToBannerSlideOut"/>
         <!--Verify uploaded image is displayed on slide-out-->
         <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource3"/>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
+            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+        </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <openNewTab stepKey="openNewTab"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnBannerStageDependOnEachTypeOfAppearance">
         <annotations>
-            <features value="Pagebuilder: Banner"/>
+            <features value="Pagebuilder:"/>
             <stories value="MAGETWO-75104: Add image into Slide, Banner from the Stage"/>
             <title value="Add image into Banner from the Stage"/>
             <description value="A user should be able to add image to Banner stage when switching between appearance type"/>
@@ -1152,8 +1150,6 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
         </before>
         <after>
@@ -1178,24 +1174,24 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons1" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverBannerContentBlockStage1"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" stepKey="onMouseOverBannerContentBlockStage1"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1" >
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
-            <argument name="section" value="BannerOnBackend"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Center-->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty2">
-            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
+            <argument name="property" value="PageBuilderBannerCollageCenteredProperty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons2" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverBannerContentBlockStage2"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" stepKey="onMouseOverBannerContentBlockStage2"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2" >
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
-            <argument name="section" value="BannerOnBackend"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Right-->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
@@ -1206,10 +1202,10 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons3" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverBannerContentBlockStage3"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderBannerContentBlock.role)}}" stepKey="onMouseOverBannerContentBlockStage3"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3" >
             <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
-            <argument name="section" value="BannerOnBackend"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
     </test>
 </tests>

@@ -9,7 +9,7 @@
               xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="addImageToStage">
         <arguments>
-            <argument name="property" defaultValue=""/>
+            <argument name="property"/>
         </arguments>
         <comment userInput="Attach image A to PageBuilder stage" stepKey="commentAttach"/>
         <attachFile userInput="{{property.value}}" selector="{{ImageOnStage.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
@@ -19,8 +19,8 @@
     </actionGroup>
     <actionGroup name="verifyUploadImageButtons">
         <arguments>
-            <argument name="contentBlockType" defaultValue=""/>
-            <argument name="section" defaultValue=""/>
+            <argument name="contentBlockType"/>
+            <argument name="section"/>
         </arguments>
         <comment userInput="Hover uploaded image to check Upload New Image button and Select From Gallery button" stepKey="commentHover"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" x="10" y="0" stepKey="onMouseOverBannerContentBlockStage"/>
@@ -29,7 +29,7 @@
     </actionGroup>
     <actionGroup name="verifyImageOnSlideout">
         <arguments>
-            <argument name="property" defaultValue=""/>
+            <argument name="property"/>
         </arguments>
         <comment userInput="Verify image A display on preview of slide-out" stepKey="commentVerifyImage"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(property.value)}}" stepKey="seeImageNameOnPreview"/>
