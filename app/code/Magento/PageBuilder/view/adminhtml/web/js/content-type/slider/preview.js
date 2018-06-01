@@ -86,6 +86,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
           _this.setActiveSlide(args.newPosition);
         }
+      }); // When sorting stops ensure we reset the focus slide to null
+
+
+      _uiEvents.on("sortableChildren:sortstop", function (args) {
+        if (args.instance.id === _this.parent.id) {
+          _this.focusedSlide(null);
+        }
       }); // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
 
 

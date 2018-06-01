@@ -34,6 +34,12 @@ ko.bindingHandlers.sortableChildren = {
                     ui,
                 });
             })
+            .on("sortstop", (event: Event, ui: JQueryUI.SortableUIParams) => {
+                events.trigger("sortableChildren:sortstop", {
+                    instance,
+                    ui,
+                });
+            })
             .on("sortupdate", (event: Event, ui: JQueryUI.SortableUIParams) => {
                 const index = ui.item.index();
                 if (originalPosition !== index) {

@@ -37,6 +37,11 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/utils/array"],
           originalPosition: originalPosition,
           ui: ui
         });
+      }).on("sortstop", function (event, ui) {
+        _uiEvents.default.trigger("sortableChildren:sortstop", {
+          instance: instance,
+          ui: ui
+        });
       }).on("sortupdate", function (event, ui) {
         var index = ui.item.index();
 
