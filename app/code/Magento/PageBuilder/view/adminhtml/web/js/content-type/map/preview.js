@@ -106,14 +106,6 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
         location.position.latitude = parseFloat(location.position.latitude);
         location.position.longitude = parseFloat(location.position.longitude);
       });
-
-      if (locations[0]) {
-        options.center = {
-          latitude: locations[0].position.latitude,
-          longitude: locations[0].position.longitude
-        };
-      }
-
       return {
         locations: locations,
         options: options

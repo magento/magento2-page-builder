@@ -134,7 +134,6 @@ define([
             if (typeof this.value() === 'string' && this.value() !== '') {
                 content = JSON.parse(this.value());
             }
-
             latitudeLongitude = new google.maps.LatLng(parseFloat(content.latitude), parseFloat(content.longitude));
 
             if (!this.marker) {
@@ -142,6 +141,7 @@ define([
             }
 
             this.marker.setPosition(latitudeLongitude);
+            debugger;
             this.map.setCenter(latitudeLongitude);
         },
 

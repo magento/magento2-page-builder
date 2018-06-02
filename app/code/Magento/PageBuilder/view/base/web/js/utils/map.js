@@ -22,6 +22,7 @@ define([
         };
 
     return function (element, markers, options) {
+
         var mapOptions = _.extend({
             zoom: 8,
             center: getGoogleLatitudeLongitude({
@@ -132,6 +133,7 @@ define([
              * Zoom to 8 if there is only a single location
              */
             if (this.bounds.length === 1) {
+                this.map.setCenter(this.bounds[0]);
                 this.map.setZoom(8);
             }
         };

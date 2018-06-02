@@ -31,6 +31,31 @@ define([
         },
 
         /**
+         * Init header elements
+         */
+        initHeader: function () {
+            var labels = [],
+                data;
+
+            if (!this.labels().length) {
+                _.each(this.childTemplate.children, function (cell) {
+                    data = this.createHeaderTemplate(cell.config);
+                    cell.config.labelVisible = false;
+                    _.extend(data, {
+                        label: cell.config.label,
+                        name: cell.name,
+                        required: !!cell.config.validation,
+                        columnsHeaderClasses: cell.config.columnsHeaderClasses,
+                        sortOrder: cell.config.sortOrder,
+                        sortBy: cell.config.sortBy
+                    });
+                    labels.push(data);
+                }, this);
+                this.labels(_.sortBy(labels, 'sortOrder'));
+            }
+        },
+
+        /**
          * Open the location modal and insert form with the data from selected record
          *
          * @param {Object} record
@@ -83,7 +108,7 @@ define([
                 allLabels,
                 placeholder;
 
-            if (property().name === 'actions') {
+            if (!property().sortBy) {
                 return;
             }
 
@@ -96,7 +121,8 @@ define([
             } else {
                 allLabels = this.labels().slice();
                 allLabels.forEach(function (label) {
-                    if (label.name === property().name) {
+
+                    if (label.sortBy === property().sortBy) {
                         label.columnsHeaderClasses = '_ascend';
                     } else {
                         label.columnsHeaderClasses = '';
@@ -110,7 +136,7 @@ define([
                 placeholder = this.emptyContentPlaceholder;
 
                 this.emptyContentPlaceholder = false;
-                this.sortRecord(property().name, ascend);
+                this.sortRecord(property().sortBy, ascend);
                 this.reload();
                 this.emptyContentPlaceholder = placeholder;
             }

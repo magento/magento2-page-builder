@@ -95,13 +95,6 @@ export default class Preview extends BasePreview {
             location.position.longitude = parseFloat(location.position.longitude);
         });
 
-        if (locations[0]) {
-            options.center = {
-                latitude: locations[0].position.latitude,
-                longitude: locations[0].position.longitude,
-            };
-        }
-
         return {
             locations,
             options,
