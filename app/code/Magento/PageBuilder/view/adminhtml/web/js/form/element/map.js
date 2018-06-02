@@ -141,7 +141,6 @@ define([
             }
 
             this.marker.setPosition(latitudeLongitude);
-            debugger;
             this.map.setCenter(latitudeLongitude);
         },
 

@@ -11,6 +11,24 @@ define([
 ], function (dynamicRows, Events, _, $) {
     'use strict';
 
+    /**
+     * Returns sortable values
+     *
+     * @param {String | Number | Object | Array} value
+     * @return {String | Number}
+     */
+    var sortValueValidator = function (value) {
+        if (typeof value === 'string') {
+            return value.toLowerCase();
+        }
+
+        if (typeof value === 'number') {
+            return value;
+        }
+
+        return '';
+    };
+
     return dynamicRows.extend({
         defaults: {
             modules: {
@@ -153,8 +171,8 @@ define([
                 var record1 = ascend ? left : right,
                     record2 = ascend ? right : left;
 
-                record1 = record1[sortBy].toLowerCase();
-                record2 = record2[sortBy].toLowerCase();
+                record1 = sortValueValidator(record1[sortBy]);
+                record2 = sortValueValidator(record2[sortBy]);
 
                 return record1 === record2 ? 0 : record1 < record2 ? -1 : 1;
             });
