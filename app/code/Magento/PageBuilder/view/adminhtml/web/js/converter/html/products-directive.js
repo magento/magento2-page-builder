@@ -38,7 +38,7 @@ define(["underscore"], function (_underscore) {
 
     _proto.toDom = function toDom(name, data) {
       var attributes = {
-        type: "Magento\\CatalogWidget\\ContentType\\Product\\ProductsList",
+        type: "Magento\\CatalogWidget\\Block\\Product\\ProductsList",
         template: "Magento_CatalogWidget::product/widget/content/grid.phtml",
         anchor_text: "",
         id_path: "",
