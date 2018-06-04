@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute;
 
 class ContentType extends \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set
