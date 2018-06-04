@@ -1069,11 +1069,11 @@
     <test name="AddImageToBannerStage">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="MAGETWO-75104: Add image into Slide, Banner from the Stage"/>
+            <stories value="Banner"/>
             <title value="Add image into Banner from the Stage"/>
             <description value="A user should be able to add image to Banner stage."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-92118"/>
+            <testCaseId value="MAGETWO-75104"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>
@@ -1134,16 +1134,16 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnBannerStageDependOnEachTypeOfAppearance">
         <annotations>
-            <features value="Pagebuilder:"/>
-            <stories value="MAGETWO-75104: Add image into Slide, Banner from the Stage"/>
+            <features value="Pagebuilder"/>
+            <stories value="Banner"/>
             <title value="Add image into Banner from the Stage"/>
             <description value="A user should be able to add image to Banner stage when switching between appearance type"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-92118"/>
+            <testCaseId value="MAGETWO-75104"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
             <group value="pagebuilder-bannerCommon"/>

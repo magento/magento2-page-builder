@@ -1044,11 +1044,11 @@
     <test name="AddImageToSliderStage">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="MAGETWO-75104: Add image into Slider, Banner from the Stage"/>
+            <stories value="Slider"/>
             <title value="Add image into Slider from the Stage"/>
             <description value="A user should be able to add image to Slider stage."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-92116"/>
+            <testCaseId value="MAGETWO-75104"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -1111,16 +1111,16 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnSliderStageDependOnEachTypeOfAppearance">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="MAGETWO-75104: Add image into Slider, Banner from the Stage"/>
+            <stories value="Slider"/>
             <title value="Add image into Slider from the Stage"/>
             <description value="A user should be able to add image to Slider stage when switching between appearance type."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-92116"/>
+            <testCaseId value="MAGETWO-75104"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
