@@ -101,7 +101,7 @@ define([
                 allLabels,
                 placeholder;
 
-            if (property().name === "actions") {
+            if (property().name === 'actions') {
                 return;
             }
 

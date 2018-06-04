@@ -72,7 +72,7 @@ define([
              */
             if (newMarkers && newMarkers.length) {
                 newMarkers.forEach(function (newMarker) {
-                    var name = newMarker.name || '',
+                    var location = newMarker['location_name'] || '',
                     comment = newMarker.comment ?
                         '<p>' + newMarker.comment.replace(/(?:\r\n|\r|\n)/g, '<br/>') + '</p>'
                         : '',
@@ -86,7 +86,7 @@ define([
                     lineBreak = city !== '' || zipCode !== '' ? '<br/>' : '',
                     contentString =
                         '<div>' +
-                        '<h3><b>' + name + '</b></h3>' +
+                        '<h3><b>' + location + '</b></h3>' +
                         comment +
                         phone +
                         '<p><span>' + address +
@@ -100,10 +100,10 @@ define([
                     newCreatedMarker = new google.maps.Marker({
                         map: this.map,
                         position: getGoogleLatitudeLongitude(newMarker.position),
-                        title: name
+                        title: location
                     });
 
-                    if (name) {
+                    if (location) {
                         newCreatedMarker.addListener('click', function () {
                             if (activeInfoWindow) {
                                 activeInfoWindow.close();
