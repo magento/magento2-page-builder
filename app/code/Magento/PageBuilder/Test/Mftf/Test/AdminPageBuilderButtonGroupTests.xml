@@ -57,12 +57,12 @@
         </actionGroup>
         <dontSeeElementInDOM selector="{{ButtonGroupOnStorefront.base('1')}}" stepKey="dontSeeButtonsStorefront"/>
     </test>
-    <test name="ButtonGroupNoRequiredAttributes">
+    <test name="ButtonGroupRequiredAttributes">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Button Group"/>
-            <title value="Button Group - Validate No Required Attributes"/>
-            <description value="A user should be able to save a Button Group edit form without inputting data into any attribute field."/>
+            <title value="Button Group - Validate Required Attributes"/>
+            <description value="A user should be able to save a Button Group edit form without inputting data into any required field."/>
             <severity value="AVERAGE"/>
             <useCaseId value="MAGETWO-90473"/>
             <testCaseId value="MAGETWO-92014"/>
@@ -84,9 +84,10 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentBlockType" value="PageBuilderButtonsContentBlock"/>
         </actionGroup>
-        <!-- Validate No Required Fields -->
-        <comment userInput="Validate No Required Fields" stepKey="commentValidateNoRequired"/>
-        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.editFormAllRequiredFields}}" stepKey="dontSeeRequiredClassInEditForm"/>
+        <!-- Validate Required Fields -->
+        <comment userInput="Validate Required Fields" stepKey="commentValidateRequired"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormAllRequiredFields}}" stepKey="waitForRequiredClassInEditForm"/>
+        <seeNumberOfElements selector="{{PageBuilderActionsSection.editFormAllRequiredFields}}" userInput="1" stepKey="seeNumberOfRequiredElements"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
