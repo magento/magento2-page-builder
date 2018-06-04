@@ -116,7 +116,8 @@ export default class Preview extends PreviewCollection {
                 this.setActiveSlide(args.newPosition);
             }
         });
-        // When a slide content type is removed we need to force update the content of the slider due to KO rendering issues
+        // When a slide content type is removed
+        // we need to force update the content of the slider due to KO rendering issues
         events.on("slide:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.contentType.parent.id === this.parent.id) {
                 this.forceContainerHeight();

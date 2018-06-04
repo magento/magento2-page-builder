@@ -86,7 +86,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
           _this.setActiveSlide(args.newPosition);
         }
-      }); // When a slide content type is removed we need to force update the content of the slider due to KO rendering issues
+      }); // When a slide content type is removed
+      // we need to force update the content of the slider due to KO rendering issues
 
 
       _uiEvents.on("slide:contentType:removed", function (args) {

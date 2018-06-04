@@ -221,8 +221,18 @@ export default class Stage {
                 return createContentType(params.contentType.config, params.parent, params.stageId)
                     .then((contentType: ContentTypeInterface) => {
                         params.parent.addChild(contentType, index);
-                        events.trigger("contentType:dropped:create", {id: contentType.id, contentType});
-                        events.trigger(params.contentType.config.name + ":contentType:dropped:create", {id: contentType.id, contentType});
+                        events.trigger("contentType:dropped:create",
+                            {
+                                id: contentType.id,
+                                contentType,
+                            },
+                        );
+                        events.trigger(params.contentType.config.name + ":contentType:dropped:create",
+                            {
+                                id: contentType.id,
+                                contentType,
+                            },
+                        );
                         return contentType;
                     });
             } else {

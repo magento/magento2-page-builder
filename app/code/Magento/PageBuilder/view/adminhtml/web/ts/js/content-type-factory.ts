@@ -9,8 +9,8 @@ import _ from "underscore";
 import ConfigFieldInterface from "./config-field.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
-import masterFactory from "./content-type/master-factory";
 import ContentTypeMountEventParamsInterface from "./content-type/content-type-mount-event-params.d";
+import masterFactory from "./content-type/master-factory";
 import previewFactory from "./content-type/preview-factory";
 import FieldDefaultsInterface from "./field-defaults.d";
 
