@@ -10,6 +10,7 @@
           xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="ButtonGroupOnStage">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]" parameterized="true"/>
+        <element name="appearance" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//div[@data-appearance='{{arg2}}']" parameterized="true"/>
         <element name="addNewButtonItemOption" type="button" selector="(//div[contains(@class,'pagebuilder-buttons')])[{{arg1}}]//a[contains(@title,'Add Button')]" parameterized="true"/>
         <element name="oldAddNewButtonItem" type="button" selector="//button[contains(text(),'Add Button')]"/>
         <!-- Advanced Configuration -->
@@ -28,6 +29,7 @@
     </section>
     <section name="ButtonGroupOnStorefront">
         <element name="base" type="button" selector="(//div[@data-role='buttons'])[{{arg1}}]" parameterized="true"/>
+        <element name="appearance" type="button" selector="(//div[@data-role='buttons'])[{{arg1}}][@data-appearance='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='buttons'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
         <element name="noAlignment" type="text" selector="(//div[@data-role='buttons'])[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
@@ -46,6 +48,7 @@
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]" parameterized="true"/>
         <element name="emptyButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@class,'placeholder-text') and not(text())]" parameterized="true"/>
         <element name="editableButtonItemElement" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(@contenteditable,'true')]" parameterized="true"/>
+        <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('.pagebuilder-button-item')[{{arg1}}-1]" parameterized="true"/>
         <!-- Content Configuration -->
         <element name="buttonItemText" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[contains(@class,'pagebuilder-button')]//span[contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="buttonItemType" type="button" selector="(//div[contains(@class,'pagebuilder-button-item')])[{{arg1}}]//a[@class='{{arg2}}']" parameterized="true"/>
@@ -66,6 +69,7 @@
         <element name="allButtons" type="button" selector="//div[@data-role='button-item']"/>
         <element name="base" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]" parameterized="true"/>
         <element name="emptyButtonItemElement" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a//span[not(text())]" parameterized="true"/>
+        <element name="jsButtonSelector" type="text" selector="document.querySelectorAll('div[data-role=\'button-item\']')[{{arg1}}-1]" parameterized="true"/>
         <!-- Content Configuration -->
         <element name="buttonItemText" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a//span[contains(.,'{{arg2}}')]" parameterized="true"/>
         <element name="buttonItemType" type="button" selector="(//div[@data-role='button-item'])[{{arg1}}]//a[@class='{{arg2}}']" parameterized="true"/>
