@@ -899,7 +899,7 @@ Inline styles
             "latitude": 30.243475338635417,
             "longitude": -97.73760683593753
         },
-        "name": "Location Name 1",
+        "location_name": "Location Name 1",
         "phone": "512-111-1111",
         "address": "11501 Domain Dr #150",
         "city": "Austin",
@@ -914,7 +914,7 @@ Inline styles
             "latitude": 29.404737046411704,
             "longitude": -98.48467714843753
         },
-        "name": "Location Name 2",
+        "location_name": "Location Name 2",
         "phone": "512-222-2222",
         "address": "849 E Commerce St",
         "city": "San Antonio",
