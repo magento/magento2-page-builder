@@ -44,8 +44,9 @@ class Buttons implements RendererInterface
 
         $rootElementAttributes = [
             'data-role' => 'buttons',
-            'data-appearance' => 'default',
-            'class' => $eavData['css_classes'] ?? ''
+            'data-appearance' => 'inline',
+            'class' => $eavData['css_classes'] ?? '',
+            'style' => 'display: inline-block;'
         ];
 
         if (isset($itemData['formData'])) {
@@ -53,7 +54,7 @@ class Buttons implements RendererInterface
             if (strpos($style, 'padding') === false) {
                 $style .= ($style ? ' ' : '') . 'padding: 10px 10px 0px;';
             }
-            $rootElementAttributes['style'] = $style;
+            $rootElementAttributes['style'] .= ' ' . $style;
         }
 
         $rootElementHtml = '<div';
