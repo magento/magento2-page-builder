@@ -37,8 +37,8 @@ define([
             mapOptions = {
                 zoom: 8,
                 center: new google.maps.LatLng(
-                    !isNaN(startValue.lat) && startValue.lat !== '' ? startValue.lat : 30.2672,
-                    !isNaN(startValue.lng) && startValue.lng !== '' ? startValue.lng : -97.7431
+                    !isNaN(startValue.latitude) && startValue.latitude !== '' ? startValue.latitude : 30.2672,
+                    !isNaN(startValue.longitude) && startValue.longitude !== '' ? startValue.longitude : -97.7431
                 ),
                 scrollwheel: false,
                 disableDoubleClickZoom: false,
@@ -57,10 +57,10 @@ define([
 
             // Add marker if there is a start value
             if (this.value()) {
-                this.addMarker(startValue.lat, startValue.lng);
+                this.addMarker(startValue.latitude, startValue.longitude);
             }
 
-            // After click, add and update both Lat and Lng.
+            // After click, add and update both Latitude and Longitude.
             google.maps.event.addListener(this.map, 'click', this.onClick.bind(this));
             google.maps.event.addListener(this.map, 'dblclick', this.onDblClick.bind(this));
             google.maps.event.trigger(this.marker, 'click');
@@ -69,14 +69,14 @@ define([
         /**
          * Adds a map marker
          *
-         * @param {String} lat
-         * @param {String} lng
+         * @param {String} latitude
+         * @param {String} longitude
          */
-        addMarker: function (lat, lng) {
+        addMarker: function (latitude, longitude) {
             this.marker = new google.maps.Marker({
                 draggable: true,
                 map: this.map,
-                position: new google.maps.LatLng(lat, lng)
+                position: new google.maps.LatLng(latitude, longitude)
             });
             google.maps.event.addListener(this.marker, 'dragend', this.onDragEnd.bind(this));
         },
@@ -115,65 +115,73 @@ define([
         onUpdate: function () {
             this._super();
             var content = this.value(),
-                latLng;
+                latitudeLongitude;
 
-            if (this.marker && content.lat === '' && content.lng === '') {
+            if (this.marker && content.latitude === '' && content.longitude === '') {
                 this.marker.setMap(null);
                 delete this.marker;
+
                 return;
             }
 
-            if (!this.validateCoordinate(content)
-                || !this.map
-                || this.value() === ''
-                || this.value() === this.exportValue()) {
+            if (!this.validateCoordinate(content) ||
+                !this.map ||
+                this.value() === '' ||
+                this.value() === this.exportValue()) {
                 return;
             }
 
             if (typeof this.value() === 'string' && this.value() !== '') {
                 content = JSON.parse(this.value());
             }
-
-            latLng = new google.maps.LatLng(parseFloat(content.lat), parseFloat(content.lng));
+            latitudeLongitude = new google.maps.LatLng(parseFloat(content.latitude), parseFloat(content.longitude));
 
             if (!this.marker) {
-                this.addMarker(latLng.lat(),latLng.lng());
+                this.addMarker(latitudeLongitude.lat(), latitudeLongitude.lng());
             }
 
-            this.marker.setPosition(latLng);
-            this.map.setCenter(latLng);
+            this.marker.setPosition(latitudeLongitude);
+            this.map.setCenter(latitudeLongitude);
         },
 
-        validateCoordinate: function(coordinates) {
+        /**
+         * Coordinate validation
+         *
+         * @param {Object} coordinates
+         * @return {Boolean}
+         */
+        validateCoordinate: function (coordinates) {
             var valid = true;
-            if( coordinates.lng === ''
-                || coordinates.lat === ''
-                || isNaN(coordinates.lng)
-                || isNaN(coordinates.lat)
-                || parseFloat(coordinates.lng) < -180
-                || parseFloat(coordinates.lng) > 180
-                || parseFloat(coordinates.lat) < -90
-                || parseFloat(coordinates.lat) > 90
+
+            if (coordinates.longitude === '' ||
+                coordinates.latitude === '' ||
+                isNaN(coordinates.longitude) ||
+                isNaN(coordinates.latitude) ||
+                parseFloat(coordinates.longitude) < -180 ||
+                parseFloat(coordinates.longitude) > 180 ||
+                parseFloat(coordinates.latitude) < -90 ||
+                parseFloat(coordinates.latitude) > 90
             ) {
                 valid = false;
             }
+
             return valid;
         },
 
         /**
-         * Returns current lat, lng, and zoom level as a single string
+         * Returns current latitude and longitude as an object
          *
-         * @param {Object} latLng
+         * @param {Object} coordinate
          * @return {Object}
          */
-        exportValue: function (latLng) {
+        exportValue: function (coordinate) {
             var position = this.marker ?
                 this.marker.getPosition() : new google.maps.LatLng(this.map.center.lat(), this.map.center.lng()),
-                curLatLng = latLng ? latLng : position;
+                currentCoordinate = coordinate ? coordinate : position;
 
             return {
-                lat: curLatLng.lat(),
-                lng: curLatLng.lng(),
+                latitude: currentCoordinate.lat(),
+                longitude: currentCoordinate.lng()
             };
         }
     });

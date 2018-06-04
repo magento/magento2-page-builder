@@ -340,4 +340,560 @@
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.valid}}" stepKey="seeKeyValid"/>
     </test>
+    <test name="MapInvalidAPIKeyWarningMessage">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map - Invalid API Key Warning Message"/>
+            <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MAGETWO-91906"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key a" stepKey="setGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Message On Edit Map Form -->
+        <comment userInput="Validate Message On Edit Map Form" stepKey="commentValidateMessageOnEditMapForm"/>
+        <waitForElementVisible selector="{{AddLocationForm.warningMessage}}" stepKey="waitForWarningMessage"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <!-- Validate No Message On Stage -->
+        <comment userInput="Validate No Message On Stage" stepKey="commentValidateMessageOnStage"/>
+        <actionGroup ref="dontSeeWarningMessage" stepKey="dontSeeWarningMessageOnStage">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate No Message On Stage After Save -->
+        <comment userInput="Validate No Message On Stage After Save" stepKey="commentValidateMessageOnStageAfterSave"/>
+        <actionGroup ref="dontSeeWarningMessage" stepKey="dontSeeWarningMessageOnStageAfterSave">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Message On Edit Map Form After Save -->
+        <comment userInput="Validate Message On Edit Map Form After Save" stepKey="commentValidateMessageOnEditMapForm2"/>
+        <waitForElementVisible selector="{{AddLocationForm.warningMessage}}" stepKey="waitForWarningMessage2"/>
+        <!-- Validate No Message On Storefront After Save -->
+        <comment userInput="Validate No Message On Storefront After Save" stepKey="commentValidateMessageOnStorefrontAfterSave"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dontSeeWarningMessage" stepKey="dontSeeWarningMessageOnStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapInvalidAPIKeyWarningMessageOnExistingPage">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map - Invalid API Key Warning Message On Existing Page"/>
+            <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront on existing page."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MAGETWO-91904"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Save Page With Map -->
+        <comment userInput="Save Page With Map" stepKey="commentSavePage"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Load Storefront -->
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="validateMap">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <!-- Apply Invalid Google Maps API Key -->
+        <comment userInput="Apply Invalid Google Maps API Key" stepKey="commentInvalidKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key a" stepKey="setGoogleMapsAPIKey"/>
+        <reloadPage stepKey="reloadPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate No Message On Stage -->
+        <comment userInput="Validate No Message On Stage" stepKey="commentValidateMessageOnStage"/>
+        <actionGroup ref="dontSeeWarningMessage" stepKey="dontSeeWarningMessageOnStage">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Message On Configuration -->
+        <comment userInput="Validate Message On Configuration" stepKey="commentValidateMessageOnConfiguration"/>
+        <waitForElementVisible selector="{{AddLocationForm.warningMessage}}" stepKey="waitForWarningMessage"/>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <!-- Validate No Message On Storefront -->
+        <comment userInput="Validate No Message On Storefront" stepKey="commentValidateMessageOnStorefront"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="dontSeeWarningMessage" stepKey="dontSeeWarningMessageOnStoreFront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapInvalidAPIKeyWarningMessageLink">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map - Invalid API Key Warning Message Link"/>
+            <description value="A user should see a warning message on the configuration panel with a link that takes you to the configuration page."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MAGETWO-91903"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key a" stepKey="setGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Warning Message Link -->
+        <comment userInput="Validate Warning Message Link" stepKey="commentValidateWarningMessageLink"/>
+        <waitForElementVisible selector="{{AddLocationForm.warningMessageLink}}" stepKey="waitForWarningMessageLink"/>
+        <click selector="{{AddLocationForm.warningMessageLink}}" stepKey="clickLink"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <seeInCurrentUrl url="{{AdminContentManagementPage.url}}" stepKey="validateURL"/>
+        <waitForElementVisible selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="waitForAdvancedContentTools"/>
+    </test>
+    <test name="MapDoesNotRenderWithInvalidAPIKey">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map Does Not Render With Invalid API Key"/>
+            <description value="A user should not see a map rendered on the configuration panel, Stage and Storefront."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MAGETWO-91913"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key a" stepKey="setGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
+        <!-- Validate Map Does Not Render On Stage -->
+        <comment userInput="Validate Map Does Not Render On Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateMapErrorMessage" stepKey="validateMapErrorMessageOnStage">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Map Does Not Render On Stage After Save -->
+        <comment userInput="Validate Map Does Not Render On Stage After Save" stepKey="commentValidateStage2"/>
+        <actionGroup ref="validateMapErrorMessage" stepKey="validateMapErrorMessageOnStageAfterSave">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <!-- Validate Map Does Not Render On Storefront -->
+        <comment userInput="Validate Map Does Not Render On Storefront" stepKey="commentValidateStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
+        <dontSeeElementInDOM selector="{{MapOnStorefront.errorContainer('1')}}" stepKey="seeMapErrorContainer"/>
+    </test>
+    <test name="MapDoesNotRenderWithInvalidAPIKeyOnExistingPage">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Map Does Not Render With Invalid API Key On Existing Page"/>
+            <description value="A user should not see a map rendered on the configuration panel, Stage and Storefront on existing page."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88225"/>
+            <testCaseId value="MAGETWO-91914"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Save Page With Map -->
+        <comment userInput="Save Page With Map" stepKey="commentSavePage"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Load Storefront -->
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="validateMapStage">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <!-- Apply Invalid Google Maps API Key -->
+        <comment userInput="Apply Invalid Google Maps API Key" stepKey="commentInvalidKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key a" stepKey="setGoogleMapsAPIKey"/>
+        <reloadPage stepKey="reloadPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <!-- Validate Map Does Not Render On Stage -->
+        <comment userInput="Validate Map Does Not Render On Stage" stepKey="commentValidateStage"/>
+        <actionGroup ref="validateMapErrorMessage" stepKey="validateMapErrorMessageOnStage">
+            <argument name="page" value="MapOnStage"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridRow(PageBuilderMapLocationName_TestLocation.fieldName, PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForGridRow"/>
+        <click selector="{{PageBuilderDataGrid.gridRow(PageBuilderMapLocationName_TestLocation.fieldName, PageBuilderMapLocationName_TestLocation.value)}}" stepKey="clickGridRow"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
+        <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
+        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
+        <!-- Validate Map Does Not Render On Location Form -->
+        <comment userInput="Validate Map Does Not Render On Location Form" stepKey="commentValidateLocationForm"/>
+        <actionGroup ref="dontSeeRenderedMapOnLocationForm" stepKey="dontSeeRenderedMapOnLocationForm"/>
+        <!-- Validate Map Still Renders On Storefront -->
+        <comment userInput="Validate Map Still Renders On Storefront" stepKey="commentValidateStorefront"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="verifyMapHasPin" stepKey="validateMapStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+    </test>
+    <test name="MapCannotAddNewLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Cannot Add New Location With Invalid API Key"/>
+            <description value="A user should not be able to add a new location with an invalid API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MAGETWO-92236"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key a" stepKey="setGoogleMapsAPIKey"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Validate Add Location Button Disabled -->
+        <comment userInput="Validate Add Location Button Disabled After Save" stepKey="commentValidateLocationButtonDisabled"/>
+        <waitForElementVisible selector="{{EditMapForm.addLocationButtonDisabled}}" stepKey="waitForAddLocationButton"/>
+    </test>
+    <test name="MapCanEditLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Can Edit Location With Invalid API Key"/>
+            <description value="A user should be able to edit a location with an invalid API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MAGETWO-92237"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Save Page With Map -->
+        <comment userInput="Save Page With Map" stepKey="commentSavePage1"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm1"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Load Storefront -->
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="validateMapStage">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <!-- Apply Invalid Google Maps API Key -->
+        <comment userInput="Apply Invalid Google Maps API Key" stepKey="commentInvalidKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key a" stepKey="setGoogleMapsAPIKey"/>
+        <reloadPage stepKey="reloadPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Verify Can Still Edit Location -->
+        <comment userInput="Verify Can Still Edit Location" stepKey="commentEdit"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridBase}}" stepKey="waitForGrid"/>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.gridRow(PageBuilderMapLocationName_TestLocation.fieldName, PageBuilderMapLocationName_TestLocation.value)}}" stepKey="waitForGridRow"/>
+        <click selector="{{PageBuilderDataGrid.gridRow(PageBuilderMapLocationName_TestLocation.fieldName, PageBuilderMapLocationName_TestLocation.value)}}" stepKey="clickGridRow"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{AddLocationForm.form}}" stepKey="waitForForm"/>
+        <see userInput="Add Location" selector="{{AddLocationForm.formTitle}}" stepKey="seeFormTitle"/>
+        <waitForElementVisible selector="{{AddLocationForm.base}}" stepKey="waitForLocationMap"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName2">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm2"/>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Set Valid API Key -->
+        <comment userInput="Set Valid API Key" stepKey="commentValidKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKeyValid"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStage"/>
+        <waitForElementVisible selector="{{MapOnStage.locationName('1', PageBuilderMapLocationName_TestLocationEdit.value)}}" stepKey="waitForLocationNameStage"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="validateLocationGridData" stepKey="validateLocationGridData2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="clickLocationGridRow" stepKey="clickLocationGridRow2">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateEditPanelField">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocationEdit"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage3"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <actionGroup ref="openMapPinTooltipWindow" stepKey="openMapPinTooltipWindowStorefront">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MapOnStorefront.locationName('1', PageBuilderMapLocationName_TestLocationEdit.value)}}" stepKey="waitForLocationNameStorefront"/>
+    </test>
+    <test name="MapCanDeleteLocationWithInvalidAPIKey">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Map"/>
+            <title value="Can Delete Location With Invalid API Key"/>
+            <description value="A user should be able to delete a location with an invalid API key."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88132"/>
+            <testCaseId value="MAGETWO-92238"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsAPIKey"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKey"/>
+            <closeTab stepKey="closeTab"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Save Page With Map -->
+        <comment userInput="Save Page With Map" stepKey="commentSavePage1"/>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragContentBlockIntoStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+        <!-- Load Storefront -->
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="verifyMapHasPin" stepKey="validateMapStage">
+            <argument name="page" value="MapOnStorefront"/>
+        </actionGroup>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <!-- Apply Invalid Google Maps API Key -->
+        <comment userInput="Apply Invalid Google Maps API Key" stepKey="commentInvalidKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key a" stepKey="setGoogleMapsAPIKey"/>
+        <reloadPage stepKey="reloadPage1"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <!-- Verify Can Still Delete Location -->
+        <comment userInput="Verify Can Still Delete Location" stepKey="commentDelete"/>
+        <actionGroup ref="deleteLocationFromGrid" stepKey="deleteLocationFromGrid">
+            <argument name="locationName" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="waitForEmptyGrid1"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Set Valid API Key -->
+        <comment userInput="Set Valid API Key" stepKey="commentValidKey"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_api_key AIzaSyCw10cOO31cpxb2bcwnHPHKtxov8oUbxJw" stepKey="setGoogleMapsAPIKeyValid"/>
+        <reloadPage stepKey="reloadPage2"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Validate Stage -->
+        <comment userInput="Validate Stage" stepKey="commentValidateStage1"/>
+        <actionGroup ref="dontSeeMapPin" stepKey="dontSeeMapPin"/>
+        <!-- Validate Edit Panel -->
+        <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderDataGrid.emptyGridMessage(PageBuilderMapGrid.emptyMessage)}}" stepKey="waitForEmptyGrid2"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <reloadPage stepKey="reloadPage3"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
+    </test>
 </tests>

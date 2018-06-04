@@ -870,22 +870,15 @@ HTML content.
 ## Map
 
 ```
-<iframe data-role="map" data-appearance="default" style="..."></iframe>
+<div data-role="map" data-appearance="default" data-show-controls="true" data-locations=<locations-json-format> style="display: inline-block; border-style: none; border-width: 1px; border-radius: 0px; height: 300px; margin: 0px; padding: 0px;"></div>
 ```
 
 Attributes
 1. data-role [map]
 2. data-appearance [default]
-3. data-position
-4. data-zoom
-5. data-location-name
-6. data-address
-7. data-city
-8. data-zipcode
-9. data-country
-10. data-comment
-11. data-show-controls
-12. class
+3. data-show-controls
+4. data-locations
+5. class
 
 Inline styles
 1. text-align
@@ -897,6 +890,43 @@ Inline styles
 7. padding
 8. width
 9. height
+
+### Example of locations json format
+**Note:**
+*The locations attribute needs to be turned into a string using `JSON.stringify()` before storing it to the database.
+``` json
+[
+    {
+        "position": {
+            "latitude": 30.243475338635417,
+            "longitude": -97.73760683593753
+        },
+        "location_name": "Location Name 1",
+        "phone": "512-111-1111",
+        "address": "11501 Domain Dr #150",
+        "city": "Austin",
+        "state": "TX",
+        "zipcode": "78758",
+        "country": "United States",
+        "comment": "Comment 1",
+        "record_id": 0
+    },
+    {
+        "position": {
+            "latitude": 29.404737046411704,
+            "longitude": -98.48467714843753
+        },
+        "location_name": "Location Name 2",
+        "phone": "512-222-2222",
+        "address": "849 E Commerce St",
+        "city": "San Antonio",
+        "zipcode": "78205",
+        "country": "United States",
+        "comment": "Comment 2",
+        "record_id": 1
+    }
+]
+```
 
 ## Block
 

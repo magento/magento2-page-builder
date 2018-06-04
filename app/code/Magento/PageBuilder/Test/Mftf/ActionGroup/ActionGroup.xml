@@ -637,11 +637,12 @@
     </actionGroup>
     <actionGroup name="saveEditPanelAndValidateFieldErrorGeneralSection">
         <arguments>
+            <argument name="form" defaultValue="PageBuilderActionsSection"/>
             <argument name="property"/>
         </arguments>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementVisible time="5" selector="{{form.editFormSave}}" stepKey="waitForSaveButton"/>
+        <click selector="{{form.editFormSave}}" stepKey="clickSaveButton"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.panelFieldValidationError(property.section, property.fieldName)}}" stepKey="waitForErrorField"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.panelFieldValidationErrorMessage(property.section, property.fieldName, property.errorMessage)}}" stepKey="waitForErrorMessage"/>
     </actionGroup>
