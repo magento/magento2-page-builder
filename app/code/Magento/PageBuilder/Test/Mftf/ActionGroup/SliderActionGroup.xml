@@ -50,7 +50,7 @@
         <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
         <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
-        <wait time="0.5" stepKey="waitForMouseOverAnimation" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="5" selector="{{SliderInAdmin.sliderOptions}}" stepKey="seeContentBlockOptionsMenu"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
         <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickAddNewSlideChild"/>
