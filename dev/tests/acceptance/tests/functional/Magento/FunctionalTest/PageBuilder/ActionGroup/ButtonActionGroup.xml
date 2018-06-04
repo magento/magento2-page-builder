@@ -73,18 +73,18 @@
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
-            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="buttonGroupindex" defaultValue="1" type="string"/>
             <argument name="firstButtonIndex" defaultValue="1" type="string"/>
             <argument name="secondButtonIndex" defaultValue="2" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{buttonGroupPage.base(index)}}" stepKey="waitForButtonGroup"/>
-        <seeElementInDOM selector="{{buttonGroupPage.appearance(index, PageBuilderAppearancePropertyInline.value)}}" stepKey="seeButtonAppearance"/>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupindex)}}" stepKey="waitForButtonGroup"/>
+        <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupindex, PageBuilderButtonGroupAppearance_Inline.value)}}" stepKey="seeButtonAppearance"/>
         <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
-        <executeJS function="{{buttonItemPage.xCoordinate(firstButtonIndex)}}" stepKey="xCoordinate1"/>
-        <executeJS function="{{buttonItemPage.yCoordinate(firstButtonIndex)}}" stepKey="yCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate1"/>
         <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
-        <executeJS function="{{buttonItemPage.xCoordinate(secondButtonIndex)}}" stepKey="xCoordinate2"/>
-        <executeJS function="{{buttonItemPage.yCoordinate(secondButtonIndex)}}" stepKey="yCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate2"/>
         <assertGreaterThan stepKey="checkXCoordinates">
             <expectedResult type="variable">xCoordinate1</expectedResult>
             <actualResult type="variable">xCoordinate2</actualResult>
@@ -98,18 +98,18 @@
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
-            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="buttonGroupindex" defaultValue="1" type="string"/>
             <argument name="firstButtonIndex" defaultValue="1" type="string"/>
             <argument name="secondButtonIndex" defaultValue="2" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{buttonGroupPage.base(index)}}" stepKey="waitForButtonGroup"/>
-        <seeElementInDOM selector="{{buttonGroupPage.appearance(index, PageBuilderAppearancePropertyInline.value)}}" stepKey="seeButtonAppearance"/>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupindex)}}" stepKey="waitForButtonGroup"/>
+        <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupindex, PageBuilderButtonGroupAppearance_Inline.value)}}" stepKey="seeButtonAppearance"/>
         <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
-        <executeJS function="{{buttonItemPage.xCoordinate(firstButtonIndex)}}" stepKey="xCoordinate1"/>
-        <executeJS function="{{buttonItemPage.yCoordinate(firstButtonIndex)}}" stepKey="yCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate1"/>
         <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
-        <executeJS function="{{buttonItemPage.xCoordinate(secondButtonIndex)}}" stepKey="xCoordinate2"/>
-        <executeJS function="{{buttonItemPage.yCoordinate(secondButtonIndex)}}" stepKey="yCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate2"/>
         <assertGreaterThanOrEqual stepKey="checkXCoordinates">
             <expectedResult type="variable">xCoordinate1</expectedResult>
             <actualResult type="variable">xCoordinate2</actualResult>
@@ -123,18 +123,18 @@
         <arguments>
             <argument name="buttonGroupPage"/>
             <argument name="buttonItemPage"/>
-            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="buttonGroupindex" defaultValue="1" type="string"/>
             <argument name="firstButtonIndex" defaultValue="1" type="string"/>
             <argument name="secondButtonIndex" defaultValue="2" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{buttonGroupPage.base(index)}}" stepKey="waitForButtonGroup"/>
-        <seeElementInDOM selector="{{buttonGroupPage.appearance(index, PageBuilderAppearancePropertyStacked.value)}}" stepKey="seeButtonAppearance"/>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupindex)}}" stepKey="waitForButtonGroup"/>
+        <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupindex, PageBuilderButtonGroupAppearance_Stacked.value)}}" stepKey="seeButtonAppearance"/>
         <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
-        <executeJS function="{{buttonItemPage.xCoordinate(firstButtonIndex)}}" stepKey="xCoordinate1"/>
-        <executeJS function="{{buttonItemPage.yCoordinate(firstButtonIndex)}}" stepKey="yCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate1"/>
         <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
-        <executeJS function="{{buttonItemPage.xCoordinate(secondButtonIndex)}}" stepKey="xCoordinate2"/>
-        <executeJS function="{{buttonItemPage.yCoordinate(secondButtonIndex)}}" stepKey="yCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate2"/>
         <assertEquals stepKey="checkXCoordinates">
             <expectedResult type="variable">xCoordinate1</expectedResult>
             <actualResult type="variable">xCoordinate2</actualResult>
