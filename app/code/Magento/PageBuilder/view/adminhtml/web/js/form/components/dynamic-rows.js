@@ -101,7 +101,7 @@ define([
                 allLabels,
                 placeholder;
 
-            if (!property().sortBy) {
+            if (property().name === "actions") {
                 return;
             }
 
