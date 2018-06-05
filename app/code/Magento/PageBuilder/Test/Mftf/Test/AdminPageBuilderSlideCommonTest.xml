@@ -1137,18 +1137,30 @@
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <comment userInput="Attempt to drag heading block onto top part of slider" stepKey="commentValidateAboveSlider"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentBlock.role,'1')}}" stepKey="actualStageSliderHeight"/>
+        <executeJS function="{{PageBuilderActionsSection.computedWidthOnStage(PageBuilderSliderContentBlock.role,'1')}}" stepKey="actualStageSliderWidth"/>
+        <executeJS function="return Math.round({$actualStageSliderWidth}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}})" stepKey="sliderWidthSansPadding"/>
+        <executeJS function="return Math.round({$sliderWidthSansPadding}/20)" stepKey="sliderWidthOffset"/>
+        <executeJS function="return Math.round({$actualStageSliderHeight}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}})" stepKey="sliderHeightSansPadding"/>
+        <executeJS function="return Math.round({$sliderHeightSansPadding}/5)" stepKey="sliderHeightOffset"/>
         <actionGroup ref="dragContentBlockToContentBlock" stepKey="dragHeadingOntoSliderTop">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
             <argument name="targetBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="offsetXCoordinate" value="50"/>
-            <argument name="offsetYCoordinate" value="50"/>
+            <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
+            <argument name="offsetYCoordinate" value="$sliderHeightOffset"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading1">
+            <argument name="index" value="1"/>
         </actionGroup>
         <comment userInput="Attempt to drag heading block onto bottom part of slider" stepKey="commentValidateBelowSlider"/>
         <actionGroup ref="dragContentBlockToContentBlock" stepKey="dragHeadingOntoSliderBottom">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
             <argument name="targetBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="offsetXCoordinate" value="50"/>
-            <argument name="offsetYCoordinate" value="300"/>
+            <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
+            <argument name="offsetYCoordinate" value="$sliderHeightSansPadding"/>
+        </actionGroup>
+        <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading2">
+            <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="validateHeadingFirst">
             <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
