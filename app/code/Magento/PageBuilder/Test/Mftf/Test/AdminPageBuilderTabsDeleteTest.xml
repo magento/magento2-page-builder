@@ -8,13 +8,13 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="TabsRemoveLastTabByDeletingTabsBlock">
+    <test name="TabsRemoveLastTabByDeletingTabsContentType">
         <annotations>
             <features value="PageBuilder"/>
             <stories value="Tabs: Delete Tab From Tabs"/>
             <useCaseId value="MAGETWO-87052"/>
             <title value="Tabs Remove Last Tab Only By Deleting Tabs content type"/>
-            <description value="A user should be able to remove tabs block from a row with confirmation."/>
+            <description value="A user should be able to remove tabs content type from a row with confirmation."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-90676"/>
             <group value="pagebuilder"/>
@@ -50,7 +50,7 @@
         <!-- Verify Remove option is disabled -->
         <comment userInput="User sees that removing last tab from the Tabs content type is disabled" stepKey="AC3"/>
         <seeElement selector="{{TabOnStage.tabOptionsRemoveDisabled}}" stepKey="seeTabRemoveOptionDisabled"/>
-        <comment userInput="User remove default state Tabs block with confirmation." stepKey="AC4"/>
+        <comment userInput="User remove default state Tabs content type with confirmation." stepKey="AC4"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>

@@ -16,6 +16,7 @@ define([
          *     as caption
          *
          * @param  {Array} nodes
+         * @param {Object} captionValue
          * @return {Object} captionValue
          */
         parseOptions: function (nodes, captionValue) {
@@ -25,15 +26,11 @@ define([
             nodes = _.map(nodes, function (node) {
                 value = node.value;
 
-                if (value === null || value === captionValue) {
-                    if (_.isUndefined(caption)) {
-                        caption = node.label;
-                    }
-                    // Allow nodes with empty values to return
-                    return node;
-                } else {
-                    return node;
+                if ((value === null || value === captionValue) && _.isUndefined(caption)) {
+                    caption = node.label;
                 }
+
+                return node;
             });
 
             return {
@@ -58,7 +55,7 @@ define([
                 value = item.value;
 
                 if (Array.isArray(value)) {
-                    indexOptions(value, result);
+                    this.indexOptions(value, result);
                 } else {
                     result[value] = item;
                 }

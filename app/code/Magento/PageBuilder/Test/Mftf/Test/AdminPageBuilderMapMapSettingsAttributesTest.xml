@@ -15,6 +15,7 @@
             <title value="Map - 500px Height"/>
             <description value="Validates map height of 500px on stage and storefront"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90509"/>
             <testCaseId value="MAGETWO-91230"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-map"/>
@@ -37,21 +38,23 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <!-- Update Edit Panel -->
-        <comment userInput="Update Edit Panel" stepKey="commentEdit"/>
+        <!-- Add Pin To Map -->
+        <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
-        <!-- Add Fill Required Fields -->
-        <comment userInput="Add Fill Required Fields" stepKey="commentAddFillRequiredFields"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Enter Height: 500 -->
+        <comment userInput="Enter Height: 500" stepKey="commentEnterHeight"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeight">
             <argument name="property" value="PageBuilderMapHeightProperty500px"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <executeJS function="{{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight1"/>
+        <executeJS function="return {{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight1"/>
         <executeJS function="return Math.round(({$actualStageMapHeight1}/{{PageBuilderMapHeightProperty500px.value}})*100)/100" stepKey="actualStageMapHeightRatio1"/>
         <assertEquals stepKey="assertStageMapHeight1">
             <expectedResult type="int">1</expectedResult>
@@ -70,7 +73,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <executeJS function="{{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight2"/>
+        <executeJS function="return {{MapOnStage.computedHeight}}" stepKey="actualStageMapHeight2"/>
         <executeJS function="return Math.round(({$actualStageMapHeight2}/{{PageBuilderMapHeightProperty500px.value}})*100)/100" stepKey="actualStageMapHeightRatio2"/>
         <assertEquals stepKey="assertStageMapHeight2">
             <expectedResult type="int">1</expectedResult>
@@ -89,7 +92,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <executeJS function="{{MapOnStorefront.computedHeight}}" stepKey="actualStorefrontMapHeight"/>
+        <executeJS function="return {{MapOnStorefront.computedHeight}}" stepKey="actualStorefrontMapHeight"/>
         <executeJS function="return Math.round(({$actualStorefrontMapHeight}/{{PageBuilderMapHeightProperty500px.value}})*100)/100" stepKey="actualStorefrontMapHeightRatio"/>
         <assertEquals stepKey="assertStorefrontMapHeight">
             <expectedResult type="int">1</expectedResult>
@@ -128,14 +131,14 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
-        <!-- Add Fill Required Fields -->
-        <comment userInput="Add Fill Required Fields" stepKey="commentAddFillRequiredFields"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <!-- Empty Height Fields -->
-        <comment userInput="Empty Height Fields" stepKey="commentEmptyHeightFields"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Enter Height: Empty -->
+        <comment userInput="Enter Height: Empty" stepKey="commentEnterHeight"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="emptyHeightField">
             <argument name="property" value="PageBuilderMapHeight_Empty"/>
         </actionGroup>
@@ -201,22 +204,22 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
-        <!-- Fill Required Fields -->
-        <comment userInput="Fill Required Fields" stepKey="commentFillRequiredFields"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
-        <!-- Height: Percentage -->
-        <comment userInput="Enter Height: Percentage" stepKey="commentHeightPercentage"/>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <!-- Enter Height: Percentage -->
+        <comment userInput="Enter Height: Percentage" stepKey="commentEnterHeightPercentage"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeightPercentage">
             <argument name="property" value="PageBuilderMapHeight_Percentage"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateErrorPercentage">
             <argument name="property" value="PageBuilderMapHeight_Percentage"/>
         </actionGroup>
-        <!-- Height: NonNumeric -->
-        <comment userInput="Enter Height: NonNumeric" stepKey="commentHeightNonNumeric"/>
+        <!-- Enter Height: NonNumeric -->
+        <comment userInput="Enter Height: NonNumeric" stepKey="commentEnterHeightNonNumeric"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeightNonNumeric">
             <argument name="property" value="PageBuilderMapHeight_NonNumeric"/>
         </actionGroup>
@@ -256,12 +259,12 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
-        <!-- Fill Required Fields -->
-        <comment userInput="Fill Required Fields" stepKey="commentFillRequiredFields"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <!-- Enable Show Controls -->
         <comment userInput="Enable Show Controls" stepKey="commentEnableShowControls"/>
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="enableShowControls">
@@ -339,12 +342,12 @@
         </actionGroup>
         <!-- Add Pin To Map -->
         <comment userInput="Add Pin To Map" stepKey="commentAddPinToMap"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
         <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
-        <!-- Fill Required Fields -->
-        <comment userInput="Fill Required Fields" stepKey="commentFillRequiredFields"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
             <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
         </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
         <!-- Disable Show Controls -->
         <comment userInput="Disable Show Controls" stepKey="commentDisableShowControls"/>
         <actionGroup ref="conditionalClickSlideOutPanelFieldGeneral" stepKey="disableShowControls">

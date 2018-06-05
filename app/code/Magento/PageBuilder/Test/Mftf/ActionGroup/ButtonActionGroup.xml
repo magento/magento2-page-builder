@@ -8,22 +8,6 @@
 
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
-    <actionGroup name="openPageBuilderEditPanelSmallByIndex">
-        <arguments>
-            <argument name="contentType" defaultValue=""/>
-            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForButtonElement"/>
-        <click selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickButtonElement"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>
-        <click selector="{{PageBuilderActionsSection.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickEditButton"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <see userInput="Edit {{contentType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-    </actionGroup>
     <actionGroup name="addButton">
         <arguments>
             <argument name="buttonGroupIndex" defaultValue="1" type="string"/>
@@ -42,19 +26,6 @@
             <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="removeContentTypeFromStageSmallByIndex">
-        <arguments>
-            <argument name="contentType" defaultValue=""/>
-            <argument name="contentTypeIndex" defaultValue="2" type="string"/>
-        </arguments>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForButtonElement"/>
-        <click selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickButtonElement"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeRemoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForRemoveButton"/>
-        <click selector="{{PageBuilderActionsSection.contentTypeRemoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickRemoveContentType"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
-    </actionGroup>
     <actionGroup name="validateButtonItemContent">
         <arguments>
             <argument name="page"/>
@@ -64,10 +35,113 @@
             <argument name="newTab" defaultValue="PageBuilderButtonItemOpenInNewTab_False"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateButtonItemContent" stepKey="comment"/>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForButtonElement"/>
         <waitForElementVisible selector="{{page.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
         <waitForElementVisible selector="{{page.buttonItemType(index, type.value)}}" stepKey="waitForButtonType"/>
         <waitForElementVisible selector="{{page.buttonItemUrl(index, url.value)}}" stepKey="waitForButtonUrl"/>
         <waitForElementVisible selector="{{page.buttonItemNewTab(index, newTab.stageValue)}}" stepKey="waitForButtonNewTab"/>
+    </actionGroup>
+    <actionGroup name="inlineEditButton">
+        <arguments>
+            <argument name="text"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="inlineEditButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(index)}}" stepKey="waitForButton"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" stepKey="waitForButtonEditable"/>
+        <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
+    </actionGroup>
+    <actionGroup name="moveButton">
+        <arguments>
+            <argument name="targetSelector" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+            <argument name="buttonIndexToMove" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="moveButton" stepKey="comment"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton1"/>
+        <click selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeMoveByIndex(PageBuilderButtonItemContentType.role, buttonIndexToMove)}}" stepKey="waitForMoveButton"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.contentTypeMoveByIndex(PageBuilderButtonItemContentType.role, buttonIndexToMove)}}" selector2="{{targetSelector}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton2"/>
+    </actionGroup>
+    <actionGroup name="validateButtonGroupInlineAppearance">
+        <arguments>
+            <argument name="buttonGroupPage"/>
+            <argument name="buttonItemPage"/>
+            <argument name="buttonGroupindex" defaultValue="1" type="string"/>
+            <argument name="firstButtonIndex" defaultValue="1" type="string"/>
+            <argument name="secondButtonIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupindex)}}" stepKey="waitForButtonGroup"/>
+        <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupindex, PageBuilderButtonGroupAppearance_Inline.value)}}" stepKey="seeButtonAppearance"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate1"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate2"/>
+        <assertGreaterThan stepKey="checkXCoordinates">
+            <expectedResult type="variable">xCoordinate1</expectedResult>
+            <actualResult type="variable">xCoordinate2</actualResult>
+        </assertGreaterThan>
+        <assertEquals stepKey="checkYCoordinates">
+            <expectedResult type="variable">yCoordinate1</expectedResult>
+            <actualResult type="variable">yCoordinate2</actualResult>
+        </assertEquals>
+    </actionGroup>
+    <actionGroup name="validateButtonGroupInlineAppearanceWraps">
+        <arguments>
+            <argument name="buttonGroupPage"/>
+            <argument name="buttonItemPage"/>
+            <argument name="buttonGroupindex" defaultValue="1" type="string"/>
+            <argument name="firstButtonIndex" defaultValue="1" type="string"/>
+            <argument name="secondButtonIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupindex)}}" stepKey="waitForButtonGroup"/>
+        <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupindex, PageBuilderButtonGroupAppearance_Inline.value)}}" stepKey="seeButtonAppearance"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate1"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate2"/>
+        <assertGreaterThanOrEqual stepKey="checkXCoordinates">
+            <expectedResult type="variable">xCoordinate1</expectedResult>
+            <actualResult type="variable">xCoordinate2</actualResult>
+        </assertGreaterThanOrEqual>
+        <assertGreaterThan stepKey="checkYCoordinates">
+            <expectedResult type="variable">yCoordinate1</expectedResult>
+            <actualResult type="variable">yCoordinate2</actualResult>
+        </assertGreaterThan>
+    </actionGroup>
+    <actionGroup name="validateButtonGroupStackedAppearance">
+        <arguments>
+            <argument name="buttonGroupPage"/>
+            <argument name="buttonItemPage"/>
+            <argument name="buttonGroupindex" defaultValue="1" type="string"/>
+            <argument name="firstButtonIndex" defaultValue="1" type="string"/>
+            <argument name="secondButtonIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{buttonGroupPage.base(buttonGroupindex)}}" stepKey="waitForButtonGroup"/>
+        <waitForElementVisible selector="{{buttonGroupPage.appearance(buttonGroupindex, PageBuilderButtonGroupAppearance_Stacked.value)}}" stepKey="seeButtonAppearance"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(firstButtonIndex)}}" stepKey="waitForButton1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate1"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(firstButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate1"/>
+        <waitForElementVisible selector="{{buttonItemPage.base(secondButtonIndex)}}" stepKey="waitForButton2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().x" stepKey="xCoordinate2"/>
+        <executeJS function="return {{buttonItemPage.jsButtonSelector(secondButtonIndex)}}.getBoundingClientRect().y" stepKey="yCoordinate2"/>
+        <assertEquals stepKey="checkXCoordinates">
+            <expectedResult type="variable">xCoordinate1</expectedResult>
+            <actualResult type="variable">xCoordinate2</actualResult>
+        </assertEquals>
+        <assertGreaterThan stepKey="checkYCoordinates">
+            <expectedResult type="variable">yCoordinate1</expectedResult>
+            <actualResult type="variable">yCoordinate2</actualResult>
+        </assertGreaterThan>
     </actionGroup>
 </actionGroups>

@@ -10,20 +10,22 @@
           xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="MapOnStage">
         <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]" parameterized="true"/>
-        <element name="clickablePin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gmnoprint']//map//area" parameterized="true"/>
-        <element name="pin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
-        <element name="pinLocation" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')]" parameterized="true"/>
+        <element name="clickablePin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gmnoprint'][{{arg2}}]//map//area" parameterized="true"/>
+        <element name="pin" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gmnoprint']/img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gmnoprint']/img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
+        <element name="pinLocations" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')]" parameterized="true"/>
         <!-- Location Pin Configuration -->
-        <element name="latitude" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-position,'{&quot;lat&quot;:{{arg2}},')]" parameterized="true"/>
-        <element name="longitude" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-position,',&quot;lng&quot;:{{arg2}}}')]" parameterized="true"/>
+        <element name="latitude" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-locations,'&quot;position&quot;:{&quot;latitude&quot;:{{arg2}},')]" parameterized="true"/>
+        <element name="longitude" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-locations,',&quot;longitude&quot;:{{arg2}}}')]" parameterized="true"/>
         <element name="tooltipWindow" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']" parameterized="true"/>
         <element name="tooltipWindowClose" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']/../div/img[contains(@src,'mapcnt6.png')]/.." parameterized="true"/>
         <element name="locationName" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/h3/b[.='{{arg2}}']" parameterized="true"/>
-        <element name="addressCityZipCountry" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/p[2][.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}']" parameterized="true"/>
-        <element name="comment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/p[1][.='{{arg2}}']" parameterized="true"/>
+        <element name="comment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='{{arg2}}']" parameterized="true"/>
+        <element name="phoneNumber" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='Phone: {{arg2}}']" parameterized="true"/>
+        <element name="noPhoneNumber" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='{{arg2}}']" parameterized="true"/>
+        <element name="addressCityStateZipCountry" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='gm-style-iw']//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}{{arg6}}']" parameterized="true"/>
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-map > div:first-child')).height)"/>
+        <element name="computedHeight" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('.pagebuilder-map > div:first-child')).height)"/>
         <element name="showControls" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@data-bind,'renderMap') and @data-show-controls='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]/div[contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
@@ -54,21 +56,23 @@
         <element name="emptyMap" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(@src) and contains(@style,'display: none;')]" parameterized="true"/>
         <element name="base" type="button" selector="(//div[@data-role='map'])[{{arg1}}]" parameterized="true"/>
         <element name="baseJS" type="text" selector="document.querySelectorAll('div[data-role=\'map\']')[{{arg1}}]" parameterized="true"/>
-        <element name="pin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[@data-role='map'])[{{arg1}}]//img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
-        <element name="clickablePin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gmnoprint']//map//area" parameterized="true"/>
-        <element name="pinLocation" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')]" parameterized="true"/>
+        <element name="pin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gmnoprint']/img[contains(@src,'spotlight-poi2_hdpi.png')]|(//div[@data-role='map'])[{{arg1}}]//div[@class='gmnoprint']/img[contains(@src,'spotlight-poi2.png')]" parameterized="true"/>
+        <element name="clickablePin" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gmnoprint'][{{arg2}}]//map//area" parameterized="true"/>
+        <element name="pinLocations" type="button" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')]" parameterized="true"/>
         <element name="zoom" type="button" selector="(//div[@data-role='map'])[{{arg1}}][@data-zoom='{{arg2}}']" parameterized="true"/>
         <!-- Location Pin Configuration -->
-        <element name="latitude" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@data-position,'{&quot;lat&quot;:{{arg2}},')]" parameterized="true"/>
-        <element name="longitude" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@data-position,',&quot;lng&quot;:{{arg2}}}')]" parameterized="true"/>
+        <element name="latitude" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@data-locations,'&quot;position&quot;:{&quot;latitude&quot;:{{arg2}},')]" parameterized="true"/>
+        <element name="longitude" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@data-locations,',&quot;longitude&quot;:{{arg2}}}')]" parameterized="true"/>
         <element name="tooltipWindow" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']" parameterized="true"/>
         <element name="tooltipWindowClose" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']/../div/img[contains(@src,'mapcnt6.png')]/.." parameterized="true"/>
         <element name="locationName" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/h3/b[.='{{arg2}}']" parameterized="true"/>
-        <element name="addressCityZipCountry" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/p[2][.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}']" parameterized="true"/>
-        <element name="comment" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/p[1][.='{{arg2}}']" parameterized="true"/>
+        <element name="comment" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='{{arg2}}']" parameterized="true"/>
+        <element name="phoneNumber" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='Phone: {{arg2}}']" parameterized="true"/>
+        <element name="noPhoneNumber" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//div/p[.='{{arg2}}']" parameterized="true"/>
+        <element name="addressCityStateZipCountry" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[@class='gm-style-iw']//span[.='{{arg2}}{{arg3}}{{arg4}}{{arg5}}{{arg6}}']" parameterized="true"/>
         <!-- Map Settings Configuration -->
         <element name="height" type="button" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'height: {{arg2}}px;')]" parameterized="true"/>
-        <element name="computedHeight" type="text" selector="return parseInt(window.getComputedStyle(document.querySelector('[data-role=map]')).height)"/>
+        <element name="computedHeight" type="text" selector="parseInt(window.getComputedStyle(document.querySelector('[data-role=map]')).height)"/>
         <element name="showControls" type="text" selector="(//div[@data-role='map'])[{{arg1}}][@data-show-controls='{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='map'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
@@ -95,12 +99,20 @@
         <element name="errorTitle" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@class, 'gm-err-container')]//div[contains(@class, 'gm-err-title')]" parameterized="true"/>
         <element name="errorMessage" type="text" selector="(//div[@data-role='map'])[{{arg1}}]//div[contains(@class, 'gm-err-container')]//div[contains(@class, 'gm-err-message')]" parameterized="true"/>
     </section>
-    <section name="MapOnConfigurationPanel">
+    <section name="EditMapForm">
+        <element name="addLocationButton" type="button" selector="//button[@data-index='add_location_button']"/>
+        <element name="addLocationButtonDisabled" type="button" selector="//button[@data-index='add_location_button' and @disabled]"/>
+    </section>
+    <section name="AddLocationForm">
+        <element name="form" type="text" selector="aside  div.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal_map_location_insert_form"/>
+        <element name="formTitle" type="text" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal h1.modal-title[data-role='title']"/>
+        <element name="cancelButton" type="button" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal  button#cancel"/>
+        <element name="editFormSave" type="button" selector="aside.pagebuilder_map_form_pagebuilder_map_form_general_map_location_modal  button#save"/>
         <element name="base" type="button" selector="//div[@data-index='position']//div[@class='map-field']"/>
         <element name="baseJS" type="text" selector="document.querySelector('div[data-index=\'position\'] div.map-field')"/>
         <element name="clickablePin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gmnoprint']//map//area"/>
-        <element name="pin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//img[contains(@src,'spotlight-poi2.png')]"/>
-        <element name="pinLocation" type="text" selector="(//div[@data-index='position']//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')])[{{arg1}}]" parameterized="true"/>
+        <element name="pin" type="button" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gmnoprint']/img[contains(@src,'spotlight-poi2_hdpi.png')]|//div[@data-index='position']//div[@class='map-field']//div[@class='gmnoprint']/img[contains(@src,'spotlight-poi2.png')]"/>
+        <element name="pinLocations" type="text" selector="(//div[@data-index='position']//div[contains(@style,'transform: matrix(1, 0, 0, 1, ')])[{{arg1}}]" parameterized="true"/>
         <element name="tooltipWindow" type="text" selector="//div[@data-index='position']//div[@class='map-field']//div[@class='gm-style-iw']"/>
         <element name="helperText" type="button" selector="//div[@data-index='position']//span[.='You can move the pin by clicking or dragging it where you want. To alter the zoom please use the controls.']"/>
         <element name="warningMessage" type="text" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')]//div[contains(@class, 'message-warning')]"/>
