@@ -38,17 +38,17 @@ define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_Page
       _BasePreview.prototype.bindEvents.call(this);
 
       _uiEvents.on(this.parent.id + ":updated", function () {
-        var imageDataStore = _this2.parent.dataStore.get();
+        var dataStore = _this2.parent.dataStore.get();
 
-        var imageObject = imageDataStore.image[0] || {};
+        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
 
         _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
       });
 
-      _uiEvents.on("image:contentType:ready", function () {
-        var imageDataStore = _this2.parent.dataStore.get();
+      _uiEvents.on(this.config.name + ":contentType:ready", function () {
+        var dataStore = _this2.parent.dataStore.get();
 
-        var initialImageValue = imageDataStore.image || ""; // Create uploader
+        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
         _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
           value: initialImageValue
@@ -65,7 +65,7 @@ define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_Page
 
 
     _proto.onImageUploaded = function onImageUploaded(data) {
-      this.parent.dataStore.update(data, "image");
+      this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
     };
 
     return Preview;
