@@ -1119,7 +1119,7 @@
             <argument name="Image" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
+        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
         <comment userInput="Go to Banner slide-out to verify uploaded image" stepKey="commentGoToBannerSlideOut"/>
         <!--Verify uploaded image is displayed on slide-out-->
         <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
@@ -1135,7 +1135,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <seeElementInDOM selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnBannerStageDependOnEachTypeOfAppearance">
         <annotations>

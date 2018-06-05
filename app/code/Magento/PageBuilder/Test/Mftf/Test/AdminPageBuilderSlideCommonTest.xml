@@ -1098,7 +1098,7 @@
             <argument name="Image" value="PageBuilderSliderBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <seeElementInDOM selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
+        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
         <!--Verify uploaded image is displayed on slide-out-->
         <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
         <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
@@ -1113,7 +1113,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <seeElementInDOM selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnSliderStageDependOnEachTypeOfAppearance">
         <annotations>
