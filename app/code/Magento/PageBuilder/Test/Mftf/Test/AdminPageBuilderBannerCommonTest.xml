@@ -1106,6 +1106,7 @@
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
         <attachFile userInput="{{PageBuilderLocalImagePropertyJpg.value}}" selector="{{PageBuilderActionsSection.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="waitForMainImageSource1"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
         <!--Upload image from Media Gallery Storage -->
         <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
@@ -1119,7 +1120,8 @@
             <argument name="Image" value="PageBuilderBannerBackgroundImageProperty"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource2"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="waitForMainImageSource2"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource2"/>
         <comment userInput="Go to Banner slide-out to verify uploaded image" stepKey="commentGoToBannerSlideOut"/>
         <!--Verify uploaded image is displayed on slide-out-->
         <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
