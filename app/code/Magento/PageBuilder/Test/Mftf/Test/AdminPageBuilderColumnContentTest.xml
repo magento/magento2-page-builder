@@ -107,7 +107,6 @@
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <comment userInput="Validate Column Height does not shrink to Tabs Height" stepKey="commentValidateColumnHeightWithTabs"/>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderTabsContentBlock.role,'1')}}" stepKey="actualStageTabsHeight"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentBlock.role,'1')}}" stepKey="actualStageColumnHeightWithTabs"/>
         <assertEquals stepKey="assertColumnHeightDoesNotAdjustToTabsHeight">
             <expectedResult type="variable">actualStageInitialColumnHeight</expectedResult>
@@ -152,11 +151,12 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <comment userInput="Validate Column Height On Stage With Custom Min Height Matches Expected" stepKey="commentValidateColumnHeight"/>
-        <actionGroup ref="validateContentBlockHeightOnStageFromInteger" stepKey="assertInitialColumnHeightMatchesExpected">
-            <argument name="contentBlock" value="PageBuilderColumnContentBlock"/>
-            <argument name="index" value="1"/>
-            <argument name="expectedHeight" value="210"/>
-        </actionGroup>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentBlock.role,'1')}}" stepKey="actualStageContentBlockHeight"/>
+        <executeJS function="return Math.round({{PageBuilderAppearanceMinHeightProperty_200.value}} + {{PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop}} + {{PageBuilderAdvancedMarginsAndPaddingProperty.paddingBottom}})" stepKey="expectedColumnHeight"/>
+        <assertEquals stepKey="assertHeightOnStageMatchesExpected">
+            <expectedResult type="variable">actualStageContentBlockHeight</expectedResult>
+            <actualResult type="variable">expectedColumnHeight</actualResult>
+        </assertEquals>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentBlock.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentBlock.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
