@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="validateBackgroundAttributesWithNoImageOrColor">
+        <arguments>
+            <argument name="page"/>
+            <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
+            <argument name="backgroundSize" defaultValue="PageBuilderBackgroundSize_Default"/>
+            <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Default"/>
+            <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{page.noBackgroundColor(index)}}" stepKey="waitForBackgroundColor"/>
+        <waitForElementVisible selector="{{page.noBackgroundImage(index)}}" stepKey="waitForBackgroundImage"/>
+        <waitForElementVisible selector="{{page.backgroundPosition(index, backgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
+        <waitForElementVisible selector="{{page.backgroundSize(index, backgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
+        <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
+        <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
+    </actionGroup>
+</actionGroups>
