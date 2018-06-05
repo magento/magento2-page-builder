@@ -98,7 +98,6 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(contentBlockType.role)}}" stepKey="waitForContentBlockInStage"/>
         <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentBlockNameInEditFormTitle"/>
         <see userInput="Edit {{contentBlockType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
-        <waitForPageLoad stepKey="waitForEditFormLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToContainerAndExpectEditPanel">
         <arguments>
@@ -113,7 +112,6 @@
         <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInContainer"/>
         <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentBlockNameInEditFormTitle"/>
         <see userInput="Edit {{contentBlockType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
-        <waitForPageLoad stepKey="waitForEditFormLoad" time="30"/>
     </actionGroup>
     <actionGroup name="dragContentBlockToContainer">
         <arguments>

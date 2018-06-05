@@ -434,7 +434,6 @@
         <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeHeaderFromRow">
             <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
         </actionGroup>
-        <waitForPageLoad time="30" stepKey="waitForShrinkAnimationAfterRemove"/>
         <!-- Assert row height is 320px after removing children -->
         <comment userInput="Assert row height is 320px after removing children" stepKey="comment3"/>
         <executeJS function="document.querySelectorAll('{{RowOnStage.baseCss}}')[0].setAttribute('divHeight', document.querySelectorAll('{{RowOnStage.baseCss}}')[0].clientHeight)" stepKey="setNewRowHeight2"/>
