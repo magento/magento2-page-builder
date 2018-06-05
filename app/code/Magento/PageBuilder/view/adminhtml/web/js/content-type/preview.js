@@ -203,10 +203,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
         autoAppend = true;
       }
 
-      var contentContentTypeData = contentType.dataStore.get();
+      var contentTypeData = contentType.dataStore.get();
       var index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
       return new Promise(function (resolve, reject) {
-        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentContentTypeData).then(function (duplicateContentType) {
+        (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentTypeData).then(function (duplicateContentType) {
           if (autoAppend) {
             contentType.parent.addChild(duplicateContentType, index);
           }

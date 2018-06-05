@@ -193,7 +193,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | `icon`              | Icon displayed on the menu.                                                                                                                 |
 | `component`         | View model responsible for rendering the preview and master format.                                                                         |
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
-| `master_component` | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
+| `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type                                                                                         |
 | `group`             | Existing menu group that contains this content type.                                                                                        |
 | `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                          |

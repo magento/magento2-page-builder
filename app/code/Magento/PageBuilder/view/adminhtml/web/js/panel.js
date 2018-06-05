@@ -36,7 +36,7 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiEvents",
       var _this = this;
 
       _uiEvents.on("stage:ready:" + this.id, function () {
-        _this.populateContentContentTypes();
+        _this.populateContentTypes();
 
         _this.isVisible(true);
       });
@@ -67,13 +67,13 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiEvents",
         this.searching(false);
       } else {
         this.searching(true);
-        this.searchResults(_underscore.map(_underscore.filter(_config.getConfig("content_types"), function (contentContentType) {
+        this.searchResults(_underscore.map(_underscore.filter(_config.getConfig("content_types"), function (contentType) {
           var regEx = new RegExp("\\b" + self.searchValue(), "gi");
-          var matches = !!contentContentType.label.toLowerCase().match(regEx);
-          return matches && contentContentType.is_visible === true;
-        }), function (contentContentType, identifier) {
+          var matches = !!contentType.label.toLowerCase().match(regEx);
+          return matches && contentType.is_visible === true;
+        }), function (contentType, identifier) {
           // Create a new instance of GroupContentType for each result
-          return new _contentType.ContentType(identifier, contentContentType);
+          return new _contentType.ContentType(identifier, contentType);
         }));
       }
     };
@@ -107,25 +107,25 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiEvents",
      */
 
 
-    _proto.populateContentContentTypes = function populateContentContentTypes() {
+    _proto.populateContentTypes = function populateContentTypes() {
       var _this2 = this;
 
       var groups = _config.getConfig("groups");
 
-      var contentContentTypes = _config.getConfig("content_types"); // Verify the configuration contains the required information
+      var contentTypes = _config.getConfig("content_types"); // Verify the configuration contains the required information
 
 
-      if (groups && contentContentTypes) {
+      if (groups && contentTypes) {
         // Iterate through the groups creating new instances with their associated content types
         _underscore.each(groups, function (group, id) {
           // Push the group instance into the observable array to update the UI
-          _this2.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentContentTypes, {
+          _this2.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
             group: id,
             is_visible: true
           }),
           /* Retrieve content types with group id */
-          function (contentContentType, identifier) {
-            var groupContentType = new _contentType.ContentType(identifier, contentContentType);
+          function (contentType, identifier) {
+            var groupContentType = new _contentType.ContentType(identifier, contentType);
             return groupContentType;
           })));
         }); // Display the panel

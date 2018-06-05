@@ -42,7 +42,7 @@ export default class Panel implements PanelInterface {
      */
     public initListeners(): void {
         events.on("stage:ready:" + this.id, () => {
-            this.populateContentContentTypes();
+            this.populateContentTypes();
             this.isVisible(true);
         });
     }
@@ -72,16 +72,16 @@ export default class Panel implements PanelInterface {
             this.searchResults(_.map(
                 _.filter(
                     Config.getConfig("content_types"),
-                    (contentContentType: ContentTypeConfigInterface) => {
+                    (contentType: ContentTypeConfigInterface) => {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
-                        const matches = !!contentContentType.label.toLowerCase().match(regEx);
+                        const matches = !!contentType.label.toLowerCase().match(regEx);
                         return matches &&
-                            contentContentType.is_visible === true;
+                            contentType.is_visible === true;
                     },
                 ),
-                (contentContentType, identifier: string) => {
+                (contentType, identifier: string) => {
                     // Create a new instance of GroupContentType for each result
-                    return new GroupContentType(identifier, contentContentType);
+                    return new GroupContentType(identifier, contentType);
                 }),
             );
         }
@@ -112,12 +112,12 @@ export default class Panel implements PanelInterface {
     /**
      * Populate the panel with the content types
      */
-    private populateContentContentTypes(): void {
+    private populateContentTypes(): void {
         const groups = Config.getConfig("groups");
-        const contentContentTypes = Config.getConfig("content_types");
+        const contentTypes = Config.getConfig("content_types");
 
         // Verify the configuration contains the required information
-        if (groups && contentContentTypes) {
+        if (groups && contentTypes) {
             // Iterate through the groups creating new instances with their associated content types
             _.each(groups, (group, id) => {
                 // Push the group instance into the observable array to update the UI
@@ -125,12 +125,12 @@ export default class Panel implements PanelInterface {
                     id,
                     group,
                     _.map(
-                        _.where(contentContentTypes, {
+                        _.where(contentTypes, {
                             group: id,
                             is_visible: true,
                         }), /* Retrieve content types with group id */
-                        (contentContentType: ContentTypeConfigInterface, identifier: string) => {
-                            const groupContentType = new GroupContentType(identifier, contentContentType);
+                        (contentType: ContentTypeConfigInterface, identifier: string) => {
+                            const groupContentType = new GroupContentType(identifier, contentType);
                             return groupContentType;
                         },
                     ),

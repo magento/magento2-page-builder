@@ -243,7 +243,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
             return contentType;
           });
         } else {
-          reject("Parameter content type missing from event.");
+          reject("Parameter contentType missing from event.");
         }
       }).catch(function (error) {
         console.error(error);

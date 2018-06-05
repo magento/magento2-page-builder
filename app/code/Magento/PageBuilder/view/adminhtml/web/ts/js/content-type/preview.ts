@@ -210,7 +210,7 @@ export default class Preview {
      * @returns {Promise<ContentTypeInterface>}
      */
     public clone(contentType: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
-        const contentContentTypeData = contentType.dataStore.get();
+        const contentTypeData = contentType.dataStore.get();
         const index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
 
         return new Promise((resolve, reject) => {
@@ -218,7 +218,7 @@ export default class Preview {
                 contentType.config,
                 contentType.parent,
                 contentType.stageId,
-                contentContentTypeData,
+                contentTypeData,
             ).then((duplicateContentType: ContentTypeInterface) => {
                 if (autoAppend) {
                     contentType.parent.addChild(duplicateContentType, index);

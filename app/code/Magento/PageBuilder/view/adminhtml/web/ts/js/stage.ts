@@ -236,7 +236,7 @@ export default class Stage {
                         return contentType;
                     });
             } else {
-                reject("Parameter content type missing from event.");
+                reject("Parameter contentType missing from event.");
             }
         }).catch((error: string) => {
             console.error(error);
