@@ -19,7 +19,7 @@
     <actionGroup name="unfocusSlideOptions">
         <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <dontSeeElement selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="dontSeeHeadingTypeToolbar"/>
+        <waitForElementNotVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="dontSeeSlideOptionsEdit"/>
     </actionGroup>
     <actionGroup name="openSlideOptions">
         <comment userInput="Open slide options" stepKey="commentOpen"/>

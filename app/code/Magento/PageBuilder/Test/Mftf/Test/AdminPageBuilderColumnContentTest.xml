@@ -187,7 +187,7 @@
     </test>
     <test name="MapAddToColumn">
         <annotations>
-            <features value="PageBuilder"/>
+            <features value="Pagebuilder"/>
             <stories value="Column"/>
             <useCaseId value="MAGETWO-88269"/>
             <title value="Add Map to Column container and view on Admin and Storefront"/>
@@ -259,12 +259,12 @@
             <argument name="height" value="PageBuilderMapHeightProperty500px"/>
         </actionGroup>
     </test>
-    <test name="MoveContentBetweenColumns">
+    <test name="ColumnsMoveContentBetweenColumns">
         <annotations>
-            <features value="PageBuilder"/>
+            <features value="Pagebuilder"/>
             <stories value="Column"/>
             <useCaseId value="MAGETWO-88269"/>
-            <title value="Move existing content between columns"/>
+            <title value="Move Heading between columns"/>
             <description value="As a Content Manager I want to be able to move content between column containers"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-92361"/>
@@ -354,10 +354,11 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Column"/>
-            <title value="Add Column group below existing columns group on stage"/>
-            <description value="User sees row adjusting height when a second column group is created"/>
+            <title value="Drag Column containing Heading from one column group to another in the same row"/>
+            <description value="Move column containing content blocks between column groups"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87113"/>
+            <useCaseId value="MAGETWO-86953"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-heading"/>
@@ -400,7 +401,6 @@
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <comment userInput="Validate heading is in third column" stepKey="commentConfirmHeadingInThirdColumn"/>
-
         <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="confirmHeadingInThirdColumn">
             <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="3"/>

@@ -190,4 +190,57 @@
         <dontSee userInput="r" selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypesAfterClearField"/>
     </test>
+    <test name="SearchContentBlockAndAddToStage">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Panel"/>
+            <title value="Search for content blocks and add them to stage"/>
+            <description value="After search I can drag and drop content blocks onto the stage before and after clicking X on the panel search "/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89887"/>
+            <useCaseId value="MAGETWO-92004"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-panel"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <comment userInput="Search Map in Panel and drag to stage" stepKey="commentSearchMap"/>
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="Map" stepKey="fillSearchField"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
+            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <comment userInput="Clear search Map and drag Column to stage" stepKey="commentClearSearch"/>
+        <waitForElementVisible selector='{{PageBuilderActionsSection.searchField}}' stepKey="seeClearSearch"/>
+        <click selector='{{PageBuilderActionsSection.searchField}}' stepKey="clickClearSearch"/>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnToStage">
+            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        </actionGroup>
+        <comment userInput="Collapse and Expand panel then drag Tabs to Column" stepKey="commentDragTabs"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStage"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.collapsePanel}}" stepKey="waitForCollapseButton"/>
+        <click selector="{{PageBuilderActionsSection.collapsePanel}}" stepKey="clickCollapseButton"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.expandPanel}}" stepKey="waitForExpandButton"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelCollapsed}}" stepKey="waitForPanelCollapsed"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.collapsePanel}}" stepKey="waitForCollapsePanelButtonNotVisible"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="waitForSearchFieldNotVisible"/>
+        <click selector="{{PageBuilderActionsSection.expandPanel}}" stepKey="clickExpandButton"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.panelCollapsed}}" stepKey="waitForPanelCollapsedNotVisible"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.expandPanel}}" stepKey="waitForExpandButtonNotVisible"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.collapsePanel}}" stepKey="waitForCollapseButtonVisible"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="waitForSearchField"/>
+        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="ta" stepKey="fillSearchFieldTa"/>
+        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTabsIntoFirstColumn">
+            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <dontSeeJsError stepKey="dontSeeJsError"/>
+    </test>
 </tests>

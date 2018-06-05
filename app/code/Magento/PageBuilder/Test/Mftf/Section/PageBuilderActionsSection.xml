@@ -18,6 +18,9 @@
         <element name="stageWrapperFullScreen" type="button" selector="div.pagebuilder-stage-wrapper.stage-full-screen"/>
         <element name="searchField" type="input" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
         <element name="clearSearch" type="button" selector='//*[@id="pagebuilder-panel"]/div[1]/a'/>
+        <element name="collapsePanel" type="button" selector='//div[contains(@class, "panel-controls")]//a[contains(@class, "collapse")]'/>
+        <element name="panelCollapsed" type="button" selector='(//div[contains(@class, "pagebuilder-stage") and contains(@class, "panel-collapsed")])'/>
+        <element name="expandPanel" type="button" selector='//div[contains(@class, "expand")]//a'/>
         <element name="firstSection" type="button" selector='//*[@id="pagebuilder-panel-groups"]/li[1]' timeout="30"/>
         <element name="panelGroup" type="button" selector="//div[@id='pagebuilder-panel']//h4[.='{{arg1}}']" parameterized="true"/>
         <element name="panelGroupActive" type="button" selector="//div[@id='pagebuilder-panel']//li[@class='active']//h4[.='{{arg1}}']" parameterized="true"/>
@@ -45,7 +48,6 @@
         <element name="dropAreaInStage" type="button" selector='(//div[contains(@class, "type-container") and contains(@class, "pagebuilder-row")])[1]//div[contains(@class,"pagebuilder-empty-container")][1]'/>
         <element name="dropZone" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}]//div[contains(@class,"pagebuilder-drop-indicator")][{{arg3}}]' parameterized="true"/>
         <element name="stageLoading" type="button" selector="div.pagebuilder-stage-loading"/>
-        <element name="stageActive" type="button" selector='(//div[contains(@class, "content-type-drop") and contains(@class, "active")])[1]'/>
         <element name="contentBlockInStage" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]' parameterized="true"/>
         <element name="contentBlockInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentBlockContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>

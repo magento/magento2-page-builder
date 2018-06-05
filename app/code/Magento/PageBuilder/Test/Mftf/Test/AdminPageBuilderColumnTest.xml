@@ -15,6 +15,7 @@
             <title value="Add column into a row and row height adjusts"/>
             <description value="A user should be able to add a column group into a row."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86953"/>
             <testCaseId value="MAGETWO-82860"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -64,7 +65,7 @@
             <description value="A user should be able to remove columns from rows."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-82861"/>
-            <useCaseId value="MAGETWO-66176"/>
+            <useCaseId value="MAGETWO-86953"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
         </annotations>
@@ -187,13 +188,13 @@
     </test>
     <test name="ColumnLabelsUpdate">
         <annotations>
-            <features value="Pagebuilder: Column"/>
-            <stories value="MAGETWO-87068: Empty Column Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
             <title value="Column labels for columns update when a new column is added"/>
             <description value="A user should be able to see column labels update when a new column is added causing resize."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-87068"/>
-            <testCaseId value="MAGETWO-87273"/>
+            <useCaseId value="MAGETWO-87068"/>
+            <testCaseId value="MAGETWO-92414"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
         </annotations>
@@ -211,17 +212,17 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <waitForElement selector="{{PageBuilderColumnSection.displayLabel('1','3/6')}}" stepKey="findBeforeLabelColumn1"/>
-        <waitForElement selector="{{PageBuilderColumnSection.displayLabel('2','3/6')}}" stepKey="findBeforeLabelColumn2"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','3/6')}}" stepKey="findBeforeLabelColumn1"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','3/6')}}" stepKey="findBeforeLabelColumn2"/>
         <actionGroup ref="dragContentBlockToContainer" stepKey="dragNewColumnToFirstColumn">
             <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
-        <waitForElement selector="{{PageBuilderColumnSection.displayLabel('1','1/6')}}" stepKey="findAfterLabelColumn1"/>
-        <waitForElement selector="{{PageBuilderColumnSection.displayLabel('2','2/6')}}" stepKey="findAfterLabelColumn2"/>
-        <waitForElement selector="{{PageBuilderColumnSection.displayLabel('3','3/6')}}" stepKey="findAfterLabelColumn3"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','1/6')}}" stepKey="findAfterLabelColumn1"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','2/6')}}" stepKey="findAfterLabelColumn2"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('3','3/6')}}" stepKey="findAfterLabelColumn3"/>
     </test>
     <test name="ColumnCanInteractEditPanel">
         <annotations>
@@ -931,9 +932,10 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Column"/>
-            <title value="Columns are the same height in the row when one column contains multiple content blocks"/>
+            <title value="Columns are the same height in the row when one column contains multiple Heading content blocks"/>
             <description value="Validate columns are the same height on the frontend when one contains content blocks"/>
             <useCaseId value="MAGETWO-71365"/>
+            <testCaseId value="MAGETWO-92415"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -1088,9 +1090,11 @@
     <test name="DragMultipleColumnsIntoRow">
         <annotations>
             <features value="Pagebuilder"/>
+            <stories value="Column"/>
             <title value="Row can contain multiple column groups"/>
             <description value="Validate multiple columns can be dragged into a row"/>
-            <useCaseId value="MAGETWO-92344"/>
+            <useCaseId value="MAGETWO-86953"/>
+            <testCaseId value="MAGETWO-92344"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
