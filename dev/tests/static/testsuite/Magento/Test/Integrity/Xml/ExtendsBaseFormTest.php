@@ -43,7 +43,8 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
         $data = [];
         $ignoreFiles = [
             'pagebuilder_base_form.xml',
-            'pagebuilder_modal_form.xml'
+            'pagebuilder_modal_form.xml',
+            'pagebuilder_map_location_form.xml'
         ];
         $componentRegistrar = new ComponentRegistrar();
         $modulePath = $componentRegistrar->getPath(ComponentRegistrar::MODULE, 'Magento_PageBuilder');
