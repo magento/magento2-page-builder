@@ -3,11 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
-class Close implements ButtonProviderInterface
+class CancelButton implements ButtonProviderInterface
 {
     /**
      * @var string
@@ -29,11 +32,11 @@ class Close implements ButtonProviderInterface
      *
      * @return array
      */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         return [
-            'label' => __('Close'),
-            'class' => 'close',
+            'label' => __('Cancel'),
+            'class' => 'cancel',
             'on_click' => '',
             'data_attribute' => [
                 'mage-init' => [
@@ -49,7 +52,7 @@ class Close implements ButtonProviderInterface
                         ]
                     ]
                 ],
-                'form-role' => 'close',
+                'form-role' => 'cancel',
             ],
             'sort_order' => 90
         ];

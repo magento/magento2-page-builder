@@ -55,7 +55,7 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkURL1">
             <argument name="property" value="PageBuilderSlideItemLinkURL1"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty">
@@ -146,7 +146,7 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkURL2">
             <argument name="property" value="PageBuilderSlideItemLinkURL2"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="PageBuilderSlideShowButtonAlwaysProperty2">
@@ -699,7 +699,7 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
@@ -817,7 +817,7 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderSlideNewTabProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
@@ -879,7 +879,7 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterSlideLinkUrl">
             <argument name="property" value="PageBuilderSlideLinkExternalUrlProperty"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderSlideNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="enterSlideShowOverlayAlways">
@@ -1224,5 +1224,150 @@
         </actionGroup>
         <waitForElementNotVisible selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeSliderInContent" />
         <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeSliderInDOM" />
+    </test>
+    <test name="AddImageToSliderStage">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
+            <title value="Add image into Slider from the Stage"/>
+            <description value="A user should be able to add image to Slider stage."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75104"/>
+            <testCaseId value="MAGETWO-92116"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!--Verify there are 2 buttons when hovering-->
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage1"/>
+        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons" />
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
+        </actionGroup>
+        <!--Upload image from local machine -->
+        <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
+        <attachFile userInput="{{PageBuilderLocalImagePropertyJpg.value}}" selector="{{PageBuilderActionsSection.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad4" />
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="waitForMainImageSource1"/>
+        <!--Upload image from Media Gallery Storage -->
+        <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
+        <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImageFile1">
+            <argument name="Image" value="PageBuilderSliderBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
+        <!--Verify uploaded image is displayed on slide-out-->
+        <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
+        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
+            <argument name="property" value="PageBuilderSliderBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
+        <waitForPageLoad stepKey="waitForPageLoad3" />
+        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+    </test>
+    <test name="VerifyUploadImageOnSliderStageDependOnEachTypeOfAppearance">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
+            <title value="Add image into Slider from the Stage"/>
+            <description value="A user should be able to add image to Slider stage when switching between appearance type."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75104"/>
+            <testCaseId value="MAGETWO-92116"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        </actionGroup>
+        <!--Verify there are 2 buttons display when user select appearance Left-->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty1">
+            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <click selector="{{SlideOnBackend.collageOverlayGeneral}}" stepKey="clickSliderInStage1"/>
+        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons1" />
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1" >
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
+        </actionGroup>
+        <!--Verify there are 2 buttons display when user select appearance Center-->
+        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions2">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty2">
+            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <click selector="{{SlideOnBackend.collageOverlayGeneral}}" stepKey="clickSliderInStage2"/>
+        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons2" />
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2" >
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
+        </actionGroup>
+        <!--Verify there are 2 buttons display when user select appearance Right-->
+        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions3">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty3">
+            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!--Verify there are 2 buttons when hovering-->
+        <click selector="{{SlideOnBackend.collageOverlayGeneral}}" stepKey="clickSliderInStage3"/>
+        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons3" />
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3" >
+            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
+        </actionGroup>
     </test>
 </tests>

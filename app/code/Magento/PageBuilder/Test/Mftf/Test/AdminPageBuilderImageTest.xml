@@ -63,16 +63,15 @@
         <waitForElementVisible selector="{{ImageOnStage.uploadImageBtn}}" stepKey="seeUploadImageBtn1" />
         <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryBtn}}" stepKey="seeSelectFromGalleryBtn1" />
         <!-- Attach image A to PageBuilder stage -->
-        <comment userInput="Attach image A to PageBuilder stage" stepKey="commentAttach"/>
-        <attachFile userInput="{{PageBuilderImageOnStage.value}}" selector="{{ImageOnStage.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{ImageOnStage.imagePreview}}" stepKey="waitForImagePreview"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageSourceOnStage('magentoStage')}}" stepKey="waitForImageSource"/>
+        <actionGroup ref="addImageToStage" stepKey="addImageToStage">
+            <argument name="property" value="PageBuilderImageOnStage"/>
+        </actionGroup>
         <!-- Hover uploaded image to check Upload New Image button and Select From Gallery button -->
-        <comment userInput="Hover uploaded image to check Upload New Image button and Select From Gallery button" stepKey="commentHover"/>
-        <moveMouseOver selector="{{ImageOnStage.imageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" x="10" y="0" stepKey="onMouseOverUploadedImage"/>
-        <waitForElementVisible selector="{{ImageOnStage.uploadNewImageBtn}}" stepKey="waitForUploadNewImageBtn" />
-        <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
+        <comment userInput="verify Upload Image Buttons" stepKey="commentVerifyUploadImageButtons"/>
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
+            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="section" value="ImageOnStage"/>
+        </actionGroup>
         <!-- Duplicate Image Content Block -->
         <comment userInput="Duplicate Image Content Block" stepKey="commentDuplicate"/>
         <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
@@ -83,9 +82,10 @@
             <argument name="contentBlockIndex" value="1"/>
         </actionGroup>
         <!-- Verify image A display on preview of slide-out -->
-        <comment userInput="Verify image A display on preview of slide-out" stepKey="commentVerifyImage"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImageOnStage.value)}}" stepKey="seeImageNameOnPreview"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeMainImageSource"/>
+        <comment userInput="Verify image A display on preview of slide-out" stepKey="commentVerifyImageOnSlideout"/>
+        <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout">
+            <argument name="property" value="PageBuilderImageOnStage"/>
+        </actionGroup>
         <!-- Verify image A stored in the root folder of Magento Media Gallery -->
         <comment userInput="Verify image A stored in the root folder of Magento Media Gallery" stepKey="commentVerifyImage2"/>
         <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
@@ -199,7 +199,7 @@
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="enterLinkProperty">
             <argument name="property" value="PageBuilderImageLinkProperty"/>
-            <argument name="selection" value="ExternalLink"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
             <argument name="newTab" value="PageBuilderImageNewTab_True"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterImageCaptionProperty">

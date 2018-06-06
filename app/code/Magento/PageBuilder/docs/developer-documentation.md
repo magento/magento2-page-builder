@@ -18,7 +18,8 @@
     1. [Bindings]
     1. [Master format]
     1. [Visual select] 
-    1. [Custom Toolbar] 
+    1. [Custom Toolbar]
+    1. [Add image uploader to content type] 
 5. [Roadmap and known issues]
 
 **[Architecture overview]** - An overview of the PageBuilder module architecture.
@@ -62,5 +63,6 @@
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Custom Toolbar]: toolbar.md
+[Add image uploader to content type]: image-uploader.md
 [Roadmap and known issues]: roadmap.md
 [Bindings]: bindings.md
