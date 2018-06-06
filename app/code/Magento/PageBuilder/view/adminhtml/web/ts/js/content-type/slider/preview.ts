@@ -114,6 +114,12 @@ export default class Preview extends PreviewCollection {
                 this.setActiveSlide(args.newPosition);
             }
         });
+        // When sorting stops ensure we reset the focus slide to null
+        events.on("sortableChildren:sortstop", (args: PreviewSortableSortUpdateEventParams) => {
+            if (args.instance.id === this.parent.id) {
+                this.focusedSlide(null);
+            }
+        });
         // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
         events.on("slide:block:removed", (args: BlockRemovedParams) => {
             if (args.block.parent.id === this.parent.id) {
