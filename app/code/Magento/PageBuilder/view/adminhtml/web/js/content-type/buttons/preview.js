@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_knockout, _translate, _uiEvents, _config, _contentTypeFactory, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _uiEvents, _config, _contentTypeFactory, _option, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -29,6 +29,20 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config
           _this2.addButton();
         }
       });
+    };
+    /**
+     * Set state based on mouseover event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onMouseOver = function onMouseOver(context, event) {
+      // Only run the mouse over action when the active element is not a child of buttons
+      if (!_jquery.contains(this.wrapperElement, document.activeElement)) {
+        return _PreviewCollection.prototype.onMouseOver.call(this, context, event);
+      }
     };
     /**
      * Return an array of options

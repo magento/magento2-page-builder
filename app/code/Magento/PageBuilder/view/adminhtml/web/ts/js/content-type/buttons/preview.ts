@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "uiEvents";
@@ -10,7 +11,6 @@ import Config from "../../config";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
-import BlockMountEventParamsInterface from "../block-mount-event-params.d";
 import ButtonItem from "../button-item/preview";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import PreviewCollection from "../preview-collection";
@@ -26,6 +26,19 @@ export default class Preview extends PreviewCollection {
                 this.addButton();
             }
         });
+    }
+
+    /**
+     * Set state based on mouseover event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onMouseOver(context: Preview, event: Event) {
+        // Only run the mouse over action when the active element is not a child of buttons
+        if (!$.contains(this.wrapperElement, document.activeElement)) {
+            return super.onMouseOver(context, event);
+        }
     }
 
     /**
