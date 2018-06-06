@@ -25,4 +25,21 @@
         <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
+    <actionGroup name="validateBackgroundColor">
+        <arguments>
+            <argument name="page"/>
+            <argument name="backgroundColor"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{page.backgroundColor(index, backgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
+    </actionGroup>
+    <actionGroup name="validateNoBackgroundColor">
+        <arguments>
+            <argument name="page"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{page.noBackgroundColor(index)}}" stepKey="waitForBackgroundColor"/>
+    </actionGroup>
 </actionGroups>

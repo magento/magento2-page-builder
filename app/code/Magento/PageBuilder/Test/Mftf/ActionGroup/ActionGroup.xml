@@ -597,11 +597,20 @@
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <dontSeeCheckboxIsChecked selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="dontSeeOptionIsCheckedProperty"/>
     </actionGroup>
+    <actionGroup name="openAndValidateColorPickerValue">
+        <arguments>
+            <argument name="color" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="waitForColorSwatch"/>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindow"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{color}}" stepKey="seeExpectedColor"/>
+    </actionGroup>
     <actionGroup name="seeColorInColorSwatch">
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(property.section, property.fieldName, property.rgb)}}" stepKey="waitForColorSwatch"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(property.section, property.fieldName, property.rgb)}}" stepKey="waitForColorSwatchColor"/>
     </actionGroup>
     <actionGroup name="seeNoColorInColorSwatch">
         <arguments>

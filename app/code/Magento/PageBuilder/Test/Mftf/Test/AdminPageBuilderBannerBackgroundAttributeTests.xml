@@ -19,7 +19,7 @@
             <!--<testCaseId value="MAGETWO-88319"/>-->
             <group value="pagebuilder"/>
             <group value="pagebuilder-banner"/>
-            <group value="pagebuilder-bannerPoster"/>
+            <group value="pagebuilder-bannerBackground"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -44,6 +44,12 @@
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="seeNoColorInColorSwatch" stepKey="validateColorSwatch">
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
+        </actionGroup>
+        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="validateBackgroundColorPlaceholderText">
             <argument name="property" value="PageBuilderBackgroundColor_Default"/>
         </actionGroup>
         <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoBackgroundImage">
@@ -110,6 +116,332 @@
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
             <argument name="page" value="BannerOnFrontend"/>
+        </actionGroup>
+    </test>
+    <test name="EditPanelColorPickerUpdatesFromFieldInput">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Color Picker Updates From Input Field Values"/>
+            <description value="Validate that when the user inputs different types of color values into the Background Color input field, the color picker updates with the appropriate color."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <!--<testCaseId value="MAGETWO-89768 MAGETWO-89770"/>-->
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerBackground"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <!-- Input: Plaintext -->
+        <comment userInput="Input: Plaintext" stepKey="commentPlaintext"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputPlaintext">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchPlaintextColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validatePlaintext">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <!-- Input: Hex -->
+        <comment userInput="Input: Hex" stepKey="commentHex"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHex">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHexColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHex">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Hex_White.hex}}"/>
+        </actionGroup>
+        <!-- Input: RGB -->
+        <comment userInput="Input: RGB" stepKey="commentRGB"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGB">
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchRGBColor">
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGB">
+            <argument name="color" value="{{PageBuilderBackgroundColor_RGB_Blue.hex}}"/>
+        </actionGroup>
+        <!-- Input: RGBa -->
+        <comment userInput="Input: RGBa" stepKey="commentRGBa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGBa">
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_RGBa_Blue.section, PageBuilderBackgroundColor_RGBa_Blue.fieldName, PageBuilderBackgroundColor_RGBa_Blue.value)}}" stepKey="waitForColorSwatchColor"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGBa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_RGBa_Blue.value}}"/>
+        </actionGroup>
+        <!-- Input: HSL -->
+        <comment userInput="Input: HSL" stepKey="commentHSL"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSL">
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSLColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSL">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSL_Orange.hex}}"/>
+        </actionGroup>
+    </test>
+    <test name="EditPanelColorPickerWindowFunctionality">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Banner"/>
+            <title value="Validate Color Picker Window Functionality"/>
+            <description value="Validate the following for the color picker window: 1) Hex chart, 2) Favorite colors, 3) Color picker area, 4) Light/Dark slide, 5) Hex Input, 6) Cancel button, 7) Apply button."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MAGETWO-89768 MAGETWO-89770"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerBackground"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <!-- Open Color Picker -->
+        <comment userInput="Open Color Picker" stepKey="commentOpen"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateDefault">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Default.value}}"/>
+        </actionGroup>
+        <!-- Validate Hex Chart -->
+        <comment userInput="Validate Hex Chart" stepKey="commentHexChart"/>
+        <waitForElementVisible selector="{{ColorPicker.firstColorBox}}" stepKey="waitForFirstColorBox"/>
+        <waitForElementVisible selector="{{ColorPicker.allColorBoxes}}" stepKey="waitForColorBoxes"/>
+        <seeNumberOfElements selector="{{ColorPicker.allColorBoxes}}" userInput="64" stepKey="verifyNumberOfColorBoxes"/>
+        <!-- Validate Color Wheel -->
+        <comment userInput="Validate Color Wheel" stepKey="commentColorWheel"/>
+        <waitForElementVisible selector="{{ColorPicker.colorWheelColor(PageBuilderBackgroundColor_Default.colorWheelDefault)}}" stepKey="waitForColorWheelDefaultColor"/>
+        <click selector="{{ColorPicker.colorWheel}}" stepKey="clickColorWheel"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorPicker.section, PageBuilderBackgroundColor_CenterColorPicker.fieldName, PageBuilderBackgroundColor_CenterColorPicker.rgb)}}" stepKey="waitForColorSwatchColor"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorPicker.hex}}" stepKey="seeColorInInputField"/>
+        <!-- Validate Clear Color Button-->
+        <comment userInput="Validate Clear Color Button" stepKey="commentClearColorButton"/>
+        <click selector="{{ColorPicker.clearColorBtn}}" stepKey="clickClearColorButton"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName, PageBuilderBackgroundColor_Default.colorSwatchColor)}}" stepKey="waitForColorSwatchColor2"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Default.value}}" stepKey="seeColorInInputField2"/>
+        <!-- Validate Hue Slider -->
+        <comment userInput="Validate Hue Slider" stepKey="commentHueSlider"/>
+        <click selector="{{ColorPicker.hueSlider}}" stepKey="clickHueSlider"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgb)}}" stepKey="waitForColorSwatchColor3"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.hex}}" stepKey="seeColorInInputField3"/>
+        <!-- Validate Light/Dark Slider -->
+        <comment userInput="Validate Light/Dark Slider" stepKey="commentLightDarkSlider"/>
+        <click selector="{{ColorPicker.lightDarkSlider}}" stepKey="clickLightDarkSlider"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider)}}" stepKey="waitForColorSwatchColor4"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider}}" stepKey="seeColorInInputField4"/>
+        <!-- Validate Hex Input Field -->
+        <comment userInput="Validate Hex Input Field" stepKey="commentHexInput"/>
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Plaintext_Green.value}}" stepKey="inputColorInInputField"/>
+        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_Plaintext_Green.section, PageBuilderBackgroundColor_Plaintext_Green.fieldName, PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForColorSwatchColor5"/>
+        <!-- Validate Apply Button -->
+        <comment userInput="Validate Apply Button" stepKey="commentApplyButton"/>
+        <click selector="{{ColorPicker.applyBtn}}" stepKey="clickApplyButton"/>
+        <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <!-- Validate Cancel Button -->
+        <comment userInput="Validate Cancel Button" stepKey="commentCancelButton"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateColorPicker">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Hex_White.value}}" stepKey="inputColorInInputField2"/>
+        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField2"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_Hex_White.section, PageBuilderBackgroundColor_Hex_White.fieldName, PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="waitForColorSwatchColor6"/>
+        <click selector="{{ColorPicker.cancelBtn}}" stepKey="clickCancelButton"/>
+        <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateColorPicker2">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <!-- Validate Favorite Colors -->
+        <comment userInput="Validate Favorite Colors" stepKey="commentFavoriteColors"/>
+        <waitForElementVisible selector="{{ColorPicker.activeFavoriteColorBox(PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForActiveFavoriteColor"/>
+    </test>
+    <test name="BannerEditBackgroundColorPlainText">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Banner"/>
+            <title value="Edit Background Color Attribute - PlainText"/>
+            <description value="Tests that the Background Color attribute functions as expected on Stage and Storefront for Banner for PlainText value"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <!--<testCaseId value="MAGETWO-90685"/>-->
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerBackground"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <!-- Add Background Color -->
+        <comment userInput="Add Background Color" stepKey="commentAddBackgroundColor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Check Background Color -->
+        <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
+        <actionGroup ref="validateBackgroundColor" stepKey="validateStage1">
+            <argument name="page" value="BannerOnBackend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Background Color After Save -->
+        <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
+        <actionGroup ref="validateBackgroundColor" stepKey="validateStage2">
+            <argument name="page" value="BannerOnBackend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <!-- Edit Panel: Check Background Color -->
+        <comment userInput="Edit Panel: Check Background Color" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="validateBackgroundColorSwatch">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColorField">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <!-- Storefront: Check Background Color -->
+        <comment userInput="Storefront: Check Background Color" stepKey="commentStorefrontCheck"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundColor" stepKey="validateStorefront">
+            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+    </test>
+    <test name="BannerEditBackgroundColorInvalid">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Banner"/>
+            <title value="Edit Background Color Attribute - Invalid"/>
+            <description value="Tests that the Background Color attribute functions as expected on Stage and Storefront for Banner for Invalid value"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <!--<testCaseId value="MAGETWO-90685"/>-->
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerBackground"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <!-- Add Background Color -->
+        <comment userInput="Add Background Color" stepKey="commentAddBackgroundColor"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Invalid"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateError">
+            <argument name="property" value="PageBuilderBackgroundColor_Invalid"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!-- Stage: Check Background Color -->
+        <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
+        <actionGroup ref="validateNoBackgroundColor" stepKey="validateStage">
+            <argument name="page" value="BannerOnBackend"/>
+        </actionGroup>
+        <!-- Add Valid After Invalid Background Color -->
+        <comment userInput="Add Valid After Invalid Background Color" stepKey="commentAddBackgroundColor2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Invalid"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateError2">
+            <argument name="property" value="PageBuilderBackgroundColor_Invalid"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor3">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Check Background Color After Valid Save -->
+        <comment userInput="Stage: Check Background Color After Valid Save" stepKey="commentStageCheck2"/>
+        <actionGroup ref="validateBackgroundColor" stepKey="validateStage1">
+            <argument name="page" value="BannerOnBackend"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
     </test>
 </tests>
