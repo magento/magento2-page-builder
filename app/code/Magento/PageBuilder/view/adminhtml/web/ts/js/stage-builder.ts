@@ -48,14 +48,14 @@ function buildElementIntoStage(element: Element, parent: ContentTypeInterface, s
 
         if (children.length > 0) {
             _.forEach(children, (childElement: HTMLElement) => {
-                childPromises.push(createElementBlock(childElement, stage, parent));
+                childPromises.push(createElementContentType(childElement, stage, parent));
                 childElements.push(childElement);
             });
         }
 
         // Wait for all the promises to finish and add the instances to the stage
         return Promise.all(childPromises).then((childrenPromises) => {
-            return Promise.all(childrenPromises.map((child: Block, index) => {
+            return Promise.all(childrenPromises.map((child: ContentType, index) => {
                 parent.addChild(child);
                 return buildElementIntoStage(childElements[index], child, stage);
             }));
@@ -71,7 +71,7 @@ function buildElementIntoStage(element: Element, parent: ContentTypeInterface, s
  * @param {stage} stage
  * @returns {Promise<ContentTypeInterface>}
  */
-function createElementBlock(
+function createElementContentType(
     element: HTMLElement,
     stage: Stage,
     parent?: ContentTypeInterface,
@@ -151,7 +151,7 @@ function buildEmpty(stage: Stage, initialValue: string) {
     const htmlDisplayContentTypeConfig = Config.getContentTypeConfig(stageConfig.html_display_content_type);
 
     if (rootContentTypeConfig) {
-        return createContentType(rootContentTypeConfig, stage, stage.id, {}).then((row: Block) => {
+        return createContentType(rootContentTypeConfig, stage, stage.id, {}).then((row: ContentType) => {
             stage.addChild(row);
             if (htmlDisplayContentTypeConfig && initialValue) {
                 return createContentType(
@@ -161,7 +161,7 @@ function buildEmpty(stage: Stage, initialValue: string) {
                     {
                         html: initialValue,
                     },
-                ).then((text: Block) => {
+                ).then((text: ContentType) => {
                     row.addChild(text);
                 });
             }

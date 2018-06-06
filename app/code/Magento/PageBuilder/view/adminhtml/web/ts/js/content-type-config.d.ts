@@ -16,7 +16,7 @@ export default interface ContentTypeConfigInterface {
     preview_template: string;
     render_template: string;
     preview_component: string;
-    content_component: string;
+    master_component: string;
     component: string;
     appearances: string[];
     readers: string[];

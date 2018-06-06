@@ -20,7 +20,7 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         // When a products type is dropped for the first time open the edit panel
-        events.on("products:block:dropped:create", (event: Event, params: {[key: string]: any}) => {
+        events.on("products:contentType:dropped:create", (event: Event, params: {[key: string]: any}) => {
             if (event.id === this.parent.id) {
                 delayedPromise(300)().then(() => {
                     this.edit.open();

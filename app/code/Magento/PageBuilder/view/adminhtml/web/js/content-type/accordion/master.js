@@ -1,17 +1,17 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/content-type/content-collection"], function (_contentCollection) {
+define(["Magento_PageBuilder/js/content-type/master-collection"], function (_masterCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var Content =
+  var Master =
   /*#__PURE__*/
-  function (_ContentCollection) {
-    _inheritsLoose(Content, _ContentCollection);
+  function (_MasterCollection) {
+    _inheritsLoose(Master, _MasterCollection);
 
-    function Content() {
-      return _ContentCollection.apply(this, arguments) || this;
+    function Master() {
+      return _MasterCollection.apply(this, arguments) || this;
     }
 
-    var _proto = Content.prototype;
+    var _proto = Master.prototype;
 
     /**
      * Retrieve the data-mage-init contents
@@ -48,9 +48,9 @@ define(["Magento_PageBuilder/js/content-type/content-collection"], function (_co
       return [0];
     };
 
-    return Content;
-  }(_contentCollection);
+    return Master;
+  }(_masterCollection);
 
-  return Content;
+  return Master;
 });
-//# sourceMappingURL=content.js.map
+//# sourceMappingURL=master.js.map

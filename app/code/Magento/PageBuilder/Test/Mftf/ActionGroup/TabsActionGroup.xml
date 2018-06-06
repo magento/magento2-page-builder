@@ -9,12 +9,12 @@
 <actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
     <actionGroup name="addTab">
-        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentBlock"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderTabsContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForMouseOverAnimation" />
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderTabsContentBlock.role)}}" stepKey="waitForOptions" />
-        <click selector="{{PageBuilderActionsSection.contentBlockAdd(PageBuilderTabsContentBlock.role)}}" stepKey="clickAddContentBlock"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderTabsContentType.role)}}" stepKey="waitForOptions" />
+        <click selector="{{PageBuilderActionsSection.contentTypeAdd(PageBuilderTabsContentType.role)}}" stepKey="clickAddContentType"/>
         <waitForPageLoad stepKey="waitForNewTab" time="30"/>
     </actionGroup>
     <actionGroup name="addTabAndOpenNewTabOptions">
@@ -22,44 +22,44 @@
             <argument name="from" defaultValue="1" type="string"/>
             <argument name="to" defaultValue="2" type="string"/>
         </arguments>
-        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentBlock"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderTabsContentBlock.role)}}" x="10" y="0" stepKey="onMouseOverContentBlockStage"/>
+        <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderTabsContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForMouseOverAnimation" time="30"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderTabsContentBlock.role)}}" stepKey="waitForOptions" />
-        <click selector="{{PageBuilderActionsSection.contentBlockAdd(PageBuilderTabsContentBlock.role)}}" stepKey="clickAddContentBlock"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderTabsContentType.role)}}" stepKey="waitForOptions" />
+        <click selector="{{PageBuilderActionsSection.contentTypeAdd(PageBuilderTabsContentType.role)}}" stepKey="clickAddContentType"/>
         <waitForPageLoad stepKey="waitForNewTab" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabContent(to)}}" stepKey="waitForNewTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader(to)}}" stepKey="waitForNewTabHeader"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsByIndex(to)}}" stepKey="waitForTabOptionsPanel"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit2"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock2"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType2"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="duplicateTabByIndex">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentBlockInStageVisible" />
+        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentTypeInStageVisible" />
         <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader(index)}}"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="clickEditContentType"/>
     </actionGroup>
     <actionGroup name="openTabOptionsByIndex">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentBlockInStageVisible" />
+        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentTypeInStageVisible" />
         <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader(index)}}"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="switchTabsAdmin">
         <arguments>

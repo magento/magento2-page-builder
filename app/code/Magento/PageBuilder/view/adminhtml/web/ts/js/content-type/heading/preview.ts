@@ -48,7 +48,7 @@ export default class Heading extends BasePreview {
         super.bindEvents();
 
         // When a heading is dropped for the first time show heading toolbar
-        events.on("heading:block:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("heading:contentType:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 _.delay(() => {
                     $(this.element).focus();

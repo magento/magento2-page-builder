@@ -7,7 +7,7 @@ import ContentTypeInterface from "./content-type.d";
 
 export default interface ContentTypeInstanceDroppedParamsInterface {
     parent: ContentTypeInterface;
-    blockInstance: ContentTypeInterface;
+    contentTypeInstance: ContentTypeInterface;
     index?: number;
     stageId: string;
 }

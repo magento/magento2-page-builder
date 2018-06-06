@@ -4,7 +4,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  var Content =
+  var Master =
   /*#__PURE__*/
   function () {
     /**
@@ -27,7 +27,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
      * @param {ContentTypeInterface} parent
      * @param {ObservableUpdater} observableUpdater
      */
-    function Content(parent, observableUpdater) {
+    function Master(parent, observableUpdater) {
       this.data = {};
       this.parent = void 0;
       this.observableUpdater = void 0;
@@ -46,7 +46,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
      */
 
 
-    var _proto = Content.prototype;
+    var _proto = Master.prototype;
 
     /**
      * Get data for css binding, example {"class-name": true}
@@ -163,7 +163,7 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
       return result;
     };
     /**
-     * Get block data
+     * Get content type data
      *
      * @param {string} element
      * @returns {DataObject}
@@ -221,16 +221,16 @@ define(["underscore", "Magento_PageBuilder/js/master-format/attribute-filter", "
       this.afterObservablesUpdated();
     };
 
-    _createClass(Content, [{
+    _createClass(Master, [{
       key: "renderTemplate",
       get: function get() {
         return (0, _appearanceConfig)(this.parent.config.name, this.getData().appearance).render_template;
       }
     }]);
 
-    return Content;
+    return Master;
   }();
 
-  return Content;
+  return Master;
 });
-//# sourceMappingURL=content.js.map
+//# sourceMappingURL=master.js.map

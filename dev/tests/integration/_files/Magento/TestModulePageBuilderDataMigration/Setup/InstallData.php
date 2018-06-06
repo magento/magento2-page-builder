@@ -81,8 +81,8 @@ class InstallData implements InstallDataInterface
         // Clear the eavConfig cache
         $this->eavConfig->clear();
 
-        // Install the default content blocks
-        $this->installDefaultContentBlocks($setup);
+        // Install the default content types
+        $this->installDefaultContentTypes($setup);
 
         $setup->endSetup();
     }
@@ -92,7 +92,7 @@ class InstallData implements InstallDataInterface
      *
      * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
      */
-    private function installDefaultContentBlocks($setup)
+    private function installDefaultContentTypes($setup)
     {
         $filePath = $this->moduleReader->getModuleDir(false, 'Magento_TestModulePageBuilderDataMigration')
             . DIRECTORY_SEPARATOR

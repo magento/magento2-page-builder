@@ -29,20 +29,20 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <comment userInput="User adds tabs and sees 1st default tab item created by default" stepKey="AC1"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <comment userInput="Tab option panel displayed on top of the new tab after adding it." stepKey="AC2"/>
         <waitForElement selector="{{TabOnStage.tabOptionsByIndex('1')}}" stepKey="seeTabOptionsPanel" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEditVisible"/>
         <comment userInput="A placeholder indicates that content can be added inside the tab" stepKey="AC3"/>
-        <see selector="{{TabOnStage.empty}}" userInput="Drag content blocks or columns here" stepKey="seeTabPlaceholder"/>
+        <see selector="{{TabOnStage.empty}}" userInput="Drag content types or columns here" stepKey="seeTabPlaceholder"/>
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC4"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-expanded" expectedValue="true" stepKey="assertTab1ContentFocused"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel('1')}}" attribute="aria-hidden" expectedValue="false" stepKey="assertTab1ContentVisible"/>
@@ -82,7 +82,7 @@
 
         <!-- Validate Default Values on Edit Tab for initial tab -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Tab has default value Tab 1 for Tab Name" stepKey="AC11"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultTabName">
@@ -126,7 +126,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsForTab1"/>
         <!-- Validate Default Values in Edit Tabs -->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openTabsEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
 
         <comment userInput="Tabs has default value Tab 1 for Default Active Tab" stepKey="commentDefaultActiveTab"/>
@@ -147,7 +147,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Default Values for Tabs on storefront -->
         <comment userInput="View default Tabs with empty Tab on storefront" stepKey="viewTabOnStorefront"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForTabsToLoadStorefront" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -178,15 +178,15 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!--Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
         <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
         <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editTab"/>
         <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>

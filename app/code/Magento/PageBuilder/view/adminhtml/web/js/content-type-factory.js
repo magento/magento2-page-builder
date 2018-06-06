@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type/content-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_loader, _uiEvents, _underscore, _contentFactory, _previewFactory) {
+define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_loader, _uiEvents, _underscore, _masterFactory, _previewFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -27,28 +27,28 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
     return new Promise(function (resolve) {
       (0, _loader)([config.component], function (ContentTypeComponent) {
         var contentType = new ContentTypeComponent(parent, config, stageId);
-        Promise.all([(0, _previewFactory)(contentType, config), (0, _contentFactory)(contentType, config)]).then(function (resolvedPromises) {
+        Promise.all([(0, _previewFactory)(contentType, config), (0, _masterFactory)(contentType, config)]).then(function (resolvedPromises) {
           var previewComponent = resolvedPromises[0],
-              contentComponent = resolvedPromises[1];
+              masterComponent = resolvedPromises[1];
           contentType.preview = previewComponent;
-          contentType.content = contentComponent;
+          contentType.content = masterComponent;
           contentType.dataStore.update(prepareData(config, data));
           resolve(contentType);
         });
       });
-    }).then(function (block) {
-      _uiEvents.trigger("block:create", {
-        id: block.id,
-        block: block
+    }).then(function (contentType) {
+      _uiEvents.trigger("contentType:create", {
+        id: contentType.id,
+        contentType: contentType
       });
 
-      _uiEvents.trigger(config.name + ":block:create", {
-        id: block.id,
-        block: block
+      _uiEvents.trigger(config.name + ":contentType:create", {
+        id: contentType.id,
+        contentType: contentType
       });
 
-      fireBlockReadyEvent(block, childrenLength);
-      return block;
+      fireContentTypeReadyEvent(contentType, childrenLength);
+      return contentType;
     }).catch(function (error) {
       console.error(error);
     });
@@ -74,23 +74,23 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
     return _underscore.extend(defaults, data);
   }
   /**
-   * A block is ready once all of its children have mounted
+   * A content type is ready once all of its children have mounted
    *
-   * @param {Block} block
+   * @param {ContentType} contentType
    * @param {number} childrenLength
    */
 
 
-  function fireBlockReadyEvent(block, childrenLength) {
+  function fireContentTypeReadyEvent(contentType, childrenLength) {
     var fire = function fire() {
-      _uiEvents.trigger("block:ready", {
-        id: block.id,
-        block: block
+      _uiEvents.trigger("contentType:ready", {
+        id: contentType.id,
+        contentType: contentType
       });
 
-      _uiEvents.trigger(block.config.name + ":block:ready", {
-        id: block.id,
-        block: block
+      _uiEvents.trigger(contentType.config.name + ":contentType:ready", {
+        id: contentType.id,
+        contentType: contentType
       });
     };
 
@@ -99,17 +99,17 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
     } else {
       var mountCounter = 0;
 
-      _uiEvents.on("block:mount", function (args) {
-        if (args.block.parent.id === block.id) {
+      _uiEvents.on("contentType:mount", function (args) {
+        if (args.contentType.parent.id === contentType.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
             fire();
 
-            _uiEvents.off("block:mount:" + block.id);
+            _uiEvents.off("contentType:mount:" + contentType.id);
           }
         }
-      }, "block:mount:" + block.id);
+      }, "contentType:mount:" + contentType.id);
     }
   }
 

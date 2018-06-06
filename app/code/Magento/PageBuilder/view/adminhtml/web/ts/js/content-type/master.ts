@@ -14,7 +14,7 @@ import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
 
-export default class Content {
+export default class Master {
     public data: ObservableObject = {};
     protected parent: ContentTypeInterface;
     private observableUpdater: ObservableUpdater;
@@ -168,7 +168,7 @@ export default class Content {
     }
 
     /**
-     * Get block data
+     * Get content type data
      *
      * @param {string} element
      * @returns {DataObject}

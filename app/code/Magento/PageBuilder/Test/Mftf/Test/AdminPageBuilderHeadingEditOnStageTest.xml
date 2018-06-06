@@ -28,8 +28,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <comment userInput="Validate Heading edit toolbar" stepKey="CommentHeadingEditToolbar"/>
@@ -77,7 +77,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H1 On Stage"/>
-            <description value="Edit Heading Type field to value H1 on stage and view the rendered content block in stage and storefront. "/>
+            <description value="Edit Heading Type field to value H1 on stage and view the rendered content type in stage and storefront. "/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88142"/>
             <testCaseId value="MAGETWO-90653"/>
@@ -93,26 +93,26 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Alignment Type -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <comment userInput="Edit heading text inline on stage for default alignment" stepKey="commentEditHeading"/>
         <pressKey selector="{{HeadingOnStage.headingEditableText('1')}}" userInput="{{PageBuilderHeadingTextProperty.value}}" stepKey="enterHeadingText1"/>
@@ -123,11 +123,11 @@
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1',PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="dontSeeCenterAlignmentSelected"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1',PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="dontSeeRightAlignmentSelected"/>
         <waitForPageLoad stepKey="waitForAnimationType1" time="30"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
             <argument name="index" value="2"/>
@@ -135,11 +135,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage3">
             <argument name="index" value="3"/>
@@ -147,11 +147,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H1"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_center"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage4">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage4">
             <argument name="index" value="4"/>
@@ -191,8 +191,8 @@
         <!-- Validate Default heading -->
         <comment userInput="Validate Default alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText1">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -208,8 +208,8 @@
         <!-- Validate Left heading -->
         <comment userInput="Validate Left alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText2">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -225,8 +225,8 @@
         <!-- Validate Center heading -->
         <comment userInput="Validate Center alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText3">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -242,8 +242,8 @@
         <!-- Validate Right heading -->
         <comment userInput="Validate Right alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText4">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -286,7 +286,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.noAlignment(PageBuilderHeadingTypeProperty_H1.value, '1')}}" stepKey="waitForAlignmentVisible"/>
@@ -315,7 +315,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H2 On Stage"/>
-            <description value="Edit Heading Type field to value H2 on stage and view the rendered content block in stage and storefront. "/>
+            <description value="Edit Heading Type field to value H2 on stage and view the rendered content type in stage and storefront. "/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88142"/>
             <testCaseId value="MAGETWO-90654"/>
@@ -331,26 +331,26 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Alignment Type -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <comment userInput="Edit heading text inline on stage for default alignment" stepKey="commentEditHeading"/>
         <pressKey selector="{{HeadingOnStage.headingEditableText('1')}}" userInput="{{PageBuilderHeadingTextProperty.value}}" stepKey="enterHeadingText1"/>
@@ -361,11 +361,11 @@
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="dontSeeCenterAlignmentSelected"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="dontSeeRightAlignmentSelected"/>
         <waitForPageLoad stepKey="waitForAnimationType1" time="30"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
             <argument name="index" value="2"/>
@@ -373,11 +373,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage3">
             <argument name="index" value="3"/>
@@ -385,11 +385,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H2"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_center"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage4">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage4">
             <argument name="index" value="4"/>
@@ -429,8 +429,8 @@
         <!-- Validate Default heading -->
         <comment userInput="Validate Default alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText1">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -446,8 +446,8 @@
         <!-- Validate Left heading -->
         <comment userInput="Validate Left alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText2">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -463,8 +463,8 @@
         <!-- Validate Center heading -->
         <comment userInput="Validate Center alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText3">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -480,8 +480,8 @@
         <!-- Validate Right heading -->
         <comment userInput="Validate Right alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText4">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -524,7 +524,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.noAlignment(PageBuilderHeadingTypeProperty_H2.value, '1')}}" stepKey="waitForAlignmentVisible"/>
@@ -553,7 +553,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H3 On Stage"/>
-            <description value="Edit Heading Type field to value H3 on stage and view the rendered content block in stage and storefront. "/>
+            <description value="Edit Heading Type field to value H3 on stage and view the rendered content type in stage and storefront. "/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88142"/>
             <testCaseId value="MAGETWO-90655"/>
@@ -569,26 +569,26 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Alignment Type -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <comment userInput="Edit heading text inline on stage for default alignment" stepKey="commentEditHeading"/>
         <pressKey selector="{{HeadingOnStage.headingEditableText('1')}}" userInput="{{PageBuilderHeadingTextProperty.value}}" stepKey="enterHeadingText1"/>
@@ -599,11 +599,11 @@
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="dontSeeCenterAlignmentSelected"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="dontSeeRightAlignmentSelected"/>
         <waitForPageLoad stepKey="waitForAnimationType1" time="30"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
             <argument name="index" value="2"/>
@@ -611,11 +611,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage3">
             <argument name="index" value="3"/>
@@ -623,11 +623,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H3"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_center"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage4">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage4">
             <argument name="index" value="4"/>
@@ -667,8 +667,8 @@
         <!-- Validate Default heading -->
         <comment userInput="Validate Default alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText1">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -684,8 +684,8 @@
         <!-- Validate Left heading -->
         <comment userInput="Validate Left alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText2">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -701,8 +701,8 @@
         <!-- Validate Center heading -->
         <comment userInput="Validate Center alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText3">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -718,8 +718,8 @@
         <!-- Validate Right heading -->
         <comment userInput="Validate Right alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText4">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -762,7 +762,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.noAlignment(PageBuilderHeadingTypeProperty_H3.value, '1')}}" stepKey="waitForAlignmentVisible"/>
@@ -791,7 +791,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H4 On Stage"/>
-            <description value="Edit Heading Type field to value H4 on stage and view the rendered content block in stage and storefront. "/>
+            <description value="Edit Heading Type field to value H4 on stage and view the rendered content type in stage and storefront. "/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88142"/>
             <testCaseId value="MAGETWO-90656"/>
@@ -807,26 +807,26 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Alignment Type -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <comment userInput="Edit heading text inline on stage for default alignment" stepKey="commentEditHeading"/>
         <pressKey selector="{{HeadingOnStage.headingEditableText('1')}}" userInput="{{PageBuilderHeadingTextProperty.value}}" stepKey="enterHeadingText1"/>
@@ -837,11 +837,11 @@
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="dontSeeCenterAlignmentSelected"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="dontSeeRightAlignmentSelected"/>
         <waitForPageLoad stepKey="waitForAnimationType1" time="30"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
             <argument name="index" value="2"/>
@@ -849,11 +849,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage3">
             <argument name="index" value="3"/>
@@ -861,11 +861,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H4"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_center"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage4">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage4">
             <argument name="index" value="4"/>
@@ -905,8 +905,8 @@
         <!-- Validate Default heading -->
         <comment userInput="Validate Default alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText1">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -922,8 +922,8 @@
         <!-- Validate Left heading -->
         <comment userInput="Validate Left alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText2">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -939,8 +939,8 @@
         <!-- Validate Center heading -->
         <comment userInput="Validate Center alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText3">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -956,8 +956,8 @@
         <!-- Validate Right heading -->
         <comment userInput="Validate Right alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText4">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -1000,7 +1000,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.noAlignment(PageBuilderHeadingTypeProperty_H4.value, '1')}}" stepKey="waitForAlignmentVisible"/>
@@ -1029,7 +1029,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H5 On Stage"/>
-            <description value="Edit Heading Type field to value H5 on stage and view the rendered content block in stage and storefront. "/>
+            <description value="Edit Heading Type field to value H5 on stage and view the rendered content type in stage and storefront. "/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88142"/>
             <testCaseId value="MAGETWO-90657"/>
@@ -1045,26 +1045,26 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Alignment Type -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <comment userInput="Edit heading text inline on stage for default alignment" stepKey="commentEditHeading"/>
         <pressKey selector="{{HeadingOnStage.headingEditableText('1')}}" userInput="{{PageBuilderHeadingTextProperty.value}}" stepKey="enterHeadingText1"/>
@@ -1075,11 +1075,11 @@
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="dontSeeCenterAlignmentSelected"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="dontSeeRightAlignmentSelected"/>
         <waitForPageLoad stepKey="waitForAnimationType1" time="30"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
             <argument name="index" value="2"/>
@@ -1087,11 +1087,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage3">
             <argument name="index" value="3"/>
@@ -1099,11 +1099,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H5"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_center"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage4">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage4">
             <argument name="index" value="4"/>
@@ -1143,8 +1143,8 @@
         <!-- Validate Default heading -->
         <comment userInput="Validate Default alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText1">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -1160,8 +1160,8 @@
         <!-- Validate Left heading -->
         <comment userInput="Validate Left alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText2">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -1177,8 +1177,8 @@
         <!-- Validate Center heading -->
         <comment userInput="Validate Center alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText3">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -1194,8 +1194,8 @@
         <!-- Validate Right heading -->
         <comment userInput="Validate Right alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText4">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -1238,7 +1238,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.noAlignment(PageBuilderHeadingTypeProperty_H5.value, '1')}}" stepKey="waitForAlignmentVisible"/>
@@ -1267,7 +1267,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H6 On Stage"/>
-            <description value="Edit Heading Type field to value H6 on stage and view the rendered content block in stage and storefront. "/>
+            <description value="Edit Heading Type field to value H6 on stage and view the rendered content type in stage and storefront. "/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88142"/>
             <testCaseId value="MAGETWO-90658"/>
@@ -1283,26 +1283,26 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Alignment Type -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage1">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <comment userInput="Edit heading text inline on stage for default alignment" stepKey="commentEditHeading"/>
         <pressKey selector="{{HeadingOnStage.headingEditableText('1')}}" userInput="{{PageBuilderHeadingTextProperty.value}}" stepKey="enterHeadingText1"/>
@@ -1314,11 +1314,11 @@
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_center.toolbar)}}" stepKey="dontSeeCenterAlignmentSelected"/>
         <dontSeeElement selector="{{HeadingOnStage.headingTextAlignToolbarSelected('1', PageBuilderHeadingAlignmentProperty_right.toolbar)}}" stepKey="dontSeeRightAlignmentSelected"/>
         <waitForPageLoad stepKey="waitForAnimationType1" time="30"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage2">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage2">
             <argument name="index" value="2"/>
@@ -1326,11 +1326,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_left"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage3">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage3">
             <argument name="index" value="3"/>
@@ -1338,11 +1338,11 @@
             <argument name="headingType" value="PageBuilderHeadingTypeProperty_H6"/>
             <argument name="headingAlignment" value="PageBuilderHeadingAlignmentProperty_center"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragHeadingIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragHeadingIntoStage4">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="enterHeadingOnStage" stepKey="enterHeadingOnStage4">
             <argument name="index" value="4"/>
@@ -1382,8 +1382,8 @@
         <!-- Validate Default heading -->
         <comment userInput="Validate Default alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel1"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText1">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -1399,8 +1399,8 @@
         <!-- Validate Left heading -->
         <comment userInput="Validate Left alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText2">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -1416,8 +1416,8 @@
         <!-- Validate Center heading -->
         <comment userInput="Validate Center alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel3"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText3">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -1433,8 +1433,8 @@
         <!-- Validate Right heading -->
         <comment userInput="Validate Right alignment and selected heading type and text persist in Edit Panel" stepKey="commentValidateEditPanel4"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="validateHeadingText4">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -1477,7 +1477,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
         <waitForElementVisible selector="{{HeadingOnStorefront.noAlignment(PageBuilderHeadingTypeProperty_H6.value, '1')}}" stepKey="waitForAlignmentVisible"/>

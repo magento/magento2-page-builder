@@ -28,8 +28,8 @@
             <closeTab stepKey="closeTab"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-                <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-                <argument name="contentBlockIndex" value="1"/>
+                <argument name="contentType" value="PageBuilderImageContentType"/>
+                <argument name="contentTypeIndex" value="1"/>
             </actionGroup>
             <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn2"/>
             <waitForPageLoad stepKey="waitForPageLoad3" />
@@ -50,13 +50,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderImageContentBlock"/>
+            <argument name="group" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
@@ -69,17 +69,17 @@
         <!-- Hover uploaded image to check Upload New Image button and Select From Gallery button -->
         <comment userInput="verify Upload Image Buttons" stepKey="commentVerifyUploadImageButtons"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
             <argument name="section" value="ImageOnStage"/>
         </actionGroup>
-        <!-- Duplicate Image Content Block -->
-        <comment userInput="Duplicate Image Content Block" stepKey="commentDuplicate"/>
-        <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        <!-- Duplicate Image Content Type -->
+        <comment userInput="Duplicate Image Content Type" stepKey="commentDuplicate"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <!-- Verify image A display on preview of slide-out -->
         <comment userInput="Verify image A display on preview of slide-out" stepKey="commentVerifyImageOnSlideout"/>
@@ -102,19 +102,19 @@
             <argument name="property" value="PageBuilderLocalImagePropertyJpg"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageContentBlockByIndex(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeLocalImagePropertyOnStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageContentBlockByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.imageContentTypeByIndex(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeLocalImagePropertyOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.imageContentTypeByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeImage1Source"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeImage2Source"/>
     </test>
-    <test name="ImageAddImageContentBlockToCMSPage">
+    <test name="ImageAddImageContentTypeToCMSPage">
         <annotations>
             <features value="Pagebuilder: Image"/>
             <stories value="MAGETWO-83926: Image"/>
@@ -134,16 +134,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderImageContentBlock"/>
+            <argument name="group" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
@@ -214,7 +214,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -239,8 +239,8 @@
         <annotations>
             <features value="Pagebuilder: Image"/>
             <stories value="MAGETWO-83926: Image"/>
-            <title value="Remove image content block from stage"/>
-            <description value="A user should be able to remove image block from a row."/>
+            <title value="Remove image content type from stage"/>
+            <description value="A user should be able to remove image type from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
@@ -255,22 +255,22 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderImageContentBlock"/>
+            <argument name="group" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Remove Content -->
         <comment userInput="Remove Content" stepKey="commentRemoveContent"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderImageContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderImageContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="ImageValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Image"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Image - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Image."/>
             <severity value="CRITICAL"/>
@@ -287,16 +287,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderImageContentBlock"/>
+            <argument name="group" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!--<scrollTo selector="{{PageBuilderActionsSection.editPanelSectionName(AdvancedForm.dataIndex)}}" stepKey="scrollToAdvancedSection" />-->
@@ -350,7 +350,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
@@ -378,7 +378,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -412,16 +412,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderImageContentBlock"/>
+            <argument name="group" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
             <argument name="property" value="PageBuilderLocalImagePropertyJpg"/>
@@ -469,7 +469,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
@@ -516,7 +516,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
@@ -546,7 +546,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -583,20 +583,20 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderImageContentBlock"/>
+            <argument name="group" value="PageBuilderImageContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragImageIntoStage">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragImageIntoStage">
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <seeElement selector="{{ImageOnStage.imagePreview}}" stepKey="seeImagePreview"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderImageContentBlock"/>
+            <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

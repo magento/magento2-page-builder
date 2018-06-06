@@ -13,7 +13,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Heading - Default Heading State"/>
-            <description value="Tests default state of a Heading content block in the stage and storefront"/>
+            <description value="Tests default state of a Heading content type in the stage and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-87104"/>
             <group value="pagebuilder"/>
@@ -28,10 +28,10 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Default Heading in Stage -->
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType"/>
@@ -45,7 +45,7 @@
         <seeElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="seeStageHeadingType2"/>
         <seeElement selector="{{HeadingOnStage.headingPlaceholder(PageBuilderHeadingTypeDefaultProperty.value, 'Edit Heading Text', '1')}}" stepKey="waitForStageHeadingText2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Default Heading in Storefront -->
         <waitForElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeadingType"/>
@@ -72,16 +72,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Heading Type -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeHeadingTypeAttribute">
@@ -116,7 +116,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Heading Type -->
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeadingTypeAttributeValue2">
@@ -146,16 +146,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
@@ -214,7 +214,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
@@ -252,7 +252,7 @@
         <grabValueFrom selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="getPaddingBottom2"/>
         <assertEmpty actual="getPaddingBottom2" actualType="variable" message="Text field has text: $getPaddingBottom2" stepKey="assertPaddingBottom2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -284,16 +284,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
@@ -338,7 +338,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
@@ -385,7 +385,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
@@ -415,7 +415,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -437,7 +437,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Verify Heading On Hover Option Menu"/>
-            <description value="Test verifies that on hover option menu for Heading content block contains all buttons"/>
+            <description value="Test verifies that on hover option menu for Heading content type contains all buttons"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88782"/>
             <group value="pagebuilder"/>
@@ -452,29 +452,29 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="waitForHeadingInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderHeadingContentBlock.role)}}" stepKey="onMouseOverHeadingStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderHeadingContentBlock.role)}}" stepKey="waitForOptionsMenu" />
-        <see selector="{{PageBuilderActionsSection.contentBlockOptionsMenu(PageBuilderHeadingContentBlock.role)}}" userInput="{{PageBuilderHeadingContentBlock.name}}" stepKey="seeHeadingOptionMenuTitle"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockMove(PageBuilderHeadingContentBlock.role)}}" stepKey="seeHeadingOptionsMove"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockEdit(PageBuilderHeadingContentBlock.role)}}" stepKey="seeHeadingOptionsEdit"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockDuplicate(PageBuilderHeadingContentBlock.role, '1')}}" stepKey="seeHeadingOptionsDuplicate"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockRemove(PageBuilderHeadingContentBlock.role)}}" stepKey="seeHeadingOptionsRemove"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="waitForHeadingInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="onMouseOverHeadingStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" stepKey="waitForOptionsMenu" />
+        <see selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" userInput="{{PageBuilderHeadingContentType.name}}" stepKey="seeHeadingOptionMenuTitle"/>
+        <seeElement selector="{{PageBuilderActionsSection.contentTypeMove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsMove"/>
+        <seeElement selector="{{PageBuilderActionsSection.contentTypeEdit(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsEdit"/>
+        <seeElement selector="{{PageBuilderActionsSection.contentTypeDuplicate(PageBuilderHeadingContentType.role, '1')}}" stepKey="seeHeadingOptionsDuplicate"/>
+        <seeElement selector="{{PageBuilderActionsSection.contentTypeRemove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsRemove"/>
     </test>
     <test name="HeadingEditText">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Text"/>
-            <description value="Edit Heading Text field in PageBuilder and view the rendered content block in stage and storefront"/>
+            <description value="Edit Heading Text field in PageBuilder and view the rendered content type in stage and storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88783"/>
             <group value="pagebuilder"/>
@@ -489,16 +489,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -508,7 +508,7 @@
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront"/>
@@ -518,7 +518,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H1"/>
-            <description value="Edit Heading Type field to value H1 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
+            <description value="Edit Heading Type field to value H1 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88859"/>
             <group value="pagebuilder"/>
@@ -533,16 +533,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -557,7 +557,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -569,7 +569,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H2"/>
-            <description value="Edit Heading Type field to value H2 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
+            <description value="Edit Heading Type field to value H2 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88784"/>
             <group value="pagebuilder"/>
@@ -584,16 +584,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -608,7 +608,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -620,7 +620,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H3"/>
-            <description value="Edit Heading Type field to value H3 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
+            <description value="Edit Heading Type field to value H3 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88785"/>
             <group value="pagebuilder"/>
@@ -635,16 +635,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -659,7 +659,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -671,7 +671,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H4"/>
-            <description value="Edit Heading Type field to value H4 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
+            <description value="Edit Heading Type field to value H4 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88786"/>
             <group value="pagebuilder"/>
@@ -686,16 +686,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -710,7 +710,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -722,7 +722,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H5"/>
-            <description value="Edit Heading Type field to value H5 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
+            <description value="Edit Heading Type field to value H5 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88787"/>
             <group value="pagebuilder"/>
@@ -737,16 +737,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -761,7 +761,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -773,7 +773,7 @@
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
             <title value="Edit Heading Type H6"/>
-            <description value="Edit Heading Type field to value H6 in PageBuilder and view the rendered content block in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content blocks when on stage and verify all on stage and storefront)."/>
+            <description value="Edit Heading Type field to value H6 in PageBuilder and view the rendered content type in stage and storefront. Validate for each value. Combine all EditHeadingType tests into 1 test once MQE-498 is released (add 6 heading content types when on stage and verify all on stage and storefront)."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88788"/>
             <group value="pagebuilder"/>
@@ -788,16 +788,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingTextProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -812,7 +812,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -839,16 +839,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeadingIntoStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeadingIntoStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearHeadingTextProperty">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -868,7 +868,7 @@
         <waitForElement selector="{{HeadingOnStage.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForHeading"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Heading in Storefront -->
         <waitForElement selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="waitForStorefrontHeading"/>
@@ -877,8 +877,8 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
-            <title value="Duplicate a heading content block in stage"/>
-            <description value="A user should be able to duplicate a heading block in a row."/>
+            <title value="Duplicate a heading content type in stage"/>
+            <description value="A user should be able to duplicate a heading content type in a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88789"/>
             <group value="pagebuilder"/>
@@ -893,16 +893,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Fill All General Fields -->
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHeadingText">
@@ -939,8 +939,8 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Duplicate and Verify Stage -->
-        <actionGroup ref="duplicateContentBlock" stepKey="duplicateHeading">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateHeading">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="verifyHeadingInStage" stepKey="verifyHeadingInStage">
             <argument name="index" value="2"/>
@@ -962,8 +962,8 @@
         </actionGroup>
         <!-- Verify Edit Panel Values -->
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeadingText">
             <argument name="property" value="PageBuilderHeadingTextProperty"/>
@@ -999,7 +999,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Storefront -->
         <actionGroup ref="verifyHeadingInStorefront" stepKey="verifyHeadingInStorefront">
@@ -1025,8 +1025,8 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Heading"/>
-            <title value="Delete Heading Content Block"/>
-            <description value="A user should be able to delete a heading block from a row. Verify on Stage amd Storefront"/>
+            <title value="Delete Heading Content Type"/>
+            <description value="A user should be able to delete a heading content type from a row. Verify on Stage amd Storefront"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88790"/>
             <group value="pagebuilder"/>
@@ -1041,27 +1041,27 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Verify Not In Stage -->
-        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(PageBuilderHeadingContentBlock.role, '1')}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(PageBuilderHeadingContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Verify Not In Storefront -->
-        <dontSeeElementInDOM selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeContentBlockInStorefront"/>
+        <dontSeeElementInDOM selector="{{HeadingOnStorefront.headingType(PageBuilderHeadingTypeDefaultProperty.value, '1')}}" stepKey="dontSeeContentTypeInStorefront"/>
     </test>
 </tests>

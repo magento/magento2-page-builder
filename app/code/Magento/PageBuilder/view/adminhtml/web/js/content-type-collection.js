@@ -55,14 +55,14 @@ define(["uiEvents", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js
       this.collection.addChild(child, index); // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
 
       _.defer(function () {
-        _uiEvents.trigger("block:mount", {
+        _uiEvents.trigger("contentType:mount", {
           id: child.id,
-          block: child
+          contentType: child
         });
 
-        _uiEvents.trigger(child.config.name + ":block:mount", {
+        _uiEvents.trigger(child.config.name + ":contentType:mount", {
           id: child.id,
-          block: child
+          contentType: child
         });
       });
     };

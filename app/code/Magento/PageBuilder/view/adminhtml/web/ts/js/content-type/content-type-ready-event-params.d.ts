@@ -5,7 +5,7 @@
 
 import ContentTypeInterface from "../content-type.d";
 
-export interface ContentTypeReadyEventParamsInterface {
+export default interface ContentTypeReadyEventParamsInterface {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }

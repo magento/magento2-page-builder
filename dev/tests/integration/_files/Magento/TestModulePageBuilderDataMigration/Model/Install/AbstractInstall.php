@@ -34,14 +34,14 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     private $modelFields;
 
     /**
-     * @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory
      */
-    private $contentBlockFactory;
+    private $contentTypeFactory;
 
     /**
-     * @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType
      */
-    private $contentBlockResource;
+    private $contentTypeResource;
 
     /**
      * Constructor
@@ -50,9 +50,9 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Registry $registry
      * @param EntitySetupFactory $entitySetupFactory
      * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
-     *        $contentBlockResource
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory $contentTypeFactory
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType
+     *        $contentTypeResource
      * @param \Magento\Framework\Model\ResourceModel\AbstractResource|null $resource
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
@@ -63,15 +63,15 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
         \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
-        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
+        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory $contentTypeFactory,
+        \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType $contentTypeResource,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
-        $this->contentBlockFactory = $contentBlockFactory;
-        $this->contentBlockResource = $contentBlockResource;
+        $this->contentTypeFactory = $contentTypeFactory;
+        $this->contentTypeResource = $contentTypeResource;
         $this->entitySetupFactory = $entitySetupFactory;
         $this->entity = $entity;
 
@@ -137,21 +137,21 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * Determine if a content block exists
+     * Determine if a content type exists
      *
      * @param $identifier
      * @return bool
      */
-    protected function contentBlockExists($identifier)
+    protected function contentTypeExists($identifier)
     {
         try {
-            $contentBlock = $this->contentBlockFactory->create();
-            $this->contentBlockResource->load(
-                $contentBlock,
+            $contentType = $this->contentTypeFactory->create();
+            $this->contentTypeResource->load(
+                $contentType,
                 $identifier,
                 'entity_type.identifier'
             );
-            if ($contentBlock->getId()) {
+            if ($contentType->getId()) {
                 return true;
             }
         } catch (\Exception $e) {
@@ -162,19 +162,19 @@ class AbstractInstall extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
-     * Will a content block exist after installation has completed?
+     * Will a content type exist after installation has completed?
      *
      * @param $identifier
      * @return bool
      */
-    protected function contentBlockWillExist($identifier)
+    protected function contentTypeWillExist($identifier)
     {
-        if ($this->contentBlockExists($identifier)) {
+        if ($this->contentTypeExists($identifier)) {
             return true;
         }
 
-        if (isset($this->installData) && isset($this->installData['content_blocks'])) {
-            if ($this->findEntityByKey($this->installData['content_blocks'], 'identifier', $identifier)) {
+        if (isset($this->installData) && isset($this->installData['content_types'])) {
+            if ($this->findEntityByKey($this->installData['content_types'], 'identifier', $identifier)) {
                 return true;
             }
         }

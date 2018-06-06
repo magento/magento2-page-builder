@@ -10,7 +10,7 @@ use Magento\Framework\UrlInterface;
 class Config
 {
     const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/content-type/preview';
-    const DEFAULT_CONTENT_COMPONENT = 'Magento_PageBuilder/js/content-type/content';
+    const DEFAULT_MASTER_COMPONENT = 'Magento_PageBuilder/js/content-type/master';
 
     /**
      * @var \Magento\PageBuilder\Model\Config\ConfigInterface
@@ -77,7 +77,7 @@ class Config
     }
 
     /**
-     * Retrieve the content block groups
+     * Retrieve the content type groups
      *
      * @return array
      */
@@ -87,7 +87,7 @@ class Config
     }
 
     /**
-     * Build up the content block data
+     * Build up the content type data
      *
      * @return array
      */
@@ -95,19 +95,19 @@ class Config
     {
         $contentTypes = $this->config->getContentTypes();
 
-        $contentBlockData = [];
+        $contentTypeData = [];
         foreach ($contentTypes as $name => $contentType) {
-            $contentBlockData[$name] = $this->flattenContentTypeData(
+            $contentTypeData[$name] = $this->flattenContentTypeData(
                 $name,
                 $contentType
             );
         }
 
-        return $contentBlockData;
+        return $contentTypeData;
     }
 
     /**
-     * Flatten the content block data
+     * Flatten the content type data
      *
      * @param $name
      * @param $contentType
@@ -135,9 +135,9 @@ class Config
             'preview_component' => (isset($contentType['preview_component'])
                 ? $contentType['preview_component']
                 : self::DEFAULT_PREVIEW_COMPONENT),
-            'content_component' => (isset($contentType['content_component'])
-                ? $contentType['content_component']
-                : self::DEFAULT_CONTENT_COMPONENT),
+            'master_component' => (isset($contentType['master_component'])
+                ? $contentType['master_component']
+                : self::DEFAULT_MASTER_COMPONENT),
             'allowed_parents' => isset($contentType['allowed_parents']) ? $contentType['allowed_parents'] : [],
             'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
             'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],

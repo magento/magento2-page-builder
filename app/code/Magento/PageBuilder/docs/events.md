@@ -47,16 +47,16 @@ This document contains reference information for events dispatched in PageBuilde
 
 ## Events list
 
-* [block:dropped](#blockdropped)
-* [block:dropped:create](#blockdroppedcreate)
-* [block:instanceDropped](#blockinstancedropped)
-* [block:mount](#blockmount)
-* [block:moved](#blockmoved)
-* [block:removed](#blockremoved)
-* [block:sorted](#blocksorted)
-* [block:sortStart](#blocksortstart)
-* [block:sortStart](#blocksortstart)
-* [buttons:block:dropped:create](#buttonsblockdroppedcreate)
+* [contentType:dropped](#contentTypedropped)
+* [contentType:dropped:create](#contentTypedroppedcreate)
+* [contentType:instanceDropped](#contentTypeinstancedropped)
+* [contentType:mount](#contentTypemount)
+* [contentType:moved](#contentTypemoved)
+* [contentType:removed](#contentTyperemoved)
+* [contentType:sorted](#contentTypesorted)
+* [contentType:sortStart](#contentTypesortstart)
+* [contentType:sortStart](#contentTypesortstart)
+* [buttons:contentType:dropped:create](#buttonscontentTypedroppedcreate)
 * [colum:drag:start](#columdragstart)
 * [colum:drag:start](#columdragstart)
 * [drag:start](#dragstart)
@@ -67,7 +67,7 @@ This document contains reference information for events dispatched in PageBuilde
 * [form:render](#formrender)
 * [form:save](#formsave)
 * [image:assigned:{{id}}](#imageassignedid)
-* [image:block:ready](#imageblockready)
+* [image:contentType:ready](#imagecontentTypeready)
 * [image:uploaded](#imageuploaded)
 * [interaction:start](#interactionstart)
 * [interaction:stop](#interactionstop)
@@ -75,26 +75,26 @@ This document contains reference information for events dispatched in PageBuilde
 * [previewObservables:updated](#previewobservablesupdated)
 * [previewSortable:sortstart](#previewsortablesortstart)
 * [previewSortable:sortupdate](#previewsortablesortupdate)
-* [row:block:ready](#rowblockready)
-* [slide:block:create](#slideblockcreate)
-* [slider:block:dropped:create](#sliderblockdroppedcreate)
-* [slide:block:duplicate](#slideblockduplicate)
-* [slide:block:mount](#slideblockmount)
-* [slide:block:removed](#slideblockremoved)
-* [slider:block:ready](#sliderblockready)
+* [row:contentType:ready](#rowcontentTypeready)
+* [slide:contentType:create](#slidecontentTypecreate)
+* [slider:contentType:dropped:create](#slidercontentTypedroppedcreate)
+* [slide:contentType:duplicate](#slidecontentTypeduplicate)
+* [slide:contentType:mount](#slidecontentTypemount)
+* [slide:contentType:removed](#slidecontentTyperemoved)
+* [slider:contentType:ready](#slidercontentTypeready)
 * [stage:error](#stageerror)
 * [stage:ready:{{id}}](#stagereadyid)
 * [stage:renderTree:{{id}}](#stagerendertreeid)
 * [stage:updated](#stageupdated)
 * [state](#state)
-* [tab-item:block:duplicate](#tab-itemblockduplicate)
-* [tab-item:block:mount](#tab-itemblockmount)
-* [tab-item:block:removed](#tab-itemblockremoved)
-* [tabs:block:dropped:create](#tabsblockdroppedcreate)
-* [tabs:block:ready](#tabsblockready)
+* [tab-item:contentType:duplicate](#tab-itemcontentTypeduplicate)
+* [tab-item:contentType:mount](#tab-itemcontentTypemount)
+* [tab-item:contentType:removed](#tab-itemcontentTyperemoved)
+* [tabs:contentType:dropped:create](#tabscontentTypedroppedcreate)
+* [tabs:contentType:ready](#tabscontentTypeready)
 * [{{id}}:updated](#idupdated)
 
-## `block:dropped`
+## `contentType:dropped`
 
 **Triggers**
 
@@ -115,11 +115,11 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `block:dropped:create`
+## `contentType:dropped:create`
 
 **Triggers**
 
-* `Stage::onBlockDropped`
+* `Stage::onContentTypeDropped`
 
 
 **Params**
@@ -127,13 +127,13 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `block:instanceDropped`
+## `contentType:instanceDropped`
 
 **Triggers**
 
@@ -145,7 +145,7 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     parent: ContentTypeInterface;
-    blockInstance: ContentTypeInterface;
+    contentTypeInstance: ContentTypeInterface;
     index?: number;
     stageId: string;
 }
@@ -153,7 +153,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `block:mount`
+## `contentType:mount`
 
 **Triggers**
 
@@ -165,30 +165,30 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `block:moved`
+## `contentType:moved`
 
 **Triggers**
 
-* `Stage::onBlockInstanceDropped`
+* `Stage::onContentTypeInstanceDropped`
 
 **Params**
 
 ``` js
 {
-    block: ContentTypeInterface,
+    contentType: ContentTypeInterface,
     index: number,
     newParent: ContentTypeInterface,
     originalParent: ContentTypeInterface
 }
 ```
 
-## `block:removed`
+## `contentType:removed`
 
 **Triggers**
 
@@ -200,12 +200,12 @@ This document contains reference information for events dispatched in PageBuilde
 {
     parent: ContentTypeInterface;
     index: number;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
     stageId: string;
 }
 ```
 
-## `block:sorted`
+## `contentType:sorted`
 
 **Triggers**
 
@@ -216,7 +216,7 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     parent: ContentTypeInterface;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
     index: number;
     stageId: string;
 }
@@ -224,7 +224,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `block:sortStart`
+## `contentType:sortStart`
 
 **Triggers**
 
@@ -234,7 +234,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 ``` js
 {
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
     event: Event;
     originalEle: JQuery;
     placeholder: JQuery;
@@ -245,7 +245,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `block:sortStop`
+## `contentType:sortStop`
 
 **Triggers**
 
@@ -255,7 +255,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 ``` js
 {
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
     event: Event;
     originalEle: JQuery;
     placeholder: JQuery;
@@ -266,18 +266,18 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `buttons:block:dropped:create`
+## `buttons:contentType:dropped:create`
 
 **Triggers**
 
-* `Stage::onBlockDropped`
+* `Stage::onContentTypeDropped`
 
 **Params**
 
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
@@ -449,11 +449,11 @@ This document contains reference information for events dispatched in PageBuilde
 
 object
 
-## `image:block:ready`
+## `image:contentType:ready`
 
 **Triggers**
 
-* `ContentTypeFactory::fireBlockReadyEvent`
+* `ContentTypeFactory::fireContentTypeReadyEvent`
 
 **Params**
 
@@ -574,24 +574,24 @@ Function
 }
 ```
 
-## `row:block:ready`
+## `row:contentType:ready`
 
 **Triggers**
 
-* `ContentTypeFactory::fireBlockReadyEvent`
+* `ContentTypeFactory::fireContentTypeReadyEvent`
 
 **Params**
 
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `slide:block:create`
+## `slide:contentType:create`
 
 **Triggers**
 
@@ -602,28 +602,28 @@ Function
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
-## `slider:block:dropped:create`
+## `slider:contentType:dropped:create`
 
 **Triggers**
 
-* `Stage::onBlockDropped`
+* `Stage::onContentTypeDropped`
 
 **Params**
 
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `slide:block:duplicate`
+## `slide:contentType:duplicate`
 
 **Triggers**
 
@@ -634,15 +634,15 @@ Function
 
 ``` js
 {
-    original: originalBlock,
-    duplicateBlock,
+    original: originalContentType,
+    duplicateContentType,
     index,
 }
 ```
 
 [Back to top]
 
-## `slide:block:mount`
+## `slide:contentType:mount`
 
 **Triggers**
 
@@ -654,43 +654,43 @@ Function
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `slide:block:removed`
+## `slide:contentType:removed`
 
 **Triggers**
 
 * `Preview::onOptionRemove`
-* `BlockRemovedParams`
+* `ContentTypeRemovedParams`
 
 **Params**
 
 ``` js
 {
     parent: ColumnGroup;
-    block: Column;
+    contentType: Column;
     index: number;
 }
 ```
 
 [Back to top]
 
-## `slider:block:ready`
+## `slider:contentType:ready`
 
 **Triggers**
 
-* `ContentTypeFactory::fireBlockReadyEvent`
+* `ContentTypeFactory::fireContentTypeReadyEvent`
 
 **Params**
 
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
@@ -764,7 +764,7 @@ Error
 
 [Back to top]
 
-## `tab-item:block:duplicate`
+## `tab-item:contentType:duplicate`
 
 **Triggers**
 
@@ -776,14 +776,14 @@ Error
 ``` js
 {
     original: ContentTypeInterface,
-    duplicateBlock: ContentTypeInterface,
+    duplicateContentType: ContentTypeInterface,
     index: number,
 }
 ```
 
 [Back to top]
 
-## `tab-item:block:mount`
+## `tab-item:contentType:mount`
 
 **Triggers**
 
@@ -795,18 +795,18 @@ Error
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `tab-item:block:removed`
+## `tab-item:contentType:removed`
 
 **Triggers**
 
 * `Preview::onOptionRemove`
-* `BlockRemovedParams`
+* `ContentTypeRemovedParams`
 
 **Params**
 
@@ -814,42 +814,42 @@ Error
 {
     parent: ContentTypeInterface;
     index: number;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
     stageId: string;
 }
 ```
 
 [Back to top]
 
-## `tabs:block:dropped:create`
+## `tabs:contentType:dropped:create`
 
 **Triggers**
 
-* `Stage::onBlockDropped`
+* `Stage::onContentTypeDropped`
 
 **Params**
 
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `tabs:block:ready`
+## `tabs:contentType:ready`
 
 **Triggers**
 
-* `ContentTypeFactory::fireBlockReadyEvent`
+* `ContentTypeFactory::fireContentTypeReadyEvent`
 
 **Params**
 
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
 }
 ```
 

@@ -3,11 +3,14 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\TestModulePageBuilderDataMigration\Model\Attribute;
 
 use Magento\Framework\Api\AttributeValueFactory;
 
-class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
+class ContentType extends \Magento\Eav\Model\Entity\Attribute\Set
 {
     const AREA_FRONTEND = 'frontend';
     const AREA_ADMINHTML = 'adminhtml';
@@ -73,11 +76,11 @@ class ContentBlock extends \Magento\Eav\Model\Entity\Attribute\Set
      */
     protected function _construct()
     {
-        $this->_init('Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock');
+        $this->_init('Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType');
     }
 
     /**
-     * Return all the attributes associated with this content block
+     * Return all the attributes associated with this content type
      *
      * @return array|null
      */

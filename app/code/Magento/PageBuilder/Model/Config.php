@@ -41,7 +41,7 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     }
 
     /**
-     * Return all content blocks
+     * Return all content types
      *
      * @return array|mixed|null
      */
