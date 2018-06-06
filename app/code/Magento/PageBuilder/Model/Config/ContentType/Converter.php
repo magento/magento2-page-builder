@@ -20,21 +20,13 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private $parser;
 
     /**
-     * @var InterpreterInterface
-     */
-    private $argumentInterpreter;
-
-    /**
      * Converter constructor.
      * @param ArgumentParser $parser
-     * @param InterpreterInterface $argumentInterpreter
      */
     public function __construct(
-        ArgumentParser $parser,
-        InterpreterInterface $argumentInterpreter
+        ArgumentParser $parser
     ) {
         $this->parser = $parser;
-        $this->argumentInterpreter = $argumentInterpreter;
     }
 
     /**
@@ -247,15 +239,17 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         if (!$xmlArgumentsNodes->length) {
             return $additionalData;
         }
-        $typeArguments = [];
+
         /** @var $xmlArgumentsNode \DOMElement */
         foreach ($xmlArgumentsNodes as $xmlArgumentsNode) {
             $parsedArgumentsData = $this->parser->parse($xmlArgumentsNode);
             $argumentName = $xmlArgumentsNode->attributes->getNamedItem('name')->nodeValue;
-            $typeArguments[$argumentName] = $this->argumentInterpreter->evaluate(
-                $parsedArgumentsData
-            );
-            $additionalData += $this->toArray($typeArguments);
+
+            if (!isset($additionalData[$argumentName])) {
+                $additionalData[$argumentName] = [];
+            }
+
+            $additionalData[$argumentName] += $parsedArgumentsData;
         }
 
         return $additionalData;
@@ -464,26 +458,5 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         return $attributeNode->hasAttribute($attributeName)
             ? $attributeNode->attributes->getNamedItem($attributeName)->nodeValue
             : null;
-    }
-
-    /**
-     * Convert arguments node from additional data to array
-     * @param array $typeArguments
-     * @return array
-     */
-    private function toArray(array $typeArguments)
-    {
-        $processedData = [];
-        foreach ($typeArguments as $key => $value) {
-            if (is_array($value)) {
-                $processedData[$key] = $this->toArray($typeArguments[$key]);
-            } elseif (is_object($value) && $value instanceof ProviderInterface) {
-                $processedData[$key] = $value->getData($key)[$key];
-            } else {
-                $processedData[$key] = $value;
-            }
-        }
-
-        return $processedData;
     }
 }
