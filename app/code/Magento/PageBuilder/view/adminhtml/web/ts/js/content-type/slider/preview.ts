@@ -327,6 +327,7 @@ export default class Preview extends PreviewCollection {
             dots: false, // We have our own dots implemented
             fade: data.fade === "1",
             infinite: data.is_infinite === "1",
+            waitForAnimate: false,
         };
     }
 }
