@@ -25,21 +25,51 @@
         <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <actionGroup name="validateBackgroundColor">
+    <actionGroup name="validateBackgroundAttributesWithNoColor">
         <arguments>
             <argument name="page"/>
-            <argument name="backgroundColor"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
-        <waitForElementVisible selector="{{page.backgroundColor(index, backgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
-    </actionGroup>
-    <actionGroup name="validateNoBackgroundColor">
-        <arguments>
-            <argument name="page"/>
+            <argument name="backgroundImage"/>
+            <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
+            <argument name="backgroundSize" defaultValue="PageBuilderBackgroundSize_Default"/>
+            <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Default"/>
+            <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
         <waitForElementVisible selector="{{page.noBackgroundColor(index)}}" stepKey="waitForBackgroundColor"/>
+        <!--<waitForElementVisible selector="{{page.backgroundImage(index)}}" stepKey="waitForBackgroundImage"/>-->
+        <waitForElementVisible selector="{{page.backgroundPosition(index, backgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
+        <waitForElementVisible selector="{{page.backgroundSize(index, backgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
+        <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
+        <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
+    </actionGroup>
+    <actionGroup name="validateBackgroundAttributesWithNoImage">
+        <arguments>
+            <argument name="page"/>
+            <argument name="backgroundColor"/>
+            <argument name="backgroundPosition" defaultValue="PageBuilderBackgroundPosition_Default"/>
+            <argument name="backgroundSize" defaultValue="PageBuilderBackgroundSize_Default"/>
+            <argument name="backgroundRepeat" defaultValue="PageBuilderBackgroundRepeat_Default"/>
+            <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{page.backgroundColor(index, backgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
+        <waitForElementVisible selector="{{page.noBackgroundImage(index)}}" stepKey="waitForBackgroundImage"/>
+        <waitForElementVisible selector="{{page.backgroundPosition(index, backgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
+        <waitForElementVisible selector="{{page.backgroundSize(index, backgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
+        <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
+        <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
+    </actionGroup>
+    <actionGroup name="validateBackgroundImage">
+        <arguments>
+            <argument name="page"/>
+            <argument name="backgroundImage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
+        <grabFromCurrentUrl regex="/^.+(?=admin)/m" stepKey="baseURL"/>
+        <comment userInput="$baseURL" stepKey="comment"/>
+        <waitForElementVisible selector="{{page.backgroundImage(index, $baseURL, backgroundImage.path, backgroundImage.value)}}" stepKey="waitForBackgroundImage"/>
     </actionGroup>
 </actionGroups>
