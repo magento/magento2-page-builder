@@ -73,10 +73,10 @@ export default class Preview extends BasePreview {
             backgroundSize: previewData.background_size(),
             minHeight: previewData.min_height() ? previewData.min_height() + "px" : "300px",
             overflow: "hidden",
-            paddingBottom: "",
-            paddingLeft: "",
-            paddingRight: "",
-            paddingTop: "",
+            paddingBottom: this.data.desktop_image.style().paddingBottom || "",
+            paddingLeft: this.data.desktop_image.style().paddingLeft || "",
+            paddingRight: this.data.desktop_image.style().paddingRight || "",
+            paddingTop: this.data.desktop_image.style().paddingTop || "",
         };
         return {
             ...styles,
