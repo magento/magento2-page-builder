@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/content-type/preview"], function (_map, _uiEvents, _preview) {
+define(["jquery", "Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _map, _uiEvents, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -43,7 +43,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
       this.generateMap(element);
       this.data.main.attributes.subscribe(function () {
-        _this2.updateMap();
+        _this2.updateMap(element);
       });
     };
     /**
@@ -63,6 +63,10 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
         mapTypeControl: controls === "true"
       };
 
+      if ((0, _jquery)(element).context.style.height === "") {
+        (0, _jquery)(element).height("300px");
+      }
+
       if (currentLocations !== "[]") {
         var mapData = this.getMapData();
         locations = mapData.locations;
@@ -74,11 +78,16 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
     /**
      * Updates map
      *
+     * @param {Element} element
      * @returns {void}
      */
 
 
-    _proto.updateMap = function updateMap() {
+    _proto.updateMap = function updateMap(element) {
+      if ((0, _jquery)(element).context.style.height === "") {
+        (0, _jquery)(element).height("300px");
+      }
+
       var mapData = this.getMapData();
       this.map.onUpdate(mapData.locations, mapData.options);
     };

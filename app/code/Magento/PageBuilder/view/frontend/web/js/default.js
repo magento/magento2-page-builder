@@ -127,14 +127,17 @@ requirejs([
             controls,
             mapOptions = {};
 
-        /**
-         * Sets height to 300px as default if no height input. But will not be saved to database
-         */
-        if ($(element).context.style.height === '') {
-            $(element).height('300px');
-        }
+        if (element.hasAttribute('data-locations')) {
+            if (element.getAttribute('data-locations') === '[]') {
+                $(element).hide();
 
-        if (element.hasAttribute('data-locations') && element.getAttribute('data-locations') !== '[]') {
+                return;
+            }
+
+            if ($(element).context.style.height === '') {
+                $(element).height('300px');
+            }
+
             locations = JSON.parse(element.getAttribute('data-locations'));
             locations.forEach(function (location) {
                 location.position.latitude = parseFloat(location.position.latitude);

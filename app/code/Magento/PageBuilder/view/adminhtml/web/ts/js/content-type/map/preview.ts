@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
 import events from "uiEvents";
 import BasePreview from "../preview";
@@ -34,7 +35,7 @@ export default class Preview extends BasePreview {
     public renderMap(element: Element) {
         this.generateMap(element);
         this.data.main.attributes.subscribe(() => {
-            this.updateMap();
+            this.updateMap(element);
         });
     }
 
@@ -53,6 +54,11 @@ export default class Preview extends BasePreview {
             disableDefaultUI: controls !== "true",
             mapTypeControl: controls === "true",
         };
+
+        if ($(element).context.style.height === "") {
+            $(element).height("300px");
+        }
+
         if (currentLocations !== "[]") {
             const mapData = this.getMapData();
 
@@ -65,9 +71,13 @@ export default class Preview extends BasePreview {
     /**
      * Updates map
      *
+     * @param {Element} element
      * @returns {void}
      */
-    private updateMap() {
+    private updateMap(element: Element) {
+        if ($(element).context.style.height === "") {
+            $(element).height("300px");
+        }
         const mapData = this.getMapData();
         this.map.onUpdate(mapData.locations, mapData.options);
     }
