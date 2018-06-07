@@ -12,7 +12,7 @@ export class Group {
     private label: KnockoutObservable<string> = ko.observable("");
     private icon: KnockoutObservable<string> = ko.observable("");
     private sort: KnockoutObservable<number> = ko.observable();
-    private blocks: KnockoutObservableArray<[any]> = ko.observableArray([]);
+    private contentTypes: KnockoutObservableArray<[any]> = ko.observableArray([]);
     private active: KnockoutObservable<boolean> = ko.observable(false);
 
     /**
@@ -20,17 +20,17 @@ export class Group {
      *
      * @param id
      * @param group
-     * @param blocks
+     * @param contentTypes
      *
      * @todo change group type
      */
-    constructor(id: number, group: any, blocks: any[] = []) {
+    constructor(id: number, group: any, contentTypes: any[] = []) {
         this.id(id);
         this.code(group.code);
         this.label(group.label);
         this.icon(group.icon);
         this.sort(group.sort);
-        this.blocks(blocks);
+        this.contentTypes(contentTypes);
     }
 
     /**

@@ -8,13 +8,14 @@ import ko from "knockout";
 import events from "uiEvents";
 import _ from "underscore";
 import Config from "../../config";
-import ConfigContentBlock from "../../config";
-import ContentTypeInterface from "../../content-type";
+import ColumnGroup from "../../content-type-collection";
 import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
+import ContentTypeInterface from "../../content-type.d";
 import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedBlockConfig} from "../../drag-drop/registry";
+import {moveArrayItem} from "../../utils/array";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
@@ -28,9 +29,9 @@ import {
     getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./resizing";
 
-interface BlockRemovedParams {
+interface ContentTypeRemovedParams {
     parent: ColumnGroup;
-    block: Column;
+    contentType: Column;
     index: number;
 }
 
@@ -38,8 +39,8 @@ export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
     public hasEmptyChild: KnockoutComputed<boolean> = ko.computed(() => {
         let empty: boolean = false;
-        (this.parent as ContentTypeCollectionInterface).getChildren()()
-            .forEach((column: ContentTypeCollectionInterface) => {
+        (this.parent as ColumnGroup).getChildren()()
+            .forEach((column: ColumnGroup) => {
                 if (column.getChildren()().length === 0) {
                     empty = true;
                 }
@@ -74,13 +75,13 @@ export default class Preview extends PreviewCollection {
      * @param {number} stageId
      */
     constructor(
-        parent: ContentTypeCollectionInterface,
-        config: ConfigContentBlock,
+        parent: ColumnGroup,
+        config: Config,
         stageId,
     ) {
         super(parent, config, stageId);
 
-        events.on("block:removed", (args: BlockRemovedParams) => {
+        events.on("contentType:removed", (args: ContentTypeRemovedParams) => {
             if (args.parent.id === this.parent.id) {
                 this.spreadWidth(event, args);
             }
@@ -787,9 +788,9 @@ export default class Preview extends PreviewCollection {
      * Spread any empty space across the other columns
      *
      * @param {Event} event
-     * @param {BlockRemovedParams} params
+     * @param {ContentTypeRemovedParams} params
      */
-    private spreadWidth(event: Event, params: BlockRemovedParams) {
+    private spreadWidth(event: Event, params: ContentTypeRemovedParams) {
         if (this.parent.children().length === 0) {
             return;
         }

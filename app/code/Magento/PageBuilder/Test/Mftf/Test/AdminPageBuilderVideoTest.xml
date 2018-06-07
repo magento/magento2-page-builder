@@ -28,16 +28,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderVideoContentBlock"/>
+            <argument name="group" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragVideoIntoStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
             <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
@@ -68,7 +68,7 @@
             <argument name="height" value="PageBuilderVideoHeight_200"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeVideoUrlInAdmin">
             <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
@@ -80,7 +80,7 @@
             <argument name="property" value="PageBuilderVideoHeight_200"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -94,7 +94,7 @@
     <test name="VideoNonEmbeddedUrl">
         <annotations>
             <features value="Pagebuilder: Video"/>
-            <stories value="MAGETWO-85972: PageBuilder Video content block does not render properly in admin"/>
+            <stories value="MAGETWO-85972: PageBuilder Video content type does not render properly in admin"/>
             <title value="Video - Add Video With Non Embedded Url"/>
             <description value="A user should be able to add an video into a row with standard url."/>
             <severity value="CRITICAL"/>
@@ -111,16 +111,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderVideoContentBlock"/>
+            <argument name="group" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragVideoIntoStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
             <argument name="property" value="PageBuilderVideoUrl_NonEmbedded"/>
@@ -134,7 +134,7 @@
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -148,7 +148,7 @@
             <features value="Pagebuilder: Video"/>
             <stories value="MAGETWO-83929: Video"/>
             <title value="Video - Delete Video"/>
-            <description value="A user should be able to delete a Video content block. Verify on Stage amd Storefront."/>
+            <description value="A user should be able to delete a Video content type. Verify on Stage amd Storefront."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89869"/>
             <group value="pagebuilder"/>
@@ -163,15 +163,15 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderVideoContentBlock"/>
+            <argument name="group" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderVideoContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderVideoContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="VideoValidateGeneralDefaultValues">
         <annotations>
@@ -193,16 +193,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderVideoContentBlock"/>
+            <argument name="group" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragButtonsOntoStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragButtonsOntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
@@ -222,7 +222,7 @@
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <actionGroup ref="validateEmptyVideoStage" stepKey="validateStage2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
@@ -233,7 +233,7 @@
         <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderVideoUrl_Default.section, PageBuilderVideoUrl_Default.fieldName)}}" stepKey="getHeight2"/>
         <assertEmpty actual="getHeight2" actualType="variable" message="Text field was not empty. Had text: $getHeight2" stepKey="assertHeight2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -243,7 +243,7 @@
     <test name="VideoValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Video"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Video - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Video."/>
             <severity value="CRITICAL"/>
@@ -260,16 +260,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderVideoContentBlock"/>
+            <argument name="group" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragVideoIntoStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragVideoIntoStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
             <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
@@ -325,7 +325,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
@@ -353,7 +353,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyDefault"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -387,16 +387,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderVideoContentBlock"/>
+            <argument name="group" value="PageBuilderVideoContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
             <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
@@ -444,7 +444,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
@@ -491,7 +491,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
@@ -521,7 +521,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderVideoContentBlock"/>
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

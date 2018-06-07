@@ -20,9 +20,9 @@ export default function create(
     contentType: ContentTypeInterface,
     config: ContentTypeConfigInterface,
 ): Promise<ContentTypeInterface> {
-    return new Promise((resolve: (contentComponent: any) => void) => {
+    return new Promise((resolve: (masterComponent: any) => void) => {
         observableUpdaterFactory(config, converterResolver).then((observableUpdater) => {
-            loadModule([config.content_component], (ContentComponent) => {
+            loadModule([config.master_component], (ContentComponent) => {
                 resolve(
                     new ContentComponent(
                         contentType,

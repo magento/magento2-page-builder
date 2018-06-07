@@ -77,7 +77,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
         <icon>icon-pagebuilder-image</icon>
         <component>Magento_PageBuilder/js/content-type</component>
         <preview_component>Magento_PageBuilder/js/content-type/banner/preview</preview_component>
-        <content_component>Magento_PageBuilder/js/content-type/content</content_component>
+        <master_component>Magento_PageBuilder/js/content-type/master</master_component>
         <form>pagebuilder_banner_form</form>
         <group>media</group>
         <allowed_parents>
@@ -197,7 +197,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | `icon`              | Icon displayed on the menu.                                                                                                                 |
 | `component`         | View model responsible for rendering the preview and master format.                                                                         |
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
-| `content_component` | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
+| `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type                                                                                         |
 | `group`             | Existing menu group that contains this content type.                                                                                        |
 | `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                          |

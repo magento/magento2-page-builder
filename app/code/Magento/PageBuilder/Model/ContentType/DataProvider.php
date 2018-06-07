@@ -3,7 +3,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace Magento\PageBuilder\Model\ContentBlock;
+
+declare(strict_types=1);
+
+namespace Magento\PageBuilder\Model\ContentType;
 
 /**
  * We populate our forms in the browser using JavaScript
@@ -15,7 +18,7 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
      *
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return [];
     }

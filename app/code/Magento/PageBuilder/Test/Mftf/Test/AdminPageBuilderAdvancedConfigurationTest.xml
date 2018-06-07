@@ -11,7 +11,7 @@
     <test name="AdvancedConfigurationEditPanelVisual">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Edit Panel Visual"/>
             <description value="Tests the following for each attribute under Advanced Configuration: 1) field exists, 2) field required or not, 3) field enabled/disabled, 4) field default value, 5) drop-down options count if applicable, 6) placeholder text if applicable"/>
             <severity value="CRITICAL"/>
@@ -28,13 +28,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTextIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Check Field Labels -->
@@ -147,7 +147,7 @@
     <test name="AdvancedConfigurationFunctionalAlignment">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Alignment"/>
             <description value="Tests that the Alignment attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -164,33 +164,33 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Alignment Type -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Alignment: Default -->
         <comment userInput="Add Alignment: Default" stepKey="commentAddAlignmentDefault"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentDefault">
@@ -199,18 +199,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Alignment: Left -->
         <comment userInput="Add Alignment: Left" stepKey="commentAddAlignmentLeft"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentLeft">
@@ -219,18 +219,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Add Alignment: Center -->
         <comment userInput="Add Alignment: Center" stepKey="commentAddAlignmentCenter"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
@@ -239,18 +239,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Add Alignment: Right -->
         <comment userInput="Add Alignment: Right" stepKey="commentAddAlignmentRight"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentRight">
@@ -315,7 +315,7 @@
             <argument name="index" value="4"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Storefront: Check Alignment: Default -->
         <comment userInput="Storefront: Check Alignment: Default" stepKey="commentStorefrontCheckDefault"/>
@@ -348,7 +348,7 @@
     <test name="AdvancedConfigurationFunctionalBorder">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Border"/>
             <description value="Tests that the Border attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -365,51 +365,51 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Text Border Type -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage5">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage6">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage6">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage7">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage7">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage8">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage8">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage9">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage9">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Border: None -->
         <comment userInput="Add Border: None" stepKey="commentAddBorderNone"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
@@ -418,18 +418,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Border: Default -->
         <comment userInput="Add Border: Default" stepKey="commentAddBorderDefault"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
@@ -438,18 +438,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Add Border: Dotted -->
         <comment userInput="Add Border: Dotted" stepKey="commentAddBorderDotted"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
@@ -458,18 +458,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Add Border: Dashed -->
         <comment userInput="Add Border: Dashed" stepKey="commentAddBorderDashed"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
@@ -478,18 +478,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Add Border: Solid -->
         <comment userInput="Add Border: Solid" stepKey="commentAddBorderSolid"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="5"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
@@ -498,18 +498,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Add Border: Double -->
         <comment userInput="Add Border: Double" stepKey="commentAddBorderDouble"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage6">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage6">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="6"/>
-            <argument name="contentBlockIndex" value="6"/>
+            <argument name="contentTypeIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage6">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="6"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText6">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder6">
@@ -518,18 +518,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings6"/>
         <!-- Add Border: Groove -->
         <comment userInput="Add Border: Groove" stepKey="commentAddBorderGroove"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage7">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage7">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="7"/>
-            <argument name="contentBlockIndex" value="7"/>
+            <argument name="contentTypeIndex" value="7"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage7">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="7"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="7"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText7">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection7"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder7">
@@ -538,18 +538,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings7"/>
         <!-- Add Border: Ridge -->
         <comment userInput="Add Border: Ridge" stepKey="commentAddBorderRidge"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage8">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage8">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="8"/>
-            <argument name="contentBlockIndex" value="8"/>
+            <argument name="contentTypeIndex" value="8"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage8">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="8"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="8"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText8">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection8"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder8">
@@ -558,18 +558,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings8"/>
         <!-- Add Border: Inset -->
         <comment userInput="Add Border: Inset" stepKey="commentAddBorderInset"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage9">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage9">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="9"/>
-            <argument name="contentBlockIndex" value="9"/>
+            <argument name="contentTypeIndex" value="9"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage9">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="9"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="9"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText9">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection9"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder9">
@@ -578,18 +578,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings9"/>
         <!-- Add Border: Outset -->
         <comment userInput="Add Border: Outset" stepKey="commentAddBorderOutset"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage10">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage10">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="10"/>
-            <argument name="contentBlockIndex" value="10"/>
+            <argument name="contentTypeIndex" value="10"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage10">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="10"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="10"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText10">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection10"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder10">
@@ -738,7 +738,7 @@
             <argument name="index" value="10"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Storefront: Check Border: None -->
         <comment userInput="Storefront: Check Border: None" stepKey="commentStorefrontCheckNone2"/>
@@ -814,7 +814,7 @@
     <test name="AdvancedConfigurationFunctionalBorderColor">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Border Color"/>
             <description value="Tests that the Border Color attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -831,36 +831,36 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Text Border Color Test -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Border Color: Empty -->
         <comment userInput="Add Border Color: Empty" stepKey="commentAddBorderColorEmpty"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
@@ -872,18 +872,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Border Color: PlainText -->
         <comment userInput="Add Border Color: PlainText Green" stepKey="commentAddBorderColorPlainText"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
@@ -895,18 +895,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Add Border Color: #FF0000 -->
         <comment userInput="Add Border Color: Hex #FF0000" stepKey="commentAddBorderColorHex"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
@@ -918,18 +918,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Add Border Color: rgb(0,0,255) -->
         <comment userInput="Add Border Color: rgb(0,0,255)" stepKey="commentAddBorderColorRGB"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
@@ -941,18 +941,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Add Border Color: Invalid -->
         <comment userInput="Add Border Color: Invalid" stepKey="commentAddBorderColorInvalid"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="5"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
@@ -1036,7 +1036,7 @@
         <!-- Navigate to storefront -->
         <comment userInput="Navigate to StoreFront" stepKey="commentNavigateToStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
 
         <!-- Storefront: Check Border Color: Empty -->
@@ -1074,7 +1074,7 @@
     <test name="AdvancedConfigurationFunctionalBorderWidth">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Border Width"/>
             <description value="Tests that the Border Width attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -1091,36 +1091,36 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Text Border Width Test -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Border Width: Empty -->
         <comment userInput="Add Border Width: Empty" stepKey="commentAddBorderWidthEmpty"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder1">
@@ -1132,18 +1132,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Border Width: 0 -->
         <comment userInput="Add Border Width: 0" stepKey="commentAddBorderWidth0"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder2">
@@ -1155,18 +1155,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Add Border Width: 1 -->
         <comment userInput="Add Border Width: 1" stepKey="commentAddBorderWidth1"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder3">
@@ -1178,18 +1178,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Add Border Width: 500 -->
         <comment userInput="Add Border Width: 500" stepKey="commentAddBorderWidth500"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder4">
@@ -1201,18 +1201,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Add Border Width: Invalid -->
         <comment userInput="Add Border Width: Invalid" stepKey="commentAddBorderWidthInvalid"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="5"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorder5">
@@ -1302,7 +1302,7 @@
             <argument name="index" value="5"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Storefront: Check Border Width: Empty -->
         <comment userInput="Storefront: Check Border Width: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -1346,7 +1346,7 @@
     <test name="AdvancedConfigurationFunctionalBorderRadius">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Border Radius"/>
             <description value="Tests that the Border Radius attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -1363,36 +1363,36 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Text Border Radius Test -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Border Radius: Empty -->
         <comment userInput="Add Border Radius: Empty" stepKey="commentAddBorderRadiusEmpty"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderRadius">
@@ -1401,18 +1401,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Border Radius: 0 -->
         <comment userInput="Add Border Radius: 0" stepKey="commentAddBorderRadius0"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius2">
@@ -1421,18 +1421,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Add Border Radius: 1 -->
         <comment userInput="Add Border Radius: 1" stepKey="commentAddBorderRadius1"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius3">
@@ -1441,18 +1441,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Add Border Radius: 500 -->
         <comment userInput="Add Border Radius: 1" stepKey="commentAddBorderRadius500"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius4">
@@ -1461,18 +1461,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Add Border Radius: Invalid -->
         <comment userInput="Add Border Radius: Invalid" stepKey="commentAddBorderRadiusInvalid"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="5"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadius5">
@@ -1549,7 +1549,7 @@
             <argument name="index" value="5"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Storefront: Check Border Radius: Empty -->
         <comment userInput="Storefront: Check Border Radius: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -1588,7 +1588,7 @@
     <test name="AdvancedConfigurationFunctionalCSSClasses">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - CSS Classes"/>
             <description value="Tests that the CSS Classes attribute functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -1605,30 +1605,30 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Text CSS Classes Test -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add CSS Classes: Empty -->
         <comment userInput="Add CSS Classes: Empty" stepKey="commentAddCSSClassesEmpty"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearCSSClasses">
@@ -1637,18 +1637,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add CSS Classes: One Class -->
         <comment userInput="Add CSS Classes: One Class" stepKey="commentAddCSSClassesOneClass"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterCSSClasses2">
@@ -1657,18 +1657,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Add CSS Classes: Multiple Classes -->
         <comment userInput="Add CSS Classes: Multiple Classes" stepKey="commentAddCSSClassesMultipleClasses"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterCSSClasses3">
@@ -1719,7 +1719,7 @@
             <argument name="index" value="3"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Storefront: Check CSS Classes: Empty -->
         <comment userInput="Storefront: Check CSS Classes: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -1745,7 +1745,7 @@
     <test name="AdvancedConfigurationFunctionalMargins">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Margins"/>
             <description value="Tests that the Margin attributes functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -1762,39 +1762,39 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Text Margins Test -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage5">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Margins: Empty -->
         <comment userInput="Add Margins: Empty" stepKey="commentAddMarginsEmpty"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="clearSlideOutPanelFieldMargins" stepKey="clearMargins">
@@ -1803,18 +1803,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Margins: 0 -->
         <comment userInput="Add Margins: 0" stepKey="commentAddMargins0"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins2">
@@ -1823,18 +1823,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Add Margins: 1 -->
         <comment userInput="Add Margins: 1" stepKey="commentAddMargins1"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins3">
@@ -1843,18 +1843,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Add Margins: 500 -->
         <comment userInput="Add Margins: 500" stepKey="commentAddMargins500"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins4">
@@ -1863,18 +1863,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Add Margins: Unique -->
         <comment userInput="Add Margins: Unique" stepKey="commentAddMarginsUnique"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="5"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins5">
@@ -1883,18 +1883,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Add Margins: Invalid -->
         <comment userInput="Add Margins: Invalid" stepKey="commentAddMarginsInvalid"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage6">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage6">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="6"/>
-            <argument name="contentBlockIndex" value="6"/>
+            <argument name="contentTypeIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage6">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="6"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText6">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
         <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins6">
@@ -1985,7 +1985,7 @@
             <argument name="index" value="6"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Storefront: Check Margins: Empty -->
         <comment userInput="Storefront: Check Margins: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -2031,7 +2031,7 @@
     <test name="AdvancedConfigurationFunctionalPadding">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - Padding"/>
             <description value="Tests that the Padding attributes functions as expected on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -2048,39 +2048,39 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Add A Row For Each Text Padding Test -->
         <comment userInput="Add Rows" stepKey="commentAddRows"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage5">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Add Padding: Empty -->
         <comment userInput="Add Padding: Empty" stepKey="commentAddPaddingEmpty"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage1">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText1">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection1"/>
         <actionGroup ref="clearSlideOutPanelFieldPadding" stepKey="clearPadding">
@@ -2089,18 +2089,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <!-- Add Padding: 0 -->
         <comment userInput="Add Padding: 0" stepKey="commentAddPadding0"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage2">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="2"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText2">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding2">
@@ -2109,18 +2109,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Add Padding: 1 -->
         <comment userInput="Add Padding: 1" stepKey="commentAddPadding1"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage3">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="3"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="3"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText3">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding3">
@@ -2129,18 +2129,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <!-- Add Padding: 500 -->
         <comment userInput="Add Padding: 500" stepKey="commentAddPadding500"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage4">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="4"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage4">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="4"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="4"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText4">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection4"/>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding4">
@@ -2149,18 +2149,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings4"/>
         <!-- Add Padding: Unique -->
         <comment userInput="Add Padding: Unique" stepKey="commentAddPaddingUnique"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage5">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="5"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage5">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="5"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="5"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText5">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection5"/>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding5">
@@ -2169,18 +2169,18 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings5"/>
         <!-- Add Padding: Invalid -->
         <comment userInput="Add Padding: Invalid" stepKey="commentAddPaddingInvalid"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage6">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage6">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="6"/>
-            <argument name="contentBlockIndex" value="6"/>
+            <argument name="contentTypeIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage6">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="6"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="6"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText6">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection6"/>
         <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding6">
@@ -2271,7 +2271,7 @@
             <argument name="index" value="6"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Storefront: Check Padding: Empty -->
         <comment userInput="Storefront: Check Padding: Empty" stepKey="commentStorefrontCheckEmpty"/>
@@ -2317,7 +2317,7 @@
     <test name="AdvancedConfigurationFunctionalAllAttributes">
         <annotations>
             <features value="Pagebuilder: Advanced Configuration"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Advanced Configuration - Functional - All Attributes"/>
             <description value="Tests that all attributes function as expected together on Stage and Storefront for Text"/>
             <severity value="CRITICAL"/>
@@ -2334,22 +2334,22 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Add Text To Stage -->
         <comment userInput="Add Text To Stage" stepKey="commentAddText"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTextIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextIntoStage">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="addTextToTinyMCE" stepKey="enterText">
-            <argument name="property" value="PageBuilderTextContentBlock"/>
+            <argument name="property" value="PageBuilderTextContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="selectAlignmentCenter">
@@ -2407,7 +2407,7 @@
             <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
         </actionGroup>
         <!-- Storefront: Check All Attributes -->
         <comment userInput="Storefront: Check All Attributes" stepKey="commentStorefrontCheck"/>

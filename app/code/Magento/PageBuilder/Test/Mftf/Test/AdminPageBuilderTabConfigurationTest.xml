@@ -29,13 +29,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <comment userInput="Add tabs without customizing tab" stepKey="AC1"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
@@ -58,7 +58,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
 
         <comment userInput="User sees Tab 1 with custom tab name on Storefront" stepKey="AC4"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -85,18 +85,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <comment userInput="User sees tabs displayed with 1st default tab item created by default" stepKey="AC1"/>
         <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="User configures custom tab name, min height, color for first tab" stepKey="AC2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -131,7 +131,7 @@
         <waitForElementVisible selector="{{TabOnStage.tabOptionsByIndex('2')}}" stepKey="waitForTabOptionsPanel"/>
         <seeElement selector="{{TabOnStage.tabOptionsByIndex('2')}}" stepKey="seeTabOptionsPanel2"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit2"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock2"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType2"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSecondTabName">
             <argument name="property" value="PageBuilderTabNameRandom2"/>
         </actionGroup>
@@ -171,7 +171,7 @@
 
         <comment userInput="User navigates to the storefront and sees changes applied" stepKey="AC13"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
 
@@ -219,16 +219,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -296,7 +296,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -341,16 +341,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -410,7 +410,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -452,16 +452,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -527,7 +527,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -569,16 +569,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -652,7 +652,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -696,16 +696,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -791,7 +791,7 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatAfterSave"/>
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -833,16 +833,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -908,7 +908,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -951,16 +951,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -1058,7 +1058,7 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatAfterSave"/>
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -1103,16 +1103,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -1185,7 +1185,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
 
         <comment userInput="Verify tabs on storefront" stepKey="AC5"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -1229,8 +1229,8 @@
             <closeTab stepKey="closeTab"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
             <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
-                <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-                <argument name="contentBlockIndex" value="1"/>
+                <argument name="contentType" value="PageBuilderRowContentType"/>
+                <argument name="contentTypeIndex" value="1"/>
             </actionGroup>
             <click selector="{{RowOnBackend.selectFromGallery}}" stepKey="clickImageSelectFromGalleryBtn2"/>
             <waitForPageLoad stepKey="waitForPageLoad3" />
@@ -1245,16 +1245,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -1349,7 +1349,7 @@
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
         <openNewTab stepKey="openNewTab"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -1393,16 +1393,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
 
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
@@ -1476,7 +1476,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
 
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
@@ -1521,18 +1521,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragTabsIntoStage">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForOptionsPanel" time="30"/>
         <!-- Open Tabs Panel -->
         <comment userInput="Add and customize first tab" stepKey="AC1"/>
         <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentBlock"/>
+        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
         <waitForElementVisible selector="{{AdvancedForm.sectionName}}" stepKey="waitForAdvancedSection"/>
         <!-- Fill All Advanced Fields -->
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
@@ -1609,7 +1609,7 @@
         <waitForElementVisible selector="{{TabOnStage.tab2ContentAdvancedStyles}}" stepKey="seeTab2ContentAdvancedStylesInAdminPreview"/>
 
         <!-- Verify in Storefront -->
-        <amOnPage url="{{PageBuilderTabsContentBlock.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoadStoreFront" time="30"/>
         <comment userInput="Verify tab 1 on storefront" stepKey="AC5"/>

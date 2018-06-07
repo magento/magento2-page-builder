@@ -9,9 +9,8 @@ import _ from "underscore";
 import ConfigFieldInterface from "./config-field.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
-import BlockMountEventParamsInterface from "./content-type/block-mount-event-params.d";
-import contentFactory from "./content-type/content-factory";
 import ContentTypeMountEventParamsInterface from "./content-type/content-type-mount-event-params.d";
+import masterFactory from "./content-type/master-factory";
 import previewFactory from "./content-type/preview-factory";
 import FieldDefaultsInterface from "./field-defaults.d";
 
@@ -32,7 +31,7 @@ export default function createContentType(
     data?: object = {},
     childrenLength: number = 0,
 ): Promise<ContentTypeInterface> {
-    return new Promise((resolve: (blockComponent: any) => void) => {
+    return new Promise((resolve: (contentTypeComponent: any) => void) => {
         loadModule([config.component], (ContentTypeComponent: any) => {
             const contentType = new ContentTypeComponent(
                 parent,
@@ -42,23 +41,23 @@ export default function createContentType(
             Promise.all(
                 [
                     previewFactory(contentType, config),
-                    contentFactory(contentType, config),
+                    masterFactory(contentType, config),
                 ],
             ).then((resolvedPromises) => {
-                const [previewComponent, contentComponent] = resolvedPromises;
+                const [previewComponent, masterComponent] = resolvedPromises;
                 contentType.preview = previewComponent;
-                contentType.content = contentComponent;
+                contentType.content = masterComponent;
                 contentType.dataStore.update(
                     prepareData(config, data),
                 );
                 resolve(contentType);
             });
         });
-    }).then((block: ContentTypeInterface) => {
-        events.trigger("block:create", {id: block.id, block});
-        events.trigger(config.name + ":block:create", {id: block.id, block});
-        fireBlockReadyEvent(block, childrenLength);
-        return block;
+    }).then((contentType: ContentTypeInterface) => {
+        events.trigger("contentType:create", {id: contentType.id, contentType});
+        events.trigger(config.name + ":contentType:create", {id: contentType.id, contentType});
+        fireContentTypeReadyEvent(contentType, childrenLength);
+        return contentType;
     }).catch((error) => {
         console.error(error);
     });
@@ -82,30 +81,30 @@ function prepareData(config, data: {}) {
 }
 
 /**
- * A block is ready once all of its children have mounted
+ * A content type is ready once all of its children have mounted
  *
- * @param {Block} block
+ * @param {ContentType} contentType
  * @param {number} childrenLength
  */
-function fireBlockReadyEvent(block: ContentTypeInterface, childrenLength: number) {
+function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
     const fire = () => {
-        events.trigger("block:ready", {id: block.id, block});
-        events.trigger(block.config.name + ":block:ready", {id: block.id, block});
+        events.trigger("contentType:ready", {id: contentType.id, contentType});
+        events.trigger(contentType.config.name + ":contentType:ready", {id: contentType.id, contentType});
     };
 
     if (childrenLength === 0) {
         fire();
     } else {
         let mountCounter = 0;
-        events.on("block:mount", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.block.parent.id === block.id) {
+        events.on("contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+            if (args.contentType.parent.id === contentType.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
                     fire();
-                    events.off(`block:mount:${block.id}`);
+                    events.off(`contentType:mount:${contentType.id}`);
                 }
             }
-        }, `block:mount:${block.id}` );
+        }, `contentType:mount:${contentType.id}` );
     }
 }

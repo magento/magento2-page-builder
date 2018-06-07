@@ -28,23 +28,23 @@
             <actionGroup ref="logout" stepKey="logOut"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Get 3/6 Column Width -->
         <comment userInput="Get 3/6 Column Width" stepKey="context1"/>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="initalColumnWidth"/>
         <!-- Change Columns To 6:0 Ratio -->
         <comment userInput="Change Columns To 6:0 Ratio" stepKey="context2"/>
-        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeSecondColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockNumber" value="2"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Verify Column Number and Size -->
         <comment userInput="Verify Column Number and Size" stepKey="context3"/>
@@ -71,7 +71,7 @@
         <!-- Verify Storefront -->
         <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="1" stepKey="seeNumberOfColumns3"/>
         <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="1" stepKey="seeNumberOfDividers3"/>
@@ -104,10 +104,10 @@
             <actionGroup ref="logout" stepKey="logOut"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Grab grid guide width -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
@@ -115,14 +115,14 @@
         <!-- Change Columns To 5:1 Ratio -->
         <comment userInput="Change Columns To 5:1 Ratio" stepKey="context1"/>
         <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="dragColumnOneToFive"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <!-- Verify Column Number and Size -->
@@ -152,7 +152,7 @@
         <!-- Verify Storefront -->
         <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns3"/>
         <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="2" stepKey="seeNumberOfDividers3"/>
@@ -185,30 +185,30 @@
             <actionGroup ref="logout" stepKey="logOut"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Change Columns To 4:2 Ratio -->
         <comment userInput="Change Columns To 4:2 Ratio" stepKey="context1"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragColumnIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockNumber" value="1"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <!-- Verify Column Number and Size -->
@@ -238,7 +238,7 @@
         <!-- Verify Storefront -->
         <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns3"/>
         <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="2" stepKey="seeNumberOfDividers3"/>
@@ -271,10 +271,10 @@
             <actionGroup ref="logout" stepKey="logOut"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Grab grid guide width (-8 due to how picky the guide is) -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
@@ -282,24 +282,24 @@
         <!-- Change Columns To 4:1:1 Ratio -->
         <comment userInput="Change Columns To 4:1:1 Ratio" stepKey="context1"/>
         <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumn1ToFour"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragColumnIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <!-- Verify Column Number and Size -->
@@ -341,7 +341,7 @@
         <!-- Verify Storefront -->
         <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
         <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="3" stepKey="seeNumberOfDividers3"/>
@@ -380,19 +380,19 @@
             <actionGroup ref="logout" stepKey="logOut"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <!-- Verify Column Number and Size -->
@@ -422,7 +422,7 @@
         <!-- Verify Storefront -->
         <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="2" stepKey="seeNumberOfColumns3"/>
         <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="2" stepKey="seeNumberOfDividers3"/>
@@ -455,35 +455,35 @@
             <actionGroup ref="logout" stepKey="logOut"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Grab grid guide width at 5 -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
         <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(5)').clientWidth" stepKey="guideWidth"/>
         <!-- Change Columns To 3:2:1 Ratio -->
         <comment userInput="Change Columns To 3:2:1 Ratio" stepKey="context1"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragColumnIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn2ToFive"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <!-- Verify Column Number and Size -->
@@ -525,7 +525,7 @@
         <!-- Verify Storefront -->
         <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
         <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="3" stepKey="seeNumberOfDividers3"/>
@@ -564,41 +564,41 @@
             <actionGroup ref="logout" stepKey="logOut"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Change Columns To 3:1:1:1 Ratio -->
         <comment userInput="Change Columns To 3:1:1:1 Ratio" stepKey="context1"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragColumnIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragColumnIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage3">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage4">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="4"/>
         </actionGroup>
         <!-- Verify Column Number and Size -->
@@ -652,7 +652,7 @@
         <!-- Verify Storefront -->
         <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="4" stepKey="seeNumberOfColumns3"/>
         <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="4" stepKey="seeNumberOfDividers3"/>
@@ -697,45 +697,45 @@
             <actionGroup ref="logout" stepKey="logOut"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <!-- Grab grid guide width -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
         <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(2)').clientWidth" stepKey="guideWidth"/>
         <!-- Change Columns To 2:2:2 Ratio -->
         <comment userInput="Change Columns To 2:2:2 Ratio" stepKey="context1"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragColumnIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
         <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1ToTwo"/>
-        <actionGroup ref="duplicateContentBlock" stepKey="duplicateFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
             <argument name="expectedIndex" value="4"/>
         </actionGroup>
-        <actionGroup ref="removeContentBlockFromStageByIndex" stepKey="removeFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="contentBlockNumber" value="1"/>
+        <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="contentTypeNumber" value="1"/>
         </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemovalModal"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage2">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderDividerContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage3">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <!-- Verify Column Number and Size -->
@@ -777,7 +777,7 @@
         <!-- Verify Storefront -->
         <comment userInput="Verify Storefront" stepKey="frontEndContext"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{ColumnsOnFrontend.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
         <seeNumberOfElements selector="{{DividerOnStorefront.allDividers}}" userInput="3" stepKey="seeNumberOfDividers3"/>

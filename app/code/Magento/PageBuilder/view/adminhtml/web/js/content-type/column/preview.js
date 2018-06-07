@@ -45,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       _PreviewCollection.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
-        _uiEvents.on("column:block:mount", function (args) {
+        _uiEvents.on("column:contentType:mount", function (args) {
           if (args.id === _this2.parent.id) {
             _this2.createColumnGroup();
           }
@@ -154,7 +154,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       var splitTimes = Math.round((0, _resizing.getColumnWidth)(child) / (0, _resizing.getSmallestColumnWidth)());
 
       if (splitTimes > 1) {
-        _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateBlock) {
+        _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateContentType) {
           var originalWidth = 0;
           var duplicateWidth = 0;
 
@@ -171,18 +171,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
           }
 
           (0, _resizing.updateColumnWidth)(child, (0, _resizing.getAcceptedColumnWidth)(originalWidth.toString()));
-          (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing.getAcceptedColumnWidth)(duplicateWidth.toString()));
-          return duplicateBlock;
+          (0, _resizing.updateColumnWidth)(duplicateContentType, (0, _resizing.getAcceptedColumnWidth)(duplicateWidth.toString()));
+          return duplicateContentType;
         });
       } else {
         // Conduct an outward search on the children to locate a suitable shrinkable column
         var shrinkableColumn = (0, _resizing.findShrinkableColumn)(child);
 
         if (shrinkableColumn) {
-          _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateBlock) {
+          _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateContentType) {
             (0, _resizing.updateColumnWidth)(shrinkableColumn, (0, _resizing.getAcceptedColumnWidth)(((0, _resizing.getColumnWidth)(shrinkableColumn) - (0, _resizing.getSmallestColumnWidth)()).toString()));
-            (0, _resizing.updateColumnWidth)(duplicateBlock, (0, _resizing.getSmallestColumnWidth)());
-            return duplicateBlock;
+            (0, _resizing.updateColumnWidth)(duplicateContentType, (0, _resizing.getSmallestColumnWidth)());
+            return duplicateContentType;
           });
         } else {
           // If we aren't able to duplicate inform the user why
@@ -227,26 +227,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       return styles;
     };
     /**
-     * Fire the mount event for blocks
+     * Fire the mount event for content types
      *
-     * @param {ContentTypeInterface[]} blocks
+     * @param {ContentTypeInterface[]} contentTypes
      */
 
 
     _proto.fireMountEvent = function fireMountEvent() {
-      for (var _len = arguments.length, blocks = new Array(_len), _key = 0; _key < _len; _key++) {
-        blocks[_key] = arguments[_key];
+      for (var _len = arguments.length, contentTypes = new Array(_len), _key = 0; _key < _len; _key++) {
+        contentTypes[_key] = arguments[_key];
       }
 
-      blocks.forEach(function (block) {
-        _uiEvents.trigger("block:mount", {
-          id: block.id,
-          block: block
+      contentTypes.forEach(function (contentType) {
+        _uiEvents.trigger("contentType:mount", {
+          id: contentType.id,
+          contentType: contentType
         });
 
-        _uiEvents.trigger(block.config.name + ":block:mount", {
-          id: block.id,
-          block: block
+        _uiEvents.trigger(contentType.config.name + ":contentType:mount", {
+          id: contentType.id,
+          contentType: contentType
         });
       });
     };

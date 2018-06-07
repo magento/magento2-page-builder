@@ -144,10 +144,10 @@ export default class Stage {
             () => events.trigger("stage:updated", {stageId: this.id}),
         );
 
-        // Block being removed from container
-        events.on("block:removed", (args: ContentTypeRemovedParamsInterface) => {
+        // ContentType being removed from container
+        events.on("contentType:removed", (args: ContentTypeRemovedParamsInterface) => {
             if (args.stageId === this.id) {
-                this.onBlockRemoved(args);
+                this.onContentTypeRemoved(args);
             }
         });
 
@@ -172,11 +172,11 @@ export default class Stage {
     }
 
     /**
-     * On block removed
+     * On content type removed
      *
      * @param params
      */
-    private onBlockRemoved(params: ContentTypeRemovedParamsInterface): void {
-        params.parent.removeChild(params.block);
+    private onContentTypeRemoved(params: ContentTypeRemovedParamsInterface): void {
+        params.parent.removeChild(params.contentType);
     }
 }

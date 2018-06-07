@@ -16,7 +16,7 @@ import {setDraggedBlockConfig} from "./drag-drop/registry";
 import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
-import {Block as GroupBlock} from "./panel/group/block";
+import {ContentType as GroupContentType} from "./panel/group/content-type";
 
 export default class Panel implements PanelInterface {
     public groups: KnockoutObservableArray<any> = ko.observableArray([]);
@@ -44,7 +44,7 @@ export default class Panel implements PanelInterface {
      */
     public initListeners(): void {
         events.on("stage:ready:" + this.id, () => {
-            this.populateContentBlocks();
+            this.populateContentTypes();
             this.isVisible(true);
         });
     }
@@ -59,7 +59,7 @@ export default class Panel implements PanelInterface {
     }
 
     /**
-     * Conduct a search on the available content blocks,
+     * Conduct a search on the available content types,
      * and find matches for beginning of words.
      *
      * @param self
@@ -74,16 +74,16 @@ export default class Panel implements PanelInterface {
             this.searchResults(_.map(
                 _.filter(
                     Config.getConfig("content_types"),
-                    (contentBlock: ContentTypeConfigInterface) => {
+                    (contentType: ContentTypeConfigInterface) => {
                         const regEx = new RegExp("\\b" + self.searchValue(), "gi");
-                        const matches = !!contentBlock.label.toLowerCase().match(regEx);
+                        const matches = !!contentType.label.toLowerCase().match(regEx);
                         return matches &&
-                            contentBlock.is_visible === true;
+                            contentType.is_visible === true;
                     },
                 ),
-                (contentBlock, identifier: string) => {
-                    // Create a new instance of GroupBlock for each result
-                    return new GroupBlock(identifier, contentBlock);
+                (contentType, identifier: string) => {
+                    // Create a new instance of GroupContentType for each result
+                    return new GroupContentType(identifier, contentType);
                 }),
             );
         }
@@ -162,28 +162,28 @@ export default class Panel implements PanelInterface {
     }
 
     /**
-     * Populate the panel with the content blocks
+     * Populate the panel with the content types
      */
-    private populateContentBlocks(): void {
+    private populateContentTypes(): void {
         const groups = Config.getConfig("groups");
-        const contentBlocks = Config.getConfig("content_types");
+        const contentTypes = Config.getConfig("content_types");
 
         // Verify the configuration contains the required information
-        if (groups && contentBlocks) {
-            // Iterate through the groups creating new instances with their associated content blocks
+        if (groups && contentTypes) {
+            // Iterate through the groups creating new instances with their associated content types
             _.each(groups, (group, id) => {
                 // Push the group instance into the observable array to update the UI
                 this.groups.push(new Group(
                     id,
                     group,
                     _.map(
-                        _.where(contentBlocks, {
+                        _.where(contentTypes, {
                             group: id,
                             is_visible: true,
-                        }), /* Retrieve content blocks with group id */
-                        (contentBlock: ContentTypeConfigInterface, identifier: string) => {
-                            const groupBlock = new GroupBlock(identifier, contentBlock);
-                            return groupBlock;
+                        }), /* Retrieve content types with group id */
+                        (contentType: ContentTypeConfigInterface, identifier: string) => {
+                            const groupContentType = new GroupContentType(identifier, contentType);
+                            return groupContentType;
                         },
                     ),
                 ));

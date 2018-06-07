@@ -139,11 +139,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
         return _uiEvents.trigger("stage:updated", {
           stageId: _this.id
         });
-      }); // Block being removed from container
+      }); // ContentType being removed from container
 
-      _uiEvents.on("block:removed", function (args) {
+      _uiEvents.on("contentType:removed", function (args) {
         if (args.stageId === _this.id) {
-          _this.onBlockRemoved(args);
+          _this.onContentTypeRemoved(args);
         }
       }); // Any store state changes trigger a stage update event
 
@@ -176,14 +176,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
       });
     };
     /**
-     * On block removed
+     * On content type removed
      *
      * @param params
      */
 
 
-    _proto.onBlockRemoved = function onBlockRemoved(params) {
-      params.parent.removeChild(params.block);
+    _proto.onContentTypeRemoved = function onContentTypeRemoved(params) {
+      params.parent.removeChild(params.contentType);
     };
 
     _createClass(Stage, [{

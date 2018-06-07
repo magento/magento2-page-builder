@@ -8,7 +8,7 @@ import mageUtils from "mageUtils";
 import events from "uiEvents";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
-import Content from "./content-type/content";
+import Master from "./content-type/master";
 import Preview from "./content-type/preview";
 import DataStore from "./data-store";
 
@@ -22,7 +22,7 @@ export default class ContentType implements ContentTypeInterface {
     public element: JQuery<HTMLElement>;
     public dataStore: DataStore = new DataStore();
     public preview: Preview;
-    public content: Content;
+    public content: Master;
 
     /**
      * @param {ContentTypeInterface} parent

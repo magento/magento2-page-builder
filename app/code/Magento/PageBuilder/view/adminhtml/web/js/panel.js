@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/block"], function (_jquery, _knockout, _translate, _uiEvents, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _block) {
+define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_jquery, _knockout, _translate, _uiEvents, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -36,7 +36,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
       var _this = this;
 
       _uiEvents.on("stage:ready:" + this.id, function () {
-        _this.populateContentBlocks();
+        _this.populateContentTypes();
 
         _this.isVisible(true);
       });
@@ -52,7 +52,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
       return this.template;
     };
     /**
-     * Conduct a search on the available content blocks,
+     * Conduct a search on the available content types,
      * and find matches for beginning of words.
      *
      * @param self
@@ -67,13 +67,13 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
         this.searching(false);
       } else {
         this.searching(true);
-        this.searchResults(_underscore.map(_underscore.filter(_config.getConfig("content_types"), function (contentBlock) {
+        this.searchResults(_underscore.map(_underscore.filter(_config.getConfig("content_types"), function (contentType) {
           var regEx = new RegExp("\\b" + self.searchValue(), "gi");
-          var matches = !!contentBlock.label.toLowerCase().match(regEx);
-          return matches && contentBlock.is_visible === true;
-        }), function (contentBlock, identifier) {
-          // Create a new instance of GroupBlock for each result
-          return new _block.Block(identifier, contentBlock);
+          var matches = !!contentType.label.toLowerCase().match(regEx);
+          return matches && contentType.is_visible === true;
+        }), function (contentType, identifier) {
+          // Create a new instance of GroupContentType for each result
+          return new _contentType.ContentType(identifier, contentType);
         }));
       }
     };
@@ -161,30 +161,30 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
       };
     };
     /**
-     * Populate the panel with the content blocks
+     * Populate the panel with the content types
      */
 
 
-    _proto.populateContentBlocks = function populateContentBlocks() {
+    _proto.populateContentTypes = function populateContentTypes() {
       var _this2 = this;
 
       var groups = _config.getConfig("groups");
 
-      var contentBlocks = _config.getConfig("content_types"); // Verify the configuration contains the required information
+      var contentTypes = _config.getConfig("content_types"); // Verify the configuration contains the required information
 
 
-      if (groups && contentBlocks) {
-        // Iterate through the groups creating new instances with their associated content blocks
+      if (groups && contentTypes) {
+        // Iterate through the groups creating new instances with their associated content types
         _underscore.each(groups, function (group, id) {
           // Push the group instance into the observable array to update the UI
-          _this2.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentBlocks, {
+          _this2.groups.push(new _group.Group(id, group, _underscore.map(_underscore.where(contentTypes, {
             group: id,
             is_visible: true
           }),
-          /* Retrieve content blocks with group id */
-          function (contentBlock, identifier) {
-            var groupBlock = new _block.Block(identifier, contentBlock);
-            return groupBlock;
+          /* Retrieve content types with group id */
+          function (contentType, identifier) {
+            var groupContentType = new _contentType.ContentType(identifier, contentType);
+            return groupContentType;
           })));
         }); // Display the panel
 

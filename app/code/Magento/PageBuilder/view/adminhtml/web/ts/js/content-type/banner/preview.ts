@@ -87,7 +87,7 @@ export default class Preview extends BasePreview {
             events.trigger(`image:assigned:${this.parent.id}`, imageObject);
         });
 
-        events.on(`${this.config.name}:block:ready`, () => {
+        events.on(`${this.config.name}:contentType:ready`, () => {
             const dataStore = this.parent.dataStore.get();
             const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
 

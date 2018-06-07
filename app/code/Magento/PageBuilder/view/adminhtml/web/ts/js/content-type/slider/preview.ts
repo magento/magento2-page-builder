@@ -19,7 +19,9 @@ import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
+import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import Slide from "../slide/preview";
@@ -30,7 +32,7 @@ export default class Preview extends PreviewCollection {
     public activeSlide: KnockoutObservable<number> = ko.observable(0);
     private element: Element;
     private childSubscribe: KnockoutSubscription;
-    private blockHeightReset: boolean;
+    private contentTypeHeightReset: boolean;
     /**
      * Assign a debounce and delay to the init of slick to ensure the DOM has updated
      *
@@ -73,12 +75,12 @@ export default class Preview extends PreviewCollection {
                     this.setActiveSlide(nextSlide);
                 },
             ).on("afterChange", () => {
-                if (!this.blockHeightReset) {
+                if (!this.contentTypeHeightReset) {
                     $(this.element).css({
                         height: "",
                         overflow: "",
                     });
-                    this.blockHeightReset = null;
+                    this.contentTypeHeightReset = null;
                 }
             });
         }
@@ -98,7 +100,7 @@ export default class Preview extends PreviewCollection {
 
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
-        events.on("slider:block:ready", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("slider:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 sliderReady = true;
             }
@@ -114,18 +116,19 @@ export default class Preview extends PreviewCollection {
                 this.setActiveSlide(args.newPosition);
             }
         });
-        // When a slide block is removed we need to force update the content of the slider due to KO rendering issues
-        events.on("slide:block:removed", (args: BlockRemovedParams) => {
-            if (args.block.parent.id === this.parent.id) {
+        // When a slide content type is removed
+        // we need to force update the content of the slider due to KO rendering issues
+        events.on("slide:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
+            if (args.contentType.parent.id === this.parent.id) {
                 this.forceContainerHeight();
                 const data = this.parent.children().slice(0);
                 this.parent.children([]);
                 this.parent.children(data);
             }
         });
-        // On a slide blocks creation we need to lock the height of the slider to ensure a smooth transition
-        events.on("slide:block:create", (args: ContentTypeCreateEventParamsInterface) => {
-            if (this.element && sliderReady && args.block.parent.id === this.parent.id) {
+        // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
+        events.on("slide:contentType:create", (args: ContentTypeCreateEventParamsInterface) => {
+            if (this.element && sliderReady && args.contentType.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
         });
@@ -224,7 +227,7 @@ export default class Preview extends PreviewCollection {
         if (this.activeSlide() !== params.item.index() || this.focusedSlide() !== params.item.index()) {
             this.navigateToSlide(params.item.index(), false, true);
             // As we've completed a navigation request we need to ensure we don't remove the forced height
-            this.blockHeightReset = true;
+            this.contentTypeHeightReset = true;
         }
     }
 
@@ -247,15 +250,15 @@ export default class Preview extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((slide) => {
-            events.on("slide:block:mount", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("slide:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
                     _.delay(() => {
                         this.navigateToSlide(this.parent.children().length - 1);
                         slide.preview.onOptionEdit();
                     }, 500 );
-                    events.off(`slide:block:mount:${slide.id}`);
+                    events.off(`slide:contentType:mount:${slide.id}`);
                 }
-            }, `slide:block:mount:${slide.id}`);
+            }, `slide:contentType:mount:${slide.id}`);
             this.parent.addChild(slide, this.parent.children().length);
         });
     }
@@ -274,15 +277,15 @@ export default class Preview extends PreviewCollection {
      */
     protected bindEvents() {
         super.bindEvents();
-        // Block being mounted onto container
-        events.on("slider:block:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
+        // ContentType being mounted onto container
+        events.on("slider:contentType:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
             }
         });
 
-        // Block being removed from container
-        events.on("slide:block:removed", (args: BlockRemovedParams) => {
+        // ContentType being removed from container
+        events.on("slide:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 // Mark the previous slide as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
@@ -291,16 +294,16 @@ export default class Preview extends PreviewCollection {
             }
         });
 
-        // Capture when a block is duplicated within the container
+        // Capture when a content type is duplicated within the container
         let duplicatedSlide: Slide;
         let duplicatedSlideIndex: number;
-        events.on("slide:block:duplicate", (args: BlockDuplicateEventParams) => {
-            if (args.duplicateBlock.parent.id === this.parent.id) {
-                duplicatedSlide = (args.duplicateBlock as Slide);
+        events.on("slide:contentType:duplicate", (args: ContentTypeDuplicateEventParamsInterface) => {
+            if (args.duplicateContentType.parent.id === this.parent.id) {
+                duplicatedSlide = (args.duplicateContentType as Slide);
                 duplicatedSlideIndex = args.index;
             }
         });
-        events.on("slide:block:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("slide:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 // Mark the new duplicate slide as active
                 (this as SliderPreview).navigateToSlide(duplicatedSlideIndex);

@@ -50,7 +50,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.movePosition = void 0;
       _this.groupPositionCache = void 0;
 
-      _uiEvents.on("block:removed", function (args) {
+      _uiEvents.on("contentType:removed", function (args) {
         if (args.parent.id === _this.parent.id) {
           _this.spreadWidth(event, args);
         }
@@ -744,7 +744,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
      * Spread any empty space across the other columns
      *
      * @param {Event} event
-     * @param {BlockRemovedParams} params
+     * @param {ContentTypeRemovedParams} params
      */
 
 

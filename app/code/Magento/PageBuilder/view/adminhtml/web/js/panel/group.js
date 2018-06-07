@@ -12,13 +12,13 @@ define(["knockout"], function (_knockout) {
      *
      * @param id
      * @param group
-     * @param blocks
+     * @param contentTypes
      *
      * @todo change group type
      */
-    function Group(id, group, blocks) {
-      if (blocks === void 0) {
-        blocks = [];
+    function Group(id, group, contentTypes) {
+      if (contentTypes === void 0) {
+        contentTypes = [];
       }
 
       this.hidden = _knockout.observable(false);
@@ -27,14 +27,14 @@ define(["knockout"], function (_knockout) {
       this.label = _knockout.observable("");
       this.icon = _knockout.observable("");
       this.sort = _knockout.observable();
-      this.blocks = _knockout.observableArray([]);
+      this.contentTypes = _knockout.observableArray([]);
       this.active = _knockout.observable(false);
       this.id(id);
       this.code(group.code);
       this.label(group.label);
       this.icon(group.icon);
       this.sort(group.sort);
-      this.blocks(blocks);
+      this.contentTypes(contentTypes);
     }
     /**
      * Toggle the group
