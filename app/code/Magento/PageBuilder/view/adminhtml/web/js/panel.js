@@ -138,7 +138,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
               }
             });
             (0, _dropIndicators.showDropIndicators)(block.config.name);
-            (0, _registry.setDraggedBlockConfig)(block.config);
+            (0, _registry.setDraggedContentTypeConfig)(block.config);
 
             _uiEvents.trigger("interaction:start", {
               stage: self.parent.stage
@@ -152,7 +152,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
             }
           });
           (0, _dropIndicators.hideDropIndicators)();
-          (0, _registry.setDraggedBlockConfig)(null);
+          (0, _registry.setDraggedContentTypeConfig)(null);
 
           _uiEvents.trigger("interaction:stop", {
             stage: self.parent.stage

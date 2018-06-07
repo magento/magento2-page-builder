@@ -14,7 +14,7 @@ import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
 import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
-import {getDraggedBlockConfig} from "../../drag-drop/registry";
+import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {moveArrayItem} from "../../utils/array";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
@@ -738,7 +738,7 @@ export default class Preview extends PreviewCollection {
                 });
             },
             activate() {
-                if (getDraggedBlockConfig() === Config.getContentTypeConfig("column")) {
+                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
                     group.find(".ui-sortable").each(function() {
                         if ($(this).data("sortable")) {
                             $(this).sortable("option", "disabled", true);
@@ -775,7 +775,7 @@ export default class Preview extends PreviewCollection {
                 self.dropPositions = calculateDropPositions((self.parent as ContentTypeCollectionInterface));
 
                 // Is the element currently being dragged a column?
-                if (getDraggedBlockConfig() === Config.getContentTypeConfig("column")) {
+                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
                     self.dropOverElement = true;
                 } else {
                     self.dropOverElement = null;

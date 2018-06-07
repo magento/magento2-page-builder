@@ -147,12 +147,12 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
     sortedContentType = null;
     ui.item.removeClass("pagebuilder-sorting-original");
     (0, _dropIndicators.hideDropIndicators)();
-    (0, _registry.setDraggedBlockConfig)(null);
+    (0, _registry.setDraggedContentTypeConfig)(null);
 
     _uiEvents.trigger("interaction:stop");
   }
   /**
-   * Handle receiving a block from the left panel
+   * Handle receiving a content type from the left panel
    *
    * @param {Preview} preview
    * @param {Event} event
@@ -171,9 +171,9 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
       return;
     }
 
-    var blockConfig = (0, _registry.getDraggedBlockConfig)();
+    var contentTypeConfig = (0, _registry.getDraggedContentTypeConfig)();
 
-    if (blockConfig) {
+    if (contentTypeConfig) {
       // If the sortable instance is disabled don't complete this operation
       if ((0, _jquery)(this).sortable("option", "disabled")) {
         return;
@@ -186,22 +186,22 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
       var parentContainerElement = (0, _jquery)(event.target).parents(".type-container");
       var containerLocked = getParentProxy(preview).getChildren()().length === 0 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Create the new content type and insert it into the parent
 
-      (0, _contentTypeFactory)(blockConfig, getParentProxy(preview), getPreviewStageIdProxy(preview)).then(function (block) {
+      (0, _contentTypeFactory)(contentTypeConfig, getParentProxy(preview), getPreviewStageIdProxy(preview)).then(function (contentType) {
         // Prepare the event handler to animate the container height on render
-        (0, _containerAnimation.bindAfterRenderForAnimation)(containerLocked, block, parentContainerElement);
-        getParentProxy(preview).addChild(block, index);
+        (0, _containerAnimation.bindAfterRenderForAnimation)(containerLocked, contentType, parentContainerElement);
+        getParentProxy(preview).addChild(contentType, index);
 
-        _uiEvents.trigger("block:dropped:create", {
-          id: block.id,
-          block: block
+        _uiEvents.trigger("contentType:dropped:create", {
+          id: contentType.id,
+          contentType: contentType
         });
 
-        _uiEvents.trigger(blockConfig.name + ":block:dropped:create", {
-          id: block.id,
-          block: block
+        _uiEvents.trigger(contentTypeConfig.name + ":contentType:dropped:create", {
+          id: contentType.id,
+          contentType: contentType
         });
 
-        return block;
+        return contentType;
       }); // Remove the DOM element, as this is a drop event we can't just remove the ui.item
 
       (0, _jquery)(event.target).find(".pagebuilder-draggable-content-type").remove();

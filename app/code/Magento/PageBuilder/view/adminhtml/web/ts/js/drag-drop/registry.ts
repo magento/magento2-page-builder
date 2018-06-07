@@ -5,15 +5,15 @@
 
 import ContentTypeConfigInterface from "../content-type-config";
 
-let draggedBlockConfig: ContentTypeConfigInterface;
+let draggedContentTypeConfig: ContentTypeConfigInterface;
 
 /**
  * Set the current dragged blocks config into the registry
  *
  * @param {ContentTypeConfigInterface} config
  */
-export function setDraggedBlockConfig(config: ContentTypeConfigInterface): void {
-    draggedBlockConfig = config;
+export function setDraggedContentTypeConfig(config: ContentTypeConfigInterface): void {
+    draggedContentTypeConfig = config;
 }
 
 /**
@@ -21,6 +21,6 @@ export function setDraggedBlockConfig(config: ContentTypeConfigInterface): void 
  *
  * @returns {ContentTypeConfigInterface}
  */
-export function getDraggedBlockConfig(): ContentTypeConfigInterface {
-    return draggedBlockConfig;
+export function getDraggedContentTypeConfig(): ContentTypeConfigInterface {
+    return draggedContentTypeConfig;
 }

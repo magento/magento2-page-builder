@@ -14,7 +14,7 @@ import {bindAfterRenderForAnimation, lockContainerHeight} from "./container-anim
 import {hideDropIndicators, showDropIndicators} from "./drop-indicators";
 import {getAllowedContainersClasses} from "./matrix";
 import {moveContentType} from "./move-content-type";
-import {getDraggedBlockConfig, setDraggedBlockConfig} from "./registry";
+import {getDraggedContentTypeConfig, setDraggedContentTypeConfig} from "./registry";
 
 /**
  * Return the sortable options for an instance which requires sorting / dropping functionality
@@ -154,12 +154,12 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
     sortedContentType = null;
     ui.item.removeClass("pagebuilder-sorting-original");
     hideDropIndicators();
-    setDraggedBlockConfig(null);
+    setDraggedContentTypeConfig(null);
     events.trigger("interaction:stop");
 }
 
 /**
- * Handle receiving a block from the left panel
+ * Handle receiving a content type from the left panel
  *
  * @param {Preview} preview
  * @param {Event} event
@@ -176,8 +176,8 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
         return;
     }
 
-    const blockConfig = getDraggedBlockConfig();
-    if (blockConfig) {
+    const contentTypeConfig = getDraggedContentTypeConfig();
+    if (contentTypeConfig) {
         // If the sortable instance is disabled don't complete this operation
         if ($(this).sortable("option", "disabled")) {
             return;
@@ -196,16 +196,22 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
             lockContainerHeight(parentContainerElement);
 
         // Create the new content type and insert it into the parent
-        createContentType(blockConfig, getParentProxy(preview), getPreviewStageIdProxy(preview))
-            .then((block: ContentTypeInterface) => {
+        createContentType(contentTypeConfig, getParentProxy(preview), getPreviewStageIdProxy(preview))
+            .then((contentType: ContentTypeInterface) => {
                 // Prepare the event handler to animate the container height on render
-                bindAfterRenderForAnimation(containerLocked, block, parentContainerElement);
+                bindAfterRenderForAnimation(containerLocked, contentType, parentContainerElement);
 
-                getParentProxy(preview).addChild(block, index);
-                events.trigger("block:dropped:create", {id: block.id, block});
-                events.trigger(blockConfig.name + ":block:dropped:create", {id: block.id, block});
+                getParentProxy(preview).addChild(contentType, index);
+                events.trigger("contentType:dropped:create", {id: contentType.id, contentType});
+                events.trigger(
+                    contentTypeConfig.name + ":contentType:dropped:create",
+                    {
+                        id: contentType.id,
+                        contentType,
+                    },
+                );
 
-                return block;
+                return contentType;
             });
 
         // Remove the DOM element, as this is a drop event we can't just remove the ui.item

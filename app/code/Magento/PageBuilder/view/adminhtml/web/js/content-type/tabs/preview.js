@@ -44,7 +44,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         }
       }, 10);
 
-      _uiEvents.on("tabs:contentType:ready", function (args) {
+      _uiEvents.on("tabs:contentType:afterRender", function (args) {
         if (args.id === _this.parent.id && _this.element) {
           _this.buildTabs();
         }

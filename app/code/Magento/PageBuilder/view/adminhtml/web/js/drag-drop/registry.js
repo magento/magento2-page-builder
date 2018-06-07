@@ -4,15 +4,15 @@ define([], function () {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var draggedBlockConfig;
+  var draggedContentTypeConfig;
   /**
    * Set the current dragged blocks config into the registry
    *
    * @param {ContentTypeConfigInterface} config
    */
 
-  function setDraggedBlockConfig(config) {
-    draggedBlockConfig = config;
+  function setDraggedContentTypeConfig(config) {
+    draggedContentTypeConfig = config;
   }
   /**
    * Retrieve the dragged blocks config
@@ -21,13 +21,13 @@ define([], function () {
    */
 
 
-  function getDraggedBlockConfig() {
-    return draggedBlockConfig;
+  function getDraggedContentTypeConfig() {
+    return draggedContentTypeConfig;
   }
 
   return {
-    setDraggedBlockConfig: setDraggedBlockConfig,
-    getDraggedBlockConfig: getDraggedBlockConfig
+    setDraggedContentTypeConfig: setDraggedContentTypeConfig,
+    getDraggedContentTypeConfig: getDraggedContentTypeConfig
   };
 });
 //# sourceMappingURL=registry.js.map

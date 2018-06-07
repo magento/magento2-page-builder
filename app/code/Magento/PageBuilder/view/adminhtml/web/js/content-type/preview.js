@@ -180,13 +180,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
         var element = elementNodes[0];
         this.wrapperElement = element;
 
-        _uiEvents.trigger("block:afterRender", {
+        _uiEvents.trigger("contentType:afterRender", {
           id: this.parent.id,
           block: this.parent,
           element: element
         });
 
-        _uiEvents.trigger(this.parent.config.name + ":block:afterRender", {
+        _uiEvents.trigger(this.parent.config.name + ":contentType:afterRender", {
           block: this.parent,
           element: element,
           id: this.parent.id

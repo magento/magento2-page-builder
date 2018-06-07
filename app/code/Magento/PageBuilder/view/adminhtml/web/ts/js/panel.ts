@@ -12,7 +12,7 @@ import "./binding/draggable";
 import Config from "./config";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import {hideDropIndicators, showDropIndicators} from "./drag-drop/drop-indicators";
-import {setDraggedBlockConfig} from "./drag-drop/registry";
+import {setDraggedContentTypeConfig} from "./drag-drop/registry";
 import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
@@ -144,7 +144,7 @@ export default class Panel implements PanelInterface {
                         }
                     });
                     showDropIndicators(block.config.name);
-                    setDraggedBlockConfig(block.config);
+                    setDraggedContentTypeConfig(block.config);
                     events.trigger("interaction:start", {stage: self.parent.stage});
                 }
             },
@@ -155,7 +155,7 @@ export default class Panel implements PanelInterface {
                     }
                 });
                 hideDropIndicators();
-                setDraggedBlockConfig(null);
+                setDraggedContentTypeConfig(null);
                 events.trigger("interaction:stop", {stage: self.parent.stage});
             },
         };

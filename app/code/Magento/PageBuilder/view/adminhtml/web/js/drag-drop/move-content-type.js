@@ -21,7 +21,7 @@ define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
     var sourceIndex = contentType.parent.children().indexOf(contentType);
     var sourceParentChildren = sourceParent.getChildren(); // Trigger our block move event
 
-    _uiEvents.trigger("block:beforeMove", {
+    _uiEvents.trigger("contentType:beforeMove", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,
@@ -55,10 +55,10 @@ define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
 
     if (_knockout.processAllDeferredBindingUpdates) {
       _knockout.processAllDeferredBindingUpdates();
-    } // Trigger our block move event
+    } // Trigger our content type move event
 
 
-    _uiEvents.trigger("block:move", {
+    _uiEvents.trigger("contentType:move", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,

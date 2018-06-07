@@ -43,7 +43,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
       // Wait for mount then animate the container
       var ns = block.id + ".afterRender.container.animate";
 
-      _uiEvents.on("block:afterRender", function (args) {
+      _uiEvents.on("contentType:afterRender", function (args) {
         if (args.block.parent === block.parent) {
           animateContainerHeight(true, element);
 

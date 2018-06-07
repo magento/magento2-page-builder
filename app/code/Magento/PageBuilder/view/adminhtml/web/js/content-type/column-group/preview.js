@@ -701,7 +701,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           });
         },
         activate: function activate() {
-          if ((0, _registry.getDraggedBlockConfig)() === _config.getContentTypeConfig("column")) {
+          if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column")) {
             var _createStyleSheet;
 
             group.find(".ui-sortable").each(function () {
@@ -732,7 +732,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           // Always calculate drop positions when an element is dragged over
           self.dropPositions = (0, _dragAndDrop.calculateDropPositions)(self.parent); // Is the element currently being dragged a column?
 
-          if ((0, _registry.getDraggedBlockConfig)() === _config.getContentTypeConfig("column")) {
+          if ((0, _registry.getDraggedContentTypeConfig)() === _config.getContentTypeConfig("column")) {
             self.dropOverElement = true;
           } else {
             self.dropOverElement = null;

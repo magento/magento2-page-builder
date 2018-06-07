@@ -26,7 +26,7 @@ export function moveContentType(
     const sourceParentChildren = sourceParent.getChildren();
 
     // Trigger our block move event
-    events.trigger("block:beforeMove", {
+    events.trigger("contentType:beforeMove", {
         contentType,
         sourceParent,
         targetParent,
@@ -63,8 +63,8 @@ export function moveContentType(
         (ko as any).processAllDeferredBindingUpdates();
     }
 
-    // Trigger our block move event
-    events.trigger("block:move", {
+    // Trigger our content type move event
+    events.trigger("contentType:move", {
         contentType,
         sourceParent,
         targetParent,
