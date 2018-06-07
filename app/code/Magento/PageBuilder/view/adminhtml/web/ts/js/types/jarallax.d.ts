@@ -67,7 +67,7 @@ interface JarallaxOptions {
     keepImg?: boolean;
 
     /**
-     * Use custom DOM / jQuery element to check if parallax block in viewport.
+     * Use custom DOM / jQuery element to check if parallax content type in viewport.
      * More info here - https://github.com/nk-o/jarallax/issues/13.
      */
     elementInViewport?: Element | JQuery<Element>;

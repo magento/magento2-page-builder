@@ -5,7 +5,7 @@
 
 import ContentTypeConfigInterface from "./content-type-config.d";
 import Preview from "./content-type/preview";
-import Content from "./content-type/content";
+import Master from "./content-type/master";
 import DataStore from "./data-store";
 
 export default interface ContentTypeInterface {
@@ -14,6 +14,6 @@ export default interface ContentTypeInterface {
     parent: ContentTypeInterface;
     config: ContentTypeConfigInterface;
     preview: Preview;
-    content: Content;
+    master: Master;
     dataStore: DataStore;
 }

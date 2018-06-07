@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import BaseContent from "./content";
+import BaseMaster from "./master";
 
-export default class ContentCollection extends BaseContent {
+export default class ContentCollection extends BaseMaster {
     /**
      * Retrieve the child template
      *

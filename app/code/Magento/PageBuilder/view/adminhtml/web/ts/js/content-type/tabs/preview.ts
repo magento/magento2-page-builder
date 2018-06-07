@@ -15,7 +15,7 @@ import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
-import BlockRemovedParamsInterface from "../../content-type-removed-params.d";
+import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
 import {ContentTypeMountEventParamsInterface} from "../content-type-mount-event-params.d";
 import {ContentTypeReadyEventParamsInterface} from "../content-type-ready-event-params.d";
@@ -63,18 +63,18 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        events.on("tabs:block:ready", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("tabs:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id && this.element) {
                 this.buildTabs();
             }
         });
-        events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
-            if (this.element && args.block.parent.id === this.parent.id) {
+        events.on("tab-item:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+            if (this.element && args.contentType.parent.id === this.parent.id) {
                 this.refreshTabs();
             }
         });
         // Set the active tab to the new position of the sorted tab
-        events.on("tab-item:block:removed", (args: ContentTypeRemovedEventParamsInterface) => {
+        events.on("tab-item:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 this.refreshTabs();
 
@@ -219,12 +219,12 @@ export default class Preview extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((tab) => {
-            events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("tab-item:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === tab.id) {
                     this.setFocusedTab(this.parent.children().length - 1);
-                    events.off(`tab-item:block:mount:${tab.id}`);
+                    events.off(`tab-item:contentType:mount:${tab.id}`);
                 }
-            }, `tab-item:block:mount:${tab.id}`);
+            }, `tab-item:contentType:mount:${tab.id}`);
             this.parent.addChild(tab, this.parent.children().length);
 
             // Update the default tab title when adding a new tab
@@ -365,44 +365,44 @@ export default class Preview extends PreviewCollection {
      */
     protected bindEvents() {
         super.bindEvents();
-        // Block being mounted onto container
+        // ContentType being mounted onto container
 
-        events.on("tabs:block:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("tabs:contentType:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addTab();
             }
         });
-        // Block being removed from container
-        events.on("tab-item:block:removed", (args: BlockRemovedParamsInterface) => {
+        // ContentType being removed from container
+        events.on("tab-item:contentType:removed", (args: ContentTypeRemovedParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 // Mark the previous tab as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
                 this.refreshTabs(newIndex, true);
             }
         });
-        // Capture when a block is duplicated within the container
+        // Capture when a content type is duplicated within the container
         let duplicatedTab: ContentTypeInterface;
         let duplicatedTabIndex: number;
-        events.on("tab-item:block:duplicate", (args: BlockDuplicateEventParams) => {
-            if (this.parent.id === args.duplicateBlock.parent.id) {
-                const tabData = args.duplicateBlock.dataStore.get(args.duplicateBlock.id);
-                args.duplicateBlock.dataStore.update(
+        events.on("tab-item:contentType:duplicate", (args: ContentTypeDuplicateEventParams) => {
+            if (this.parent.id === args.duplicateContentType.parent.id) {
+                const tabData = args.duplicateContentType.dataStore.get(args.duplicateContentType.id);
+                args.duplicateContentType.dataStore.update(
                     tabData.tab_name.toString() + " copy",
                     "tab_name",
                 );
-                duplicatedTab = args.duplicateBlock;
+                duplicatedTab = args.duplicateContentType;
                 duplicatedTabIndex = args.index;
             }
             this.buildTabs(args.index);
         });
-        events.on("tab-item:block:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("tab-item:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {
                 this.refreshTabs(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;
             }
-            if (this.parent.id === args.block.parent.id) {
+            if (this.parent.id === args.contentType.parent.id) {
                 this.updateTabNamesInDataStore();
-                args.block.dataStore.subscribe(() => {
+                args.contentType.dataStore.subscribe(() => {
                     this.updateTabNamesInDataStore();
                 });
             }
@@ -430,7 +430,7 @@ export default class Preview extends PreviewCollection {
     }
 }
 
-// Resolve issue with jQuery UI tabs blocking events on content editable areas
+// Resolve issue with jQuery UI tabs content typeing events on content editable areas
 const originalTabKeyDown = $.ui.tabs.prototype._tabKeydown;
 $.ui.tabs.prototype._tabKeydown = function(event: Event) {
     // If the target is content editable don't handle any events

@@ -36,7 +36,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore",
 
       if (children.length > 0) {
         _.forEach(children, function (childElement) {
-          childPromises.push(createElementBlock(childElement, stage, parent));
+          childPromises.push(createElementContentType(childElement, stage, parent));
           childElements.push(childElement);
         });
       } // Wait for all the promises to finish and add the instances to the stage
@@ -60,7 +60,7 @@ define(["mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore",
    */
 
 
-  function createElementBlock(element, stage, parent) {
+  function createElementContentType(element, stage, parent) {
     parent = parent || stage;
     var role = element.getAttribute(_config.getConfig("dataRoleAttributeName"));
 

@@ -32,11 +32,11 @@
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
 
         <!-- I see empty color swatch and empty color input field -->
@@ -206,8 +206,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeElementRow"/>
     </test>
@@ -230,12 +230,12 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeTwoRows"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeRow">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOneRow"/>
     </test>
@@ -259,17 +259,17 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeTwoRows"/>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeRow">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOneRow"/>
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStage('row')}}" stepKey="onMouseOverContentBlockStage"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockOptionsMenu('row')}}" stepKey="waitForOptionsVisible" />
-        <seeElement selector="{{PageBuilderActionsSection.contentBlockDeleteDisabled}}" stepKey="seeDisabledRemoveBlockButton" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage('row')}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeOptionsMenu('row')}}" stepKey="waitForOptionsVisible" />
+        <seeElement selector="{{PageBuilderActionsSection.contentTypeDeleteDisabled}}" stepKey="seeDisabledRemoveContentTypeButton" />
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="1" stepKey="seeOneRow1"/>
     </test>
     <test name="RowPlaceholderAndDisplayLabelInAdminPreview">
@@ -277,7 +277,7 @@
             <features value="Pagebuilder: Row"/>
             <stories value="MAGETWO-75136: Empty Row Preview on Stage"/>
             <title value="Row placeholder and display label in admin preview"/>
-            <description value="A user should see the row display label and preview with a placeholder that suggests any content blocks can be dragged there"/>
+            <description value="A user should see the row display label and preview with a placeholder that suggests any content types can be dragged there"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-88296"/>
             <group value="pagebuilder"/>
@@ -294,10 +294,10 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <waitForElementVisible selector="{{RowOnStage.empty('1')}}" stepKey="waitForEmptyRow"/>
-        <see selector="{{RowOnStage.base('1')}}" userInput="Drag content blocks or columns here" stepKey="seeRowPlaceholder"/>
+        <see selector="{{RowOnStage.base('1')}}" userInput="Drag content types or columns here" stepKey="seeRowPlaceholder"/>
         <see selector="{{RowOnStage.displayLabel('1')}}" userInput="Row" stepKey="seeRowDisplayLabel"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <dontSee selector="{{RowOnStage.empty('1')}}" stepKey="dontSeeRowPlaceholder"/>
     </test>
@@ -330,8 +330,8 @@
             <expectedResult type="string">320</expectedResult>
             <actualResult type="variable">getEmptyRowHeight</actualResult>
         </assertEquals>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragHeaderToRow">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragHeaderToRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
@@ -348,8 +348,8 @@
             <expectedResult type="string">0</expectedResult>
             <actualResult type="variable">getNewRowHeight</actualResult>
         </assertNotEquals>
-        <actionGroup ref="removeEmptyContentBlockFromStage" stepKey="removeHeaderFromRow">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeaderFromRow">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
         <!-- Assert row height is 320px after removing children -->
         <comment userInput="Assert row height is 320px after removing children" stepKey="comment3"/>
@@ -363,7 +363,7 @@
     <test name="RowValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Row"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Row - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Row."/>
             <severity value="CRITICAL"/>
@@ -381,10 +381,10 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
@@ -437,7 +437,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel After Save -->
@@ -465,7 +465,7 @@
             <argument name="property" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -500,10 +500,10 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
@@ -552,7 +552,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection2"/>
         <!-- Validate Edit Panel -->
@@ -599,7 +599,7 @@
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection3"/>
         <!-- Validate Edit Panel After Save -->
@@ -629,7 +629,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -666,65 +666,65 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage1">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage1">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage3">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage4">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage4">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage5">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage5">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage6">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage6">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage7">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage7">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage8">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage8">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage9">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage9">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage10">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage10">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage11">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage11">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage12">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage12">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage13">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage13">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage14">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage14">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage15">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage15">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage16">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage16">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage17">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage17">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage18">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage18">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage19">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage19">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragRowIntoStage20">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage20">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="21" stepKey="seeElementRow"/>
     </test>
@@ -749,7 +749,7 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Validate Background Fields Not Required -->
         <comment userInput="Validate Background Fields Not Required" stepKey="commentBackground"/>
@@ -790,7 +790,7 @@
             <features value="Pagebuilder: Row"/>
             <stories value="MAGETWO-90461: Add Missing Tests For Row"/>
             <title value="Row - Duplicate Row"/>
-            <description value="A user should be able to duplicate a row content block. Verify on Stage amd Storefront."/>
+            <description value="A user should be able to duplicate a row content type. Verify on Stage amd Storefront."/>
             <severity value="AVERAGE"/>
             <testCaseId value="MAGETWO-90598"/>
             <group value="pagebuilder"/>
@@ -806,10 +806,10 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Fill All Fields -->
         <comment userInput="Fill All Fields" stepKey="commentEdit"/>
@@ -868,8 +868,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Duplicate and Validate Stage -->
         <comment userInput="Duplicate" stepKey="commentDuplicate"/>
-        <actionGroup ref="duplicateContentBlock" stepKey="duplicateContentBlock">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateContentType">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateRowBackgroundAttributesWithAllUpdatedAndParallaxEnabled" stepKey="validateDuplicateBackgroundOnStage">
@@ -901,8 +901,8 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <!-- Validate Edit Panel For Duplicate -->
         <comment userInput="Validate Edit Panel For Duplicate" stepKey="commentValidateEdit"/>
@@ -992,8 +992,8 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+            <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
         <!-- Validate Edit Panel For Duplicate After Save -->
         <comment userInput="Validate Edit Panel For Duplicate After Save" stepKey="commentValidateEdit2"/>
@@ -1050,7 +1050,7 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>

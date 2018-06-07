@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _translate, _option, _colorConverter, _numberConverter, _preview) {
+define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_knockout, _translate, _uiEvents, _option, _colorConverter, _numberConverter, _preview, _uploader) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -10,6 +10,10 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/
   /*#__PURE__*/
   function (_BasePreview) {
     _inheritsLoose(Preview, _BasePreview);
+
+    /**
+     * Uploader instance
+     */
 
     /**
      * @param {ContentTypeInterface} parent
@@ -23,6 +27,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/
       _this.showOverlayHover = _knockout.observable(false);
       _this.showButtonHover = _knockout.observable(false);
       _this.buttonPlaceholder = (0, _translate)("Edit Button Text");
+      _this.uploader = void 0;
       var slider = _this.parent.parent;
 
       _this.displayLabel((0, _translate)("Slide " + (slider.children().indexOf(_this.parent) + 1)));
@@ -325,6 +330,16 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/
       };
     };
     /**
+     * Get registry callback reference to uploader UI component
+     *
+     * @returns {Uploader}
+     */
+
+
+    _proto.getUploader = function getUploader() {
+      return this.uploader;
+    };
+    /**
      * Return an array of options
      *
      * @returns {Array<Option>}
@@ -351,6 +366,36 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/
       newOptions.push(new _option(this, "remove", "<i class='icon-admin-pagebuilder-remove'></i>", (0, _translate)("Remove"), removeFn, removeClasses, 100));
       return newOptions;
     };
+    /**
+     * @inheritDoc
+     */
+
+
+    _proto.bindEvents = function bindEvents() {
+      var _this2 = this;
+
+      _BasePreview.prototype.bindEvents.call(this);
+
+      _uiEvents.on(this.parent.id + ":updated", function () {
+        var dataStore = _this2.parent.dataStore.get();
+
+        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
+
+        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
+      });
+
+      _uiEvents.on(this.config.name + ":contentType:ready", function () {
+        var dataStore = _this2.parent.dataStore.get();
+
+        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+
+        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
+          value: initialImageValue
+        })); // Register listener when image gets uploaded from uploader UI component
+
+        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
+      });
+    };
 
     _proto.afterStyleMapped = function afterStyleMapped(styles) {
       // Extract data values our of observable functions
@@ -366,6 +411,16 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/content-type-menu/
       }
 
       return styles;
+    };
+    /**
+     * Update image data inside data store
+     *
+     * @param {Array} data - list of each files' data
+     */
+
+
+    _proto.onImageUploaded = function onImageUploaded(data) {
+      this.parent.dataStore.update(data, this.config.additional_data.uploaderConfig.dataScope);
     };
 
     return Preview;

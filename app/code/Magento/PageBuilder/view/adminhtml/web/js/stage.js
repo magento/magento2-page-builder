@@ -116,43 +116,43 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
         return _uiEvents.trigger("stage:updated", {
           stageId: _this.id
         });
-      }); // Block dropped from left hand panel
+      }); // ContentType dropped from left hand panel
 
-      _uiEvents.on("block:dropped", function (args) {
+      _uiEvents.on("contentType:dropped", function (args) {
         if (args.stageId === _this.id) {
-          _this.onBlockDropped(args);
+          _this.onContentTypeDropped(args);
         }
-      }); // Block instance being moved between structural elements
+      }); // ContentType instance being moved between structural elements
 
 
-      _uiEvents.on("block:instanceDropped", function (args) {
+      _uiEvents.on("contentType:instanceDropped", function (args) {
         if (args.stageId === _this.id) {
-          _this.onBlockInstanceDropped(args);
+          _this.onContentTypeInstanceDropped(args);
         }
-      }); // Block being removed from container
+      }); // ContentType being removed from container
 
 
-      _uiEvents.on("block:removed", function (args) {
+      _uiEvents.on("contentType:removed", function (args) {
         if (args.stageId === _this.id) {
-          _this.onBlockRemoved(args);
+          _this.onContentTypeRemoved(args);
         }
-      }); // Block sorted within the same structural element
+      }); // ContentType sorted within the same structural element
 
 
-      _uiEvents.on("block:sorted", function (args) {
+      _uiEvents.on("contentType:sorted", function (args) {
         if (args.stageId === _this.id) {
-          _this.onBlockSorted(args);
+          _this.onContentTypeSorted(args);
         }
       }); // Observe sorting actions
 
 
-      _uiEvents.on("block:sortStart", function (args) {
+      _uiEvents.on("contentType:sortStart", function (args) {
         if (args.stageId === _this.id) {
           _this.onSortingStart(args);
         }
       });
 
-      _uiEvents.on("block:sortStop", function (args) {
+      _uiEvents.on("contentType:sortStop", function (args) {
         if (args.stageId === _this.id) {
           _this.onSortingStop(args);
         }
@@ -187,78 +187,77 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       });
     };
     /**
-     * On block removed
+     * On content type removed
      *
      * @param event
      * @param params
      */
 
 
-    _proto.onBlockRemoved = function onBlockRemoved(params) {
-      params.parent.removeChild(params.block);
+    _proto.onContentTypeRemoved = function onContentTypeRemoved(params) {
+      params.parent.removeChild(params.contentType);
     };
     /**
-     * On instance of an existing block is dropped onto container
+     * On instance of an existing content type is dropped onto container
      *
-     * @param {Event} event
-     * @param {BlockInstanceDroppedParams} params
+     * @param {ContentTypeInstanceDroppedParamsInterface} params
      */
 
 
-    _proto.onBlockInstanceDropped = function onBlockInstanceDropped(params) {
-      var originalParent = params.blockInstance.parent;
-      params.blockInstance.parent = params.parent;
-      params.parent.parent.addChild(params.blockInstance, params.index);
+    _proto.onContentTypeInstanceDropped = function onContentTypeInstanceDropped(params) {
+      var originalParent = params.contentTypeInstance.parent;
+      params.contentTypeInstance.parent = params.parent;
+      params.parent.parent.addChild(params.contentTypeInstance, params.index);
 
-      _uiEvents.trigger("block:moved", {
-        block: params.blockInstance,
+      _uiEvents.trigger("contentType:moved", {
+        contentType: params.contentTypeInstance,
         index: params.index,
         newParent: params.parent,
         originalParent: originalParent
       });
     };
     /**
-     * On block dropped into container
+     * On content type dropped into container
      *
-     * @param {BlockDroppedParams} params
+     * @param {ContentTypeDroppedParamsInterface} params
      */
 
 
-    _proto.onBlockDropped = function onBlockDropped(params) {
+    _proto.onContentTypeDropped = function onContentTypeDropped(params) {
       var index = params.index || 0;
       new Promise(function (resolve, reject) {
-        if (params.block) {
-          return (0, _contentTypeFactory)(params.block.config, params.parent, params.stageId).then(function (block) {
-            params.parent.addChild(block, index);
+        if (params.contentType) {
+          return (0, _contentTypeFactory)(params.contentType.config, params.parent, params.stageId).then(function (contentType) {
+            params.parent.addChild(contentType, index);
 
-            _uiEvents.trigger("block:dropped:create", {
-              id: block.id,
-              block: block
+            _uiEvents.trigger("contentType:dropped:create", {
+              id: contentType.id,
+              contentType: contentType
             });
 
-            _uiEvents.trigger(params.block.config.name + ":block:dropped:create", {
-              id: block.id,
-              block: block
+            _uiEvents.trigger(params.contentType.config.name + ":contentType:dropped:create", {
+              id: contentType.id,
+              contentType: contentType
             });
 
-            return block;
+            return contentType;
           });
         } else {
-          reject("Parameter block missing from event.");
+          reject("Parameter contentType missing from event.");
         }
       }).catch(function (error) {
         console.error(error);
       });
     };
     /**
-     * On block sorted within it's own container
+     * On content type sorted within it's own container
      *
-     * @param {BlockSortedParams} params
+     * @param {ContentTypeSortedParams} params
      */
 
 
-    _proto.onBlockSorted = function onBlockSorted(params) {
-      var originalIndex = _knockout.utils.arrayIndexOf(params.parent.children(), params.block);
+    _proto.onContentTypeSorted = function onContentTypeSorted(params) {
+      var originalIndex = _knockout.utils.arrayIndexOf(params.parent.children(), params.contentType);
 
       if (originalIndex !== params.index) {
         (0, _array.moveArrayItem)(params.parent.children, originalIndex, params.index);

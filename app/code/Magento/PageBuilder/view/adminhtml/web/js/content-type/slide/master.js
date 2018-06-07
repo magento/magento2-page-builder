@@ -1,27 +1,27 @@
 /*eslint-disable */
-define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attribute/link-href", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/content"], function (_translate, _underscore, _linkHref, _colorConverter, _directives, _numberConverter, _content) {
+define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attribute/link-href", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/directives", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/master"], function (_translate, _underscore, _linkHref, _colorConverter, _directives, _numberConverter, _master) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var Content =
+  var Master =
   /*#__PURE__*/
-  function (_BaseContent) {
-    _inheritsLoose(Content, _BaseContent);
+  function (_BaseMaster) {
+    _inheritsLoose(Master, _BaseMaster);
 
-    function Content() {
+    function Master() {
       var _temp, _this;
 
       for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BaseContent.call.apply(_BaseContent, [this].concat(args)) || this, _this.createValueForHref = new _linkHref(), _temp) || _this;
+      return (_temp = _this = _BaseMaster.call.apply(_BaseMaster, [this].concat(args)) || this, _this.createValueForHref = new _linkHref(), _temp) || _this;
     }
 
-    var _proto = Content.prototype;
+    var _proto = Master.prototype;
 
     /**
      * Get data for attr binding, example {"data-role": "element"}
@@ -30,7 +30,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attrib
      * @deprecated
      */
     _proto.getAttributes = function getAttributes(element) {
-      var attributes = _underscore.clone(_BaseContent.prototype.getAttributes.call(this, element));
+      var attributes = _underscore.clone(_BaseMaster.prototype.getAttributes.call(this, element));
 
       return _extends({}, attributes, {
         "data-slide-name": this.getData(element).slide_name
@@ -261,9 +261,9 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attrib
       });
     };
 
-    return Content;
-  }(_content);
+    return Master;
+  }(_master);
 
-  return Content;
+  return Master;
 });
-//# sourceMappingURL=content.js.map
+//# sourceMappingURL=master.js.map

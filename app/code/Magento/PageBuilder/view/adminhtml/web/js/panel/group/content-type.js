@@ -4,14 +4,14 @@ define(["knockout"], function (_knockout) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var Block =
+  var ContentType =
   /*#__PURE__*/
   function () {
     /**
      * @param {string} identifier
      * @param {ContentTypeConfigInterface} config
      */
-    function Block(identifier, config) {
+    function ContentType(identifier, config) {
       this.droppable = true;
       this.config = void 0;
       this.icon = _knockout.observable("");
@@ -29,7 +29,7 @@ define(["knockout"], function (_knockout) {
      */
 
 
-    var _proto = Block.prototype;
+    var _proto = ContentType.prototype;
 
     _proto.getConfig = function getConfig() {
       return this.config;
@@ -47,11 +47,11 @@ define(["knockout"], function (_knockout) {
       }).join(", ");
     };
 
-    return Block;
+    return ContentType;
   }();
 
   return {
-    Block: Block
+    ContentType: ContentType
   };
 });
-//# sourceMappingURL=block.js.map
+//# sourceMappingURL=content-type.js.map

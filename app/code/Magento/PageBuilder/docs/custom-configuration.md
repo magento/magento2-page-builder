@@ -18,6 +18,7 @@
     1. [Master format]
     1. [Visual select]
     1. [Custom Toolbar]
+    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -36,6 +37,7 @@
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Custom Toolbar]: toolbar.md
+[Add image uploader to content type]: image-uploader.md
 [Roadmap and known issues]: roadmap.md
 
 
@@ -61,6 +63,8 @@ Use `additional_data` in your `Vendor/ModuleName/view/adminhtml/pagebuilder/cont
 ``` xml
 <additional_data>
     <arguments name="uploaderConfig" xsi:type="array">
+        <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>
+        <item name="isShowImageUploadOptions" xsi:type="boolean">true</item>
         <item name="maxFileSize" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\MaxFileSize</item>
         <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png</item>
         <item name="component" xsi:type="string">Magento_PageBuilder/js/form/element/image-uploader</item>
@@ -126,7 +130,7 @@ In the `additional_data` XML config there is a `storeId` item with a `storeId` p
 <item name="storeId" xsi:type="object">\Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\StoreId</item>
 ```
 
-Custom configuration is injected into relevant content type block constructors, such as for the image block shown here, and accessed in `config.additional_data` within the content block type in `/app/code/Magento/PageBuilder/view/adminhtml/web/js/content-type/<your-content-type>/preview.js`:
+Custom configuration is injected into relevant content type block constructors, such as for the image block shown here, and accessed in `config.additional_data` within the content type type in `/app/code/Magento/PageBuilder/view/adminhtml/web/js/content-type/<your-content-type>/preview.js`:
 
 ``` js
 var uploaderConfiguration = Object.assign(

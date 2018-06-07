@@ -6,7 +6,7 @@
 import ContentTypeInterface from "./content-type.d";
 
 export default interface SortParamsInterface {
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
     event: Event;
     originalEle: JQuery;
     placeholder: JQuery;

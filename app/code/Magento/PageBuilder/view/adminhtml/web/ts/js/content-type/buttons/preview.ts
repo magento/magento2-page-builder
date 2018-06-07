@@ -10,7 +10,6 @@ import Config from "../../config";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
-import BlockMountEventParamsInterface from "../block-mount-event-params.d";
 import ButtonItem from "../button-item/preview";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import PreviewCollection from "../preview-collection";
@@ -21,7 +20,7 @@ export default class Preview extends PreviewCollection {
     public bindEvents() {
         super.bindEvents();
 
-        events.on("buttons:block:dropped:create", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("buttons:contentType:dropped:create", (args: ContentTypeMountEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addButton();
             }

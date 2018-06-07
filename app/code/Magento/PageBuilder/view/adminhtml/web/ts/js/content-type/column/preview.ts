@@ -56,7 +56,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column-group")) {
-            events.on("column:block:mount", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("column:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === this.parent.id) {
                     this.createColumnGroup();
                 }
@@ -165,7 +165,7 @@ export default class Preview extends PreviewCollection {
         // Attempt to split the current column into parts
         let splitTimes = Math.round(getColumnWidth(child) / getSmallestColumnWidth());
         if (splitTimes > 1) {
-            super.clone(child, autoAppend).then((duplicateBlock: ContentTypeInterface) => {
+            super.clone(child, autoAppend).then((duplicateContentType: ContentTypeInterface) => {
                 let originalWidth = 0;
                 let duplicateWidth = 0;
 
@@ -180,24 +180,24 @@ export default class Preview extends PreviewCollection {
                     }
                 }
                 updateColumnWidth(child, getAcceptedColumnWidth(originalWidth.toString()));
-                updateColumnWidth(duplicateBlock, getAcceptedColumnWidth(duplicateWidth.toString()));
+                updateColumnWidth(duplicateContentType, getAcceptedColumnWidth(duplicateWidth.toString()));
 
-                return duplicateBlock;
+                return duplicateContentType;
             });
         } else {
             // Conduct an outward search on the children to locate a suitable shrinkable column
             const shrinkableColumn = findShrinkableColumn(child);
             if (shrinkableColumn) {
-                super.clone(child, autoAppend).then((duplicateBlock: ContentTypeInterface) => {
+                super.clone(child, autoAppend).then((duplicateContentType: ContentTypeInterface) => {
                     updateColumnWidth(
                         shrinkableColumn,
                         getAcceptedColumnWidth(
                             (getColumnWidth(shrinkableColumn) - getSmallestColumnWidth()).toString(),
                         ),
                     );
-                    updateColumnWidth(duplicateBlock, getSmallestColumnWidth());
+                    updateColumnWidth(duplicateContentType, getSmallestColumnWidth());
 
-                    return duplicateBlock;
+                    return duplicateContentType;
                 });
             } else {
                 // If we aren't able to duplicate inform the user why
@@ -243,14 +243,14 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Fire the mount event for blocks
+     * Fire the mount event for content types
      *
-     * @param {ContentTypeInterface[]} blocks
+     * @param {ContentTypeInterface[]} contentTypes
      */
-    private fireMountEvent(...blocks: ContentTypeInterface[]) {
-        blocks.forEach((block) => {
-            events.trigger("block:mount", {id: block.id, block});
-            events.trigger(block.config.name + ":block:mount", {id: block.id, block});
+    private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
+        contentTypes.forEach((contentType) => {
+            events.trigger("contentType:mount", {id: contentType.id, contentType});
+            events.trigger(contentType.config.name + ":contentType:mount", {id: contentType.id, contentType});
         });
     }
 }

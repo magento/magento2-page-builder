@@ -46,20 +46,20 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
         }
       }, 10);
 
-      _uiEvents.on("tabs:block:ready", function (args) {
+      _uiEvents.on("tabs:contentType:ready", function (args) {
         if (args.id === _this.parent.id && _this.element) {
           _this.buildTabs();
         }
       });
 
-      _uiEvents.on("tab-item:block:mount", function (args) {
-        if (_this.element && args.block.parent.id === _this.parent.id) {
+      _uiEvents.on("tab-item:contentType:mount", function (args) {
+        if (_this.element && args.contentType.parent.id === _this.parent.id) {
           _this.refreshTabs();
         }
       }); // Set the active tab to the new position of the sorted tab
 
 
-      _uiEvents.on("tab-item:block:removed", function (args) {
+      _uiEvents.on("tab-item:contentType:removed", function (args) {
         if (args.parent.id === _this.parent.id) {
           _this.refreshTabs(); // We need to wait for the tabs to refresh before executing the focus
 
@@ -220,13 +220,13 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       var _this3 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.parent, this.parent.stageId).then(function (tab) {
-        _uiEvents.on("tab-item:block:mount", function (args) {
+        _uiEvents.on("tab-item:contentType:mount", function (args) {
           if (args.id === tab.id) {
             _this3.setFocusedTab(_this3.parent.children().length - 1);
 
-            _uiEvents.off("tab-item:block:mount:" + tab.id);
+            _uiEvents.off("tab-item:contentType:mount:" + tab.id);
           }
-        }, "tab-item:block:mount:" + tab.id);
+        }, "tab-item:contentType:mount:" + tab.id);
 
         _this3.parent.addChild(tab, _this3.parent.children().length); // Update the default tab title when adding a new tab
 
@@ -372,51 +372,51 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
 
-      _PreviewCollection.prototype.bindEvents.call(this); // Block being mounted onto container
+      _PreviewCollection.prototype.bindEvents.call(this); // ContentType being mounted onto container
 
 
-      _uiEvents.on("tabs:block:dropped:create", function (args) {
+      _uiEvents.on("tabs:contentType:dropped:create", function (args) {
         if (args.id === _this4.parent.id && _this4.parent.children().length === 0) {
           _this4.addTab();
         }
-      }); // Block being removed from container
+      }); // ContentType being removed from container
 
 
-      _uiEvents.on("tab-item:block:removed", function (args) {
+      _uiEvents.on("tab-item:contentType:removed", function (args) {
         if (args.parent.id === _this4.parent.id) {
           // Mark the previous tab as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
 
           _this4.refreshTabs(newIndex, true);
         }
-      }); // Capture when a block is duplicated within the container
+      }); // Capture when a content type is duplicated within the container
 
 
       var duplicatedTab;
       var duplicatedTabIndex;
 
-      _uiEvents.on("tab-item:block:duplicate", function (args) {
-        if (_this4.parent.id === args.duplicateBlock.parent.id) {
-          var tabData = args.duplicateBlock.dataStore.get(args.duplicateBlock.id);
-          args.duplicateBlock.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
-          duplicatedTab = args.duplicateBlock;
+      _uiEvents.on("tab-item:contentType:duplicate", function (args) {
+        if (_this4.parent.id === args.duplicateContentType.parent.id) {
+          var tabData = args.duplicateContentType.dataStore.get(args.duplicateContentType.id);
+          args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
+          duplicatedTab = args.duplicateContentType;
           duplicatedTabIndex = args.index;
         }
 
         _this4.buildTabs(args.index);
       });
 
-      _uiEvents.on("tab-item:block:mount", function (args) {
+      _uiEvents.on("tab-item:contentType:mount", function (args) {
         if (duplicatedTab && args.id === duplicatedTab.id) {
           _this4.refreshTabs(duplicatedTabIndex, true);
 
           duplicatedTab = duplicatedTabIndex = null;
         }
 
-        if (_this4.parent.id === args.block.parent.id) {
+        if (_this4.parent.id === args.contentType.parent.id) {
           _this4.updateTabNamesInDataStore();
 
-          args.block.dataStore.subscribe(function () {
+          args.contentType.dataStore.subscribe(function () {
             _this4.updateTabNamesInDataStore();
           });
         }
@@ -441,7 +441,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
     };
 
     return Preview;
-  }(_previewCollection); // Resolve issue with jQuery UI tabs blocking events on content editable areas
+  }(_previewCollection); // Resolve issue with jQuery UI tabs content typeing events on content editable areas
 
 
   Preview.focusOperationTime = void 0;

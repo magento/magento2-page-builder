@@ -1154,7 +1154,7 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
         /** @var \Magento\PageBuilder\Model\Entity */
         $entity = self::$objectManager->create(\Magento\PageBuilder\Model\Entity::class);
 
-        $data['attribute_set_id'] = $this->getContentBlockId($contentTypeCode);
+        $data['attribute_set_id'] = $this->getContentTypeId($contentTypeCode);
 
         /** @var \Magento\Eav\Api\AttributeRepositoryInterface $attributeRepository */
         $attributeRepository = self::$objectManager->create(\Magento\Eav\Api\AttributeRepositoryInterface::class);
@@ -1189,30 +1189,30 @@ class TreeConverterTest extends \PHPUnit\Framework\TestCase
      * @return mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function getContentBlockId($contentTypeCode)
+    private function getContentTypeId($contentTypeCode)
     {
-        /* @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory */
-        $contentBlockFactory = self::$objectManager->create(
-            \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory::class
+        /* @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory $contentTypeFactory */
+        $contentTypeFactory = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory::class
         );
-        $contentBlock = $contentBlockFactory->create();
+        $contentType = $contentTypeFactory->create();
 
-        $contentBlockResource = self::$objectManager->create(
-            \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock::class
+        $contentTypeResource = self::$objectManager->create(
+            \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType::class
         );
-        /* @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock */
-        $contentBlockResource->load(
-            $contentBlock,
+        /* @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentType $contentType */
+        $contentTypeResource->load(
+            $contentType,
             $contentTypeCode,
             sprintf('%s.identifier', self::$resourceConnection->getTableName('entity_type'))
         );
-        if (!$contentBlock->getId()) {
+        if (!$contentType->getId()) {
             throw \Magento\Framework\Exception\NoSuchEntityException::singleField(
                 'identifier',
                 $contentTypeCode
             );
         }
 
-        return $contentBlock->getId();
+        return $contentType->getId();
     }
 }

@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\TestModulePageBuilderDataMigration\Model\Install;
 
 use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetupFactory;
@@ -11,12 +14,12 @@ use Magento\TestModulePageBuilderDataMigration\Setup\EntitySetup;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class ContentBlock extends AbstractInstall
+class ContentType extends AbstractInstall
 {
     /**
-     * @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory
      */
-    private $contentBlockFactory;
+    private $contentTypeFactory;
 
     /**
      * @var \Magento\Eav\Model\Entity\AttributeFactory
@@ -34,9 +37,9 @@ class ContentBlock extends AbstractInstall
     private $eavAttributeGroupFactory;
 
     /**
-     * @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
+     * @var \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType
      */
-    private $contentBlockResource;
+    private $contentTypeResource;
 
     /**
      * Constructor
@@ -45,9 +48,9 @@ class ContentBlock extends AbstractInstall
      * @param \Magento\Framework\Registry $registry
      * @param EntitySetupFactory $entitySetupFactory
      * @param \Magento\PageBuilder\Model\ResourceModel\Entity $entity
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock
-     *        $contentBlockResource
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory $contentTypeFactory
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType
+     *        $contentTypeResource
      * @param \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory
      * @param \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory $eavAttributeCollectionFactory
      * @param \Magento\Eav\Model\Entity\Attribute\GroupFactory $eavAttributeGroupFactory
@@ -62,8 +65,8 @@ class ContentBlock extends AbstractInstall
         \Magento\Framework\Registry $registry,
         EntitySetupFactory $entitySetupFactory,
         \Magento\PageBuilder\Model\ResourceModel\Entity $entity,
-        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlockFactory $contentBlockFactory,
-        \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentBlock $contentBlockResource,
+        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentTypeFactory $contentTypeFactory,
+        \Magento\TestModulePageBuilderDataMigration\Model\ResourceModel\Attribute\ContentType $contentTypeResource,
         \Magento\Eav\Model\Entity\AttributeFactory $eavAttributeFactory,
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\CollectionFactory $eavAttributeCollectionFactory,
         \Magento\Eav\Model\Entity\Attribute\GroupFactory $eavAttributeGroupFactory,
@@ -76,70 +79,70 @@ class ContentBlock extends AbstractInstall
             $registry,
             $entitySetupFactory,
             $entity,
-            $contentBlockFactory,
-            $contentBlockResource,
+            $contentTypeFactory,
+            $contentTypeResource,
             $resource,
             $resourceCollection,
             $data
         );
 
-        $this->contentBlockFactory = $contentBlockFactory;
-        $this->contentBlockResource = $contentBlockResource;
+        $this->contentTypeFactory = $contentTypeFactory;
+        $this->contentTypeResource = $contentTypeResource;
         $this->eavAttributeFactory = $eavAttributeFactory;
         $this->eavAttributeCollectionFactory = $eavAttributeCollectionFactory;
         $this->eavAttributeGroupFactory = $eavAttributeGroupFactory;
     }
 
     /**
-     * Create a single content block
+     * Create a single content type
      *
-     * @param array $contentBlockData
+     * @param array $contentTypeData
      * @param EntitySetup $eavSetup
-     * @param bool $contentBlockIdentifier
+     * @param bool $contentTypeIdentifier
      * @return $this
      * @throws \Exception
      *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function createContentBlock($contentBlockData, EntitySetup $eavSetup, $contentBlockIdentifier = false)
+    public function createContentType($contentTypeData, EntitySetup $eavSetup, $contentTypeIdentifier = false)
     {
         // Set the attribute code into the data if passed separately
-        if ($contentBlockIdentifier === false && isset($contentBlockData['identifier'])) {
-            $contentBlockIdentifier = $contentBlockData['identifier'];
-            unset($contentBlockData['identifier']);
+        if ($contentTypeIdentifier === false && isset($contentTypeData['identifier'])) {
+            $contentTypeIdentifier = $contentTypeData['identifier'];
+            unset($contentTypeData['identifier']);
         }
 
         // Ensure the data has an attribute code
-        if (!$contentBlockIdentifier || empty($contentBlockIdentifier)) {
-            throw new \Exception('No content block identifier defined');
+        if (!$contentTypeIdentifier || empty($contentTypeIdentifier)) {
+            throw new \Exception('No content type identifier defined');
         }
 
         // Add the new attribute providing it doesn't already exist
-        if (!$this->contentBlockExists($contentBlockIdentifier)) {
-            if (!isset($contentBlockData['attribute_data'])) {
-                throw new \Exception('No attribute data present for content block ' . $contentBlockIdentifier);
+        if (!$this->contentTypeExists($contentTypeIdentifier)) {
+            if (!isset($contentTypeData['attribute_data'])) {
+                throw new \Exception('No attribute data present for content type ' . $contentTypeIdentifier);
             }
-            $attributeData = $contentBlockData['attribute_data'];
+            $attributeData = $contentTypeData['attribute_data'];
 
-            $contentBlockDataObject = new \Magento\Framework\DataObject();
-            $contentBlockDataObject->addData($contentBlockData);
+            $contentTypeDataObject = new \Magento\Framework\DataObject();
+            $contentTypeDataObject->addData($contentTypeData);
 
             // Remove the unneeded extra data from the object
-            $contentBlockDataObject->unsetData('group')->unsetData('attribute_data');
-            $contentBlockDataObject->setData('attribute_set_name', $contentBlockDataObject->getData('name'));
+            $contentTypeDataObject->unsetData('group')->unsetData('attribute_data');
+            $contentTypeDataObject->setData('attribute_set_name', $contentTypeDataObject->getData('name'));
 
             /* @var $attributes array|bool */
             $attributes = (isset($attributeData['attributes']) &&
                 is_array($attributeData['attributes'])) ? $attributeData['attributes'] : false;
             if (!$attributes) {
-                throw new \Exception('No attributes are associated with ' . $contentBlockIdentifier);
+                throw new \Exception('No attributes are associated with ' . $contentTypeIdentifier);
             }
 
             $attributeGroups = (isset($attributeData['groups']) &&
                 is_array($attributeData['attributes'])) ? $attributeData['groups'] : false;
 
-            // Determine if this content block has all the required attributes
+            // Determine if this content type has all the required attributes
             $missingAttributes = [];
             foreach ($attributes as $attributeCode) {
                 if (!$this->attributeExists($attributeCode, $eavSetup)) {
@@ -147,47 +150,47 @@ class ContentBlock extends AbstractInstall
                 }
             }
 
-            // Content blocks require all attributes to be present on creation
+            // Content types require all attributes to be present on creation
             if (count($missingAttributes) > 0) {
                 throw new \Exception(count($missingAttributes) . ' attribute dependencies are missing for content ' .
-                    'block ' . $contentBlockIdentifier . ': ' . implode(', ', $missingAttributes));
+                    'block ' . $contentTypeIdentifier . ': ' . implode(', ', $missingAttributes));
             }
 
-            /* @var $contentBlock \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock */
-            $contentBlock = $this->contentBlockFactory->create();
+            /* @var $contentType \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentType */
+            $contentType = $this->contentTypeFactory->create();
 
-            // Pass the data from the installation json into the new content block model
-            $contentBlock->setData($contentBlockDataObject->getData());
+            // Pass the data from the installation json into the new content type model
+            $contentType->setData($contentTypeDataObject->getData());
 
-            // Save the content block
-            $this->contentBlockResource->save($contentBlock);
+            // Save the content type
+            $this->contentTypeResource->save($contentType);
 
             // Build up the attributes and groups
-            $contentBlock->setGroups($this->buildGroups($contentBlock, $attributeGroups));
+            $contentType->setGroups($this->buildGroups($contentType, $attributeGroups));
 
-            $this->contentBlockResource->save($contentBlock);
+            $this->contentTypeResource->save($contentType);
         }
 
         return $this;
     }
 
     /**
-     * @param array $contentBlocks
+     * @param array $contentTypes
      * @param mixed $installData
      * @param EntitySetup $eavSetup
      * @return $this
      * @throws \Exception
      */
-    public function createContentBlocks($contentBlocks, $installData, EntitySetup $eavSetup)
+    public function createContentTypes($contentTypes, $installData, EntitySetup $eavSetup)
     {
         if (is_array($installData) && !empty($installData)) {
             $this->setInstallData($installData);
         }
 
-        if (is_array($contentBlocks)) {
-            foreach ($contentBlocks as $contentBlock) {
-                if (isset($contentBlock['identifier'])) {
-                    $this->createContentBlock($contentBlock, $eavSetup, $contentBlock['identifier']);
+        if (is_array($contentTypes)) {
+            foreach ($contentTypes as $contentType) {
+                if (isset($contentType['identifier'])) {
+                    $this->createContentType($contentType, $eavSetup, $contentType['identifier']);
                 }
             }
         }
@@ -196,12 +199,12 @@ class ContentBlock extends AbstractInstall
     }
 
     /**
-     * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock
+     * @param \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentType $contentType
      * @param array $attributeGroups
      * @return array
      */
     private function buildGroups(
-        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentBlock $contentBlock,
+        \Magento\TestModulePageBuilderDataMigration\Model\Attribute\ContentType $contentType,
         $attributeGroups
     ) {
         $newGroups = [];
@@ -211,7 +214,7 @@ class ContentBlock extends AbstractInstall
             // Create the group
             $groupObject = $this->eavAttributeGroupFactory->create();
             $groupObject->setData($group);
-            $groupObject->setAttributeSetId($contentBlock->getAttributeSetId());
+            $groupObject->setAttributeSetId($contentType->getAttributeSetId());
             $attributeCodes = [];
             foreach ($groupAttributes as $gAttribute) {
                 $attrCode = isset($gAttribute['attribute_code']) ? $gAttribute['attribute_code'] : false;
@@ -228,7 +231,7 @@ class ContentBlock extends AbstractInstall
                 foreach ($groupAttributesCollection as $gAttribute) {
                     $newAttribute = $this->eavAttributeFactory->create()
                         ->setId($gAttribute->getId())
-                        ->setAttributeSetId($contentBlock->getAttributeSetId())
+                        ->setAttributeSetId($contentType->getAttributeSetId())
                         ->setEntityTypeId($this->getEntityTypeId())
                         ->setSortOrder($gAttribute->getSortOrder());
                     $modelAttributeArray[] = $newAttribute;

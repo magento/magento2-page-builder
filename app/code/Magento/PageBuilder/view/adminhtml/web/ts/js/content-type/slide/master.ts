@@ -9,9 +9,9 @@ import CreateValueForHref from "../../converter/attribute/link-href";
 import {fromHex} from "../../utils/color-converter";
 import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
-import BaseContent from "../content";
+import BaseMaster from "../master";
 
-export default class Content extends BaseContent {
+export default class Master extends BaseMaster {
 
     private createValueForHref: CreateValueForHref = new CreateValueForHref();
 

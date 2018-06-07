@@ -18,6 +18,7 @@
     1. [Master format]
     1. [Visual select]
     1. [Custom Toolbar]
+    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -36,6 +37,7 @@
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Custom Toolbar]: toolbar.md
+[Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
 
 ## What is PageBuilder?
@@ -91,7 +93,7 @@ To revert back to using the default WYSIWYG, add the following entry to the fiel
 | ----------------- | --------------------- | -------------------------------------------------------------------------------------------------------------- |
 | Content type      | `component`           | View model responsible for rendering the preview and master format                                             |
 | Preview component | `preview_component`   | Contains preview specific logic that is generic for all appearances. Preview component is optional             |
-| Master component  | `content_component`   | Contains master format rendering logic that is generic for all appearances. Content component is optional      |
+| Master component  | `master_component`    | Contains master format rendering logic that is generic for all appearances. Content component is optional      |
 | Data Store        |                       | Contains data for the content type                                                                             |
 | Appearance        | `appearance`          | Configuration for content type that defines look and behavior. Includes data mapping, form, templates, reader. |
 | Preview template  | `preview_template`    | Template used to display the element in the preview                                                            |
@@ -154,7 +156,7 @@ Appearances allow you to make the following customization on existing content ty
 
 | File type                | Location                                                                                       |
 | -------------------------|------------------------------------------------------------------------------------------------|
-| Content type components  | `Vendor/ModuleName/view/adminhtml/web/js/content-type/content-type-name`                       |
+| Content type components  | `Vendor/ModuleName/view/adminhtml/web/js/content-type/master-type-name`                       |
 | Content type templates   | `Vendor/ModuleName/view/adminhtml/web/template/content-type/content-type-name/appearance-name` |
 | Styles                   | `Vendor/ModuleName/view/adminhtml/web/css/source/content-type/content-type-name`               |
 

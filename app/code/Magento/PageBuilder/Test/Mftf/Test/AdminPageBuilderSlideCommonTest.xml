@@ -8,7 +8,7 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="AddSliderContentBlockToCMSPage">
+    <test name="AddSliderContentTypeToCMSPage">
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-83933: Advanced Slider"/>
@@ -29,13 +29,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
@@ -69,8 +69,8 @@
         <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
         <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openSliderEditPanel">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="enterAutoplayYes">
             <argument name="property" value="PageBuilderSliderAutoplayOnProperty"/>
@@ -185,7 +185,7 @@
         <seeElement selector="{{SlideOnBackend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURLAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2BackgroundAdmin"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Slider settings on Storefront" stepKey="commentValidateStorefront"/>
@@ -223,7 +223,7 @@
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-87085: Empty Slider Admin Preview"/>
             <title value="Verify Empty Slider default state on admin preview and storefront"/>
-            <description value="As a Content Manager I want to see empty content blocks preview on the stage so that I see their position and can access their settings"/>
+            <description value="As a Content Manager I want to see empty content types preview on the stage so that I see their position and can access their settings"/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
@@ -238,14 +238,14 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <comment userInput="User sees Slide configuration first slide open by default with a delay after rendering Slider on the stage" stepKey="AC0"/>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
@@ -277,7 +277,7 @@
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0"/>
         <!-- Slide order in option panel -->
         <comment userInput="User sees Slide order number in slide option panel" stepKey="AC7"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="waitForContentBlockInStageVisible" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
         <waitForElementVisible time="10" selector="{{SlideOnBackend.optionTitle}}" stepKey="waitForOptionTitle" />
         <grabTextFrom selector="{{SlideOnBackend.optionTitle}}" stepKey="grabSlide1OptionTitle"/>
         <assertEquals expected="Slide 1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
@@ -292,7 +292,7 @@
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="background-attachment: scroll" stepKey="verifyAdminScrollAttachment"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -350,11 +350,11 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <comment userInput="User adds Slider into the content, user sees first Slide to be displayed inside the slider" stepKey="AC1"/>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <comment userInput="User sees Slide configuration opened with a delay." stepKey="AC2"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
@@ -381,11 +381,11 @@
 
         <comment userInput="User hovers Slider, user sees Slider option panel" stepKey="AC7"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.content}}" stepKey="scrollToContent"/>
-        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentBlockStage"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentTypeStage"/>
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
 
-        <waitForElementVisible time="5" selector="{{SliderInAdmin.sliderOptions}}" stepKey="seeContentBlockOptionsMenu"/>
+        <waitForElementVisible time="5" selector="{{SliderInAdmin.sliderOptions}}" stepKey="seeContentTypeOptionsMenu"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
 
         <comment userInput="User doesn't see Slide Option panel, both option panels not displayed at once." stepKey="AC8"/>
@@ -434,8 +434,8 @@
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-83933: Advanced Slider"/>
-            <title value="Remove slider content block from stage"/>
-            <description value="A user should be able to remove slider block from a row."/>
+            <title value="Remove slider content type from stage"/>
+            <description value="A user should be able to remove slider content type from a row."/>
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
@@ -451,19 +451,19 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
         <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeEmptyContentBlockFromStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeContentBlockInStage"/>
+        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="SlideCanDeleteSlide">
         <annotations>
@@ -485,21 +485,21 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <comment userInput="Add slider with initial slide" stepKey="addSliderWithSlide"/>
 
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
         <click selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="clickNavigationDot"/>
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
-        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
-        <click selector="{{SliderInAdmin.slideOptionsRemove}}" stepKey="clickRemoveContentBlock"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentTypeOptionsMenu"/>
+        <click selector="{{SliderInAdmin.slideOptionsRemove}}" stepKey="clickRemoveContentType"/>
         <comment userInput="Verify cannot remove last slide" stepKey="cantRemoveLastSlide"/>
 
-        <seeElement selector="{{SliderInAdmin.slideOptionsRemoveDisabled}}" stepKey="seeContentBlockRemoveOptionDisabled"/>
+        <seeElement selector="{{SliderInAdmin.slideOptionsRemoveDisabled}}" stepKey="seeContentTypeRemoveOptionDisabled"/>
         <comment userInput="Add a second slide without custom content" stepKey="addSlideNoContent"/>
 
         <actionGroup ref="addSlide" stepKey="add0Slide"/>
@@ -530,7 +530,7 @@
     <test name="SliderValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Slider - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Slider."/>
             <severity value="CRITICAL"/>
@@ -548,15 +548,15 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
@@ -591,7 +591,7 @@
     <test name="SlideValidateAdvancedConfigurationDefaultValues">
         <annotations>
             <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Blocks and Containers Advanced Configuration settings"/>
+            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
             <title value="Slide - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Slide."/>
             <severity value="CRITICAL"/>
@@ -609,10 +609,10 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Validate Default Values -->
@@ -664,13 +664,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
@@ -703,7 +703,7 @@
         <seeElement selector="{{SlideOnBackend.editButton(PageBuilderSlideButtonTypePrimaryProperty.value)}}" stepKey="buttonPrimaryStyled"/>
         <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -727,7 +727,7 @@
         <seeElement selector="{{SlideOnBackend.editButton(PageBuilderSlideButtonTypeSecondaryProperty.value)}}" stepKey="buttonSecondaryStyled"/>
         <switchToNextTab stepKey="switchToNextTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront 2 -->
         <comment userInput="Validate Storefront 2" stepKey="commentValidateStorefront2"/>
@@ -751,7 +751,7 @@
         <seeElement selector="{{SlideOnBackend.editButton(PageBuilderSlideButtonTypeLinkProperty.value)}}" stepKey="buttonLinkStyled"/>
         <switchToNextTab stepKey="switchToNextTab2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront 3 -->
         <comment userInput="Validate Storefront 3" stepKey="commentValidateStorefront3"/>
@@ -780,13 +780,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
@@ -813,7 +813,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
@@ -841,13 +841,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
@@ -880,7 +880,7 @@
         <annotations>
             <features value="Pagebuilder: Slider"/>
             <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
-            <title value="Add an image content block into slide"/>
+            <title value="Add an image content type into slide"/>
             <description value="A user should be able to add an image into a slide."/>
             <severity value="CRITICAL"/>
             <group value="pagebuilder"/>
@@ -910,10 +910,10 @@
         <!--See PageBuilder fullsize-->
         <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waiForPageBuilderVisible" />
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragAdvancedSliderOntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragAdvancedSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
@@ -991,13 +991,13 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
@@ -1033,13 +1033,158 @@
         <assertEquals expected="{{PageBuilderSlideMessageLongProperty.value}}" expectedType="string" actual="grabSlideContent" actualType="variable" message="actual=$grabSlideContent" stepKey="assertContentIsVisible"/>
         <seeElement selector="{{SlideOnBackend.backgroundColorOnStage(PageBuilderBackgroundColorProperty_FFFFFF.rgb)}}"  stepKey="seeSliderBackgroundColorApplied"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedOnStorefront"/>
         <seeElementInDOM selector="{{SlideOnFrontend.posterMobileBackgroundColor}}" stepKey="seeBackgroundColorOnFrontend" />
+    </test>
+    <test name="AddImageToSliderStage">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
+            <title value="Add image into Slider from the Stage"/>
+            <description value="A user should be able to add image to Slider stage."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75104"/>
+            <testCaseId value="MAGETWO-92116"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <!--Verify there are 2 buttons when hovering-->
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage1"/>
+        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons" />
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
+        </actionGroup>
+        <!--Upload image from local machine -->
+        <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
+        <attachFile userInput="{{PageBuilderLocalImagePropertyJpg.value}}" selector="{{PageBuilderActionsSection.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad4" />
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="waitForMainImageSource1"/>
+        <!--Upload image from Media Gallery Storage -->
+        <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
+        <click selector="{{SliderInAdmin.slideWrapper}}" stepKey="clickSliderInStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="seeSelectFromGalleryBtn2" />
+        <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />
+        <waitForPageLoad stepKey="waitForPageLoad2" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
+            <argument name="ImageFolder" value="ImageFolder"/>
+        </actionGroup>
+        <actionGroup ref="attachImage" stepKey="attachImageFile1">
+            <argument name="Image" value="PageBuilderSliderBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveImage" stepKey="saveImage"/>
+        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
+        <!--Verify uploaded image is displayed on slide-out-->
+        <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
+        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
+            <argument name="property" value="PageBuilderSliderBackgroundImageProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
+        <waitForPageLoad stepKey="waitForPageLoad3" />
+        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+    </test>
+    <test name="VerifyUploadImageOnSliderStageDependOnEachTypeOfAppearance">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
+            <title value="Add image into Slider from the Stage"/>
+            <description value="A user should be able to add image to Slider stage when switching between appearance type."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75104"/>
+            <testCaseId value="MAGETWO-92116"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createPreReqCMSPage" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqCMSPage" stepKey="deleteCreatePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToContentCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createPreReqCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!--Verify there are 2 buttons display when user select appearance Left-->
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty1">
+            <argument name="property" value="PageBuilderSlideCollageLeftProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <click selector="{{SlideOnBackend.collageOverlayGeneral}}" stepKey="clickSliderInStage1"/>
+        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons1" />
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1" >
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
+        </actionGroup>
+        <!--Verify there are 2 buttons display when user select appearance Center-->
+        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions2">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty2">
+            <argument name="property" value="PageBuilderSlideCollageCenteredProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <click selector="{{SlideOnBackend.collageOverlayGeneral}}" stepKey="clickSliderInStage2"/>
+        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons2" />
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2" >
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
+        </actionGroup>
+        <!--Verify there are 2 buttons display when user select appearance Right-->
+        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions3">
+            <argument name="index" value="1"/>
+        </actionGroup>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceProperty3">
+            <argument name="property" value="PageBuilderSlideCollageRightProperty"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
+        <!--Verify there are 2 buttons when hovering-->
+        <click selector="{{SlideOnBackend.collageOverlayGeneral}}" stepKey="clickSliderInStage3"/>
+        <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons3" />
+        <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3" >
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="section" value="PageBuilderActionsSection"/>
+        </actionGroup>
     </test>
     <test name="SlideBorderIsVisible">
         <annotations>

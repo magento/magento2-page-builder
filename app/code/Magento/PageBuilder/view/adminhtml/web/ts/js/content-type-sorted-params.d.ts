@@ -7,7 +7,7 @@ import ContentTypeInterface from "./content-type.d";
 
 export default interface ContentTypeSortedParamsInterface {
     parent: ContentTypeInterface;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface;
     index: number;
     stageId: string;
 }

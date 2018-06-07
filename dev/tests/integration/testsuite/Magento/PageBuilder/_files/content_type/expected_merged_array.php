@@ -27,7 +27,7 @@ return [
             'group' => 'group2',
             'component' => 'Path/to/component',
             'preview_component' => 'Path/to/preview/component',
-            'content_component' => 'Path/to/content/component',
+            'master_component' => 'Path/to/master/component',
             'allowed_parents' => [
                 0 => 'stage'
             ],

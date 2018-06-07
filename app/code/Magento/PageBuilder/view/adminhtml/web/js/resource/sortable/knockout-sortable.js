@@ -7,7 +7,7 @@
 
 define([
     "knockout", "jquery", "underscore", "Magento_Ui/js/lib/core/events", "Magento_PageBuilder/js/content-type", "jquery/ui"],
-    function(ko, jQuery, _, events, ContentType) {
+    function(ko, jQuery, _, events) {
 
     /**
      * Retrieve the view model for an element
@@ -40,8 +40,8 @@ define([
             appendTo: document.body,
             placeholder: {
                 element: function (clone) {
-                    if (clone.hasClass('pagebuilder-draggable-block')) {
-                        return jQuery('<div />').addClass('pagebuilder-draggable-block pagebuilder-placeholder').append(clone.html());
+                    if (clone.hasClass('pagebuilder-draggable-content-type')) {
+                        return jQuery('<div />').addClass('pagebuilder-draggable-content-type pagebuilder-placeholder').append(clone.html());
                     }
                     return jQuery('<div />').addClass('pagebuilder-placeholder-sortable');
                 },
@@ -102,24 +102,24 @@ define([
          * @param ui
          */
         onSortStart: function (event, ui) {
-            var block = getViewModelFromUi(ui);
+            var contentType = getViewModelFromUi(ui);
 
             // Store the original parent for use in the update call
-            block.originalParent = block.parent || false;
+            contentType.originalParent = contentType.parent || false;
 
             // ui.helper.data('sorting') is appended to the helper of sorted items
-            if (block && jQuery(ui.helper).data('sorting')) {
+            if (contentType && jQuery(ui.helper).data('sorting')) {
                 var eventData = {
-                    block: block,
+                    contentType: contentType,
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
                     originalEle: ui.item,
-                    stageId: block.stageId
+                    stageId: contentType.stageId
                 };
 
                 // ui.position to ensure we're only reacting to sorting events
-                events.trigger("block:sortStart", eventData);
+                events.trigger("contentType:sortStart", eventData);
             }
         },
 
@@ -133,21 +133,21 @@ define([
             // Always remove the sorting original class from an element
             ui.item.removeClass('pagebuilder-sorting-original');
 
-            var block = getViewModelFromUi(ui);
+            var contentType = getViewModelFromUi(ui);
 
             // ui.helper.data('sorting') is appended to the helper of sorted items
-            if (block && jQuery(ui.helper).data('sorting')) {
+            if (contentType && jQuery(ui.helper).data('sorting')) {
                 var eventData = {
-                    block: block,
+                    contentType: contentType,
                     event: event,
                     helper: ui.helper,
                     placeholder: ui.placeholder,
                     originalEle: ui.item,
-                    stageId: block.stageId
+                    stageId: contentType.stageId
                 };
 
                 // ui.position to ensure we're only reacting to sorting events
-                events.trigger("block:sortStop", eventData);
+                events.trigger("contentType:sortStop", eventData);
             }
 
             ui.item.css('opacity', 1);
@@ -160,16 +160,16 @@ define([
          * @param ui
          */
         onSortUpdate: function (event, ui) {
-            var blockEl = ui.item,
-                newParentEl = blockEl.parent()[0],
-                newIndex = blockEl.index();
+            var contentTypeEl = ui.item,
+                newParentEl = contentTypeEl.parent()[0],
+                newIndex = contentTypeEl.index();
 
-            if (blockEl && newParentEl && newParentEl === this) {
-                var block = ko.dataFor(blockEl[0]),
+            if (contentTypeEl && newParentEl && newParentEl === this) {
+                var contentType = ko.dataFor(contentTypeEl[0]),
                     newParent = ko.dataFor(newParentEl);
 
                 // @todo to be refactored under MAGETWO-86953
-                if ((block.config.name === 'column-group' || block.config.name === 'column') &&
+                if ((contentType.config.name === 'column-group' || contentType.config.name === 'column') &&
                     jQuery(event.currentTarget).hasClass('column-container')
                 ) {
                     return;
@@ -198,26 +198,26 @@ define([
                 }
 
                 // Fire our events on the various parents of the operation
-                if (block !== newParent) {
+                if (contentType !== newParent) {
                     ui.item.remove();
-                    if (block.originalParent === newParent) {
-                        events.trigger("block:sorted", {
+                    if (contentType.originalParent === newParent) {
+                        events.trigger("contentType:sorted", {
                             parent: newParent,
-                            block: block,
+                            contentType: contentType,
                             index: newIndex,
-                            stageId: block.stageId
+                            stageId: contentType.stageId
                         });
                     } else {
-                        block.originalParent.removeChild(block);
-                        events.trigger("block:instanceDropped", {
+                        contentType.originalParent.removeChild(contentType);
+                        events.trigger("contentType:instanceDropped", {
                             parent: newParent,
-                            blockInstance: block,
+                            contentTypeInstance: contentType,
                             index: newIndex,
-                            stageId: block.stageId
+                            stageId: contentType.stageId
                         });
                     }
 
-                    block.originalParent = false;
+                    contentType.originalParent = false;
                     jQuery(this).sortable('refresh');
                 }
             }
@@ -241,7 +241,7 @@ define([
 
             var allowedParents = currentInstance.config.allowed_parents;
 
-            // Verify if the currently dragged block is accepted by the hovered parent
+            // Verify if the currently dragged content type is accepted by the hovered parent
             if (parentContainerName && Array.isArray(allowedParents)) {
                 if (allowedParents.indexOf(parentContainerName) === -1) {
                     ui.placeholder.hide();
@@ -262,34 +262,34 @@ define([
         },
 
         /**
-         * Handle recieving a block from the panel
+         * Handle recieving a content type from the panel
          *
          * @param event
          * @param ui
          */
         onSortReceive: function (event, ui) {
             if (jQuery(event.target)[0] === this) {
-                var block = getViewModelFromUi(ui),
+                var contentType = getViewModelFromUi(ui),
                     target = ko.dataFor(jQuery(event.target)[0]);
 
                 // Don't run sortable when dropping on a placeholder
                 // @todo to be refactored under MAGETWO-86953
-                if (block.config.name === "column" &&
+                if (contentType.config.name === "column" &&
                     jQuery(event.srcElement).parents('.ui-droppable').length > 0
                 ) {
                     return;
                 }
 
-                if (block.droppable) {
+                if (contentType.droppable) {
                     event.stopPropagation();
-                    // Emit the blockDropped event upon the target
+                    // Emit the content type Dropped event upon the target
                     // Detect if the target is the parent UI component, if so swap the target to the stage
                     var stageId = typeof target.parent.preview !== "undefined" ? target.parent.stageId : target.id;
                     target = typeof target.parent.preview !== "undefined" ? target.parent : target;
-                    events.trigger("block:dropped", {
+                    events.trigger("contentType:dropped", {
                         parent: target,
                         stageId: stageId,
-                        block: block,
+                        contentType: contentType,
                         index: this.draggedItem.index(),
                     });
                     this.draggedItem.remove();
