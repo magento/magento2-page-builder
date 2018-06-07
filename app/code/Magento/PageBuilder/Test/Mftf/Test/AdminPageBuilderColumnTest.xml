@@ -45,16 +45,16 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderEmptyColumnHeightProperty"/>
-            <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
-            <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
+            <argument name="expectedPaddingTop" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
+            <argument name="expectedPaddingBottom" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
         </actionGroup>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
-        <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
+        <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop}}+{{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
         <assertEquals stepKey="assertRowHeightAdjustsToColumnHeight">
-            <expectedResult type="variable">expectedRowHeightWithPaddingAndColumns</expectedResult>
-            <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
+            <expectedResult type="variable">actualStageInitialColumnHeight</expectedResult>
+            <actualResult type="variable">expectedRowHeightWithPaddingAndColumns</actualResult>
         </assertEquals>
     </test>
     <test name="RemoveColumnFromStageAndRowShrinks">

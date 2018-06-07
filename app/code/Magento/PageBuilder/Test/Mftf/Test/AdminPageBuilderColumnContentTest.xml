@@ -152,7 +152,7 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <comment userInput="Validate Column Height On Stage With Custom Min Height Matches Expected" stepKey="commentValidateColumnHeight"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageContentTypeHeight"/>
-        <executeJS function="return Math.round({{PageBuilderAppearanceMinHeightProperty_200.value}} + {{PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop}} + {{PageBuilderAdvancedMarginsAndPaddingProperty.paddingBottom}})" stepKey="expectedColumnHeight"/>
+        <executeJS function="return Math.round({{PageBuilderAppearanceMinHeightProperty_200.value}} + {{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop}} + {{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingBottom}})" stepKey="expectedColumnHeight"/>
         <assertEquals stepKey="assertHeightOnStageMatchesExpected">
             <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
             <actualResult type="variable">expectedColumnHeight</actualResult>
