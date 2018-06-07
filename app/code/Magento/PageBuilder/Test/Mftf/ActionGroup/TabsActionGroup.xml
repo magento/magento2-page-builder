@@ -45,7 +45,7 @@
         </arguments>
         <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentTypeInStageVisible" />
         <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader(index)}}"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
+        <waitForElementVisible time="30" selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
         <click selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="clickEditContentType"/>
     </actionGroup>
     <actionGroup name="openTabOptionsByIndex">
@@ -68,7 +68,7 @@
         </arguments>
         <click selector="{{TabOnStage.tabHeader(to)}}" stepKey="switchToTab"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimation" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
+        <waitForElementVisible time="30" selector="{{TabOnStage.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
         <assertElementContainsAttribute selector="{{TabOnStage.tabPanel(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
     </actionGroup>
@@ -77,12 +77,13 @@
             <argument name="from" defaultValue="1" type="string"/>
             <argument name="to" defaultValue="2" type="string"/>
         </arguments>
+        <!-- requires reloadPage before for tabs to become active, see MAGETWO-92406 -->
         <click selector="{{TabOnStorefront.tabHeader(to)}}" stepKey="switchToTab"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront1" time="30"/>
         <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
-        <wait time="1" stepKey="waitForTabRender"/>
+        <wait time="2" stepKey="waitForTabRender"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront2" time="30"/>
-        <waitForElementVisible selector="{{TabOnStorefront.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
+        <waitForElementVisible time="30" selector="{{TabOnStorefront.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
         <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
     </actionGroup>
