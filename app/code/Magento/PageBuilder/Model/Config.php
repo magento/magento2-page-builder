@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\PageBuilder\Model\Config\ContentType\Converter;
 
 class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuilder\Model\Config\ConfigInterface
 {
@@ -21,26 +20,18 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     private $scopeConfig;
 
     /**
-     * @var Converter
-     */
-    private $converter;
-
-    /**
      * @param \Magento\PageBuilder\Model\Config\CompositeReader $reader
      * @param \Magento\Framework\Config\CacheInterface $cache
      * @param ScopeConfigInterface $scopeConfig
-     * @param Converter $converter
      * @param string $cacheId
      */
     public function __construct(
         \Magento\PageBuilder\Model\Config\CompositeReader $reader,
         \Magento\Framework\Config\CacheInterface $cache,
         ScopeConfigInterface $scopeConfig,
-        Converter $converter,
         $cacheId = 'pagebuilder_config'
     ) {
         $this->scopeConfig = $scopeConfig;
-        $this->converter = $converter;
         parent::__construct($reader, $cache, $cacheId);
     }
 
@@ -59,10 +50,7 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
      */
     public function getContentTypes(): array
     {
-        $types = $this->get('types');
-        $types = $this->converter->parseAdditionalData($types);
-
-        return $types;
+        return $this->get('types');
     }
 
     /**

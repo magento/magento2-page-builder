@@ -9,8 +9,6 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Config\ContentType;
 
 use Magento\Framework\ObjectManager\Config\Mapper\ArgumentParser;
-use Magento\Framework\Data\Argument\InterpreterInterface;
-use Magento\PageBuilder\Model\Config\ContentType\AdditionalData\ProviderInterface;
 
 class Converter implements \Magento\Framework\Config\ConverterInterface
 {
@@ -20,21 +18,13 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private $parser;
 
     /**
-     * @var InterpreterInterface
-     */
-    private $argumentInterpreter;
-
-    /**
      * Converter constructor.
      * @param ArgumentParser $parser
-     * @param InterpreterInterface $argumentInterpreter
      */
     public function __construct(
-        ArgumentParser $parser,
-        InterpreterInterface $argumentInterpreter
+        ArgumentParser $parser
     ) {
         $this->parser = $parser;
-        $this->argumentInterpreter = $argumentInterpreter;
     }
 
     /**
@@ -49,44 +39,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         return [
             'types' => $this->convertTypes($source)
         ];
-    }
-
-    /**
-     * Convert and evaluate additional data from arguments nodes to array
-     *
-     * @param array $types
-     * @return array
-     */
-    public function parseAdditionalData(array $types): array
-    {
-        $convertToProviders = function ($additionalDatum) use (&$convertToProviders) {
-            $processedData = [];
-
-            foreach ($additionalDatum as $key => $value) {
-                $processedData[$key] = $value;
-
-                if (is_array($value)) {
-                    $processedData[$key] = $convertToProviders($additionalDatum[$key]);
-                } elseif (is_object($value) && $value instanceof ProviderInterface) {
-                    $processedData[$key] = $value->getData($key)[$key];
-                }
-            }
-
-            return $processedData;
-        };
-
-        foreach ($types as &$type) {
-            if (!isset($type['additional_data'])) {
-                continue;
-            }
-
-            foreach ($type['additional_data'] as &$additionalDatum) {
-                $additionalDatum = $this->argumentInterpreter->evaluate($additionalDatum);
-                $additionalDatum = $convertToProviders($additionalDatum);
-            }
-        }
-
-        return $types;
     }
 
     /**
