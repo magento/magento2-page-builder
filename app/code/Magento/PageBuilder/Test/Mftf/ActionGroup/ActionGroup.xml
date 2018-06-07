@@ -165,13 +165,15 @@
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
             <argument name="offsetXCoordinate" defaultValue="10" type="string"/>
             <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
+            <argument name="containerOffsetXCoordinate" defaultValue="null" type="string"/>
+            <argument name="containerOffsetYCoordinate" defaultValue="null" type="string"/>
         </arguments>
         <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStageVisible"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentBlockStage"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockMoveByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForEditButton"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.contentBlockMoveByIndex(contentBlockType.role, contentBlockIndex)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="moveContentTypeIntoContainer"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.contentBlockMoveByIndex(contentBlockType.role, contentBlockIndex)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerTargetType.role, containerTargetIndex)}}"  x="{{containerOffsetXCoordinate}}" y="{{containerOffsetYCoordinate}}" stepKey="moveContentTypeIntoContainer"/>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
         <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage"/>
     </actionGroup>
