@@ -293,9 +293,10 @@
         </arguments>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad stepKey="waitForOptionsAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, '1')}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentTypeRemove(contentType.role)}}" stepKey="clickRemoveContentType"/>
+        <waitForPageLoad stepKey="waitForRemoveAnimation"/>
     </actionGroup>
     <actionGroup name="removeContentTypeFromStageByIndex">
         <arguments>
@@ -307,7 +308,7 @@
         <seeElement selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="seeContentTypeInStage" />
         <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForContentTypeInStageVisible" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad stepKey="waitForOptionsAnimation"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForOptions" />
         <click selector="{{PageBuilderActionsSection.contentTypeRemoveByIndex(contentType.role, contentTypeNumber)}}" stepKey="clickRemoveContentType"/>
         <waitForPageLoad time="30" stepKey="waitForRemoveAnimation"/>
