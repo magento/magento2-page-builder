@@ -128,12 +128,19 @@ requirejs([
             mapOptions = {};
 
         if (element.hasAttribute('data-locations')) {
+
+            /**
+             * Set map display to none if no locations
+             */
             if (element.getAttribute('data-locations') === '[]') {
                 $(element).hide();
 
                 return;
             }
 
+            /**
+             * Sets height to 300px as default if no height input but does not save to database.
+             */
             if ($(element).context.style.height === '') {
                 $(element).height('300px');
             }
