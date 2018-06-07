@@ -1078,34 +1078,34 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragTextIntoRowAboveSlider">
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextIntoRowAboveSlider">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
             <argument name="dropZoneIndex" value="1"/>
             <argument name="offsetXCoordinate" value="0"/>
         </actionGroup>
-        <comment userInput="User sees Text displayed in row above Slider on Stage" stepKey="confirmContentBlocksOnStage"/>
-        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="checkTextPositionInRow">
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <comment userInput="User sees Text displayed in row above Slider on Stage" stepKey="confirmContentTypesOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkTextPositionInRow">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="1"/>
-            <argument name="contentBlockType" value="PageBuilderTextContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="checkSliderPositionInRow">
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkSliderPositionInRow">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="2"/>
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
     </test>
     <test name="SliderCannotHaveContentDroppedInside">
@@ -1130,22 +1130,22 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <comment userInput="Attempt to drag heading block onto top part of slider" stepKey="commentValidateAboveSlider"/>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentBlock.role,'1')}}" stepKey="actualStageSliderHeight"/>
-        <executeJS function="{{PageBuilderActionsSection.computedWidthOnStage(PageBuilderSliderContentBlock.role,'1')}}" stepKey="actualStageSliderWidth"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageSliderHeight"/>
+        <executeJS function="{{PageBuilderActionsSection.computedWidthOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageSliderWidth"/>
         <executeJS function="return Math.round({$actualStageSliderWidth}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingLeft}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingRight}})" stepKey="sliderWidthSansPadding"/>
         <executeJS function="return Math.round({$sliderWidthSansPadding}/20)" stepKey="sliderWidthOffset"/>
         <executeJS function="return Math.round({$actualStageSliderHeight}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}})" stepKey="sliderHeightSansPadding"/>
         <executeJS function="return Math.round({$sliderHeightSansPadding}/5)" stepKey="sliderHeightOffset"/>
-        <actionGroup ref="dragContentBlockToContentBlock" stepKey="dragHeadingOntoSliderTop">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="targetBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToContentType" stepKey="dragHeadingOntoSliderTop">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="targetBlockType" value="PageBuilderSliderContentType"/>
             <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
             <argument name="offsetYCoordinate" value="$sliderHeightOffset"/>
         </actionGroup>
@@ -1153,35 +1153,35 @@
         <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit1"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation1"/>
         <comment userInput="Attempt to drag heading block onto bottom part of slider" stepKey="commentValidateBelowSlider"/>
-        <actionGroup ref="dragContentBlockToContentBlock" stepKey="dragHeadingOntoSliderBottom">
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="targetBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToContentType" stepKey="dragHeadingOntoSliderBottom">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="targetBlockType" value="PageBuilderSliderContentType"/>
             <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
             <argument name="offsetYCoordinate" value="$sliderHeightSansPadding"/>
         </actionGroup>
         <moveMouseOver selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="moveMouseOutsideLiveEdit2"/>
         <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit2"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation2"/>
-        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="validateHeadingFirst">
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingFirst">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="1"/>
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="validateSliderSecond">
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateSliderSecond">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="2"/>
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="validateContentBlockInsideContainerStage" stepKey="validateHeadingThird">
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingThird">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
             <argument name="positionInContainer" value="3"/>
-            <argument name="contentBlockType" value="PageBuilderHeadingContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
     </test>
     <test name="SliderCanBeDeletedAfterAccidentalDrag">
@@ -1206,24 +1206,24 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <actionGroup ref="unfocusSlideOptions" stepKey="unfocusSlideOptions"/>
         <actionGroup ref="moveContentTypeToContainer" stepKey="moveSliderIntoExistingRow">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
-            <argument name="contentBlockIndex" value="1"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="removeContentBlockFromStage" stepKey="removeSliderFromStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeSliderFromStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeSliderInContent" />
-        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentBlockInStage(PageBuilderSliderContentBlock.role)}}" stepKey="dontSeeSliderInDOM" />
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInContent" />
+        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInDOM" />
     </test>
     <test name="AddImageToSliderStage">
         <annotations>

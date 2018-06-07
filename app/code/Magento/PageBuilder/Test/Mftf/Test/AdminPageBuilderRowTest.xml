@@ -208,18 +208,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <comment userInput="Modify initial row background color" stepKey="commentEdit"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
             <argument name="dropZoneIndex" value="2"/>
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeElementRow"/>
@@ -261,18 +261,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+            <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <comment userInput="Modify initial row background color" stepKey="commentEdit"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderRowBackgroundColor_CCCCCC"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragRowIntoStage">
-            <argument name="contentBlockType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragRowIntoStage">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="containerTargetType" value="PageBuilderStage"/>
             <argument name="containerTargetIndex" value="1"/>
-            <argument name="contentBlockIndex" value="2"/>
+            <argument name="contentTypeIndex" value="2"/>
             <argument name="dropZoneIndex" value="1"/>
             <argument name="offsetXCoordinate" value="0"/>
         </actionGroup>
@@ -466,31 +466,31 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Validate Initial Row Height" stepKey="commentValidateRowHeight"/>
-        <actionGroup ref="validateContentBlockHeightOnStage" stepKey="assertInitialRowHeightMatchesExpected">
-            <argument name="contentBlock" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertInitialRowHeightMatchesExpected">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
             <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
             <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderSliderContentBlock"/>
+            <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
-            <argument name="contentBlockType" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderIntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <comment userInput="Validate Initial Slider Height On Stage Matches Expected" stepKey="commentValidateSliderHeight"/>
-        <actionGroup ref="validateContentBlockHeightOnStage" stepKey="assertInitialSliderHeightMatchesExpected">
-            <argument name="contentBlock" value="PageBuilderSliderContentBlock"/>
+        <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertInitialSliderHeightMatchesExpected">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderEmptySliderContainerHeightProperty"/>
             <argument name="expectedPaddingTop" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
             <argument name="expectedPaddingBottom" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
         </actionGroup>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentBlock.role,'1')}}" stepKey="actualStageInitialSliderHeight"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageInitialSliderHeight"/>
         <comment userInput="Validate Row Height adjusts to Slider Height on Stage" stepKey="commentValidateRowHeightAdjustToSlider"/>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentBlock.role,'1')}}" stepKey="actualStageRowHeightWithSlider"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithSlider"/>
         <executeJS function="return Math.round({$actualStageInitialSliderHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndSlider"/>
         <assertEquals stepKey="assertRowHeightAdjustsToSliderHeight">
             <expectedResult type="variable">expectedRowHeightWithPaddingAndSlider</expectedResult>

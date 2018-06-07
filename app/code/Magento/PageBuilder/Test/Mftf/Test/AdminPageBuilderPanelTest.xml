@@ -190,7 +190,7 @@
         <dontSee userInput="r" selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="validateInputClearedAfterRemoveCharacters"/>
         <actionGroup ref="validateGroupsAndContentTypes" stepKey="validateGroupsAndContentTypesAfterClearField"/>
     </test>
-    <test name="SearchContentBlockAndAddToStage">
+    <test name="SearchContentTypeAndAddToStage">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Panel"/>
@@ -212,15 +212,15 @@
         </after>
         <comment userInput="Search Map in Panel and drag to stage" stepKey="commentSearchMap"/>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="Map" stepKey="fillSearchField"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragContentBlockToStage">
-            <argument name="contentBlockType" value="PageBuilderMapContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <comment userInput="Clear search Map and drag Column to stage" stepKey="commentClearSearch"/>
         <waitForElementVisible selector='{{PageBuilderActionsSection.searchField}}' stepKey="seeClearSearch"/>
         <click selector='{{PageBuilderActionsSection.searchField}}' stepKey="clickClearSearch"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnToStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <dontSeeJsError stepKey="dontSeeJsError"/>
     </test>
@@ -244,8 +244,8 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnToStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnToStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <comment userInput="Collapse and Expand panel then drag Tabs to Column" stepKey="commentDragTabs"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.stageWrapper}}" stepKey="waitForStage"/>
@@ -261,9 +261,9 @@
         <waitForElementVisible selector="{{PageBuilderActionsSection.collapsePanel}}" stepKey="waitForCollapseButtonVisible"/>
         <waitForElementVisible selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="waitForSearchField"/>
         <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="ta" stepKey="fillSearchFieldTa"/>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTabsIntoFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <dontSeeJsError stepKey="dontSeeJsError"/>

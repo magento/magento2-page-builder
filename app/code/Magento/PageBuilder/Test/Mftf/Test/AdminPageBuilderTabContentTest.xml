@@ -975,22 +975,22 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Columns to Stage -->
         <comment userInput="Drag Columns to Stage" stepKey="commentDragColumnsToStage"/>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
         <!-- Add Tabs to Column -->
         <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandInteractiveGroup">
-            <argument name="group" value="PageBuilderTabsContentBlock"/>
+            <argument name="group" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragTabsIntoFirstColumn">
-            <argument name="contentBlockType" value="PageBuilderTabsContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1"/>
         </actionGroup>
         <!-- Validate Tabs default state On Stage -->
@@ -998,9 +998,9 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Try to drag Column onto Tab -->
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragColumnOntoTab">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderTabContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnOntoTab">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderTabContentType"/>
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <dontSeeElementInDOM selector="{{TabOnStage.tabColumnContent}}" stepKey="dontSeeNewColumnsInTabs"/>

@@ -29,28 +29,28 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Validate Initial Row Height" stepKey="commentValidateRowHeight"/>
-        <actionGroup ref="validateContentBlockHeightOnStage" stepKey="assertInitialRowHeightMatchesExpected">
-            <argument name="contentBlock" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertInitialRowHeightMatchesExpected">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
             <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
             <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
         <comment userInput="Validate Initial Column Height On Stage Matches Expected" stepKey="commentValidateColumnHeight"/>
-        <actionGroup ref="validateContentBlockHeightOnStage" stepKey="assertInitialColumnHeightMatchesExpected">
-            <argument name="contentBlock" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertInitialColumnHeightMatchesExpected">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderEmptyColumnHeightProperty"/>
             <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
             <argument name="expectedPaddingBottom" value="PageBuilderPaddingProperty10"/>
         </actionGroup>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentBlock.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentBlock.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
         <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
         <assertEquals stepKey="assertRowHeightAdjustsToColumnHeight">
             <expectedResult type="variable">expectedRowHeightWithPaddingAndColumns</expectedResult>
@@ -92,8 +92,8 @@
         <dontSeeElement selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
         <dontSeeElement selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="dontSeeColumnGroup"/>
         <comment userInput="Validate Row Height shrinks with removal of columns" stepKey="commentValidateRowHeight"/>
-        <actionGroup ref="validateContentBlockHeightOnStage" stepKey="assertRowHeightMatchesExpectedAfterDeleteColumns">
-            <argument name="contentBlock" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="validateContentTypeHeightOnStage" stepKey="assertRowHeightMatchesExpectedAfterDeleteColumns">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
             <argument name="index" value="1"/>
             <argument name="containerDefaultHeight" value="PageBuilderRowDefaultHeight"/>
             <argument name="expectedPaddingTop" value="PageBuilderPaddingProperty10"/>
@@ -217,8 +217,8 @@
         <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','3/6')}}" stepKey="findBeforeLabelColumn1"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','3/6')}}" stepKey="findBeforeLabelColumn2"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewColumnToFirstColumn">
-            <argument name="contentType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderColumnContentBlock"/>
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
@@ -992,8 +992,8 @@
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading3">
             <argument name="index" value="3"/>
         </actionGroup>
-        <comment userInput="User sees 3 Heading content blocks displayed in first column on Stage" stepKey="confirmContentBlocksOnStage"/>
-        <seeNumberOfElements selector="{{HeadingOnStage.allHeadingsInContainer(PageBuilderColumnContentBlock.role, '1')}}" userInput="3" stepKey="see3HeadingsInFirstColumn"/>
+        <comment userInput="User sees 3 Heading content blocks displayed in first column on Stage" stepKey="confirmContentTypesOnStage"/>
+        <seeNumberOfElements selector="{{HeadingOnStage.allHeadingsInContainer(PageBuilderColumnContentType.role, '1')}}" userInput="3" stepKey="see3HeadingsInFirstColumn"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <seeElement selector="{{ColumnsOnFrontend.column1HeightFull}}" stepKey="seeColumn1FullHeightApplied"/>
@@ -1034,8 +1034,8 @@
         <actionGroup ref="navigateToCreatedCMSBlockPage" stepKey="navigateToCreatedCMSBlockPage1">
             <argument name="CMSBlockPage" value="$$createPreReqBlock$$"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
@@ -1113,19 +1113,19 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="dragContentBlockToContainer" stepKey="dragFirstColumnOntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragFirstColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragSecondColumnOntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragSecondColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="offsetXCoordinate" value="5" />
             <argument name="offsetYCoordinate" value="5" />
         </actionGroup>
-        <actionGroup ref="dragContentBlockToDropZone" stepKey="dragThirdColumnOntoStage">
-            <argument name="contentBlockType" value="PageBuilderColumnContentBlock"/>
-            <argument name="containerTargetType" value="PageBuilderRowContentBlock"/>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragThirdColumnOntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
             <argument name="offsetXCoordinate" value="5" />
             <argument name="offsetYCoordinate" value="5" />
         </actionGroup>

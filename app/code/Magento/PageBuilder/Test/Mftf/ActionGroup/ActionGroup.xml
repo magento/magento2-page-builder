@@ -110,11 +110,11 @@
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
         </arguments>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentType.name)}}" selector2="{{PageBuilderActionsSection.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentBlockIntoStage"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderActionsSection.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
-        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentBlockInContainer"/>
-        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentBlockNameInEditFormTitle"/>
-        <see userInput="Edit {{contentType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentBlockNameInEditFormTitle"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInContainer"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForContentTypeNameInEditFormTitle"/>
+        <see userInput="Edit {{contentType.editPanelName}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="dragContentTypeToContainer">
         <arguments>
@@ -132,23 +132,23 @@
         <waitForPageLoad stepKey="waitForToolbarsToLoad" time="30"/>
     </actionGroup>
     <!-- Test to ensure a content block doesn't receive drop events -->
-    <actionGroup name="dragContentBlockToContentBlock">
+    <actionGroup name="dragContentTypeToContentType">
         <arguments>
-            <argument name="contentBlockType"/>
-            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
             <argument name="targetBlockType"/>
             <argument name="offsetXCoordinate" defaultValue="null" type="string"/>
             <argument name="offsetYCoordinate" defaultValue="null" type="string"/>
         </arguments>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.contentBlockInStage(targetBlockType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentBlockIntoStage"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderActionsSection.contentTypeInStage(targetBlockType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
-        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
-    <actionGroup name="dragContentBlockToDropZone">
+    <actionGroup name="dragContentTypeToDropZone">
         <arguments>
-            <argument name="contentBlockType"/>
-            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
             <argument name="containerTargetType"/>
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
             <argument name="dropZoneIndex" defaultValue="1" type="string"/>
@@ -157,14 +157,14 @@
         </arguments>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
         <waitForElement time="30" selector="{{PageBuilderActionsSection.dropZone(containerTargetType.role, containerTargetIndex, dropZoneIndex)}}" stepKey="waitForStageActive"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentBlockInPanel(contentBlockType.name)}}" selector2="{{PageBuilderActionsSection.dropZone(containerTargetType.role, containerTargetIndex, dropZoneIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentBlockIntoStage"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.draggableContentTypeInPanel(contentType.name)}}" selector2="{{PageBuilderActionsSection.dropZone(containerTargetType.role, containerTargetIndex, dropZoneIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="dropContentTypeIntoStage"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
-        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
     <actionGroup name="moveContentTypeToContainer">
         <arguments>
-            <argument name="contentBlockType"/>
-            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
             <argument name="containerTargetType"/>
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
             <argument name="offsetXCoordinate" defaultValue="10" type="string"/>
@@ -172,14 +172,14 @@
             <argument name="containerOffsetXCoordinate" defaultValue="null" type="string"/>
             <argument name="containerOffsetYCoordinate" defaultValue="null" type="string"/>
         </arguments>
-        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStageVisible"/>
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentBlockStage"/>
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentBlockOptionsMenuByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForOptions"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentBlockMoveByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForEditButton"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.contentBlockMoveByIndex(contentBlockType.role, contentBlockIndex)}}" selector2="{{PageBuilderActionsSection.contentBlockContainer(containerTargetType.role, containerTargetIndex)}}"  x="{{containerOffsetXCoordinate}}" y="{{containerOffsetYCoordinate}}" stepKey="moveContentTypeIntoContainer"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeMoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>
+        <dragAndDrop selector1="{{PageBuilderActionsSection.contentTypeMoveByIndex(contentType.role, contentTypeIndex)}}" selector2="{{PageBuilderActionsSection.contentTypeContainer(containerTargetType.role, containerTargetIndex)}}"  x="{{containerOffsetXCoordinate}}" y="{{containerOffsetYCoordinate}}" stepKey="moveContentTypeIntoContainer"/>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
-        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInStageByIndex(contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockInStage"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStage"/>
     </actionGroup>
     <actionGroup name="dragContentTypeNextToExistingContentType">
         <arguments>
@@ -835,51 +835,51 @@
         <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHexCodeIntoInputField1"/>
         <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{colorCode.value}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
     </actionGroup>
-    <actionGroup name="validateContentBlockHeightOnStage">
+    <actionGroup name="validateContentTypeHeightOnStage">
         <arguments>
-            <argument name="contentBlock"/>
+            <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="containerDefaultHeight" defaultValue="1"/>
             <argument name="expectedPaddingTop" defaultValue="1"/>
             <argument name="expectedPaddingBottom" defaultValue="1"/>
         </arguments>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(contentBlock.role,index)}}" stepKey="actualStageContentBlockHeight"/>
-        <executeJS function="return Math.round({{containerDefaultHeight.value}}+{{expectedPaddingTop.paddingTop}}+{{expectedPaddingBottom.paddingBottom}})" stepKey="expectedContentBlockHeightWithPadding"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
+        <executeJS function="return Math.round({{containerDefaultHeight.value}}+{{expectedPaddingTop.paddingTop}}+{{expectedPaddingBottom.paddingBottom}})" stepKey="expectedContentTypeHeightWithPadding"/>
         <assertEquals stepKey="assertHeightOnStageMatchesExpected">
-            <expectedResult type="variable">actualStageContentBlockHeight</expectedResult>
-            <actualResult type="variable">expectedContentBlockHeightWithPadding</actualResult>
+            <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
+            <actualResult type="variable">expectedContentTypeHeightWithPadding</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateContentBlockHeightOnStageWithoutPadding">
+    <actionGroup name="validateContentTypeHeightOnStageWithoutPadding">
         <arguments>
-            <argument name="contentBlock"/>
+            <argument name="contentType"/>
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="containerDefaultHeight" defaultValue="1"/>
         </arguments>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(contentBlock.role,index)}}" stepKey="actualStageContentBlockHeight"/>
-        <executeJS function="return Math.round({{containerDefaultHeight.value}})" stepKey="expectedContentBlockHeightWithPadding"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
+        <executeJS function="return Math.round({{containerDefaultHeight.value}})" stepKey="expectedContentTypeHeightWithPadding"/>
         <assertEquals stepKey="assertHeightOnStageMatchesExpected">
-            <expectedResult type="variable">actualStageContentBlockHeight</expectedResult>
-            <actualResult type="variable">expectedContentBlockHeightWithPadding</actualResult>
+            <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
+            <actualResult type="variable">expectedContentTypeHeightWithPadding</actualResult>
         </assertEquals>
     </actionGroup>
-    <actionGroup name="validateContentBlockInsideContainerStage">
+    <actionGroup name="validateContentTypeInsideContainerStage">
         <arguments>
-            <argument name="contentBlockType"/>
-            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
             <argument name="containerTargetType"/>
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
             <argument name="positionInContainer" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockStage"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStage"/>
     </actionGroup>
-    <actionGroup name="validateContentBlockInsideContainerStorefront">
+    <actionGroup name="validateContentTypeInsideContainerStorefront">
         <arguments>
-            <argument name="contentBlockType"/>
-            <argument name="contentBlockIndex" defaultValue="1" type="string"/>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
             <argument name="containerTargetType"/>
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentBlockInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentBlockType.role, contentBlockIndex)}}" stepKey="waitForContentBlockStorefront"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentTypeInsideContainerStorefront(containerTargetType.role, containerTargetIndex, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStorefront"/>
     </actionGroup>
 </actionGroups>
