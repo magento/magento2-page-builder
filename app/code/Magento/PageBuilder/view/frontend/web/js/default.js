@@ -141,7 +141,6 @@ requirejs([
                 location.position.longitude = parseFloat(location.position.longitude);
             });
             controls = element.getAttribute('data-show-controls');
-            mapOptions.center = locations[0].position;
             mapOptions.disableDefaultUI = controls !== 'true';
             mapOptions.mapTypeControl = controls === 'true';
             new GoogleMap(element, locations, mapOptions);

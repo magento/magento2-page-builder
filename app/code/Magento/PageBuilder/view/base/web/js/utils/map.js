@@ -5,8 +5,9 @@
 
 define([
     'underscore',
+    'googleMapsStyles',
     'googleMaps'
-], function (_) {
+], function (_, googleMapsStyles) {
     'use strict';
 
     var google = window.google || {},
@@ -22,7 +23,6 @@ define([
         };
 
     return function (element, markers, options) {
-
         var mapOptions = _.extend({
             zoom: 8,
             center: getGoogleLatitudeLongitude({
@@ -35,7 +35,8 @@ define([
             mapTypeControl: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
-            }
+            },
+            styles: googleMapsStyles ? JSON.parse(googleMapsStyles) : ''
         }, options);
 
         /* Create the map */

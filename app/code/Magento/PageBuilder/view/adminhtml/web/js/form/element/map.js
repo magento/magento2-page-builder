@@ -7,8 +7,9 @@
 
 define([
     'Magento_Ui/js/form/element/abstract',
+    'googleMapsStyles',
     'googleMaps'
-], function (AbstractField) {
+], function (AbstractField, googleMapsStyles) {
     'use strict';
 
     var google = window.google || {};
@@ -49,7 +50,8 @@ define([
                 navigationControl: true,
                 navigationControlOptions: {
                     style: google.maps.NavigationControlStyle.DEFAULT
-                }
+                },
+                styles: googleMapsStyles ? JSON.parse(googleMapsStyles) : ''
             };
 
             // Create the map
