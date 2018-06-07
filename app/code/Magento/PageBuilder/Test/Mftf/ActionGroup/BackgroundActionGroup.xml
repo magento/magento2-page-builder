@@ -37,7 +37,7 @@
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
         <waitForElementVisible selector="{{page.noBackgroundColor(index)}}" stepKey="waitForBackgroundColor"/>
-        <!--<waitForElementVisible selector="{{page.backgroundImage(index)}}" stepKey="waitForBackgroundImage"/>-->
+        <waitForElementVisible selector="{{page.backgroundImage(index, backgroundImage.fileName)}}" stepKey="waitForBackgroundImage"/>
         <waitForElementVisible selector="{{page.backgroundPosition(index, backgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
         <waitForElementVisible selector="{{page.backgroundSize(index, backgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
         <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
@@ -55,21 +55,53 @@
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
         <waitForElementVisible selector="{{page.backgroundColor(index, backgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
-        <waitForElementVisible selector="{{page.noBackgroundImage(index)}}" stepKey="waitForBackgroundImage"/>
         <waitForElementVisible selector="{{page.backgroundPosition(index, backgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
         <waitForElementVisible selector="{{page.backgroundSize(index, backgroundSize.value)}}" stepKey="waitForBackgroundSize"/>
         <waitForElementVisible selector="{{page.backgroundRepeat(index, backgroundRepeat.styleValue)}}" stepKey="waitForBackgroundRepeat"/>
         <waitForElementVisible selector="{{page.backgroundAttachment(index, backgroundAttachment.value)}}" stepKey="waitForBackgroundAttachment"/>
     </actionGroup>
-    <actionGroup name="validateBackgroundImage">
+    <actionGroup name="validateBackgroundImageInAdmin">
         <arguments>
-            <argument name="page"/>
+            <argument name="section"/>
             <argument name="backgroundImage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForBaseElement"/>
-        <grabFromCurrentUrl regex="/^.+(?=admin)/m" stepKey="baseURL"/>
-        <comment userInput="$baseURL" stepKey="comment"/>
-        <waitForElementVisible selector="{{page.backgroundImage(index, $baseURL, backgroundImage.path, backgroundImage.value)}}" stepKey="waitForBackgroundImage"/>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" stepKey="waitForBackgroundImage"/>
+        <grabAttributeFrom selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
+        <!-- Grab base URL -->
+        <grabFromCurrentUrl regex="/(^.+(?=\/admin))/" stepKey="baseURL"/>
+        <!-- Return the string value of background-image -->
+        <executeJS function="return '$contentTypeStyle'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundImageValue"/>
+        <!-- Convert all characters in string variables to regex friendly strings  -->
+        <executeJS function="return '$baseURL'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
+        <executeJS function="return '{{backgroundImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
+        <assertRegExp stepKey="assertBackgroundImageContainsFileInformation">
+            <expectedResult type="string">/{$regexBaseURL}\/.+{$regexFilePath}_\d+\.{{backgroundImage.fileType}}/</expectedResult>
+            <actualResult type="variable">$backgroundImageValue</actualResult>
+        </assertRegExp>
+    </actionGroup>
+    <actionGroup name="validateBackgroundImageOnStorefront">
+        <arguments>
+            <argument name="section"/>
+            <argument name="contentBlockType"/>
+            <argument name="backgroundImage"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
+        <waitForElementVisible selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" stepKey="waitForBackgroundImage"/>
+        <grabAttributeFrom selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
+        <!-- Grab base URL -->
+        <executeJS function="return '{{contentBlockType.pageNamePrefix}}{{PageBuilderPageTitle.pageName}}'" stepKey="storefrontPage"/>
+        <grabFromCurrentUrl regex="/(^.+(?=\/$storefrontPage))/" stepKey="baseURL"/>
+        <!-- Return the string value of background-image -->
+        <executeJS function="return '$contentTypeStyle'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundImageValue"/>
+        <!-- Convert all characters in string variables to regex friendly strings  -->
+        <executeJS function="return '$baseURL'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexBaseURL"/>
+        <executeJS function="return '{{backgroundImage.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
+        <assertRegExp stepKey="assertBackgroundImageContainsFileInformation">
+            <expectedResult type="string">/{$regexBaseURL}\/.+{$regexFilePath}_\d+\.{{backgroundImage.fileType}}/</expectedResult>
+            <actualResult type="variable">$backgroundImageValue</actualResult>
+        </assertRegExp>
     </actionGroup>
 </actionGroups>
