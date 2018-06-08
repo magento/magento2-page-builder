@@ -4,8 +4,9 @@
  */
 
 define([
-    'jquery'
-], function ($) {
+    'jquery',
+    'Magento_Ui/js/lib/validation/utils'
+], function ($, utils) {
     'use strict';
 
     /**
@@ -67,6 +68,18 @@ define([
                 return validateNumberBetween(value, -180, 180);
             },
             $.mage.__('Please enter a number between -180 and 180')
+        );
+
+        validator.addRule(
+            'validate-video-url',
+            function (href) {
+                if (utils.isEmptyNoTrim(href)) {
+                    return true;
+                }
+
+                return href.match(/youtube\.com/) || href.match(/youtube\.com|youtu\.be/) || href.match(/vimeo\.com/);
+            },
+            $.mage.__('Please enter a valid video URL.')
         );
 
         return validator;
