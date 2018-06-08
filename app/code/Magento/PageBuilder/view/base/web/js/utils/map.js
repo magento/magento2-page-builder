@@ -5,9 +5,9 @@
 
 define([
     'underscore',
-    'googleMapsStyles',
+    'module',
     'googleMaps'
-], function (_, googleMapsStyles) {
+], function (_, module) {
     'use strict';
 
     var google = window.google || {},
@@ -36,7 +36,7 @@ define([
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
             },
-            styles: googleMapsStyles ? JSON.parse(googleMapsStyles) : ''
+            styles: module.config().mapStyle ? JSON.parse(module.config().mapStyle) : ''
         }, options);
 
         /* Create the map */
