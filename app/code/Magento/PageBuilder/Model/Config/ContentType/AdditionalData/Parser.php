@@ -39,27 +39,34 @@ class Parser
     {
         $parsedAdditionalData = [];
 
-        $convertToProviders = function ($additionalDatum) use (&$convertToProviders) {
-            $processedData = [];
-
-            foreach ($additionalDatum as $key => $value) {
-                $processedData[$key] = $value;
-
-                if (is_array($value)) {
-                    $processedData[$key] = $convertToProviders($additionalDatum[$key]);
-                } elseif (is_object($value) && $value instanceof ProviderInterface) {
-                    $processedData[$key] = $value->getData($key)[$key];
-                }
-            }
-
-            return $processedData;
-        };
-
-        foreach ($additionalData as $key => $additionalDatum) {
-            $additionalDatum = $this->argumentInterpreter->evaluate($additionalDatum);
-            $parsedAdditionalData[$key] = $convertToProviders($additionalDatum);
+        foreach ($additionalData as $key => $additionalDataItem) {
+            $additionalDataItem = $this->argumentInterpreter->evaluate($additionalDataItem);
+            $parsedAdditionalData[$key] = $this->evaluateProviders($additionalDataItem);
         }
 
         return $parsedAdditionalData;
+    }
+
+    /**
+     * Evaluate ProviderInterface objects
+     *
+     * @param array $additionalDataItem
+     * @return array
+     */
+    private function evaluateProviders(array $additionalDataItem): array
+    {
+        $processedData = [];
+
+        foreach ($additionalDataItem as $key => $value) {
+            $processedData[$key] = $value;
+
+            if (is_array($value)) {
+                $processedData[$key] = $this->evaluateProviders($additionalDataItem[$key]);
+            } elseif (is_object($value) && $value instanceof ProviderInterface) {
+                $processedData[$key] = $value->getData($key)[$key];
+            }
+        }
+
+        return $processedData;
     }
 }
