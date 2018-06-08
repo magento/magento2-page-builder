@@ -35,7 +35,7 @@ export default class Preview extends BasePreview {
     public renderMap(element: Element) {
         this.generateMap(element);
         this.data.main.attributes.subscribe(() => {
-            this.updateMap(element);
+            this.updateMap();
         });
     }
 
@@ -69,7 +69,7 @@ export default class Preview extends BasePreview {
      * @param {Element} element
      * @returns {void}
      */
-    private updateMap(element: Element) {
+    private updateMap() {
         const mapData = this.getMapData();
         this.map.onUpdate(mapData.locations, mapData.options);
     }

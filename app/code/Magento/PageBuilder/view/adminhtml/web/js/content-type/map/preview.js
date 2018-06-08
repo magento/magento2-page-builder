@@ -43,7 +43,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
       this.generateMap(element);
       this.data.main.attributes.subscribe(function () {
-        _this2.updateMap(element);
+        _this2.updateMap();
       });
     };
     /**
@@ -79,7 +79,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
      */
 
 
-    _proto.updateMap = function updateMap(element) {
+    _proto.updateMap = function updateMap() {
       var mapData = this.getMapData();
       this.map.onUpdate(mapData.locations, mapData.options);
     };
