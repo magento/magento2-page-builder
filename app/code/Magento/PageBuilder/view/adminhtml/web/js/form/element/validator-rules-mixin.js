@@ -77,7 +77,7 @@ define([
                     return true;
                 }
 
-                return href.match(/youtube\.com/) || href.match(/youtube\.com|youtu\.be/) || href.match(/vimeo\.com/);
+                return href.match(/youtube\.com|youtu\.be/) || href.match(/vimeo\.com/);
             },
             $.mage.__('Please enter a valid video URL.')
         );
