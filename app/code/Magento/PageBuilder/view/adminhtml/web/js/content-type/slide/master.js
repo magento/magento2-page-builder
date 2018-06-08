@@ -94,7 +94,7 @@ define(["mage/translate", "underscore", "Magento_PageBuilder/js/converter/attrib
       var data = this.parent.dataStore.get();
       var overlayColorAttr = "transparent";
 
-      if (data.show_overlay !== "never_show") {
+      if (data.show_overlay !== "never") {
         if (data.overlay_color !== "" && data.overlay_color !== undefined) {
           overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color, (0, _numberConverter.percentToDecimal)(data.overlay_transparency));
         }

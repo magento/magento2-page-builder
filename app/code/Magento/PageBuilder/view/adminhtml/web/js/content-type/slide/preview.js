@@ -204,7 +204,7 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
 
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
       // Triggers the visibility of the overlay content to show
-      if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+      if (this.data.main.attributes()["data-show-overlay"] === "hover") {
         this.data.overlay.attributes(Object.assign(this.data.overlay.attributes(), {
           "data-background-color-orig": this.data.overlay.style().backgroundColor
         }));
@@ -213,7 +213,7 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
         }));
       }
 
-      if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+      if (this.data.main.attributes()["data-show-button"] === "hover") {
         this.data.button.style(Object.assign(this.data.button.style(), {
           opacity: 1,
           visibility: "visible"
@@ -227,13 +227,13 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
 
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
       // Triggers the visibility of the overlay content to hide
-      if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+      if (this.data.main.attributes()["data-show-overlay"] === "hover") {
         this.data.overlay.style(Object.assign(this.data.overlay.style(), {
           backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]
         }));
       }
 
-      if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+      if (this.data.main.attributes()["data-show-button"] === "hover") {
         this.data.button.style(Object.assign(this.data.button.style(), {
           opacity: 0,
           visibility: "hidden"
@@ -319,7 +319,7 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
       var data = this.previewData;
       var overlayColorAttr = "transparent";
 
-      if (data.show_overlay() !== "never_show") {
+      if (data.show_overlay() !== "never") {
         if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
           overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color(), (0, _numberConverter.percentToDecimal)(data.overlay_transparency()));
         }
