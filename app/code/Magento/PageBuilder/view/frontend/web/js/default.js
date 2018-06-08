@@ -137,14 +137,6 @@ requirejs([
 
                 return;
             }
-
-            /**
-             * Sets height to 300px as default if no height input but does not save to database.
-             */
-            if ($(element).context.style.height === '') {
-                $(element).height('300px');
-            }
-
             locations = JSON.parse(element.getAttribute('data-locations'));
             locations.forEach(function (location) {
                 location.position.latitude = parseFloat(location.position.latitude);

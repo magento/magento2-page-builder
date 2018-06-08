@@ -55,13 +55,8 @@ export default class Preview extends BasePreview {
             mapTypeControl: controls === "true",
         };
 
-        if ($(element).context.style.height === "") {
-            $(element).height("300px");
-        }
-
         if (currentLocations !== "[]") {
             const mapData = this.getMapData();
-
             locations = mapData.locations;
             options = mapData.options;
         }
@@ -75,9 +70,6 @@ export default class Preview extends BasePreview {
      * @returns {void}
      */
     private updateMap(element: Element) {
-        if ($(element).context.style.height === "") {
-            $(element).height("300px");
-        }
         const mapData = this.getMapData();
         this.map.onUpdate(mapData.locations, mapData.options);
     }
