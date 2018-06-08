@@ -10,7 +10,7 @@ define([
 
     return function (target) {
         $.validator.addMethod(
-            'validate-style',
+            'validate-google-map-style',
             function (value) {
                 if ($.mage.isEmptyNoTrim(value)) {
                     return true;
