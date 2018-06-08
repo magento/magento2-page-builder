@@ -1116,10 +1116,10 @@
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="attachImageFile1">
-            <argument name="Image" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
+        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeImageInDOM"/>
         <comment userInput="Go to Banner slide-out to verify uploaded image" stepKey="commentGoToBannerSlideOut"/>
         <!--Verify uploaded image is displayed on slide-out-->
         <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
@@ -1127,7 +1127,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1135,7 +1135,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnBannerStageDependOnEachTypeOfAppearance">
         <annotations>

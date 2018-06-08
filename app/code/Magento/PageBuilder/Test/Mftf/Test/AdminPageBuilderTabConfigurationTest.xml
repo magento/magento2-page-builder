@@ -1227,21 +1227,13 @@
         </before>
         <after>
             <closeTab stepKey="closeTab"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
-                <argument name="contentType" value="PageBuilderRowContentType"/>
-                <argument name="contentTypeIndex" value="1"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderTabBackgroundImagePngProperty.path}}"/>
             </actionGroup>
-            <click selector="{{RowOnBackend.selectFromGallery}}" stepKey="clickImageSelectFromGalleryBtn2"/>
-            <waitForPageLoad stepKey="waitForPageLoad3" />
-            <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup2">
-                <argument name="FolderName" value="wysiwyg"/>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderTabBackgroundImagePngProperty"/>
             </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteUploadedImageFromStorage">
-                <argument name="Image" value="PageBuilderTabBackgroundImagePngProperty" />
-            </actionGroup>
-            <waitForPageLoad stepKey="waitForPageLoad4" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">

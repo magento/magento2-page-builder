@@ -30,16 +30,16 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
@@ -74,17 +74,17 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage2">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
@@ -112,10 +112,10 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
-            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="section" value="BannerOnFrontend"/>
         </actionGroup>
     </test>
     <test name="BannerEditPanelColorPickerUpdatesFromFieldInput">
@@ -133,23 +133,23 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
         </before>
         <after>
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Input: Plaintext -->
         <comment userInput="Input: Plaintext" stepKey="commentPlaintext"/>
@@ -220,23 +220,23 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
         </before>
         <after>
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
             <argument name="CMSPage" value="$$createCMSPage$$"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Open Color Picker -->
         <comment userInput="Open Color Picker" stepKey="commentOpen"/>
@@ -323,18 +323,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Set Background Color -->
         <comment userInput="Set Background Color" stepKey="commentSetBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -343,7 +343,7 @@
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage1">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -351,13 +351,13 @@
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage2">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <!-- Edit Panel: Check Background Color -->
         <comment userInput="Edit Panel: Check Background Color" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeColorInColorSwatch" stepKey="validateBackgroundColorSwatch">
             <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
@@ -368,10 +368,10 @@
         <!-- Storefront: Check Background Color -->
         <comment userInput="Storefront: Check Background Color" stepKey="commentStorefrontCheck"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStorefront">
-            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
     </test>
@@ -397,18 +397,18 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Set Background Color -->
         <comment userInput="Set Background Color" stepKey="commentSetBackgroundColor"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
             <argument name="property" value="PageBuilderBackgroundColor_Invalid"/>
@@ -420,12 +420,12 @@
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
         </actionGroup>
         <!-- Set Valid After Invalid Background Color -->
         <comment userInput="Set Valid After Invalid Background Color" stepKey="commentSetBackgroundColor2"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor2">
             <argument name="property" value="PageBuilderBackgroundColor_Invalid"/>
@@ -440,7 +440,7 @@
         <!-- Stage: Check Background Color After Valid Save -->
         <comment userInput="Stage: Check Background Color After Valid Save" stepKey="commentStageCheck2"/>
         <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage1">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
     </test>
@@ -463,21 +463,28 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Set Background Image -->
         <comment userInput="Set Background Image" stepKey="commentSetBackgroundImage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -500,7 +507,7 @@
         <!-- Edit Panel: Check Background Image -->
         <comment userInput="Edit Panel: Check Background Image" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -508,11 +515,236 @@
         <!-- Storefront: Check Background Image -->
         <comment userInput="Storefront: Check Background Image" stepKey="commentStorefrontCheck"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageOnStorefront" stepKey="validateImageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+    </test>
+    <test name="BannerBackgroundImageGIF">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Banner"/>
+            <title value="Background Image - GIF"/>
+            <description value="Tests that the Background Image attribute functions as expected on Stage and Storefront for Banner for GIF file type"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MAGETWO-92629"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerBackground"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_GIF.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderBackgroundImage_GIF"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Set Background Image -->
+        <comment userInput="Set Background Image" stepKey="commentSetBackgroundImage"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty">
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Check Background Image -->
+        <comment userInput="Stage: Check Background Image" stepKey="commentStageCheck"/>
+        <actionGroup ref="validateBackgroundImageInAdmin" stepKey="validateImageStage1">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_GIF"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Background Image After Save -->
+        <comment userInput="Stage: Check Background Image After Save" stepKey="commentStageCheckAfterSave"/>
+        <actionGroup ref="validateBackgroundImageInAdmin" stepKey="validateImageStage2">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_GIF"/>
+        </actionGroup>
+        <!-- Edit Panel: Check Background Image -->
+        <comment userInput="Edit Panel: Check Background Image" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_GIF"/>
+        </actionGroup>
+        <!-- Storefront: Check Background Image -->
+        <comment userInput="Storefront: Check Background Image" stepKey="commentStorefrontCheck"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageOnStorefront" stepKey="validateImageStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_GIF"/>
+        </actionGroup>
+    </test>
+    <test name="BannerBackgroundImagePNG">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Banner"/>
+            <title value="Background Image - PNG"/>
+            <description value="Tests that the Background Image attribute functions as expected on Stage and Storefront for Banner for PNG file type"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MAGETWO-92630"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerBackground"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_PNG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderBackgroundImage_PNG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Set Background Image -->
+        <comment userInput="Set Background Image" stepKey="commentSetBackgroundImage"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty">
+            <argument name="property" value="PageBuilderBackgroundImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Check Background Image -->
+        <comment userInput="Stage: Check Background Image" stepKey="commentStageCheck"/>
+        <actionGroup ref="validateBackgroundImageInAdmin" stepKey="validateImageStage1">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_PNG"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
+        <!-- Stage: Check Background Image After Save -->
+        <comment userInput="Stage: Check Background Image After Save" stepKey="commentStageCheckAfterSave"/>
+        <actionGroup ref="validateBackgroundImageInAdmin" stepKey="validateImageStage2">
+            <argument name="section" value="BannerOnBackend"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_PNG"/>
+        </actionGroup>
+        <!-- Edit Panel: Check Background Image -->
+        <comment userInput="Edit Panel: Check Background Image" stepKey="commentValidateEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage">
+            <argument name="property" value="PageBuilderBackgroundImage_PNG"/>
+        </actionGroup>
+        <!-- Storefront: Check Background Image -->
+        <comment userInput="Storefront: Check Background Image" stepKey="commentStorefrontCheck"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateBackgroundImageOnStorefront" stepKey="validateImageStorefront">
+            <argument name="section" value="BannerOnFrontend"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImage_PNG"/>
+        </actionGroup>
+    </test>
+    <test name="BannerBackgroundImageInvalid">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Banner"/>
+            <title value="Background Image - SQL"/>
+            <description value="Tests that the Background Image attribute functions as expected for invalid SQL file type"/>
+            <severity value="MAJOR"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MAGETWO-92633"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-banner"/>
+            <group value="pagebuilder-bannerBackground"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Set Invalid Background Image -->
+        <comment userInput="Set Invalid Background Image" stepKey="commentSetBackgroundImage1"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachInvalidFileOnSlideOut" stepKey="attachInvalidFileOnSlideOut">
+            <argument name="property" value="PageBuilderBackgroundImage_Invalid"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Stage: Validate No Image -->
+        <comment userInput="Stage: Validate No Image" stepKey="commentStageCheck"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage1">
+            <argument name="section" value="BannerOnBackend"/>
+        </actionGroup>
+        <!-- Set Valid Background Image -->
+        <comment userInput="Set Valid Background Image" stepKey="commentSetBackgroundImage2"/>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="attachFileSlideOutProperty" stepKey="attachInvalidFileOnSlideOut2">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <!-- Stage: Check Background Image -->
+        <comment userInput="Stage: Check Background Image" stepKey="commentStageCheck2"/>
+        <actionGroup ref="validateBackgroundImageInAdmin" stepKey="validateImageStage">
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
@@ -535,21 +767,28 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Set Background Position -->
         <comment userInput="Set Background Position" stepKey="commentSetBackgroundPosition"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -561,7 +800,7 @@
         <!-- Stage: Check Background Position -->
         <comment userInput="Stage: Check Background Position" stepKey="commentStageCheck"/>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStage1">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Centered"/>
         </actionGroup>
@@ -574,7 +813,7 @@
         <!-- Stage: Check Background Position After Save -->
         <comment userInput="Stage: Check Background Position After Save" stepKey="commentStageCheckAfterSave"/>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStage2">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Centered"/>
         </actionGroup>
@@ -585,7 +824,7 @@
         <!-- Edit Panel: Check Background Position -->
         <comment userInput="Edit Panel: Check Background Position" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundPosition">
             <argument name="property" value="PageBuilderBackgroundPosition_Centered"/>
@@ -593,16 +832,16 @@
         <!-- Storefront: Check Background Position -->
         <comment userInput="Storefront: Check Background Position" stepKey="commentStorefrontCheck"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStorefront">
-            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundPosition" value="PageBuilderBackgroundPosition_Centered"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageOnStorefront" stepKey="validateImageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
@@ -625,21 +864,28 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Set Background Repeat -->
         <comment userInput="Set Background Repeat" stepKey="commentSetBackgroundRepeat"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -651,7 +897,7 @@
         <!-- Stage: Check Background Repeat -->
         <comment userInput="Stage: Check Background Repeat" stepKey="commentStageCheck"/>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStage1">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
@@ -664,7 +910,7 @@
         <!-- Stage: Check Background Repeat After Save -->
         <comment userInput="Stage: Check Background Repeat After Save" stepKey="commentStageCheckAfterSave"/>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStage2">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
@@ -675,7 +921,7 @@
         <!-- Edit Panel: Check Background Repeat -->
         <comment userInput="Edit Panel: Check Background Repeat" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
             <argument name="property" value="PageBuilderBackgroundRepeat_Enabled"/>
@@ -683,16 +929,16 @@
         <!-- Storefront: Check Background Repeat -->
         <comment userInput="Storefront: Check Background Repeat" stepKey="commentStorefrontCheck"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStorefront">
-            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundRepeat" value="PageBuilderBackgroundRepeat_Enabled"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageOnStorefront" stepKey="validateImageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
@@ -715,21 +961,28 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Set Background Size -->
         <comment userInput="Set Background Size" stepKey="commentSetBackgroundSize"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -741,7 +994,7 @@
         <!-- Stage: Check Background Size -->
         <comment userInput="Stage: Check Background Size" stepKey="commentStageCheck"/>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStage1">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
@@ -754,7 +1007,7 @@
         <!-- Stage: Check Background Size After Save -->
         <comment userInput="Stage: Check Background Size After Save" stepKey="commentStageCheckAfterSave"/>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStage2">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
@@ -765,7 +1018,7 @@
         <!-- Edit Panel: Check Background Size -->
         <comment userInput="Edit Panel: Check Background Size" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundSize">
             <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
@@ -773,16 +1026,16 @@
         <!-- Storefront: Check Background Size -->
         <comment userInput="Storefront: Check Background Size" stepKey="commentStorefrontCheck"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStorefront">
-            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundSize" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageOnStorefront" stepKey="validateImageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
@@ -805,21 +1058,28 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            </actionGroup>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
-            <argument name="group" value="PageBuilderBannerContentBlock"/>
+            <argument name="group" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentBlockToStage" stepKey="dragBannerIntoStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <!-- Set Background Attachment -->
         <comment userInput="Set Background Attachment" stepKey="commentSetBackgroundAttachment"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachFileSlideOutProperty">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -831,7 +1091,7 @@
         <!-- Stage: Check Background Attachment -->
         <comment userInput="Stage: Check Background Attachment" stepKey="commentStageCheck"/>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStage1">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
@@ -844,7 +1104,7 @@
         <!-- Stage: Check Background Attachment After Save -->
         <comment userInput="Stage: Check Background Attachment After Save" stepKey="commentStageCheckAfterSave"/>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStage2">
-            <argument name="page" value="BannerOnBackend"/>
+            <argument name="section" value="BannerOnBackend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
@@ -855,7 +1115,7 @@
         <!-- Edit Panel: Check Background Attachment -->
         <comment userInput="Edit Panel: Check Background Attachment" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBackgroundAttachment">
             <argument name="property" value="PageBuilderBackgroundAttachment_Fixed"/>
@@ -863,16 +1123,16 @@
         <!-- Storefront: Check Background Attachment -->
         <comment userInput="Storefront: Check Background Attachment" stepKey="commentStorefrontCheck"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundAttributesWithNoColor" stepKey="validateStorefront">
-            <argument name="page" value="BannerOnFrontend"/>
+            <argument name="section" value="BannerOnFrontend"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
             <argument name="backgroundAttachment" value="PageBuilderBackgroundAttachment_Fixed"/>
         </actionGroup>
         <actionGroup ref="validateBackgroundImageOnStorefront" stepKey="validateImageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
-            <argument name="contentBlockType" value="PageBuilderBannerContentBlock"/>
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>

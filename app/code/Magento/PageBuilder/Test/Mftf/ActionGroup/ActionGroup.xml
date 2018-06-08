@@ -624,7 +624,20 @@
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="waitForImageUpload" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.backgroundImagePreview}}" stepKey="waitForImageUpload"/>
+    </actionGroup>
+    <actionGroup name="attachInvalidFileOnSlideOut">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidFileTypeTitle}}" stepKey="waitForInvalidFileTypeTitle"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidFileTypeMessage}}" stepKey="waitForInvalidFileTypeMessage"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidFileTypeOkBtn}}" stepKey="waitForInvalidFileTypeBtn"/>
+        <click selector="{{PageBuilderActionsSection.invalidFileTypeOkBtn}}" stepKey="clickInvalidFileTypeBtn"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.invalidFileTypeTitle}}" stepKey="waitForModalGone"/>
+        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.backgroundImagePreview}}" stepKey="dontSeeImage"/>
     </actionGroup>
     <actionGroup name="saveEditPanelSettings">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
