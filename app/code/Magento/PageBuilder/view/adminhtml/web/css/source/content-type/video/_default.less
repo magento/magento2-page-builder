@@ -14,17 +14,26 @@
         background-color: @color-gray98;
         display: flex;
         justify-content: center;
-        min-height: 300px;
 
     }
     .icon-pagebuilder-video:before {
         font-size: 80px;
         color: @color-gray65-lighten;
     }
-    .pagebuilder-video iframe {
-        height: 400px;
-        max-width: 100%;
-        width: 100%;
+    .pagebuilder-video {
+        .pagebuilder-video-container {
+            position: relative;
+            padding-top: 56.25%;
+        }
+        iframe,
+        .pagebuilder-video-placeholder {
+            height: 100%;
+            left: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
     }
 }
 
