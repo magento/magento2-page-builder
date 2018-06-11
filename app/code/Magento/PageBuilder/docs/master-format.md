@@ -459,6 +459,7 @@ HTML content.
 Attributes
 1. data-role [video]
 2. data-appearance [default]
+3. class
 
 Inline styles
 1. text-align
@@ -482,7 +483,6 @@ Inline styles
 
 Attributes
 1. src
-2. class
 
 ## Slider
 
