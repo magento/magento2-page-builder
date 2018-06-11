@@ -463,11 +463,10 @@ Attributes
 Inline styles
 1. text-align
 
-### video element
+### wrapper element
 
 Attributes
 1. src
-2. class
 
 Inline styles
 1. text-align
@@ -477,8 +476,13 @@ Inline styles
 5. border-radius
 6. margin
 7. padding
-8. width
-9. height
+8. max-width
+
+### video element
+
+Attributes
+1. src
+2. class
 
 ## Slider
 
