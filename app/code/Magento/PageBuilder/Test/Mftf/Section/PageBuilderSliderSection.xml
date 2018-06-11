@@ -37,7 +37,7 @@
         <element name="slideOptionsRemoveDisabled" type="button" selector="//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'disabled')]"/>
         <element name="sliderOptions" type="button" selector="//div[contains(@class, 'pagebuilder-slider')]//ul[contains(@class, 'pagebuilder-options-links')]"/>
         <element name="addNewSlide" type="button" selector="div.pagebuilder-slider div.pagebuilder-options ul.pagebuilder-options-links li.pagebuilder-options-link a.add-child"/>
-        <element name="default" type="button" selector="(//div[@class='slider-container'])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; min-height: {{arg6}}px;']" parameterized="true"/>
+        <element name="default" type="button" selector="(//div[@class='slider-container'])[{{arg1}}][(contains(@style, 'border-style: {{arg2}}')) and contains(@style, 'border-radius: {{arg3}}px') and contains(@style, 'margin: {{arg4}}px') and contains(@style, 'padding: {{arg5}}px') and contains(@style, 'min-height: {{arg6}}px')]" parameterized="true"/>
         <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
         <element name="firstSlideNavigationDot" type="button" selector="(//div[contains(@class, 'navigation-dot')])[1]"/>
         <element name="activeSlideTooltip" type="button" selector="//div[contains(@class, 'navigation-dot')]//span[contains(@role, 'tooltip')]"/>
@@ -184,7 +184,7 @@
         <element name="collageAlignment" type="button" selector="div[style*='text-align: center'][style*='magento']"/>
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="contentSectionName" type="button" selector="/div[@data-index='content']"/>
-        <element name="slideBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="slideBorderStyle" type="button" selector="//div[(contains(@style, 'border-width: {{arg1}}px')) and contains(@style, 'border-style: {{arg2}}') and contains(@style, 'border-color: {{arg3}}')]" parameterized="true"/>
         <element name="slideBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="editFormBackgroundImagePreview" type="button" selector="//input[@name='background_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
         <element name="editFormBackgroundMobileImagePreview" type="button" selector="//input[@name='mobile_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
