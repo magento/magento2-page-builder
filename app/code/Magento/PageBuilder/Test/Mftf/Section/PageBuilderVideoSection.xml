@@ -10,15 +10,13 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="VideoOnStage">
         <!-- Empty Video -->
-        <element name="empty" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][not(descendant::iframe)]" parameterized="true"/>
-        <element name="icon" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//i[@class='icon-pagebuilder-video']" parameterized="true"/>
+        <element name="empty" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//iframe" parameterized="true"/>
+        <element name="icon" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//i[contains(@class,'icon-pagebuilder-video')]" parameterized="true"/>
         <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//span[.='{{arg2}}']" parameterized="true"/>
         <!-- General Configuration -->
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}]" parameterized="true"/>
         <element name="source" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][@src='{{arg2}}']" parameterized="true"/>
-        <element name="height" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][contains(@style,'height: {{arg2}};')]" parameterized="true"/>
-        <element name="noHeight" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][not(contains(@style,'height:'))]" parameterized="true"/>
-        <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][contains(@style,'width: {{arg2}};')]" parameterized="true"/>
+        <element name="width" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'max-width: {{arg1}};')][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
@@ -35,13 +33,11 @@
     </section>
     <section name="VideoOnStorefront">
         <!-- Empty Video -->
-        <element name="empty" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][@src='']" parameterized="true"/>
+        <element name="empty" type="text" selector="//div[@data-role='video'][count(iframe)=0]"/>
         <!-- General Configuration -->
         <element name="base" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}]" parameterized="true"/>
         <element name="source" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][@src='{{arg2}}']" parameterized="true"/>
-        <element name="height" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][contains(@style,'height: {{arg2}}')]" parameterized="true"/>
-        <element name="noHeight" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][not(contains(@style,'height:'))]" parameterized="true"/>
-        <element name="width" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][contains(@style,'width: {{arg2}}')]" parameterized="true"/>
+        <element name="width" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'max-width: {{arg1}};')][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>

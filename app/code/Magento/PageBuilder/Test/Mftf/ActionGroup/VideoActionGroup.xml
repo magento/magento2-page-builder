@@ -14,14 +14,23 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="url" defaultValue=""/>
             <argument name="width" defaultValue=""/>
-            <argument name="height" defaultValue=""/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
-        <waitForElementVisible selector="{{page.height(index, height.value)}}" stepKey="waitForHeight"/>
-        <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForWidth"/>
+        <waitForElementVisible selector="{{page.width(width.valueOnStage)}}" stepKey="waitForWidth"/>
     </actionGroup>
-    <actionGroup name="validateVideoEmptyHeightEmptyWidth">
+    <actionGroup name="validateVideoOnFrontend">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="url" defaultValue=""/>
+            <argument name="width" defaultValue=""/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
+        <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
+        <waitForElementVisible selector="{{page.width(width.value)}}" stepKey="waitForWidth"/>
+    </actionGroup>
+    <actionGroup name="validateVideoEmptyWidth">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -29,7 +38,6 @@
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
-        <waitForElementVisible selector="{{page.noHeight(index)}}" stepKey="waitForHeight"/>
         <waitForElementVisible selector="{{page.noWidth(index)}}" stepKey="waitForWidth"/>
     </actionGroup>
     <actionGroup name="validateEmptyVideoStage">
@@ -38,6 +46,5 @@
         </arguments>
         <waitForElementVisible selector="{{VideoOnStage.empty(index)}}" stepKey="waitForEmptyVideo"/>
         <waitForElementVisible selector="{{VideoOnStage.icon(index)}}" stepKey="waitForIcon"/>
-        <waitForElementVisible selector="{{VideoOnStage.text(index, PageBuilderVideoUrl_Default.text)}}" stepKey="waitForText"/>
     </actionGroup>
 </actionGroups>
