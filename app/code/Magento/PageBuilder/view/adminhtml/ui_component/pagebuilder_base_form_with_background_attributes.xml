@@ -75,7 +75,26 @@
                 </imageUploader>
             </formElements>
         </field>
-        <field name="background_position" sortOrder="40" formElement="select">
+        <field name="background_size" sortOrder="40" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">cover</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Background Size</label>
+                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="BackgroundSizeSource" />
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="background_position" sortOrder="50" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">left top</item>
@@ -90,9 +109,9 @@
                     <settings>
                         <options>
                             <option name="0" xsi:type="array">
-                            <item name="value" xsi:type="string">left top</item>
-                            <item name="label" xsi:type="string" translate="true">Top Left</item>
-                        </option>
+                                <item name="value" xsi:type="string">left top</item>
+                                <item name="label" xsi:type="string" translate="true">Top Left</item>
+                            </option>
                             <option name="1" xsi:type="array">
                                 <item name="value" xsi:type="string">center top</item>
                                 <item name="label" xsi:type="string" translate="true">Top Center</item>
@@ -130,49 +149,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="background_size" sortOrder="50" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">cover</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Background Size</label>
-                <elementTmpl>Magento_PageBuilder/form/element/visual-select</elementTmpl>
-            </settings>
-            <formElements>
-                <select>
-                    <settings>
-                        <options class="BackgroundSizeSource" />
-                    </settings>
-                </select>
-            </formElements>
-        </field>
-        <field name="background_repeat" sortOrder="60" formElement="checkbox">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="default" xsi:type="string">no-repeat</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>boolean</dataType>
-                <label translate="true">Background Repeat</label>
-                <dataScope>background_repeat</dataScope>
-            </settings>
-            <formElements>
-                <checkbox>
-                    <settings>
-                        <valueMap>
-                            <map name="false" xsi:type="string">no-repeat</map>
-                            <map name="true" xsi:type="string">repeat</map>
-                        </valueMap>
-                        <prefer>toggle</prefer>
-                    </settings>
-                </checkbox>
-            </formElements>
-        </field>
-        <field name="background_attachment" sortOrder="70" formElement="select">
+        <field name="background_attachment" sortOrder="60" formElement="select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">scroll</item>
@@ -197,6 +174,29 @@
                         </options>
                     </settings>
                 </select>
+            </formElements>
+        </field>
+        <field name="background_repeat" sortOrder="70" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">no-repeat</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Background Repeat</label>
+                <dataScope>background_repeat</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">no-repeat</map>
+                            <map name="true" xsi:type="string">repeat</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
             </formElements>
         </field>
     </fieldset>
