@@ -10,7 +10,9 @@ import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm
 import events from "uiEvents";
 import _ from "underscore";
 import "../binding/live-edit";
+import "../binding/sortable";
 import "../binding/sortable-children";
+import ContentTypeCollectionInterface from "../content-type-collection";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
@@ -20,9 +22,10 @@ import OptionInterface from "../content-type-menu/option.d";
 import TitleOption from "../content-type-menu/title";
 import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
+import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
+import {getSortableOptions} from "../drag-drop/sortable";
 import StyleAttributeFilter from "../master-format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
-import SortParamsInterface from "../sort-params.d";
 import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
@@ -32,6 +35,8 @@ export default class Preview {
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
+    public wrapperElement: Element;
+
     /**
      * @deprecated
      */
@@ -124,6 +129,9 @@ export default class Preview {
             return;
         }
 
+        // Ensure no other options panel is displayed
+        $(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
+
         this.mouseover = true;
         this.mouseoverContext = context;
         const currentTarget = event.currentTarget;
@@ -177,6 +185,30 @@ export default class Preview {
                 id: this.parent.id,
             },
         );
+    }
+
+    /**
+     * Dispatch an after render event for individual content types
+     *
+     * @param {Element[]} elements
+     */
+    public dispatchAfterRenderEvent(elements: Element[]): void {
+        const elementNodes = elements.filter((renderedElement: Element) => {
+            return renderedElement.nodeType === Node.ELEMENT_NODE;
+        });
+        if (elementNodes.length > 0) {
+            const element = elementNodes[0];
+            this.wrapperElement = element;
+            events.trigger("contentType:afterRender", {id: this.parent.id, block: this.parent, element});
+            events.trigger(
+                this.parent.config.name + ":contentType:afterRender",
+                {
+                    block: this.parent,
+                    element,
+                    id: this.parent.id,
+                },
+            );
+        }
     }
 
     /**
@@ -236,14 +268,32 @@ export default class Preview {
      */
     public onOptionRemove(): void {
         const removeContentType = () => {
-            const params = {
-                contentType: this.parent,
-                index: this.parent.parent.getChildren().indexOf(this.parent),
-                parent: this.parent.parent,
-                stageId: this.parent.stageId,
+            const dispatchRemoveEvent = () => {
+                const params = {
+                    contentType: this.parent,
+                    index: (this.parent.parent as ContentTypeCollectionInterface).getChildren().indexOf(this.parent),
+                    parent: this.parent.parent,
+                    stageId: this.parent.stageId,
+                };
+                events.trigger("contentType:removed", params);
+                events.trigger(this.parent.config.name + ":contentType:removed", params);
             };
-            events.trigger("contentType:removed", params);
-            events.trigger(this.parent.config.name + ":contentType:removed", params);
+
+            if (this.wrapperElement) {
+                const parentContainerElement = $(this.wrapperElement).parents(".type-container");
+                const containerLocked =
+                    (this.parent.parent as ContentTypeCollectionInterface).getChildren()().length === 1 &&
+                    lockContainerHeight(parentContainerElement);
+
+                // Fade out the content type
+                $(this.wrapperElement).fadeOut(animationTime / 2, () => {
+                    dispatchRemoveEvent();
+                    // Prepare the event handler to animate the container height on render
+                    animateContainerHeight(containerLocked, parentContainerElement);
+                });
+            } else {
+                dispatchRemoveEvent();
+            }
         };
 
         if (this.isConfigured()) {
@@ -262,6 +312,37 @@ export default class Preview {
         } else {
             removeContentType();
         }
+    }
+
+    /**
+     * Determine if the container can receive drop events? With the current matrix system everything can unless
+     * specified in an inherited preview instance.
+     *
+     * @returns {boolean}
+     */
+    public isContainer() {
+        return true;
+    }
+
+    /**
+     * Return the sortable options
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+    public getSortableOptions(): JQueryUI.SortableOptions | any {
+        return getSortableOptions(this);
+    }
+
+    /**
+     * Get the CSS classes for the children element, as we dynamically create this class name it can't sit in the DOM
+     * without causing browser issues
+     *
+     * @returns {{[p: string]: boolean}}
+     */
+    public getChildrenCss() {
+        return {
+            [this.config.name + "-container"]: true,
+        };
     }
 
     /**
@@ -337,7 +418,6 @@ export default class Preview {
      * Bind events
      */
     protected bindEvents() {
-        events.on("contentType:sortStart", this.onSortStart.bind(this.parent));
         this.parent.dataStore.subscribe(
             (data: DataObject) => {
                 this.updateObservables();
@@ -467,24 +547,5 @@ export default class Preview {
         );
         this.afterObservablesUpdated();
         events.trigger("previewObservables:updated", {preview: this});
-    }
-
-    /**
-     * Event called when starting starts on this element
-     *
-     * @param {Event} event
-     * @param {SortParamsInterface} params
-     */
-    private onSortStart(event: Event, params: SortParamsInterface): void {
-        if (params.contentType.id === this.parent.id) {
-            const originalEle = $(params.originalEle);
-            originalEle.show();
-            originalEle.addClass("pagebuilder-sorting-original");
-
-            // Reset the width & height of the helper
-            $(params.helper)
-                .css({width: "", height: ""})
-                .html($("<h3 />").text(this.title).html());
-        }
     }
 }

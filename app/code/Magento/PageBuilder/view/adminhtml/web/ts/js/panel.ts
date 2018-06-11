@@ -3,14 +3,16 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import ko from "knockout";
-import "ko-draggable";
-import "ko-sortable";
 import $t from "mage/translate";
 import events from "uiEvents";
 import _ from "underscore";
+import "./binding/draggable";
 import Config from "./config";
 import ContentTypeConfigInterface from "./content-type-config.d";
+import {hideDropIndicators, showDropIndicators} from "./drag-drop/drop-indicators";
+import {setDraggedContentTypeConfig} from "./drag-drop/registry";
 import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
@@ -107,6 +109,56 @@ export default class Panel implements PanelInterface {
     public clearSearch(): void {
         this.searchValue("");
         this.searching(false);
+    }
+
+    /**
+     * Retrieve the draggable options for the panel items
+     *
+     * @returns {JQueryUI.DraggableOptions}
+     */
+    public getDraggableOptions(): JQueryUI.DraggableOptions {
+        const self = this;
+        return {
+            appendTo: "body",
+            cursor: "-webkit-grabbing",
+            connectToSortable: ".content-type-drop",
+            containment: "document",
+            helper() {
+                return $(this).clone().css({
+                    width: $(this).width(),
+                    height: $(this).height(),
+                    zIndex: 10001,
+                    pointerEvents: "none",
+                });
+            },
+            start() {
+                const block = ko.dataFor(this);
+                if (block && block.config) {
+                    /**
+                     * Swap all sortable instances to use intersect, as the item from the left panel is a predictable
+                     * size this yields better results when dragging
+                     */
+                    $(".content-type-container.ui-sortable").each(function() {
+                        if ($(this).data("sortable")) {
+                            $(this).sortable("option", "tolerance", "intersect");
+                        }
+                    });
+                    showDropIndicators(block.config.name);
+                    setDraggedContentTypeConfig(block.config);
+                    events.trigger("interaction:start", {stage: self.parent.stage});
+                }
+            },
+            stop() {
+                $(".content-type-container.ui-sortable").each(function() {
+                    if ($(this).data("sortable")) {
+                        $(this).sortable("option", "tolerance", "pointer");
+                    }
+                });
+                hideDropIndicators();
+                setDraggedContentTypeConfig(null);
+                events.trigger("interaction:stop", {stage: self.parent.stage});
+            },
+        };
     }
 
     /**

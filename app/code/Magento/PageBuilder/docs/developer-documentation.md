@@ -15,6 +15,7 @@
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
+    1. [Bindings]
     1. [Master format]
     1. [Visual select] 
     1. [Custom Toolbar]
@@ -39,6 +40,8 @@
 
 **[Events]** - Reference documentation for PageBuilder events.
 
+**[Bindings]** - Reference documentation for PageBuilder bindings.
+
 **[Master format]** - Describes the master format for PageBuilder content types.
 
 **[Visual select]** - Documentation on customizing the visual select field.
@@ -62,3 +65,4 @@
 [Custom Toolbar]: toolbar.md
 [Add image uploader to content type]: image-uploader.md
 [Roadmap and known issues]: roadmap.md
+[Bindings]: bindings.md

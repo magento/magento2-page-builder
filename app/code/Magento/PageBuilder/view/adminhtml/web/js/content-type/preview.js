@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _uiEvents, _underscore, _liveEdit, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _styleAttributeFilter, _styleAttributeMapper, _appearanceConfig) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/dismissible-confirm", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/live-edit", "Magento_PageBuilder/js/binding/sortable", "Magento_PageBuilder/js/binding/sortable-children", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu", "Magento_PageBuilder/js/content-type-menu/edit", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type-menu/title", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/style-attribute-filter", "Magento_PageBuilder/js/master-format/style-attribute-mapper", "Magento_PageBuilder/js/content-type/appearance-config"], function (_jquery, _knockout, _translate, _dismissibleConfirm, _uiEvents, _underscore, _liveEdit, _sortable, _sortableChildren, _contentTypeFactory, _contentTypeMenu, _edit, _option, _title, _containerAnimation, _sortable2, _styleAttributeFilter, _styleAttributeMapper, _appearanceConfig) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -32,6 +32,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       this.config = void 0;
       this.data = {};
       this.displayLabel = void 0;
+      this.wrapperElement = void 0;
       this.previewData = {};
       this.previewStyle = void 0;
       this.fieldsToIgnoreOnRemove = [];
@@ -98,8 +99,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     _proto.onMouseOver = function onMouseOver(context, event) {
       if (this.mouseover) {
         return;
-      }
+      } // Ensure no other options panel is displayed
 
+
+      (0, _jquery)(".pagebuilder-options-visible").removeClass("pagebuilder-options-visible");
       this.mouseover = true;
       this.mouseoverContext = context;
       var currentTarget = event.currentTarget;
@@ -160,6 +163,35 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
         element: element,
         id: this.parent.id
       });
+    };
+    /**
+     * Dispatch an after render event for individual content types
+     *
+     * @param {Element[]} elements
+     */
+
+
+    _proto.dispatchAfterRenderEvent = function dispatchAfterRenderEvent(elements) {
+      var elementNodes = elements.filter(function (renderedElement) {
+        return renderedElement.nodeType === Node.ELEMENT_NODE;
+      });
+
+      if (elementNodes.length > 0) {
+        var element = elementNodes[0];
+        this.wrapperElement = element;
+
+        _uiEvents.trigger("contentType:afterRender", {
+          id: this.parent.id,
+          block: this.parent,
+          element: element
+        });
+
+        _uiEvents.trigger(this.parent.config.name + ":contentType:afterRender", {
+          block: this.parent,
+          element: element,
+          id: this.parent.id
+        });
+      }
     };
     /**
      * Get the options instance
@@ -226,16 +258,31 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       var _this3 = this;
 
       var removeContentType = function removeContentType() {
-        var params = {
-          contentType: _this3.parent,
-          index: _this3.parent.parent.getChildren().indexOf(_this3.parent),
-          parent: _this3.parent.parent,
-          stageId: _this3.parent.stageId
+        var dispatchRemoveEvent = function dispatchRemoveEvent() {
+          var params = {
+            contentType: _this3.parent,
+            index: _this3.parent.parent.getChildren().indexOf(_this3.parent),
+            parent: _this3.parent.parent,
+            stageId: _this3.parent.stageId
+          };
+
+          _uiEvents.trigger("contentType:removed", params);
+
+          _uiEvents.trigger(_this3.parent.config.name + ":contentType:removed", params);
         };
 
-        _uiEvents.trigger("contentType:removed", params);
+        if (_this3.wrapperElement) {
+          var parentContainerElement = (0, _jquery)(_this3.wrapperElement).parents(".type-container");
+          var containerLocked = _this3.parent.parent.getChildren()().length === 1 && (0, _containerAnimation.lockContainerHeight)(parentContainerElement); // Fade out the content type
 
-        _uiEvents.trigger(_this3.parent.config.name + ":contentType:removed", params);
+          (0, _jquery)(_this3.wrapperElement).fadeOut(_containerAnimation.animationTime / 2, function () {
+            dispatchRemoveEvent(); // Prepare the event handler to animate the container height on render
+
+            (0, _containerAnimation.animateContainerHeight)(containerLocked, parentContainerElement);
+          });
+        } else {
+          dispatchRemoveEvent();
+        }
       };
 
       if (this.isConfigured()) {
@@ -255,6 +302,40 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       } else {
         removeContentType();
       }
+    };
+    /**
+     * Determine if the container can receive drop events? With the current matrix system everything can unless
+     * specified in an inherited preview instance.
+     *
+     * @returns {boolean}
+     */
+
+
+    _proto.isContainer = function isContainer() {
+      return true;
+    };
+    /**
+     * Return the sortable options
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+
+
+    _proto.getSortableOptions = function getSortableOptions() {
+      return (0, _sortable2.getSortableOptions)(this);
+    };
+    /**
+     * Get the CSS classes for the children element, as we dynamically create this class name it can't sit in the DOM
+     * without causing browser issues
+     *
+     * @returns {{[p: string]: boolean}}
+     */
+
+
+    _proto.getChildrenCss = function getChildrenCss() {
+      var _ref;
+
+      return _ref = {}, _ref[this.config.name + "-container"] = true, _ref;
     };
     /**
      * Return an array of options
@@ -293,8 +374,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
     _proto.bindEvents = function bindEvents() {
       var _this4 = this;
-
-      _uiEvents.on("contentType:sortStart", this.onSortStart.bind(this.parent));
 
       this.parent.dataStore.subscribe(function (data) {
         _this4.updateObservables();
@@ -429,26 +508,6 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       _uiEvents.trigger("previewObservables:updated", {
         preview: this
       });
-    };
-    /**
-     * Event called when starting starts on this element
-     *
-     * @param {Event} event
-     * @param {SortParamsInterface} params
-     */
-
-
-    _proto.onSortStart = function onSortStart(event, params) {
-      if (params.contentType.id === this.parent.id) {
-        var originalEle = (0, _jquery)(params.originalEle);
-        originalEle.show();
-        originalEle.addClass("pagebuilder-sorting-original"); // Reset the width & height of the helper
-
-        (0, _jquery)(params.helper).css({
-          width: "",
-          height: ""
-        }).html((0, _jquery)("<h3 />").text(this.title).html());
-      }
     };
 
     _createClass(Preview, [{

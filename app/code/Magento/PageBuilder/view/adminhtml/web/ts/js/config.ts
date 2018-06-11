@@ -4,6 +4,7 @@
  */
 
 import _ from "underscore";
+import ContentTypeConfigInterface from "./content-type-config";
 
 export default class Config {
 
@@ -38,7 +39,7 @@ export default class Config {
      * @param {string} contentType
      * @returns {any}
      */
-    public static getContentTypeConfig(contentType: string): any {
+    public static getContentTypeConfig(contentType: string): ContentTypeConfigInterface {
         if (typeof Config.getConfig("content_types")[contentType] !== "undefined") {
             return Config.getConfig("content_types")[contentType];
         }

@@ -5,6 +5,7 @@
 
 import ko from "knockout";
 import ContentTypeConfigInterface from "../../content-type-config.d";
+import {getAllowedContainersClasses} from "../../drag-drop/matrix";
 
 export class ContentType {
     public droppable: boolean = true;
@@ -34,11 +35,13 @@ export class ContentType {
     }
 
     /**
-     * Return the draggable config to the element
+     * Only connect to container sortable instances that the current content type is accepted into
      *
      * @returns {string}
      */
-    public getDraggableConfig() {
-        return this.config.allowed_parents.map((value, index) => "." + value + "-container").join(", ");
+    public getDraggableOptions() {
+        return {
+            connectToSortable: getAllowedContainersClasses(this.config.name),
+        };
     }
 }

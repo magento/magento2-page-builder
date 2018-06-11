@@ -25,6 +25,7 @@
             <expectedResult type="variable">initialNumberOfButtonsPlusOne</expectedResult>
             <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
         </assertEquals>
+        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="unfocusButtonLiveEdit"/>
     </actionGroup>
     <actionGroup name="validateButtonItemContent">
         <arguments>
@@ -52,6 +53,8 @@
         <waitForElementVisible selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" stepKey="waitForButtonEditable"/>
         <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
+        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="unfocusLiveEdit"/>
+        <waitForPageLoad stepKey="waitForUnfocus"/>
     </actionGroup>
     <actionGroup name="moveButton">
         <arguments>
