@@ -9,10 +9,14 @@ import events from "uiEvents";
 import _ from "underscore";
 import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
+import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import ContentTypeInterface from "../../content-type.d";
-import {ContentType as GroupContentType} from "../../panel/group/content-type";
+import {animationTime} from "../../drag-drop/container-animation";
+import {moveContentType} from "../../drag-drop/move-content-type";
+import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {moveArrayItem} from "../../utils/array";
+import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
 import PreviewCollection from "../preview-collection";
@@ -21,8 +25,8 @@ import {createColumn} from "./factory";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import {
     calculateGhostWidth, comparator, determineAdjustedColumn, determineColumnWidths, determineMaxGhostWidth,
-    getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth,
-    getColumnWidth, getMaxColumns, getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
+    getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth, getMaxColumns,
+    getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./resizing";
 
 interface ContentTypeRemovedParams {
@@ -33,6 +37,16 @@ interface ContentTypeRemovedParams {
 
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
+    public hasEmptyChild: KnockoutComputed<boolean> = ko.computed(() => {
+        let empty: boolean = false;
+        (this.parent as ColumnGroup).getChildren()()
+            .forEach((column: ColumnGroup) => {
+                if (column.getChildren()().length === 0) {
+                    empty = true;
+                }
+            });
+        return empty;
+    });
     private dropPlaceholder: JQuery<HTMLElement>;
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;
@@ -53,14 +67,15 @@ export default class Preview extends PreviewCollection {
     private dropPositions: DropPosition[] = [];
     private dropPosition: DropPosition;
     private movePosition: DropPosition;
+    private groupPositionCache: GroupPositionCache;
 
     /**
-     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeCollectionInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {number} stageId
      */
     constructor(
-        parent: EditableArea,
+        parent: ColumnGroup,
         config: Config,
         stageId,
     ) {
@@ -97,23 +112,19 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle a new column being dropped into the group
      *
-     * @param {Event} event
-     * @param {JQueryUI.DroppableEventUIParam} ui
      * @param {DropPosition} dropPosition
      */
-    public onNewColumnDrop(event: Event, ui: JQueryUI.DroppableEventUIParam, dropPosition: DropPosition) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-
+    public onNewColumnDrop(dropPosition: DropPosition) {
         // Create our new column
         createColumn(
             this.parent,
             getSmallestColumnWidth(),
             dropPosition.insertIndex,
-        ).then(() => {
+        ).then((column: Column) => {
             const newWidth = getAcceptedColumnWidth(
                 (getColumnWidth(dropPosition.affectedColumn) - getSmallestColumnWidth()).toString(),
             );
+
             // Reduce the affected columns width by the smallest column width
             updateColumnWidth(dropPosition.affectedColumn, newWidth);
         });
@@ -122,14 +133,11 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle an existing column being dropped into a new column group
      *
-     * @param {Event} event
      * @param {DropPosition} movePosition
      */
-    public onExistingColumnDrop(event: Event, movePosition: DropPosition) {
+    public onExistingColumnDrop(movePosition: DropPosition) {
         const column: Column = getDragColumn();
         let modifyOldNeighbour;
-        event.preventDefault();
-        event.stopImmediatePropagation();
 
         // Determine which old neighbour we should modify
         const oldWidth = getColumnWidth(column);
@@ -144,14 +152,8 @@ export default class Preview extends PreviewCollection {
         // Set the column to it's smallest column width
         updateColumnWidth(column, getSmallestColumnWidth());
 
-        column.parent.removeChild(column);
-
-        events.trigger("contentType:instanceDropped", {
-            contentTypeInstance: column,
-            index: movePosition.insertIndex,
-            parent: this,
-            stageId: this.parent.stageId,
-        });
+        // Move the content type
+        moveContentType(column, movePosition.insertIndex, this.parent);
 
         // Modify the old neighbour
         if (modifyOldNeighbour) {
@@ -183,7 +185,9 @@ export default class Preview extends PreviewCollection {
                 // As we're moving an array item the keys all reduce by 1
                 --newIndex;
             }
-            moveArrayItem(this.parent.children, currentIndex, newIndex);
+
+            // Move the content type
+            moveContentType(column, newIndex);
         }
     }
 
@@ -246,13 +250,14 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery<HTMLElement>} handle
      */
     public registerResizeHandle(column: Column, handle: JQuery<HTMLElement>) {
-        handle.off("mousedown");
-        handle.on("mousedown", (event) => {
+        handle.off("mousedown touchstart");
+        handle.on("mousedown touchstart", (event) => {
             event.preventDefault();
+            const groupPosition = this.getGroupPosition(this.groupElement);
             this.resizing(true);
 
             this.resizeColumnInstance = column;
-            this.resizeColumnWidths = determineColumnWidths(this.resizeColumnInstance, this.groupElement);
+            this.resizeColumnWidths = determineColumnWidths(this.resizeColumnInstance, groupPosition);
             this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
 
             // Set a flag of the columns which are currently being resized
@@ -299,7 +304,7 @@ export default class Preview extends PreviewCollection {
                 const columnInstance: Column = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
                 setDragColumn(columnInstance.parent);
-                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupContentType));
+                this.dropPositions = calculateDropPositions((this.parent as ContentTypeCollectionInterface));
 
                 events.trigger("column:drag:start", {
                     column: columnInstance,
@@ -337,9 +342,10 @@ export default class Preview extends PreviewCollection {
      *
      * @param {Column} columns
      */
-    private setColumnsAsResizing(...columns: Column[]) {
-        columns.forEach((column) => {
+    private setColumnsAsResizing(...columns: ContentTypeInterface[]) {
+        columns.forEach((column: ContentTypeInterface) => {
             column.preview.resizing(true);
+            column.element.css({transition: `width ${animationTime}ms ease-in-out`});
         });
     }
 
@@ -347,8 +353,11 @@ export default class Preview extends PreviewCollection {
      * Unset resizing flag on all child columns
      */
     private unsetResizingColumns() {
-        (this.parent as ColumnGroupContentType).children().forEach((column: Column) => {
+        (this.parent as ContentTypeCollectionInterface).children().forEach((column: ContentTypeInterface) => {
             column.preview.resizing(false);
+            if (column.element) {
+                column.element.css({transition: ""});
+            }
         });
     }
 
@@ -371,8 +380,11 @@ export default class Preview extends PreviewCollection {
         $("body").css("cursor", "");
 
         this.dropPlaceholder.removeClass("left right");
-        this.movePlaceholder.removeClass("active");
+        this.movePlaceholder.css("left", "").removeClass("active");
         this.resizeGhost.removeClass("active");
+
+        // Reset the group positions cache
+        this.groupPositionCache = null;
     }
 
     /**
@@ -381,18 +393,96 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery<HTMLElement>} group
      */
     private initMouseMove(group: JQuery<HTMLElement>) {
-        group.mousemove((event: JQuery.Event) => {
-            this.onResizingMouseMove(event, group);
-            this.onDraggingMouseMove(event, group);
-            this.onDroppingMouseMove(event, group);
-        }).mouseleave(() => {
-            this.movePlaceholder.css("left", "").removeClass("active");
-        });
+        let intersects: boolean = false;
+        $(document).on("mousemove touchmove", (event: JQuery.Event) => {
+            const groupPosition = this.getGroupPosition(group);
 
-        // As the mouse might be released outside of the group, attach to the body
-        $("body").mouseup(() => {
+            // If we're handling a touch event we need to pass through the page X & Y
+            if (event.type === "touchmove") {
+                event.pageX = (event.originalEvent as any).pageX;
+                event.pageY = (event.originalEvent as any).pageY;
+            }
+
+            if (this.eventIntersectsGroup(event, groupPosition)) {
+                intersects = true;
+                this.onResizingMouseMove(event, group, groupPosition);
+                this.onDraggingMouseMove(event, group, groupPosition);
+                this.onDroppingMouseMove(event, group, groupPosition);
+            } else {
+                intersects = false;
+                this.groupPositionCache = null;
+                this.dropPosition = null;
+                this.dropPlaceholder.removeClass("left right");
+                this.movePlaceholder.css("left", "").removeClass("active");
+            }
+        }).on("mouseup touchend", () => {
+            if (intersects) {
+                this.handleMouseUp();
+            }
+            intersects = false;
+
+            this.dropPosition = null;
             this.endAllInteractions();
+
+            _.defer(() => {
+                // Re-enable any disabled sortable areas
+                group.find(".ui-sortable").each(function() {
+                    if ($(this).data("sortable")) {
+                        $(this).sortable("option", "disabled", false);
+                    }
+                });
+            });
         });
+    }
+
+    /**
+     * Handle the mouse up action, either adding a new column or moving an existing
+     */
+    private handleMouseUp() {
+        if (this.dropOverElement && this.dropPosition) {
+            this.onNewColumnDrop(this.dropPosition);
+            this.dropOverElement = null;
+        }
+
+        const column: Column = getDragColumn();
+
+        if (this.movePosition && column && column.parent !== this.parent) {
+            this.onExistingColumnDrop(this.movePosition);
+        }
+    }
+
+    /**
+     * Does the current event intersect with the group?
+     *
+     * @param {JQuery.Event} event
+     * @param {GroupPositionCache} groupPosition
+     * @returns {boolean}
+     */
+    private eventIntersectsGroup(event: JQuery.Event, groupPosition: GroupPositionCache) {
+        return event.pageY > groupPosition.top &&
+            event.pageY < (groupPosition.top + groupPosition.outerHeight) &&
+            event.pageX > groupPosition.left &&
+            event.pageX < (groupPosition.left + groupPosition.outerWidth);
+    }
+
+    /**
+     * Cache the groups positions
+     *
+     * @param {JQuery<HTMLElement>} group
+     */
+    private getGroupPosition(group: JQuery<HTMLElement>) {
+        if (!this.groupPositionCache) {
+            this.groupPositionCache = {
+                top: group.offset().top,
+                left: group.offset().left,
+                width: group.width(),
+                height: group.height(),
+                outerWidth: group.outerWidth(),
+                outerHeight: group.outerHeight(),
+            };
+        }
+
+        return this.groupPositionCache;
     }
 
     /**
@@ -423,8 +513,9 @@ export default class Preview extends PreviewCollection {
      *
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
+     * @param {GroupPositionCache} groupPosition
      */
-    private onResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
+    private onResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
         let newColumnWidth: ColumnWidth;
 
         if (this.resizeMouseDown) {
@@ -441,7 +532,6 @@ export default class Preview extends PreviewCollection {
 
             // Determine which column in the group should be adjusted for this action
             [adjustedColumn, modifyColumnInPair, usedHistory] = determineAdjustedColumn(
-                group,
                 currentPos,
                 this.resizeColumnInstance,
                 this.resizeHistory,
@@ -449,7 +539,7 @@ export default class Preview extends PreviewCollection {
 
             // Calculate the ghost width based on mouse position and bounds of allowed sizes
             const ghostWidth = calculateGhostWidth(
-                group,
+                groupPosition,
                 currentPos,
                 this.resizeColumnInstance,
                 modifyColumnInPair,
@@ -508,7 +598,7 @@ export default class Preview extends PreviewCollection {
                             // If we do a resize, re-calculate the column widths
                             this.resizeColumnWidths = determineColumnWidths(
                                 this.resizeColumnInstance,
-                                this.groupElement,
+                                groupPosition,
                             );
                             this.resizeMaxGhostWidth = determineMaxGhostWidth(this.resizeColumnWidths);
                         });
@@ -523,16 +613,17 @@ export default class Preview extends PreviewCollection {
      *
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
+     * @param {GroupPositionCache} groupPosition
      */
-    private onDraggingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
+    private onDraggingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
         const dragColumn: Column = getDragColumn();
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
             if (this.dropPositions.length === 0) {
-                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupContentType));
+                this.dropPositions = calculateDropPositions((this.parent as ContentTypeCollectionInterface));
             }
             const columnInstance = dragColumn;
-            const currentX = event.pageX - $(group).offset().left;
+            const currentX = event.pageX - groupPosition.left;
 
             // Are we within the same column group or have we ended up over another?
             if (columnInstance.parent === this.parent) {
@@ -556,7 +647,7 @@ export default class Preview extends PreviewCollection {
                     this.movePlaceholder.css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
                         right: (this.movePosition.placement === "right" ?
-                                $(group).outerWidth() - this.movePosition.right - 5 : ""
+                                groupPosition.outerWidth - this.movePosition.right - 5 : ""
                         ),
                     }).addClass("active");
                 } else {
@@ -574,9 +665,9 @@ export default class Preview extends PreviewCollection {
                     this.dropPlaceholder.removeClass(classToRemove).css({
                         left: (this.movePosition.placement === "left" ? this.movePosition.left : ""),
                         right: (this.movePosition.placement === "right" ?
-                                $(group).width() - this.movePosition.right : ""
+                                groupPosition.width - this.movePosition.right : ""
                         ),
-                        width: $(group).width() / getMaxColumns() + "px",
+                        width: groupPosition.width / getMaxColumns() + "px",
                     }).addClass(this.movePosition.placement);
                 } else {
                     this.dropPlaceholder.removeClass("left right");
@@ -590,10 +681,22 @@ export default class Preview extends PreviewCollection {
      *
      * @param {JQuery.Event} event
      * @param {JQuery<HTMLElement>} group
+     * @param {GroupPositionCache} groupPosition
      */
-    private onDroppingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>) {
-        if (this.dropOverElement) {
-            const currentX = event.pageX - $(group).offset().left;
+    private onDroppingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
+        const elementChildrenParent = group.parents(".element-children");
+        // Only initiate this process if we're within the group by a buffer to allow for sortable to function correctly
+        if (
+            this.dropOverElement &&
+            event.pageY > groupPosition.top + 20 &&
+            event.pageY < (groupPosition.top + groupPosition.outerHeight) - 20
+        ) {
+            // Disable the parent sortable instance
+            if (elementChildrenParent.data("sortable")) {
+                elementChildrenParent.sortable("option", "disabled", true);
+            }
+
+            const currentX = event.pageX - groupPosition.left;
             this.dropPosition = this.dropPositions.find((position) => {
                 return currentX > position.left && currentX < position.right && position.canShrink;
             });
@@ -601,10 +704,18 @@ export default class Preview extends PreviewCollection {
             if (this.dropPosition) {
                 this.dropPlaceholder.removeClass("left right").css({
                     left: (this.dropPosition.placement === "left" ? this.dropPosition.left : ""),
-                    right: (this.dropPosition.placement === "right" ? $(group).width() - this.dropPosition.right : ""),
-                    width: $(group).width() / getMaxColumns() + "px",
+                    right:
+                        (this.dropPosition.placement === "right" ? groupPosition.width - this.dropPosition.right : ""),
+                    width: groupPosition.width / getMaxColumns() + "px",
                 }).addClass(this.dropPosition.placement);
             }
+        } else if (this.dropOverElement) {
+            // Re-enable the parent sortable instance
+            if (elementChildrenParent.data("sortable")) {
+                elementChildrenParent.sortable("option", "disabled", false);
+            }
+            this.dropPosition = null;
+            this.dropPlaceholder.removeClass("left right");
         }
     }
 
@@ -614,45 +725,65 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery<HTMLElement>} group
      */
     private initDroppable(group: JQuery<HTMLElement>) {
-        let currentDraggedContentType: GroupContentType;
+        const self = this;
+        let headStyles: HTMLStyleElement;
 
         group.droppable({
-            activate: (event: Event) => {
-                currentDraggedContentType = ko.dataFor(event.currentTarget);
+            deactivate() {
+                self.dropOverElement = null;
+                self.dropPlaceholder.removeClass("left right");
+
+                _.defer(() => {
+                    // Re-enable the parent sortable instance & all children sortable instances
+                    group.parents(".element-children").each(function() {
+                        if ($(this).data("sortable")) {
+                            $(this).sortable("option", "disabled", false);
+                        }
+                    });
+                });
             },
-            deactivate: () => {
-                this.dropOverElement = null;
-                this.dropPlaceholder.removeClass("left right");
-            },
-            drop: (event: Event, ui: JQueryUI.DroppableEventUIParam) => {
-                if (this.dropOverElement && this.dropPosition) {
-                    (this as ColumnGroupContentType).onNewColumnDrop(event, ui, this.dropPosition);
-                    this.dropOverElement = null;
+            activate() {
+                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
+                    group.find(".ui-sortable").each(function() {
+                        if ($(this).data("sortable")) {
+                            $(this).sortable("option", "disabled", true);
+                        }
+                    });
+
+                    const classes = [
+                        ".pagebuilder-content-type.pagebuilder-column .pagebuilder-drop-indicator",
+                        ".pagebuilder-content-type.pagebuilder-column .empty-container .content-type-container:before",
+                    ];
+
+                    // Ensure we don't display any drop indicators inside the column
+                    headStyles = createStyleSheet({
+                        [classes.join(", ")]: {
+                            display: "none!important",
+                        },
+                    });
+                    document.head.appendChild(headStyles);
+                } else if (headStyles) {
+                    headStyles.remove();
+                    headStyles = null;
                 }
-
-                const column: Column = getDragColumn();
-
-                if (this.movePosition && column && column.parent !== this.parent) {
-                    (this as ColumnGroupContentType).onExistingColumnDrop(event, this.movePosition);
-                }
-
-                this.dropPositions = [];
-                this.dropPlaceholder.removeClass("left right");
             },
-            greedy: true,
-            out: () => {
-                this.dropOverElement = null;
-                this.dropPlaceholder.removeClass("left right");
+            drop() {
+                self.dropPositions = [];
+                self.dropPlaceholder.removeClass("left right");
             },
-            over: () => {
+            out() {
+                self.dropOverElement = null;
+                self.dropPlaceholder.removeClass("left right");
+            },
+            over() {
                 // Always calculate drop positions when an element is dragged over
-                this.dropPositions = calculateDropPositions((this.parent as ColumnGroupContentType));
+                self.dropPositions = calculateDropPositions((self.parent as ContentTypeCollectionInterface));
 
                 // Is the element currently being dragged a column?
-                if (currentDraggedContentType instanceof GroupContentType &&
-                    currentDraggedContentType.getConfig() === Config.getContentTypeConfig("column")
-                ) {
-                    this.dropOverElement = true;
+                if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
+                    self.dropOverElement = true;
+                } else {
+                    self.dropOverElement = null;
                 }
             },
         });
@@ -724,6 +855,15 @@ export default class Preview extends PreviewCollection {
             return;
         }
     }
+}
+
+export interface GroupPositionCache {
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+    outerWidth: number;
+    outerHeight: number;
 }
 
 export interface ResizeHistory {

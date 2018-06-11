@@ -103,22 +103,22 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   /**
    * Determine the pixel position of every column that can be created within the group
    *
-   * @param {Column} column
-   * @param {JQuery} group
+   * @param {Preview} column
+   * @param {GroupPositionCache} groupPosition
    * @returns {ColumnWidth[]}
    */
 
 
-  function determineColumnWidths(column, group) {
-    var singleColumnWidth = group.outerWidth() / getMaxColumns();
+  function determineColumnWidths(column, groupPosition) {
+    var singleColumnWidth = groupPosition.outerWidth / getMaxColumns();
     var adjacentColumn = getAdjacentColumn(column, "+1");
     var columnWidths = [];
     var columnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
     var adjacentRightPosition = adjacentColumn.element.offset().left + adjacentColumn.element.outerWidth(true); // Determine the maximum size (in pixels) that this column can be dragged to
 
     var columnsToRight = column.parent.children().length - (getColumnIndexInGroup(column) + 1);
-    var leftMaxWidthFromChildren = group.offset().left + group.outerWidth() - columnsToRight * singleColumnWidth + 10;
-    var rightMaxWidthFromChildren = group.offset().left + (column.parent.children().length - columnsToRight) * singleColumnWidth - 10; // Due to rounding we add a threshold of 10
+    var leftMaxWidthFromChildren = groupPosition.left + groupPosition.outerWidth - columnsToRight * singleColumnWidth + 10;
+    var rightMaxWidthFromChildren = groupPosition.left + (column.parent.children().length - columnsToRight) * singleColumnWidth - 10; // Due to rounding we add a threshold of 10
     // Iterate through the amount of columns generating the position for both left & right interactions
 
     for (var i = getMaxColumns(); i > 0; i--) {
@@ -240,26 +240,26 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
    */
 
 
-  function calculateGhostWidth(group, currentPos, column, modifyColumnInPair, maxGhostWidth) {
-    var ghostWidth = currentPos - group.offset().left;
+  function calculateGhostWidth(groupPosition, currentPos, column, modifyColumnInPair, maxGhostWidth) {
+    var ghostWidth = currentPos - groupPosition.left;
 
     switch (modifyColumnInPair) {
       case "left":
-        var singleColumnWidth = column.element.position().left + group.outerWidth() / getMaxColumns(); // Don't allow the ghost widths be less than the smallest column
+        var singleColumnWidth = column.element.position().left + groupPosition.outerWidth / getMaxColumns(); // Don't allow the ghost widths be less than the smallest column
 
         if (ghostWidth <= singleColumnWidth) {
           ghostWidth = singleColumnWidth;
         }
 
         if (currentPos >= maxGhostWidth.left) {
-          ghostWidth = maxGhostWidth.left - group.offset().left;
+          ghostWidth = maxGhostWidth.left - groupPosition.left;
         }
 
         break;
 
       case "right":
         if (currentPos <= maxGhostWidth.right) {
-          ghostWidth = maxGhostWidth.right - group.offset().left;
+          ghostWidth = maxGhostWidth.right - groupPosition.left;
         }
 
         break;
@@ -270,7 +270,6 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   /**
    * Determine which column in the group should be adjusted for the current resize action
    *
-   * @param {JQuery<HTMLElement>} group
    * @param {number} currentPos
    * @param {Column} column
    * @param {ResizeHistory} history
@@ -278,7 +277,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
    */
 
 
-  function determineAdjustedColumn(group, currentPos, column, history) {
+  function determineAdjustedColumn(currentPos, column, history) {
     var modifyColumnInPair = "left";
     var usedHistory;
     var resizeColumnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);

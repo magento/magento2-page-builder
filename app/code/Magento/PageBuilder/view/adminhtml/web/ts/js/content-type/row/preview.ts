@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/jarallax/jarallax.min";
+import ResizeObserver from "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min";
 import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
@@ -113,5 +114,13 @@ export default class Preview extends PreviewCollection {
     public initParallax(element: Element) {
         this.element = element;
         this.buildJarallax();
+
+        // Observe for resizes of the element and force jarallax to display correctly
+        if ($(this.element).hasClass("jarallax")) {
+            new ResizeObserver(() => {
+                jarallax(this.element, "onResize");
+                jarallax(this.element, "onScroll");
+            }).observe(this.element);
+        }
     }
 }

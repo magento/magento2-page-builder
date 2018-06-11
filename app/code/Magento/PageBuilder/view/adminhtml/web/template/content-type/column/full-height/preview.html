@@ -9,7 +9,7 @@
      attr="data.main.attributes"
      ko-style="Object.assign(data.main.style(), {width: previewData.width()})"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
-     css="{'empty-column': $parent.children().length == 0}"
+     css="{'empty-container': $parent.children().length == 0}"
      afterRender="initColumn">
     <div class="pagebuilder-column-resize-handle"
          afterRender="bindResizeHandle"
@@ -22,6 +22,7 @@
     </div>
     <div class="pagebuilder-empty-container"
          css="{visible: parent.children().length == 0}"
-         data-bind="i18n: 'Empty Column'">
+         translate="'Empty Column'">
+        <div class="pagebuilder-drop-indicator"></div>
     </div>
 </div>

@@ -259,6 +259,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       });
     };
     /**
+     * Slider can not receive drops by default
+     *
+     * @returns {boolean}
+     */
+
+
+    _proto.isContainer = function isContainer() {
+      return false;
+    };
+    /**
      * Bind events
      */
 

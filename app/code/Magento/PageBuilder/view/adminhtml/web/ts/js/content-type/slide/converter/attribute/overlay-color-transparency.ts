@@ -27,7 +27,7 @@ export default class OverlayColorTransparency implements ConverterInterface {
      */
     public toDom(name: string, data: object): string | object {
         let overlayColor: string = "transparent";
-        if (data.show_overlay !== "never_show") {
+        if (data.show_overlay !== "never") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
                 overlayColor = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
             }

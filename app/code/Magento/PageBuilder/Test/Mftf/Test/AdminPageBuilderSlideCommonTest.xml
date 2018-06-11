@@ -10,11 +10,12 @@
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AddSliderContentTypeToCMSPage">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-83933: Advanced Slider"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Add Slider in PageBuilder for new CMS page, customize slider settings and view on Storefront"/>
             <description value="The user should be able to add the slides media content type to slider media content type and it should be visible on the frontend"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83933"/>
             <testCaseId value="MAGETWO-84920"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
@@ -220,11 +221,13 @@
     </test>
     <test name="SliderEmptySliderAdminPreview">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-87085: Empty Slider Admin Preview"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Verify Empty Slider default state on admin preview and storefront"/>
             <description value="As a Content Manager I want to see empty content types preview on the stage so that I see their position and can access their settings"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87085"/>
+            <testCaseId value="MAGETWO-88767"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -323,19 +326,20 @@
         <comment userInput="Slide Content WYSIWYG defaults to empty" stepKey="storefrontDefaultContent" />
         <dontSeeInPageSource userInput="Edit slide text" stepKey="dontSeeDummyTextInPageSource"/>
         <comment userInput="Verify slide content defaults on storefront: Show Button defaults to Never Show" stepKey="storefrontDefaultShowButton"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-button" expectedValue="never_show" stepKey="slideStorefrontShowButton"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-button" expectedValue="never" stepKey="slideStorefrontShowButton"/>
         <comment userInput="Verify slide content defaults on storefront: Button Type defaults to Primary" stepKey="storefrontDefaultButtonType"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-button-type" expectedValue="pagebuilder-button-primary" stepKey="slideStorefrontButtonType"/>
         <comment userInput="Verify slide content defaults on storefront: Show Overlay defaults to Never Show" stepKey="storefrontDefaultOverlay"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-overlay" expectedValue="never_show" stepKey="slideStorefrontShowOverlay"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-overlay" expectedValue="never" stepKey="slideStorefrontShowOverlay"/>
     </test>
     <test name="CanManageSlides">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-83933: Advanced Slider"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Can add slides and see tooltip and slide name when clicking navigation dots"/>
             <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83933"/>
             <testCaseId value="MAGETWO-87949"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
@@ -432,11 +436,12 @@
     </test>
     <test name="SliderDelete">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-83933: Advanced Slider"/>
-            <title value="Remove slider content type from stage"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
+            <title value="Remove slider content block from stage"/>
             <description value="A user should be able to remove slider content type from a row."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83933"/>
             <testCaseId value="MAGETWO-84919"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
@@ -467,11 +472,13 @@
     </test>
     <test name="SlideCanDeleteSlide">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-87095: Delete Slide from Slider"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Cannot delete last slide from slider"/>
             <description value="A user should be able delete slides when there are multiple of them."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-87095"/>
+            <testCaseId value="MAGETWO-88748"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -529,11 +536,12 @@
     </test>
     <test name="SliderValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Slider - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Slider."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
             <testCaseId value="MAGETWO-89437"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
@@ -590,11 +598,12 @@
     </test>
     <test name="SlideValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-83415: Bluefoot Content Types and Containers Advanced Configuration settings"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Slide - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Slide."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-83415"/>
             <testCaseId value="MAGETWO-89439"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
@@ -643,13 +652,15 @@
         <!-- Validate Style On Stage. Currently Not Implemented -->
         <comment userInput="Validate Style On Stage. Currently Not Implemented" stepKey="CommentValidateStage"/>
     </test>
-    <test name="CanAddImageToSlide">
+    <test name="SlideHasEditButtonTextButtonStyledInAdminAndStorefront">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-75774: Bluefoot Slide Configuration (without 1 appearance)"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Slide has 'Edit Button Text' button styled correctly (Luna) in admin and frontend (Base)"/>
             <description value="A user should be able to see 'Edit Button Text' button styled correctly for Slide"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MAGETWO-88744"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -762,11 +773,13 @@
     </test>
     <test name="SlideCanOpenInNewTab">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-75774: Bluefoot Slide Configuration (without 1 appearance)"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Slide can open in new tab in frontend"/>
             <description value="A user should be able to click on Slide and open in new tab for frontend"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MAGETWO-88746"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -822,12 +835,13 @@
     </test>
     <test name="SlideDoesNotNavigateInPreview">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-75774: Bluefoot Slide Configuration (without 1 appearance)"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Slide does not navigate on click"/>
             <description value="A user should be to click on the Slide in preview and not have it navigate to another page."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MAGETWO-88747"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -972,11 +986,12 @@
     </test>
     <test name="SlideWithDefaultMinHeightAdjustsToContentHeight">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-75774: Bluefoot Slide Configuration (without 1 appearance)"/>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
             <title value="Slide shows full content even when larger than slide default minimum height on Admin and Storefront"/>
             <description value="If content height is larger than min height, verify slide height equals content height"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
             <testCaseId value="MAGETWO-88743"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
@@ -1040,6 +1055,175 @@
         <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <see userInput="{{PageBuilderSlideMessageLongProperty.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedOnStorefront"/>
         <seeElementInDOM selector="{{SlideOnFrontend.posterMobileBackgroundColor}}" stepKey="seeBackgroundColorOnFrontend" />
+    </test>
+    <test name="SliderCanHaveContentPlacedAbove">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider allows content to be placed above self"/>
+            <description value="You should be able to drag &amp; drop new content above the slider when it's the first in a container"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92307"/>
+            <useCaseId value="MAGETWO-86953"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="dragContentTypeToDropZone" stepKey="dragTextIntoRowAboveSlider">
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="dropZoneIndex" value="1"/>
+            <argument name="offsetXCoordinate" value="0"/>
+        </actionGroup>
+        <comment userInput="User sees Text displayed in row above Slider on Stage" stepKey="confirmContentTypesOnStage"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkTextPositionInRow">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="1"/>
+            <argument name="contentType" value="PageBuilderTextContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="checkSliderPositionInRow">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="2"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="SliderCannotHaveContentDroppedInside">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
+            <title value="Slider doesn't receive new content when drop on top of self"/>
+            <description value="Any new content dropped into the slider should be added either above or below depending on position"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92333"/>
+            <useCaseId value="MAGETWO-86953"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <comment userInput="Attempt to drag heading block onto top part of slider" stepKey="commentValidateAboveSlider"/>
+        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageSliderHeight"/>
+        <executeJS function="{{PageBuilderActionsSection.computedWidthOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageSliderWidth"/>
+        <executeJS function="return Math.round({$actualStageSliderWidth}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingLeft}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingRight}})" stepKey="sliderWidthSansPadding"/>
+        <executeJS function="return Math.round({$sliderWidthSansPadding}/20)" stepKey="sliderWidthOffset"/>
+        <executeJS function="return Math.round({$actualStageSliderHeight}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}})" stepKey="sliderHeightSansPadding"/>
+        <executeJS function="return Math.round({$sliderHeightSansPadding}/5)" stepKey="sliderHeightOffset"/>
+        <actionGroup ref="dragContentTypeToContentType" stepKey="dragHeadingOntoSliderTop">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="targetBlockType" value="PageBuilderSliderContentType"/>
+            <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
+            <argument name="offsetYCoordinate" value="$sliderHeightOffset"/>
+        </actionGroup>
+        <moveMouseOver selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="moveMouseOutsideLiveEdit1"/>
+        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit1"/>
+        <waitForPageLoad time="30" stepKey="waitForAnimation1"/>
+        <comment userInput="Attempt to drag heading block onto bottom part of slider" stepKey="commentValidateBelowSlider"/>
+        <actionGroup ref="dragContentTypeToContentType" stepKey="dragHeadingOntoSliderBottom">
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="targetBlockType" value="PageBuilderSliderContentType"/>
+            <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
+            <argument name="offsetYCoordinate" value="$sliderHeightSansPadding"/>
+        </actionGroup>
+        <moveMouseOver selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="moveMouseOutsideLiveEdit2"/>
+        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit2"/>
+        <waitForPageLoad time="30" stepKey="waitForAnimation2"/>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingFirst">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="1"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateSliderSecond">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="2"/>
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingThird">
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+            <argument name="positionInContainer" value="3"/>
+            <argument name="contentType" value="PageBuilderHeadingContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+        </actionGroup>
+    </test>
+    <test name="SliderCanBeDeletedAfterAccidentalDrag">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Slider"/>
+            <title value="After accidental drag slider should still be removable"/>
+            <description value="You should still be able to remove a slider after accidentally moving it within the same container"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92364"/>
+            <useCaseId value="MAGETWO-86953"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
+        <actionGroup ref="unfocusSlideOptions" stepKey="unfocusSlideOptions"/>
+        <actionGroup ref="moveContentTypeToContainer" stepKey="moveSliderIntoExistingRow">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+            <argument name="contentTypeIndex" value="1"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="removeContentTypeFromStage" stepKey="removeSliderFromStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInContent" />
+        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInDOM" />
     </test>
     <test name="AddImageToSliderStage">
         <annotations>

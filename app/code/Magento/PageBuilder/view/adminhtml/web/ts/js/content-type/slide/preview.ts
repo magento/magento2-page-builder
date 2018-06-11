@@ -192,7 +192,7 @@ export default class Preview extends BasePreview {
      */
     public onMouseOverWrapper() {
         // Triggers the visibility of the overlay content to show
-        if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+        if (this.data.main.attributes()["data-show-overlay"] === "hover") {
             this.data.overlay.attributes(
                 Object.assign(
                     this.data.overlay.attributes(),
@@ -206,7 +206,7 @@ export default class Preview extends BasePreview {
                 ),
             );
         }
-        if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+        if (this.data.main.attributes()["data-show-button"] === "hover") {
             this.data.button.style(
                 Object.assign(
                     this.data.button.style(),
@@ -221,7 +221,7 @@ export default class Preview extends BasePreview {
      */
     public onMouseOutWrapper() {
         // Triggers the visibility of the overlay content to hide
-        if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+        if (this.data.main.attributes()["data-show-overlay"] === "hover") {
             this.data.overlay.style(
                 Object.assign(
                     this.data.overlay.style(),
@@ -229,7 +229,7 @@ export default class Preview extends BasePreview {
                 ),
             );
         }
-        if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+        if (this.data.main.attributes()["data-show-button"] === "hover") {
             this.data.button.style(
                 Object.assign(
                     this.data.button.style(),
@@ -313,7 +313,7 @@ export default class Preview extends BasePreview {
     public getOverlayAttributes(): {} {
         const data = this.previewData;
         let overlayColorAttr: string = "transparent";
-        if (data.show_overlay() !== "never_show") {
+        if (data.show_overlay() !== "never") {
             if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
                 overlayColorAttr = fromHex(data.overlay_color(), percentToDecimal(data.overlay_transparency()));
             }

@@ -1,0 +1,74 @@
+/*eslint-disable */
+define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
+  /**
+   * Copyright © Magento, Inc. All rights reserved.
+   * See COPYING.txt for license details.
+   */
+
+  /**
+   * Move a content type to a new index, with the option to move to a new container
+   *
+   * @param {ContentType} contentType
+   * @param {number} targetIndex
+   * @param {ContentTypeCollection} targetParent
+   */
+  function moveContentType(contentType, targetIndex, targetParent) {
+    if (targetParent === void 0) {
+      targetParent = null;
+    }
+
+    var sourceParent = contentType.parent;
+    var sourceIndex = contentType.parent.children().indexOf(contentType);
+    var sourceParentChildren = sourceParent.getChildren(); // Trigger our block move event
+
+    _uiEvents.trigger("contentType:beforeMove", {
+      contentType: contentType,
+      sourceParent: sourceParent,
+      targetParent: targetParent,
+      targetIndex: targetIndex,
+      stageId: contentType.stageId
+    });
+
+    if (targetParent && sourceParent !== targetParent) {
+      contentType.parent = targetParent; // Handle dragging between sortable elements
+
+      sourceParentChildren.splice(sourceIndex, 1);
+      targetParent.getChildren().splice(targetIndex, 0, contentType);
+    } else {
+      // Retrieve the children from the source parent
+      var children = _knockout.utils.unwrapObservable(sourceParentChildren); // Inform KO that this value is about to mutate
+
+
+      if (sourceParentChildren.valueWillMutate) {
+        sourceParentChildren.valueWillMutate();
+      } // Perform the mutation
+
+
+      children.splice(sourceIndex, 1);
+      children.splice(targetIndex, 0, contentType); // Inform KO that the mutation is complete
+
+      if (sourceParentChildren.valueHasMutated) {
+        sourceParentChildren.valueHasMutated();
+      }
+    } // Process any deferred bindings
+
+
+    if (_knockout.processAllDeferredBindingUpdates) {
+      _knockout.processAllDeferredBindingUpdates();
+    } // Trigger our content type move event
+
+
+    _uiEvents.trigger("contentType:move", {
+      contentType: contentType,
+      sourceParent: sourceParent,
+      targetParent: targetParent,
+      targetIndex: targetIndex,
+      stageId: contentType.stageId
+    });
+  }
+
+  return {
+    moveContentType: moveContentType
+  };
+});
+//# sourceMappingURL=move-content-type.js.map
