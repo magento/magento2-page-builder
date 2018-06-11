@@ -7,10 +7,10 @@
 
 <div class="pagebuilder-content-type pagebuilder-slide"
      attr="data.main.attributes"
+     ko-style="Object.assign(data.main.style(), data.desktop_image.style(), getBackgroundStyles())"
      css="data.main.css"
      event="{ mouseover: onMouseOver, mouseout: onMouseOut }">
-    <div ko-style="Object.assign(data.main.style(), data.desktop_image.style(), getBackgroundStyles())"
-         event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
+    <div event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
         <div class="pagebuilder-collage-overlay" ko-style="data.overlay.style()">
             <scope args="getUploader().getUiComponent()">
                 <render />
