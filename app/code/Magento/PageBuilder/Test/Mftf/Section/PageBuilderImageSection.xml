@@ -46,7 +46,8 @@
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]" parameterized="true"/>
         <element name="attachImageBtn" type="button" selector="//div[@class='pagebuilder-image-uploader-container']//input[@name='image']" />
         <element name="imageContentTypeByIndex" type="button" selector="//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-image')][1]//img[contains(@src,'{{var1}}')]" parameterized="true"/>
-        <element name="imagePreview" type="button" selector="//div[@class='preview-image-container']" />
+        <element name="imageEmptyPreview" type="text" selector="//div[contains(concat(' ', normalize-space(@class), ' '), ' pagebuilder-image-empty-preview ')]" />
+        <element name="imagePreview" type="text" selector="//img[contains(concat(' ', normalize-space(@class), ' '), ' preview-image ')]" />
         <element name="imageSourceOnStage" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true" />
         <element name="selectFromGalleryBtn" type="button" selector="//figure//div[@class='file-uploader-area']//label[text()='Select from Gallery']"/>
         <element name="selectFromGalleryImageBtn" type="button" selector="//ul[@class='pagebuilder-options-links']//label[text()='Select from Gallery']"/>
