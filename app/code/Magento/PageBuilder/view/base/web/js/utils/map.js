@@ -6,8 +6,9 @@
 define([
     'underscore',
     'module',
+    'mage/translate',
     'googleMaps'
-], function (_, module) {
+], function (_, module, $t) {
     'use strict';
 
     var google = window.google || {},
@@ -20,10 +21,36 @@ define([
          */
         getGoogleLatitudeLongitude = function (position) {
             return new google.maps.LatLng(position.latitude, position.longitude);
-        };
+        },
+        gmAuthFailure = false;
+
+    // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+    /**
+     * Google's error listener for map loader failures
+     */
+
+    window.gm_authFailure = function () {
+        gmAuthFailure = true;
+    };
+    // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
     return function (element, markers, options) {
-        var mapOptions = _.extend({
+        var mapOptions,
+            placeholder;
+
+        /**
+         * Terminate map early and add placeholder if gm_authFailure is true
+         */
+        if (gmAuthFailure) {
+            placeholder = document.createElement('div');
+
+            placeholder.innerHTML = $t('Enter API Key to use Google Maps');
+            placeholder.classList.add('map-placeholder');
+            element.appendChild(placeholder);
+
+            return;
+        }
+        mapOptions = _.extend({
             zoom: 8,
             center: getGoogleLatitudeLongitude({
                 latitude: 30.2672,
