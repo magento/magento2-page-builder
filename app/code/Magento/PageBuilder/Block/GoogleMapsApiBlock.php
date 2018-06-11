@@ -33,8 +33,8 @@ class GoogleMapsApiBlock extends \Magento\Framework\View\Element\Template
      *
      * @return string|null
      */
-     public function getGoogleMapsStyles(): ?string
-     {
+    public function getGoogleMapsStyles(): ?string
+    {
         return $this->_scopeConfig->getValue(self::GOOGLE_MAPS_STYLES_PATH);
-     }
+    }
 }

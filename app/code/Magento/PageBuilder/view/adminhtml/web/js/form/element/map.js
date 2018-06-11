@@ -29,7 +29,8 @@ define([
         renderMap: function (element) {
             // Get the start value and convert the value into an array
             var startValue = this.value(),
-                mapOptions;
+                mapOptions,
+                latitudeLongitude;
 
             if (typeof startValue === 'string' && startValue !== '') {
                 startValue = JSON.parse(startValue);
@@ -47,7 +48,7 @@ define([
 
             // Add marker if there is a start value
             if (startValue.latitude !== '' && startValue.longitude !== '') {
-                var latitudeLongitude = new google.maps.LatLng(
+                latitudeLongitude = new google.maps.LatLng(
                     parseFloat(startValue.latitude),
                     parseFloat(startValue.longitude)
                 );
