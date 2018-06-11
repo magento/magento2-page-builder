@@ -36,7 +36,7 @@ define([
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
             },
-            styles: module.config().mapStyle ? JSON.parse(module.config().mapStyle) : ''
+            styles: module.config().mapStyle ? JSON.parse(module.config().mapStyle) : []
         }, options);
 
         /* Create the map */

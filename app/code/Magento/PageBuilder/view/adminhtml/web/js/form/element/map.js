@@ -39,7 +39,7 @@ define([
                 navigationControl: true,
                 navigationControlOptions: {
                     style: google.maps.NavigationControlStyle.DEFAULT
-                },
+                }
             };
 
             // Create the map
@@ -47,10 +47,11 @@ define([
 
             // Add marker if there is a start value
             if (startValue.latitude !== '' && startValue.longitude !== '') {
-                const latitudeLongitude = new google.maps.LatLng(
+                var latitudeLongitude = new google.maps.LatLng(
                     parseFloat(startValue.latitude),
                     parseFloat(startValue.longitude)
                 );
+
                 this.mapElement.map.setCenter(latitudeLongitude);
                 this.addMarker(startValue.latitude, startValue.longitude);
             }

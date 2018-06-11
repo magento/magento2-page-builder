@@ -29,13 +29,12 @@ class GoogleMapsApiBlock extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * Retrieving Google Maps Styles from Configurations
+     * Retrieve Google Maps Styles from Configurations
      *
-     * @return string
+     * @return string|null
      */
      public function getGoogleMapsStyles(): ?string
      {
-        $mapStyles = $this->_scopeConfig->getValue(self::GOOGLE_MAPS_STYLES_PATH);
-        return $mapStyles;
+        return $this->_scopeConfig->getValue(self::GOOGLE_MAPS_STYLES_PATH);
      }
 }
