@@ -12,7 +12,7 @@
         <element name="default" type="button" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-column')])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; width: {{arg6}}; background-size: {{arg7}}; background-repeat: {{arg8}}; background-attachment: {{arg9}}; align-self: {{arg10}};']" parameterized="true"/>
         <element name="editFormSpinner" type="input" selector=".admin__form-loading-mask[style='display: loading;'][data-role='spinner']"/>
         <element name="columnGroup" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]"/>
-        <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]"/>
+        <element name="columnGroupColumns" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')]" parameterized="true"/>
         <element name="column" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][1]"/>
         <element name="column2" type="text" selector="(//div[contains(@class, 'pagebuilder-column-group')])[1]/descendant::div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-column')][2]"/>
         <element name="columnX" type="text" selector=".pagebuilder-content-type.pagebuilder-column:nth-child({{arg1}})" parameterized="true"/>
@@ -33,6 +33,7 @@
         <element name="editColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-content-type"]'/>
         <element name="editColumn2" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[2]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-content-type"]'/>
         <element name="editColumn3" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[3]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="edit-content-type"]'/>
+        <element name="columnMoveByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[{{arg1}}]//div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-column"]' parameterized="true"/>
         <element name="dragColumn" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="move-structural"]'/>
         <element name="removeColumn" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[1]/descendant::div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][1]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="remove-structural"]'/>
         <element name="removeColumn2" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[1]/descendant::div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")][2]/div[contains(@class,"pagebuilder-options-visible")]/descendant::*[@class="remove-structural"]'/>
@@ -54,8 +55,9 @@
         <element name="panelFieldDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @disabled]' parameterized="true"/>
         <element name="panelFieldNotDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and not(@disabled)]' parameterized="true"/>
         <element name="columnSaveButton" type="button" selector=".page-main-actions .page-actions [data-ui-id='column-form-page-actions-save']" timeout="30"/>
-        <element name="displayLabel" type="button" selector='(//div[contains(@class, "pagebuilder-display-label")])[0][contains(text(), "{{arg1}}")]' parameterized="true"/>
-        <element name="empty" type="button" selector="//div[contains(@class, 'empty-column')]"/>
+        <element name="displayLabel" type="button" selector='(//div[contains(@class, "pagebuilder-display-label")])[{{arg1}}][contains(text(), "{{arg2}}")]' parameterized="true"/>
+        <element name="empty" type="button" selector="(//div[contains(@class,'empty-container')]//div[contains(@class,'element-children') and contains(@class,'column-container')])[{{arg1}}]" parameterized="true"/>
+        <element name="dropPlaceholder" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[{{arg1}}]//div[contains(@class,"drop-placeholder")][{{arg2}}]' parameterized="true"/>
     </section>
     <section name="ColumnsOnFrontend">
         <element name="columnGroup" type="block" selector=".pagebuilder-column-group"/>

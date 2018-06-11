@@ -6,7 +6,7 @@
 import ColumnGroup from "../../content-type-collection";
 import {outwardSearch} from "../../utils/array";
 import Column from "../column/preview";
-import {ColumnWidth, MaxGhostWidth, ResizeHistory} from "./preview";
+import {ColumnWidth, GroupPositionCache, MaxGhostWidth, ResizeHistory} from "./preview";
 
 /**
  * Get the maximum columns allowed
@@ -101,12 +101,12 @@ export function getColumnsWidth(group: ColumnGroup): number {
 /**
  * Determine the pixel position of every column that can be created within the group
  *
- * @param {Column} column
- * @param {JQuery} group
+ * @param {Preview} column
+ * @param {GroupPositionCache} groupPosition
  * @returns {ColumnWidth[]}
  */
-export function determineColumnWidths(column: Column, group: JQuery): ColumnWidth[] {
-    const singleColumnWidth = group.outerWidth() / getMaxColumns();
+export function determineColumnWidths(column: Column, groupPosition: GroupPositionCache): ColumnWidth[] {
+    const singleColumnWidth = groupPosition.outerWidth / getMaxColumns();
     const adjacentColumn = getAdjacentColumn(column, "+1");
     const columnWidths = [];
     const columnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
@@ -115,9 +115,9 @@ export function determineColumnWidths(column: Column, group: JQuery): ColumnWidt
 
     // Determine the maximum size (in pixels) that this column can be dragged to
     const columnsToRight = column.parent.children().length - (getColumnIndexInGroup(column) + 1);
-    const leftMaxWidthFromChildren = group.offset().left + group.outerWidth() - (columnsToRight * singleColumnWidth)
-        + 10;
-    const rightMaxWidthFromChildren = group.offset().left +
+    const leftMaxWidthFromChildren = groupPosition.left + groupPosition.outerWidth -
+        (columnsToRight * singleColumnWidth) + 10;
+    const rightMaxWidthFromChildren = groupPosition.left +
         (column.parent.children().length - columnsToRight) * singleColumnWidth - 10;
     // Due to rounding we add a threshold of 10
 
@@ -238,29 +238,29 @@ export function getRoundedColumnWidth(width: number): number {
  * @returns {number}
  */
 export function calculateGhostWidth(
-    group: JQuery<HTMLElement>,
+    groupPosition: GroupPositionCache,
     currentPos: number,
     column: Column,
     modifyColumnInPair: string,
     maxGhostWidth: MaxGhostWidth,
 ): number {
-    let ghostWidth = currentPos - group.offset().left;
+    let ghostWidth = currentPos - groupPosition.left;
 
     switch (modifyColumnInPair) {
         case "left":
-            const singleColumnWidth = column.element.position().left + group.outerWidth() / getMaxColumns();
+            const singleColumnWidth = column.element.position().left + groupPosition.outerWidth / getMaxColumns();
             // Don't allow the ghost widths be less than the smallest column
             if (ghostWidth <= singleColumnWidth) {
                 ghostWidth = singleColumnWidth;
             }
 
             if (currentPos >= maxGhostWidth.left) {
-                ghostWidth = maxGhostWidth.left - group.offset().left;
+                ghostWidth = maxGhostWidth.left - groupPosition.left;
             }
             break;
         case "right":
             if (currentPos <= maxGhostWidth.right) {
-                ghostWidth = maxGhostWidth.right - group.offset().left;
+                ghostWidth = maxGhostWidth.right - groupPosition.left;
             }
             break;
     }
@@ -271,14 +271,12 @@ export function calculateGhostWidth(
 /**
  * Determine which column in the group should be adjusted for the current resize action
  *
- * @param {JQuery<HTMLElement>} group
  * @param {number} currentPos
  * @param {Column} column
  * @param {ResizeHistory} history
  * @returns {[Column , string , string]}
  */
 export function determineAdjustedColumn(
-    group: JQuery<HTMLElement>,
     currentPos: number,
     column: Column,
     history: ResizeHistory,

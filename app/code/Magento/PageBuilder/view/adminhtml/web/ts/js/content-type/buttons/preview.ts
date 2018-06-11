@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "uiEvents";
@@ -25,6 +26,19 @@ export default class Preview extends PreviewCollection {
                 this.addButton();
             }
         });
+    }
+
+    /**
+     * Set state based on mouseover event for the preview
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onMouseOver(context: Preview, event: Event) {
+        // Only run the mouse over action when the active element is not a child of buttons
+        if (!$.contains(this.wrapperElement, document.activeElement)) {
+            return super.onMouseOver(context, event);
+        }
     }
 
     /**

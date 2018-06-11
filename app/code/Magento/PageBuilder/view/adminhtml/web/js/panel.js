@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_knockout, _koDraggable, _koSortable, _translate, _uiEvents, _underscore, _config, _group, _contentType) {
+define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_jquery, _knockout, _translate, _uiEvents, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -101,6 +101,64 @@ define(["knockout", "ko-draggable", "ko-sortable", "mage/translate", "uiEvents",
     _proto.clearSearch = function clearSearch() {
       this.searchValue("");
       this.searching(false);
+    };
+    /**
+     * Retrieve the draggable options for the panel items
+     *
+     * @returns {JQueryUI.DraggableOptions}
+     */
+
+
+    _proto.getDraggableOptions = function getDraggableOptions() {
+      var self = this;
+      return {
+        appendTo: "body",
+        cursor: "-webkit-grabbing",
+        connectToSortable: ".content-type-drop",
+        containment: "document",
+        helper: function helper() {
+          return (0, _jquery)(this).clone().css({
+            width: (0, _jquery)(this).width(),
+            height: (0, _jquery)(this).height(),
+            zIndex: 10001,
+            pointerEvents: "none"
+          });
+        },
+        start: function start() {
+          var block = _knockout.dataFor(this);
+
+          if (block && block.config) {
+            /**
+             * Swap all sortable instances to use intersect, as the item from the left panel is a predictable
+             * size this yields better results when dragging
+             */
+            (0, _jquery)(".content-type-container.ui-sortable").each(function () {
+              if ((0, _jquery)(this).data("sortable")) {
+                (0, _jquery)(this).sortable("option", "tolerance", "intersect");
+              }
+            });
+            (0, _dropIndicators.showDropIndicators)(block.config.name);
+            (0, _registry.setDraggedContentTypeConfig)(block.config);
+
+            _uiEvents.trigger("interaction:start", {
+              stage: self.parent.stage
+            });
+          }
+        },
+        stop: function stop() {
+          (0, _jquery)(".content-type-container.ui-sortable").each(function () {
+            if ((0, _jquery)(this).data("sortable")) {
+              (0, _jquery)(this).sortable("option", "tolerance", "pointer");
+            }
+          });
+          (0, _dropIndicators.hideDropIndicators)();
+          (0, _registry.setDraggedContentTypeConfig)(null);
+
+          _uiEvents.trigger("interaction:stop", {
+            stage: self.parent.stage
+          });
+        }
+      };
     };
     /**
      * Populate the panel with the content types
