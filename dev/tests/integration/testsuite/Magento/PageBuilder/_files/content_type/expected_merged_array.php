@@ -86,32 +86,128 @@ return [
             ],
             'additional_data' => [
                 'config1' => [
-                    'settingWithTypeString' => 'string',
-                    'settingWithTypeObject' => 'test data',
-                    'settingWithTypeNull' => null,
-                    'settingWithTypeInteger' => '20',
-                    'settingWithTypeBooleanTrue' => true,
-                    'settingWithTypeBooleanFalse' => false,
-                    'settingWithTypeNumber2' => '-90'
+                    'name' => 'config1',
+                    'xsi:type' => 'array',
+                    'item' => [
+                        'settingWithTypeString' => [
+                            'name' => 'settingWithTypeString',
+                            'xsi:type' => 'string',
+                            'value' => 'string',
+                        ],
+                        'settingWithTypeBooleanTrue' => [
+                            'name' => 'settingWithTypeBooleanTrue',
+                            'xsi:type' => 'boolean',
+                            'value' => 'true',
+                        ],
+                        'settingWithTypeBooleanFalse' => [
+                            'name' => 'settingWithTypeBooleanFalse',
+                            'xsi:type' => 'boolean',
+                            'value' => 'false',
+                        ],
+                        'settingWithTypeInteger' => [
+                            'name' => 'settingWithTypeInteger',
+                            'xsi:type' => 'number',
+                            'value' => '20',
+                        ],
+                        'settingWithTypeNull' => [
+                            'name' => 'settingWithTypeNull',
+                            'xsi:type' => 'null',
+                        ],
+                        'settingWithTypeNumber2' => [
+                            'name' => 'settingWithTypeNumber2',
+                            'xsi:type' => 'number',
+                            'value' => '-90',
+                        ],
+                        'settingWithTypeObject' => [
+                            'name' => 'settingWithTypeObject',
+                            'xsi:type' => 'object',
+                            'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
+                                . 'ContentType\\AdditionalData\\Provider\\TestData',
+                        ],
+                    ],
                 ],
                 'config2' => [
-                    'arrayConfig' => [
-                        'settingWithTypeString' => 'string',
-                        'settingWithTypeObject' => 'test data',
-                        'settingWithTypeNull' => null,
-                        'settingWithTypeInteger' => '20',
-                        'settingWithTypeBooleanTrue' => true,
-                        'settingWithTypeBooleanFalse' => false,
-                        'settingWithTypeNumber2' => '-90'
-                    ]
+                    'name' => 'config2',
+                    'xsi:type' => 'array',
+                    'item' => [
+                        'arrayConfig' => [
+                            'name' => 'arrayConfig',
+                            'xsi:type' => 'array',
+                            'item' => [
+                                'settingWithTypeString' => [
+                                    'name' => 'settingWithTypeString',
+                                    'xsi:type' => 'string',
+                                    'value' => 'string',
+                                ],
+                                'settingWithTypeBooleanTrue' => [
+                                    'name' => 'settingWithTypeBooleanTrue',
+                                    'xsi:type' => 'boolean',
+                                    'value' => 'true',
+                                ],
+                                'settingWithTypeBooleanFalse' => [
+                                    'name' => 'settingWithTypeBooleanFalse',
+                                    'xsi:type' => 'boolean',
+                                    'value' => 'false',
+                                ],
+                                'settingWithTypeInteger' => [
+                                    'name' => 'settingWithTypeInteger',
+                                    'xsi:type' => 'number',
+                                    'value' => '20',
+                                ],
+                                'settingWithTypeNull' => [
+                                    'name' => 'settingWithTypeNull',
+                                    'xsi:type' => 'null',
+                                ],
+                                'settingWithTypeNumber2' => [
+                                    'name' => 'settingWithTypeNumber2',
+                                    'xsi:type' => 'number',
+                                    'value' => '-90',
+                                ],
+                                'settingWithTypeObject' => [
+                                    'name' => 'settingWithTypeObject',
+                                    'xsi:type' => 'object',
+                                    'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
+                                        . 'ContentType\\AdditionalData\\Provider\\TestData',
+                                ],
+                            ],
+                        ],
+                    ],
                 ],
-                'settingWithTypeString' => 'string',
-                'settingWithTypeObject' => 'test data',
-                'settingWithTypeNull' => null,
-                'settingWithTypeInteger' => '20',
-                'settingWithTypeBooleanTrue' => true,
-                'settingWithTypeBooleanFalse' => false,
-                'settingWithTypeNumber2' => '-90'
+                'settingWithTypeString' => [
+                    'name' => 'settingWithTypeString',
+                    'xsi:type' => 'string',
+                    'value' => 'string',
+                ],
+                'settingWithTypeBooleanTrue' => [
+                    'name' => 'settingWithTypeBooleanTrue',
+                    'xsi:type' => 'boolean',
+                    'value' => 'true',
+                ],
+                'settingWithTypeBooleanFalse' => [
+                    'name' => 'settingWithTypeBooleanFalse',
+                    'xsi:type' => 'boolean',
+                    'value' => 'false',
+                ],
+                'settingWithTypeInteger' => [
+                    'name' => 'settingWithTypeInteger',
+                    'xsi:type' => 'number',
+                    'value' => '20',
+                ],
+                'settingWithTypeNull' => [
+                    'name' => 'settingWithTypeNull',
+                    'xsi:type' => 'null',
+                ],
+                'settingWithTypeNumber2' => [
+                    'name' => 'settingWithTypeNumber2',
+                    'xsi:type' => 'number',
+                    'value' => '-90',
+                ],
+                'settingWithTypeObject' => [
+                    'name' => 'settingWithTypeObject',
+                    'xsi:type' => 'object',
+                    'value' => 'Magento\\TestModulePageBuilderDataMigration\\Model\\Config\\'
+                        . 'ContentType\\AdditionalData\\Provider\\TestData',
+                ],
             ],
         ],
         'type2' => [

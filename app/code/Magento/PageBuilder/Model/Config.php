@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -43,9 +46,9 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     /**
      * Return all content types
      *
-     * @return array|mixed|null
+     * @return array
      */
-    public function getContentTypes()
+    public function getContentTypes(): array
     {
         return $this->get('types');
     }
@@ -55,7 +58,7 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
      *
      * @return bool
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return (bool)$this->scopeConfig->getValue(
             \Magento\PageBuilder\Model\Config::IS_PAGEBUILDER_ENABLED
