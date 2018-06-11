@@ -63,7 +63,7 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        events.on("tabs:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("tabs:contentType:afterRender", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id && this.element) {
                 this.buildTabs();
             }
@@ -87,22 +87,24 @@ export default class Preview extends PreviewCollection {
         });
         // Refresh tab contents and set the focus to the new position of the sorted tab
         events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
-            this.refreshTabs(args.newPosition, true);
-            /**
-             * Update the default active tab if its position was affected by the sorting
-             */
-            const defaultActiveTab = +args.instance.preview.previewData.default_active();
-            let newDefaultActiveTab = defaultActiveTab;
-            if (args.originalPosition === defaultActiveTab) {
-                newDefaultActiveTab = args.newPosition;
-            } else if (args.originalPosition < defaultActiveTab && args.newPosition >= defaultActiveTab) {
-                // a tab was moved from the left of the default active tab the right of it, changing its index
-                newDefaultActiveTab--;
-            } else if (args.originalPosition > defaultActiveTab && args.newPosition <= defaultActiveTab) {
-                // a tab was moved from the right of the default active tab the left of it, changing its index
-                newDefaultActiveTab++;
+            if (args.instance.id === this.parent.id) {
+                this.refreshTabs(args.newPosition, true);
+                /**
+                 * Update the default active tab if its position was affected by the sorting
+                 */
+                const defaultActiveTab = +args.instance.preview.previewData.default_active();
+                let newDefaultActiveTab = defaultActiveTab;
+                if (args.originalPosition === defaultActiveTab) {
+                    newDefaultActiveTab = args.newPosition;
+                } else if (args.originalPosition < defaultActiveTab && args.newPosition >= defaultActiveTab) {
+                    // a tab was moved from the left of the default active tab the right of it, changing its index
+                    newDefaultActiveTab--;
+                } else if (args.originalPosition > defaultActiveTab && args.newPosition <= defaultActiveTab) {
+                    // a tab was moved from the right of the default active tab the left of it, changing its index
+                    newDefaultActiveTab++;
+                }
+                this.updateData("default_active", newDefaultActiveTab);
             }
-            this.updateData("default_active", newDefaultActiveTab);
         });
     }
 
