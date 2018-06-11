@@ -678,9 +678,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <waitForElementVisible time="2" selector="{{RowOnBackend.backgroundSectionName}}" stepKey="waitForBackgroundForm"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
@@ -708,9 +705,9 @@
         <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
 
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
-        <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
+            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -786,7 +783,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{RowOnStage.backgroundColor('1', PageBuilderRowBackgroundColor_CCCCCC.rgb)}}" stepKey="seeBackgroundColorAdminPreview"/>
-        <waitForElementVisible selector="{{RowOnStage.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.fileName, PageBuilderRowBackgroundImage_MagentoJpg.fileType)}}" stepKey="seeBackgroundImageAdminPreview"/>
+        <waitForElementVisible selector="{{RowOnStage.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.fileName, PageBuilderRowBackgroundImage_MagentoJpg.extension)}}" stepKey="seeBackgroundImageAdminPreview"/>
         <waitForElementVisible selector="{{RowOnStage.backgroundPosition('1', PageBuilderRowBackgroundPosition_TopAligned.styleValue)}}" stepKey="seeBackgroundPositionAdminPreview"/>
         <waitForElementVisible selector="{{RowOnStage.backgroundSize('1', PageBuilderRowBackgroundSize_Cover.value)}}" stepKey="seeBackgroundSizeAdminPreview"/>
         <waitForElementVisible selector="{{RowOnStage.backgroundRepeat('1', PageBuilderRowBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatAdminPreview"/>
@@ -820,7 +817,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{RowOnStorefront.backgroundColor('1', PageBuilderRowBackgroundColor_CCCCCC.rgb)}}" stepKey="seeBackgroundColorSet"/>
-        <waitForElementVisible selector="{{RowOnStorefront.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.fileName, PageBuilderRowBackgroundImage_MagentoJpg.fileType)}}" stepKey="seeBackgroundImageSet"/>
+        <waitForElementVisible selector="{{RowOnStorefront.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.fileName, PageBuilderRowBackgroundImage_MagentoJpg.extension)}}" stepKey="seeBackgroundImageSet"/>
         <waitForElementVisible selector="{{RowOnStorefront.backgroundPosition('1', PageBuilderRowBackgroundPosition_TopAligned.styleValue)}}" stepKey="seeBackgroundPositionSet"/>
         <waitForElementVisible selector="{{RowOnStorefront.backgroundSize('1', PageBuilderRowBackgroundSize_Cover.value)}}" stepKey="seeBackgroundSizeSet"/>
         <waitForElementVisible selector="{{RowOnStorefront.backgroundRepeat('1', PageBuilderRowBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatSet"/>

@@ -95,10 +95,6 @@
         <element name="uploadNewImageBtn" type="button" selector="//label[text()='Upload Image']" />
         <element name="selectFromGalleryImageBtn" type="button" selector="//ul[contains(@class,'pagebuilder-options-links')]//label[text()='Select from Gallery']"/>
         <element name="imageSourceOnFrontEnd" type="button" selector="//div[not(contains(@class, 'pagebuilder-mobile-hidden')) and contains(@style, '{{var1}}')]" parameterized="true" />
-        <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img'/>
-        <element name="invalidUploadTitle" type="text" selector="//aside[contains(@class,'modal-popup')]//header/h1[contains(.,'Attention')]"/>
-        <element name="invalidUploadMessage" type="text" selector="//aside[contains(@class,'modal-popup')]//div[@class='modal-content']//div[.=&quot;{{arg1}}&quot;]" parameterized="true"/>
-        <element name="invalidUploadOkBtn" type="text" selector="//aside[contains(@class,'modal-popup')]//footer//button//span[.='OK']"/>
     </section>
     <section name="AdvancedForm">
         <element name="sectionName" type="button" selector="//div[@data-index='advanced']"/>
@@ -147,5 +143,12 @@
         <element name="lightDarkSlider" type="button" selector=".sp-container[style] .sp-alpha"/>
         <element name="cancelBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style]//a[text()='Cancel']"/>
         <element name="applyBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style]//button[text()='Apply']"/>
+    </section>
+    <section name="EditPanelForm">
+        <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img'/>
+        <element name="selectFromGalleryBtn" type="button" selector="//aside//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//label[text()='Select from Gallery']" parameterized="true"/>
+        <element name="invalidUploadTitle" type="text" selector="//aside[contains(@class,'modal-popup')]//header/h1[contains(.,'Attention')]"/>
+        <element name="invalidUploadMessage" type="text" selector="//aside[contains(@class,'modal-popup')]//div[@class='modal-content']//div[.=&quot;{{arg1}}&quot;]" parameterized="true"/>
+        <element name="invalidUploadOkBtn" type="text" selector="//aside[contains(@class,'modal-popup')]//footer//button//span[.='OK']"/>
     </section>
 </sections>

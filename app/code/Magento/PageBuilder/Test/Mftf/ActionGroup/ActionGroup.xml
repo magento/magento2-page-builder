@@ -475,6 +475,15 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
     </actionGroup>
+    <actionGroup name="clickSelectFromGallerySlideOut">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElementVisible selector="{{EditPanelForm.selectFromGalleryBtn(property.section, property.fieldName)}}" stepKey="waitForSelectFromGalleryBtn"/>
+        <click selector="{{EditPanelForm.selectFromGalleryBtn(property.section, property.fieldName)}}" stepKey="clickSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+    </actionGroup>
     <actionGroup name="conditionalClickSlideOutPanelFieldGeneral">
     <arguments>
         <argument name="property" defaultValue=""/>
@@ -520,7 +529,7 @@
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormUploadedImageSource(property.section, property.fieldName, property.fileName, property.fileType)}}" stepKey="seeUploadedFile"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormUploadedImageSource(property.section, property.fieldName, property.fileName, property.extension)}}" stepKey="seeUploadedFile"/>
     </actionGroup>
     <actionGroup name="seeNoImageUploadedOnSlideOut">
         <arguments>
@@ -624,7 +633,7 @@
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.backgroundImagePreview}}" stepKey="waitForImageUpload"/>
+        <waitForElementVisible selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="waitForImageUpload"/>
     </actionGroup>
     <actionGroup name="attachInvalidFileOnSlideOut">
         <arguments>
@@ -632,19 +641,19 @@
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
-        <click selector="{{PageBuilderActionsSection.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.invalidUploadTitle}}" stepKey="waitForModalGone"/>
-        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.backgroundImagePreview}}" stepKey="dontSeeImage"/>
+        <waitForElementVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
+        <waitForElementVisible selector="{{EditPanelForm.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
+        <waitForElementVisible selector="{{EditPanelForm.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
+        <click selector="{{EditPanelForm.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
+        <waitForElementNotVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForModalGone"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="dontSeeImage"/>
     </actionGroup>
     <actionGroup name="saveEditPanelSettings">
-        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible" />
-        <waitForElementVisible time="5" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton" />
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton"/>
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveButton"/>
+        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible"/>
+        <waitForElementVisible time="5" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </actionGroup>
     <actionGroup name="saveEditPanelAndValidateFieldError">
         <arguments>
