@@ -6,7 +6,7 @@
 import _ from "underscore";
 import ConverterInterface from "./converter-interface";
 
-export default class WidgetDirective implements ConverterInterface {
+export default class WidgetDirectiveAbstract implements ConverterInterface {
     /**
      * Convert value to internal format
      *

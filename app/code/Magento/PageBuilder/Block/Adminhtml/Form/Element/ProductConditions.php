@@ -72,6 +72,11 @@ class ProductConditions extends Template
         ];
     }
 
+    /**
+     * Creates a JSON string containing the configuration for the needed JS components in the mage-init format
+     *
+     * @return string
+     */
     public function getConfigJson(): string
     {
         return $this->serializer->serialize([

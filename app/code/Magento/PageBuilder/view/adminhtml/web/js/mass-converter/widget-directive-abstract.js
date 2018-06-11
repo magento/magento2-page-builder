@@ -4,12 +4,12 @@ define(["underscore"], function (_underscore) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var WidgetDirective =
+  var WidgetDirectiveAbstract =
   /*#__PURE__*/
   function () {
-    function WidgetDirective() {}
+    function WidgetDirectiveAbstract() {}
 
-    var _proto = WidgetDirective.prototype;
+    var _proto = WidgetDirectiveAbstract.prototype;
 
     /**
      * Convert value to internal format
@@ -80,9 +80,9 @@ define(["underscore"], function (_underscore) {
       return result.substr(0, result.length - 1);
     };
 
-    return WidgetDirective;
+    return WidgetDirectiveAbstract;
   }();
 
-  return WidgetDirective;
+  return WidgetDirectiveAbstract;
 });
-//# sourceMappingURL=widget-directive.js.map
+//# sourceMappingURL=widget-directive-abstract.js.map

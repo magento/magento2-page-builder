@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/mass-converter/widget-directive"], function (_widgetDirective) {
+define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], function (_widgetDirectiveAbstract) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var WidgetDirective =
@@ -75,7 +75,7 @@ define(["Magento_PageBuilder/js/mass-converter/widget-directive"], function (_wi
     };
 
     return WidgetDirective;
-  }(_widgetDirective);
+  }(_widgetDirectiveAbstract);
 
   return WidgetDirective;
 });

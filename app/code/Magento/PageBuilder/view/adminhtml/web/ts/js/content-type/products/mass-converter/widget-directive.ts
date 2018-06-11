@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import BaseWidgetDirective from "../../../mass-converter/widget-directive";
+import BaseWidgetDirective from "../../../mass-converter/widget-directive-abstract";
 
 export default class WidgetDirective extends BaseWidgetDirective {
     /**
