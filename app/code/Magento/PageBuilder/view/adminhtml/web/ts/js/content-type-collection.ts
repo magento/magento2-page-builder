@@ -4,6 +4,7 @@
  */
 
 import events from "uiEvents";
+import _ from "underscore";
 import Collection from "./collection";
 import ContentType from "./content-type";
 import ContentTypeCollectionInterface from "./content-type-collection.d";

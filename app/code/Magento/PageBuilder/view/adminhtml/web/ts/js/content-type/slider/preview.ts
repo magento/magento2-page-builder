@@ -264,6 +264,15 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Slider can not receive drops by default
+     *
+     * @returns {boolean}
+     */
+    public isContainer() {
+        return false;
+    }
+
+    /**
      * Bind events
      */
     protected bindEvents() {

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder", "Magento_PageBuilder/js/utils/array"], function (_knockout, _translate, _alert, _uiEvents, _underscore, _collection, _contentTypeFactory, _dataStore, _render, _stageBuilder, _array) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _jqueryUiTouchPunch, _alert, _uiEvents, _underscore, _collection, _dataStore, _matrix, _sortable, _render, _stageBuilder) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -14,7 +14,9 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       this.parent = void 0;
       this.id = void 0;
       this.config = {
-        name: "stage"
+        name: "stage",
+        type: "restricted-container",
+        accepts: ["row"]
       };
       this.loading = _knockout.observable(true);
       this.showBorders = _knockout.observable(false);
@@ -29,6 +31,7 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
       this.id = parent.id;
       this.initListeners();
       (0, _stageBuilder)(this, parent.initialValue).then(this.ready.bind(this));
+      (0, _matrix.generateAllowedParents)();
     }
     /**
      * Get template.
@@ -107,8 +110,28 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
     };
 
     /**
+     * Determine if the container can receive drop events?
+     *
+     * @returns {boolean}
+     */
+    _proto.isContainer = function isContainer() {
+      return true;
+    };
+    /**
+     * Return the sortable options
+     *
+     * @returns {JQueryUI.SortableOptions}
+     */
+
+
+    _proto.getSortableOptions = function getSortableOptions() {
+      return (0, _sortable.getSortableOptions)(this);
+    };
+    /**
      * Init listeners
      */
+
+
     _proto.initListeners = function initListeners() {
       var _this = this;
 
@@ -116,45 +139,11 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
         return _uiEvents.trigger("stage:updated", {
           stageId: _this.id
         });
-      }); // ContentType dropped from left hand panel
-
-      _uiEvents.on("contentType:dropped", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onContentTypeDropped(args);
-        }
-      }); // ContentType instance being moved between structural elements
-
-
-      _uiEvents.on("contentType:instanceDropped", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onContentTypeInstanceDropped(args);
-        }
       }); // ContentType being removed from container
-
 
       _uiEvents.on("contentType:removed", function (args) {
         if (args.stageId === _this.id) {
           _this.onContentTypeRemoved(args);
-        }
-      }); // ContentType sorted within the same structural element
-
-
-      _uiEvents.on("contentType:sorted", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onContentTypeSorted(args);
-        }
-      }); // Observe sorting actions
-
-
-      _uiEvents.on("contentType:sortStart", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onSortingStart(args);
-        }
-      });
-
-      _uiEvents.on("contentType:sortStop", function (args) {
-        if (args.stageId === _this.id) {
-          _this.onSortingStop(args);
         }
       }); // Any store state changes trigger a stage update event
 
@@ -189,99 +178,12 @@ define(["knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "
     /**
      * On content type removed
      *
-     * @param event
      * @param params
      */
 
 
     _proto.onContentTypeRemoved = function onContentTypeRemoved(params) {
       params.parent.removeChild(params.contentType);
-    };
-    /**
-     * On instance of an existing content type is dropped onto container
-     *
-     * @param {ContentTypeInstanceDroppedParamsInterface} params
-     */
-
-
-    _proto.onContentTypeInstanceDropped = function onContentTypeInstanceDropped(params) {
-      var originalParent = params.contentTypeInstance.parent;
-      params.contentTypeInstance.parent = params.parent;
-      params.parent.parent.addChild(params.contentTypeInstance, params.index);
-
-      _uiEvents.trigger("contentType:moved", {
-        contentType: params.contentTypeInstance,
-        index: params.index,
-        newParent: params.parent,
-        originalParent: originalParent
-      });
-    };
-    /**
-     * On content type dropped into container
-     *
-     * @param {ContentTypeDroppedParamsInterface} params
-     */
-
-
-    _proto.onContentTypeDropped = function onContentTypeDropped(params) {
-      var index = params.index || 0;
-      new Promise(function (resolve, reject) {
-        if (params.contentType) {
-          return (0, _contentTypeFactory)(params.contentType.config, params.parent, params.stageId).then(function (contentType) {
-            params.parent.addChild(contentType, index);
-
-            _uiEvents.trigger("contentType:dropped:create", {
-              id: contentType.id,
-              contentType: contentType
-            });
-
-            _uiEvents.trigger(params.contentType.config.name + ":contentType:dropped:create", {
-              id: contentType.id,
-              contentType: contentType
-            });
-
-            return contentType;
-          });
-        } else {
-          reject("Parameter contentType missing from event.");
-        }
-      }).catch(function (error) {
-        console.error(error);
-      });
-    };
-    /**
-     * On content type sorted within it's own container
-     *
-     * @param {ContentTypeSortedParams} params
-     */
-
-
-    _proto.onContentTypeSorted = function onContentTypeSorted(params) {
-      var originalIndex = _knockout.utils.arrayIndexOf(params.parent.children(), params.contentType);
-
-      if (originalIndex !== params.index) {
-        (0, _array.moveArrayItem)(params.parent.children, originalIndex, params.index);
-      }
-    };
-    /**
-     * On sorting start
-     *
-     * @param {SortParamsInterface} params
-     */
-
-
-    _proto.onSortingStart = function onSortingStart(params) {
-      this.showBorders(true);
-    };
-    /**
-     * On sorting stop
-     *
-     * @param {SortParamsInterface} params
-     */
-
-
-    _proto.onSortingStop = function onSortingStop(params) {
-      this.showBorders(false);
     };
 
     _createClass(Stage, [{

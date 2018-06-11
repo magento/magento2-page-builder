@@ -7,7 +7,10 @@ import $ from "jquery";
 import ko from "knockout";
 import events from "uiEvents";
 import ContentTypeInterface from "../content-type.d";
+import {moveContentType} from "../drag-drop/move-content-type";
 import {moveArrayItem} from "../utils/array";
+
+let draggedContentType: ContentTypeInterface;
 
 // Create a new sortable Knockout binding
 ko.bindingHandlers.sortableChildren = {
@@ -28,23 +31,31 @@ ko.bindingHandlers.sortableChildren = {
         $(element).sortable(options)
             .on("sortstart", (event: Event, ui: JQueryUI.SortableUIParams) => {
                 originalPosition = ui.item.index();
+                draggedContentType = instance.children()[originalPosition];
                 events.trigger("sortableChildren:sortstart", {
                     instance,
                     originalPosition,
                     ui,
                 });
             })
-            .on("sortupdate", (event: Event, ui: JQueryUI.SortableUIParams) => {
-                const index = ui.item.index();
-                if (originalPosition !== index) {
-                    ui.item.remove();
-                    moveArrayItem(instance.children, originalPosition, index);
-                    events.trigger("sortableChildren:sortupdate", {
-                        instance,
-                        newPosition: index,
-                        originalPosition,
-                        ui,
-                    });
+            .on("sortupdate", function(event: Event, ui: JQueryUI.SortableUIParams) {
+                if (this === ui.item.parent()[0]) {
+                    const index = ui.item.index();
+                    const targetParent = ko.dataFor(ui.item.parent()[0]).parent;
+                    if (targetParent && (originalPosition !== index || draggedContentType.parent !== targetParent)) {
+                        ui.item.remove();
+                        if (draggedContentType.parent === targetParent) {
+                            moveArrayItem(instance.children, originalPosition, index);
+                        } else {
+                            moveContentType(draggedContentType, index, targetParent);
+                        }
+                        events.trigger("sortableChildren:sortupdate", {
+                            instance,
+                            newPosition: index,
+                            originalPosition,
+                            ui,
+                        });
+                    }
                 }
             });
     },
