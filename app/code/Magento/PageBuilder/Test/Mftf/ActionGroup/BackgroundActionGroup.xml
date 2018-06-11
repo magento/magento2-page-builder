@@ -17,6 +17,7 @@
             <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateBackgroundAttributesWithNoImageOrColor" stepKey="comment"/>
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <waitForElementVisible selector="{{section.noBackgroundColor(index)}}" stepKey="waitForBackgroundColor"/>
         <waitForElementVisible selector="{{section.noBackgroundImage(index)}}" stepKey="waitForBackgroundImage"/>
@@ -35,6 +36,7 @@
             <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateBackgroundAttributesWithNoColor" stepKey="comment"/>
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <waitForElementVisible selector="{{section.noBackgroundColor(index)}}" stepKey="waitForBackgroundColor"/>
         <waitForElementVisible selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" stepKey="waitForBackgroundImage"/>
@@ -53,6 +55,7 @@
             <argument name="backgroundAttachment" defaultValue="PageBuilderBackgroundAttachment_Default"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateBackgroundAttributesWithNoImage" stepKey="comment"/>
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <waitForElementVisible selector="{{section.backgroundColor(index, backgroundColor.rgb)}}" stepKey="waitForBackgroundColor"/>
         <waitForElementVisible selector="{{section.backgroundPosition(index, backgroundPosition.styleValue)}}" stepKey="waitForBackgroundPosition"/>
@@ -66,6 +69,7 @@
             <argument name="backgroundImage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateBackgroundImageInAdmin" stepKey="comment"/>
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <waitForElementVisible selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" stepKey="waitForBackgroundImage"/>
         <grabAttributeFrom selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
@@ -88,6 +92,7 @@
             <argument name="backgroundImage"/>
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
+        <comment userInput="validateBackgroundImageOnStorefront" stepKey="comment"/>
         <waitForElementVisible selector="{{section.base(index)}}" stepKey="waitForBaseElement"/>
         <waitForElementVisible selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" stepKey="waitForBackgroundImage"/>
         <grabAttributeFrom selector="{{section.backgroundImage(index, backgroundImage.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>

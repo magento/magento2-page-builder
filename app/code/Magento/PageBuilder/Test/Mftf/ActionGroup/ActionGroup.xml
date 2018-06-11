@@ -632,11 +632,11 @@
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidFileTypeTitle}}" stepKey="waitForInvalidFileTypeTitle"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidFileTypeMessage}}" stepKey="waitForInvalidFileTypeMessage"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidFileTypeOkBtn}}" stepKey="waitForInvalidFileTypeBtn"/>
-        <click selector="{{PageBuilderActionsSection.invalidFileTypeOkBtn}}" stepKey="clickInvalidFileTypeBtn"/>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.invalidFileTypeTitle}}" stepKey="waitForModalGone"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
+        <click selector="{{PageBuilderActionsSection.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.invalidUploadTitle}}" stepKey="waitForModalGone"/>
         <dontSeeElementInDOM selector="{{PageBuilderActionsSection.backgroundImagePreview}}" stepKey="dontSeeImage"/>
     </actionGroup>
     <actionGroup name="saveEditPanelSettings">
