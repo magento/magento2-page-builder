@@ -35,9 +35,8 @@
                             </element>
                             <element name="wrapper" path=".//div[contains(@class,'pagebuilder-video-wrapper')]">
                                 <style_properties>
-                                    <complex_property name="max_width" reader="Magento_PageBuilder/js/content-type/video/property/max-width" converter="Magento_PageBuilder/js/content-type/video/converter/style/max-width"/>
-                                    <!--<property name="width" source="width" persist="false"/>-->
-                                    <property name="max_height" source="height" persist="false"/>
+                                    <property name="max_width" source="max_width"/>
+                                    <property name="max_height" source="max_eight" persist="false"/>
                                     <property name="text_align" source="text_align"/>
                                     <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
@@ -52,6 +51,14 @@
                                 </attributes>
                             </element>
                         </elements>
+                        <converters>
+                            <converter component="Magento_PageBuilder/js/content-type/video/mass-converter/max-width" name="max_width">
+                                <config>
+                                    <item name="max_width_variable" value="max_width"/>
+                                    <item name="max_height_variable" value="max_height"/>
+                                </config>
+                            </converter>
+                        </converters>
                     </data_mapping>
                     <preview_template>Magento_PageBuilder/content-type/video/default/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/video/default/master</render_template>
