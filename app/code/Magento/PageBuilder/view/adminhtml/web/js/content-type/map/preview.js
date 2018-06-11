@@ -74,7 +74,6 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
     /**
      * Updates map
      *
-     * @param {Element} element
      * @returns {void}
      */
 

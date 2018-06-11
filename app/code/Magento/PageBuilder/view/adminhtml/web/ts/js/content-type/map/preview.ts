@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import $ from "jquery";
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
 import events from "uiEvents";
 import BasePreview from "../preview";
@@ -66,7 +65,6 @@ export default class Preview extends BasePreview {
     /**
      * Updates map
      *
-     * @param {Element} element
      * @returns {void}
      */
     private updateMap() {
