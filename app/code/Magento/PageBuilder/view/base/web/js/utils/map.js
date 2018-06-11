@@ -43,7 +43,6 @@ define([
          */
         if (gmAuthFailure) {
             placeholder = document.createElement('div');
-
             placeholder.innerHTML = $t('Enter API Key to use Google Maps');
             placeholder.classList.add('map-placeholder');
             element.appendChild(placeholder);
