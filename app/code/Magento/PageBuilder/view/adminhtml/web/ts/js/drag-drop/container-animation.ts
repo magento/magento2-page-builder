@@ -5,7 +5,6 @@
 import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeInterface from "../content-type";
-import {ContentTypeMountEventParamsInterface} from "../content-type/content-type-mount-event-params";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type/content-type-after-render-event-params";
 
 /**
