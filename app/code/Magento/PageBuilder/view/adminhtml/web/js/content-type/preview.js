@@ -182,12 +182,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
         _uiEvents.trigger("contentType:afterRender", {
           id: this.parent.id,
-          block: this.parent,
+          contentType: this.parent,
           element: element
         });
 
         _uiEvents.trigger(this.parent.config.name + ":contentType:afterRender", {
-          block: this.parent,
+          contentType: this.parent,
           element: element,
           id: this.parent.id
         });

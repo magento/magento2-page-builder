@@ -24,6 +24,7 @@ import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {ActiveOptionsInterface} from "./active-options.d";
 import {SortableOptionsInterface} from "./sortable-options.d";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 
 export default class Preview extends PreviewCollection {
     public static focusOperationTime: number;
@@ -63,7 +64,7 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        events.on("tabs:contentType:afterRender", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("tabs:contentType:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
             if (args.id === this.parent.id && this.element) {
                 this.buildTabs();
             }
