@@ -56,9 +56,12 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
       this.generateMap(element);
       this.element = element;
-      this.data.main.attributes.subscribe(function () {
-        _this3.updateMap();
-      });
+
+      if (this.map.map) {
+        this.data.main.attributes.subscribe(function () {
+          _this3.updateMap();
+        });
+      }
     };
     /**
      * Generate maps

@@ -43,9 +43,11 @@ export default class Preview extends BasePreview {
     public renderMap(element: Element) {
         this.generateMap(element);
         this.element = element;
-        this.data.main.attributes.subscribe(() => {
-            this.updateMap();
-        });
+        if (this.map.map) {
+            this.data.main.attributes.subscribe(() => {
+                this.updateMap();
+            });
+        }
     }
 
     /**
