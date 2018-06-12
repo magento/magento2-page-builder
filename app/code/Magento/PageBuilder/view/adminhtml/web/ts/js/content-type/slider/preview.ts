@@ -12,11 +12,13 @@ import _ from "underscore";
 import "../../binding/focus";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
+import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
@@ -26,8 +28,6 @@ import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import Slide from "../slide/preview";
 import {default as SliderPreview} from "../slider/preview";
-import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
-import ContentTypeCollectionInterface from "../../content-type-collection";
 
 export default class Preview extends PreviewCollection {
     public focusedSlide: KnockoutObservable<number> = ko.observable();
@@ -247,8 +247,6 @@ export default class Preview extends PreviewCollection {
      */
     protected bindEvents() {
         super.bindEvents();
-
-
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
         events.on("slider:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {

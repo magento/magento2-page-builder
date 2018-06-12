@@ -6,6 +6,7 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "uiEvents";
+import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Options from "../../content-type-menu";
 import Option from "../../content-type-menu/option";
@@ -17,7 +18,6 @@ import {percentToDecimal} from "../../utils/number-converter";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
-import ContentTypeCollectionInterface from "../../content-type-collection";
 
 export default class Preview extends BasePreview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
