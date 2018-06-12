@@ -47,7 +47,7 @@ define([
             var placeholder = document.createElement('div');
 
             placeholder.innerHTML = $t('Enter API Key to use Google Maps');
-            placeholder.classList.add('map-placeholder');
+            placeholder.classList.add('google-map-auth-failure-placeholder');
             container.innerHTML = '';
             container.appendChild(placeholder);
         };

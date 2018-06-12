@@ -46,6 +46,11 @@ define([
             // Create the map
             this.mapElement = new GoogleMap(element, [], mapOptions);
 
+            if (!this.mapElement.map) {
+
+                return;
+            }
+
             // Add marker if there is a start value
             if (startValue.latitude !== '' && startValue.longitude !== '') {
                 latitudeLongitude = new google.maps.LatLng(
