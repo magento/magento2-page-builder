@@ -111,10 +111,11 @@ Inline styles
 9. border-color
 10. border-width
 11. border-radius
-12. margin
-13. padding
-14. align-self
-15. min-height
+12. min-height
+13. width
+14. margin
+15. padding
+16. align-self
 
 ## Tabs
 
