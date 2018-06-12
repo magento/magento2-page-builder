@@ -29,7 +29,7 @@ define([
                     },
                     result = model.toDom(data, config);
 
-                expect(result.myhtml).toBe('');
+                expect(result.myhtml).toBe(undefined);
             });
             it('Should return an empty string when conditions_encoded is false', function () {
                 var data = {
@@ -41,7 +41,7 @@ define([
                     },
                     result = model.toDom(data, config);
 
-                expect(result.myhtml).toBe('');
+                expect(result.myhtml).toBe(undefined);
             });
             it('Should return an empty string when conditions_encoded is empty string', function () {
                 var data = {
@@ -53,7 +53,7 @@ define([
                     },
                     result = model.toDom(data, config);
 
-                expect(result.myhtml).toBe('');
+                expect(result.myhtml).toBe('undefined;
             });
             it('Should return an empty string when conditions_encoded is empty undefined', function () {
                 var data = {
@@ -64,7 +64,7 @@ define([
                     },
                     result = model.toDom(data, config);
 
-                expect(result.myhtml).toBe('');
+                expect(result.myhtml).toBe(undefined);
             });
             it('Should transform regular properties', function () {
                 var data = {
@@ -118,7 +118,7 @@ define([
                     attributes = {
                         myhtml: '{{widget products_count="123"}}'
                     },
-                    result = model.fromDom(attributes);
+                    result = model.fromDom(attributes, config);
 
                 expect(result.products_count).toBe(expected.products_count);
                 expect(result.conditions_encoded).toBe(expected.conditions_encoded);

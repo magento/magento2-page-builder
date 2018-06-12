@@ -8,6 +8,7 @@
 /** @var $block \Magento\PageBuilder\Block\Adminhtml\Form\Element\ProductConditions */
 $attribute = $block->getData('attribute');
 $id = $block->getData('formNamespace') . '_' . $attribute;
+$role = 'pagebuilder-conditions-form-placeholder-' . $attribute;
 ?>
 <label class="admin__field-label">
     <span><?= $block->escapeHtml($block->getData('label')) ?></span>
@@ -16,7 +17,7 @@ $id = $block->getData('formNamespace') . '_' . $attribute;
     <div class="rule-tree">
         <fieldset id="<?= $block->escapeHtmlAttr($id) ?>" class="fieldset">
             <div class="rule-tree-wrapper">
-                <div data-role="pagebuilder-conditions-form-placeholder-<?= $block->escapeHtmlAttr($attribute) ?>"></div>
+                <div data-role="<?= $block->escapeHtmlAttr($role) ?>"></div>
             </div>
         </fieldset>
     </div>
