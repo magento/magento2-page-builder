@@ -33,14 +33,28 @@ class Widgets extends Template
 
     public function getConfig()
     {
-        $config = $this->getData('config');
-        //todo have config as
+        $widgetsConfig = $this->getData('config');
+        $resultConfig = [];
 //        ['div[data-role="slider"][data-appearance="default]' =>
 //            [
 //                'componentName' => ['componentConfig']
 //            ]
 //        ]
-        return $this->jsonEncoder->encode($config);
+        foreach ($widgetsConfig as $contentTypeName => $config) {
+            $selector = sprintf('div[data-role="%s"]', $contentTypeName);
+            foreach ($config as $appearanceName => $item) {
+                if (!isset($item['component'])) {
+                    continue;
+                }
+                if (isset($item['appearance'])) {
+                    $selector .= sprintf('[data-appearance="%s"]', $item['appearance']);
+                }
+                $componentConfig = isset($item['config']) ? $item['config'] : [];
+                $resultConfig[$selector] = [$item['component'] => $componentConfig];
+            }
+
+        }
+        return $this->jsonEncoder->encode($resultConfig);
     }
 }
 
