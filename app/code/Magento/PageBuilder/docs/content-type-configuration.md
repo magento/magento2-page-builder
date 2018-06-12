@@ -18,11 +18,11 @@
     1. **Content type configuration**
     1. [How to add a new content type]
     1. [Events]
-    1. [Bindings]
     1. [Master format]
-    1. [Visual select]   
+    1. [Visual select] 
+    1. [Reuse product conditions in content types]
+    1. [Store component master format as widget directive]
     1. [Custom Toolbar] 
-    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -38,11 +38,11 @@
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
-[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Add image uploader to content type]: image-uploader.md
 [Roadmap and known issues]: roadmap.md
 
 ## Configuration
@@ -77,7 +77,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
         <icon>icon-pagebuilder-image</icon>
         <component>Magento_PageBuilder/js/content-type</component>
         <preview_component>Magento_PageBuilder/js/content-type/banner/preview</preview_component>
-        <master_component>Magento_PageBuilder/js/content-type/master</master_component>
+        <content_component>Magento_PageBuilder/js/content-type/content</content_component>
         <form>pagebuilder_banner_form</form>
         <group>media</group>
         <allowed_parents>
@@ -197,7 +197,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | `icon`              | Icon displayed on the menu.                                                                                                                 |
 | `component`         | View model responsible for rendering the preview and master format.                                                                         |
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
-| `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
+| `content_component` | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type                                                                                         |
 | `group`             | Existing menu group that contains this content type.                                                                                        |
 | `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                          |

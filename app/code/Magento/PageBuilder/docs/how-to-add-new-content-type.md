@@ -15,11 +15,11 @@
     1. [Content type configuration]
     1. **How to add a new content type**
     1. [Events]
-    1. [Bindings]
     1. [Master format]
-    1. [Visual select]   
+    1. [Visual select]
+    1. [Reuse product conditions in content types]   
+    1. [Store component master format as widget directive]
     1. [Custom Toolbar]
-    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -35,11 +35,11 @@
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
-[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Add image uploader to content type]: image-uploader.md
 [Roadmap and known issues]: roadmap.md
 
 
@@ -135,7 +135,7 @@ In the `simple.xml` above we defined border attributes and form for component. L
                 <item name="component" xsi:type="string">Magento_PageBuilder/js/form/provider</item>
             </item>
         </argument>
-        <dataProvider name="modulename_simple_form_data_source" class="Magento\PageBuilder\Model\ContentType\DataProvider">
+        <dataProvider name="modulename_simple_form_data_source" class="Magento\PageBuilder\Model\ContentBlock\DataProvider">
             <settings>
                 <requestFieldName/>
                 <primaryFieldName/>
@@ -255,7 +255,7 @@ Now, let's add content type that can contain other content types. Create configu
             <icon>icon-vendorname-complex</icon>
             <component>Magento_PageBuilder/js/content-type-collection</component>
             <preview_component>Magento_PageBuilder/js/content-type/preview-collection</preview_component>
-            <master_component>Magento_PageBuilder/js/content-type/master-collection</master_component>
+            <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
             <form>vendorname_complex_form</form>
             <group>general</group>
             <allowed_parents>
@@ -332,12 +332,12 @@ Please also notice that we specified in configuration the following, to allow ou
 | ------------------- | ---------------------------------------------- |
 | `component`         | Magento_PageBuilder/js/content-type-collection |
 | `preview_component` | Magento_PageBuilder/js/content-type/preview-collection      |
-| `master_component` | Magento_PageBuilder/js/content-type/master-collection      |
+| `content_component` | Magento_PageBuilder/js/content-type/content-collection      |
 
-You can also specify `master_component` if you want to do modifications to observables used in master format templates.
+You can also specify `content_component` if you want to do modifications to observables used in master format templates.
 
 
-## component, preview_component and master_component
+## component, preview_component and content_component
 
 `component` is structure element. If your content type can contain children use `Magento_PageBuilder/js/content-type-collection`, otherwise use `Magento_PageBuilder/js/content-type`. You may extend default `component` if you want to dispatch additional or subscribe to existing events.
 
@@ -345,7 +345,7 @@ You can also specify `master_component` if you want to do modifications to obser
 
 You can also do modifications to observables used in preview template if you override `afterObservablesUpdated` method. 
 
-`master_component` contains master format rendering logic that is generic for all appearances. If `master_component` not specified, the default one `Magento_PageBuilder/js/content-type/master` will be used. If your content type can have other components as children, you need to specify `Magento_PageBuilder/js/content-type/master-collection`. If you need to do modifications to observables used in preview template if you override `afterObservablesUpdated` method.
+`content_component` contains master format rendering logic that is generic for all appearances. If `content_component` not specified, the default one `Magento_PageBuilder/js/content-type/content` will be used. If your content type can have other components as children, you need to specify `Magento_PageBuilder/js/content-type/content-collection`. If you need to do modifications to observables used in preview template if you override `afterObservablesUpdated` method.
 
 ## Config
 

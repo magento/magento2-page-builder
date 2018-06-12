@@ -39,28 +39,28 @@ This page lists the upcoming functionality and known issues for the PageBuilder 
 * Ability to set the vertical alignment for content inside a container. <!-- MAGETWO-90242 -->
 * Ability to upload and use SVG files in the content. <!-- MAGETWO-53778 -->
 
-### Text content type
+### Text content block
 
-  * Text block enhancements will make it easier to see the content type and access its settings on the stage. <!-- MAGETWO-87070 -->
+  * Text block enhancements will make it easier to see the content block and access its settings on the stage. <!-- MAGETWO-87070 -->
   * Edit text content on the stage. <!--MAGETWO-86724-->
 
-### Accordion content type
+### Accordion content block
 
   * Ability to add content inside Accordion items. <!-- MAGETWO-66514 -->
   * Ability to add additional items to Accordion content and configure it within the stage. <!-- MAGETWO-87046 -->
   * Ability to configure Accordion behavior. <!-- MAGETWO-87098 -->
-  * Ability to see newly-dragged Accordion content type on the stage. <!-- MAGETWO-87089 -->
+  * Ability to see newly-dragged Accordion content block on the stage. <!-- MAGETWO-87089 -->
   * Ability to delete AccordionSection from the Stage. <!-- MAGETWO-87053 -->
   * Ability to rearrange AccordionSection containers inside an Accordion on the stage. <!-- MAGETWO-87051 -->
   * Ability to duplicate AccordionSection containers. <!-- MAGETWO-88857 -->
 
-### Map content type
+### Map content block
 
-  * Google Map API integration with the Map content type. <!-- MAGETWO-88225 -->
+  * Google Map API integration with the Map content block. <!-- MAGETWO-88225 -->
 
 ### Developer experience
 
-  * A tutorial, with code examples, that shows how to create Custom content types that meet the specific needs of a merchant. <!-- MAGETWO-72564 -->
+  * A tutorial, with code examples, that shows how to create Custom content blocks that meet the specific needs of a merchant. <!-- MAGETWO-72564 -->
   * Improved exception handling. <!-- MAGETWO-88348 -->
   * Improved validation of `content_types.xml`. <!-- MAGETWO-88379 -->
   * Documentation on how to create custom appearances for PageBuilder blocks and containers. <!-- MAGETWO-86522 -->

@@ -15,11 +15,11 @@
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
-    1. [Bindings]
     1. [Master format]
     1. [Visual select]
+    1. [Reuse product conditions in content types]
+    1. [Store component master format as widget directive]
     1. [Custom Toolbar]
-    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -35,11 +35,11 @@
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
-[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Add image uploader to content type]: image-uploader.md
 [Roadmap and known issues]: roadmap.md
 
 
@@ -54,7 +54,7 @@ For example, if you want to load data from the backend, you can use objects, `xs
 
 ## Overview
 
-To add customization to a Page Builder content type, you must:
+To add customization to a Page Builder content type:
 1. [Add additional data to the XML config](#additional-data)
 2. [Implement `ProviderInterface` for conversion](#conversion) (Optional, as it is only required if you're using `xsi:type="object"` to obtain dynamic configuration at runtime)
 
@@ -65,8 +65,6 @@ Use `additional_data` in your `Vendor/ModuleName/view/adminhtml/pagebuilder/cont
 ``` xml
 <additional_data>
     <arguments name="uploaderConfig" xsi:type="array">
-        <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>
-        <item name="isShowImageUploadOptions" xsi:type="boolean">true</item>
         <item name="maxFileSize" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\MaxFileSize</item>
         <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png</item>
         <item name="component" xsi:type="string">Magento_PageBuilder/js/form/element/image-uploader</item>
@@ -132,7 +130,7 @@ In the `additional_data` XML config there is a `storeId` item with a `storeId` p
 <item name="storeId" xsi:type="object">\Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\StoreId</item>
 ```
 
-Custom configuration is injected into relevant content type block constructors, such as for the image block shown here, and accessed in `config.additional_data` within the content type type in `/app/code/Magento/PageBuilder/view/adminhtml/web/js/content-type/<your-content-type>/preview.js`:
+Custom configuration is injected into relevant content type block constructors, such as for the image block shown here, and accessed in `config.additional_data` within the content block type in `/app/code/Magento/PageBuilder/view/adminhtml/web/js/content-type/<your-content-type>/preview.js`:
 
 ``` js
 var uploaderConfiguration = Object.assign(
