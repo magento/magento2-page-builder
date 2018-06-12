@@ -15,8 +15,9 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
         $invoker(
             /**
              * @param string $filename
+             * @param string $baseForm
              */
-            function ($filename) {
+            function ($filename, $baseForm) {
                 $dom = new \DOMDocument();
                 $dom->loadXML(file_get_contents($filename));
                 $errors = libxml_get_errors();
@@ -29,9 +30,9 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
                 );
 
                 $this->assertEquals(
-                    'pagebuilder_base_form',
+                    $baseForm,
                     $dom->getElementsByTagName('form')->item(0)->getAttribute('extends'),
-                    'The XML file ' . $filename . ' does not extend "pagebuilder_base_form"'
+                    'The XML file ' . $filename . ' does not extend "'. $baseForm . '"'
                 );
             },
             $this->getXmlFiles()
@@ -46,17 +47,24 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
             'pagebuilder_modal_form.xml',
             'pagebuilder_map_location_form.xml'
         ];
+        $overrideFiles = [
+            'pagebuilder_banner_form.xml' => 'pagebuilder_base_form_with_background_attributes'
+        ];
         $componentRegistrar = new ComponentRegistrar();
         $modulePath = $componentRegistrar->getPath(ComponentRegistrar::MODULE, 'Magento_PageBuilder');
         $dir = $modulePath . '/view/adminhtml/ui_component/';
 
         $files = glob($dir . 'pagebuilder_*.xml', GLOB_NOSORT);
         foreach ($files as $file) {
+            $baseForm = 'pagebuilder_base_form';
             $fileName = substr($file, strlen($dir));
             if (in_array($fileName, $ignoreFiles)) {
                 continue;
             }
-            $data[$fileName] = [$file];
+            if (array_key_exists($fileName, $overrideFiles)) {
+                $baseForm = $overrideFiles[$fileName];
+            }
+            $data[$fileName] = [$file, $baseForm];
         }
 
         return $data;
