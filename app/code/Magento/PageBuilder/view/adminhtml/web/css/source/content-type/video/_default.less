@@ -8,7 +8,6 @@
 //  _____________________________________________
 
 .pagebuilder-content-type {
-
     .pagebuilder-video-placeholder {
         align-items: center;
         background-color: @color-gray98;
@@ -21,6 +20,14 @@
         font-size: 80px;
     }
     .pagebuilder-video {
+        display: flex;
+
+        [data-role="video"],
+        .pagebuilder-video-wrapper,
+        .pagebuilder-video-container {
+            display: flex;
+            flex-grow: 1;
+        }
         .pagebuilder-video-container {
             padding-top: 56.25%;
             position: relative;
