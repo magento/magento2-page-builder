@@ -61,8 +61,8 @@
     </section>
     <section name="ColumnsOnFrontend">
         <element name="columnGroup" type="block" selector=".pagebuilder-column-group"/>
-        <element name="allColumns" type="block" selector=".pagebuilder-column-group .pagebuilder-column"/>
-        <element name="columnX" type="block" selector=".pagebuilder-column-group .pagebuilder-column:nth-child({{arg}})" parameterized="true"/>
+        <element name="allColumns" type="block" selector="(//div[@data-role='column'])"/>
+        <element name="columnX" type="block" selector="[data-role=column]:nth-child({{arg1}})" parameterized="true"/>
         <element name="columnStyle" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="column1Height" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'min-height: 500px;')]"/>
         <element name="column1HeightFull" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'align-self: stretch;')]"/>
