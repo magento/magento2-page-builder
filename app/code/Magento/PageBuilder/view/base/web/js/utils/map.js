@@ -6,9 +6,10 @@
 define([
     'underscore',
     'module',
+    'uiEvents',
     'mage/translate',
     'googleMaps'
-], function (_, module, $t) {
+], function (_, module, events, $t) {
     'use strict';
 
     var google = window.google || {},
@@ -28,27 +29,36 @@ define([
     /**
      * Google's error listener for map loader failures
      */
-
     window.gm_authFailure = function () {
+        events.trigger('googleMaps:authFailure');
         gmAuthFailure = true;
     };
     // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
     return function (element, markers, options) {
-        var mapOptions,
-            placeholder;
+        var mapOptions;
 
         /**
-         * Terminate map early and add placeholder if gm_authFailure is true
+         * Replace the content of element with a placeholder
+         *
+         * @param {Element} container
          */
-        if (gmAuthFailure) {
-            placeholder = document.createElement('div');
+        this.usePlaceholder = function (container) {
+            var placeholder = document.createElement('div');
+
             placeholder.innerHTML = $t('Enter API Key to use Google Maps');
             placeholder.classList.add('map-placeholder');
-            element.appendChild(placeholder);
+            container.innerHTML = '';
+            container.appendChild(placeholder);
+        };
+
+        //Terminate map early and add placeholder if gm_authFailure is true
+        if (gmAuthFailure) {
+            this.usePlaceholder(element);
 
             return;
         }
+
         mapOptions = _.extend({
             zoom: 8,
             center: getGoogleLatitudeLongitude({
