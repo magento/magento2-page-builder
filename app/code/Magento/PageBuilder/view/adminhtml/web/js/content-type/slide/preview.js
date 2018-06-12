@@ -40,7 +40,7 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
       return _this;
     }
     /**
-     * Get the slide wrapper attributes for the preview
+     * Get the background wrapper attributes for the preview
      *
      * @returns {any}
      */
@@ -49,6 +49,22 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
     var _proto = Preview.prototype;
 
     _proto.getBackgroundStyles = function getBackgroundStyles() {
+      var desktopStyles = this.data.desktop_image.style();
+      return _extends({}, desktopStyles, {
+        paddingBottom: "",
+        paddingLeft: "",
+        paddingRight: "",
+        paddingTop: ""
+      });
+    };
+    /**
+     * Get the slide wrapper attributes for the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getPaddingStyles = function getPaddingStyles() {
       var previewData = this.previewData;
       var appearance = this.data.main.attributes()["data-appearance"];
       var paddingData = {};

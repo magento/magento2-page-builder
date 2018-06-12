@@ -47,12 +47,28 @@ export default class Preview extends BasePreview {
             this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
         });
     }
+
+    /**
+     * Get the background wrapper attributes for the preview
+     *
+     * @returns {any}
+     */
+    public getBackgroundStyles() {
+        const desktopStyles = this.data.desktop_image.style();
+        return {
+            ...desktopStyles,
+            paddingBottom: "",
+            paddingLeft: "",
+            paddingRight: "",
+            paddingTop: "",
+        };
+    }
     /**
      * Get the slide wrapper attributes for the preview
      *
      * @returns {any}
      */
-    public getBackgroundStyles() {
+    public getPaddingStyles() {
         const previewData = this.previewData;
         const appearance = this.data.main.attributes()["data-appearance"];
         const paddingData: any =  {};
