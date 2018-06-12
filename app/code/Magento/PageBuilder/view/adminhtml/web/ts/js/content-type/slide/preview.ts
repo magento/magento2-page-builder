@@ -61,7 +61,7 @@ export default class Preview extends BasePreview {
             paddingLeft: "",
             paddingRight: "",
             paddingTop: "",
-            border: "none",
+            borderStyle: "none",
             borderRadius: "0px",
         };
     }

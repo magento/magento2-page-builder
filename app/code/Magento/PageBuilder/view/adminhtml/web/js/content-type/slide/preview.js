@@ -55,7 +55,7 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
         paddingLeft: "",
         paddingRight: "",
         paddingTop: "",
-        border: "none",
+        borderStyle: "none",
         borderRadius: "0px"
       });
     };
