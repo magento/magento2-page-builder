@@ -6,8 +6,7 @@
 /* eslint-disable max-nested-callbacks */
 define([
     'jquery',
-    'Magento_PageBuilder/js/content-type/video/converter/style/text-align',
-    'prototype'
+    'Magento_PageBuilder/js/content-type/video/converter/style/text-align'
 ], function ($, Converter) {
     'use strict';
 
