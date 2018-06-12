@@ -17,6 +17,7 @@ import {percentToDecimal} from "../../utils/number-converter";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
+import ContentTypeCollectionInterface from "../../content-type-collection";
 
 export default class Preview extends BasePreview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
@@ -343,7 +344,13 @@ export default class Preview extends BasePreview {
             return (option.code !== "remove");
         });
         const removeClasses = ["remove-structural"];
-        let removeFn = this.onOptionRemove;
+        let removeFn = () => {
+            const index = (this.parent.parent as ContentTypeCollectionInterface).getChildren().indexOf(this.parent);
+            this.onOptionRemove();
+            // Invoking methods on slider
+            this.parent.parent.onAfterRender();
+            this.parent.parent.setFocusedSlide(index - 1);
+        };
         if (this.parent.parent.children().length <= 1) {
             removeFn = () => { return; };
             removeClasses.push("disabled");

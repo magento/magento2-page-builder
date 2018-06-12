@@ -44,7 +44,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
       var ns = block.id + ".afterRender.container.animate";
 
       _uiEvents.on("contentType:afterRender", function (args) {
-        if (args.block.parent === block.parent) {
+        if (args.contentType.parent === block.parent) {
           animateContainerHeight(true, element);
 
           _uiEvents.off(ns);

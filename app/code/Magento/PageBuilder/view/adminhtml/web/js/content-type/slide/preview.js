@@ -347,13 +347,25 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
 
 
     _proto.retrieveOptions = function retrieveOptions() {
+      var _this2 = this;
+
       var options = _BasePreview.prototype.retrieveOptions.call(this);
 
       var newOptions = options.filter(function (option) {
         return option.code !== "remove";
       });
       var removeClasses = ["remove-structural"];
-      var removeFn = this.onOptionRemove;
+
+      var removeFn = function removeFn() {
+        var index = _this2.parent.parent.getChildren().indexOf(_this2.parent);
+
+        _this2.onOptionRemove(); // Invoking methods on slider
+
+
+        _this2.parent.parent.onAfterRender();
+
+        _this2.parent.parent.setFocusedSlide(index - 1);
+      };
 
       if (this.parent.parent.children().length <= 1) {
         removeFn = function removeFn() {
@@ -372,28 +384,28 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
+      var _this3 = this;
 
       _BasePreview.prototype.bindEvents.call(this);
 
       _uiEvents.on(this.parent.id + ":updated", function () {
-        var dataStore = _this2.parent.dataStore.get();
+        var dataStore = _this3.parent.dataStore.get();
 
-        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this3.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
+        _uiEvents.trigger("image:assigned:" + _this3.parent.id, imageObject);
       });
 
       _uiEvents.on(this.config.name + ":contentType:ready", function () {
-        var dataStore = _this2.parent.dataStore.get();
+        var dataStore = _this3.parent.dataStore.get();
 
-        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+        var initialImageValue = dataStore[_this3.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
+        _this3.uploader = new _uploader(_this3.parent.id, "imageuploader_" + _this3.parent.id, Object.assign({}, _this3.config.additional_data.uploaderConfig, {
           value: initialImageValue
         })); // Register listener when image gets uploaded from uploader UI component
 
-        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
+        _this3.uploader.onUploaded(_this3.onImageUploaded.bind(_this3));
       });
     };
 
