@@ -44,9 +44,15 @@
             <argument name="index" defaultValue="1" type="string"/>
         </arguments>
         <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentTypeInStageVisible" />
-        <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader(index)}}"/>
-        <waitForElementVisible time="30" selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="clickEditContentType"/>
+        <click selector="{{TabOnStage.tabHeader(index)}}" stepKey="clickTabTitle"/>
+        <waitForElementVisible time="30" selector="{{TabOnStage.tabOptionsByIndex(index)}}" stepKey="waitForTabOptionsPanel"/>
+        <grabTextFrom selector="{{TabOnStage.tabHeader(index)}}" stepKey="grabNameFromInitialTab"/>
+        <waitForElementVisible time="30" selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="seeTabOptionsDuplicate"/>
+        <click selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="clickDuplicateTab"/>
+        <executeJS function="return Math.round({{index}}+1)" stepKey="newTabIndex"/>
+        <waitForElementVisible time="30" selector="{{TabOnStage.tabHeader('${newTabIndex}')}}" stepKey="waitForNewTabVisible" />
+        <waitForElementVisible time="30" selector="{{TabOnStage.tabOptionsByIndex('${newTabIndex}')}}" stepKey="waitForNewTabOptionsPanel"/>
+        <see userInput="{$grabNameFromInitialTab} copy" selector="{{TabOnStage.tabHeader('${newTabIndex}')}}" stepKey="seeDuplicatedTabName"/>
     </actionGroup>
     <actionGroup name="openTabOptionsByIndex">
         <arguments>

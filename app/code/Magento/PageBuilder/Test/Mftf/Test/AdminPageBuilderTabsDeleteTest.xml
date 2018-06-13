@@ -10,8 +10,8 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="TabsRemoveLastTabByDeletingTabsContentType">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Delete Tab From Tabs"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-87052"/>
             <title value="Tabs Remove Last Tab Only By Deleting Tabs content type"/>
             <description value="A user should be able to remove tabs content type from a row with confirmation."/>
@@ -66,8 +66,8 @@
     </test>
     <test name="TabsRemoveSecondTabDefaultState">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Delete Tab From Tabs"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-87052"/>
             <testCaseId value="MAGETWO-90672"/>
             <title value="Tabs Remove Individual Default State Second Tab"/>
@@ -111,8 +111,8 @@
         <!-- Remove second tab -->
         <click selector="{{TabOnStage.tabOptionsRemove}}" stepKey="clickRemoveOption"/>
         <comment userInput="Removal confirmation modal not displayed when removing default state individual Tab" stepKey="AC3"/>
-        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
-        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
+        <waitForElementNotVisible time="30" selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
+        <waitForElementNotVisible time="30" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader"/>
         <comment userInput="Tabs with single Tab shown on the stage after save and on the storefront" stepKey="AC4"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
@@ -126,8 +126,8 @@
     </test>
     <test name="TabsRemoveConfiguredSecondTabWithConfirmation">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Delete Tab From Tabs"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-87052"/>
             <testCaseId value="MAGETWO-90673"/>
             <title value="Tabs Remove Individual Configured Second Tab with Confirmation"/>
@@ -182,8 +182,8 @@
     </test>
     <test name="TabsRemoveSecondTabContainingTextWithConfirmation">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Delete Tab From Tabs"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-87052"/>
             <testCaseId value="MAGETWO-90674"/>
             <title value="Tabs Remove Second Tab Containing Content with Confirmation"/>
@@ -241,8 +241,8 @@
     </test>
     <test name="TabsRemoveConfiguredTabsContainerWithConfirmation">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Delete Tab From Tabs"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-87052"/>
             <testCaseId value="MAGETWO-90675"/>
             <title value="Tabs Remove Configured Tabs Container with Confirmation"/>
@@ -283,8 +283,8 @@
     </test>
     <test name="TabsOnDeleteCorrectTabBecomesActiveAndFocused">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Delete Tab From Tabs"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-87052"/>
             <testCaseId value="MAGETWO-90677"/>
             <title value="Tabs Remove Third Tab And Second Becomes Active And Focused"/>
@@ -326,8 +326,8 @@
     </test>
     <test name="TabsDismissedCustomizedTabRemovalConfirmationPersistsSession">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Delete Tab From Tabs"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-87052"/>
             <testCaseId value="MAGETWO-90671"/>
             <title value="Tabs Dismissed Customized Tab Removal Confirmation Persists Session"/>
