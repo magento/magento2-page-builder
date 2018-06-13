@@ -66,10 +66,9 @@ define([
         try {
             mapStyle = module.config().mapStyle ? JSON.parse(module.config().mapStyle) : [];
         }
-        catch (e) {
+        catch (error) {
             mapStyle = [];
         }
-
         mapOptions = _.extend({
             zoom: 8,
             center: getGoogleLatitudeLongitude({
