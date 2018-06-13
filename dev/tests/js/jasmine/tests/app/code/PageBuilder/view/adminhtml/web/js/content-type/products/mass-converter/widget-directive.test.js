@@ -53,7 +53,7 @@ define([
                     },
                     result = model.toDom(data, config);
 
-                expect(result.myhtml).toBe('undefined;
+                expect(result.myhtml).toBe(undefined);
             });
             it('Should return an empty string when conditions_encoded is empty undefined', function () {
                 var data = {
