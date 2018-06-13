@@ -17,7 +17,7 @@
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
-        <waitForElementVisible selector="{{page.width(width.valueOnStage)}}" stepKey="waitForWidth"/>
+        <waitForElementVisible selector="{{page.width(width.value)}}" stepKey="waitForWidth"/>
     </actionGroup>
     <actionGroup name="validateVideoOnFrontend">
         <arguments>
@@ -46,5 +46,68 @@
         </arguments>
         <waitForElementVisible selector="{{VideoOnStage.empty(index)}}" stepKey="waitForEmptyVideo"/>
         <waitForElementVisible selector="{{VideoOnStage.icon(index)}}" stepKey="waitForIcon"/>
+    </actionGroup>
+    <actionGroup name="validateVideoAdvancedStyleWithNoAlignment">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateVideoAdvancedStyleWithNoAlignment">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(padding.value)}}" stepKey="waitForPaddingVisible"/>
+    </actionGroup>
+    <actionGroup name="validateVideoAdvancedStyleWithAllUpdated">
+        <arguments>
+            <argument name="page" defaultValue=""/>
+            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
+            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
+            <argument name="borderColor" defaultValue=""/>
+            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
+            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
+            <argument name="cssClasses" defaultValue=""/>
+            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
+            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
+        <waitForElementVisible selector="{{page.alignment(alignment.value)}}" stepKey="waitForAlignmentVisible"/>
+        <waitForElementVisible selector="{{page.border(border.value)}}" stepKey="waitForBorderVisible"/>
+        <waitForElementVisible selector="{{page.borderColor(borderColor.rbg)}}" stepKey="waitForBorderColorVisible"/>
+        <waitForElementVisible selector="{{page.borderWidth(borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
+        <waitForElementVisible selector="{{page.borderRadius(borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
+        <waitForElementVisible selector="{{page.cssClasses(cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
+        <waitForElementVisible selector="{{page.margins(margin.value)}}" stepKey="waitForMarginVisible"/>
+        <waitForElementVisible selector="{{page.padding(padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
 </actionGroups>
