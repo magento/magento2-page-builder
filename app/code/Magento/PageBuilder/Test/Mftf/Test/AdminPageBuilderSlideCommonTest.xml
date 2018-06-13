@@ -165,7 +165,7 @@
         <seeElement selector="{{SliderInAdmin.ShowArrows}}" stepKey="verifyArrowsYesOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeight500OnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderAlignment(PageBuilderAdvancedAlignmentPropertyLeft.value)}}" stepKey="verifyAlignmentLeftOnAdmin"/>
-        <seeElement selector="{{SliderInAdmin.sliderBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnAdmin"/>
+        <seeElement selector="{{SliderInAdmin.sliderBorder(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleOnAdmin"/>
         <seeElement selector="{{SliderInAdmin.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnAdmin"/>
         <comment userInput="Validate slide 1 on stage" stepKey="commentValidateSlide1Stage"/>
@@ -173,7 +173,6 @@
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnBackend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayedAdmin"/>
         <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnBackend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayedAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearance"/>
-        <seeElement selector="{{SlideOnBackend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURLAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1BackgroundAdmin"/>
         <click selector="{{SliderInAdmin.nextSlide}}" stepKey="clickNextSlideOnSliderAdmin"/>
         <waitForElementVisible time="2" selector="{{SlideOnBackend.slide('1')}}" stepKey="waitForSlide2Admin" />
@@ -183,7 +182,6 @@
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnBackend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayedAdmin"/>
         <see userInput="{{PageBuilderSlideItemButtonText2.value}}" selector="{{SlideOnBackend.slideButtonText('1')}}" stepKey="seeSlide2LinkTextDisplayedAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearance"/>
-        <seeElement selector="{{SlideOnBackend.slideLinkURL2(PageBuilderSlideItemLinkURL2.value)}}" stepKey="seeSlide2LinkURLAdmin"/>
         <seeElement selector="{{SlideOnBackend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.fileType)}}" stepKey="seeSlide2BackgroundAdmin"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
@@ -197,7 +195,7 @@
         <seeElement selector="{{SliderOnFrontend.IsInfinite(PageBuilderSliderIsInfiniteProperty.value)}}" stepKey="seeSliderIsInfiniteSetting"/>
         <seeElement selector="{{SliderOnFrontend.ShowArrows(PageBuilderSliderShowArrowsYesProperty.value)}}" stepKey="seeSliderShowArrowsSetting"/>
         <seeElement selector="{{SliderOnFrontend.ShowDots(PageBuilderSliderShowDotsNoProperty.value)}}" stepKey="seeSliderShowDotsOffOnFrontendSetting"/>
-        <seeElement selector="{{SliderOnFrontend.sliderBorderColor}}" stepKey="seeSliderShowGreenColor"/>
+        <seeElement selector="{{SliderOnFrontend.sliderBorder(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_green.rbg)}}" stepKey="verifyBorderStyleOnStorefront"/>
         <seeElement selector="{{SliderOnFrontend.sliderMinHeight(PageBuilderSliderMinHeight500Property.value)}}" stepKey="verifyMinHeightOnFrontEnd"/>
         <seeElement selector="{{SliderOnFrontend.sliderMarginPaddings(PageBuilderAdvancedMarginsAndPaddingProperty.marginTop, PageBuilderAdvancedMarginsAndPaddingProperty.paddingTop)}}" stepKey="verifySliderMarginPaddingOnFrontEnd"/>
         <comment userInput="Validate Slide 1 on Storefront" stepKey="commentValidateSlide1Storefront"/>
@@ -256,7 +254,7 @@
         <waitForElementVisible stepKey="wait2" selector="{{SlideOnBackend.emptyslide}}" time="10"/>
         <grabTextFrom selector="{{SlideOnBackend.emptyslide}}" stepKey="grabNameFromEmptySlide"/>
         <assertEquals stepKey="assertEditSlideOnEmptyPreview" message="Empty slide says Edit slide text on admin preview">
-            <expectedResult type="string">Edit slide text</expectedResult>
+            <expectedResult type="string">Edit Slide Text</expectedResult>
             <actualResult type="variable">grabNameFromEmptySlide</actualResult>
         </assertEquals>
         <!-- Verify Poster overlay -->
@@ -276,7 +274,7 @@
         <assertElementContainsAttribute selector="{{SliderInAdmin.posterOverlay}}" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40px"/>
         <!-- Empty slide no border -->
         <comment userInput="User sees no slide border by default" stepKey="AC6"/>
-        <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border: none;" stepKey="verifyBorderNone"/>
+        <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border-style: none;" stepKey="verifyBorderNone"/>
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0"/>
         <!-- Slide order in option panel -->
         <comment userInput="User sees Slide order number in slide option panel" stepKey="AC7"/>
@@ -301,11 +299,11 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible time="10" selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <comment userInput="Verify slide defaults on storefront: margin 0 px by default" stepKey="storefrontDefaultMargin"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="margin: 0px;" stepKey="verifyMargin0pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: paddings 40 px by default" stepKey="storefrontDefaultPadding"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultOverlay}}" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40pxStorefront"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="padding: 40px;" stepKey="verifyPadding40pxStorefront"/>
         <comment userInput="Verify slide defaults on storefront: User sees no slide border by default" stepKey="storefrontDefaultBorder"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-border" expectedValue="none" stepKey="verifyBorderNoneStorefront"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="border-style: none" stepKey="verifyBorderNoneStorefront"/>
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0Storefront"/>
         <comment userInput="Verify slide defaults on storefront: Appearance defaults to Poster" stepKey="storefrontDefaultAppearance" />
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-appearance" expectedValue="poster" stepKey="slideStorefrontPoster"/>
@@ -313,24 +311,20 @@
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultImage}}" attribute="style" expectedValue="min-height: 300px;" stepKey="slideStorefrontMinHeight"/>
         <comment userInput="Verify slide background defaults on storefront: Background Color defaults to empty" stepKey="storefrontDefaultColor" />
         <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultOverlay}}" attribute="style" expectedValue="background-color: transparent;" stepKey="slideStorefrontBackgroundColor"/>
-        <comment userInput="Verify slide background defaults on storefront: Background Image defaults to empty" stepKey="storefrontDefaultImage"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slideDefaultImage}}" attribute="style" expectedValue="background-image: none;" stepKey="slideStorefrontBackgroundImage"/>
         <comment userInput="Verify slide background defaults on storefront: Background Position defaults to Top Aligned" stepKey="storefrontDefaultPosition"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="background-position: left top;" stepKey="slideStorefrontPosition"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-position: left top;" stepKey="slideStorefrontPosition"/>
         <comment userInput="Verify slide background defaults on storefront: Background Size defaults to Cover" stepKey="storefrontDefaultSize"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="background-size: cover;" stepKey="slideStorefrontSize"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-size: cover;" stepKey="slideStorefrontSize"/>
         <comment userInput="Verify slide background defaults on storefront: Background Repeat defaults to No" stepKey="storefrontDefaultRepeat"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="background-repeat: no-repeat;" stepKey="slideStorefrontRepeat"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-repeat: no-repeat;" stepKey="slideStorefrontRepeat"/>
         <comment userInput="Verify slide background defaults on storefront: Background Attachment defaults to Scroll" stepKey="storefrontDefaultAttachment"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="style" expectedValue="background-attachment: scroll;" stepKey="slideStorefrontScroll"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}} .pagebuilder-slide-wrapper" attribute="style" expectedValue="background-attachment: scroll;" stepKey="slideStorefrontScroll"/>
         <comment userInput="Slide Content WYSIWYG defaults to empty" stepKey="storefrontDefaultContent" />
         <dontSeeInPageSource userInput="Edit slide text" stepKey="dontSeeDummyTextInPageSource"/>
         <comment userInput="Verify slide content defaults on storefront: Show Button defaults to Never Show" stepKey="storefrontDefaultShowButton"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-button" expectedValue="never_show" stepKey="slideStorefrontShowButton"/>
-        <comment userInput="Verify slide content defaults on storefront: Button Type defaults to Primary" stepKey="storefrontDefaultButtonType"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-button-type" expectedValue="pagebuilder-button-primary" stepKey="slideStorefrontButtonType"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-button" expectedValue="never" stepKey="slideStorefrontShowButton"/>
         <comment userInput="Verify slide content defaults on storefront: Show Overlay defaults to Never Show" stepKey="storefrontDefaultOverlay"/>
-        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-overlay" expectedValue="never_show" stepKey="slideStorefrontShowOverlay"/>
+        <assertElementContainsAttribute selector="{{SlideOnFrontend.slide('1')}}" attribute="data-show-overlay" expectedValue="never" stepKey="slideStorefrontShowOverlay"/>
     </test>
     <test name="CanManageSlides">
         <annotations>
@@ -1369,5 +1363,115 @@
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
+    </test>
+    <test name="SlideBorderIsVisible">
+        <annotations>
+            <features value="Pagebuilder: Slider"/>
+            <stories value="MAGETWO-91186: Pagebuilder - Slide Border Cuts Off Right Side On Storefront"/>
+            <title value="Slide border is visible in storefront"/>
+            <description value="User should be able to add a border to a slide and see all sides of the border visible on the storefront"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92372"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Fill Out Edit Panel -->
+        <comment userInput="Edit Advanced settings for slider" stepKey="EditSliderAdvanced"/>
+        <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
+        <actionGroup ref="selectSlideOutPanelField" stepKey="enterAdvancedBorderProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderPropertySolid"/>
+        </actionGroup>
+        <comment userInput="I fill out color into Border Color using Color Picker" stepKey="comment2"/>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor2">
+            <argument name="colorCode" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField2">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderWidthProperty">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty10"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Validate Storefront -->
+        <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <executeJS function="{{SlideOnFrontend.computedBoxSizing}}" stepKey="actualBoxSizingStyle"/>
+        <assertEquals stepKey="assertBoxSizingStyle">
+            <expectedResult type="string">border-box</expectedResult>
+            <actualResult type="variable">actualBoxSizingStyle</actualResult>
+        </assertEquals>
+    </test>
+    <test name="SliderCanBeNavigatedQuickly">
+        <annotations>
+            <features value="Pagebuilder: Slider"/>
+            <title value="Ability to navigate between slides quickly"/>
+            <description value="Navigating between slides whilst the animation is still running should still result in the correct slide being show."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-92363"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutSlideOneColour">
+            <argument name="colorCode" value="PageBuilderBackgroundColorProperty_087E8B"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="duplicateSlide" stepKey="duplicateSlide" />
+        <actionGroup ref="openSlideOptionsByIndex" stepKey="openFirstSlideOptions">
+            <argument name="index" value="2"/>
+        </actionGroup>
+        <actionGroup ref="fillOutColorPicker" stepKey="fillOutSlideTwoColour">
+            <argument name="colorCode" value="PageBuilderBackgroundColorProperty_3C3C3C"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettingsForSlideTwo"/>
+        <!-- Switch to first slide -->
+        <waitForElementVisible selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="waitForSliderDot1"/>
+        <click selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="clickSliderDot1"/>
+        <!-- Then quickly back to the second -->
+        <wait time="0.1" stepKey="waitForPartialNavigation"/>
+        <waitForElementVisible selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="waitForSliderDot2"/>
+        <click selector="{{SliderInAdmin.slideNavigationDot('2')}}" stepKey="clickSliderDot2"/>
+        <!-- Then quickly back to the first -->
+        <wait time="0.1" stepKey="waitForPartialNavigation1"/>
+        <waitForElementVisible selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="waitForSliderDot3"/>
+        <click selector="{{SliderInAdmin.slideNavigationDot('1')}}" stepKey="clickSliderDot3"/>
+        <waitForElementVisible selector="{{SlideOnBackend.slide('1')}}" stepKey="waitForSlideOneVisible"/>
     </test>
 </tests>
