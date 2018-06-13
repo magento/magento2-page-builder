@@ -225,7 +225,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <executeJS function="return (document.querySelectorAll('body script')[1].innerHTML).match(/(?&lt;=mapStyle:\s').+(?=')/)" stepKey="mapStyle1"/>
+        <executeJS function="return document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)" stepKey="mapStyle1"/>
         <assertEquals stepKey="assertMapStyle1">
             <actualResult type="variable">$mapStyle1</actualResult>
             <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
@@ -233,7 +233,6 @@
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <!-- Storefront: Validate Map Style Changed -->
         <comment userInput="Storefront: Validate Map Style Changed" stepKey="commentValidate2"/>
@@ -241,7 +240,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + (document.querySelectorAll('body script')[1].innerHTML).match(/(?&lt;=mapStyle:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle2"/>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle2"/>
         <assertEquals stepKey="assertMapStyle2">
             <actualResult type="variable">$mapStyle2</actualResult>
             <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
@@ -254,7 +253,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront4">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + (document.querySelectorAll('body script')[1].innerHTML).match(/(?&lt;=mapStyle:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle3"/>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle3"/>
         <assertEquals stepKey="assertMapStyle3">
             <actualResult type="variable">$mapStyle3</actualResult>
             <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
@@ -265,10 +264,64 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront5">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <executeJS function="return (document.querySelectorAll('body script')[1].innerHTML).match(/(?&lt;=mapStyle:\s').+(?=')/)" stepKey="mapStyle4"/>
+        <executeJS function="return document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)" stepKey="mapStyle4"/>
         <assertEquals stepKey="assertMapStyle4">
             <actualResult type="variable">$mapStyle4</actualResult>
             <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
+        </assertEquals>
+    </test>
+    <test name="MapRendersNewGoogleMapsStyleOnStageImmediately">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Google Maps Style"/>
+            <title value="Map Renders New Google Maps Style On Stage Without Cache Refresh"/>
+            <description value="A change to the Google Maps Style should immediately take affect on the stage without a cache refresh"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-89028"/>
+            <testCaseId value="MAGETWO-92778"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsStyle"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!--Set Google Maps Style -->
+        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
+            <argument name="style" value="{{googleMapsStyle.validShort}}"/>
+        </actionGroup>
+        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <!-- Stage: Validate Map Style Changed -->
+        <comment userInput="Stage: Validate Map Style Changed" stepKey="commentValidate1"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle1"/>
+        <assertEquals stepKey="assertMapStyle1">
+            <actualResult type="variable">$mapStyle1</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
         </assertEquals>
     </test>
 </tests>
