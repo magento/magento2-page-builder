@@ -111,10 +111,11 @@ Inline styles
 9. border-color
 10. border-width
 11. border-radius
-12. margin
-13. padding
-14. align-self
-15. min-height
+12. min-height
+13. width
+14. margin
+15. padding
+16. align-self
 
 ## Tabs
 
@@ -483,7 +484,8 @@ Inline styles
 ## Slider
 
 ```
-<div data-role="slider" data-appearance="default" style="..."></div>
+<div class="pagebuilder-slider" data-role="slider" data-appearance="default" data-autoplay="0"
+     data-autoplay-speed="4000" data-fade="0" data-show-arrows="0" data-show-dots="1" style="...">
 ```
 
 Attributes
@@ -492,7 +494,7 @@ Attributes
 3. data-autoplay
 4. data-autoplay-speed
 5. data-fade
-6. data-is-infinite
+6. data-infinite-loop
 7. data-show-arrows
 8. data-show-dots
 9. class
@@ -512,21 +514,21 @@ Inline styles
 Poster
 
 ```
-<div data-role="slide" data-appearance="poster" data-overlay-color="rgb(0, 0, 0)" data-appearance="poster" style="...">
-    <a href="" target="">
-        <div class="wrapper pagebuilder-mobile-only">
-            <div style="" class="overlay">
-                <div class="content">
+<div data-role="slide" data-slide-name="" data-appearance="poster" data-show-button="hover" data-show-overlay="always" style="...">
+    <a href="" target="" data-link-type="default">
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
+                <div class="pagebuilder-poster-content">
                     <div>Content</div>
-                    <button type="button" style="" class="action primary" >Button Text</button>
+                    <button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
                 </div>
             </div>
         </div>
-        <div style="" class="wrapper">
-            <div style="" class="overlay">
-                <div class="content">
-                    <div>Banner content</div>
-                    <button type="button" style="" class="action primary">Button Text</button>
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-only" style="">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
+                <div class="pagebuilder-poster-content">
+                    <div>Content</div>
+                    <button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
                 </div>
             </div>
         </div>
@@ -537,22 +539,21 @@ Poster
 Collage Left
 
 ```
-<div data-role="slide" data-appearance="collage-left" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-left" style="" class="pagebuilder-banner">
-    <a href="" target="">
-        <div style=""
-             class="pagebuilder-mobile-only wrapper">
-            <div style="" class="overlay>
-                <div class="content">
-                    <div>Banner content</div>
-                    <button style="" class="action primary">Banner Text</button>
+<div data-role="slide" data-slide-name="" data-appearance="collage-left" data-show-button="hover" data-show-overlay="always" style="...">
+    <a href="" target="" data-link-type="default">
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
+            <div class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
+                <div class="pagebuilder-collage-content">
+                    <div>Content</div>
+                    <button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
                 </div>
             </div>
         </div>
-        <div style="" class="pagebuilder-mobile-only wrapper">
-            <div style="" class="overlay">
-                <div class="content">
-                    <div>Banner content</div>
-                    <button style="" class="action primary">Button Text</button>
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-only" style="">
+            <div class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
+                <div class="pagebuilder-collage-content">
+                    <div>Content</div>
+                    <button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
                 </div>
             </div>
         </div>
@@ -563,45 +564,46 @@ Collage Left
 Collage Centered
 
 ```
-<div data-role="slide" data-appearance="collage-centered" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-center" style="" class="pagebuilder-banner">
-    <a href="" target="">
-        <div style="" class="pagebuilder-desktop-only wrapper">
-            <div class="overlay">
-                <div class="content">
-                    <div>Button content</div>
-                    <button style="" class="action primary">Button Text</button>
+<div data-role="slide" data-slide-name="" data-appearance="collage-centered" data-show-button="hover" data-show-overlay="always" style="...">
+    <a href="" target="" data-link-type="default">
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
+            <div class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
+                <div class="pagebuilder-collage-content">
+                    <div>Content</div>
+                    <button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
                 </div>
             </div>
         </div>
-        <div style="" class="pagebuilder-mobile-only wrapper">
-            <div style="" class="overlay">
-                <div class="content">
-                    <div>Banner content</div>
-                    <button style="" class="action primary">Button Text</button>
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-only" style="">
+            <div class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
+                <div class="pagebuilder-collage-content">
+                    <div>Content</div>
+                    <button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
                 </div>
             </div>
         </div>
     </a>
 </div>
 ```
+
 Collage Right
 
 ```
-<div data-role="slide" data-appearance="collage-right" data-overlay-color="rgb(0, 0, 0)" data-appearance="collage-right" style="" class="pagebuilder-banner">
-    <a href="" target="">
-        <div style="" class="pagebuilder-desktop-only wrapper">
-            <div style="" class="overlay">
-                <div class="content">
-                    <div data-bind="html: getContentHtml()"></div>
-                    <button style="" class="action primary">Button Text</button>
+<div data-role="slide" data-slide-name="" data-appearance="collage-right" data-show-button="hover" data-show-overlay="always" style="...">
+    <a href="" target="" data-link-type="default">
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden" style="...">
+            <div class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
+                <div class="pagebuilder-collage-content">
+                    <div>Content</div>
+                    <button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
                 </div>
             </div>
         </div>
-        <div style="" class="pagebuilder-mobile-only wrapper">
-            <div style="" class="overlay">
-                <div class="content">
-                    <div>Banner content</div>
-                    <button style="" class="action primary">Button Text</button>
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-only" style="">
+            <div class="pagebuilder-overlay" data-overlay-color="rgba(255,255,255,0.5)" style="">
+                <div class="pagebuilder-collage-content">
+                    <div>Content</div>
+                    <button type="button" class="pagebuilder-slide-button pagebuilder-button-primary" style="">Button Text</button>
                 </div>
             </div>
         </div>
@@ -613,36 +615,28 @@ Collage Right
 
 Attributes
 1. data-role [slide]
-2. data-appearance [poster, collage-left, collage-centered, collage-right]
-3. data-show-button
-4. data-show-overlay
-5. class
+2. data-slide-name
+3. data-appearance [poster, collage-left, collage-centered, collage-right]
+4. data-show-button
+5. data-show-overlay
 
 Inline styles
 1. border-style
 2. border-color
 3. border-width
 4. border-radius
-5. margin
 
 ### link element
 
 Attributes
-1. data-role
-2. data-appearance
-3. href
-4. target
-5. data-link-type
+1. href
+2. target
+3. data-link-type
 
 ### overlay element
 
 Attributes
-1. data-role
-2. data-appearance
-3. data-link-type
-4. data-overlay-color
-5. href
-6. target
+1. data-overlay-color
 
 Inline styles
 1. background-color
@@ -657,7 +651,7 @@ Inline styles
 5. background-repeat
 6. background-attachment
 7. text-align
-8. padding
+8. margins-and-padding
 9. min-height
 
 
@@ -671,7 +665,7 @@ Inline styles
 5. background-repeat
 6. background-attachment
 7. text-align
-8. padding
+8. margins-and-padding
 9. min-height
 
 ### content element
