@@ -134,9 +134,11 @@ define([
                     config = {
                         html_variable: 'myhtml'
                     },
-                    attributes = '{{widget ' +
-                        'products_count="123" ' +
-                        'conditions_encoded="^[`1`:^[`type`:`My||Type`,`aggregator`:`all`^]^]"}}',
+                    attributes = {
+                        myhtml: '{{widget ' +
+                            'products_count="123" ' +
+                            'conditions_encoded="^[`1`:^[`type`:`My||Type`,`aggregator`:`all`^]^]"}}'
+                    },
                     result = model.fromDom(attributes, config);
 
                 expect(result.products_count).toBe(expected.products_count);

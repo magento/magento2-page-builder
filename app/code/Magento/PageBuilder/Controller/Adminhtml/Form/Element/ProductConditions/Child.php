@@ -18,7 +18,7 @@ class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
     /**
      * @var \Magento\CatalogWidget\Model\Rule
      */
-    protected $rule;
+    private $rule;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
