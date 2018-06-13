@@ -49,7 +49,7 @@ class Widgets extends Template
                 if (isset($item['appearance'])) {
                     $selector .= sprintf('[data-appearance="%s"]', $item['appearance']);
                 }
-                $componentConfig = isset($item['config']) ? $item['config'] : [];
+                $componentConfig = isset($item['config']) ? $item['config'] : '{}';
                 $resultConfig[$selector] = [$item['component'] => $componentConfig];
             }
 
