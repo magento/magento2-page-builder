@@ -15,9 +15,9 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
         $invoker(
             /**
              * @param string $filename
-             * @param string $baseForm
+             * @param string $expectedBaseForm
              */
-            function ($filename, $baseForm) {
+            function ($filename, $expectedBaseForm) {
                 $dom = new \DOMDocument();
                 $dom->loadXML(file_get_contents($filename));
                 $errors = libxml_get_errors();
@@ -30,9 +30,9 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
                 );
 
                 $this->assertEquals(
-                    $baseForm,
+                    $expectedBaseForm,
                     $dom->getElementsByTagName('form')->item(0)->getAttribute('extends'),
-                    'The XML file ' . $filename . ' does not extend "'. $baseForm . '"'
+                    'The XML file ' . $filename . ' does not extend "'. $expectedBaseForm . '"'
                 );
             },
             $this->getXmlFiles()
@@ -43,11 +43,11 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
     {
         $data = [];
         $ignoreFiles = [
-            'pagebuilder_base_form.xml',
-            'pagebuilder_modal_form.xml',
-            'pagebuilder_map_location_form.xml'
+            'pagebuilder_modal_form.xml'
         ];
         $overrideFiles = [
+            'pagebuilder_base_form.xml' => '',
+            'pagebuilder_map_location_form.xml' => '',
             'pagebuilder_banner_form.xml' => 'pagebuilder_base_form_with_background_attributes'
         ];
         $componentRegistrar = new ComponentRegistrar();
@@ -56,14 +56,11 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
 
         $files = glob($dir . 'pagebuilder_*.xml', GLOB_NOSORT);
         foreach ($files as $file) {
-            $baseForm = 'pagebuilder_base_form';
             $fileName = substr($file, strlen($dir));
             if (in_array($fileName, $ignoreFiles)) {
                 continue;
             }
-            if (array_key_exists($fileName, $overrideFiles)) {
-                $baseForm = $overrideFiles[$fileName];
-            }
+            $baseForm = $overrideFiles[$fileName] ?? 'pagebuilder_base_form';
             $data[$fileName] = [$file, $baseForm];
         }
 
