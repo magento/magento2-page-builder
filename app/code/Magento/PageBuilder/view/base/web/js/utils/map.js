@@ -36,7 +36,8 @@ define([
     // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
     return function (element, markers, options) {
-        var mapOptions;
+        var mapOptions,
+            mapStyle;
 
         /**
          * Replace the content of element with a placeholder
@@ -59,6 +60,16 @@ define([
             return;
         }
 
+        /**
+         * Just in case of a bad JSON that bypassed validation
+         */
+        try {
+            mapStyle = module.config().mapStyle ? JSON.parse(module.config().mapStyle) : [];
+        }
+        catch (e) {
+            mapStyle = [];
+        }
+
         mapOptions = _.extend({
             zoom: 8,
             center: getGoogleLatitudeLongitude({
@@ -72,7 +83,7 @@ define([
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
             },
-            styles: module.config().mapStyle ? JSON.parse(module.config().mapStyle) : []
+            styles: mapStyle
         }, options);
 
         /* Create the map */
