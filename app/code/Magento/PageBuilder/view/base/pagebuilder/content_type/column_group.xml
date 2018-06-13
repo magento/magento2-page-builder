@@ -22,11 +22,19 @@
             <is_visible>false</is_visible>
             <appearances>
                 <appearance default="true" name="default">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <attributes>
+                                    <attribute name="name" source="data-role"/>
+                                    <attribute name="appearance" source="data-appearance"/>
+                                </attributes>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/content-type/column-group/default/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/column-group/default/master</render_template>
-                    <readers>
-                        <reader component="Magento_PageBuilder/js/master-format/read/default" name="default"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

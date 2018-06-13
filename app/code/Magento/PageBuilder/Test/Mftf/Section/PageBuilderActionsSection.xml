@@ -52,7 +52,7 @@
         <element name="contentTypeInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentTypeContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
         <element name="contentTypeInsideContainerStage" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}]//div[contains(@class,"pagebuilder-content-type-wrapper")][{{arg3}}]//div[contains(@class,"pagebuilder-{{arg4}}")][{{arg5}}]' parameterized="true"/>
-        <element name="contentTypeInsideContainerStorefront" type="button" selector='(//div[@class="pagebuilder-{{arg1}}"])[{{arg2}}]//div[@data-role="{{arg3}}"][{{arg4}}]' parameterized="true"/>
+        <element name="contentTypeInsideContainerStorefront" type="button" selector='(//div[@data-role="{{arg1}}"])[{{arg2}}]//div[@data-role="{{arg3}}"][{{arg4}}]' parameterized="true"/>
         <element name="contentTypePreviewInStage" type="button" selector="div.pagebuilder-{{arg1}}.pagebuilder-content-type" parameterized="true"/>
         <element name="contentTypeOptionsMenu" type="button" selector='div.pagebuilder-{{arg1}}.pagebuilder-content-type div.pagebuilder-options' parameterized="true"/>
         <element name="contentTypeOptionsMenuByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]//div[contains(@class,"pagebuilder-options-visible")]' parameterized="true"/>
@@ -138,11 +138,11 @@
     </section>
     <section name="ColorPicker">
         <element name="colorSwatch" type="button" selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]"/>
-        <element name="colorBox" type="button" selector="//div[contains(@class,'sp-palette') and @style]//span[@data-color='{{arg1}}']" parameterized="true"/>
-        <element name="firstColorBox" type="button" selector="//div[contains(@class,'sp-palette') and @style]//span[@data-color='rgb(252, 0, 9)']"/>
-        <element name="colorWheel" type="button" selector="//div[contains(@class,'sp-palette') and @style]//div[@class='sp-val']"/>
-        <element name="applyBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style]//button[text()='Apply']"/>
-        <element name="cancelBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style]//a[text()='Cancel']"/>
-        <element name="inputField" type="input" selector="//div[contains(@class,'sp-palette') and @style]//input[@class='sp-input']"/>
+        <element name="colorBox" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//span[@data-color='{{arg1}}']" parameterized="true"/>
+        <element name="firstColorBox" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//span[@data-color='rgb(252, 0, 9)']"/>
+        <element name="colorWheel" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//div[@class='sp-val']"/>
+        <element name="applyBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//button[text()='Apply']"/>
+        <element name="cancelBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//a[text()='Cancel']"/>
+        <element name="inputField" type="input" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//input[@class='sp-input']"/>
     </section>
 </sections>

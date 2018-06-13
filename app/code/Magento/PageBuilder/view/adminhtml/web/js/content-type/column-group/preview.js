@@ -653,10 +653,14 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.onDroppingMouseMove = function onDroppingMouseMove(event, group, groupPosition) {
-      // Only initiate this process if we're within the group by a buffer to allow for sortable to function correctly
+      var elementChildrenParent = group.parents(".element-children"); // Only initiate this process if we're within the group by a buffer to allow for sortable to function correctly
+
       if (this.dropOverElement && event.pageY > groupPosition.top + 20 && event.pageY < groupPosition.top + groupPosition.outerHeight - 20) {
         // Disable the parent sortable instance
-        group.parents(".element-children").sortable("option", "disabled", true);
+        if (elementChildrenParent.data("sortable")) {
+          elementChildrenParent.sortable("option", "disabled", true);
+        }
+
         var currentX = event.pageX - groupPosition.left;
         this.dropPosition = this.dropPositions.find(function (position) {
           return currentX > position.left && currentX < position.right && position.canShrink;
@@ -671,7 +675,10 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         }
       } else if (this.dropOverElement) {
         // Re-enable the parent sortable instance
-        group.parents(".element-children").sortable("option", "disabled", false);
+        if (elementChildrenParent.data("sortable")) {
+          elementChildrenParent.sortable("option", "disabled", false);
+        }
+
         this.dropPosition = null;
         this.dropPlaceholder.removeClass("left right");
       }
