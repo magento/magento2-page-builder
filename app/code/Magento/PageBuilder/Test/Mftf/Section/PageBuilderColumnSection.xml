@@ -61,8 +61,8 @@
     </section>
     <section name="ColumnsOnFrontend">
         <element name="columnGroup" type="block" selector=".pagebuilder-column-group"/>
-        <element name="allColumns" type="block" selector=".pagebuilder-column-group .pagebuilder-column"/>
-        <element name="columnX" type="block" selector=".pagebuilder-column-group .pagebuilder-column:nth-child({{arg}})" parameterized="true"/>
+        <element name="allColumns" type="block" selector="(//div[@data-role='column'])"/>
+        <element name="columnX" type="block" selector="[data-role=column]:nth-child({{arg1}})" parameterized="true"/>
         <element name="columnStyle" type="button" selector="(//div[@data-role='column'])[{{arg1}}][contains(@style, '{{arg2}}')]" parameterized="true"/>
         <element name="column1Height" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'min-height: 500px;')]"/>
         <element name="column1HeightFull" type="button" selector="(//div[@data-role='column'])[1][contains(@style, 'align-self: stretch;')]"/>
@@ -93,7 +93,7 @@
         <element name="backgroundImageSource" type="button" selector="div[data-role='column'][style*='background-image: url'][style*='{{arg1}}'][style*='.{{arg2}}']" parameterized="true"/>
         <element name="columnDisplay" type="button" selector="[data-role='column']:first-child"/>
         <element name="columnTextAlign" type="button" selector="[data-role='column']:first-child[style*='text-align: left;']"/>
-        <element name="columnBorder" type="button" selector="[data-role='column']:first-child[style*='border: 10px dotted rgb(255, 255, 255);']"/>
+        <element name="columnBorder" type="button" selector="[data-role='column']:first-child[style*='border-style: dotted;'][style*='border-color: rgb(255, 255, 255);'][style*='border-width: 10px;']"/>
         <element name="columnBorderRadius" type="button" selector="[data-role='column']:first-child[style*='border-radius: 12px;']"/>
         <element name="columnMargin" type="button" selector="[data-role='column']:first-child[style*='margin: 5px;']"/>
         <element name="columnPadding" type="button" selector="[data-role='column']:first-child[style*='padding: 5px;']"/>

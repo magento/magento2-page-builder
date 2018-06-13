@@ -7,30 +7,37 @@
 //  Default appearance styles
 //  _____________________________________________
 
-[data-role='slide'] > a {
-    color: inherit;
-    text-decoration: inherit;
+[data-role='slide'] {
+    box-sizing: border-box;
 
-    &:hover {
+    > a {
         color: inherit;
         text-decoration: inherit;
+
+        &:hover {
+            color: inherit;
+            text-decoration: inherit;
+        }
     }
 }
 
 .pagebuilder-slide-wrapper {
     box-sizing: border-box;
+
     .pagebuilder-overlay {
         -moz-transition: background-color 500ms ease;
         -o-transition: background-color 500ms ease;
         -webkit-transition: background-color 500ms ease;
         box-sizing: border-box;
         transition: background-color 500ms ease;
+
         &.pagebuilder-poster-overlay {
             align-items: center;
             display: flex;
             justify-content: center;
         }
     }
+
     .pagebuilder-slide-button {
         -moz-transition: opacity 500ms ease;
         -o-transition: opacity 500ms ease;

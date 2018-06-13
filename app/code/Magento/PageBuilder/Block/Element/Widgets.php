@@ -10,6 +10,9 @@ namespace Magento\PageBuilder\Block\Element;
 
 use Magento\Framework\View\Element\Template;
 
+/**
+ * Class Widgets provides configuration for content types widgets need to be loaded on frontend
+ */
 class Widgets extends Template
 {
 
@@ -31,15 +34,14 @@ class Widgets extends Template
         parent::__construct($context, $data);
     }
 
-    public function getConfig()
+    /**
+     * Returns config for widgets initializer component
+     * @return string
+     */
+    public function getConfig() : string
     {
         $widgetsConfig = $this->getData('config');
         $resultConfig = [];
-//        ['div[data-role="slider"][data-appearance="default]' =>
-//            [
-//                'componentName' => ['componentConfig']
-//            ]
-//        ]
         foreach ($widgetsConfig as $contentTypeName => $config) {
             $selector = sprintf('div[data-role="%s"]', $contentTypeName);
             foreach ($config as $appearanceName => $item) {
@@ -57,4 +59,3 @@ class Widgets extends Template
         return $this->jsonEncoder->encode($resultConfig);
     }
 }
-

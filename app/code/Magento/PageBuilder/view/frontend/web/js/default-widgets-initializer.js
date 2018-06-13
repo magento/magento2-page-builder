@@ -23,9 +23,6 @@ define([
         });
     }
 
-    /**
-     * {'
-     */
     return function (data) {
         _.each(data.config, function (componentConfiguration, elementPath) {
             $(elementPath).each(function (index, element) {

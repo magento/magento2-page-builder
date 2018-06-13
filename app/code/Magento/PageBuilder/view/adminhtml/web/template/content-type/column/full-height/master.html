@@ -5,6 +5,9 @@
  */
 -->
 
-<div data-bind="attr: getAttributes(), style: getStyle(), css: getCss()" class="pagebuilder-column">
-    <!-- ko template: renderChildTemplate --><!-- /ko -->
+<div class="pagebuilder-column"
+     attr="data.main.attributes"
+     ko-style="data.main.style"
+     css="data.main.css">
+    <render args="renderChildTemplate"/>
 </div>
