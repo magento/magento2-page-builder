@@ -983,10 +983,10 @@
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+                <argument name="FolderName" value="Storage Root"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+                <argument name="Image" value="PageBuilderBackgroundImageRoot_JPG"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
@@ -1005,13 +1005,13 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="property" value="PageBuilderBackgroundImageRoot_JPG"/>
         </actionGroup>
         <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-            <argument name="FolderName" value="{{PageBuilderBackgroundImage_JPG.path}}"/>
+            <argument name="FolderName" value="Storage Root"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="Image" value="PageBuilderBackgroundImageRoot_JPG"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -1019,14 +1019,12 @@
         <comment userInput="Stage: Check Background Image" stepKey="commentStageCheck"/>
         <!-- Note that Base URL is not added to image url in DOM until after page save -->
         <waitForElementVisible selector="{{BannerOnBackend.base('1')}}" stepKey="waitForBaseElement"/>
-        <waitForElementVisible selector="{{BannerOnBackend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="waitForBackgroundImage"/>
-        <grabAttributeFrom selector="{{BannerOnBackend.backgroundImage('1', PageBuilderBackgroundImage_JPG.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
+        <waitForElementVisible selector="{{BannerOnBackend.backgroundImage('1', PageBuilderBackgroundImageRoot_JPG.fileName)}}" stepKey="waitForBackgroundImage"/>
+        <grabAttributeFrom selector="{{BannerOnBackend.backgroundImage('1', PageBuilderBackgroundImageRoot_JPG.fileName)}}" userInput="style" stepKey="contentTypeStyle"/>
         <!-- Return the string value of background-image -->
         <executeJS function="return '$contentTypeStyle'.match(/((?&lt;=(background-image: url\((&quot;|\'))).+(?=(&quot;|\')\);))/)[0]" stepKey="backgroundImageValue"/>
-        <!-- Convert all characters in string variables to regex friendly strings  -->
-        <executeJS function="return '{{PageBuilderBackgroundImage_JPG.path}}'.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\\\^\\$\|]/g, '\\\\$&amp;')" stepKey="regexFilePath"/>
         <assertRegExp stepKey="assertBackgroundImageContainsFileInformation">
-            <expectedResult type="string">/\/pub\/media.*{$regexFilePath}\/{{PageBuilderBackgroundImage_JPG.fileName}}(_\d+)?\.{{PageBuilderBackgroundImage_JPG.extension}}/</expectedResult>
+            <expectedResult type="string">/\/pub\/media\/{{PageBuilderBackgroundImageRoot_JPG.fileName}}(_\d+)?\.{{PageBuilderBackgroundImageRoot_JPG.extension}}/</expectedResult>
             <actualResult type="variable">$backgroundImageValue</actualResult>
         </assertRegExp>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1035,7 +1033,7 @@
         <comment userInput="Stage: Check Background Image After Save" stepKey="commentStageCheckAfterSave"/>
         <actionGroup ref="validateBackgroundImage" stepKey="validateImageStage2">
             <argument name="section" value="BannerOnBackend"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImageRoot_JPG"/>
         </actionGroup>
         <!-- Edit Panel: Check Background Image -->
         <comment userInput="Edit Panel: Check Background Image" stepKey="commentValidateEditPanel"/>
@@ -1043,7 +1041,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundImage">
-            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="property" value="PageBuilderBackgroundImageRoot_JPG"/>
         </actionGroup>
         <!-- Storefront: Check Background Image -->
         <comment userInput="Storefront: Check Background Image" stepKey="commentStorefrontCheck"/>
@@ -1053,7 +1051,7 @@
         <actionGroup ref="validateBackgroundImage" stepKey="validateImageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="pageNamePrefix" value="banner"/>
-            <argument name="backgroundImage" value="PageBuilderBackgroundImage_JPG"/>
+            <argument name="backgroundImage" value="PageBuilderBackgroundImageRoot_JPG"/>
         </actionGroup>
     </test>
     <test name="BannerBackgroundImageGIF">
@@ -1535,10 +1533,10 @@
         <after>
             <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
             <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-                <argument name="FolderName" value="{{PageBuilderBackgroundMobileImage_JPG.path}}"/>
+                <argument name="FolderName" value="Storage Root"/>
             </actionGroup>
             <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
-                <argument name="Image" value="PageBuilderBackgroundMobileImage_JPG"/>
+                <argument name="Image" value="PageBuilderBackgroundMobileImageRoot_JPG"/>
             </actionGroup>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
@@ -1557,13 +1555,13 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
-            <argument name="property" value="PageBuilderBackgroundMobileImage_JPG"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImageRoot_JPG"/>
         </actionGroup>
         <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
-            <argument name="FolderName" value="{{PageBuilderBackgroundMobileImage_JPG.path}}"/>
+            <argument name="FolderName" value="Storage Root"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="PageBuilderBackgroundMobileImage_JPG"/>
+            <argument name="Image" value="PageBuilderBackgroundMobileImageRoot_JPG"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
@@ -1585,7 +1583,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="validateBackgroundMobileImage">
-            <argument name="property" value="PageBuilderBackgroundMobileImage_JPG"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImageRoot_JPG"/>
         </actionGroup>
         <!-- Storefront: Check Mobile Background Image -->
         <comment userInput="Storefront: Check Mobile Background Image" stepKey="commentStorefrontCheck"/>
@@ -1595,7 +1593,7 @@
         <actionGroup ref="validateBackgroundMobileImage" stepKey="validateImageStorefront">
             <argument name="section" value="BannerOnFrontend"/>
             <argument name="pageNamePrefix" value="banner"/>
-            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImage_JPG"/>
+            <argument name="backgroundMobileImage" value="PageBuilderBackgroundMobileImageRoot_JPG"/>
         </actionGroup>
     </test>
     <test name="BannerBackgroundMobileImageGIF">
@@ -2451,7 +2449,7 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="validateBackgroundRepeat">
             <argument name="property" value="PageBuilderBackgroundRepeat_Disabled"/>
         </actionGroup>
         <!-- Storefront: Check Background Repeat -->
