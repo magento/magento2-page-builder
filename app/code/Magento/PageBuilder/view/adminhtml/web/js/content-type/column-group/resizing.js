@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/utils/array"], function (_array) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/array"], function (_config, _array) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -11,7 +11,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
    * @returns {number}
    */
   function getMaxColumns() {
-    return 6;
+    var stageConfig = _config.getConfig("stage_config");
+
+    return stageConfig.column_grid_size;
   }
   /**
    * Get the smallest column width possible

@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
 import {outwardSearch} from "../../utils/array";
 import Column from "../column/preview";
@@ -14,7 +15,8 @@ import {ColumnWidth, GroupPositionCache, MaxGhostWidth, ResizeHistory} from "./p
  * @returns {number}
  */
 export function getMaxColumns() {
-    return 6;
+    const stageConfig = Config.getConfig("stage_config");
+    return stageConfig.column_grid_size;
 }
 
 /**
