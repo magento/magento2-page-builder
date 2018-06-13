@@ -12,6 +12,7 @@ use Magento\Framework\View\Element\Template;
 
 /**
  * Class Widgets provides configuration for content types widgets need to be loaded on frontend
+ * @api
  */
 class Widgets extends Template
 {
@@ -44,7 +45,7 @@ class Widgets extends Template
         $resultConfig = [];
         foreach ($widgetsConfig as $contentTypeName => $config) {
             $selector = sprintf('div[data-role="%s"]', $contentTypeName);
-            foreach ($config as $appearanceName => $item) {
+            foreach ($config as $item) {
                 if (!isset($item['component'])) {
                     continue;
                 }
@@ -54,7 +55,6 @@ class Widgets extends Template
                 $componentConfig = isset($item['config']) ? $item['config'] : '{}';
                 $resultConfig[$selector] = [$item['component'] => $componentConfig];
             }
-
         }
         return $this->jsonEncoder->encode($resultConfig);
     }
