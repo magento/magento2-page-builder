@@ -38,6 +38,7 @@ export default class AttributeFilter {
         "enable_parallax",
         "parallax_speed",
         "border",
+        "vertical_alignment",
     ];
 
     /**
