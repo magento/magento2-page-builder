@@ -1,3 +1,7 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 define([
     'jquery',
     'jquery/ui'
@@ -11,6 +15,7 @@ define([
         $.ui.tabs({
             active: $element.data('activeTab') || 0,
             create:
+
                 /**
                  * Adjust the margin bottom of the navigation to correctly display the active tab
                  */
