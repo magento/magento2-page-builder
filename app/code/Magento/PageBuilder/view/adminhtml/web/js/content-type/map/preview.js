@@ -14,7 +14,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.element = void 0, _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.element = void 0, _this.mapElement = void 0, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -30,7 +30,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
       _uiEvents.on("googleMaps:authFailure", function () {
         if (_this2.element) {
-          _this2.map.usePlaceholder(_this2.element);
+          _this2.mapElement.usePlaceholder(_this2.element);
         }
       }); // When a map is dropped for the first time open the edit panel
 
@@ -57,7 +57,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
       this.generateMap(element);
       this.element = element;
 
-      if (this.map.map) {
+      if (this.mapElement.map) {
         this.data.main.attributes.subscribe(function () {
           _this3.updateMap();
         });
@@ -86,7 +86,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
         options = mapData.options;
       }
 
-      this.map = new _map(element, locations, options);
+      this.mapElement = new _map(element, locations, options);
     };
     /**
      * Updates map
@@ -97,7 +97,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
 
     _proto.updateMap = function updateMap() {
       var mapData = this.getMapData();
-      this.map.onUpdate(mapData.locations, mapData.options);
+      this.mapElement.onUpdate(mapData.locations, mapData.options);
     };
     /**
      * Get locations, center coordinates, and zoom from data.position

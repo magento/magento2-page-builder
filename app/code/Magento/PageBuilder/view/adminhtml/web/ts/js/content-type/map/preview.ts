@@ -10,6 +10,7 @@ import BasePreview from "../preview";
 export default class Preview extends BasePreview {
 
     private element: Element;
+    private mapElement: GoogleMap;
 
     /**
      * Open edit menu on map content type drop with a delay of 300ms
@@ -20,7 +21,7 @@ export default class Preview extends BasePreview {
         // When the map api key fails, empties out the content type and adds the placeholder
         events.on("googleMaps:authFailure", () => {
             if (this.element) {
-                this.map.usePlaceholder(this.element);
+                this.mapElement.usePlaceholder(this.element);
             }
         });
 
@@ -43,7 +44,7 @@ export default class Preview extends BasePreview {
     public renderMap(element: Element) {
         this.generateMap(element);
         this.element = element;
-        if (this.map.map) {
+        if (this.mapElement.map) {
             this.data.main.attributes.subscribe(() => {
                 this.updateMap();
             });
@@ -70,7 +71,7 @@ export default class Preview extends BasePreview {
             locations = mapData.locations;
             options = mapData.options;
         }
-        this.map = new GoogleMap(element, locations, options);
+        this.mapElement = new GoogleMap(element, locations, options);
     }
 
     /**
@@ -80,7 +81,7 @@ export default class Preview extends BasePreview {
      */
     private updateMap() {
         const mapData = this.getMapData();
-        this.map.onUpdate(mapData.locations, mapData.options);
+        this.mapElement.onUpdate(mapData.locations, mapData.options);
     }
 
     /**
