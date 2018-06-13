@@ -13,15 +13,14 @@
         <element name="Autoplay" type="button" selector="div[data-role='slider'][data-autoplay='{{arg1}}']" parameterized="true"/>
         <element name="AutoplaySpeed" type="button" selector=".pagebuilder-slider[data-autoplay-speed='{{arg1}}']" parameterized="true"/>
         <element name="Fade" type="button" selector="div[data-role='slider'][data-fade='{{arg1}}']" parameterized="true"/>
-        <element name="IsInfinite" type="button" selector="div[data-role='slider'][data-is-infinite='{{arg1}}']" parameterized="true"/>
+        <element name="IsInfinite" type="button" selector="div[data-role='slider'][data-infinite-loop='{{arg1}}']" parameterized="true"/>
         <element name="ShowArrows" type="button" selector="div[data-role='slider'][data-show-arrows='{{arg1}}']" parameterized="true"/>
         <element name="ShowDots" type="button" selector="div[data-role='slider'][data-show-dots='{{arg1}}']" parameterized="true"/>
         <element name="nextSlide" type="button" selector="[data-role='slider'] .slick-next"/>
         <element name="slideNavigator" type="button" selector="(//div[@data-role='slider']//button)[{{arg1}}]" parameterized="true"/>
         <element name="sliderMinHeight" type="button" selector="div[style*='min-height: {{arg1}}']" parameterized="true"/>
         <element name="sliderAlignment" type="button" selector="div[style*='text-align: {{arg1}}']" parameterized="true"/>
-        <element name="sliderBorderColor" type="button" selector="//div[contains(@style,'border: 10px dotted rgb(0, 128, 0)')]"/>
-        <element name="sliderBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="sliderBorder" type="button" selector="div.pagebuilder-slider[style*='border-width: {{arg1}}px'][style*='border-style: {{arg2}}'][style*='border-color: {{arg3}}']" parameterized="true"/>
         <element name="sliderBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="sliderClass" type="button" selector="div[data-role='slider'][class='{{arg1}}']" parameterized="true"/>
         <element name="sliderMarginPaddings" type="button" selector="div.pagebuilder-slider[style*='margin: {{arg1}}px; padding: {{arg2}}px;']" parameterized="true"/>
@@ -33,10 +32,11 @@
         <element name="slideOptionsTitle" type="button" selector="//div[contains(@class, 'navigation-dot active')]//li[contains(@class, 'pagebuilder-options-link')]//div[contains(@class, 'option-title')]"/>
         <element name="slideOptionsEdit" type="button" selector="//div[contains(@class, 'navigation-dot active')]//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'edit-content-type')]"/>
         <element name="slideOptionsRemove" type="button" selector="//div[contains(@class, 'navigation-dot active')]//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'remove-structural')]"/>
+        <element name="slideOptionsDuplicate" type="button" selector="//div[contains(@class, 'navigation-dot active')]//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'duplicate-structural')]"/>
         <element name="slideOptionsRemoveDisabled" type="button" selector="//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'disabled')]"/>
         <element name="sliderOptions" type="button" selector="//div[contains(@class, 'pagebuilder-slider')]//ul[contains(@class, 'pagebuilder-options-links')]"/>
         <element name="addNewSlide" type="button" selector="div.pagebuilder-slider div.pagebuilder-options ul.pagebuilder-options-links li.pagebuilder-options-link a.add-child"/>
-        <element name="default" type="button" selector="(//div[@class='slider-container'])[{{arg1}}][@style='border: {{arg2}}; border-radius: {{arg3}}px; margin: {{arg4}}px; padding: {{arg5}}px; min-height: {{arg6}}px;']" parameterized="true"/>
+        <element name="default" type="button" selector="(//div[@class='slider-container'])[{{arg1}}][(contains(@style, 'border-style: {{arg2}}')) and contains(@style, 'border-radius: {{arg3}}px') and contains(@style, 'margin: {{arg4}}px') and contains(@style, 'padding: {{arg5}}px') and contains(@style, 'min-height: {{arg6}}px')]" parameterized="true"/>
         <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
         <element name="firstSlideNavigationDot" type="button" selector="(//div[contains(@class, 'navigation-dot')])[1]"/>
         <element name="activeSlideTooltip" type="button" selector="//div[contains(@class, 'navigation-dot')]//span[contains(@role, 'tooltip')]"/>
@@ -51,7 +51,7 @@
         <element name="ShowDots" type="button" selector="div[data-role='slider'][data-show-dots='{{arg1}}']" parameterized="true"/>
         <element name="sliderMinHeight" type="button" selector="div.slider-container[style*='min-height: {{arg1}}']" parameterized="true"/>
         <element name="sliderAlignment" type="button" selector="div.slider-container[style*='text-align: {{arg1}}']" parameterized="true"/>
-        <element name="sliderBorderStyle" type="button" selector="div.slider-container[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="sliderBorder" type="button" selector="div.slider-container[style*='border-width: {{arg1}}px'][style*='border-style: {{arg2}}'][style*='border-color: {{arg3}}']" parameterized="true"/>
         <element name="sliderBorderRadiusStyle" type="button" selector="div.slider-container[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="sliderMarginPaddings" type="button" selector="div.slider-container[style*='margin: {{arg1}}px; padding: {{arg2}}px;']" parameterized="true"/>
         <element name="slideWrapper" type="button" selector=".pagebuilder-slide-wrapper"/>
@@ -105,7 +105,7 @@
         <element name="collageLeft" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(50% + 40px) 40px 40px'][style*='magento']"/>
         <element name="collageCentered" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px calc(25% + 40px)'][style*='magento']"/>
         <element name="collageRight" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='40px 40px 40px calc(50% + 40px)'][style*='magento']"/>
-        <element name="collageMargin" type="button" selector="div[data-role='slide'][style*='margin: 1px 2px 3px 4px']"/>
+        <element name="collageMargin" type="button" selector="div[data-role='slide'] .pagebuilder-slide-wrapper[style*='margin: 1px 2px 3px 4px']"/>
         <element name="collageMinHeight" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-hidden[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
         <element name="collageAlignment" type="button" selector="div[data-role='slide'] .pagebuilder-slide-wrapper[style*='text-align: center']"/>
         <element name="collageMobileWithoutMobileImage" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='padding: 40px;'][style*='magento']"/>
@@ -125,23 +125,24 @@
         <element name="collageMinHeightMobile" type="button" selector="div[data-role='slide'] .pagebuilder-mobile-only[style*='min-height: {{arg1}}px'][style*='magento']" parameterized="true"/>
         <element name="collageOverlay" type="button" selector=".pagebuilder-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
-        <element name="slideBorderStyle" type="button" selector="div[data-role='slide'][style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="slideBorderStyle" type="button" selector="div[data-role='slide'][style*='border-width: {{arg1}}px'][style*='border-style: {{arg2}}'][style*='border-color: {{arg3}}']" parameterized="true"/>
         <element name="slideBorderRadiusStyle" type="button" selector="div[data-role='slide'][style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="slideClass" type="button" selector="div[data-role='slide'][class*='{{arg1}}']" parameterized="true"/>
+        <element name="computedBoxSizing" type="button" selector="return window.getComputedStyle(document.querySelector('[data-role=slide]')).boxSizing"/>
     </section>
     <section name="SlideOnBackend">
         <element name="optionTitle" type="button" selector=".pagebuilder-slider .navigation-dot.active .option-title"/>
         <element name="collageOverlayGeneral" type="button" selector=".pagebuilder-collage-overlay"/>
         <element name="slideAppearancePoster" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-poster-content" parameterized="true"/>
-        <element name="slideAppearanceCollageLeft" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [style*='40px calc(50% + 40px) 40px 40px']" parameterized="true"/>
-        <element name="slideAppearanceCollageCenter" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [style*='40px calc(25% + 40px)']" parameterized="true"/>
-        <element name="slideAppearanceCollageRight" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [style*='40px 40px 40px calc(50% + 40px)']" parameterized="true"/>
+        <element name="slideAppearanceCollageLeft" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [data-appearance*='collage-left']" parameterized="true"/>
+        <element name="slideAppearanceCollageCenter" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [data-appearance*='collage-centered']" parameterized="true"/>
+        <element name="slideAppearanceCollageRight" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide [data-appearance*='collage-right']" parameterized="true"/>
         <element name="slideName" type="button" selector="[data-slick-index='{{arg1}}'] [data-bind='text: previewData.name()']" parameterized="true"/>
         <element name="slideContent" type="text" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide div p" parameterized="true"/>
         <element name="slideButtonText" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide-button span" parameterized="true"/>
         <element name="slideLinkURL1" type="button" selector="[data-slick-index='0'] .pagebuilder-slide-button[data-link-url='{{arg1}}']" parameterized="true"/>
         <element name="slideLinkURL2" type="button" selector="[data-slick-index='1'] .pagebuilder-slide-button[data-link-url='{{arg1}}']" parameterized="true"/>
-        <element name="slideBackgroundImage" type="text" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide >div[style*='background-image: url'][style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
+        <element name="slideBackgroundImage" type="text" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide-wrapper >div[style*='background-image: url'][style*='{{arg2}}'][style*='{{arg3}}']" parameterized="true"/>
         <element name="slide" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-slide" parameterized="true"/>
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
         <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
@@ -156,15 +157,15 @@
         <element name="paddingLeftInput" type="button" selector="[name='paddingLeft']"/>
         <element name="paddingBottomInput" type="button" selector="[name='paddingBottom']"/>
         <element name="paddingRightInput" type="button" selector="[name='paddingRight']"/>
-        <element name="emptyslide" type="button" selector="//div[contains(@class, 'pagebuilder-empty-slide') and text() = 'Edit slide text']"/>
+        <element name="emptyslide" type="button" selector="//div[contains(@class, 'pagebuilder-empty-slide') and text() = 'Edit Slide Text']"/>
         <element name="emptyPoster" type="button" selector=".pagebuilder-slide-wrapper"/>
-        <element name="poster" type="button" selector=".pagebuilder-slide-wrapper[style*='magento']"/>
+        <element name="poster" type="button" selector=".pagebuilder-poster-overlay"/>
         <element name="backgroundColorOnStage" type="button" selector=".pagebuilder-slide-wrapper[style*='background-color: {{var1}};']" parameterized="true"/>
-        <element name="posterBackgroundColor" type="button" selector=".pagebuilder-slide-wrapper[style*='magento'][style*='background-color: rgb(255, 255, 255);']"/>
-        <element name="posterBackgroundPosition" type="button" selector=".pagebuilder-slide-wrapper[style*='magento'][style*='background-position: center center;']"/>
-        <element name="posterBackgroundSize" type="button" selector=".pagebuilder-slide-wrapper[style*='magento'][style*='background-size: cover;']"/>
-        <element name="posterBackgroundRepeat" type="button" selector=".pagebuilder-slide-wrapper[style*='magento'][style*='background-repeat: repeat;']"/>
-        <element name="posterBackgroundAttachment" type="button" selector=".pagebuilder-slide-wrapper[style*='magento'][style*='background-attachment: scroll;']"/>
+        <element name="posterBackgroundColor" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-color: rgb(255, 255, 255);']"/>
+        <element name="posterBackgroundPosition" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-position: center center;']"/>
+        <element name="posterBackgroundSize" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-size: cover;']"/>
+        <element name="posterBackgroundRepeat" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-repeat: repeat;']"/>
+        <element name="posterBackgroundAttachment" type="button" selector=".pagebuilder-poster-overlay[style*='magento'][style*='background-attachment: scroll;']"/>
         <element name="emptyCollageLeft" type="button" selector="div[style*='40px calc(50% + 40px) 40px 40px']"/>
         <element name="emptyCollageCentered" type="button" selector="div[style*='40px calc(25% + 40px)']"/>
         <element name="emptyCollageRight" type="button" selector="div[style*='40px 40px 40px calc(50% + 40px)']"/>
@@ -182,7 +183,7 @@
         <element name="collageAlignment" type="button" selector="div[style*='text-align: center'][style*='magento']"/>
         <element name="posterOverlay" type="button" selector=".pagebuilder-poster-overlay[style*='rgba(255, 255, 255, 0.7)']"/>
         <element name="contentSectionName" type="button" selector="/div[@data-index='content']"/>
-        <element name="slideBorderStyle" type="button" selector="div[style*='border: {{arg1}}px {{arg2}} {{arg3}}']" parameterized="true"/>
+        <element name="slideBorderStyle" type="button" selector="//div[(contains(@style, 'border-width: {{arg1}}px')) and contains(@style, 'border-style: {{arg2}}') and contains(@style, 'border-color: {{arg3}}')]" parameterized="true"/>
         <element name="slideBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="editFormBackgroundImagePreview" type="button" selector="//input[@name='background_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
         <element name="editFormBackgroundMobileImagePreview" type="button" selector="//input[@name='mobile_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
