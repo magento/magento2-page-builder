@@ -5,8 +5,8 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-textarea" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <div class="pagebuilder-text" if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" html="data.main.html"></div>
-    <div class="pagebuilder-text" ifnot="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="Object.assign(data.main.css(), {'placeholder-text': !data.main.html()})" translate="'Text'"></div>
+<div class="pagebuilder-content-type pagebuilder-text" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+    <div if="data.main.html()" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" html="data.main.html"></div>
+    <div class="placeholder-text" ifnot="data.main.html" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" translate="'Text'"></div>
     <render args="getOptions().template" />
 </div>
