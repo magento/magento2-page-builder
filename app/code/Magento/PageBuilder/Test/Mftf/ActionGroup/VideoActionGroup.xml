@@ -18,7 +18,6 @@
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
         <waitForElementVisible selector="{{page.width(width.value)}}" stepKey="waitForWidth"/>
-
         <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
         <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
         <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
@@ -36,7 +35,6 @@
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
         <waitForElementVisible selector="{{page.width(width.value)}}" stepKey="waitForWidth"/>
-
         <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
         <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
         <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
@@ -53,7 +51,6 @@
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
         <waitForElementVisible selector="{{page.noWidth(index)}}" stepKey="waitForWidth"/>
-
         <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
         <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
         <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
@@ -87,7 +84,6 @@
         <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
         <waitForElementVisible selector="{{page.margins(margin.value)}}" stepKey="waitForMarginVisible"/>
         <waitForElementVisible selector="{{page.padding(padding.value)}}" stepKey="waitForPaddingVisible"/>
-        <assertLessThanOrEqual expected="2" expectedType="int" actual="ratioDifference" actualType="variable" stepKey="assertRatio"/>
     </actionGroup>
     <actionGroup name="validateVideoAdvancedStyleWithNoAlignment">
         <arguments>
