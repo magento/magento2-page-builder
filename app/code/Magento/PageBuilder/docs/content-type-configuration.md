@@ -407,12 +407,12 @@ The `tag` element allows you to read the tag name of the element and map back to
 You can customize Page Builder content types by adding your own logic on the frontend.
 
 To add custom logic to content types:
-1. [Create a JavaScript widget](#widget)
-2. [Add XML configuration to load it on the frontend](#xml-config)
+1. [Create a JavaScript widget](#create-a-javascript-widget)
+2. [Add XML configuration to load it on the frontend](#add-xml-configuration-to-load-it-on-the-frontend)
 
-### Create a JavaScript widget {#widget}
+### Create a JavaScript widget
 
-Create a JavaScript widget, to be stored in a `{vendor-path}/view/frontend/web/js/content-type/{conent-type-name}/appearance/{appearance-name}/widget.js` file:
+Create a JavaScript widget in your module's `/view/frontend/web/js/content-type/{conent-type-name}/appearance/{appearance-name}/widget.js` file:
 
 ``` javascript
 /**
@@ -483,9 +483,9 @@ define(['jquery'], function ($) {
 });
 ``` 
 
-### Add XML configuration to load it on the frontend {#xml-config}
+### Add XML configuration to load it on the frontend
 
-To load this file on the frontend, add the following configuration to the `default.xml` layout file in `Magento/PageBuilder/Block/WidgetInitializer`:
+To load this file on the frontend, add the following configuration to the `default.xml` file in your custom module's `frontend/layout/` directory:
 
 ``` xml
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
@@ -495,8 +495,8 @@ To load this file on the frontend, add the following configuration to the `defau
                 <argument name="config" xsi:type="array">
                     <item name="%content-type-name%" xsi:type="array">
                         <item name="default" xsi:type="array">
-                            <!--required argument--
-                            <item name="component" xsi:type="string">%{Vendor+Path}/js/content-type/{conent-type-name}/appearance/{appearance-name}/widget%</item>
+                            <!--required argument-->
+                            <item name="component" xsi:type="string">%{vendor-path}/js/content-type/{content-type-name}/appearance/{appearance-name}/widget%</item>
                             <!--optional if you need provide some config for your widget-->                          
                             <item name="config" xsi:type="array">
                                 <item name="buttonSelector" xsi:type="string">.pagebuilder-slide-button</item>
