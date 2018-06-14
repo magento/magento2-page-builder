@@ -412,7 +412,7 @@ To add custom logic to content types:
 
 ### Create a JavaScript widget
 
-Create a JavaScript widget in your module's `/view/frontend/web/js/content-type/{conent-type-name}/appearance/{appearance-name}/widget.js` file:
+Create a JavaScript widget in your module's `/view/frontend/web/js/content-type/{content-type-name}/appearance/{appearance-name}/widget.js` file:
 
 ``` javascript
 /**
