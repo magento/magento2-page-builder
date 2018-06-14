@@ -39,8 +39,7 @@ define([], function () {
         sku: "data-sku",
         src: "src",
         title: "data-title",
-        view_mode: "data-view-mode",
-        vertical_alignment: "data-vertical-alignment"
+        view_mode: "data-view-mode"
       };
     }
 

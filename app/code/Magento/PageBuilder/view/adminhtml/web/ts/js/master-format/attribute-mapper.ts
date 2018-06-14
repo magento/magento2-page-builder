@@ -38,7 +38,6 @@ export default class AttributeMapper {
         src: "src",
         title: "data-title",
         view_mode: "data-view-mode",
-        vertical_alignment: "data-vertical-alignment",
     };
 
     /**

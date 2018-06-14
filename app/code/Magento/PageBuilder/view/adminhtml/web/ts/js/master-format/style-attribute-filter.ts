@@ -27,6 +27,7 @@ export default class StyleAttributeFilter {
         "color",
         "display",
         "height",
+        "justify_content",
         "min_height",
         "margin_bottom",
         "margin_left",
