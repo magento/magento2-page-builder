@@ -17,22 +17,22 @@ use Magento\Framework\View\Element\Template;
 class WidgetInitializer extends Template
 {
     /**
-     * @var \Magento\Framework\Serialize\SerializerInterface
+     * @var \Magento\Framework\Serialize\Serializer\Json
      */
-    private $jsonEncoder;
+    private $jsonSerializer;
 
     /**
      * WidgetInitializer constructor.
      * @param Template\Context $context
-     * @param \Magento\Framework\Serialize\SerializerInterface $jsonEncoder
+     * @param \Magento\Framework\Serialize\Serializer\Json $jsonEncoder
      * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Framework\Serialize\SerializerInterface $jsonEncoder,
+        \Magento\Framework\Serialize\Serializer\Json $jsonEncoder,
         array $data = []
     ) {
-        $this->jsonEncoder = $jsonEncoder;
+        $this->jsonSerializer = $jsonEncoder;
         parent::__construct($context, $data);
     }
 
@@ -58,6 +58,6 @@ class WidgetInitializer extends Template
                 $resultConfig[$selector] = [$item['component'] => $componentConfig];
             }
         }
-        return $this->jsonEncoder->serialize($resultConfig);
+        return $this->jsonSerializer->serialize($resultConfig);
     }
 }
