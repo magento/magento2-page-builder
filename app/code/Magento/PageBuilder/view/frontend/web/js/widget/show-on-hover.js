@@ -53,14 +53,17 @@ define(['jquery'], function ($) {
         });
     }
 
-    return function (config, element) {
+    return function (config) {
 
-        var buttonClass = config.buttonSelector,
-            overlayHoverSelector = '[data-show-overlay="%s"] > a'.replace('%s', config.showOverlay),
-            overlayButtonSelector = '[data-show-button="%s"] > a'.replace('%s', config.showOverlay);
+        var buttonSelector = config.buttonSelector,
+            overlayHoverSelector = 'div[data-role="%s"][data-show-overlay="%s"] > a'
+                .replace('%s', config.dataRole)
+                .replace('%s', config.showOverlay),
+            overlayButtonSelector = 'div[data-role="%s"][data-show-button="%s"] > a'
+                .replace('%s', config.dataRole)
+                .replace('%s', config.showOverlay);
 
-        showOverlayOnHover($(element).find(overlayHoverSelector));
-        showButtonOnHover($(element).find(overlayButtonSelector), buttonClass);
-
+        showOverlayOnHover($(overlayHoverSelector));
+        showButtonOnHover($(overlayButtonSelector), buttonSelector);
     };
 });
