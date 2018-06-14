@@ -5,7 +5,7 @@
 import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeInterface from "../content-type";
-import {ContentTypeMountEventParamsInterface} from "../content-type/content-type-mount-event-params";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type/content-type-after-render-event-params";
 
 /**
  * Animation time in ms for container animations
@@ -46,8 +46,8 @@ export function bindAfterRenderForAnimation(
     if (containerLocked) {
         // Wait for mount then animate the container
         const ns = block.id + ".afterRender.container.animate";
-        events.on("contentType:afterRender", (args: ContentTypeMountEventParamsInterface) => {
-            if (args.block.parent === block.parent) {
+        events.on("contentType:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
+            if (args.contentType.parent === block.parent) {
                 animateContainerHeight(true, element);
                 events.off(ns);
             }

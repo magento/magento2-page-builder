@@ -51,6 +51,12 @@
         <click selector="{{SliderInAdmin.slideOptionsRemove}}" stepKey="clickRemoveContentType"/>
         <wait time="0.5" stepKey="waitForRemovalAnimation" />
     </actionGroup>
+    <actionGroup name="duplicateSlide">
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
+        <click selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="clickActiveSlideNavigationDot"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{SliderInAdmin.slideOptionsDuplicate}}" stepKey="clickRemoveContentBlock"/>
+    </actionGroup>
     <actionGroup name="addSlide">
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
         <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>

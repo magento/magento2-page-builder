@@ -199,11 +199,11 @@ export default class Preview {
         if (elementNodes.length > 0) {
             const element = elementNodes[0];
             this.wrapperElement = element;
-            events.trigger("contentType:afterRender", {id: this.parent.id, block: this.parent, element});
+            events.trigger("contentType:afterRender", {id: this.parent.id, contentType: this.parent, element});
             events.trigger(
                 this.parent.config.name + ":contentType:afterRender",
                 {
-                    block: this.parent,
+                    contentType: this.parent,
                     element,
                     id: this.parent.id,
                 },
