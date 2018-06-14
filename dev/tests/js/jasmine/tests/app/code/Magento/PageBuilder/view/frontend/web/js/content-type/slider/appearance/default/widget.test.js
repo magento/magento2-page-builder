@@ -18,7 +18,7 @@ define([
 
             sliderWidgetInitializer(undefined, el);
 
-            expect($.fn.slick).toHaveBeenCalled();
+            expect($.fn.slick).toHaveBeenCalledWith('unslick');
         });
 
         it('Should call slick on element based on its data', function () {
