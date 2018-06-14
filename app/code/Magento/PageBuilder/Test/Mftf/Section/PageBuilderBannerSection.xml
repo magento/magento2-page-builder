@@ -62,10 +62,10 @@
         <element name="default" type="button" selector="(//div[@class='pagebuilder-banner-wrapper'])[{{arg1}}][contains(@style, 'border-style: {{arg2}};') and contains(@style, 'border-radius: {{arg3}}px;') and contains(@style, 'margin: {{arg4}}px;') and contains(@style, 'background-size: {{arg6}};') and contains(@style, 'background-repeat: {{arg7}};') and contains(@style, 'background-attachment: {{arg8}};')]//div[@class='pagebuilder-poster-overlay'][contains(@style,'padding: {{arg10}}px;')]" parameterized="true"/>
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
         <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
-        <element name="buttonText" type="text" selector="//a//span[text()='{{arg1}}']" parameterized="true"/>
-        <element name="editableButtonItemElement" type="button" selector="//a[contains(@class, '{{arg1}}')]/span[contains(@contenteditable, 'true')]" parameterized="true"/>
+        <element name="buttonText" type="text" selector="//button//span[text()='{{arg1}}']" parameterized="true"/>
+        <element name="editableButtonItemElement" type="button" selector="//button[contains(@class, '{{arg1}}')]/span[contains(@contenteditable, 'true')]" parameterized="true"/>
         <element name="linkUrl" type="button" selector="[href*='{{arg1}}']" parameterized="true"/>
-        <element name="editButton" type="button" selector="//a[contains(@class, '{{arg1}}')]" parameterized="true"/>
+        <element name="editButton" type="button" selector="//button[contains(@class, '{{arg1}}')]" parameterized="true"/>
         <element name="requiredField" type="text" selector="//div[contains(@class, 'pagebuilder_modal_form_pagebuilder_modal_form_modal')] //div[contains(@class, 'admin__field _required')]" />
         <element name="errorField" type="text" selector="//label[contains(@class, 'admin__field-error')]" />
         <element name="appearanceSelect" type="button" selector="[name='appearance']"/>
