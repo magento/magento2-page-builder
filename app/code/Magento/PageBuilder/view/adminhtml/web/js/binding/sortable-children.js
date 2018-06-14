@@ -39,6 +39,11 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/drag-drop/move
           originalPosition: originalPosition,
           ui: ui
         });
+      }).on("sortstop", function (event, ui) {
+        _uiEvents.default.trigger("sortableChildren:sortstop", {
+          instance: instance,
+          ui: ui
+        });
       }).on("sortupdate", function (event, ui) {
         if (this === ui.item.parent()[0]) {
           var index = ui.item.index();

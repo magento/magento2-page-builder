@@ -2,6 +2,8 @@
 define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/utils/color-converter", "Magento_PageBuilder/js/utils/number-converter", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_knockout, _translate, _uiEvents, _option, _colorConverter, _numberConverter, _preview, _uploader) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -38,7 +40,7 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
       return _this;
     }
     /**
-     * Get the slide wrapper attributes for the preview
+     * Get the background wrapper attributes for the preview
      *
      * @returns {any}
      */
@@ -47,23 +49,63 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
     var _proto = Preview.prototype;
 
     _proto.getBackgroundStyles = function getBackgroundStyles() {
-      var data = this.previewData;
-      var backgroundImage = "none";
-
-      if (data.background_image() && data.background_image() !== "" && data.background_image() !== undefined && data.background_image()[0] !== undefined) {
-        backgroundImage = "url(" + data.background_image()[0].url + ")";
-      }
-
-      return {
-        backgroundImage: backgroundImage,
-        backgroundSize: data.background_size(),
-        minHeight: data.min_height() ? data.min_height() + "px" : "300px",
-        overflow: "hidden",
+      var desktopStyles = this.data.desktop_image.style();
+      return _extends({}, desktopStyles, {
         paddingBottom: "",
         paddingLeft: "",
         paddingRight: "",
-        paddingTop: ""
+        paddingTop: "",
+        borderStyle: "none",
+        borderRadius: "0px"
+      });
+    };
+    /**
+     * Get the slide wrapper attributes for the preview
+     *
+     * @returns {any}
+     */
+
+
+    _proto.getPaddingStyles = function getPaddingStyles() {
+      var previewData = this.previewData;
+      var appearance = this.data.main.attributes()["data-appearance"];
+      var paddingData = {};
+
+      switch (appearance) {
+        case "collage-centered":
+          paddingData.paddingLeft = "calc(25% + " + this.data.desktop_image.style().paddingLeft + ")";
+          paddingData.paddingRight = "calc(25% + " + this.data.desktop_image.style().paddingRight + ")";
+          break;
+
+        case "collage-left":
+          paddingData.paddingRight = "calc(50% + " + this.data.desktop_image.style().paddingRight + ")";
+          break;
+
+        case "collage-right":
+          paddingData.paddingLeft = "calc(50% + " + this.data.desktop_image.style().paddingLeft + ")";
+          break;
+
+        default:
+          break;
+      }
+
+      var backgroundImage = "none";
+
+      if (previewData.background_image() && previewData.background_image() !== "" && previewData.background_image() !== undefined && previewData.background_image()[0] !== undefined) {
+        backgroundImage = "url(" + previewData.background_image()[0].url + ")";
+      }
+
+      var styles = {
+        backgroundImage: backgroundImage,
+        backgroundSize: previewData.background_size(),
+        minHeight: previewData.min_height() ? previewData.min_height() + "px" : "300px",
+        overflow: "hidden",
+        paddingBottom: this.data.desktop_image.style().paddingBottom || "",
+        paddingLeft: this.data.desktop_image.style().paddingLeft || "",
+        paddingRight: this.data.desktop_image.style().paddingRight || "",
+        paddingTop: this.data.desktop_image.style().paddingTop || ""
       };
+      return _extends({}, styles, paddingData);
     };
     /**
      * Get the slide overlay attributes for the preview
@@ -179,12 +221,21 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
 
 
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
-      if (this.previewData.show_overlay() === "on_hover") {
-        this.showOverlayHover(true);
+      // Triggers the visibility of the overlay content to show
+      if (this.data.main.attributes()["data-show-overlay"] === "hover") {
+        this.data.overlay.attributes(Object.assign(this.data.overlay.attributes(), {
+          "data-background-color-orig": this.data.overlay.style().backgroundColor
+        }));
+        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+          backgroundColor: this.data.overlay.attributes()["data-overlay-color"]
+        }));
       }
 
-      if (this.previewData.show_button() === "on_hover") {
-        this.showButtonHover(true);
+      if (this.data.main.attributes()["data-show-button"] === "hover") {
+        this.data.button.style(Object.assign(this.data.button.style(), {
+          opacity: 1,
+          visibility: "visible"
+        }));
       }
     };
     /**
@@ -193,12 +244,18 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
 
 
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
-      if (this.previewData.show_overlay() === "on_hover") {
-        this.showOverlayHover(false);
+      // Triggers the visibility of the overlay content to hide
+      if (this.data.main.attributes()["data-show-overlay"] === "hover") {
+        this.data.overlay.style(Object.assign(this.data.overlay.style(), {
+          backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]
+        }));
       }
 
-      if (this.previewData.show_button() === "on_hover") {
-        this.showButtonHover(false);
+      if (this.data.main.attributes()["data-show-button"] === "hover") {
+        this.data.button.style(Object.assign(this.data.button.style(), {
+          opacity: 0,
+          visibility: "hidden"
+        }));
       }
     };
     /**
@@ -280,7 +337,7 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
       var data = this.previewData;
       var overlayColorAttr = "transparent";
 
-      if (data.show_overlay() !== "never_show") {
+      if (data.show_overlay() !== "never") {
         if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
           overlayColorAttr = (0, _colorConverter.fromHex)(data.overlay_color(), (0, _numberConverter.percentToDecimal)(data.overlay_transparency()));
         }
@@ -308,13 +365,25 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
 
 
     _proto.retrieveOptions = function retrieveOptions() {
+      var _this2 = this;
+
       var options = _BasePreview.prototype.retrieveOptions.call(this);
 
       var newOptions = options.filter(function (option) {
         return option.code !== "remove";
       });
       var removeClasses = ["remove-structural"];
-      var removeFn = this.onOptionRemove;
+
+      var removeFn = function removeFn() {
+        var index = _this2.parent.parent.getChildren().indexOf(_this2.parent);
+
+        _this2.onOptionRemove(); // Invoking methods on slider
+
+
+        _this2.parent.parent.onAfterRender();
+
+        _this2.parent.parent.setFocusedSlide(index - 1);
+      };
 
       if (this.parent.parent.children().length <= 1) {
         removeFn = function removeFn() {
@@ -333,28 +402,28 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
 
 
     _proto.bindEvents = function bindEvents() {
-      var _this2 = this;
+      var _this3 = this;
 
       _BasePreview.prototype.bindEvents.call(this);
 
       _uiEvents.on(this.parent.id + ":updated", function () {
-        var dataStore = _this2.parent.dataStore.get();
+        var dataStore = _this3.parent.dataStore.get();
 
-        var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
+        var imageObject = dataStore[_this3.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
+        _uiEvents.trigger("image:assigned:" + _this3.parent.id, imageObject);
       });
 
       _uiEvents.on(this.config.name + ":contentType:ready", function () {
-        var dataStore = _this2.parent.dataStore.get();
+        var dataStore = _this3.parent.dataStore.get();
 
-        var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
+        var initialImageValue = dataStore[_this3.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader
 
-        _this2.uploader = new _uploader(_this2.parent.id, "imageuploader_" + _this2.parent.id, Object.assign({}, _this2.config.additional_data.uploaderConfig, {
+        _this3.uploader = new _uploader(_this3.parent.id, "imageuploader_" + _this3.parent.id, Object.assign({}, _this3.config.additional_data.uploaderConfig, {
           value: initialImageValue
         })); // Register listener when image gets uploaded from uploader UI component
 
-        _this2.uploader.onUploaded(_this2.onImageUploaded.bind(_this2));
+        _this3.uploader.onUploaded(_this3.onImageUploaded.bind(_this3));
       });
     };
 

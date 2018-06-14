@@ -684,6 +684,7 @@ export default class Preview extends PreviewCollection {
      * @param {GroupPositionCache} groupPosition
      */
     private onDroppingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
+        const elementChildrenParent = group.parents(".element-children");
         // Only initiate this process if we're within the group by a buffer to allow for sortable to function correctly
         if (
             this.dropOverElement &&
@@ -691,7 +692,9 @@ export default class Preview extends PreviewCollection {
             event.pageY < (groupPosition.top + groupPosition.outerHeight) - 20
         ) {
             // Disable the parent sortable instance
-            group.parents(".element-children").sortable("option", "disabled", true);
+            if (elementChildrenParent.data("sortable")) {
+                elementChildrenParent.sortable("option", "disabled", true);
+            }
 
             const currentX = event.pageX - groupPosition.left;
             this.dropPosition = this.dropPositions.find((position) => {
@@ -708,7 +711,9 @@ export default class Preview extends PreviewCollection {
             }
         } else if (this.dropOverElement) {
             // Re-enable the parent sortable instance
-            group.parents(".element-children").sortable("option", "disabled", false);
+            if (elementChildrenParent.data("sortable")) {
+                elementChildrenParent.sortable("option", "disabled", false);
+            }
             this.dropPosition = null;
             this.dropPlaceholder.removeClass("left right");
         }
