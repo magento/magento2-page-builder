@@ -8,7 +8,7 @@ define([
 ], function (tabsInitializerWidget, $) {
     'use strict';
 
-    describe('Magento_PageBuilder/js/content-type/slider/appearance/default/widget', function () {
+    describe('Magento_PageBuilder/js/content-type/tabs/appearance/default/widget', function () {
         it('Should call $.ui.tabs with active based on element\'s activeTab data', function () {
             var el = document.createElement('div');
 
