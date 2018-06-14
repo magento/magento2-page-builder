@@ -8,7 +8,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="head.components">
-            <block class="Magento\PageBuilder\Block\Element\Widgets" name="pagebuilder_widgets" template="Magento_PageBuilder::widget/default.phtml">
+            <block class="Magento\PageBuilder\Block\WidgetInitializer" name="pagebuilder_widgets" template="Magento_PageBuilder::widget-initializer.phtml">
                 <arguments>
                     <argument name="config" xsi:type="array">
                         <item name="slider" xsi:type="array">
@@ -33,7 +33,7 @@
                         </item>
                         <item name="slide" xsi:type="array">
                             <item name="default" xsi:type="array">
-                                <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/widgets/show-on-hover.js</item>
+                                <item name="component" xsi:type="string">Magento_PageBuilder/js/widgets/show-on-hover</item>
                                 <item name="config" xsi:type="array">
                                     <item name="buttonSelector" xsi:type="string">.pagebuilder-slide-button</item>
                                     <item name="showOverlay" xsi:type="string">hover</item>
@@ -42,7 +42,7 @@
                         </item>
                         <item name="banner" xsi:type="array">
                             <item name="default" xsi:type="array">
-                                <item name="component" xsi:type="string">Magento_PageBuilder/js/content-type/widgets/show-on-hover.js</item>
+                                <item name="component" xsi:type="string">Magento_PageBuilder/js/widgets/show-on-hover</item>
                                 <item name="config" xsi:type="array">
                                     <item name="buttonSelector" xsi:type="string">.pagebuilder-banner-button</item>
                                     <item name="showOverlay" xsi:type="string">on_hover</item>

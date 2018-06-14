@@ -6,29 +6,30 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Block\Element;
+namespace Magento\PageBuilder\Block;
 
 use Magento\Framework\View\Element\Template;
 
 /**
- * Class Widgets provides configuration for content types widgets need to be loaded on frontend
+ * Class WidgetInitializer provides configuration for content types widgets need to be loaded on frontend
  * @api
  */
-class Widgets extends Template
+class WidgetInitializer extends Template
 {
-
     /**
-     * @var \Magento\Framework\Json\EncoderInterface
+     * @var \Magento\Framework\Serialize\SerializerInterface
      */
     private $jsonEncoder;
 
     /**
-     * Widgets constructor.
-     * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
+     * WidgetInitializer constructor.
+     * @param Template\Context $context
+     * @param \Magento\Framework\Serialize\SerializerInterface $jsonEncoder
+     * @param array $data
      */
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
+        \Magento\Framework\Serialize\SerializerInterface $jsonEncoder,
         array $data = []
     ) {
         $this->jsonEncoder = $jsonEncoder;
@@ -36,8 +37,9 @@ class Widgets extends Template
     }
 
     /**
-     * Returns config for widgets initializer component
+     * Returns config for widgets initializer component.
      * @return string
+     * @api
      */
     public function getConfig() : string
     {
@@ -56,6 +58,6 @@ class Widgets extends Template
                 $resultConfig[$selector] = [$item['component'] => $componentConfig];
             }
         }
-        return $this->jsonEncoder->encode($resultConfig);
+        return $this->jsonEncoder->serialize($resultConfig);
     }
 }
