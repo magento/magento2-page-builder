@@ -5,23 +5,25 @@
  */
 -->
 
-<div class="pagebuilder-content-type pagebuilder-banner type-nested" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
+<div class="pagebuilder-content-type pagebuilder-banner type-nested" attr="data.main.attributes" ko-style="data.main.style" css="data.main.css" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
     <render args="getOptions().template" />
-    <div attr="data.main.attributes" ko-style="Object.assign({}, data.main.style(), data.overlay.style(), data.desktop_image.style(), {paddingLeft: 'calc(25% + ' + data.desktop_image.style().paddingLeft + ')', paddingRight: 'calc(25% + ' + data.desktop_image.style().paddingRight + ')'})" css="data.main.css" event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
-        <div class="pagebuilder-collage-overlay" ko-style="data.overlay.style()">
+    <div class="pagebuilder-banner-wrapper" css="data.desktop_image.css" attr="data.desktop_image.attributes" ko-style="Object.assign({}, data.desktop_image.style(), {paddingLeft: 'calc(25% + ' + data.desktop_image.style().paddingLeft + ')', paddingRight: 'calc(25% + ' + data.desktop_image.style().paddingRight + ')'})" event="{mouseover: onMouseOverWrapper, mouseout: onMouseOutWrapper}">
+        <div class="pagebuilder-overlay" css="data.overlay.css" attr="data.overlay.attributes" ko-style="data.overlay.style">
             <scope args="getUploader().getUiComponent()">
                 <render />
             </scope>
-            <div if="data.content.html()" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" html="data.content.html"></div>
-            <div ifnot="data.content.html()" class="pagebuilder-empty-banner" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" translate="'Edit Banner Text'"></div>
-            <a if="data.main.attributes()['data-show-button'] !== 'never_show'"
-               type="button"
-               class="pagebuilder-banner-button"
-               attr="data.button.attributes"
-               ko-style="data.button.style"
-               css="data.button.css">
-                <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
-            </a>
+            <div class="pagebuilder-collage-content">
+                <div if="data.content.html()" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" html="data.content.html"></div>
+                <div ifnot="data.content.html()" class="pagebuilder-empty-banner" attr="data.content.attributes" ko-style="data.content.style" css="data.content.css" translate="'Edit Banner Text'"></div>
+                <button if="data.main.attributes()['data-show-button'] !== 'never'"
+                   type="button"
+                   class="pagebuilder-banner-button"
+                   attr="data.button.attributes"
+                   ko-style="data.button.style"
+                   css="data.button.css">
+                    <span data-bind="liveEdit: { field: 'button_text', placeholder: buttonPlaceholder }"></span>
+                </button>
+            </div>
         </div>
     </div>
 </div>

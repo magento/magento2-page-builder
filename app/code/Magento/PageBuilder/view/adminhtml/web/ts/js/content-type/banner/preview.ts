@@ -29,7 +29,7 @@ export default class Preview extends BasePreview {
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOverWrapper() {
-        if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+        if (this.data.main.attributes()["data-show-overlay"] === "hover") {
             this.data.overlay.attributes(
                 Object.assign(
                     this.data.overlay.attributes(),
@@ -43,7 +43,7 @@ export default class Preview extends BasePreview {
                 ),
             );
         }
-        if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+        if (this.data.main.attributes()["data-show-button"] === "hover") {
             this.data.button.style(
                 Object.assign(
                     this.data.button.style(),
@@ -57,7 +57,7 @@ export default class Preview extends BasePreview {
      * Set state based on overlay mouseout event for the preview
      */
     public onMouseOutWrapper() {
-        if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+        if (this.data.main.attributes()["data-show-overlay"] === "hover") {
             this.data.overlay.style(
                 Object.assign(
                     this.data.overlay.style(),
@@ -65,7 +65,7 @@ export default class Preview extends BasePreview {
                 ),
             );
         }
-        if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+        if (this.data.main.attributes()["data-show-button"] === "hover") {
             this.data.button.style(
                 Object.assign(
                     this.data.button.style(),

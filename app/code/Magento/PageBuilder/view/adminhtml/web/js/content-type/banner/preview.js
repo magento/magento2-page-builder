@@ -33,7 +33,7 @@ define(["mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type/previ
 
 
     _proto.onMouseOverWrapper = function onMouseOverWrapper() {
-      if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+      if (this.data.main.attributes()["data-show-overlay"] === "hover") {
         this.data.overlay.attributes(Object.assign(this.data.overlay.attributes(), {
           "data-background-color-orig": this.data.overlay.style().backgroundColor
         }));
@@ -42,7 +42,7 @@ define(["mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type/previ
         }));
       }
 
-      if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+      if (this.data.main.attributes()["data-show-button"] === "hover") {
         this.data.button.style(Object.assign(this.data.button.style(), {
           opacity: 1,
           visibility: "visible"
@@ -55,13 +55,13 @@ define(["mage/translate", "uiEvents", "Magento_PageBuilder/js/content-type/previ
 
 
     _proto.onMouseOutWrapper = function onMouseOutWrapper() {
-      if (this.data.main.attributes()["data-show-overlay"] === "on_hover") {
+      if (this.data.main.attributes()["data-show-overlay"] === "hover") {
         this.data.overlay.style(Object.assign(this.data.overlay.style(), {
           backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]
         }));
       }
 
-      if (this.data.main.attributes()["data-show-button"] === "on_hover") {
+      if (this.data.main.attributes()["data-show-button"] === "hover") {
         this.data.button.style(Object.assign(this.data.button.style(), {
           opacity: 0,
           visibility: "hidden"
