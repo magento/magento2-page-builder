@@ -462,7 +462,7 @@ Attributes
 3. class
 
 Inline styles
-1. text-align
+1. justify-content
 
 ### wrapper element
 
@@ -470,14 +470,13 @@ Attributes
 1. src
 
 Inline styles
-1. text-align
-2. border-style
-3. border-color
-4. border-width
-5. border-radius
-6. margin
-7. padding
-8. max-width
+1. border-style
+2. border-color
+3. border-width
+4. border-radius
+5. margin
+6. padding
+7. max-width
 
 ### video element
 
