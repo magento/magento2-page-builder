@@ -15,11 +15,11 @@
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
-    1. [Bindings]
     1. [Master format]
     1. **Visual select**
+    1. [Reuse product conditions in content types]
+    1. [Store component master format as widget directive]
     1. [Custom Toolbar]
-    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -35,23 +35,23 @@
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
-[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
 
 ## What's in this topic
 This topic describes how to extend some Page Builder fields to accommodate a custom look and feel for the text alignment option.
 
-The text alignment field for each content type, in the Advanced section, now shows an icon and title. You can customize the text alignment field to show this new look and feel for all content types.
+The text alignment field for each content block, in the Advanced section, now shows an icon and title. You can customize the text alignment field to show this new look and feel for all content blocks.
 
 All image formats are supported for icons, though we suggest using an SVG format.
 
 ## Overview
 
-To add Visual Select customization to a Page Builder content type:
+To add Visual Select customization to a Page Builder content block:
 1. [Override the select component with an element template](#element-template)
 2. [Add Visual Select to the XML config](#xml-config)
 
