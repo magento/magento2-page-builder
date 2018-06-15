@@ -423,68 +423,35 @@ Create a JavaScript widget in your module's `/view/frontend/web/js/content-type/
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
- 
-define(['jquery'], function ($) {
+
+define([
+    'jquery',
+    'slick'
+], function ($) {
     'use strict';
- 
-    /**
-     * Show the overlay on hover of specific elements
-     *
-     * @param {JQuery<Element>[]} $elements
-     */
-    function showOverlayOnHover($elements) {
-        $elements.each(function (index, element) {
-            var overlayEl = $(element).find('.pagebuilder-overlay'),
-                overlayColor = overlayEl.attr('data-overlay-color');
- 
-            $(element).hover(
-                function () {
-                    overlayEl.css('background-color', overlayColor);
-                },
-                function () {
-                    overlayEl.css('background-color', 'transparent');
-                }
-            );
+
+    return function (config, sliderElement) {
+
+        var $element = $(sliderElement);
+
+        /**
+         * Prevent each slick slider from being initialized more than once which could throw an error.
+         */
+        if ($element.hasClass('slick-initialized')) {
+            $element.slick('unslick');
+        }
+
+        $element.slick({
+            autoplay: $element.data('autoplay') === 1,
+            autoplaySpeed: $element.data('autoplay-speed') || 0,
+            fade: $element.data('fade') === 1,
+            infinite: $element.data('is-infinite') === 1,
+            arrows: $element.data('show-arrows') === 1,
+            dots: $element.data('show-dots') === 1
         });
-    }
- 
-    /**
-     * Show button on hover of specific elements
-     *
-     * @param {JQuery<Element>[]} $elements
-     * @param {String} buttonClass
-     */
-    function showButtonOnHover($elements, buttonClass) {
-        $elements.each(function (index, element) {
-            var buttonEl = $(element).find(buttonClass);
- 
-            $(element).hover(
-                function () {
-                    buttonEl.css({
-                        'opacity': '1',
-                        'visibility': 'visible'
-                    });
-                }, function () {
-                    buttonEl.css({
-                        'opacity': '0',
-                        'visibility': 'hidden'
-                    });
-                }
-            );
-        });
-    }
- 
-    return function (config, element) {
- 
-        var buttonClass = config.buttonSelector,
-            overlayHoverSelector = '[data-show-overlay="%s"] > a'.replace('%s', config.showOverlay),
-            overlayButtonSelector = '[data-show-button="%s"] > a'.replace('%s', config.showOverlay);
- 
-        showOverlayOnHover($(element).find(overlayHoverSelector));
-        showButtonOnHover($(element).find(overlayButtonSelector), buttonClass);
- 
     };
 });
+
 ``` 
 
 ### Add XML configuration to load it on the frontend
