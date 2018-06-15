@@ -11,7 +11,9 @@ define([
     var el;
 
     afterEach(function () {
-        el.remove();
+        if (el !== undefined) {
+            el.remove();
+        }
     });
 
     describe('Magento_PageBuilder/js/widget/show-on-hover', function () {

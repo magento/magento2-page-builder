@@ -26,7 +26,9 @@ define([
     });
 
     afterEach(function () {
-        el.remove();
+        if (el !== undefined) {
+            el.remove();
+        }
     });
 
     describe('Magento_PageBuilder/js/content-type/map/appearance/default/widget', function () {
