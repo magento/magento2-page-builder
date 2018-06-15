@@ -4,12 +4,17 @@
  * See COPYING.txt for license details.
  */
 
-/** @var Magento\PageBuilder\Block\GoogleMapsApiBlock $block */
+/** @var Magento\PageBuilder\Block\GoogleMapsApi $block */
 ?>
 <script>
     require.config({
         paths: {
-            googleMaps: '<?= $block->escapeJs($block->getGoogleMapsApiPath()); ?>'
+            googleMaps: '<?= $block->escapeJs($block->getLibraryUrl()); ?>'
+        },
+        config: {
+            'Magento_PageBuilder/js/utils/map': {
+                mapStyle: '<?= $block->escapeJs($block->getStyle()); ?>'
+            }
         }
     });
 </script>

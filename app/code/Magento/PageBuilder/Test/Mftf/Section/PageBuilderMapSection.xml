@@ -48,9 +48,7 @@
         <element name="zoomIn" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Zoom in']" parameterized="true"/>
         <element name="zoomOut" type="button" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//button[@title='Zoom out']" parameterized="true"/>
         <!-- Map Error Message -->
-        <element name="errorContainer" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@class, 'gm-err-container')]" parameterized="true"/>
-        <element name="errorTitle" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@class, 'gm-err-container')]//div[contains(@class, 'gm-err-title')]" parameterized="true"/>
-        <element name="errorMessage" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[contains(@class, 'gm-err-container')]//div[contains(@class, 'gm-err-message')]" parameterized="true"/>
+        <element name="errorContainer" type="text" selector="(//div[contains(@class,'pagebuilder-map')])[{{arg1}}]//div[@class='google-map-auth-failure-placeholder']" parameterized="true"/>
     </section>
     <section name="MapOnStorefront">
         <element name="emptyMap" type="button" selector="(//div[@data-role='map'])[{{arg1}}][not(@src) and contains(@style,'display: none;')]" parameterized="true"/>
