@@ -8,45 +8,87 @@
 
 <entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/DataGenerator/etc/dataProfileSchema.xsd">
-    <!-- Background Image -->
-    <entity name="PageBuilderBannerBackgroundImagePropertyDefault" type="pagebuilder_background_image_property">
-        <data key="name">Background Image</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_image</data>
-        <data key="value">none</data>
+    <!-- Appearance -->
+    <entity name="PageBuilderBannerAppearanceDefaultProperty" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">poster</data>
     </entity>
-    <entity name="PageBuilderBannerBackgroundImageProperty" type="pagebuilder_background_image_property">
-        <data key="name">Background Image</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_image</data>
-        <data key="value">magento3.jpg</data>
-        <data key="fileName">magento3</data>
-        <data key="fileType">jpg</data>
-        <data key="path">wysiwyg/magento</data>
-        <data key="url">/(\b(https?|ftp|file):\/\/)[-A-Za-z0-9+&amp;@#/%?=~_|!:,.;]+[-A-Za-z0-9+&amp;@#/%=~_|]/g</data>
+    <entity name="PageBuilderBannerCollageLeftProperty" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">collage-left</data>
     </entity>
-    <!-- Mobile Image -->
-    <entity name="PageBuilderBannerMobileImageProperty" type="pagebuilder_background_image_property">
-        <data key="name">Background Mobile Image</data>
-        <data key="section">background</data>
-        <data key="fieldName">mobile_image</data>
-        <data key="value">m-logo.gif</data>
-        <data key="fileType">gif</data>
-        <data key="path">wysiwyg/m-logo</data>
-        <data key="url">/(\b(https?|ftp|file):\/\/)[-A-Za-z0-9+&amp;@#/%?=~_|!:,.;]+[-A-Za-z0-9+&amp;@#/%=~_|]/g</data>
+    <entity name="PageBuilderBannerCollageRightProperty" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">collage-right</data>
     </entity>
-    <!-- Background Size -->
-    <entity name="PageBuilderBannerBackgroundSizeProperty" type="pagebuilder_banner_backgroundSize_property">
-        <data key="name">Background Size</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_size</data>
-        <data key="value">cover</data>
+    <entity name="PageBuilderBannerCollageCenteredProperty" type="pagebuilder_banner_appearance_property">
+        <data key="name">Appearance</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">appearance</data>
+        <data key="value">collage-centered</data>
     </entity>
-    <entity name="PageBuilderBannerBackgroundSizeDefaultProperty" type="pagebuilder_banner_backgroundSize_property">
-        <data key="name">Background Size</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_size</data>
-        <data key="value">cover</data>
+    <!-- Minimum Height -->
+    <entity name="PageBuilderBannerMinimumHeightProperty" type="pagebuilder_banner_minimumHeight_property">
+        <data key="name">Minimum Height</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">min_height</data>
+        <data key="value">500</data>
+    </entity>
+    <entity name="PageBuilderBannerMinimumHeightDefaultProperty" type="pagebuilder_banner_minimumHeightDefault_property">
+        <data key="name">Minimum Height</data>
+        <data key="section">appearance_fieldset</data>
+        <data key="fieldName">min_height</data>
+        <data key="value">300</data>
+    </entity>
+    <!-- Message Text -->
+    <entity name="PageBuilderBannerMessageDefaultProperty" type="pagebuilder_banner_message_property">
+        <data key="placeholder">Edit Banner Text</data>
+    </entity>
+    <entity name="PageBuilderBannerMessageProperty" type="pagebuilder_banner_message_property">
+        <data key="name">Message Text</data>
+        <data key="section">contents</data>
+        <data key="role">textarea</data>
+        <data key="fieldName">message</data>
+        <data key="cmsPageLinkName" unique="suffix">cms-page-link-</data>
+        <data key="value">Good Night!</data>
+    </entity>
+    <!-- Link -->
+    <entity name="PageBuilderBannerLinkUrlProperty" type="pagebuilder_banner_linkUrl_property">
+        <data key="name">Link</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="value">http://www.magento.com/</data>
+        <data key="_value">http://magento.com/</data>
+    </entity>
+    <entity name="PageBuilderBannerLinkUrlPropertyValidate" type="pagebuilder_banner_linkUrl_property">
+        <data key="name">Link</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url[default]</data>
+        <data key="value">http://www.magento.com/</data>
+    </entity>
+    <entity name="PageBuilderBannerLink_Anchor" type="pagebuilder_banner_linkUrl_property">
+        <data key="name">Link</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="value">#my-anchor-id</data>
+    </entity>
+    <entity name="PageBuilderBannerNewTabDefaultProperty" type="pagebuilder_banner_newTab_property">
+        <data key="name">Open in new tab</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="value">false</data>
+    </entity>
+    <entity name="PageBuilderBannerNewTabProperty" type="pagebuilder_banner_newTab_property">
+        <data key="name">Open in new tab</data>
+        <data key="section">contents</data>
+        <data key="fieldName">link_url</data>
+        <data key="value">true</data>
     </entity>
     <!-- Show Button -->
     <entity name="PageBuilderBannerShowButtonAlwaysProperty" type="pagebuilder_banner_showButton_property">
@@ -67,7 +109,46 @@
         <data key="fieldName">show_button</data>
         <data key="value">hover</data>
     </entity>
-    <!-- Show Content Overlay -->
+    <!-- Button Text -->
+    <entity name="PageBuilderBannerButtonTextProperty" type="pagebuilder_banner_buttonText_property">
+        <data key="name">Button Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_text</data>
+        <data key="value">Good Morning!</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTextProperty2" type="pagebuilder_banner_buttonText_property2">
+        <data key="name">Button Text</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_text</data>
+        <data key="value">Editable</data>
+    </entity>
+    <!-- Button Type -->
+    <entity name="PageBuilderBannerButtonTypeDefaultProperty" type="pagebuilder_banner_buttonTypeDefault_property">
+        <data key="name">Button Type</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_type</data>
+        <data key="value">Primary</data>
+        <data key="class">true</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTypePrimaryProperty" type="pagebuilder_banner_buttonType_property">
+        <data key="name">Button Type</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_type</data>
+        <data key="value">pagebuilder-button-primary</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTypeSecondaryProperty" type="pagebuilder_banner_buttonType_property">
+        <data key="name">Button Type</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_type</data>
+        <data key="value">pagebuilder-button-secondary</data>
+    </entity>
+    <entity name="PageBuilderBannerButtonTypeLinkProperty" type="pagebuilder_banner_buttonType_property">
+        <data key="name">Button Type</data>
+        <data key="section">contents</data>
+        <data key="fieldName">button_type</data>
+        <data key="value">pagebuilder-button-link</data>
+    </entity>
+    <!-- Show Overlay -->
     <entity name="PageBuilderBannerShowContentOverlayAlwaysProperty" type="pagebuilder_banner_showContentOverlay_property">
         <data key="name">Show Overlay</data>
         <data key="section">contents</data>
@@ -129,262 +210,5 @@
         <data key="section">contents</data>
         <data key="fieldName">overlay_transparency</data>
         <data key="value">abc</data>
-    </entity>
-    <!-- Minimum Height -->
-    <entity name="PageBuilderBannerMinimumHeightProperty" type="pagebuilder_banner_minimumHeight_property">
-        <data key="name">Minimum Height</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">min_height</data>
-        <data key="value">500</data>
-    </entity>
-    <entity name="PageBuilderBannerMinimumHeightDefaultProperty" type="pagebuilder_banner_minimumHeightDefault_property">
-        <data key="name">Minimum Height</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">min_height</data>
-        <data key="value">300</data>
-    </entity>
-    <!-- Message -->
-    <entity name="PageBuilderBannerMessageDefaultProperty" type="pagebuilder_banner_message_property">
-        <data key="placeholder">Edit Banner Text</data>
-    </entity>
-    <entity name="PageBuilderBannerMessageProperty" type="pagebuilder_banner_message_property">
-        <data key="name">Message Text</data>
-        <data key="section">contents</data>
-        <data key="role">textarea</data>
-        <data key="fieldName">message</data>
-        <data key="cmsPageLinkName" unique="suffix">cms-page-link-</data>
-        <data key="value">Good Night!</data>
-    </entity>
-    <!-- Button Text -->
-    <entity name="PageBuilderBannerButtonTextProperty" type="pagebuilder_banner_buttonText_property">
-        <data key="name">Button Text</data>
-        <data key="section">contents</data>
-        <data key="fieldName">button_text</data>
-        <data key="value">Good Morning!</data>
-    </entity>
-    <entity name="PageBuilderBannerButtonTextProperty2" type="pagebuilder_banner_buttonText_property2">
-        <data key="name">Button Text</data>
-        <data key="section">contents</data>
-        <data key="fieldName">button_text</data>
-        <data key="value">Editable</data>
-    </entity>
-    <!-- Link -->
-    <entity name="PageBuilderBannerLinkUrlProperty" type="pagebuilder_banner_linkUrl_property">
-        <data key="name">Link</data>
-        <data key="section">contents</data>
-        <data key="fieldName">link_url</data>
-        <data key="value">http://www.magento.com/</data>
-        <data key="_value">http://magento.com/</data>
-    </entity>
-    <entity name="PageBuilderBannerLinkUrlPropertyValidate" type="pagebuilder_banner_linkUrl_property">
-        <data key="name">Link</data>
-        <data key="section">contents</data>
-        <data key="fieldName">link_url[default]</data>
-        <data key="value">http://www.magento.com/</data>
-    </entity>
-    <entity name="PageBuilderBannerLink_Anchor" type="pagebuilder_banner_linkUrl_property">
-        <data key="name">Link</data>
-        <data key="section">contents</data>
-        <data key="fieldName">link_url</data>
-        <data key="value">#my-anchor-id</data>
-    </entity>
-    <!-- New Tab -->
-    <entity name="PageBuilderBannerNewTabDefaultProperty" type="pagebuilder_newTab_property">
-        <data key="name">Open in new tab</data>
-        <data key="section">contents</data>
-        <data key="fieldName">link_url</data>
-        <data key="value">false</data>
-    </entity>
-    <entity name="PageBuilderBannerNewTabProperty" type="pagebuilder_newTab_property">
-        <data key="name">Open in new tab</data>
-        <data key="section">contents</data>
-        <data key="fieldName">link_url</data>
-        <data key="value">true</data>
-    </entity>
-    <!-- Button Type -->
-    <entity name="PageBuilderBannerButtonTypeDefaultProperty" type="pagebuilder_banner_buttonTypeDefault_property">
-        <data key="name">Button Type</data>
-        <data key="section">contents</data>
-        <data key="fieldName">button_type</data>
-        <data key="value">Primary</data>
-        <data key="class">true</data>
-    </entity>
-    <entity name="PageBuilderBannerButtonTypePrimaryProperty" type="pagebuilder_banner_buttonType_property">
-        <data key="name">Button Type</data>
-        <data key="section">contents</data>
-        <data key="fieldName">button_type</data>
-        <data key="value">pagebuilder-button-primary</data>
-    </entity>
-    <entity name="PageBuilderBannerButtonTypeSecondaryProperty" type="pagebuilder_banner_buttonType_property">
-        <data key="name">Button Type</data>
-        <data key="section">contents</data>
-        <data key="fieldName">button_type</data>
-        <data key="value">pagebuilder-button-secondary</data>
-    </entity>
-    <entity name="PageBuilderBannerButtonTypeLinkProperty" type="pagebuilder_banner_buttonType_property">
-        <data key="name">Button Type</data>
-        <data key="section">contents</data>
-        <data key="fieldName">button_type</data>
-        <data key="value">pagebuilder-button-link</data>
-    </entity>
-    <!-- Appearance -->
-    <entity name="PageBuilderBannerAppearanceDefaultProperty" type="pagebuilder_appearance_property">
-        <data key="name">Appearance</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">appearance</data>
-        <data key="value">poster</data>
-    </entity>
-    <entity name="PageBuilderBannerCollageLeftProperty" type="pagebuilder_appearance_property">
-        <data key="name">Appearance</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">appearance</data>
-        <data key="value">collage-left</data>
-    </entity>
-    <entity name="PageBuilderBannerCollageRightProperty" type="pagebuilder_appearance_property">
-        <data key="name">Appearance</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">appearance</data>
-        <data key="value">collage-right</data>
-    </entity>
-    <entity name="PageBuilderBannerCollageCenteredProperty" type="pagebuilder_appearance_property">
-        <data key="name">Appearance</data>
-        <data key="section">appearance_fieldset</data>
-        <data key="fieldName">appearance</data>
-        <data key="value">collage-centered</data>
-    </entity>
-    <!-- Margin & Padding -->
-    <entity name="PageBuilderBannerDefaultPaddingTopProperty" type="pagebuilder_padding_top_property">
-        <data key="name">Padding Top</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">paddingTop</data>
-        <data key="value">40</data>
-    </entity>
-    <entity name="PageBuilderBannerDefaultPaddingRightProperty" type="pagebuilder_padding_right_property">
-        <data key="name">Padding Right</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">paddingRight</data>
-        <data key="value">40</data>
-    </entity>
-    <entity name="PageBuilderBannerDefaultPaddingLeftProperty" type="pagebuilder_padding_left_property">
-        <data key="name">Padding Left</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">paddingLeft</data>
-        <data key="value">40</data>
-    </entity>
-    <entity name="PageBuilderBannerDefaultPaddingBottomProperty" type="pagebuilder_padding_bottom_property">
-        <data key="name">Padding Bottom</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">paddingBottom</data>
-        <data key="value">40</data>
-    </entity>
-    <entity name="PageBuilderBannerDefaultMarginTopProperty" type="pagebuilder_margin_top_property">
-        <data key="name">Margin Top</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">marginTop</data>
-        <data key="value">1</data>
-    </entity>
-    <entity name="PageBuilderBannerDefaultMarginRightProperty" type="pagebuilder_margin_right_property">
-        <data key="name">Margin Right</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">marginRight</data>
-        <data key="value">2</data>
-    </entity>
-    <entity name="PageBuilderBannerDefaultMarginLeftProperty" type="pagebuilder_margin_left_property">
-        <data key="name">Margin Left</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">marginLeft</data>
-        <data key="value">4</data>
-    </entity>
-    <entity name="PageBuilderBannerDefaultMarginBottomProperty" type="pagebuilder_margin_bottom_property">
-        <data key="name">Margin Bottom</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">marginBottom</data>
-        <data key="value">3</data>
-    </entity>
-    <entity name="PageBuilderBannerAdvancedMarginsAndPaddingDefaultProperty" type="pagebuilder_advanced_margins_and_padding_property">
-        <data key="name">Margins and Padding</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">margins_and_padding</data>
-        <data key="marginTop">0</data>
-        <data key="marginRight">0</data>
-        <data key="marginBottom">0</data>
-        <data key="marginLeft">0</data>
-        <data key="paddingTop">40</data>
-        <data key="paddingRight">40</data>
-        <data key="paddingBottom">40</data>
-        <data key="paddingLeft">40</data>
-    </entity>
-    <entity name="PageBuilderBannerAdvancedMarginsAndPaddingProperty" type="pagebuilder_advanced_margins_and_padding_property">
-        <data key="name">Margins and Padding</data>
-        <data key="section">advanced</data>
-        <data key="fieldName">margins_and_padding</data>
-        <data key="marginTop">1</data>
-        <data key="marginRight">2</data>
-        <data key="marginBottom">3</data>
-        <data key="marginLeft">4</data>
-        <data key="paddingTop">40</data>
-        <data key="paddingRight">40</data>
-        <data key="paddingBottom">40</data>
-        <data key="paddingLeft">40</data>
-    </entity>
-    <!-- Background Color -->
-    <entity name="PageBuilderBannerWhiteBackgroundColorProperty" type="pagebuilder_banner_background_color_property">
-        <data key="name">Background Color</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_color</data>
-        <data key="value">#ffffff</data>
-        <data key="editPanelValue">#ffffff</data>
-    </entity>
-    <entity name="PageBuilderBannerBackgroundColor_Red" type="pagebuilder_banner_background_color_property">
-        <data key="name">Background Color</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_color</data>
-        <data key="value">red</data>
-    </entity>
-    <!-- Background Position -->
-    <entity name="PageBuilderBannerBackgroundPositionDefaultProperty" type="pagebuilder_banner_background_position_property">
-        <data key="name">Background Position</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_position</data>
-        <data key="value">Top Aligned</data>
-    </entity>
-    <entity name="PageBuilderBannerBackgroundPositionCenteredProperty" type="pagebuilder_banner_background_position_property">
-        <data key="name">Background Position</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_position</data>
-        <data key="value">Centered</data>
-    </entity>
-    <!-- Background Repeat -->
-    <entity name="PageBuilderBannerBackgroundRepeatDefaultProperty" type="pagebuilder_banner_background_repeat_property">
-        <data key="name">Background Repeat</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_repeat</data>
-        <data key="value">0</data>
-        <data key="stageValue">no-repeat</data>
-    </entity>
-    <!-- Background Attachement -->
-    <entity name="PageBuilderBannerBackgroundAttachmentDefaultProperty" type="pagebuilder_banner_background_attach_property">
-        <data key="name">Background Attachment</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_attachment</data>
-        <data key="value">scroll</data>
-    </entity>
-    <entity name="PageBuilderBannerBackgroundAttachmentScrollProperty" type="pagebuilder_banner_background_attach_property">
-        <data key="name">Background Attachment</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_attachment</data>
-        <data key="value">Scroll</data>
-    </entity>
-    <entity name="PageBuilderBannerBackgroundAttachmentFixedProperty" type="pagebuilder_banner_background_attach_property">
-        <data key="name">Background Attachment</data>
-        <data key="section">background</data>
-        <data key="fieldName">background_attachment</data>
-        <data key="value">Fixed</data>
-    </entity>
-    <entity name="PageBuilderBannerWhiteOverlayColorProperty" type="pagebuilder_banner_overlay_color_property">
-        <data key="name">Overlay Color</data>
-        <data key="section">contents</data>
-        <data key="fieldName">overlay_color</data>
-        <data key="value">#ffffff</data>
     </entity>
 </entities>

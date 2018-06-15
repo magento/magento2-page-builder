@@ -9,6 +9,7 @@
 <sections xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Page/etc/SectionObject.xsd">
     <section name="BannerOnFrontend">
+        <element name="base" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]" parameterized="true"/>
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
         <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
         <element name="placeholderText" type="text" selector="//div[text()='{{arg1}}']" parameterized="true"/>
@@ -57,8 +58,19 @@
         <element name="bannerBorderStyle" type="button" selector="//div[@data-role='banner'][contains(@style, 'border-width: {{arg1}}px') and contains(@style, 'border-style: {{arg2}}') and contains(@style, 'border-color: {{arg3}}')]" parameterized="true"/>
         <element name="bannerBorderRadiusStyle" type="button" selector="div[data-role='banner'][style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="bannerClass" type="button" selector="div[data-role='banner'][class='{{arg1}}']" parameterized="true"/>
+        <!-- Background Configuration -->
+        <element name="backgroundPosition" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[contains(@class,'pagebuilder-banner-wrapper') and not(contains(@class,'pagebuilder-mobile-only'))][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[contains(@class,'pagebuilder-banner-wrapper') and not(contains(@class,'pagebuilder-mobile-only'))][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[contains(@class,'pagebuilder-banner-wrapper') and not(contains(@class,'pagebuilder-mobile-only'))][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[contains(@class,'pagebuilder-banner-wrapper') and not(contains(@class,'pagebuilder-mobile-only'))][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundColor" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[contains(@class,'pagebuilder-banner-wrapper') and not(contains(@class,'pagebuilder-mobile-only'))][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[contains(@class,'pagebuilder-banner-wrapper') and not(contains(@class,'pagebuilder-mobile-only'))][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[contains(@class,'pagebuilder-banner-wrapper') and not(contains(@class,'pagebuilder-mobile-only'))][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[contains(@class,'pagebuilder-banner-wrapper') and not(contains(@class,'pagebuilder-mobile-only'))][not(contains(@style,'background-image:'))]" parameterized="true"/>
+        <element name="backgroundMobileImage" type="button" selector="(//div[@data-role='banner'])[{{arg1}}]//div[contains(@class,'pagebuilder-banner-wrapper') and contains(@class,'pagebuilder-mobile-only')][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
     </section>
     <section name="BannerOnBackend">
+        <element name="base" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]" parameterized="true"/>
         <element name="default" type="button" selector="(//div[contains(@class, 'pagebuilder-banner')])[{{arg1}}][contains(@style, 'border-style: {{arg2}};') and contains(@style, 'border-radius: {{arg3}}px;') and contains(@style, 'margin: {{arg4}}px;')]//div[contains(@class, 'pagebuilder-banner-wrapper') and contains(@style, 'background-size: {{arg6}};') and contains(@style, 'background-repeat: {{arg7}};') and contains(@style, 'background-attachment: {{arg8}};')]//div[contains(@class, 'pagebuilder-poster-overlay')][contains(@style,'padding: {{arg10}}px;')]" parameterized="true"/>
         <element name="backgroundImageSource" type="button" selector="//div[contains(@style, '{{arg1}}')]" parameterized="true"/>
         <element name="messageText" type="text" selector="//div/p[text()='{{arg1}}']" parameterized="true"/>
@@ -102,6 +114,15 @@
         <element name="bannerBorderRadiusStyle" type="button" selector="div[style*='border-radius: {{arg1}}']" parameterized="true"/>
         <element name="editFormBackgroundImagePreview" type="button" selector="//input[@name='background_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
         <element name="editFormBackgroundMobileImagePreview" type="button" selector="//input[@name='mobile_image']/ancestor::div[@class='admin__field-control']/descendant::img"/>
+        <!-- Background Configuration -->
+        <element name="backgroundPosition" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/div[@data-appearance][contains(@style,'background-position: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundSize" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/div[@data-appearance][contains(@style,'background-size: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundRepeat" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/div[@data-appearance][contains(@style,'background-repeat: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundAttachment" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/div[@data-appearance][contains(@style,'background-attachment: {{arg2}};')]" parameterized="true"/>
+        <element name="backgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/div[@data-appearance][contains(@style,'background-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBackgroundColor" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/div[@data-appearance][not(contains(@style,'background-color:'))]" parameterized="true"/>
+        <element name="backgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/div[@data-appearance][contains(@style,'background-image: url(') and contains(@style,'{{arg2}}')]" parameterized="true"/>
+        <element name="noBackgroundImage" type="button" selector="(//div[contains(@class,'pagebuilder-banner') and contains(@class,'pagebuilder-content-type')])[{{arg1}}]/div[@data-appearance][not(contains(@style,'background-image:'))]" parameterized="true"/>
     </section>
     <section name="BannerOnConfigurationPanel">
         <element name="tinyMCEIFrame" type="text" selector="pagebuilder_banner_form_message_ifr"/>

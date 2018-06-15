@@ -137,12 +137,26 @@
         <element name="fourthSelection" type="input" selector="//li[@name='{{var1}}']" parameterized="true"/>
     </section>
     <section name="ColorPicker">
-        <element name="colorSwatch" type="button" selector="//div[contains(concat(' ',normalize-space(@class),' '),'sp-preview')]"/>
-        <element name="colorBox" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//span[@data-color='{{arg1}}']" parameterized="true"/>
-        <element name="firstColorBox" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//span[@data-color='rgb(252, 0, 9)']"/>
-        <element name="colorWheel" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//div[@class='sp-val']"/>
-        <element name="applyBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//button[text()='Apply']"/>
-        <element name="cancelBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//a[text()='Cancel']"/>
-        <element name="inputField" type="input" selector="//div[contains(@class,'sp-palette') and @style and not(contains(@class, 'sp-hidden'))]//input[@class='sp-input']"/>
+        <element name="colorSwatch" type="button" selector=".sp-preview"/>
+        <element name="colorPickerWindow" type="button" selector=".sp-container[style]"/>
+        <element name="allColorBoxes" type="button" selector=".sp-container[style] .sp-palette-row:not(.sp-palette-row-selection) [data-color]"/>
+        <element name="colorBox" type="button" selector=".sp-container[style] [data-color='{{arg1}}']" parameterized="true"/>
+        <element name="firstColorBox" type="button" selector=".sp-container[style] [data-color='rgb(252, 0, 9)']"/>
+        <element name="activeFavoriteColorBox" type="button" selector=".sp-container[style] .sp-palette-row.sp-palette-row-selection .sp-thumb-active[data-color='{{arg1}}']" parameterized="true"/>
+        <element name="colorWheel" type="button" selector=".sp-container[style] .sp-val"/>
+        <element name="colorWheelColor" type="button" selector=".sp-container[style] .sp-color[style='background-color: {{arg1}};']" parameterized="true"/>
+        <element name="inputField" type="input" selector=".sp-container[style] .sp-input"/>
+        <element name="clearColorBtn" type="button" selector=".sp-container[style] [title='Clear Color Selection']"/>
+        <element name="hueSlider" type="button" selector=".sp-container[style] .sp-hue"/>
+        <element name="lightDarkSlider" type="button" selector=".sp-container[style] .sp-alpha"/>
+        <element name="cancelBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style]//a[text()='Cancel']"/>
+        <element name="applyBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style]//button[text()='Apply']"/>
+    </section>
+    <section name="EditPanelForm">
+        <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img[@class="preview-image"]'/>
+        <element name="selectFromGalleryBtn" type="button" selector="//aside//div[@data-index='{{arg1}}']/descendant::*[@name='{{arg2}}']//..//label[text()='Select from Gallery']" parameterized="true"/>
+        <element name="invalidUploadTitle" type="text" selector="//aside[contains(@class,'modal-popup')]//header/h1[contains(.,'Attention')]"/>
+        <element name="invalidUploadMessage" type="text" selector="//aside[contains(@class,'modal-popup')]//div[@class='modal-content']//div[.=&quot;{{arg1}}&quot;]" parameterized="true"/>
+        <element name="invalidUploadOkBtn" type="text" selector="//aside[contains(@class,'modal-popup')]//footer//button//span[.='OK']"/>
     </section>
 </sections>
