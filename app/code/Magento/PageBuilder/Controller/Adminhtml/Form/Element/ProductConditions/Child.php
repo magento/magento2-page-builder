@@ -6,10 +6,9 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Products\Conditions;
+namespace Magento\PageBuilder\Controller\Adminhtml\Form\Element\ProductConditions;
 
 use Magento\Rule\Model\Condition\AbstractCondition;
-use Magento\Rule\Model\Condition\Combine;
 
 /**
  * Responsible for rendering the child elements of the conditions rule tree using the provided params
@@ -19,7 +18,7 @@ class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
     /**
      * @var \Magento\CatalogWidget\Model\Rule
      */
-    protected $rule;
+    private $rule;
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -48,7 +47,7 @@ class Child extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
             ->setId($id)
             ->setType($className)
             ->setRule($this->rule)
-            ->setPrefix('conditions');
+            ->setPrefix($this->getRequest()->getParam('prefix', 'conditions'));
 
         if (!empty($typeData[1])) {
             $model->setAttribute($typeData[1]);
