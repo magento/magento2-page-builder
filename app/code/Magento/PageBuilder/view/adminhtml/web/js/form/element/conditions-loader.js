@@ -2,13 +2,15 @@ define([
     'jquery',
     'Magento_Rule/rules',
     'uiRegistry',
-    'prototype'
-], function ($, RulesForm, uiRegistry) {
+    'mage/utils/objects'
+], function ($, RulesForm, uiRegistry, objectUtils) {
     'use strict';
 
     return function (config, conditionsFormPlaceholder) {
         var $conditionsFormPlaceholder = $(conditionsFormPlaceholder),
-            conditions = uiRegistry.get(config.formNamespace + '.' + config.formNamespace).source.data['conditions_encoded'] || '[]';
+            attributeData = uiRegistry.get(config.formNamespace + '.' + config.formNamespace).source.data,
+            conditions = objectUtils.nested(attributeData, config.attribute) || '[]';
+
         $('body').trigger('processStart');
 
         $.ajax(config.componentUrl, {

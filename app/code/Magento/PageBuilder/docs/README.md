@@ -18,9 +18,10 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
-    1. [Bindings]
     1. [Master format]
     1. [Visual select]
+    1. [Reuse product conditions in content types]
+    1. [Store component master format as widget directive]
     1. [Custom Toolbar]
 5. [Roadmap and known issues]
 
@@ -39,5 +40,7 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 [Events]: events.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
 [Roadmap and Known Issues]: roadmap.md

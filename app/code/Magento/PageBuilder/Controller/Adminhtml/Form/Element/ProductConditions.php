@@ -6,14 +6,14 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Products;
+namespace Magento\PageBuilder\Controller\Adminhtml\Form\Element;
 
 use Magento\Rule\Model\Condition\Combine;
 
 /**
  * Responsible for rendering the top-level conditions rule tree using the provided params
  */
-class Conditions extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
+class ProductConditions extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Widget
 {
     /**
      * @var \Magento\CatalogWidget\Model\Rule
@@ -45,9 +45,13 @@ class Conditions extends \Magento\CatalogWidget\Controller\Adminhtml\Product\Wid
      */
     public function execute()
     {
-        $conditions = $this->getRequest()->getParam('conditions');
-        $this->rule->loadPost(['conditions'=> $this->serializer->unserialize($conditions)]);
+        $prefix = $this->getRequest()->getParam('prefix', 'conditions');
+        $conditionsEncoded = $this->getRequest()->getParam('conditions');
         $conditions = $this->rule->getConditions();
+        $conditions->setData('prefix', $prefix);
+        // The rule class expects something to be set in the prefix field before the conditions are loaded
+        $conditions->setData($prefix, []);
+        $this->rule->loadPost(['conditions' => $this->serializer->unserialize($conditionsEncoded)]);
         $formName = $this->getRequest()->getParam('form_namespace');
         // Combine class recursively sets jsFormObject so we don't need to
         $conditions->setJsFormObject($formName);
