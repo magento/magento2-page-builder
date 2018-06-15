@@ -546,12 +546,14 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty_Text">
             <argument name="property" value="PageBuilder_InvalidVideoURL_Text"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn1"/>
-        <see userInput="{{PageBuilder_InvalidVideoURL_Text.validationMessage}}" stepKey="seeValidationMessage1"/>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorText">
+            <argument name="property" value="PageBuilder_InvalidVideoURL_Text"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty_HTML">
             <argument name="property" value="PageBuilder_InvalidVideoURL_HTML"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn2"/>
-        <see userInput="{{PageBuilder_InvalidVideoURL_HTML.validationMessage}}" stepKey="seeValidationMessage2"/>
+        <actionGroup ref="saveEditPanelAndValidateFieldErrorGeneralSection" stepKey="validateErrorHTML">
+            <argument name="property" value="PageBuilder_InvalidVideoURL_HTML"/>
+        </actionGroup>
     </test>
 </tests>
