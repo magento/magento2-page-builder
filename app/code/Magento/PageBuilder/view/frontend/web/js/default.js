@@ -9,6 +9,7 @@ requirejs([
     'jquery',
     'Magento_PageBuilder/js/utils/map',
     'jquery/ui',
+    'mage/tabs',
     'slick',
     'jarallax'
 ], function ($, GoogleMap) {
