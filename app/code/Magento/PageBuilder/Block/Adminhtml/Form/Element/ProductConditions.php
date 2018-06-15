@@ -6,20 +6,20 @@
 
 declare(strict_types=1);
 
-namespace Magento\PageBuilder\Block\Adminhtml\ContentType\Products;
+namespace Magento\PageBuilder\Block\Adminhtml\Form\Element;
 
 use Magento\Backend\Block\Template;
 
 /**
  * The block used to render the conditions rule tree form within the PageBuilder interface.
  */
-class Conditions extends Template
+class ProductConditions extends Template
 {
     /**
      *
      * @var string
      */
-    protected $_template = 'Magento_PageBuilder::content_type/products/conditions.phtml';
+    protected $_template = 'Magento_PageBuilder::form/element/conditions.phtml';
 
     /**
      * @var \Magento\Framework\Serialize\Serializer\Json
@@ -42,41 +42,46 @@ class Conditions extends Template
     }
 
     /**
-     * Returns the form namespace to be used with the JS config
-     *
-     * @return string
-     */
-    public function getFormNamespace(): string
-    {
-        return 'pagebuilder_products_form';
-    }
-
-    /**
      * Returns an array of arguments to pass to the condition tree UIComponent
      *
      * @return array
      */
     private function getConfig(): array
     {
+        $formNamespace = $this->getData('formNamespace');
+        $attribute = $this->getData('attribute');
+
         return [
-            'formNamespace' => $this->getFormNamespace(),
+            'formNamespace' => $formNamespace,
             'componentUrl' => $this->getUrl(
-                'pagebuilder/contenttype/products_conditions',
-                ['form_namespace' => $this->getFormNamespace()]
+                'pagebuilder/form/element_productconditions',
+                [
+                    'form_namespace' => $formNamespace,
+                    'prefix' => $attribute,
+                ]
             ),
-            'jsObjectName' => $this->getFormNamespace(),
+            'jsObjectName' => $formNamespace . '_' . $attribute,
             'childComponentUrl' => $this->getUrl(
-                'pagebuilder/contenttype/products_conditions_child',
-                ['form_namespace' => $this->getFormNamespace()]
+                'pagebuilder/form/element_productconditions_child',
+                [
+                    'form_namespace' => $formNamespace,
+                    'prefix' => $attribute,
+                ]
             ),
+            'attribute' => $attribute,
         ];
     }
 
+    /**
+     * Creates a JSON string containing the configuration for the needed JS components in the mage-init format
+     *
+     * @return string
+     */
     public function getConfigJson(): string
     {
         return $this->serializer->serialize([
-            '[data-role=pagebuilder-product-conditions-form-placeholder]' => [
-                'Magento_PageBuilder/js/content-type/products/conditions-loader' => $this->getConfig(),
+            '[data-role=pagebuilder-conditions-form-placeholder-' . $this->getData('attribute') . ']' => [
+                'Magento_PageBuilder/js/form/element/conditions-loader' => $this->getConfig(),
             ]
         ]);
     }
