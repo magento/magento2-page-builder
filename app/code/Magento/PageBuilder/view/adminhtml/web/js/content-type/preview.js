@@ -340,7 +340,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
     /**
      * Get the CSS styles for the children element
      *
-     * @returns {}
+     * @returns {object}
      */
 
 

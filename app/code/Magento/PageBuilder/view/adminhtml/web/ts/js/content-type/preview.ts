@@ -348,7 +348,7 @@ export default class Preview {
     /**
      * Get the CSS styles for the children element
      *
-     * @returns {}
+     * @returns {object}
      */
     public getChildrenStyles() {
         return this.data.hasOwnProperty("content") ? this.data.content.style : {};
