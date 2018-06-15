@@ -10,6 +10,11 @@
     require.config({
         paths: {
             googleMaps: '<?= $block->escapeJs($block->getGoogleMapsApiPath()); ?>'
+        },
+        config: {
+            'Magento_PageBuilder/js/utils/map': {
+                mapStyle: '<?= $block->escapeJs($block->getGoogleMapsStyles()); ?>'
+            }
         }
     });
 </script>
