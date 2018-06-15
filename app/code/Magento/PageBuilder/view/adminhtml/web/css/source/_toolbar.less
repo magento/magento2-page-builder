@@ -18,8 +18,8 @@
     }
 
     .pagebuilder-toolbar-options {
+        bottom: 100%;
         opacity: 1;
-        top: -39px;
         transition-delay: 200ms;
         visibility: visible;
     }
@@ -35,21 +35,22 @@
     -webkit-transition: opacity 200ms, top 200ms, visibility 200ms;
     background-color: @color-gray94;
     border: 1px solid @color-gray75;
-    height: 38px;
+    bottom: 0;
     left: -2px;
     opacity: 0;
     position: absolute;
-    top: 0;
-    transition: opacity 200ms, top 200ms, visibility 200ms;
+    transition: bottom 200ms, opacity 200ms, visibility 200ms;
     visibility: hidden;
     width: calc(~'100% + 4px');
     z-index: 32;
 
     .pagebuilder-toolbar-options-wrapper {
         display: flex;
+        flex-wrap: wrap;
 
         .pagebuilder-toolbar-options-links {
             display: flex;
+            flex-wrap: wrap;
             list-style: none;
             margin: 0;
             vertical-align: middle;

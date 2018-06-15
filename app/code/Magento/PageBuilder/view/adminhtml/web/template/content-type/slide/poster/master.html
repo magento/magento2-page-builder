@@ -5,25 +5,59 @@
  */
 -->
 
-<div data-bind="attr: getAttributes(), style: getSlideContainerStyle(), css: getCss()">
-    <a data-bind="attr: getLinkAttribute()">
-        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-only" data-bind="style: getSlideStyles('mobileImage')">
-            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
+<div attr="data.main.attributes"
+     ko-style="data.main.style"
+     css="data.main.css">
+    <a attr="data.link.attributes"
+       ko-style="data.link.style"
+       css="data.link.css">
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-hidden"
+             attr="data.desktop_image.attributes"
+             ko-style="data.desktop_image.style"
+             css="data.desktop_image.css">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay"
+                 attr="data.overlay.attributes"
+                 ko-style="data.overlay.style"
+                 css="data.overlay.css">
                 <div class="pagebuilder-poster-content">
-                    <div data-bind="html: getContentHtml()"></div>
-                    <!-- ko if: getData().show_button !== "never_show" -->
-                    <button type="button" class="pagebuilder-slide-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
-                    <!-- /ko -->
+                    <div attr="data.content.attributes"
+                         ko-style="data.content.style"
+                         css="data.content.css"
+                         html="data.content.html">
+                    </div>
+                    <button if="data.main.attributes()['data-show-button'] !== 'never'"
+                            type="button"
+                            class="pagebuilder-slide-button"
+                            attr="data.button.attributes"
+                            ko-style="data.button.style"
+                            css="data.button.css"
+                            html="data.button.html">
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="pagebuilder-slide-wrapper" data-bind="style: getSlideStyles('image'), css: {'pagebuilder-mobile-hidden': getData().mobile_image}">
-            <div class="pagebuilder-overlay pagebuilder-poster-overlay" data-bind="attr: getOverlayAttributes(), style: getOverlayStyles()">
+        <div class="pagebuilder-slide-wrapper pagebuilder-mobile-only"
+             attr="data.mobile_image.attributes"
+             ko-style="data.mobile_image.style"
+             css="data.mobile_image.css">
+            <div class="pagebuilder-overlay pagebuilder-poster-overlay"
+                 attr="data.overlay.attributes"
+                 ko-style="data.overlay.style"
+                 css="data.overlay.css">
                 <div class="pagebuilder-poster-content">
-                    <div data-bind="html: getContentHtml()"></div>
-                    <!-- ko if: getData().show_button !== "never_show" -->
-                    <button type="button" class="pagebuilder-slide-button" data-bind="text: getData().button_text, style: getButtonStyle(), css: getData().button_type"></button>
-                    <!-- /ko -->
+                    <div attr="data.content.attributes"
+                         ko-style="data.content.style"
+                         css="data.content.css"
+                         html="data.content.html">
+                    </div>
+                    <button if="data.main.attributes()['data-show-button'] !== 'never'"
+                            type="button"
+                            class="pagebuilder-slide-button"
+                            attr="data.button.attributes"
+                            ko-style="data.button.style"
+                            css="data.button.css"
+                            html="data.button.html">
+                    </button>
                 </div>
             </div>
         </div>

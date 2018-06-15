@@ -9,7 +9,9 @@ import $t from "mage/translate";
 import "tabs";
 import events from "uiEvents";
 import _ from "underscore";
+import {ActiveOptionsInterface} from "../../binding/active-options.d";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
+import {SortableOptionsInterface} from "../../binding/sortable-options.d";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
@@ -17,13 +19,11 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
-import {ContentTypeMountEventParamsInterface} from "../content-type-mount-event-params.d";
-import {ContentTypeReadyEventParamsInterface} from "../content-type-ready-event-params.d";
-import {ContentTypeRemovedEventParamsInterface} from "../content-type-removed-event-params.d";
+import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
+import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
+import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import {ActiveOptionsInterface} from "./active-options.d";
-import {SortableOptionsInterface} from "./sortable-options.d";
 
 export default class Preview extends PreviewCollection {
     public static focusOperationTime: number;
@@ -63,7 +63,7 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        events.on("tabs:contentType:afterRender", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("tabs:contentType:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
             if (args.id === this.parent.id && this.element) {
                 this.buildTabs();
             }

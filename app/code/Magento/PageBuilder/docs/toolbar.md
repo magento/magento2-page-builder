@@ -17,8 +17,9 @@
     1. [Events]
     1. [Master format]
     1. [Visual select]
+    1. [Reuse product conditions in content types]
+    1. [Store component master format as widget directive]
     1. **Custom Toolbar**
-    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -36,8 +37,9 @@
 [Events]: events.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
 
 ## What's in this topic
@@ -46,15 +48,15 @@ This document outlines how to add a custom toolbar in Page Builder. It's a simpl
 
 ## Overview
 
-To add a custom toolbar to a Page Builder content type:
+To add a custom toolbar to a Page Builder content block:
 1. [Add a toolbar configuration](#toolbarConfig)
 2. [Add a toolbar template](#toolbarTpl)
 
 ## Add a toolbar configuration
 
-To add a Toolbar configuration to your content type, you need to create a new instance of the `Toolbar` class, then add configuration options to it. 
+To add a Toolbar configuration to your content block, you need to create a new instance of the `Toolbar` class, then add configuration options to it. 
 
-An example implementation can be found in the Heading content type:
+An example implementation can be found in the Heading content block:
 `app/code/Magento/PageBuilder/view/adminhtml/web/ts/js/content-type/heading/preview.ts`
 
 In the Heading example, the `Toolbar` constructor requires its parent preview and the toolbar options you want to include as follows:
@@ -102,7 +104,7 @@ Option property descriptions:
 
 ## Add toolbar template
 
-In your content type template, add the toolbar events to your main toolbar container, and insert the toolbar template:
+In your content block template, add the toolbar events to your main toolbar container, and insert the toolbar template:
 ```html
 <div class="pagebuilder-toolbar-container" tabindex="0" event="{ focusin: toolbar.onFocusIn, focusout: toolbar.onFocusOut }">
     <with args="toolbar">
@@ -111,7 +113,7 @@ In your content type template, add the toolbar events to your main toolbar conta
 </div>
 ```
 
-An example implementation can be found in the Heading content type:
+An example implementation can be found in the Heading content block:
 `app/code/Magento/PageBuilder/view/adminhtml/web/template/content-type/heading/default/preview.html`
 
 

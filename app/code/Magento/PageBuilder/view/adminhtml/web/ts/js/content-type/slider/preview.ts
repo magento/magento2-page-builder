@@ -12,11 +12,13 @@ import _ from "underscore";
 import "../../binding/focus";
 import {PreviewSortableSortUpdateEventParams} from "../../binding/sortable-children";
 import Config from "../../config";
+import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
@@ -98,40 +100,8 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        // We only start forcing the containers height once the slider is ready
-        let sliderReady: boolean = false;
-        events.on("slider:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {
-            if (args.id === this.parent.id) {
-                sliderReady = true;
-            }
-        });
-
         this.childSubscribe = this.parent.children.subscribe(this.buildSlick);
         this.parent.dataStore.subscribe(this.buildSlick);
-
-        // Set the active slide to the new position of the sorted slide
-        events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
-            if (args.instance.id === this.parent.id) {
-                $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
-                this.setActiveSlide(args.newPosition);
-            }
-        });
-        // When a slide content type is removed
-        // we need to force update the content of the slider due to KO rendering issues
-        events.on("slide:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.contentType.parent.id === this.parent.id) {
-                this.forceContainerHeight();
-                const data = this.parent.children().slice(0);
-                this.parent.children([]);
-                this.parent.children(data);
-            }
-        });
-        // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
-        events.on("slide:contentType:create", (args: ContentTypeCreateEventParamsInterface) => {
-            if (this.element && sliderReady && args.contentType.parent.id === this.parent.id) {
-                this.forceContainerHeight();
-            }
-        });
 
         // Set the stage to interacting when a slide is focused
         this.focusedSlide.subscribe((value: number) => {
@@ -277,20 +247,67 @@ export default class Preview extends PreviewCollection {
      */
     protected bindEvents() {
         super.bindEvents();
+        // We only start forcing the containers height once the slider is ready
+        let sliderReady: boolean = false;
+        events.on("slider:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {
+            if (args.id === this.parent.id) {
+                sliderReady = true;
+            }
+        });
+
+        // Set the active slide to the new position of the sorted slide
+        events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
+            if (args.instance.id === this.parent.id) {
+                $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
+                this.setActiveSlide(args.newPosition);
+            }
+        });
+
+        // When a slide content type is removed
+        // we need to force update the content of the slider due to KO rendering issues
+        let newItemIndex: number;
+        events.on("slide:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
+            if (args.contentType.parent.id === this.parent.id) {
+                // Mark the previous slide as active
+                newItemIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
+
+                this.forceContainerHeight();
+                const data = this.parent.children().slice(0);
+                this.parent.children([]);
+                this.parent.children(data);
+            }
+        });
+
+        events.on("slide:contentType:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
+            const itemIndex = (args.contentType.parent as ContentTypeCollectionInterface)
+                .getChildren()().indexOf(args.contentType);
+            if ((args.contentType.parent.id === this.parent.id) &&
+                (newItemIndex !== null && newItemIndex === itemIndex)
+            ) {
+                _.defer(() => {
+                    if (newItemIndex !== null) {
+                        newItemIndex = null;
+                        (this as SliderPreview).navigateToSlide(itemIndex, true, true);
+                        _.defer(() => {
+                            this.focusedSlide(null);
+                            this.focusedSlide(itemIndex);
+                        });
+                    }
+                });
+            }
+        });
+
+        // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
+        events.on("slide:contentType:create", (args: ContentTypeCreateEventParamsInterface) => {
+            if (this.element && sliderReady && args.contentType.parent.id === this.parent.id) {
+                this.forceContainerHeight();
+            }
+        });
+
         // ContentType being mounted onto container
         events.on("slider:contentType:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
-            }
-        });
-
-        // ContentType being removed from container
-        events.on("slide:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
-            if (args.parent.id === this.parent.id) {
-                // Mark the previous slide as active
-                const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
-                (this as SliderPreview).setActiveSlide(newIndex);
-                (this as SliderPreview).setFocusedSlide(newIndex, true);
             }
         });
 
@@ -305,11 +322,11 @@ export default class Preview extends PreviewCollection {
         });
         events.on("slide:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedSlide && args.id === duplicatedSlide.id) {
-                // Mark the new duplicate slide as active
-                (this as SliderPreview).navigateToSlide(duplicatedSlideIndex);
-                // Force the focus of the slide, as the previous slide will have focus
-                (this as SliderPreview).setFocusedSlide(duplicatedSlideIndex, true);
-                duplicatedSlide = duplicatedSlideIndex = null;
+                _.defer(() => {
+                    // Mark the new duplicate slide as active
+                    (this as SliderPreview).navigateToSlide(duplicatedSlideIndex, true, true);
+                    duplicatedSlide = duplicatedSlideIndex = null;
+                });
             }
         });
     }
@@ -339,6 +356,7 @@ export default class Preview extends PreviewCollection {
             dots: false, // We have our own dots implemented
             fade: data.fade === "1",
             infinite: data.is_infinite === "1",
+            waitForAnimate: false,
         };
     }
 }

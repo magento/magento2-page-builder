@@ -100,24 +100,27 @@ requirejs([
         showOverlayOnHover($('div[data-role="banner"][data-show-overlay="on_hover"] > a'));
         showButtonOnHover($('div[data-role="banner"][data-show-button="on_hover"] > a'), '.pagebuilder-banner-button');
 
-        showOverlayOnHover($('div[data-role="slide"][data-show-overlay="on_hover"] > a'));
-        showButtonOnHover($('div[data-role="slide"][data-show-button="on_hover"] > a'), '.pagebuilder-slide-button');
+        showOverlayOnHover($('div[data-role="slide"][data-show-overlay="hover"] > a'));
+        showButtonOnHover($('div[data-role="slide"][data-show-button="hover"] > a'), '.pagebuilder-slide-button');
 
         $('div[data-role="tabs"]').each(function (index, element) {
-            $(element).tabs({
-                active: $(element).data('active-tab') || 0,
-                create:
+            $.ui.tabs(
+                {
+                    active: $(element).data('active-tab') || 0,
+                    create:
 
-                    /**
-                     * Adjust the margin bottom of the navigation to correctly display the active tab
-                     */
-                    function () {
-                        var borderWidth = parseInt($(this).find('.tabs-content').css('borderWidth').toString(), 10);
+                        /**
+                         * Adjust the margin bottom of the navigation to correctly display the active tab
+                         */
+                        function () {
+                            var borderWidth = parseInt($(this).find('.tabs-content').css('borderWidth').toString(), 10);
 
-                        $(this).find('.tabs-navigation').css('marginBottom', -borderWidth);
-                        $(this).find('.tabs-navigation li:not(:first-child)').css('marginLeft', -borderWidth);
-                    }
-            });
+                            $(this).find('.tabs-navigation').css('marginBottom', -borderWidth);
+                            $(this).find('.tabs-navigation li:not(:first-child)').css('marginLeft', -borderWidth);
+                        }
+                },
+                $(element)
+            );
         });
     });
 

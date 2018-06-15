@@ -15,11 +15,11 @@
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
-    1. [Bindings]
     1. [Master format]
-    1. [Visual select] 
-    1. [Custom Toolbar]
-    1. [Add image uploader to content type] 
+    1. [Visual select]
+    1. [Reuse product conditions in content types]
+    1. [Store component master format as widget directive]
+    1. [Custom Toolbar] 
 5. [Roadmap and known issues]
 
 **[Architecture overview]** - An overview of the PageBuilder module architecture.
@@ -40,11 +40,13 @@
 
 **[Events]** - Reference documentation for PageBuilder events.
 
-**[Bindings]** - Reference documentation for PageBuilder bindings.
-
 **[Master format]** - Describes the master format for PageBuilder content types.
 
 **[Visual select]** - Documentation on customizing the visual select field.
+
+**[Reuse product conditions in content types]** - Documentation on using the product conditions rule tree for different content types.
+
+**[Store component master format as widget directive]** - Documentation on storing a component's master format as a `widget-directive`.
 
 **[Custom Toolbar]** - Documentation on adding a custom toolbar.
 
@@ -62,7 +64,7 @@
 [Events]: events.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Add image uploader to content type]: image-uploader.md
 [Roadmap and known issues]: roadmap.md
-[Bindings]: bindings.md

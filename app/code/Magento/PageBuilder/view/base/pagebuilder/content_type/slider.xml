@@ -22,11 +22,35 @@
             </allowed_parents>
             <appearances>
                 <appearance default="true" name="default">
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute name="name" source="data-role" />
+                                    <attribute name="appearance" source="data-appearance"/>
+                                    <attribute name="autoplay" source="data-autoplay"/>
+                                    <attribute name="autoplay_speed" source="data-autoplay-speed"/>
+                                    <attribute name="fade" source="data-fade"/>
+                                    <attribute name="is_infinite" source="data-infinite-loop"/>
+                                    <attribute name="show_arrows" source="data-show-arrows"/>
+                                    <attribute name="show_dots" source="data-show-dots"/>
+                                </attributes>
+                                <css name="css_classes"/>
+                            </element>
+                        </elements>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/content-type/slider/default/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/slider/default/master</render_template>
-                    <readers>
-                        <reader component="Magento_PageBuilder/js/master-format/read/default" name="default"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
