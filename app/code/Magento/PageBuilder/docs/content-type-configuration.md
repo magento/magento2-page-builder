@@ -406,6 +406,117 @@ The `tag` element allows you to read the tag name of the element and map back to
 <tag name="heading_type"/>
 ```
 
+## Add custom logic to content types
+
+You can customize Page Builder content types by adding your own logic on the frontend.
+
+To add custom logic to content types:
+1. [Create a JavaScript widget](#create-a-javascript-widget)
+2. [Add XML configuration to load it on the frontend](#add-xml-configuration-to-load-it-on-the-frontend)
+
+### Create a JavaScript widget
+
+Create a JavaScript widget in your module's `/view/frontend/web/js/content-type/{content-type-name}/appearance/{appearance-name}/widget.js` file:
+
+``` javascript
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ 
+define(['jquery'], function ($) {
+    'use strict';
+ 
+    /**
+     * Show the overlay on hover of specific elements
+     *
+     * @param {JQuery<Element>[]} $elements
+     */
+    function showOverlayOnHover($elements) {
+        $elements.each(function (index, element) {
+            var overlayEl = $(element).find('.pagebuilder-overlay'),
+                overlayColor = overlayEl.attr('data-overlay-color');
+ 
+            $(element).hover(
+                function () {
+                    overlayEl.css('background-color', overlayColor);
+                },
+                function () {
+                    overlayEl.css('background-color', 'transparent');
+                }
+            );
+        });
+    }
+ 
+    /**
+     * Show button on hover of specific elements
+     *
+     * @param {JQuery<Element>[]} $elements
+     * @param {String} buttonClass
+     */
+    function showButtonOnHover($elements, buttonClass) {
+        $elements.each(function (index, element) {
+            var buttonEl = $(element).find(buttonClass);
+ 
+            $(element).hover(
+                function () {
+                    buttonEl.css({
+                        'opacity': '1',
+                        'visibility': 'visible'
+                    });
+                }, function () {
+                    buttonEl.css({
+                        'opacity': '0',
+                        'visibility': 'hidden'
+                    });
+                }
+            );
+        });
+    }
+ 
+    return function (config, element) {
+ 
+        var buttonClass = config.buttonSelector,
+            overlayHoverSelector = '[data-show-overlay="%s"] > a'.replace('%s', config.showOverlay),
+            overlayButtonSelector = '[data-show-button="%s"] > a'.replace('%s', config.showOverlay);
+ 
+        showOverlayOnHover($(element).find(overlayHoverSelector));
+        showButtonOnHover($(element).find(overlayButtonSelector), buttonClass);
+ 
+    };
+});
+``` 
+
+### Add XML configuration to load it on the frontend
+
+To load this file on the frontend, add the following configuration to the `default.xml` file in your custom module's `frontend/layout/` directory:
+
+``` xml
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="pagebuilder.widget.initializer">
+            <arguments>
+                <argument name="config" xsi:type="array">
+                    <item name="%content-type-name%" xsi:type="array">
+                        <item name="default" xsi:type="array">
+                            <!--required argument-->
+                            <item name="component" xsi:type="string">%{vendor-path}/js/content-type/{content-type-name}/appearance/{appearance-name}/widget%</item>
+                            <!--optional if you need provide some config for your widget-->                          
+                            <item name="config" xsi:type="array">
+                                <item name="buttonSelector" xsi:type="string">.pagebuilder-slide-button</item>
+                                <item name="showOverlay" xsi:type="string">hover</item>
+                            </item>
+                            <!--optional if you want load widget per appearance-->
+                            <item name="appearance" xsi:type="string">default</item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
+```
+
 ## Converter Interfaces
 
 Converter and mass converter are the two types of converters. Both converters expect `fromDom` and `toDom` methods, with usage examples described below.
