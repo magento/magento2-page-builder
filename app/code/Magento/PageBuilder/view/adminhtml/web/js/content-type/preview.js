@@ -338,6 +338,16 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       return _ref = {}, _ref[this.config.name + "-container"] = true, _ref;
     };
     /**
+     * Get the CSS styles for the children element
+     *
+     * @returns {}
+     */
+
+
+    _proto.getChildrenStyles = function getChildrenStyles() {
+      return this.data.hasOwnProperty("content") ? this.data.content.style : {};
+    };
+    /**
      * Return an array of options
      *
      * @returns {Array<OptionInterface>}

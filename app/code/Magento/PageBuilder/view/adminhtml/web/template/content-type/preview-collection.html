@@ -5,7 +5,7 @@
  */
 -->
 
-<div class="element-children content-type-container" each="parent.getChildren()" css="getChildrenCss()" attr="{id: parent.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
+<div class="element-children content-type-container" each="parent.getChildren()" ko-style="getChildrenStyles()" css="getChildrenCss()" attr="{id: parent.id + '-children'}" data-bind="sortable: getSortableOptions()" afterRender="function (element) { if (typeof afterChildrenRender === 'function') { afterChildrenRender(element); } }">
     <if args="$parent.isContainer()">
         <div class="pagebuilder-drop-indicator"></div>
     </if>

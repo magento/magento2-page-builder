@@ -16,9 +16,7 @@
          data-bind="visible: $index() < $parent.parent.children().length - 1"></div>
     <div class="pagebuilder-resizing" css="{active: resizing}"></div>
     <render args="getOptions().template"></render>
-    <div class="pagebuilder-column-content" ko-style="data.content.style()" afterRender="function(){console.log(data)}">
-        <render args="previewChildTemplate"></render>
-    </div>
+    <render args="previewChildTemplate"></render>
     <div class="pagebuilder-display-label"
          html="displayLabel().toUpperCase()">
     </div>

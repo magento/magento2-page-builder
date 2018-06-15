@@ -346,6 +346,15 @@ export default class Preview {
     }
 
     /**
+     * Get the CSS styles for the children element
+     *
+     * @returns {}
+     */
+    public getChildrenStyles() {
+        return this.data.hasOwnProperty("content") ? this.data.content.style : {};
+    }
+
+    /**
      * Return an array of options
      *
      * @returns {Array<OptionInterface>}
