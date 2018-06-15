@@ -14,22 +14,22 @@
         <element name="icon" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//i[contains(@class,'icon-pagebuilder-video')]" parameterized="true"/>
         <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//span[.='{{arg2}}']" parameterized="true"/>
         <!-- General Configuration -->
-        <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}]" parameterized="true"/>
-        <element name="source" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][@src='{{arg2}}']" parameterized="true"/>
-        <element name="width" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'max-width: {{arg1}}')][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
-        <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
+        <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]" parameterized="true"/>
+        <element name="source" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//iframe[@src='{{arg2}}']" parameterized="true"/>
+        <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@style,'max-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="noWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[not(starts-with(@style,'width:')) and not(contains(@style,' width:'))][contains(@class,'pagebuilder-video-wrapper')]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'justify-content: {{arg1}};')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'border-style: {{arg1}}')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'border-color: {{arg1}}')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'border-width: {{arg1}}')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'border-radius: {{arg1}}')]" parameterized="true"/>
-        <element name="cssClasses" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@class,'{{arg1}}')]" parameterized="true"/>
-        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}]" parameterized="true"/>
-        <element name="margins" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
-        <element name="padding" type="text" selector="//div[contains(@class,'pagebuilder-video')]//div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@style, 'justify-content: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[not(contains(@style,'justify-content:'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//div[contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
         <element name="videoSlideOutTitle" selector="//h1[text()='Edit Video']" type="text" parameterized="true" />
     </section>
     <section name="VideoOnStorefront">
@@ -38,19 +38,19 @@
         <!-- General Configuration -->
         <element name="base" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}]" parameterized="true"/>
         <element name="source" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][@src='{{arg2}}']" parameterized="true"/>
-        <element name="width" type="text" selector="//div[contains(@class,'pagebuilder-video') and contains(@style,'max-width: {{arg1}}')]" parameterized="true"/>
+        <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][contains(@style,'max-width: {{arg2}}')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
         <!-- Advanced Configuration -->
-        <element name="alignment" type="text" selector="//div[@data-role='video' and contains(@style,'justify-content: {{arg1}}')]" parameterized="true"/>
-        <element name="noAlignment" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][not(contains(@style,'text-align:'))]" parameterized="true"/>
-        <element name="border" type="text" selector="//div[contains(@class,'pagebuilder-video') and contains(@style, 'border-style: {{arg1}}')]" parameterized="true"/>
-        <element name="borderColor" type="text" selector="//div[contains(@class,'pagebuilder-video') and contains(@style, 'border-color: {{arg1}}')]" parameterized="true"/>
-        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
-        <element name="borderWidth" type="text" selector="//div[contains(@class,'pagebuilder-video') and contains(@style, 'border-width: {{arg1}}')]" parameterized="true"/>
-        <element name="borderRadius" type="text" selector="//div[contains(@class,'pagebuilder-video') and contains(@style, 'border-radius: {{arg1}}')]" parameterized="true"/>
-        <element name="cssClasses" type="text" selector="//div[@data-role='video' and contains(@class,'{{arg1}}')]" parameterized="true"/>
-        <element name="noCssClasses" type="text" selector="(//div[contains(@class,'pagebuilder-video')]//iframe)[{{arg1}}]" parameterized="true"/>
-        <element name="margins" type="text" selector="//div[contains(@class,'pagebuilder-video') and contains(@style, 'margin: {{arg1}}')]" parameterized="true"/>
-        <element name="padding" type="text" selector="//div[contains(@class,'pagebuilder-video') and contains(@style, 'padding: {{arg1}}')]" parameterized="true"/>
+        <element name="alignment" type="text" selector="(//div[@data-role='video'])[{{arg1}}][contains(@style,'justify-content: {{arg2}};')]" parameterized="true"/>
+        <element name="noAlignment" type="text" selector="(//div[@data-role='video'])[{{arg1}}][not(contains(@style,'justify-content'))]" parameterized="true"/>
+        <element name="border" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][contains(@style,'border-style: {{arg2}};')]" parameterized="true"/>
+        <element name="borderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][contains(@style,'border-color: {{arg2}};')]" parameterized="true"/>
+        <element name="noBorderColor" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][not(contains(@style,'border-color:'))]" parameterized="true"/>
+        <element name="borderWidth" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][contains(@style,'border-width: {{arg2}}px;')]" parameterized="true"/>
+        <element name="borderRadius" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][contains(@style,'border-radius: {{arg2}}px;')]" parameterized="true"/>
+        <element name="cssClasses" type="text" selector="(//div[@data-role='video'])[{{arg1}}][contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="noCssClasses" type="text" selector="(//div[@data-role='video'])[{{arg1}}][not(@class)]" parameterized="true"/>
+        <element name="margins" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][contains(@style,'margin: {{arg2}}px;')]" parameterized="true"/>
+        <element name="padding" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][contains(@style,'padding: {{arg2}}px;')]" parameterized="true"/>
     </section>
 </sections>

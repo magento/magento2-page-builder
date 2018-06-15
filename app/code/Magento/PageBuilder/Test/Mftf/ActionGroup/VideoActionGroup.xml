@@ -17,24 +17,7 @@
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
-        <waitForElementVisible selector="{{page.width(width.value)}}" stepKey="waitForWidth"/>
-        <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
-        <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
-        <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
-        <executeJS function="return Math.abs(window.calculatedHeight - window.actualHeight)" stepKey="ratioDifference"/>
-        <!-- This is 2 because the width and the height may both have fractions that could round by a maximum of 1 for each which makes the maximum 2-->
-        <assertLessThanOrEqual expected="2" expectedType="int" actual="ratioDifference" actualType="variable" stepKey="assertRatio"/>
-    </actionGroup>
-    <actionGroup name="validateVideoOnFrontend">
-        <arguments>
-            <argument name="page" defaultValue=""/>
-            <argument name="index" defaultValue="1" type="string"/>
-            <argument name="url" defaultValue=""/>
-            <argument name="width" defaultValue=""/>
-        </arguments>
-        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
-        <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
-        <waitForElementVisible selector="{{page.width(width.value)}}" stepKey="waitForWidth"/>
+        <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForWidth"/>
         <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
         <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
         <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.base(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
@@ -64,68 +47,5 @@
         </arguments>
         <waitForElementVisible selector="{{VideoOnStage.empty(index)}}" stepKey="waitForEmptyVideo"/>
         <waitForElementVisible selector="{{VideoOnStage.icon(index)}}" stepKey="waitForIcon"/>
-    </actionGroup>
-    <actionGroup name="validateVideoAdvancedStyleWithNoAlignment">
-        <arguments>
-            <argument name="page" defaultValue=""/>
-            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
-        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
-        <waitForElementVisible selector="{{page.border(border.value)}}" stepKey="waitForBorderVisible"/>
-        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
-        <waitForElementVisible selector="{{page.borderWidth(borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
-        <waitForElementVisible selector="{{page.borderRadius(borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
-        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
-        <waitForElementVisible selector="{{page.margins(margin.value)}}" stepKey="waitForMarginVisible"/>
-        <waitForElementVisible selector="{{page.padding(padding.value)}}" stepKey="waitForPaddingVisible"/>
-    </actionGroup>
-    <actionGroup name="validateVideoAdvancedStyleWithNoAlignment">
-        <arguments>
-            <argument name="page" defaultValue=""/>
-            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
-        <waitForElementVisible selector="{{page.noAlignment(index)}}" stepKey="waitForAlignmentVisible"/>
-        <waitForElementVisible selector="{{page.border(border.value)}}" stepKey="waitForBorderVisible"/>
-        <waitForElementVisible selector="{{page.noBorderColor(index)}}" stepKey="waitForBorderColorVisible"/>
-        <waitForElementVisible selector="{{page.borderWidth(borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
-        <waitForElementVisible selector="{{page.borderRadius(borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
-        <waitForElementVisible selector="{{page.noCssClasses(index)}}" stepKey="waitForCSSClassesVisible"/>
-        <waitForElementVisible selector="{{page.margins(margin.value)}}" stepKey="waitForMarginVisible"/>
-        <waitForElementVisible selector="{{page.padding(padding.value)}}" stepKey="waitForPaddingVisible"/>
-    </actionGroup>
-    <actionGroup name="validateVideoAdvancedStyleWithAllUpdated">
-        <arguments>
-            <argument name="page" defaultValue=""/>
-            <argument name="alignment" defaultValue="PageBuilderAdvancedAlignmentPropertyDefault"/>
-            <argument name="border" defaultValue="PageBuilderAdvancedBorderPropertyNone"/>
-            <argument name="borderColor" defaultValue=""/>
-            <argument name="borderWidth" defaultValue="PageBuilderAdvancedBorderWidthPropertyDefault"/>
-            <argument name="borderRadius" defaultValue="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
-            <argument name="cssClasses" defaultValue=""/>
-            <argument name="margin" defaultValue="PageBuilderMarginsPropertyDefault"/>
-            <argument name="padding" defaultValue="PageBuilderPaddingPropertyDefault"/>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElementVisible"/>
-        <waitForElementVisible selector="{{page.alignment(alignment.value)}}" stepKey="waitForAlignmentVisible"/>
-        <waitForElementVisible selector="{{page.border(border.value)}}" stepKey="waitForBorderVisible"/>
-        <waitForElementVisible selector="{{page.borderColor(borderColor.rbg)}}" stepKey="waitForBorderColorVisible"/>
-        <waitForElementVisible selector="{{page.borderWidth(borderWidth.value)}}" stepKey="waitForBorderWidthVisible"/>
-        <waitForElementVisible selector="{{page.borderRadius(borderRadius.value)}}" stepKey="waitForBorderRadiusVisible"/>
-        <waitForElementVisible selector="{{page.cssClasses(cssClasses.value)}}" stepKey="waitForCSSClassesVisible"/>
-        <waitForElementVisible selector="{{page.margins(margin.value)}}" stepKey="waitForMarginVisible"/>
-        <waitForElementVisible selector="{{page.padding(padding.value)}}" stepKey="waitForPaddingVisible"/>
     </actionGroup>
 </actionGroups>
