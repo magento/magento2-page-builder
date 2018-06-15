@@ -93,6 +93,7 @@ This document contains reference information for events dispatched in PageBuilde
 * [tabs:contentType:dropped:create](#tabscontentTypedroppedcreate)
 * [tabs:contentType:ready](#tabscontentTypeready)
 * [{{id}}:updated](#idupdated)
+* [googleMaps:authFailure](#googlemapsauthFailure)
 
 ## `contentType:dropped`
 
@@ -869,6 +870,18 @@ Error
     paramObj: [key: string]: Stage
 }
 ```
+
+[Back to top]
+
+## `googleMaps:authFailure`
+
+**Triggers**
+
+* `window.gm_authFailure`
+
+**Params**
+
+_none_
 
 [Back to top]
 
