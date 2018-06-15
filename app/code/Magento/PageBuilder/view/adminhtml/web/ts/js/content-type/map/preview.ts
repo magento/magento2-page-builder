@@ -65,9 +65,9 @@ export default class Preview extends BasePreview {
             disableDefaultUI: controls !== "true",
             mapTypeControl: controls === "true",
         };
+
         if (currentLocations !== "[]") {
             const mapData = this.getMapData();
-
             locations = mapData.locations;
             options = mapData.options;
         }

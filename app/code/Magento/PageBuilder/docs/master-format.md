@@ -868,7 +868,7 @@ HTML content.
 ## Map
 
 ```
-<div data-role="map" data-appearance="default" data-show-controls="true" data-locations=<locations-json-format> style="display: inline-block; border-style: none; border-width: 1px; border-radius: 0px; height: 300px; margin: 0px; padding: 0px;"></div>
+<div data-role="map" data-appearance="default" data-show-controls="true" data-locations=<locations-json-format> style="border-style: none; border-width: 1px; border-radius: 0px; height: 300px; margin: 0px; padding: 0px;"></div>
 ```
 
 Attributes

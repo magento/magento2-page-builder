@@ -65,11 +65,6 @@ class Map implements RendererInterface
 
             $style = $this->styleExtractor->extractStyle($formData);
             if ($style) {
-                if (isset($eavData['map'])) {
-                    $style .= ' display: inline-block;';
-                } else {
-                    $style .= ' display: none;';
-                }
                 $this->rootElementAttributes['style'] = $style;
             }
         }
