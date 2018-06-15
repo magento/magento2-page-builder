@@ -1,5 +1,7 @@
 /*eslint-disable */
 define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _tabs, _uiEvents, _underscore, _config, _contentTypeFactory, _option, _previewCollection) {
+  function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -268,10 +270,10 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
     _proto.getTabHeaderStyles = function getTabHeaderStyles() {
       var headerStyles = this.data.headers.style();
-      return { ...headerStyles,
+      return _extends({}, headerStyles, {
         marginBottom: "-" + headerStyles.borderWidth,
         marginLeft: "-" + headerStyles.borderWidth
-      };
+      });
     };
     /**
      * Get the sortable options for the tab heading sorting

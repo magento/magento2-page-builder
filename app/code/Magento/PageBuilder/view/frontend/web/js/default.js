@@ -100,8 +100,8 @@ requirejs([
         showOverlayOnHover($('div[data-role="banner"][data-show-overlay="on_hover"] > a'));
         showButtonOnHover($('div[data-role="banner"][data-show-button="on_hover"] > a'), '.pagebuilder-banner-button');
 
-        showOverlayOnHover($('div[data-role="slide"][data-show-overlay="on_hover"] > a'));
-        showButtonOnHover($('div[data-role="slide"][data-show-button="on_hover"] > a'), '.pagebuilder-slide-button');
+        showOverlayOnHover($('div[data-role="slide"][data-show-overlay="hover"] > a'));
+        showButtonOnHover($('div[data-role="slide"][data-show-button="hover"] > a'), '.pagebuilder-slide-button');
 
         $('div[data-role="tabs"]').each(function (index, element) {
             $(element).tabs({

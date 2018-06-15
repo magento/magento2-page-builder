@@ -6,6 +6,7 @@
 import ko from "knockout";
 import $t from "mage/translate";
 import events from "uiEvents";
+import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Options from "../../content-type-menu";
 import Option from "../../content-type-menu/option";
@@ -46,28 +47,66 @@ export default class Preview extends BasePreview {
             this.displayLabel($t(`Slide ${slider.children().indexOf(this.parent) + 1}`));
         });
     }
+
+    /**
+     * Get the background wrapper attributes for the preview
+     *
+     * @returns {any}
+     */
+    public getBackgroundStyles() {
+        const desktopStyles = this.data.desktop_image.style();
+        return {
+            ...desktopStyles,
+            paddingBottom: "",
+            paddingLeft: "",
+            paddingRight: "",
+            paddingTop: "",
+            borderStyle: "none",
+            borderRadius: "0px",
+        };
+    }
     /**
      * Get the slide wrapper attributes for the preview
      *
      * @returns {any}
      */
-    public getBackgroundStyles() {
-        const data = this.previewData;
-        let backgroundImage: string = "none";
-        if (data.background_image() && data.background_image() !== "" &&
-            data.background_image() !== undefined &&
-            data.background_image()[0] !== undefined) {
-            backgroundImage = "url(" + data.background_image()[0].url + ")";
+    public getPaddingStyles() {
+        const previewData = this.previewData;
+        const appearance = this.data.main.attributes()["data-appearance"];
+        const paddingData: any =  {};
+        switch (appearance) {
+            case "collage-centered":
+                paddingData.paddingLeft = `calc(25% + ${this.data.desktop_image.style().paddingLeft})`;
+                paddingData.paddingRight = `calc(25% + ${this.data.desktop_image.style().paddingRight})`;
+                break;
+            case "collage-left":
+                paddingData.paddingRight = `calc(50% + ${this.data.desktop_image.style().paddingRight})`;
+                break;
+            case "collage-right":
+                paddingData.paddingLeft = `calc(50% + ${this.data.desktop_image.style().paddingLeft})`;
+                break;
+            default:
+                break;
         }
-        return {
+        let backgroundImage: string = "none";
+        if (previewData.background_image() && previewData.background_image() !== "" &&
+            previewData.background_image() !== undefined &&
+            previewData.background_image()[0] !== undefined) {
+            backgroundImage = "url(" + previewData.background_image()[0].url + ")";
+        }
+        const styles =  {
             backgroundImage,
-            backgroundSize: data.background_size(),
-            minHeight: data.min_height() ? data.min_height() + "px" : "300px",
+            backgroundSize: previewData.background_size(),
+            minHeight: previewData.min_height() ? previewData.min_height() + "px" : "300px",
             overflow: "hidden",
-            paddingBottom: "",
-            paddingLeft: "",
-            paddingRight: "",
-            paddingTop: "",
+            paddingBottom: this.data.desktop_image.style().paddingBottom || "",
+            paddingLeft: this.data.desktop_image.style().paddingLeft || "",
+            paddingRight: this.data.desktop_image.style().paddingRight || "",
+            paddingTop: this.data.desktop_image.style().paddingTop || "",
+        };
+        return {
+            ...styles,
+            ...paddingData,
         };
     }
 
@@ -171,12 +210,28 @@ export default class Preview extends BasePreview {
      * Set state based on overlay mouseover event for the preview
      */
     public onMouseOverWrapper() {
-        if (this.previewData.show_overlay() === "on_hover") {
-            this.showOverlayHover(true);
-
+        // Triggers the visibility of the overlay content to show
+        if (this.data.main.attributes()["data-show-overlay"] === "hover") {
+            this.data.overlay.attributes(
+                Object.assign(
+                    this.data.overlay.attributes(),
+                    {"data-background-color-orig": this.data.overlay.style().backgroundColor},
+                ),
+            );
+            this.data.overlay.style(
+                Object.assign(
+                    this.data.overlay.style(),
+                    {backgroundColor: this.data.overlay.attributes()["data-overlay-color"]},
+                ),
+            );
         }
-        if (this.previewData.show_button() === "on_hover") {
-            this.showButtonHover(true);
+        if (this.data.main.attributes()["data-show-button"] === "hover") {
+            this.data.button.style(
+                Object.assign(
+                    this.data.button.style(),
+                    {opacity: 1, visibility: "visible"},
+                ),
+            );
         }
     }
 
@@ -184,11 +239,22 @@ export default class Preview extends BasePreview {
      * Set state based on overlay mouseout event for the preview
      */
     public onMouseOutWrapper() {
-        if (this.previewData.show_overlay() === "on_hover") {
-            this.showOverlayHover(false);
+        // Triggers the visibility of the overlay content to hide
+        if (this.data.main.attributes()["data-show-overlay"] === "hover") {
+            this.data.overlay.style(
+                Object.assign(
+                    this.data.overlay.style(),
+                    {backgroundColor: this.data.overlay.attributes()["data-background-color-orig"]},
+                ),
+            );
         }
-        if (this.previewData.show_button() === "on_hover") {
-            this.showButtonHover(false);
+        if (this.data.main.attributes()["data-show-button"] === "hover") {
+            this.data.button.style(
+                Object.assign(
+                    this.data.button.style(),
+                    {opacity: 0, visibility: "hidden"},
+                ),
+            );
         }
     }
 
@@ -266,7 +332,7 @@ export default class Preview extends BasePreview {
     public getOverlayAttributes(): {} {
         const data = this.previewData;
         let overlayColorAttr: string = "transparent";
-        if (data.show_overlay() !== "never_show") {
+        if (data.show_overlay() !== "never") {
             if (data.overlay_color() !== "" && data.overlay_color() !== undefined) {
                 overlayColorAttr = fromHex(data.overlay_color(), percentToDecimal(data.overlay_transparency()));
             }
@@ -296,7 +362,13 @@ export default class Preview extends BasePreview {
             return (option.code !== "remove");
         });
         const removeClasses = ["remove-structural"];
-        let removeFn = this.onOptionRemove;
+        let removeFn = () => {
+            const index = (this.parent.parent as ContentTypeCollectionInterface).getChildren().indexOf(this.parent);
+            this.onOptionRemove();
+            // Invoking methods on slider
+            this.parent.parent.onAfterRender();
+            this.parent.parent.setFocusedSlide(index - 1);
+        };
         if (this.parent.parent.children().length <= 1) {
             removeFn = () => { return; };
             removeClasses.push("disabled");

@@ -83,7 +83,7 @@ export default class Master extends BaseMaster {
     public getOverlayAttributes(): {} {
         const data = this.parent.dataStore.get();
         let overlayColorAttr: string = "transparent";
-        if (data.show_overlay !== "never_show") {
+        if (data.show_overlay !== "never") {
             if (data.overlay_color !== "" && data.overlay_color !== undefined) {
                 overlayColorAttr = fromHex(data.overlay_color, percentToDecimal(data.overlay_transparency));
             }

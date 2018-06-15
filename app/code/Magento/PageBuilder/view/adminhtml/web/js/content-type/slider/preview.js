@@ -21,8 +21,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // We only start forcing the containers height once the slider is ready
-
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.focusedSlide = _knockout.observable();
       _this.activeSlide = _knockout.observable(0);
       _this.element = void 0;
@@ -67,47 +66,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
           });
         }
       }, 10);
-      var sliderReady = false;
-
-      _uiEvents.on("slider:contentType:ready", function (args) {
-        if (args.id === _this.parent.id) {
-          sliderReady = true;
-        }
-      });
-
       _this.childSubscribe = _this.parent.children.subscribe(_this.buildSlick);
 
-      _this.parent.dataStore.subscribe(_this.buildSlick); // Set the active slide to the new position of the sorted slide
-
-
-      _uiEvents.on("sortableChildren:sortupdate", function (args) {
-        if (args.instance.id === _this.parent.id) {
-          (0, _jquery)(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
-
-          _this.setActiveSlide(args.newPosition);
-        }
-      }); // When a slide content type is removed
-      // we need to force update the content of the slider due to KO rendering issues
-
-
-      _uiEvents.on("slide:contentType:removed", function (args) {
-        if (args.contentType.parent.id === _this.parent.id) {
-          _this.forceContainerHeight();
-
-          var data = _this.parent.children().slice(0);
-
-          _this.parent.children([]);
-
-          _this.parent.children(data);
-        }
-      }); // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
-
-
-      _uiEvents.on("slide:contentType:create", function (args) {
-        if (_this.element && sliderReady && args.contentType.parent.id === _this.parent.id) {
-          _this.forceContainerHeight();
-        }
-      }); // Set the stage to interacting when a slide is focused
+      _this.parent.dataStore.subscribe(_this.buildSlick); // Set the stage to interacting when a slide is focused
 
 
       _this.focusedSlide.subscribe(function (value) {
@@ -276,24 +237,76 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
     _proto.bindEvents = function bindEvents() {
       var _this3 = this;
 
-      _PreviewCollection.prototype.bindEvents.call(this); // ContentType being mounted onto container
+      _PreviewCollection.prototype.bindEvents.call(this); // We only start forcing the containers height once the slider is ready
+
+
+      var sliderReady = false;
+
+      _uiEvents.on("slider:contentType:ready", function (args) {
+        if (args.id === _this3.parent.id) {
+          sliderReady = true;
+        }
+      }); // Set the active slide to the new position of the sorted slide
+
+
+      _uiEvents.on("sortableChildren:sortupdate", function (args) {
+        if (args.instance.id === _this3.parent.id) {
+          (0, _jquery)(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
+
+          _this3.setActiveSlide(args.newPosition);
+        }
+      }); // When a slide content type is removed
+      // we need to force update the content of the slider due to KO rendering issues
+
+
+      var newItemIndex;
+
+      _uiEvents.on("slide:contentType:removed", function (args) {
+        if (args.contentType.parent.id === _this3.parent.id) {
+          // Mark the previous slide as active
+          newItemIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
+
+          _this3.forceContainerHeight();
+
+          var data = _this3.parent.children().slice(0);
+
+          _this3.parent.children([]);
+
+          _this3.parent.children(data);
+        }
+      });
+
+      _uiEvents.on("slide:contentType:afterRender", function (args) {
+        var itemIndex = args.contentType.parent.getChildren()().indexOf(args.contentType);
+
+        if (args.contentType.parent.id === _this3.parent.id && newItemIndex !== null && newItemIndex === itemIndex) {
+          _underscore.defer(function () {
+            if (newItemIndex !== null) {
+              newItemIndex = null;
+
+              _this3.navigateToSlide(itemIndex, true, true);
+
+              _underscore.defer(function () {
+                _this3.focusedSlide(null);
+
+                _this3.focusedSlide(itemIndex);
+              });
+            }
+          });
+        }
+      }); // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
+
+
+      _uiEvents.on("slide:contentType:create", function (args) {
+        if (_this3.element && sliderReady && args.contentType.parent.id === _this3.parent.id) {
+          _this3.forceContainerHeight();
+        }
+      }); // ContentType being mounted onto container
 
 
       _uiEvents.on("slider:contentType:dropped:create", function (args) {
         if (args.id === _this3.parent.id && _this3.parent.children().length === 0) {
           _this3.addSlide();
-        }
-      }); // ContentType being removed from container
-
-
-      _uiEvents.on("slide:contentType:removed", function (args) {
-        if (args.parent.id === _this3.parent.id) {
-          // Mark the previous slide as active
-          var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
-
-          _this3.setActiveSlide(newIndex);
-
-          _this3.setFocusedSlide(newIndex, true);
         }
       }); // Capture when a content type is duplicated within the container
 
@@ -310,13 +323,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       _uiEvents.on("slide:contentType:mount", function (args) {
         if (duplicatedSlide && args.id === duplicatedSlide.id) {
-          // Mark the new duplicate slide as active
-          _this3.navigateToSlide(duplicatedSlideIndex); // Force the focus of the slide, as the previous slide will have focus
+          _underscore.defer(function () {
+            // Mark the new duplicate slide as active
+            _this3.navigateToSlide(duplicatedSlideIndex, true, true);
 
-
-          _this3.setFocusedSlide(duplicatedSlideIndex, true);
-
-          duplicatedSlide = duplicatedSlideIndex = null;
+            duplicatedSlide = duplicatedSlideIndex = null;
+          });
         }
       });
     };
@@ -348,7 +360,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
         dots: false,
         // We have our own dots implemented
         fade: data.fade === "1",
-        infinite: data.is_infinite === "1"
+        infinite: data.is_infinite === "1",
+        waitForAnimate: false
       };
     };
 

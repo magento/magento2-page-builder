@@ -50,10 +50,10 @@
         <comment userInput="Validate Row Height adjusts to Tabs inside Column" stepKey="commentValidateRowHeightWithColumnAndTabs"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumnsAndTabs"/>
         <executeJS function="return Math.round({$actualStageColumnHeightWithTabs}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
-        <assertEquals stepKey="assertRowHeightAdjustsToTabsHeight">
+        <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToTabsHeight">
             <expectedResult type="variable">expectedRowHeightWithColumnTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumnsAndTabs</actualResult>
-        </assertEquals>
+        </assertGreaterThanOrEqual>
     </test>
     <test name="TabsAddToColumnWithSetLargeMinimumHeightAndHeightDoesNotAdjust">
         <annotations>
@@ -95,10 +95,10 @@
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
         <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
-        <assertEquals stepKey="assertRowHeightAdjustsToColumnHeight">
+        <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToColumnHeight">
             <expectedResult type="variable">expectedRowHeightWithPaddingAndColumns</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
-        </assertEquals>
+        </assertGreaterThanOrEqual>
         <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
@@ -115,10 +115,10 @@
         <comment userInput="Validate Row Height does not shrink to Tabs height" stepKey="commentValidateRowHeightWithColumnAndTabs"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumnsAndTabs"/>
         <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
-        <assertEquals stepKey="assertRowHeightAdjustsToTabsHeight">
+        <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToTabsHeight">
             <expectedResult type="variable">expectedRowHeightWithColumnTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumnsAndTabs</actualResult>
-        </assertEquals>
+        </assertGreaterThanOrEqual>
     </test>
     <test name="TabsAddToColumnWithSetSmallMinimumHeightAndHeightAdjusts">
         <annotations>
@@ -161,10 +161,10 @@
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
         <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
-        <assertEquals stepKey="assertRowHeightAdjustsToColumnHeight">
+        <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToColumnHeight">
             <expectedResult type="variable">expectedRowHeightWithPaddingAndColumns</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumns</actualResult>
-        </assertEquals>
+        </assertGreaterThanOrEqual>
         <comment userInput="Drag Tabs to Column" stepKey="commentDragTabsToColumn"/>
         <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoFirstColumn">
@@ -176,17 +176,17 @@
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderTabsContentType.role,'1')}}" stepKey="actualStageTabsHeight"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageColumnHeightWithTabs"/>
         <executeJS function="return Math.round({$actualStageTabsHeight}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedColumnHeightWithTabsAndPadding"/>
-        <assertEquals stepKey="assertColumnHeightAdjustsToTabsHeight">
+        <assertGreaterThanOrEqual stepKey="assertColumnHeightAdjustsToTabsHeight">
             <expectedResult type="variable">expectedColumnHeightWithTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageColumnHeightWithTabs</actualResult>
-        </assertEquals>
+        </assertGreaterThanOrEqual>
         <comment userInput="Validate Row Height adjusts to Tabs inside Column" stepKey="commentValidateRowHeightWithColumnAndTabs"/>
         <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumnsAndTabs"/>
         <executeJS function="return Math.round({$actualStageColumnHeightWithTabs}+{{PageBuilderPaddingProperty10.paddingTop}}+{{PageBuilderPaddingProperty10.paddingBottom}})" stepKey="expectedRowHeightWithColumnTabsAndPadding"/>
-        <assertEquals stepKey="assertRowHeightAdjustsToTabsHeight">
+        <assertGreaterThanOrEqual stepKey="assertRowHeightAdjustsToTabsHeight">
             <expectedResult type="variable">expectedRowHeightWithColumnTabsAndPadding</expectedResult>
             <actualResult type="variable">actualStageRowHeightWithColumnsAndTabs</actualResult>
-        </assertEquals>
+        </assertGreaterThanOrEqual>
     </test>
     <test name="MapAddToColumn">
         <annotations>

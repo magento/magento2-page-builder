@@ -18,7 +18,8 @@ module.exports = {
     ],
     plugins: [
         ['./babel/resolve-imports', {prefix: 'Magento_PageBuilder/'}],
-        'transform-typescript'
+        'transform-typescript',
+        'transform-object-rest-spread',
     ],
     ignore: [
         "/**/*.d.ts"

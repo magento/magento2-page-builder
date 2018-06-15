@@ -22,36 +22,180 @@
             </allowed_parents>
             <appearances>
                 <appearance default="true" name="full-height">
-                    <data name="align_self">stretch</data>
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                                    <property name="background_position" source="background_position"/>
+                                    <property name="background_size" source="background_size"/>
+                                    <property name="background_repeat" source="background_repeat"/>
+                                    <property name="background_attachment" source="background_attachment"/>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="width" source="width"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings"/>
+                                    <static_property source="align_self" value="stretch"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute name="name" source="data-role"/>
+                                    <attribute name="appearance" source="data-appearance"/>
+                                </attributes>
+                                <css name="css_classes">
+                                    <filter>
+                                        <class source="pagebuilder-column"/>
+                                    </filter>
+                                </css>
+                            </element>
+                        </elements>
+                        <converters>
+                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                                <config>
+                                    <item name="background_color_format" value="background_color_format"/>
+                                </config>
+                            </converter>
+                        </converters>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
-                    <readers>
-                        <reader component="Magento_PageBuilder/js/master-format/read/default" name="default"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
                 <appearance name="align-top">
-                    <data name="align_self">flex-start</data>
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                                    <property name="background_position" source="background_position"/>
+                                    <property name="background_size" source="background_size"/>
+                                    <property name="background_repeat" source="background_repeat"/>
+                                    <property name="background_attachment" source="background_attachment"/>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="width" source="width"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings"/>
+                                    <static_property source="align_self" value="flex-start"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute name="name" source="data-role"/>
+                                    <attribute name="appearance" source="data-appearance"/>
+                                </attributes>
+                                <css name="css_classes">
+                                    <filter>
+                                        <class source="pagebuilder-column"/>
+                                    </filter>
+                                </css>
+                            </element>
+                        </elements>
+                        <converters>
+                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                                <config>
+                                    <item name="background_color_format" value="background_color_format"/>
+                                </config>
+                            </converter>
+                        </converters>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
-                    <readers>
-                        <reader component="Magento_PageBuilder/js/master-format/read/default" name="default"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
                 <appearance name="align-center">
-                    <data name="align_self">center</data>
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                                    <property name="background_position" source="background_position"/>
+                                    <property name="background_size" source="background_size"/>
+                                    <property name="background_repeat" source="background_repeat"/>
+                                    <property name="background_attachment" source="background_attachment"/>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="width" source="width"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings"/>
+                                    <static_property source="align_self" value="center"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute name="name" source="data-role"/>
+                                    <attribute name="appearance" source="data-appearance"/>
+                                </attributes>
+                                <css name="css_classes">
+                                    <filter>
+                                        <class source="pagebuilder-column"/>
+                                    </filter>
+                                </css>
+                            </element>
+                        </elements>
+                        <converters>
+                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                                <config>
+                                    <item name="background_color_format" value="background_color_format"/>
+                                </config>
+                            </converter>
+                        </converters>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
-                    <readers>
-                        <reader component="Magento_PageBuilder/js/master-format/read/default" name="default"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
                 <appearance name="align-bottom">
-                    <data name="align_self">flex-end</data>
+                    <data_mapping>
+                        <elements>
+                            <element name="main" path=".">
+                                <style_properties>
+                                    <property name="background_color" source="background_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="background_image" source="background_image" converter="Magento_PageBuilder/js/converter/style/background-image" preview_converter="Magento_PageBuilder/js/converter/style/preview/background-image"/>
+                                    <property name="background_position" source="background_position"/>
+                                    <property name="background_size" source="background_size"/>
+                                    <property name="background_repeat" source="background_repeat"/>
+                                    <property name="background_attachment" source="background_attachment"/>
+                                    <property name="text_align" source="text_align"/>
+                                    <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
+                                    <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
+                                    <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="min_height" source="min_height" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="width" source="width"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" preview_converter="Magento_PageBuilder/js/content-type/row/converter/style/margins-and-paddings"/>
+                                    <static_property source="align_self" value="flex-end"/>
+                                </style_properties>
+                                <attributes>
+                                    <attribute name="name" source="data-role"/>
+                                    <attribute name="appearance" source="data-appearance"/>
+                                </attributes>
+                                <css name="css_classes">
+                                    <filter>
+                                        <class source="pagebuilder-column"/>
+                                    </filter>
+                                </css>
+                            </element>
+                        </elements>
+                        <converters>
+                            <converter name="preferred_color_format" component="Magento_PageBuilder/js/mass-converter/preferred-color-format">
+                                <config>
+                                    <item name="background_color_format" value="background_color_format"/>
+                                </config>
+                            </converter>
+                        </converters>
+                    </data_mapping>
                     <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
-                    <readers>
-                        <reader component="Magento_PageBuilder/js/master-format/read/default" name="default"/>
-                    </readers>
+                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

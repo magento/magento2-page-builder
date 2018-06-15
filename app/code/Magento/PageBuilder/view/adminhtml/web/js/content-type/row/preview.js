@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _jarallax, _uiEvents, _underscore, _option, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jarallax/jarallax.min", "Magento_PageBuilder/js/resource/resize-observer/ResizeObserver.min", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _jarallax, _ResizeObserver, _uiEvents, _underscore, _option, _previewCollection) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -99,8 +99,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
 
     _proto.initParallax = function initParallax(element) {
+      var _this2 = this;
+
       this.element = element;
-      this.buildJarallax();
+      this.buildJarallax(); // Observe for resizes of the element and force jarallax to display correctly
+
+      if ((0, _jquery)(this.element).hasClass("jarallax")) {
+        new _ResizeObserver(function () {
+          jarallax(_this2.element, "onResize");
+          jarallax(_this2.element, "onScroll");
+        }).observe(this.element);
+      }
     };
 
     return Preview;

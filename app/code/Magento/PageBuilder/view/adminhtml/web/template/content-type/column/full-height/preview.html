@@ -5,14 +5,24 @@
  */
 -->
 
-<div class="pagebuilder-content-type type-container pagebuilder-column children-min-height" data-bind="style: previewStyle, afterRender: initColumn, event: { mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false, css: {'empty-container': parent.children().length == 0}">
-    <div class="pagebuilder-column-resize-handle" data-bind="afterRender: bindResizeHandle, visible: $index() < parent.parent.children().length - 1"></div>
-    <div class="pagebuilder-resizing" data-bind="css: {active: resizing}"></div>
-    <!-- ko template: getOptions().template --><!-- /ko -->
-    <!-- ko template: previewChildTemplate --><!-- /ko -->
-
-    <div class="pagebuilder-display-label" data-bind="text: function () { return displayLabel().toUpperCase(); }()"></div>
-    <div class="pagebuilder-empty-container" data-bind="css: {visible: parent.children().length == 0}, i18n: 'Empty Column'">
+<div class="pagebuilder-content-type type-container pagebuilder-column children-min-height"
+     attr="data.main.attributes"
+     ko-style="Object.assign(data.main.style(), {width: previewData.width()})"
+     event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false"
+     css="{'empty-container': $parent.children().length == 0}"
+     afterRender="initColumn">
+    <div class="pagebuilder-column-resize-handle"
+         afterRender="bindResizeHandle"
+         data-bind="visible: $index() < $parent.parent.children().length - 1"></div>
+    <div class="pagebuilder-resizing" css="{active: resizing}"></div>
+    <render args="getOptions().template"></render>
+    <render args="previewChildTemplate"></render>
+    <div class="pagebuilder-display-label"
+         html="displayLabel().toUpperCase()">
+    </div>
+    <div class="pagebuilder-empty-container"
+         css="{visible: parent.children().length == 0}"
+         translate="'Empty Column'">
         <div class="pagebuilder-drop-indicator"></div>
     </div>
 </div>
