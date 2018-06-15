@@ -15,11 +15,11 @@
     1. [Content type configuration]
     1. [How to add a new content type]
     1. [Events]
-    1. [Bindings]
     1. **Master format**
     1. [Visual select]
+    1. [Reuse product conditions in content types]
+    1. [Store component master format as widget directive]
     1. [Custom Toolbar]
-    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -35,11 +35,11 @@
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
-[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
 
 PageBuilder uses XHTML with inline styles and data attributes as the master format for storage.
@@ -868,7 +868,7 @@ HTML content.
 ## Map
 
 ```
-<div data-role="map" data-appearance="default" data-show-controls="true" data-locations=<locations-json-format> style="border-style: none; border-width: 1px; border-radius: 0px; height: 300px; margin: 0px; padding: 0px;"></div>
+<div data-role="map" data-appearance="default" data-show-controls="true" data-locations=<locations-json-format> style="..."></div>
 ```
 
 Attributes
@@ -950,14 +950,12 @@ Inline styles
 ## Products
 
 ```
-<div data-role="products" data-appearance="grid" data-products-count="4" data-conditions-encoded="">{{widget type="Magento\CatalogWidget\Block\Product\ProductsList" template="Magento_CatalogWidget::product/widget/content/grid.phtml" anchor_text="" id_path="" show_pager="0" products_count="4" type_name="Catalog Products List" conditions_encoded=""}}</div>
+<div data-role="products" data-appearance="grid">{{widget type="Magento\CatalogWidget\Block\Product\ProductsList" template="Magento_CatalogWidget::product/widget/content/grid.phtml" anchor_text="" id_path="" show_pager="0" products_count="5" type_name="Catalog Products List" conditions_encoded=""}}</div>
 ```
 
 Attributes
 1. data-role [products]
 2. data-appearance [grid]
-3. data-products-count
-4. data-conditions-encoded
 
 Inline styles
 1. text-align
