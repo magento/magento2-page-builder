@@ -11,6 +11,7 @@
     <section name="VideoOnStage">
         <!-- Empty Video -->
         <element name="empty" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//iframe" parameterized="true"/>
+        <element name="iframe" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//iframe" parameterized="true"/>
         <element name="icon" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//i[contains(@class,'icon-pagebuilder-video')]" parameterized="true"/>
         <element name="text" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}]//span[.='{{arg2}}']" parameterized="true"/>
         <!-- General Configuration -->
@@ -36,6 +37,7 @@
         <element name="empty" type="text" selector="//div[@data-role='video'][count(iframe)=0]"/>
         <!-- General Configuration -->
         <element name="base" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}]" parameterized="true"/>
+        <element name="iframe" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}]" parameterized="true"/>
         <element name="source" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][@src='{{arg2}}']" parameterized="true"/>
         <element name="width" type="text" selector="(//div[contains(@class,'pagebuilder-video')])[{{arg1}}][contains(@style,'max-width: {{arg2}}')]" parameterized="true"/>
         <element name="noWidth" type="text" selector="(//div[@data-role='video']//iframe)[{{arg1}}][not(starts-with(@style,'width:')) and not(contains(@style,' width:'))]" parameterized="true"/>
