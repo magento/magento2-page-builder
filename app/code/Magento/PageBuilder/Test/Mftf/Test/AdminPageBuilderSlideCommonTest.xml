@@ -911,11 +911,13 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilder"/>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
             <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
         </before>
         <after>
             <deleteData createDataKey="createPreReqCategory" stepKey="createPreReqCategory" />
+            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilder"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="navigateToCreatedCategory" stepKey="navigateToCreatedCatalogPage">
