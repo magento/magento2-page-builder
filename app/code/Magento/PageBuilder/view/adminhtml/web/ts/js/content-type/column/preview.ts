@@ -8,6 +8,7 @@ import ko from "knockout";
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
+import _ from "underscore";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
@@ -207,6 +208,23 @@ export default class Preview extends PreviewCollection {
                 });
             }
         }
+    }
+
+    /**
+     * Get the CSS styles for the children element
+     *
+     * @returns {object}
+     */
+    public getChildrenStyles() {
+        const styles = this.data.main.style();
+        if (_.isEmpty(styles.display)) {
+            return {};
+        }
+        return {
+            display: styles.display,
+            flexDirection: styles.flexDirection,
+            justifyContent: styles.justifyContent,
+        };
     }
 
     /**

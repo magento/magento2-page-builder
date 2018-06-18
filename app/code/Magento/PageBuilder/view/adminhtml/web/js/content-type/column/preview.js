@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/resizing", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _config, _contentTypeFactory, _option, _resizing, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/resizing", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _underscore, _config, _contentTypeFactory, _option, _resizing, _previewCollection) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -192,6 +192,26 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
           });
         }
       }
+    };
+    /**
+     * Get the CSS styles for the children element
+     *
+     * @returns {object}
+     */
+
+
+    _proto.getChildrenStyles = function getChildrenStyles() {
+      var styles = this.data.main.style();
+
+      if (_underscore.isEmpty(styles.display)) {
+        return {};
+      }
+
+      return {
+        display: styles.display,
+        flexDirection: styles.flexDirection,
+        justifyContent: styles.justifyContent
+      };
     };
     /**
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
