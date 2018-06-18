@@ -35,9 +35,9 @@ define([
     };
     // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
-    return function (element, markers, options) {
-        var mapOptions,
-            mapStyle;
+    return function (element, markers, additionalOptions) {
+        var options,
+            style;
 
         /**
          * Replace the content of element with a placeholder
@@ -64,12 +64,12 @@ define([
          * Just in case of a bad JSON that bypassed validation
          */
         try {
-            mapStyle = module.config().mapStyle ? JSON.parse(module.config().mapStyle) : [];
+            style = module.config().style ? JSON.parse(module.config().style) : [];
         }
         catch (error) {
-            mapStyle = [];
+            style = [];
         }
-        mapOptions = _.extend({
+        options = _.extend({
             zoom: 8,
             center: getGoogleLatitudeLongitude({
                 latitude: 30.2672,
@@ -82,11 +82,11 @@ define([
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
             },
-            styles: mapStyle
-        }, options);
+            styles: style
+        }, additionalOptions);
 
         /* Create the map */
-        this.map = new google.maps.Map(element, mapOptions);
+        this.map = new google.maps.Map(element, options);
         this.markers = [];
 
         /**

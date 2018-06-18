@@ -225,7 +225,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)" stepKey="mapStyle1"/>
+        <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle1"/>
         <assertEquals stepKey="assertMapStyle1">
             <actualResult type="variable">$mapStyle1</actualResult>
             <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
@@ -240,7 +240,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle2"/>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle2"/>
         <assertEquals stepKey="assertMapStyle2">
             <actualResult type="variable">$mapStyle2</actualResult>
             <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
@@ -253,7 +253,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront4">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle3"/>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle3"/>
         <assertEquals stepKey="assertMapStyle3">
             <actualResult type="variable">$mapStyle3</actualResult>
             <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
@@ -264,7 +264,7 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront5">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
-        <executeJS function="return document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)" stepKey="mapStyle4"/>
+        <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle4"/>
         <assertEquals stepKey="assertMapStyle4">
             <actualResult type="variable">$mapStyle4</actualResult>
             <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
@@ -318,7 +318,7 @@
         <switchToPreviousTab stepKey="switchToPreviousTab"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'mapStyle\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=mapStyle:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle1"/>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle1"/>
         <assertEquals stepKey="assertMapStyle1">
             <actualResult type="variable">$mapStyle1</actualResult>
             <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
