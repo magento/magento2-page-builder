@@ -8,14 +8,15 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     _inheritsLoose(Preview, _PreviewCollection);
 
     /**
-     * @param {ContentTypeCollectionInterface} parent
+     *
+     * @param {ContentTypeCollection} parent
      * @param {ContentTypeConfigInterface} config
-     * @param {number} stageId
+     * @param {ObservableUpdater} observableUpdater
      */
-    function Preview(parent, config, stageId) {
+    function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, stageId) || this;
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.resizing = _knockout.observable(false);
       _this.hasEmptyChild = _knockout.computed(function () {
         var empty = false;
@@ -90,7 +91,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       var _this2 = this;
 
       // Create our new column
-      (0, _factory.createColumn)(this.parent, this.columnGroupUtils.getSmallestColumnWidth(), dropPosition.insertIndex).then(function (column) {
+      (0, _factory.createColumn)(this.parent, this.columnGroupUtils.getSmallestColumnWidth(), dropPosition.insertIndex).then(function () {
         var newWidth = _this2.columnGroupUtils.getAcceptedColumnWidth((_this2.columnGroupUtils.getColumnWidth(dropPosition.affectedColumn) - _this2.columnGroupUtils.getSmallestColumnWidth()).toString()); // Reduce the affected columns width by the smallest column width
 
 
@@ -134,7 +135,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Handle a column being sorted into a new position in the group
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {number} newIndex
      */
 
@@ -155,9 +156,9 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Handle a column being resized
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {number} width
-     * @param {Column} adjustedColumn
+     * @param {ContentTypeCollectionInterface} adjustedColumn
      */
 
 
@@ -181,7 +182,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Init the drop placeholder
      *
-     * @param element
+     * @param {Element} element
      */
 
 
@@ -211,7 +212,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Register a resize handle within a child column
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {JQuery<HTMLElement>} handle
      */
 
@@ -250,13 +251,16 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     };
     /**
      * Bind draggable instances to the child columns
+     *
+     * @param {ContentTypeCollectionInterface} column
+     * @returns {JQuery<TElement extends Node>}
      */
 
 
     _proto.bindDraggable = function bindDraggable(column) {
       var _this4 = this;
 
-      column.element.draggable({
+      column.preview.element.draggable({
         appendTo: "body",
         containment: "body",
         handle: ".move-column",
@@ -322,7 +326,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Set columns in the group as resizing
      *
-     * @param {Column} columns
+     * @param {ContentTypeCollectionInterface} columns
      */
 
 
@@ -333,7 +337,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
       columns.forEach(function (column) {
         column.preview.resizing(true);
-        column.element.css({
+        column.preview.element.css({
           transition: "width " + _containerAnimation.animationTime + "ms ease-in-out"
         });
       });
@@ -347,8 +351,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       this.parent.children().forEach(function (column) {
         column.preview.resizing(false);
 
-        if (column.element) {
-          column.element.css({
+        if (column.preview.element) {
+          column.preview.element.css({
             transition: ""
           });
         }
@@ -491,7 +495,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
      *
      * @param {string} usedHistory
      * @param {string} direction
-     * @param {Column} adjustedColumn
+     * @param {ContentTypeCollectionInterface} adjustedColumn
      * @param {string} modifyColumnInPair
      */
 
@@ -523,8 +527,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       if (this.resizeMouseDown) {
         event.preventDefault();
         var currentPos = event.pageX;
-        var resizeColumnLeft = this.resizeColumnInstance.element.offset().left;
-        var resizeColumnWidth = this.resizeColumnInstance.element.outerWidth();
+        var resizeColumnLeft = this.resizeColumnInstance.preview.element.offset().left;
+        var resizeColumnWidth = this.resizeColumnInstance.preview.element.outerWidth();
         var resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
         var direction = currentPos >= resizeHandlePosition ? "right" : "left";
 
@@ -609,9 +613,9 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         var currentX = event.pageX - groupPosition.left; // Are we within the same column group or have we ended up over another?
 
         if (columnInstance.parent === this.parent) {
-          var currentColumn = dragColumn.element;
+          var currentColumn = dragColumn.preview.element;
           var currentColumnRight = currentColumn.position().left + currentColumn.width();
-          var lastColInGroup = this.parent.children()[this.parent.children().length - 1].element;
+          var lastColInGroup = this.parent.children()[this.parent.children().length - 1].preview.element;
           var insertLastPos = lastColInGroup.position().left + lastColInGroup.width() / 2;
           this.movePosition = this.dropPositions.find(function (position) {
             // Only ever look for the left placement, except the last item where we look on the right

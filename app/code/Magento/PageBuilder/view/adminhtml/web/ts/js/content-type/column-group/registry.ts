@@ -3,16 +3,16 @@
  * See COPYING.txt for license details.
  */
 
-import Column from "../column/preview";
+import ContentTypeCollectionInterface from "../../content-type-collection.d";
 
-let dragColumn: Column;
+let dragColumn: ContentTypeCollectionInterface;
 
 /**
  * Retrieve the drag column from the registry
  *
- * @returns {Column}
+ * @returns {ContentTypeCollectionInterface}
  */
-export function getDragColumn(): Column {
+export function getDragColumn(): ContentTypeCollectionInterface {
     return dragColumn;
 }
 
@@ -26,8 +26,8 @@ export function removeDragColumn(): void {
 /**
  * Set the drag column in the registry
  *
- * @param {Column} column
+ * @param {ContentTypeCollectionInterface} column
  */
-export function setDragColumn(column: Column) {
+export function setDragColumn(column: ContentTypeCollectionInterface) {
     dragColumn = column;
 }

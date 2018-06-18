@@ -3,15 +3,15 @@
  * See COPYING.txt for license details.
  */
 
-import ColumnGroup from "../../content-type-collection";
+import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import {outwardSearch} from "../../utils/array";
-import Column from "../column/preview";
+import ColumnPreview from "../column/preview";
 import {ColumnWidth, GroupPositionCache, MaxGhostWidth, ResizeHistory} from "./preview";
 
 export default class ColumnGroupUtils {
-    private columnGroup: ColumnGroup;
+    private columnGroup: ContentTypeCollectionInterface;
 
-    constructor(columnGroup: ColumnGroup) {
+    constructor(columnGroup: ContentTypeCollectionInterface) {
         this.columnGroup = columnGroup;
     }
 
@@ -20,8 +20,9 @@ export default class ColumnGroupUtils {
      *
      * @returns {number}
      */
-    public getGridSize() {
-        return this.columnGroup.dataStore.state['gridSize'];
+    public getGridSize(): number {
+        const state = this.columnGroup.dataStore.get();
+        return parseInt((state.gridSize as string), 10);
     }
 
     /**
@@ -61,34 +62,36 @@ export default class ColumnGroupUtils {
     /**
      * Return the width of the column
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @returns {number}
      */
-    public getColumnWidth(column: Column): number {
+    public getColumnWidth(column: ContentTypeCollectionInterface): number {
         return this.getAcceptedColumnWidth(column.dataStore.get().width.toString());
     }
 
     /**
      * Retrieve the index of the column within it's group
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @returns {number}
      */
-    public getColumnIndexInGroup(column: Column): number {
+    public getColumnIndexInGroup(column: ContentTypeCollectionInterface): number {
         return column.parent.children().indexOf(column);
     }
 
     /**
      * Retrieve the adjacent column based on a direction of +1 or -1
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {"+1" | "-1"} direction
-     * @returns {any}
+     * @returns {ContentTypeCollectionInterface}
      */
-    public getAdjacentColumn(column: Column, direction: "+1" | "-1"): Column {
+    public getAdjacentColumn(
+        column: ContentTypeCollectionInterface, direction: "+1" | "-1",
+    ): ContentTypeCollectionInterface {
         const currentIndex = this.getColumnIndexInGroup(column);
         if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
-            return (column.parent.children()[currentIndex + parseInt(direction, 10)] as Column);
+            return column.parent.children()[currentIndex + parseInt(direction, 10)];
         }
         return null;
     }
@@ -96,13 +99,12 @@ export default class ColumnGroupUtils {
     /**
      * Get the total width of all columns in the group
      *
-     * @param {ColumnGroup} group
      * @returns {number}
      */
     public getColumnsWidth(): number {
-        return this.columnGroup.children().map((column: Column) => {
+        return this.columnGroup.children().map((column: ContentTypeCollectionInterface) => {
             return this.getColumnWidth(column);
-        }).reduce((widthA, widthB) => {
+        }).reduce((widthA: number, widthB: number) => {
             return widthA + (widthB ? widthB : 0);
         });
     }
@@ -110,18 +112,22 @@ export default class ColumnGroupUtils {
     /**
      * Determine the pixel position of every column that can be created within the group
      *
-     * @param {Preview} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {GroupPositionCache} groupPosition
      * @returns {ColumnWidth[]}
      */
-    public determineColumnWidths(column: Column, groupPosition: GroupPositionCache): ColumnWidth[] {
+    public determineColumnWidths(
+        column: ContentTypeCollectionInterface,
+        groupPosition: GroupPositionCache,
+    ): ColumnWidth[] {
         const gridSize = this.getGridSize();
         const singleColumnWidth = groupPosition.outerWidth / gridSize;
         const adjacentColumn = this.getAdjacentColumn(column, "+1");
         const columnWidths = [];
-        const columnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
-        const adjacentRightPosition = adjacentColumn.element.offset().left +
-            adjacentColumn.element.outerWidth(true);
+        const columnLeft = (column.preview as ColumnPreview).element.offset().left
+            - parseInt((column.preview as ColumnPreview).element.css("margin-left"), 10);
+        const adjacentRightPosition = (adjacentColumn.preview as ColumnPreview).element.offset().left +
+            (adjacentColumn.preview as ColumnPreview).element.outerWidth(true);
 
         // Determine the maximum size (in pixels) that this column can be dragged to
         const columnsToRight = column.parent.children().length - (this.getColumnIndexInGroup(column) + 1);
@@ -188,34 +194,37 @@ export default class ColumnGroupUtils {
     /**
      * Find a column which can be shrunk for the current resize action
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {"left" | "right"} direction
-     * @returns {Column}
+     * @returns {ContentTypeCollectionInterface}
      */
-    public findShrinkableColumnForResize(column: Column, direction: "left" | "right"): Column {
+    public findShrinkableColumnForResize(
+        column: ContentTypeCollectionInterface,
+        direction: "left" | "right",
+    ): ContentTypeCollectionInterface {
         const currentIndex = this.getColumnIndexInGroup(column);
         const parentChildren = column.parent.children();
-        let searchArray: Column[];
+        let searchArray: ContentTypeCollectionInterface[];
         switch (direction) {
             case "right":
-                searchArray = parentChildren.slice(currentIndex + 1) as Column[];
+                searchArray = parentChildren.slice(currentIndex + 1);
                 break;
             case "left":
-                searchArray = parentChildren.slice(0).reverse().slice(parentChildren.length - currentIndex) as Column[];
+                searchArray = parentChildren.slice(0).reverse().slice(parentChildren.length - currentIndex);
                 break;
         }
-        return searchArray.find((groupColumn: Column) => {
+        return searchArray.find((groupColumn: ContentTypeCollectionInterface) => {
             return this.getColumnWidth(groupColumn) > this.getSmallestColumnWidth();
-        }) as Column;
+        });
     }
 
     /**
      * Find a shrinkable column outwards from the current column
      *
-     * @param {Column} column
-     * @returns {Column}
+     * @param {ContentTypeCollectionInterface} column
+     * @returns {ContentTypeCollectionInterface}
      */
-    public findShrinkableColumn(column: Column): Column {
+    public findShrinkableColumn(column: ContentTypeCollectionInterface): ContentTypeCollectionInterface {
         return outwardSearch(
             column.parent.children(),
             this.getColumnIndexInGroup(column),
@@ -240,23 +249,26 @@ export default class ColumnGroupUtils {
     /**
      * Calculate the ghost size for the resizing action
      *
-     * @param {JQuery<HTMLElement>} group
+     * @param {GroupPositionCache} groupPosition
      * @param {number} currentPos
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {string} modifyColumnInPair
      * @param {MaxGhostWidth} maxGhostWidth
      * @returns {number}
      */
-    public calculateGhostWidth(groupPosition: GroupPositionCache,
-                        currentPos: number,
-                        column: Column,
-                        modifyColumnInPair: string,
-                        maxGhostWidth: MaxGhostWidth,): number {
+    public calculateGhostWidth(
+        groupPosition: GroupPositionCache,
+        currentPos: number,
+        column: ContentTypeCollectionInterface,
+        modifyColumnInPair: string,
+        maxGhostWidth: MaxGhostWidth,
+    ): number {
         let ghostWidth = currentPos - groupPosition.left;
 
         switch (modifyColumnInPair) {
             case "left":
-                const singleColumnWidth = column.element.position().left + groupPosition.outerWidth / this.getGridSize();
+                const singleColumnWidth = (column.preview as ColumnPreview).element.position().left
+                    + groupPosition.outerWidth / this.getGridSize();
                 // Don't allow the ghost widths be less than the smallest column
                 if (ghostWidth <= singleColumnWidth) {
                     ghostWidth = singleColumnWidth;
@@ -280,20 +292,23 @@ export default class ColumnGroupUtils {
      * Determine which column in the group should be adjusted for the current resize action
      *
      * @param {number} currentPos
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {ResizeHistory} history
-     * @returns {[Column , string , string]}
+     * @returns {[ContentTypeCollectionInterface , string]}
      */
-    public determineAdjustedColumn(currentPos: number,
-                            column: Column,
-                            history: ResizeHistory,): [Column, string, string] {
+    public determineAdjustedColumn(
+        currentPos: number,
+        column: ContentTypeCollectionInterface,
+        history: ResizeHistory,
+    ): [ContentTypeCollectionInterface, string, string] {
         let modifyColumnInPair: string = "left";
         let usedHistory: string;
-        const resizeColumnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
-        const resizeColumnWidth = column.element.outerWidth(true);
+        const resizeColumnLeft = (column.preview as ColumnPreview).element.offset().left
+            - parseInt((column.preview as ColumnPreview).element.css("margin-left"), 10);
+        const resizeColumnWidth = (column.preview as ColumnPreview).element.outerWidth(true);
         const resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
 
-        let adjustedColumn: Column;
+        let adjustedColumn: ContentTypeCollectionInterface;
         if (currentPos >= resizeHandlePosition) {
             // Get the history for the opposite direction of resizing
             if (history.left.length > 0) {
@@ -342,11 +357,15 @@ export default class ColumnGroupUtils {
     /**
      * Resize a column to a specific width
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {number} width
-     * @param {Column} shrinkableColumn
+     * @param {ContentTypeCollectionInterface} shrinkableColumn
      */
-    public resizeColumn(column: Column, width: number, shrinkableColumn: Column) {
+    public resizeColumn(
+        column: ContentTypeCollectionInterface,
+        width: number,
+        shrinkableColumn: ContentTypeCollectionInterface,
+    ) {
         const current = this.getColumnWidth(column);
         const difference = (parseFloat(width.toString()) - current).toFixed(8);
 
@@ -382,10 +401,10 @@ export default class ColumnGroupUtils {
     /**
      * Update the width of a column
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {number} width
      */
-    public updateColumnWidth(column: Column, width: number): void {
+    public updateColumnWidth(column: ContentTypeCollectionInterface, width: number): void {
         column.dataStore.update(
             parseFloat(width.toString()) + "%",
             "width",

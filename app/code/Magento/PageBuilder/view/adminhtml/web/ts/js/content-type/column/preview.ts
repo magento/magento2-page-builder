@@ -9,13 +9,13 @@ import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import Config from "../../config";
+import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
-import ColumnGroup from "../column-group/preview";
 import ColumnGroupUtils from "../column-group/resizing";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ObservableUpdater from "../observable-updater";
@@ -23,6 +23,7 @@ import PreviewCollection from "../preview-collection";
 
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
+    public element: JQuery<Element>;
     private columnGroupUtils: ColumnGroupUtils;
 
     /**
@@ -69,7 +70,7 @@ export default class Preview extends PreviewCollection {
      * @param element
      */
     public initColumn(element: Element) {
-        this.parent.element = $(element);
+        this.element = $(element);
         events.trigger("column:initElement", {
             column: this.parent,
             element: $(element),
@@ -131,12 +132,12 @@ export default class Preview extends PreviewCollection {
                 Config.getContentTypeConfig("column-group"),
                 this.parent.parent,
                 this.parent.stageId,
-                {gridSize: stageConfig.column_grid_size}
-            ).then((columnGroup: ColumnGroup) => {
+                {gridSize: stageConfig.column_grid_size},
+            ).then((columnGroup: ContentTypeCollectionInterface) => {
                 return Promise.all([
                     createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
                     createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
-                ]).then((columns: [Column, Column]) => {
+                ]).then((columns: [ContentTypeCollectionInterface, ContentTypeCollectionInterface]) => {
                     columnGroup.addChild(columns[0], 0);
                     columnGroup.addChild(columns[1], 1);
                     this.parent.parent.addChild(columnGroup, index);
@@ -151,56 +152,77 @@ export default class Preview extends PreviewCollection {
     /**
      * Duplicate a child of the current instance
      *
-     * @param {Column} child
+     * @param {ContentTypeInterface} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>|void}
+     * @returns {Promise<ContentTypeInterface> | void}
      */
-    public clone(child: Column, autoAppend: boolean = true): Promise<ContentTypeInterface> | void {
+    public clone(
+        contentType: ContentTypeCollectionInterface,
+        autoAppend: boolean = true,
+    ): Promise<ContentTypeCollectionInterface> | void {
         // Are we duplicating from a parent?
-        if ( child.config.name !== "column"
+        if ( contentType.config.name !== "column"
             || this.parent.parent.children().length === 0
             || (this.parent.parent.children().length > 0 && this.columnGroupUtils.getColumnsWidth() < 100)
         ) {
-            return super.clone(child, autoAppend);
+            return super.clone(contentType, autoAppend);
         }
 
         // Attempt to split the current column into parts
-        let splitTimes = Math.round(this.columnGroupUtils.getColumnWidth(child) / this.columnGroupUtils.getSmallestColumnWidth());
+        let splitTimes = Math.round(
+            this.columnGroupUtils.getColumnWidth(contentType) / this.columnGroupUtils.getSmallestColumnWidth(),
+        );
         if (splitTimes > 1) {
-            super.clone(child, autoAppend).then((duplicateContentType: ContentTypeInterface) => {
-                let originalWidth = 0;
-                let duplicateWidth = 0;
+            const splitClone = super.clone(contentType, autoAppend);
+            if (splitClone) {
+                splitClone.then((duplicateContentType: ContentTypeCollectionInterface) => {
+                    let originalWidth = 0;
+                    let duplicateWidth = 0;
 
-                for (let i = 0; i <= splitTimes; i++) {
-                    if (splitTimes > 0) {
-                        originalWidth += this.columnGroupUtils.getSmallestColumnWidth();
-                        --splitTimes;
+                    for (let i = 0; i <= splitTimes; i++) {
+                        if (splitTimes > 0) {
+                            originalWidth += this.columnGroupUtils.getSmallestColumnWidth();
+                            --splitTimes;
+                        }
+                        if (splitTimes > 0) {
+                            duplicateWidth += this.columnGroupUtils.getSmallestColumnWidth();
+                            --splitTimes;
+                        }
                     }
-                    if (splitTimes > 0) {
-                        duplicateWidth += this.columnGroupUtils.getSmallestColumnWidth();
-                        --splitTimes;
-                    }
-                }
-                this.columnGroupUtils.updateColumnWidth(child, this.columnGroupUtils.getAcceptedColumnWidth(originalWidth.toString()));
-                this.columnGroupUtils.updateColumnWidth(duplicateContentType, this.columnGroupUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
-
-                return duplicateContentType;
-            });
-        } else {
-            // Conduct an outward search on the children to locate a suitable shrinkable column
-            const shrinkableColumn = this.columnGroupUtils.findShrinkableColumn(child);
-            if (shrinkableColumn) {
-                super.clone(child, autoAppend).then((duplicateContentType: ContentTypeInterface) => {
                     this.columnGroupUtils.updateColumnWidth(
-                        shrinkableColumn,
-                        this.columnGroupUtils.getAcceptedColumnWidth(
-                            (this.columnGroupUtils.getColumnWidth(shrinkableColumn) - this.columnGroupUtils.getSmallestColumnWidth()).toString(),
-                        ),
+                        contentType,
+                        this.columnGroupUtils.getAcceptedColumnWidth(originalWidth.toString()),
                     );
-                    this.columnGroupUtils.updateColumnWidth(duplicateContentType, this.columnGroupUtils.getSmallestColumnWidth());
+                    this.columnGroupUtils.updateColumnWidth(
+                        duplicateContentType,
+                        this.columnGroupUtils.getAcceptedColumnWidth(duplicateWidth.toString()),
+                    );
 
                     return duplicateContentType;
                 });
+            }
+        } else {
+            // Conduct an outward search on the children to locate a suitable shrinkable column
+            const shrinkableColumn = this.columnGroupUtils.findShrinkableColumn(contentType);
+            if (shrinkableColumn) {
+                const shrinkableClone = super.clone(contentType, autoAppend);
+                if (shrinkableClone) {
+                    shrinkableClone.then((duplicateContentType: ContentTypeCollectionInterface) => {
+                        this.columnGroupUtils.updateColumnWidth(
+                            shrinkableColumn,
+                            this.columnGroupUtils.getAcceptedColumnWidth(
+                                (this.columnGroupUtils.getColumnWidth(shrinkableColumn)
+                                    - this.columnGroupUtils.getSmallestColumnWidth()).toString(),
+                            ),
+                        );
+                        this.columnGroupUtils.updateColumnWidth(
+                            duplicateContentType,
+                            this.columnGroupUtils.getSmallestColumnWidth(),
+                        );
+
+                        return duplicateContentType;
+                    });
+                }
             } else {
                 // If we aren't able to duplicate inform the user why
                 alertDialog({

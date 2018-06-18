@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 import createContentType from "../content-type-factory";
 import ContentTypeInterface from "../content-type.d";
 import Preview from "./preview";
@@ -18,13 +19,16 @@ export default class PreviewCollection extends Preview {
     }
 
     /**
-     * Duplicate content type
+     * Duplicate a collection content type
      *
-     * @param {ContentTypeInterface} contentType
+     * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>}
+     * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
-    public clone(contentType: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
+    public clone(
+        contentType: ContentTypeCollectionInterface,
+        autoAppend: boolean = true,
+    ): Promise<ContentTypeCollectionInterface> | void {
         const index = contentType.parent.getChildren().indexOf(contentType) + 1 || null;
 
         return new Promise((resolve, reject) => {
@@ -33,15 +37,24 @@ export default class PreviewCollection extends Preview {
                 contentType.parent,
                 contentType.stageId,
                 contentType.dataStore.get(),
-            ).then((duplicate: ContentTypeInterface) => {
+            ).then((duplicate: ContentTypeCollectionInterface) => {
                 if (contentType.children && contentType.children().length > 0) {
                     // Duplicate the instances children into the new duplicate
-                    contentType.children().forEach((subChild: ContentTypeInterface) => {
-                        duplicate.preview.clone(subChild, false).then((duplicateSubChild) => {
-                            duplicateSubChild.parent = duplicate;
-                            duplicate.addChild(duplicateSubChild);
-                        });
-                    });
+                    contentType.children().forEach(
+                        (subChild: ContentTypeInterface & ContentTypeCollectionInterface) => {
+                            const subChildClone = duplicate.preview.clone(subChild, false);
+                            if (subChildClone) {
+                                subChildClone.then(
+                                    (duplicateSubChild: ContentTypeInterface & ContentTypeCollectionInterface) => {
+                                        duplicateSubChild.parent = duplicate;
+                                        duplicate.addChild(duplicateSubChild);
+                                    },
+                                );
+                            } else {
+                                reject("Unable to duplicate sub child.");
+                            }
+                        },
+                    );
                 }
 
                 if (autoAppend) {

@@ -19,6 +19,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
       _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
       _this.resizing = _knockout.observable(false);
+      _this.element = void 0;
       _this.columnGroupUtils = void 0;
       _this.columnGroupUtils = new _resizing(_this.parent.parent);
 
@@ -63,7 +64,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
 
     _proto.initColumn = function initColumn(element) {
-      this.parent.element = (0, _jquery)(element);
+      this.element = (0, _jquery)(element);
 
       _uiEvents.trigger("column:initElement", {
         column: this.parent,
@@ -142,13 +143,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
     /**
      * Duplicate a child of the current instance
      *
-     * @param {Column} child
+     * @param {ContentTypeInterface} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>|void}
+     * @returns {Promise<ContentTypeInterface> | void}
      */
 
 
-    _proto.clone = function clone(child, autoAppend) {
+    _proto.clone = function clone(contentType, autoAppend) {
       var _this4 = this;
 
       if (autoAppend === void 0) {
@@ -156,48 +157,56 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       }
 
       // Are we duplicating from a parent?
-      if (child.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && this.columnGroupUtils.getColumnsWidth() < 100) {
-        return _PreviewCollection.prototype.clone.call(this, child, autoAppend);
+      if (contentType.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && this.columnGroupUtils.getColumnsWidth() < 100) {
+        return _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
       } // Attempt to split the current column into parts
 
 
-      var splitTimes = Math.round(this.columnGroupUtils.getColumnWidth(child) / this.columnGroupUtils.getSmallestColumnWidth());
+      var splitTimes = Math.round(this.columnGroupUtils.getColumnWidth(contentType) / this.columnGroupUtils.getSmallestColumnWidth());
 
       if (splitTimes > 1) {
-        _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateContentType) {
-          var originalWidth = 0;
-          var duplicateWidth = 0;
+        var splitClone = _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
 
-          for (var i = 0; i <= splitTimes; i++) {
-            if (splitTimes > 0) {
-              originalWidth += _this4.columnGroupUtils.getSmallestColumnWidth();
-              --splitTimes;
+        if (splitClone) {
+          splitClone.then(function (duplicateContentType) {
+            var originalWidth = 0;
+            var duplicateWidth = 0;
+
+            for (var i = 0; i <= splitTimes; i++) {
+              if (splitTimes > 0) {
+                originalWidth += _this4.columnGroupUtils.getSmallestColumnWidth();
+                --splitTimes;
+              }
+
+              if (splitTimes > 0) {
+                duplicateWidth += _this4.columnGroupUtils.getSmallestColumnWidth();
+                --splitTimes;
+              }
             }
 
-            if (splitTimes > 0) {
-              duplicateWidth += _this4.columnGroupUtils.getSmallestColumnWidth();
-              --splitTimes;
-            }
-          }
+            _this4.columnGroupUtils.updateColumnWidth(contentType, _this4.columnGroupUtils.getAcceptedColumnWidth(originalWidth.toString()));
 
-          _this4.columnGroupUtils.updateColumnWidth(child, _this4.columnGroupUtils.getAcceptedColumnWidth(originalWidth.toString()));
-
-          _this4.columnGroupUtils.updateColumnWidth(duplicateContentType, _this4.columnGroupUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
-
-          return duplicateContentType;
-        });
-      } else {
-        // Conduct an outward search on the children to locate a suitable shrinkable column
-        var shrinkableColumn = this.columnGroupUtils.findShrinkableColumn(child);
-
-        if (shrinkableColumn) {
-          _PreviewCollection.prototype.clone.call(this, child, autoAppend).then(function (duplicateContentType) {
-            _this4.columnGroupUtils.updateColumnWidth(shrinkableColumn, _this4.columnGroupUtils.getAcceptedColumnWidth((_this4.columnGroupUtils.getColumnWidth(shrinkableColumn) - _this4.columnGroupUtils.getSmallestColumnWidth()).toString()));
-
-            _this4.columnGroupUtils.updateColumnWidth(duplicateContentType, _this4.columnGroupUtils.getSmallestColumnWidth());
+            _this4.columnGroupUtils.updateColumnWidth(duplicateContentType, _this4.columnGroupUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
 
             return duplicateContentType;
           });
+        }
+      } else {
+        // Conduct an outward search on the children to locate a suitable shrinkable column
+        var shrinkableColumn = this.columnGroupUtils.findShrinkableColumn(contentType);
+
+        if (shrinkableColumn) {
+          var shrinkableClone = _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
+
+          if (shrinkableClone) {
+            shrinkableClone.then(function (duplicateContentType) {
+              _this4.columnGroupUtils.updateColumnWidth(shrinkableColumn, _this4.columnGroupUtils.getAcceptedColumnWidth((_this4.columnGroupUtils.getColumnWidth(shrinkableColumn) - _this4.columnGroupUtils.getSmallestColumnWidth()).toString()));
+
+              _this4.columnGroupUtils.updateColumnWidth(duplicateContentType, _this4.columnGroupUtils.getSmallestColumnWidth());
+
+              return duplicateContentType;
+            });
+          }
         } else {
           // If we aren't able to duplicate inform the user why
           (0, _alert)({

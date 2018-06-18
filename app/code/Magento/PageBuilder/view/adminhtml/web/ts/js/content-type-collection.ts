@@ -12,7 +12,7 @@ import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 
 export default class ContentTypeCollection extends ContentType implements ContentTypeCollectionInterface {
-    private collection: Collection = new Collection();
+    public collection: Collection = new Collection();
 
     /**
      * @param {ContentTypeInterface} parent
@@ -20,7 +20,7 @@ export default class ContentTypeCollection extends ContentType implements Conten
      * @param {string} stageId
      */
     constructor(
-        parent: ContentTypeInterface,
+        parent: ContentTypeCollectionInterface,
         config: ContentTypeConfigInterface,
         stageId: string,
     ) {

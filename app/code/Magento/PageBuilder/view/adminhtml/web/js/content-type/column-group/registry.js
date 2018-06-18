@@ -8,7 +8,7 @@ define([], function () {
   /**
    * Retrieve the drag column from the registry
    *
-   * @returns {Column}
+   * @returns {ContentTypeCollectionInterface}
    */
 
   function getDragColumn() {
@@ -25,7 +25,7 @@ define([], function () {
   /**
    * Set the drag column in the registry
    *
-   * @param {Column} column
+   * @param {ContentTypeCollectionInterface} column
    */
 
 

@@ -4,18 +4,18 @@
  */
 import ko from "knockout";
 import events from "uiEvents";
-import ContentTypeInterface from "../content-type";
-import ContentTypeCollectionInterface from "../content-type-collection";
+import ContentTypeCollectionInterface from "../content-type-collection.d";
+import ContentTypeInterface from "../content-type.d";
 
 /**
  * Move a content type to a new index, with the option to move to a new container
  *
- * @param {ContentType} contentType
+ * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
  * @param {number} targetIndex
- * @param {ContentTypeCollection} targetParent
+ * @param {ContentTypeCollectionInterface} targetParent
  */
 export function moveContentType(
-    contentType: ContentTypeInterface,
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface,
     targetIndex: number,
     targetParent: ContentTypeCollectionInterface = null,
 ) {

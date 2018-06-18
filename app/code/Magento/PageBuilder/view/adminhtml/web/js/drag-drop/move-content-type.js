@@ -8,9 +8,9 @@ define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
   /**
    * Move a content type to a new index, with the option to move to a new container
    *
-   * @param {ContentType} contentType
+   * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
    * @param {number} targetIndex
-   * @param {ContentTypeCollection} targetParent
+   * @param {ContentTypeCollectionInterface} targetParent
    */
   function moveContentType(contentType, targetIndex, targetParent) {
     if (targetParent === void 0) {

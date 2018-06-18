@@ -3,17 +3,18 @@
  * See COPYING.txt for license details.
  */
 
+import ContentTypeCollectionInterface from "./content-type-collection.d";
 import ContentTypeConfigInterface from "./content-type-config.d";
-import Preview from "./content-type/preview";
 import Master from "./content-type/master";
+import Preview from "./content-type/preview";
 import DataStore from "./data-store";
 
 export default interface ContentTypeInterface {
     id: string;
     stageId: string;
-    parent: ContentTypeInterface;
+    parent: ContentTypeCollectionInterface;
     config: ContentTypeConfigInterface;
     preview: Preview;
-    master: Master;
+    content: Master;
     dataStore: DataStore;
 }

@@ -12,7 +12,7 @@ import _ from "underscore";
 import "../binding/live-edit";
 import "../binding/sortable";
 import "../binding/sortable-children";
-import ContentTypeCollectionInterface from "../content-type-collection";
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeConfigInterface from "../content-type-config.d";
 import createContentType from "../content-type-factory";
 import ContentTypeMenu from "../content-type-menu";
@@ -31,7 +31,7 @@ import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
 
 export default class Preview {
-    public parent: ContentTypeInterface;
+    public parent: ContentTypeCollectionInterface;
     public config: ContentTypeConfigInterface;
     public data: ObservableObject = {};
     public displayLabel: KnockoutObservable<string>;
@@ -237,15 +237,18 @@ export default class Preview {
     /**
      * Duplicate content type
      *
-     * @param {ContentTypeInterface} contentType
+     * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>}
+     * @returns {Promise<ContentTypeInterface> | void}
      */
-    public clone(contentType: ContentTypeInterface, autoAppend: boolean = true): Promise<ContentTypeInterface> {
+    public clone(
+        contentType: ContentTypeInterface & ContentTypeCollectionInterface,
+        autoAppend: boolean = true,
+    ): Promise<ContentTypeInterface> | void {
         const contentTypeData = contentType.dataStore.get();
         const index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             createContentType(
                 contentType.config,
                 contentType.parent,

@@ -21,7 +21,8 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     var _proto = ColumnGroupUtils.prototype;
 
     _proto.getGridSize = function getGridSize() {
-      return this.columnGroup.dataStore.state['gridSize'];
+      var state = this.columnGroup.dataStore.get();
+      return parseInt(state.gridSize, 10);
     };
     /**
      * Get the smallest column width possible
@@ -60,7 +61,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Return the width of the column
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @returns {number}
      */
 
@@ -71,7 +72,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Retrieve the index of the column within it's group
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @returns {number}
      */
 
@@ -82,9 +83,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Retrieve the adjacent column based on a direction of +1 or -1
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {"+1" | "-1"} direction
-     * @returns {any}
+     * @returns {ContentTypeCollectionInterface}
      */
 
 
@@ -100,7 +101,6 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Get the total width of all columns in the group
      *
-     * @param {ColumnGroup} group
      * @returns {number}
      */
 
@@ -117,7 +117,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Determine the pixel position of every column that can be created within the group
      *
-     * @param {Preview} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {GroupPositionCache} groupPosition
      * @returns {ColumnWidth[]}
      */
@@ -128,8 +128,8 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       var singleColumnWidth = groupPosition.outerWidth / gridSize;
       var adjacentColumn = this.getAdjacentColumn(column, "+1");
       var columnWidths = [];
-      var columnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
-      var adjacentRightPosition = adjacentColumn.element.offset().left + adjacentColumn.element.outerWidth(true); // Determine the maximum size (in pixels) that this column can be dragged to
+      var columnLeft = column.preview.element.offset().left - parseInt(column.preview.element.css("margin-left"), 10);
+      var adjacentRightPosition = adjacentColumn.preview.element.offset().left + adjacentColumn.preview.element.outerWidth(true); // Determine the maximum size (in pixels) that this column can be dragged to
 
       var columnsToRight = column.parent.children().length - (this.getColumnIndexInGroup(column) + 1);
       var leftMaxWidthFromChildren = groupPosition.left + groupPosition.outerWidth - columnsToRight * singleColumnWidth + 10;
@@ -194,9 +194,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Find a column which can be shrunk for the current resize action
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {"left" | "right"} direction
-     * @returns {Column}
+     * @returns {ContentTypeCollectionInterface}
      */
 
 
@@ -224,8 +224,8 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Find a shrinkable column outwards from the current column
      *
-     * @param {Column} column
-     * @returns {Column}
+     * @param {ContentTypeCollectionInterface} column
+     * @returns {ContentTypeCollectionInterface}
      */
 
 
@@ -250,9 +250,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Calculate the ghost size for the resizing action
      *
-     * @param {JQuery<HTMLElement>} group
+     * @param {GroupPositionCache} groupPosition
      * @param {number} currentPos
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {string} modifyColumnInPair
      * @param {MaxGhostWidth} maxGhostWidth
      * @returns {number}
@@ -264,7 +264,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
       switch (modifyColumnInPair) {
         case "left":
-          var singleColumnWidth = column.element.position().left + groupPosition.outerWidth / this.getGridSize(); // Don't allow the ghost widths be less than the smallest column
+          var singleColumnWidth = column.preview.element.position().left + groupPosition.outerWidth / this.getGridSize(); // Don't allow the ghost widths be less than the smallest column
 
           if (ghostWidth <= singleColumnWidth) {
             ghostWidth = singleColumnWidth;
@@ -290,17 +290,17 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * Determine which column in the group should be adjusted for the current resize action
      *
      * @param {number} currentPos
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {ResizeHistory} history
-     * @returns {[Column , string , string]}
+     * @returns {[ContentTypeCollectionInterface , string]}
      */
 
 
     _proto.determineAdjustedColumn = function determineAdjustedColumn(currentPos, column, history) {
       var modifyColumnInPair = "left";
       var usedHistory;
-      var resizeColumnLeft = column.element.offset().left - parseInt(column.element.css("margin-left"), 10);
-      var resizeColumnWidth = column.element.outerWidth(true);
+      var resizeColumnLeft = column.preview.element.offset().left - parseInt(column.preview.element.css("margin-left"), 10);
+      var resizeColumnWidth = column.preview.element.outerWidth(true);
       var resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
       var adjustedColumn;
 
@@ -353,9 +353,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Resize a column to a specific width
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {number} width
-     * @param {Column} shrinkableColumn
+     * @param {ContentTypeCollectionInterface} shrinkableColumn
      */
 
 
@@ -388,7 +388,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Update the width of a column
      *
-     * @param {Column} column
+     * @param {ContentTypeCollectionInterface} column
      * @param {number} width
      */
 
