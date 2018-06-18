@@ -138,19 +138,19 @@
     </section>
     <section name="ColorPicker">
         <element name="colorSwatch" type="button" selector=".sp-preview"/>
-        <element name="colorPickerWindow" type="button" selector=".sp-container[style]"/>
-        <element name="allColorBoxes" type="button" selector=".sp-container[style] .sp-palette-row:not(.sp-palette-row-selection) [data-color]"/>
-        <element name="colorBox" type="button" selector=".sp-container[style] [data-color='{{arg1}}']" parameterized="true"/>
-        <element name="firstColorBox" type="button" selector=".sp-container[style] [data-color='rgb(252, 0, 9)']"/>
-        <element name="activeFavoriteColorBox" type="button" selector=".sp-container[style] .sp-palette-row.sp-palette-row-selection .sp-thumb-active[data-color='{{arg1}}']" parameterized="true"/>
-        <element name="colorWheel" type="button" selector=".sp-container[style] .sp-val"/>
-        <element name="colorWheelColor" type="button" selector=".sp-container[style] .sp-color[style='background-color: {{arg1}};']" parameterized="true"/>
-        <element name="inputField" type="input" selector=".sp-container[style] .sp-input"/>
-        <element name="clearColorBtn" type="button" selector=".sp-container[style] [title='Clear Color Selection']"/>
-        <element name="hueSlider" type="button" selector=".sp-container[style] .sp-hue"/>
-        <element name="lightDarkSlider" type="button" selector=".sp-container[style] .sp-alpha"/>
-        <element name="cancelBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style]//a[text()='Cancel']"/>
-        <element name="applyBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style]//button[text()='Apply']"/>
+        <element name="colorPickerWindow" type="button" selector=".sp-container[style]:last-child"/>
+        <element name="allColorBoxes" type="button" selector=".sp-container[style]:last-child .sp-palette-row:not(.sp-palette-row-selection) [data-color]"/>
+        <element name="colorBox" type="button" selector=".sp-container[style]:last-child [data-color='{{arg1}}']" parameterized="true"/>
+        <element name="firstColorBox" type="button" selector=".sp-container[style]:last-child [data-color='rgb(252, 0, 9)']"/>
+        <element name="activeFavoriteColorBox" type="button" selector=".sp-container[style]:last-child .sp-palette-row.sp-palette-row-selection .sp-thumb-active[data-color='{{arg1}}']" parameterized="true"/>
+        <element name="colorWheel" type="button" selector=".sp-container[style]:last-child .sp-val"/>
+        <element name="colorWheelColor" type="button" selector=".sp-container[style]:last-child .sp-color[style='background-color: {{arg1}};']" parameterized="true"/>
+        <element name="inputField" type="input" selector=".sp-container[style]:last-child .sp-input"/>
+        <element name="clearColorBtn" type="button" selector=".sp-container[style]:last-child [title='Clear Color Selection']"/>
+        <element name="hueSlider" type="button" selector=".sp-container[style]:last-child .sp-hue"/>
+        <element name="lightDarkSlider" type="button" selector=".sp-container[style]:last-child .sp-alpha"/>
+        <element name="cancelBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style][last()]//a[text()='Cancel']"/>
+        <element name="applyBtn" type="button" selector="//div[contains(@class,'sp-palette') and @style][last()]//button[text()='Apply']"/>
     </section>
     <section name="EditPanelForm">
         <element name="backgroundImagePreview" type="button" selector='//div[@data-index="background"]/descendant::img[@class="preview-image"]'/>
