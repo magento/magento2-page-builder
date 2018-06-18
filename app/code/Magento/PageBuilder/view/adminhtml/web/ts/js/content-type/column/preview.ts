@@ -157,7 +157,7 @@ export default class Preview extends PreviewCollection {
      * @returns {Promise<ContentTypeInterface> | void}
      */
     public clone(
-        contentType: ContentTypeCollectionInterface,
+        contentType: ContentTypeCollectionInterface<Preview>,
         autoAppend: boolean = true,
     ): Promise<ContentTypeCollectionInterface> | void {
         // Are we duplicating from a parent?
@@ -175,7 +175,7 @@ export default class Preview extends PreviewCollection {
         if (splitTimes > 1) {
             const splitClone = super.clone(contentType, autoAppend);
             if (splitClone) {
-                splitClone.then((duplicateContentType: ContentTypeCollectionInterface) => {
+                splitClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
                     let originalWidth = 0;
                     let duplicateWidth = 0;
 
@@ -207,7 +207,7 @@ export default class Preview extends PreviewCollection {
             if (shrinkableColumn) {
                 const shrinkableClone = super.clone(contentType, autoAppend);
                 if (shrinkableClone) {
-                    shrinkableClone.then((duplicateContentType: ContentTypeCollectionInterface) => {
+                    shrinkableClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
                         this.columnGroupUtils.updateColumnWidth(
                             shrinkableColumn,
                             this.columnGroupUtils.getAcceptedColumnWidth(

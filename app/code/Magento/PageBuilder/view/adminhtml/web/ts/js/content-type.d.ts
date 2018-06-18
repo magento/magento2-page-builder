@@ -9,12 +9,12 @@ import Master from "./content-type/master";
 import Preview from "./content-type/preview";
 import DataStore from "./data-store";
 
-export default interface ContentTypeInterface {
+export default interface ContentTypeInterface<P = Preview, M = Master> {
     id: string;
     stageId: string;
     parent: ContentTypeCollectionInterface;
     config: ContentTypeConfigInterface;
-    preview: Preview;
-    content: Master;
+    preview: P;
+    content: M;
     dataStore: DataStore;
 }

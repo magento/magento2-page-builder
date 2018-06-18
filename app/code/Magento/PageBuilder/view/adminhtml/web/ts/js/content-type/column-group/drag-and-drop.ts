@@ -16,9 +16,9 @@ import ColumnGroupUtils from "./resizing";
 export function calculateDropPositions(group: ContentTypeCollectionInterface): DropPosition[] {
     const columnGroupUtils = new ColumnGroupUtils(group);
     const dropPositions: any[] = [];
-    group.children().forEach((column: ContentTypeCollectionInterface, index: number) => {
-        const left = (column.preview as ColumnPreview).element.position().left;
-        const width = (column.preview as ColumnPreview).element.outerWidth(true);
+    group.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
+        const left = column.preview.element.position().left;
+        const width = column.preview.element.outerWidth(true);
         const canShrink = columnGroupUtils.getAcceptedColumnWidth(columnGroupUtils.getColumnWidth(column).toString()) >
             columnGroupUtils.getSmallestColumnWidth();
         dropPositions.push(
@@ -45,6 +45,6 @@ export interface DropPosition {
     right: number;
     insertIndex: number;
     placement: string;
-    affectedColumn: ContentTypeCollectionInterface;
+    affectedColumn: ContentTypeCollectionInterface<ColumnPreview>;
     canShrink: boolean;
 }

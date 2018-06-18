@@ -5,8 +5,10 @@
 
 import Collection from "./collection";
 import ContentTypeInterface from "./content-type.d";
+import Master from "./content-type/master";
+import Preview from "./content-type/preview";
 
-export default interface ContentTypeCollectionInterface extends ContentTypeInterface {
+export default interface ContentTypeCollectionInterface<P = Preview, M = Master> extends ContentTypeInterface<P, M> {
     children: KnockoutObservableArray<any>;
     collection: Collection;
 

@@ -25,7 +25,7 @@ define([], function () {
   /**
    * Set the drag column in the registry
    *
-   * @param {ContentTypeCollectionInterface} column
+   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
    */
 
 

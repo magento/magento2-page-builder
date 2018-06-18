@@ -135,7 +135,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Handle a column being sorted into a new position in the group
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {number} newIndex
      */
 
@@ -156,9 +156,9 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Handle a column being resized
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {number} width
-     * @param {ContentTypeCollectionInterface} adjustedColumn
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} adjustedColumn
      */
 
 
@@ -212,7 +212,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Register a resize handle within a child column
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {JQuery<HTMLElement>} handle
      */
 
@@ -252,7 +252,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Bind draggable instances to the child columns
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @returns {JQuery<TElement extends Node>}
      */
 
@@ -495,7 +495,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
      *
      * @param {string} usedHistory
      * @param {string} direction
-     * @param {ContentTypeCollectionInterface} adjustedColumn
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} adjustedColumn
      * @param {string} modifyColumnInPair
      */
 

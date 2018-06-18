@@ -11,7 +11,6 @@ import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
-import ContentTypeInterface from "../../content-type.d";
 import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
@@ -47,12 +46,12 @@ export default class Preview extends PreviewCollection {
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;
     private resizeGhost: JQuery<HTMLElement>;
-    private resizeColumnInstance: ContentTypeCollectionInterface;
+    private resizeColumnInstance: ContentTypeCollectionInterface<ColumnPreview>;
     private resizeColumnWidths: ColumnWidth[] = [];
     private resizeMaxGhostWidth: MaxGhostWidth;
     private resizeMouseDown: boolean;
-    private resizeLeftLastColumnShrunk: ContentTypeCollectionInterface;
-    private resizeRightLastColumnShrunk: ContentTypeCollectionInterface;
+    private resizeLeftLastColumnShrunk: ContentTypeCollectionInterface<ColumnPreview>;
+    private resizeRightLastColumnShrunk: ContentTypeCollectionInterface<ColumnPreview>;
     private resizeLastPosition: number;
     private resizeLastColumnInPair: string;
     private resizeHistory: ResizeHistory = {
@@ -176,10 +175,10 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle a column being sorted into a new position in the group
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {number} newIndex
      */
-    public onColumnSort(column: ContentTypeCollectionInterface, newIndex: number) {
+    public onColumnSort(column: ContentTypeCollectionInterface<ColumnPreview>, newIndex: number) {
         const currentIndex = this.columnGroupUtils.getColumnIndexInGroup(column);
         if (currentIndex !== newIndex) {
             if (currentIndex < newIndex) {
@@ -195,14 +194,14 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle a column being resized
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {number} width
-     * @param {ContentTypeCollectionInterface} adjustedColumn
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} adjustedColumn
      */
     public onColumnResize(
-        column: ContentTypeCollectionInterface,
+        column: ContentTypeCollectionInterface<ColumnPreview>,
         width: number,
-        adjustedColumn: ContentTypeCollectionInterface,
+        adjustedColumn: ContentTypeCollectionInterface<ColumnPreview>,
     ) {
         this.columnGroupUtils.resizeColumn(column, width, adjustedColumn);
     }
@@ -251,10 +250,10 @@ export default class Preview extends PreviewCollection {
     /**
      * Register a resize handle within a child column
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {JQuery<HTMLElement>} handle
      */
-    public registerResizeHandle(column: ContentTypeCollectionInterface, handle: JQuery<HTMLElement>) {
+    public registerResizeHandle(column: ContentTypeCollectionInterface<ColumnPreview>, handle: JQuery<HTMLElement>) {
         handle.off("mousedown touchstart");
         handle.on("mousedown touchstart", (event) => {
             event.preventDefault();
@@ -290,11 +289,11 @@ export default class Preview extends PreviewCollection {
     /**
      * Bind draggable instances to the child columns
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @returns {JQuery<TElement extends Node>}
      */
-    public bindDraggable(column: ContentTypeCollectionInterface) {
-        (column.preview as ColumnPreview).element.draggable({
+    public bindDraggable(column: ContentTypeCollectionInterface<ColumnPreview>) {
+        column.preview.element.draggable({
             appendTo: "body",
             containment: "body",
             handle: ".move-column",
@@ -314,7 +313,7 @@ export default class Preview extends PreviewCollection {
             start: (event: Event) => {
                 const columnInstance: ContentTypeCollectionInterface = ko.dataFor($(event.target)[0]);
                 // Use the global state as columns can be dragged between groups
-                setDragColumn(columnInstance.parent);
+                setDragColumn((columnInstance.parent as ContentTypeCollectionInterface<ColumnPreview>));
                 this.dropPositions = calculateDropPositions(this.parent);
 
                 events.trigger("column:drag:start", {
@@ -353,10 +352,10 @@ export default class Preview extends PreviewCollection {
      *
      * @param {ContentTypeCollectionInterface} columns
      */
-    private setColumnsAsResizing(...columns: ContentTypeCollectionInterface[]) {
+    private setColumnsAsResizing(...columns: Array<ContentTypeCollectionInterface<ColumnPreview>>) {
         columns.forEach((column) => {
-            (column.preview as ColumnPreview).resizing(true);
-            (column.preview as ColumnPreview).element.css({transition: `width ${animationTime}ms ease-in-out`});
+            column.preview.resizing(true);
+            column.preview.element.css({transition: `width ${animationTime}ms ease-in-out`});
         });
     }
 
@@ -364,10 +363,10 @@ export default class Preview extends PreviewCollection {
      * Unset resizing flag on all child columns
      */
     private unsetResizingColumns() {
-        this.parent.children().forEach((column: ContentTypeCollectionInterface) => {
+        this.parent.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
             (column.preview as ColumnPreview).resizing(false);
-            if ((column.preview as ColumnPreview).element) {
-                (column.preview as ColumnPreview).element.css({transition: ""});
+            if (column.preview.element) {
+                column.preview.element.css({transition: ""});
             }
         });
     }
@@ -501,13 +500,13 @@ export default class Preview extends PreviewCollection {
      *
      * @param {string} usedHistory
      * @param {string} direction
-     * @param {ContentTypeCollectionInterface} adjustedColumn
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} adjustedColumn
      * @param {string} modifyColumnInPair
      */
     private recordResizeHistory(
         usedHistory: string,
         direction: string,
-        adjustedColumn: ContentTypeCollectionInterface,
+        adjustedColumn: ContentTypeCollectionInterface<ColumnPreview>,
         modifyColumnInPair: string,
     ) {
         if (usedHistory) {
@@ -532,12 +531,12 @@ export default class Preview extends PreviewCollection {
         if (this.resizeMouseDown) {
             event.preventDefault();
             const currentPos = event.pageX;
-            const resizeColumnLeft = (this.resizeColumnInstance.preview as ColumnPreview).element.offset().left;
-            const resizeColumnWidth = (this.resizeColumnInstance.preview as ColumnPreview).element.outerWidth();
+            const resizeColumnLeft = this.resizeColumnInstance.preview.element.offset().left;
+            const resizeColumnWidth = this.resizeColumnInstance.preview.element.outerWidth();
             const resizeHandlePosition = resizeColumnLeft + resizeColumnWidth;
             const direction = (currentPos >= resizeHandlePosition) ? "right" : "left";
 
-            let adjustedColumn: ContentTypeCollectionInterface;
+            let adjustedColumn: ContentTypeCollectionInterface<ColumnPreview>;
             let modifyColumnInPair: string; // We need to know if we're modifying the left or right column in the pair
             let usedHistory: string; // Was the adjusted column pulled from history?
 
@@ -634,17 +633,16 @@ export default class Preview extends PreviewCollection {
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
             if (this.dropPositions.length === 0) {
-                this.dropPositions = calculateDropPositions((this.parent as ContentTypeCollectionInterface));
+                this.dropPositions = calculateDropPositions(this.parent);
             }
             const columnInstance = dragColumn;
             const currentX = event.pageX - groupPosition.left;
 
             // Are we within the same column group or have we ended up over another?
             if (columnInstance.parent === this.parent) {
-                const currentColumn = (dragColumn.preview as ColumnPreview).element;
+                const currentColumn = dragColumn.preview.element;
                 const currentColumnRight = currentColumn.position().left + currentColumn.width();
-                const lastColInGroup =
-                    (this.parent.children()[this.parent.children().length - 1].preview as ColumnPreview).element;
+                const lastColInGroup = this.parent.children()[this.parent.children().length - 1].preview.element;
                 const insertLastPos = lastColInGroup.position().left + (lastColInGroup.width() / 2);
 
                 this.movePosition = this.dropPositions.find((position) => {
@@ -792,7 +790,7 @@ export default class Preview extends PreviewCollection {
             },
             over() {
                 // Always calculate drop positions when an element is dragged over
-                self.dropPositions = calculateDropPositions((self.parent as ContentTypeCollectionInterface));
+                self.dropPositions = calculateDropPositions(self.parent);
 
                 // Is the element currently being dragged a column?
                 if (getDraggedContentTypeConfig() === Config.getContentTypeConfig("column")) {
@@ -843,7 +841,7 @@ export default class Preview extends PreviewCollection {
 
         // Let's spread the width across the columns
         for (let i = 1; i <= spreadAcross; i++) {
-            let columnToModify: ContentTypeCollectionInterface;
+            let columnToModify: ContentTypeCollectionInterface<ColumnPreview>;
 
             // As the original column has been removed from the array, check the new index for a column
             if ((params.index) <= this.parent.children().length
@@ -891,7 +889,7 @@ export interface ResizeHistory {
 }
 
 export interface ResizeHistoryItem {
-    adjustedColumn: ContentTypeCollectionInterface;
+    adjustedColumn: ContentTypeCollectionInterface<ColumnPreview>;
     modifyColumnInPair: string;
 }
 

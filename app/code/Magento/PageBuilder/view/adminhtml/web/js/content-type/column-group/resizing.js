@@ -61,7 +61,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Return the width of the column
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @returns {number}
      */
 
@@ -72,7 +72,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Retrieve the index of the column within it's group
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @returns {number}
      */
 
@@ -83,9 +83,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Retrieve the adjacent column based on a direction of +1 or -1
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {"+1" | "-1"} direction
-     * @returns {ContentTypeCollectionInterface}
+     * @returns {ContentTypeCollectionInterface<ColumnPreview>}
      */
 
 
@@ -117,7 +117,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Determine the pixel position of every column that can be created within the group
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {GroupPositionCache} groupPosition
      * @returns {ColumnWidth[]}
      */
@@ -194,9 +194,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Find a column which can be shrunk for the current resize action
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {"left" | "right"} direction
-     * @returns {ContentTypeCollectionInterface}
+     * @returns {ContentTypeCollectionInterface<ColumnPreview>}
      */
 
 
@@ -224,8 +224,8 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Find a shrinkable column outwards from the current column
      *
-     * @param {ContentTypeCollectionInterface} column
-     * @returns {ContentTypeCollectionInterface}
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @returns {ContentTypeCollectionInterface<ColumnPreview>}
      */
 
 
@@ -252,7 +252,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      *
      * @param {GroupPositionCache} groupPosition
      * @param {number} currentPos
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {string} modifyColumnInPair
      * @param {MaxGhostWidth} maxGhostWidth
      * @returns {number}
@@ -290,9 +290,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * Determine which column in the group should be adjusted for the current resize action
      *
      * @param {number} currentPos
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {ResizeHistory} history
-     * @returns {[ContentTypeCollectionInterface , string]}
+     * @returns {[ContentTypeCollectionInterface<ColumnPreview>, string, string]}
      */
 
 
@@ -353,9 +353,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Resize a column to a specific width
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {number} width
-     * @param {ContentTypeCollectionInterface} shrinkableColumn
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} shrinkableColumn
      */
 
 
@@ -388,7 +388,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Update the width of a column
      *
-     * @param {ContentTypeCollectionInterface} column
+     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
      * @param {number} width
      */
 
