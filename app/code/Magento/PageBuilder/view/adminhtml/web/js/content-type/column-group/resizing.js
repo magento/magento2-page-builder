@@ -108,11 +108,11 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     _proto.getColumnsWidth = function getColumnsWidth() {
       var _this = this;
 
-      return this.columnGroup.children().map(function (column) {
+      return this.getAcceptedColumnWidth(this.columnGroup.children().map(function (column) {
         return _this.getColumnWidth(column);
       }).reduce(function (widthA, widthB) {
         return widthA + (widthB ? widthB : 0);
-      });
+      }).toString());
     };
     /**
      * Determine the pixel position of every column that can be created within the group

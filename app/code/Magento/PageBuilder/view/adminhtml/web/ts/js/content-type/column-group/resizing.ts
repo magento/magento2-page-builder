@@ -102,11 +102,13 @@ export default class ColumnGroupUtils {
      * @returns {number}
      */
     public getColumnsWidth(): number {
-        return this.columnGroup.children().map((column: ContentTypeCollectionInterface) => {
-            return this.getColumnWidth(column);
-        }).reduce((widthA: number, widthB: number) => {
-            return widthA + (widthB ? widthB : 0);
-        });
+        return this.getAcceptedColumnWidth(
+            this.columnGroup.children().map((column: ContentTypeCollectionInterface) => {
+                return this.getColumnWidth(column);
+            }).reduce((widthA: number, widthB: number) => {
+                return widthA + (widthB ? widthB : 0);
+            }).toString(),
+        );
     }
 
     /**
