@@ -12,7 +12,7 @@ import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 
 export default class ContentTypeCollection extends ContentType implements ContentTypeCollectionInterface {
-    public collection: Collection = new Collection();
+    private collection: Collection = new Collection();
 
     /**
      * @param {ContentTypeInterface} parent

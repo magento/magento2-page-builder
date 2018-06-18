@@ -246,7 +246,7 @@ export default class Preview {
         autoAppend: boolean = true,
     ): Promise<ContentTypeInterface> | void {
         const contentTypeData = contentType.dataStore.get();
-        const index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
+        const index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
 
         return new Promise((resolve) => {
             createContentType(

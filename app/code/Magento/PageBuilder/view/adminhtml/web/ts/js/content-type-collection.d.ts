@@ -10,7 +10,6 @@ import Preview from "./content-type/preview";
 
 export default interface ContentTypeCollectionInterface<P = Preview, M = Master> extends ContentTypeInterface<P, M> {
     children: KnockoutObservableArray<any>;
-    collection: Collection;
 
     addChild(child: ContentTypeInterface, index?: number): void;
 

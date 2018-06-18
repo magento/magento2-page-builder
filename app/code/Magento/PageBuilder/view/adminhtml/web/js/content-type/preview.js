@@ -236,7 +236,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
       }
 
       var contentTypeData = contentType.dataStore.get();
-      var index = contentType.parent.collection.children.indexOf(contentType) + 1 || null;
+      var index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
       return new Promise(function (resolve) {
         (0, _contentTypeFactory)(contentType.config, contentType.parent, contentType.stageId, contentTypeData).then(function (duplicateContentType) {
           if (autoAppend) {
