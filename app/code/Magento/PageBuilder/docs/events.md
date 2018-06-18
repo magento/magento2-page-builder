@@ -15,11 +15,11 @@
     1. [Content type configuration]
     1. [How to add a new content type]
     1. **Events**
-    1. [Bindings]
     1. [Master format]
     1. [Visual select]
+    1. [Reuse product conditions in content types]
+    1. [Store component master format as widget directive]
     1. [Custom Toolbar]
-    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -35,11 +35,11 @@
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
-[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Add image uploader to content type]: image-uploader.md
 [Roadmap and Known Issues]: roadmap.md
 
 This document contains reference information for events dispatched in PageBuilder.
@@ -49,16 +49,16 @@ This document contains reference information for events dispatched in PageBuilde
 
 ## Events list
 
-* [contentType:dropped](#contentTypedropped)
-* [contentType:dropped:create](#contentTypedroppedcreate)
-* [contentType:instanceDropped](#contentTypeinstancedropped)
-* [contentType:mount](#contentTypemount)
-* [contentType:moved](#contentTypemoved)
-* [contentType:removed](#contentTyperemoved)
-* [contentType:sorted](#contentTypesorted)
-* [contentType:sortStart](#contentTypesortstart)
-* [contentType:sortStart](#contentTypesortstart)
-* [buttons:contentType:dropped:create](#buttonscontentTypedroppedcreate)
+* [block:dropped](#blockdropped)
+* [block:dropped:create](#blockdroppedcreate)
+* [block:instanceDropped](#blockinstancedropped)
+* [block:mount](#blockmount)
+* [block:moved](#blockmoved)
+* [block:removed](#blockremoved)
+* [block:sorted](#blocksorted)
+* [block:sortStart](#blocksortstart)
+* [block:sortStart](#blocksortstart)
+* [buttons:block:dropped:create](#buttonsblockdroppedcreate)
 * [colum:drag:start](#columdragstart)
 * [colum:drag:start](#columdragstart)
 * [drag:start](#dragstart)
@@ -69,7 +69,7 @@ This document contains reference information for events dispatched in PageBuilde
 * [form:render](#formrender)
 * [form:save](#formsave)
 * [image:assigned:{{id}}](#imageassignedid)
-* [image:contentType:ready](#imagecontentTypeready)
+* [image:block:ready](#imageblockready)
 * [image:uploaded](#imageuploaded)
 * [interaction:start](#interactionstart)
 * [interaction:stop](#interactionstop)
@@ -77,26 +77,26 @@ This document contains reference information for events dispatched in PageBuilde
 * [previewObservables:updated](#previewobservablesupdated)
 * [previewSortable:sortstart](#previewsortablesortstart)
 * [previewSortable:sortupdate](#previewsortablesortupdate)
-* [row:contentType:ready](#rowcontentTypeready)
-* [slide:contentType:create](#slidecontentTypecreate)
-* [slider:contentType:dropped:create](#slidercontentTypedroppedcreate)
-* [slide:contentType:duplicate](#slidecontentTypeduplicate)
-* [slide:contentType:mount](#slidecontentTypemount)
-* [slide:contentType:removed](#slidecontentTyperemoved)
-* [slider:contentType:ready](#slidercontentTypeready)
+* [row:block:ready](#rowblockready)
+* [slide:block:create](#slideblockcreate)
+* [slider:block:dropped:create](#sliderblockdroppedcreate)
+* [slide:block:duplicate](#slideblockduplicate)
+* [slide:block:mount](#slideblockmount)
+* [slide:block:removed](#slideblockremoved)
+* [slider:block:ready](#sliderblockready)
 * [stage:error](#stageerror)
 * [stage:ready:{{id}}](#stagereadyid)
 * [stage:renderTree:{{id}}](#stagerendertreeid)
 * [stage:updated](#stageupdated)
 * [state](#state)
-* [tab-item:contentType:duplicate](#tab-itemcontentTypeduplicate)
-* [tab-item:contentType:mount](#tab-itemcontentTypemount)
-* [tab-item:contentType:removed](#tab-itemcontentTyperemoved)
-* [tabs:contentType:dropped:create](#tabscontentTypedroppedcreate)
-* [tabs:contentType:ready](#tabscontentTypeready)
+* [tab-item:block:duplicate](#tab-itemblockduplicate)
+* [tab-item:block:mount](#tab-itemblockmount)
+* [tab-item:block:removed](#tab-itemblockremoved)
+* [tabs:block:dropped:create](#tabsblockdroppedcreate)
+* [tabs:block:ready](#tabsblockready)
 * [{{id}}:updated](#idupdated)
 
-## `contentType:dropped`
+## `block:dropped`
 
 **Triggers**
 
@@ -117,11 +117,11 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `contentType:dropped:create`
+## `block:dropped:create`
 
 **Triggers**
 
-* `Stage::onContentTypeDropped`
+* `Stage::onBlockDropped`
 
 
 **Params**
@@ -129,13 +129,13 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `contentType:instanceDropped`
+## `block:instanceDropped`
 
 **Triggers**
 
@@ -147,7 +147,7 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     parent: ContentTypeInterface;
-    contentTypeInstance: ContentTypeInterface;
+    blockInstance: ContentTypeInterface;
     index?: number;
     stageId: string;
 }
@@ -155,7 +155,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `contentType:mount`
+## `block:mount`
 
 **Triggers**
 
@@ -167,30 +167,30 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `contentType:moved`
+## `block:moved`
 
 **Triggers**
 
-* `Stage::onContentTypeInstanceDropped`
+* `Stage::onBlockInstanceDropped`
 
 **Params**
 
 ``` js
 {
-    contentType: ContentTypeInterface,
+    block: ContentTypeInterface,
     index: number,
     newParent: ContentTypeInterface,
     originalParent: ContentTypeInterface
 }
 ```
 
-## `contentType:removed`
+## `block:removed`
 
 **Triggers**
 
@@ -202,12 +202,12 @@ This document contains reference information for events dispatched in PageBuilde
 {
     parent: ContentTypeInterface;
     index: number;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
     stageId: string;
 }
 ```
 
-## `contentType:sorted`
+## `block:sorted`
 
 **Triggers**
 
@@ -218,7 +218,7 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     parent: ContentTypeInterface;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
     index: number;
     stageId: string;
 }
@@ -226,7 +226,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `contentType:sortStart`
+## `block:sortStart`
 
 **Triggers**
 
@@ -236,7 +236,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 ``` js
 {
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
     event: Event;
     originalEle: JQuery;
     placeholder: JQuery;
@@ -247,7 +247,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `contentType:sortStop`
+## `block:sortStop`
 
 **Triggers**
 
@@ -257,7 +257,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 ``` js
 {
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
     event: Event;
     originalEle: JQuery;
     placeholder: JQuery;
@@ -268,18 +268,18 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `buttons:contentType:dropped:create`
+## `buttons:block:dropped:create`
 
 **Triggers**
 
-* `Stage::onContentTypeDropped`
+* `Stage::onBlockDropped`
 
 **Params**
 
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
@@ -451,11 +451,11 @@ This document contains reference information for events dispatched in PageBuilde
 
 object
 
-## `image:contentType:ready`
+## `image:block:ready`
 
 **Triggers**
 
-* `ContentTypeFactory::fireContentTypeReadyEvent`
+* `ContentTypeFactory::fireBlockReadyEvent`
 
 **Params**
 
@@ -576,24 +576,24 @@ Function
 }
 ```
 
-## `row:contentType:ready`
+## `row:block:ready`
 
 **Triggers**
 
-* `ContentTypeFactory::fireContentTypeReadyEvent`
+* `ContentTypeFactory::fireBlockReadyEvent`
 
 **Params**
 
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `slide:contentType:create`
+## `slide:block:create`
 
 **Triggers**
 
@@ -604,28 +604,28 @@ Function
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
-## `slider:contentType:dropped:create`
+## `slider:block:dropped:create`
 
 **Triggers**
 
-* `Stage::onContentTypeDropped`
+* `Stage::onBlockDropped`
 
 **Params**
 
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `slide:contentType:duplicate`
+## `slide:block:duplicate`
 
 **Triggers**
 
@@ -636,15 +636,15 @@ Function
 
 ``` js
 {
-    original: originalContentType,
-    duplicateContentType,
+    original: originalBlock,
+    duplicateBlock,
     index,
 }
 ```
 
 [Back to top]
 
-## `slide:contentType:mount`
+## `slide:block:mount`
 
 **Triggers**
 
@@ -656,43 +656,43 @@ Function
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `slide:contentType:removed`
+## `slide:block:removed`
 
 **Triggers**
 
 * `Preview::onOptionRemove`
-* `ContentTypeRemovedParams`
+* `BlockRemovedParams`
 
 **Params**
 
 ``` js
 {
     parent: ColumnGroup;
-    contentType: Column;
+    block: Column;
     index: number;
 }
 ```
 
 [Back to top]
 
-## `slider:contentType:ready`
+## `slider:block:ready`
 
 **Triggers**
 
-* `ContentTypeFactory::fireContentTypeReadyEvent`
+* `ContentTypeFactory::fireBlockReadyEvent`
 
 **Params**
 
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
@@ -766,7 +766,7 @@ Error
 
 [Back to top]
 
-## `tab-item:contentType:duplicate`
+## `tab-item:block:duplicate`
 
 **Triggers**
 
@@ -778,14 +778,14 @@ Error
 ``` js
 {
     original: ContentTypeInterface,
-    duplicateContentType: ContentTypeInterface,
+    duplicateBlock: ContentTypeInterface,
     index: number,
 }
 ```
 
 [Back to top]
 
-## `tab-item:contentType:mount`
+## `tab-item:block:mount`
 
 **Triggers**
 
@@ -797,18 +797,18 @@ Error
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `tab-item:contentType:removed`
+## `tab-item:block:removed`
 
 **Triggers**
 
 * `Preview::onOptionRemove`
-* `ContentTypeRemovedParams`
+* `BlockRemovedParams`
 
 **Params**
 
@@ -816,42 +816,42 @@ Error
 {
     parent: ContentTypeInterface;
     index: number;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
     stageId: string;
 }
 ```
 
 [Back to top]
 
-## `tabs:contentType:dropped:create`
+## `tabs:block:dropped:create`
 
 **Triggers**
 
-* `Stage::onContentTypeDropped`
+* `Stage::onBlockDropped`
 
 **Params**
 
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
 [Back to top]
 
-## `tabs:contentType:ready`
+## `tabs:block:ready`
 
 **Triggers**
 
-* `ContentTypeFactory::fireContentTypeReadyEvent`
+* `ContentTypeFactory::fireBlockReadyEvent`
 
 **Params**
 
 ``` js
 {
     id: string;
-    contentType: ContentTypeInterface;
+    block: ContentTypeInterface;
 }
 ```
 
