@@ -79,13 +79,23 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       return _this;
     }
     /**
+     * Return the grid size from the utils class
+     *
+     * @returns {number}
+     */
+
+
+    var _proto = Preview.prototype;
+
+    _proto.getGridSize = function getGridSize() {
+      return this.columnGroupUtils.getGridSize();
+    };
+    /**
      * Handle a new column being dropped into the group
      *
      * @param {DropPosition} dropPosition
      */
 
-
-    var _proto = Preview.prototype;
 
     _proto.onNewColumnDrop = function onNewColumnDrop(dropPosition) {
       var _this2 = this;

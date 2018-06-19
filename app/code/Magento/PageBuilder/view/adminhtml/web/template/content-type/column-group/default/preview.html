@@ -6,11 +6,7 @@
 -->
 
 <div class="pagebuilder-column-group" css="{'resizing': resizing, 'empty-child': hasEmptyChild}">
-    <div class="resize-grid">
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
+    <div class="resize-grid" each="new Array(getGridSize())">
         <div class="grid-line"></div>
     </div>
     <div class="resize-ghost" afterRender="function (element) { bindGhost.call($data, element); }"></div>

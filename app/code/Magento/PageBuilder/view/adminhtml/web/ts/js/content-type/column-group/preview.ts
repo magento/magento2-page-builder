@@ -108,6 +108,15 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Return the grid size from the utils class
+     *
+     * @returns {number}
+     */
+    public getGridSize() {
+        return this.columnGroupUtils.getGridSize();
+    }
+
+    /**
      * Handle a new column being dropped into the group
      *
      * @param {DropPosition} dropPosition
