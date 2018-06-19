@@ -5,7 +5,44 @@
  */
 -->
 
-<div class="pagebuilder-column-group" css="{'resizing': resizing, 'empty-child': hasEmptyChild}">
+<div class="pagebuilder-column-group"
+     css="{'resizing': resizing, 'empty-child': hasEmptyChild}"
+     event="{ mouseover: onMouseOver, mouseout: onMouseOut },  mouseoverBubble: false">
+    <div class="pagebuilder-column-grid-options">
+        <div class="pagebuilder-column-grid-options-wrapper">
+            <i class="icon-pagebuilder-grid-options"></i>
+        </div>
+        <div class="focus-options">
+            <div class="pagebuilder-options">
+                <div class="pagebuilder-options-wrapper">
+                    <ul class="pagebuilder-options-links">
+                        <li class="pagebuilder-options-link">
+                            <div class="option-title">
+                                Grid Size
+                            </div>
+                        </li>
+                        <li class="pagebuilder-options-link">
+                            <div class="pagebuilder-grid-link-wrapper">
+                                <input type="text" class="admin__control-text"/>
+                            </div>
+                        </li>
+                        <li class="pagebuilder-options-link">
+                            <div class="pagebuilder-grid-link-wrapper">
+                                <div class="pagebuilder-grid-options-help">
+                                    ?
+                                    <span class="tooltip-content"
+                                          role="tooltip">
+                                        <p>Grid size determines the maximum number of columns available.</p>
+                                        <p>Select a value between 2 and 16.</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="resize-grid" each="gridSizeArray">
         <div class="grid-line"></div>
     </div>

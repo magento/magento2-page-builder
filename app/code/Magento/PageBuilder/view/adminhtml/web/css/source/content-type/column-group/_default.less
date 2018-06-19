@@ -38,6 +38,135 @@
             }
         }
 
+        .pagebuilder-column-grid-options {
+            background: rgb(255, 255, 255);
+            border: 1px solid rgba(153, 153, 153, .4);
+            border-radius: 10px;
+            cursor: pointer;
+            height: 18px;
+            left: -9px;
+            position: absolute;
+            top: 10px;
+            vertical-align: center;
+            width: 18px;
+            z-index: 11;
+
+            .focus-options {
+                position: relative;
+
+                .admin__control-text {
+                    height: 90%;
+                    width: 24px;
+                }
+
+                .pagebuilder-grid-link-wrapper {
+                    align-items: center;
+                    display: flex;
+                    height: 100%;
+                    margin-right: 8px;
+                }
+
+                .pagebuilder-grid-options-help {
+                    background: #373330;
+                    border-radius: 22px;
+                    color: white;
+                    font-size: 16px;
+                    height: 22px;
+                    position: relative;
+                    vertical-align: top;
+                    width: 22px;
+                }
+
+                .tooltip-content {
+                    background: @color-lazy-sun;
+                    border: 1px solid @color-dark-grayish-orange;
+                    border-radius: 1px;
+                    bottom: 97.5%;
+                    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
+                    font-size: 14px;
+                    left: 50%;
+                    padding: .9rem 1.8rem;
+                    position: absolute;
+                    text-align: left;
+                    transform: translateX(-50%);
+                    visibility: hidden;
+                    width: 300px;
+
+                    &:before,
+                    &:after {
+                        border: .8rem solid transparent;
+                        content: '';
+                        display: block;
+                        height: 0;
+                        left: 50%;
+                        margin-left: -.8rem;
+                        position: absolute;
+                        top: 100%;
+                        width: 0;
+                    }
+                    &:before {
+                        border-top-color: @color-dark-grayish-orange;
+                        margin-top: 1px;
+                        z-index: 3;
+                    }
+                    &:after {
+                        border-top-color: @color-lazy-sun;
+                        z-index: 4;
+                    }
+                }
+
+                .pagebuilder-grid-options-help:hover > .tooltip-content {
+                    visibility: visible;
+                }
+
+                .pagebuilder-options {
+                    position: absolute;
+                    top: -46px;
+
+                    .option-title {
+                        margin-right: 8px;
+                        padding-left: 4px;
+                        padding-right: 0px;
+                    }
+
+                    .pagebuilder-options-wrapper {
+                        padding: 3px;
+                    }
+
+                    .pagebuilder-options-wrapper:after {
+                        border: none;
+                        border-bottom: 1px solid rgba(153, 153, 153, .7);
+                        border-right: 1px solid rgba(153, 153, 153, .7);
+                        bottom: -14px;
+                    }
+                }
+            }
+
+            .pagebuilder-column-grid-options-wrapper {
+                position: relative;
+
+                .icon-pagebuilder-grid-options {
+                    color: rgba(153, 153, 153, .4);
+                    font-size: 18px;
+                    position: absolute;
+                    top: -8px;
+                }
+            }
+
+
+
+            &:hover {
+                border: 1px solid rgba(153, 153, 153, .8);
+
+                .pagebuilder-column-grid-options-wrapper {
+                    .icon-pagebuilder-grid-options {
+                        color: rgba(153, 153, 153, .8);
+                    }
+                }
+            }
+        }
+
+
         .move-placeholder {
             background: rgba(142, 0, 6, .3);
             bottom: -1px;
