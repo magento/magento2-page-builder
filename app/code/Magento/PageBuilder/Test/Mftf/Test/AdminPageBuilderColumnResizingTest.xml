@@ -111,10 +111,10 @@
         </actionGroup>
         <!-- Grab grid guide width -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
-        <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(5)').clientWidth" stepKey="guideWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('10')}}').clientWidth" stepKey="guideWidth"/>
         <!-- Change Columns To 5:1 Ratio -->
         <comment userInput="Change Columns To 5:1 Ratio" stepKey="context1"/>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="dragColumnOneToFive"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="dragColumnOneToFive"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -278,10 +278,10 @@
         </actionGroup>
         <!-- Grab grid guide width (-8 due to how picky the guide is) -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
-        <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(4)').clientWidth-8" stepKey="guideWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('8')}}').clientWidth-8" stepKey="guideWidth"/>
         <!-- Change Columns To 4:1:1 Ratio -->
         <comment userInput="Change Columns To 4:1:1 Ratio" stepKey="context1"/>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumn1ToFour"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumn1ToFour"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -462,7 +462,7 @@
         </actionGroup>
         <!-- Grab grid guide width at 5 -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
-        <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(5)').clientWidth" stepKey="guideWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('10')}}').clientWidth" stepKey="guideWidth"/>
         <!-- Change Columns To 3:2:1 Ratio -->
         <comment userInput="Change Columns To 3:2:1 Ratio" stepKey="context1"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
@@ -470,7 +470,7 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn2ToFive"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeColumn2ToFive"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -704,7 +704,7 @@
         </actionGroup>
         <!-- Grab grid guide width -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
-        <executeJS function="return document.querySelector('.resize-grid .grid-line:nth-child(2)').clientWidth" stepKey="guideWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidth"/>
         <!-- Change Columns To 2:2:2 Ratio -->
         <comment userInput="Change Columns To 2:2:2 Ratio" stepKey="context1"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage2">
@@ -712,7 +712,7 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1ToTwo"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('2')}}" x="$guideWidth" stepKey="resizeColumn1ToTwo"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>

@@ -1162,14 +1162,14 @@
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seeDuplicatedColumn"/>
         <!-- Resize first column to 4/12 -->
         <comment userInput="Grab grid guide width for 4/12" stepKey="commentRetrieveGuideWidth"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('2')}}').clientWidth" stepKey="guideWidthFirstColumn"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidthFirstColumn"/>
         <comment userInput="Resize first column to 4/12" stepKey="commentResizeFirstColumn"/>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('2')}}" x="$guideWidthFirstColumn" stepKey="resizeFirstColumn"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('4')}}" x="$guideWidthFirstColumn" stepKey="resizeFirstColumn"/>
         <!-- Resize second column to 4/12 -->
         <comment userInput="Grab grid guide width for 4/12 for second column" stepKey="commentRetrieveGuideWidthForSecond"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidthSecondColumn"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('8')}}').clientWidth" stepKey="guideWidthSecondColumn"/>
         <comment userInput="Resize second column to 4/12" stepKey="commentResizeSecondColumn"/>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('4')}}" x="$guideWidthSecondColumn" stepKey="resizeSecondColumn"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('8')}}" x="$guideWidthSecondColumn" stepKey="resizeSecondColumn"/>
         <!-- Check all columns have the same width -->
         <comment userInput="Validate column widths are as expected" stepKey="commentValidateWidthsAreCorrect"/>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
