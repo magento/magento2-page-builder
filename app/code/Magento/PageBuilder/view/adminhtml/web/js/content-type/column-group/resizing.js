@@ -400,10 +400,11 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      * Determine if a grid can be resized to the requested size.
      *
      * Rules for resizing the grid:
-     * The grid size can always be increased up to the configured maximum value. (Assume this validation is done on entry)
-     * The grid size can be reduced only if the number of non-empty columns is less than or equal to the new size.
-     * If the new grid size is less than the number of columns currently in the grid, empty columns will be deleted to
-     * accommodate the new size.
+     *  - The grid size can always be increased up to the configured maximum value. (Assume this validation is done
+     *    on entry)
+     *  - The grid size can be reduced only if the number of non-empty columns is less than or equal to the new size.
+     *  - If the new grid size is less than the number of columns currently in the grid, empty columns will be deleted
+     *    to accommodate the new size.
      *
      * @param {number} newGridSize
      * @returns {boolean}
@@ -417,7 +418,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       if (newGridSize < currentGridSize && numColumns > newGridSize) {
         var numEmptyColumns = 0;
         this.columnGroup.getChildren()().forEach(function (column) {
-          if (column.getChildren()() === 0) numEmptyColumns++;
+          if (column.getChildren().length === 0) {
+            numEmptyColumns++;
+          }
         });
         return numEmptyColumns >= currentGridSize - newGridSize;
       }
@@ -439,84 +442,56 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       var numColumns = this.columnGroup.getChildren()().length; // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
 
       if (newGridSize < numColumns) {
-        this.columnGroup.children().forEach(function (column, index) {
+        this.columnGroup.getChildren()().forEach(function (column) {
           if (newGridSize < numColumns && column.getChildren().length === 0) {
-            // remove column
             _this4.columnGroup.removeChild(column);
 
             numColumns--;
           }
         });
+        this.columnGroup.dataStore.update(numColumns, "gridSize");
       } // update column widths
 
 
-      for (var _iterator = this.columnGroup.getChildren()(), _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-        var _ref;
+      var totalNewWidths = 0;
+      this.columnGroup.getChildren()().forEach(function (column, index) {
+        var newWidth = (100 * Math.floor(_this4.getColumnWidth(column) / 100 * newGridSize) / newGridSize).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0); // make sure the column is at least one grid size wide
 
-        if (_isArray) {
-          if (_i2 >= _iterator.length) break;
-          _ref = _iterator[_i2++];
-        } else {
-          _i2 = _iterator.next();
-          if (_i2.done) break;
-          _ref = _i2.value;
+        if (newWidth < minColWidth) {
+          newWidth = minColWidth;
+        } // make sure we leave enough space for other columns
+
+
+        var maxAvailableWidth = 100 - totalNewWidths - (numColumns - index - 1) * parseFloat(minColWidth);
+
+        if (parseFloat(newWidth) > maxAvailableWidth) {
+          newWidth = maxAvailableWidth.toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
         }
 
-        var _column5 = _ref;
-        var newWidth = 100 * Math.floor(this.getColumnWidth(_column5) / 100 * newGridSize) / newGridSize;
-        if (newWidth < minColWidth) newWidth = minColWidth; // make sure it is at least one grid size wide
+        totalNewWidths += parseFloat(newWidth);
 
-        this.updateColumnWidth(_column5, newWidth);
-      } // persist new grid size so upcoming calls to get column widths are calculated correctly
-
+        _this4.updateColumnWidth(column, parseFloat(newWidth));
+      }); // persist new grid size so upcoming calls to get column widths are calculated correctly
 
       this.columnGroup.dataStore.update(newGridSize, "gridSize"); // apply leftover columns if the new grid size did not distribute evenly into existing columns
 
       if (Math.round(this.getColumnsWidth()) < 100) {
-        for (var _iterator2 = this.columnGroup.getChildren()(), _isArray2 = Array.isArray(_iterator2), _i3 = 0, _iterator2 = _isArray2 ? _iterator2 : _iterator2[Symbol.iterator]();;) {
-          var _ref2;
+        for (var _iterator = this.columnGroup.getChildren()(), _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+          var _ref;
 
-          if (_isArray2) {
-            if (_i3 >= _iterator2.length) break;
-            _ref2 = _iterator2[_i3++];
+          if (_isArray) {
+            if (_i2 >= _iterator.length) break;
+            _ref = _iterator[_i2++];
           } else {
-            _i3 = _iterator2.next();
-            if (_i3.done) break;
-            _ref2 = _i3.value;
+            _i2 = _iterator.next();
+            if (_i2.done) break;
+            _ref = _i2.value;
           }
 
-          var _column2 = _ref2;
+          var _column = _ref;
 
           if (Math.round(this.getColumnsWidth()) < 100) {
-            this.updateColumnWidth(_column2, parseFloat(this.getColumnWidth(_column2)) + parseFloat(minColWidth));
-          } else {
-            break;
-          }
-        }
-      } // reduce width if we've over-applied. This can happen when decreasing the grid size
-
-
-      if (Math.round(this.getColumnsWidth()) > 100) {
-        for (var _iterator3 = this.columnGroup.getChildren()(), _isArray3 = Array.isArray(_iterator3), _i4 = 0, _iterator3 = _isArray3 ? _iterator3 : _iterator3[Symbol.iterator]();;) {
-          var _ref3;
-
-          if (_isArray3) {
-            if (_i4 >= _iterator3.length) break;
-            _ref3 = _iterator3[_i4++];
-          } else {
-            _i4 = _iterator3.next();
-            if (_i4.done) break;
-            _ref3 = _i4.value;
-          }
-
-          var _column4 = _ref3;
-
-          if (Math.round(this.getColumnsWidth()) > 100) {
-            var colWidth = _column4.dataStore.get().width;
-
-            if (colWidth > minColWidth) {
-              this.updateColumnWidth(_column4, this.getColumnWidth(_column4) - minColWidth);
-            }
+            this.updateColumnWidth(_column, parseFloat(this.getColumnWidth(_column)) + parseFloat(minColWidth));
           } else {
             break;
           }
