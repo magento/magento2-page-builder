@@ -830,7 +830,9 @@ export default class Preview extends PreviewCollection {
         let spreadAmount;
 
         for (let i = this.columnGroupUtils.getGridSize(); i > 0; i--) {
-            allowedColumnWidths.push(this.columnGroupUtils.getRoundedColumnWidth(100 / this.columnGroupUtils.getGridSize() * i));
+            allowedColumnWidths.push(
+                this.columnGroupUtils.getRoundedColumnWidth(100 / this.columnGroupUtils.getGridSize() * i),
+            );
         }
 
         // Determine how we can spread the empty space across the columns

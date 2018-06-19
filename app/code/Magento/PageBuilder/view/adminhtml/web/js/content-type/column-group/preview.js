@@ -52,6 +52,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.groupPositionCache = void 0;
       _this.columnGroupUtils = void 0;
       _this.columnGroupUtils = new _resizing(_this.parent);
+      window.resizeGrid = _this.columnGroupUtils.resizeGrid.bind(_this.columnGroupUtils);
 
       _uiEvents.on("contentType:removed", function (args) {
         if (args.parent.id === _this.parent.id) {

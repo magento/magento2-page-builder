@@ -15,6 +15,7 @@ import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import {DataObject} from "../../data-store";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import ColumnGroupUtils from "../column-group/resizing";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
@@ -38,15 +39,19 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
         this.columnGroupUtils = new ColumnGroupUtils(this.parent.parent);
-        this.previewData.width.subscribe((newWidth) => {
-            const gridSize = this.columnGroupUtils.getGridSize();
-            newWidth = parseFloat(newWidth);
-            newWidth = Math.round(newWidth / (100 / gridSize));
-            const newLabel = `${newWidth}/${gridSize}`;
-            const column = $t("Column");
-            this.displayLabel(`${column} ${newLabel}`);
-        });
 
+        // Update the width label for the column
+        this.previewData.width.subscribe(this.updateDisplayLabel.bind(this));
+
+        // Update label if the grid size changes
+        let originalGridSize = this.columnGroupUtils.getGridSize();
+        this.parent.parent.dataStore.subscribe((state: DataObject) => {
+            const newGridSize = parseInt(state.gridSize.toString(), 10);
+            if (originalGridSize !== newGridSize) {
+                this.updateDisplayLabel();
+                originalGridSize = newGridSize;
+            }
+        });
     }
 
     /**
@@ -277,5 +282,15 @@ export default class Preview extends PreviewCollection {
             events.trigger("contentType:mount", {id: contentType.id, contentType});
             events.trigger(contentType.config.name + ":contentType:mount", {id: contentType.id, contentType});
         });
+    }
+
+    /**
+     * Update the display label for the column
+     */
+    private updateDisplayLabel() {
+        const newWidth = parseFloat(this.parent.dataStore.get().width.toString());
+        const gridSize = this.columnGroupUtils.getGridSize();
+        const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
+        this.displayLabel(`${$t("Column")} ${newLabel}`);
     }
 }

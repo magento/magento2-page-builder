@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import Collection from "./collection";
 import ContentTypeInterface from "./content-type.d";
 import Master from "./content-type/master";
 import Preview from "./content-type/preview";

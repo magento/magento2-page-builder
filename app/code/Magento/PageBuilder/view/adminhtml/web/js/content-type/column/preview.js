@@ -21,17 +21,21 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       _this.resizing = _knockout.observable(false);
       _this.element = void 0;
       _this.columnGroupUtils = void 0;
-      _this.columnGroupUtils = new _resizing(_this.parent.parent);
+      _this.columnGroupUtils = new _resizing(_this.parent.parent); // Update the width label for the column
 
-      _this.previewData.width.subscribe(function (newWidth) {
-        var gridSize = _this.columnGroupUtils.getGridSize();
+      _this.previewData.width.subscribe(_this.updateDisplayLabel.bind(_this)); // Update label if the grid size changes
 
-        newWidth = parseFloat(newWidth);
-        newWidth = Math.round(newWidth / (100 / gridSize));
-        var newLabel = newWidth + "/" + gridSize;
-        var column = (0, _translate)("Column");
 
-        _this.displayLabel(column + " " + newLabel);
+      var originalGridSize = _this.columnGroupUtils.getGridSize();
+
+      _this.parent.parent.dataStore.subscribe(function (state) {
+        var newGridSize = parseInt(state.gridSize.toString(), 10);
+
+        if (originalGridSize !== newGridSize) {
+          _this.updateDisplayLabel();
+
+          originalGridSize = newGridSize;
+        }
       });
 
       return _this;
@@ -273,6 +277,17 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
           contentType: contentType
         });
       });
+    };
+    /**
+     * Update the display label for the column
+     */
+
+
+    _proto.updateDisplayLabel = function updateDisplayLabel() {
+      var newWidth = parseFloat(this.parent.dataStore.get().width.toString());
+      var gridSize = this.columnGroupUtils.getGridSize();
+      var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
+      this.displayLabel((0, _translate)("Column") + " " + newLabel);
     };
 
     return Preview;
