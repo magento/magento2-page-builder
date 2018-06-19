@@ -19,6 +19,7 @@
         <element name="imageLink" type="button" selector="figure[data-role='image'] a[href='{{arg1}}']" parameterized="true"/>
         <element name="imageLinkTarget" type="button" selector="figure[data-role='image'] a[target='{{arg1}}']" parameterized="true"/>
         <element name="imageSource" type="button" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
+        <element name="imageSourceByIndex" type="button" selector="(//figure[@data-role='image'])[{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
         <element name="mobileImageSource" type="button" selector="img.pagebuilder-mobile-only[src*='{{arg1}}'][src$='.{{arg2}}']" parameterized="true"/>
         <!-- Advanced Configuration -->
         <element name="alignment" type="text" selector="(//figure[@data-role='image'])[{{arg1}}][contains(@style,'text-align: {{arg2}};')]" parameterized="true"/>
@@ -39,13 +40,12 @@
         <element name="imagePreview" type="text" selector="//img[@class='preview-image']"/>
         <element name="imageSource" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true"/>
         <element name="placeholderContent" type="button" selector="//span[text()='{{var1}}']//parent::label//following-sibling::div//p[text()='Browse to find or drag image here']" parameterized="true"/>
-        <element name="selectFromGalleryBtn" type="button" selector="//span[text()='{{var1}}']//parent::label//following-sibling::div//label[text()='Select from Gallery']" parameterized="true"/>
         <element name="trashBinIcon" type="button" selector=".action-remove"/>
     </section>
     <section name="ImageOnStage">
         <element name="base" type="text" selector="(//div[contains(@class,'pagebuilder-content-type') and contains(@class,'pagebuilder-image')])[{{arg1}}]" parameterized="true"/>
         <element name="attachImageBtn" type="button" selector="//div[@class='pagebuilder-image-uploader-container']//input[@name='image']" />
-        <element name="imageContentTypeByIndex" type="button" selector="//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-image')][1]//img[contains(@src,'{{var1}}')]" parameterized="true"/>
+        <element name="imageSourceByIndex" type="button" selector="(//div[contains(@class, 'pagebuilder-content-type') and contains(@class, 'pagebuilder-image')])[{{arg1}}]//img[contains(@src,'{{arg2}}')]" parameterized="true"/>
         <element name="imageEmptyPreview" type="text" selector="//div[contains(concat(' ', normalize-space(@class), ' '), ' pagebuilder-image-empty-preview ')]" />
         <element name="imagePreview" type="text" selector="//img[contains(concat(' ', normalize-space(@class), ' '), ' preview-image ')]" />
         <element name="imageSourceOnStage" type="text" selector="//img[contains(@src,'{{var1}}')]" parameterized="true" />
