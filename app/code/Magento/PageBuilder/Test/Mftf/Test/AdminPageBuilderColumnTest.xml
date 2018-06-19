@@ -214,17 +214,17 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','3/6')}}" stepKey="findBeforeLabelColumn1"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','3/6')}}" stepKey="findBeforeLabelColumn2"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewColumnToFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','1/6')}}" stepKey="findAfterLabelColumn1"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','2/6')}}" stepKey="findAfterLabelColumn2"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('3','3/6')}}" stepKey="findAfterLabelColumn3"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','1/12')}}" stepKey="findAfterLabelColumn1"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','5/12')}}" stepKey="findAfterLabelColumn2"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('3','6/12')}}" stepKey="findAfterLabelColumn3"/>
     </test>
     <test name="ColumnCanInteractEditPanel">
         <annotations>
@@ -924,8 +924,8 @@
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneSixth)}}" stepKey="seeFirstColumnWidth"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthOneThird)}}" stepKey="seeSecondColumnWidth"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneTwelfth)}}" stepKey="seeFirstColumnWidth"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthFiveTwelfth)}}" stepKey="seeSecondColumnWidth"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>

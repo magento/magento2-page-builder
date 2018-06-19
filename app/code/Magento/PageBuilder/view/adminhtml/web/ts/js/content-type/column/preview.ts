@@ -15,7 +15,6 @@ import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import {DataObject} from "../../data-store";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import ColumnGroupUtils from "../column-group/resizing";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";

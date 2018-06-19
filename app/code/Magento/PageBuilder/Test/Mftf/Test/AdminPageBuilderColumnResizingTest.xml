@@ -197,6 +197,8 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
         <actionGroup ref="removeContentTypeFromStageByIndex" stepKey="removeFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeNumber" value="1"/>
@@ -287,6 +289,7 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -576,11 +579,14 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeColumnToTwo"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage3">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('3')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('10')}}" x="$guideWidth" stepKey="resizeSecondColumnToTwo"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage1">
             <argument name="contentType" value="PageBuilderDividerContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
@@ -712,7 +718,8 @@
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="2"/>
         </actionGroup>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('2')}}" x="$guideWidth" stepKey="resizeColumn1ToTwo"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('4')}}" x="$guideWidth" stepKey="resizeColumnToThird"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('8')}}" x="$guideWidth" stepKey="resizeSecondColumnToThird"/>
         <actionGroup ref="duplicateContentType" stepKey="duplicateFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="targetIndex" value="1"/>
