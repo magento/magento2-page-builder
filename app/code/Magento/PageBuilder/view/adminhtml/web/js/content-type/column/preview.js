@@ -23,20 +23,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       _this.columnGroupUtils = void 0;
       _this.columnGroupUtils = new _resizing(_this.parent.parent); // Update the width label for the column
 
-      _this.previewData.width.subscribe(_this.updateDisplayLabel.bind(_this)); // Update label if the grid size changes
+      _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
 
-
-      var originalGridSize = _this.columnGroupUtils.getGridSize();
-
-      _this.parent.parent.dataStore.subscribe(function (state) {
-        var newGridSize = parseInt(state.gridSize.toString(), 10);
-
-        if (originalGridSize !== newGridSize) {
-          _this.updateDisplayLabel();
-
-          originalGridSize = newGridSize;
-        }
-      });
+      _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "gridSize");
 
       return _this;
     }

@@ -41,17 +41,8 @@ export default class Preview extends PreviewCollection {
         this.columnGroupUtils = new ColumnGroupUtils(this.parent.parent);
 
         // Update the width label for the column
-        this.previewData.width.subscribe(this.updateDisplayLabel.bind(this));
-
-        // Update label if the grid size changes
-        let originalGridSize = this.columnGroupUtils.getGridSize();
-        this.parent.parent.dataStore.subscribe((state: DataObject) => {
-            const newGridSize = parseInt(state.gridSize.toString(), 10);
-            if (originalGridSize !== newGridSize) {
-                this.updateDisplayLabel();
-                originalGridSize = newGridSize;
-            }
-        });
+        this.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
+        this.parent.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "gridSize");
     }
 
     /**
