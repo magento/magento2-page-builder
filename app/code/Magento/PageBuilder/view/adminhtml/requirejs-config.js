@@ -43,6 +43,9 @@ var config = {
             },
             'Magento_Ui/js/lib/validation/validator': {
                 'Magento_PageBuilder/js/form/element/map-validator-rules-mixin': true
+            },
+            'mage/validation': {
+                'Magento_PageBuilder/js/system/config/validator-rules-mixin': true
             }
         }
     }
