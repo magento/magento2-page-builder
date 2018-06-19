@@ -356,6 +356,24 @@
         <waitForElementNotVisible time="30" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide"/>
         <waitForElementVisible time="30" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow"/>
     </actionGroup>
+    <actionGroup name="validateVerticalAlignmentVisualSelects">
+        <arguments>
+            <argument name="property1" defaultValue=""/>
+            <argument name="property2" defaultValue=""/>
+            <argument name="property3" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property1.section, property1.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="{{VisualSelectComponent.firstSelection(property1.value)}}" stepKey="seeFirstSelection"/>
+        <seeElement selector="{{VisualSelectComponent.firstSelection(property2.value)}}" stepKey="seeSecondSelection"/>
+        <seeElement selector="{{VisualSelectComponent.firstSelection(property3.value)}}" stepKey="seeThirdSelection"/>
+    </actionGroup>
+    <actionGroup name="validateSelectedVisualSelect">
+        <arguments>
+            <argument name="property" defaultValue=""/>
+        </arguments>
+        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <seeElement selector="{{VisualSelectComponent.selected(property.value)}}" stepKey="seeSelectionIsActive"/>
+    </actionGroup>
     <actionGroup name="validateSlideOutPanelField">
         <arguments>
             <argument name="property"/>
