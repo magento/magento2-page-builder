@@ -123,34 +123,33 @@ export default class Preview extends PreviewCollection {
     /**
      * Wrap the current column in a group if it not in a column-group
      *
-     * @returns {Promise<ContentTypeInterface>}
+     * @returns {Promise<ContentTypeCollectionInterface>}
      */
-    public createColumnGroup(): Promise<ContentTypeInterface> {
+    public createColumnGroup(): Promise<ContentTypeCollectionInterface> {
         if (this.parent.parent.config.name !== "column-group") {
             const index = this.parent.parent.children().indexOf(this.parent);
             // Remove child instantly to stop content jumping around
             this.parent.parent.removeChild(this.parent);
-            // Get default grid size from config
-            const stageConfig = Config.getConfig("stage_config");
-            this.parent.parent.gridSize = stageConfig.column_grid_size;
             // Create a new instance of column group to wrap our columns with
             return createContentType(
                 Config.getContentTypeConfig("column-group"),
                 this.parent.parent,
                 this.parent.stageId,
-                {gridSize: stageConfig.column_grid_size},
+                {gridSize: Config.getConfig("stage_config").column_grid_size},
             ).then((columnGroup: ContentTypeCollectionInterface) => {
                 return Promise.all([
                     createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
                     createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
-                ]).then((columns: [ContentTypeCollectionInterface, ContentTypeCollectionInterface]) => {
-                    columnGroup.addChild(columns[0], 0);
-                    columnGroup.addChild(columns[1], 1);
-                    this.parent.parent.addChild(columnGroup, index);
+                ]).then(
+                    (columns: [ContentTypeCollectionInterface<Preview>, ContentTypeCollectionInterface<Preview>]) => {
+                        columnGroup.addChild(columns[0], 0);
+                        columnGroup.addChild(columns[1], 1);
+                        this.parent.parent.addChild(columnGroup, index);
 
-                    this.fireMountEvent(columnGroup, columns[0], columns[1]);
-                    return columnGroup;
-                });
+                        this.fireMountEvent(columnGroup, columns[0], columns[1]);
+                        return columnGroup;
+                    },
+                );
             });
         }
     }

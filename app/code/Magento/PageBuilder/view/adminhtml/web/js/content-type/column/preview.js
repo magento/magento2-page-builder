@@ -109,7 +109,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
     /**
      * Wrap the current column in a group if it not in a column-group
      *
-     * @returns {Promise<ContentTypeInterface>}
+     * @returns {Promise<ContentTypeCollectionInterface>}
      */
 
 
@@ -119,14 +119,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       if (this.parent.parent.config.name !== "column-group") {
         var index = this.parent.parent.children().indexOf(this.parent); // Remove child instantly to stop content jumping around
 
-        this.parent.parent.removeChild(this.parent); // Get default grid size from config
-
-        var stageConfig = _config.getConfig("stage_config");
-
-        this.parent.parent.gridSize = stageConfig.column_grid_size; // Create a new instance of column group to wrap our columns with
+        this.parent.parent.removeChild(this.parent); // Create a new instance of column group to wrap our columns with
 
         return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId, {
-          gridSize: stageConfig.column_grid_size
+          gridSize: _config.getConfig("stage_config").column_grid_size
         }).then(function (columnGroup) {
           return Promise.all([(0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
             width: "50%"

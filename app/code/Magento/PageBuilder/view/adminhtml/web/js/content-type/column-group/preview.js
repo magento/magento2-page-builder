@@ -29,6 +29,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
         return empty;
       });
+      _this.gridSizeArray = _knockout.observableArray([]);
       _this.dropPlaceholder = void 0;
       _this.movePlaceholder = void 0;
       _this.groupElement = void 0;
@@ -51,8 +52,19 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.movePosition = void 0;
       _this.groupPositionCache = void 0;
       _this.columnGroupUtils = void 0;
-      _this.columnGroupUtils = new _resizing(_this.parent);
-      window.resizeGrid = _this.columnGroupUtils.resizeGrid.bind(_this.columnGroupUtils);
+      _this.columnGroupUtils = new _resizing(_this.parent); // Keep track of the grid size in an observable
+
+      var originalGridSize = _this.columnGroupUtils.getGridSize();
+
+      _this.parent.dataStore.subscribe(function (state) {
+        var newGridSize = parseInt(state.gridSize.toString(), 10);
+
+        if (originalGridSize !== newGridSize) {
+          _this.gridSizeArray(new Array(newGridSize));
+
+          originalGridSize = newGridSize;
+        }
+      });
 
       _uiEvents.on("contentType:removed", function (args) {
         if (args.parent.id === _this.parent.id) {
@@ -80,23 +92,13 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       return _this;
     }
     /**
-     * Return the grid size from the utils class
-     *
-     * @returns {number}
-     */
-
-
-    var _proto = Preview.prototype;
-
-    _proto.getGridSize = function getGridSize() {
-      return this.columnGroupUtils.getGridSize();
-    };
-    /**
      * Handle a new column being dropped into the group
      *
      * @param {DropPosition} dropPosition
      */
 
+
+    var _proto = Preview.prototype;
 
     _proto.onNewColumnDrop = function onNewColumnDrop(dropPosition) {
       var _this2 = this;

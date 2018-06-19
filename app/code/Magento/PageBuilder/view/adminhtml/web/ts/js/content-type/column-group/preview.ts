@@ -23,6 +23,7 @@ import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import ColumnGroupUtils from "./resizing";
+import {DataObject} from "../../data-store";
 
 interface ContentTypeRemovedParams {
     parent: ColumnGroup;
@@ -42,6 +43,7 @@ export default class Preview extends PreviewCollection {
             });
         return empty;
     });
+    public gridSizeArray: KnockoutObservableArray<any[]> = ko.observableArray([]);
     private dropPlaceholder: JQuery<HTMLElement>;
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;
@@ -79,6 +81,16 @@ export default class Preview extends PreviewCollection {
         super(parent, config, observableUpdater);
         this.columnGroupUtils = new ColumnGroupUtils(this.parent);
 
+        // Keep track of the grid size in an observable
+        let originalGridSize = this.columnGroupUtils.getGridSize();
+        this.parent.dataStore.subscribe((state: DataObject) => {
+            const newGridSize = parseInt(state.gridSize.toString(), 10);
+            if (originalGridSize !== newGridSize) {
+                this.gridSizeArray(new Array(newGridSize));
+                originalGridSize = newGridSize;
+            }
+        });
+
         events.on("contentType:removed", (args: ContentTypeRemovedParams) => {
             if (args.parent.id === this.parent.id) {
                 this.spreadWidth(event, args);
@@ -105,15 +117,6 @@ export default class Preview extends PreviewCollection {
                 50,
             ),
         );
-    }
-
-    /**
-     * Return the grid size from the utils class
-     *
-     * @returns {number}
-     */
-    public getGridSize() {
-        return this.columnGroupUtils.getGridSize();
     }
 
     /**
