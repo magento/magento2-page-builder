@@ -414,4 +414,88 @@ export default class ColumnGroupUtils {
             "width",
         );
     }
+
+    /**
+     * Determine if a grid can be resized to the requested size.
+     *
+     * Rules for resizing the grid:
+     * The grid size can always be increased up to the configured maximum value. (Assume this validation is done on entry)
+     * The grid size can be reduced only if the number of non-empty columns is less than or equal to the new size.
+     * If the new grid size is less than the number of columns currently in the grid, empty columns will be deleted to
+     * accommodate the new size.
+     *
+     * @param {number} newGridSize
+     * @returns {boolean}
+     */
+    public canResizeGrid(newGridSize: number): boolean {
+        const currentGridSize = this.getGridSize();
+        const numColumns = this.columnGroup.getChildren().length;
+
+        if (newGridSize < currentGridSize && numColumns > newGridSize) {
+            let numEmptyColumns = 0;
+            this.columnGroup.getChildren()().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                if (column.getChildren()() === 0) numEmptyColumns++;
+            });
+            return (numEmptyColumns >= currentGridSize - newGridSize);
+        }
+        return true;
+    }
+
+    /**
+     * Apply the new grid size, adjusting the existing columns as needed.
+     * Assume we have previously validated that the new grid size is attainable for the current configuration.
+     *
+     * @param {number} newGridSize
+     */
+    public resizeGrid(newGridSize: number) {
+        const minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(
+            Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0,
+        );
+        let numColumns = this.columnGroup.getChildren()().length;
+        // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
+        if (newGridSize < numColumns) {
+            this.columnGroup.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
+                if (newGridSize < numColumns && column.getChildren().length === 0) {
+                    // remove column
+                    this.columnGroup.removeChild(column);
+                    numColumns--;
+                }
+            });
+        }
+
+        // update column widths
+        for (let column: ContentTypeCollectionInterface<ColumnPreview> of this.columnGroup.getChildren()()) {
+            let newWidth = 100 * Math.floor((this.getColumnWidth(column) / 100) * newGridSize) / newGridSize;
+            if (newWidth < minColWidth) newWidth = minColWidth; // make sure it is at least one grid size wide
+            this.updateColumnWidth(column, newWidth);
+        }
+
+        // persist new grid size so upcoming calls to get column widths are calculated correctly
+        this.columnGroup.dataStore.update(newGridSize, "gridSize");
+
+        // apply leftover columns if the new grid size did not distribute evenly into existing columns
+        if (Math.round(this.getColumnsWidth()) < 100) {
+            for (let column: ContentTypeCollectionInterface<ColumnPreview> of this.columnGroup.getChildren()()) {
+                if (Math.round(this.getColumnsWidth()) < 100) {
+                    this.updateColumnWidth(column, parseFloat(this.getColumnWidth(column)) + parseFloat(minColWidth));
+                } else {
+                    break;
+                }
+            }
+        }
+
+        // reduce width if we've over-applied. This can happen when decreasing the grid size
+        if (Math.round(this.getColumnsWidth()) > 100) {
+            for (let column: ContentTypeCollectionInterface<ColumnPreview> of this.columnGroup.getChildren()()) {
+                if (Math.round(this.getColumnsWidth()) > 100) {
+                    const colWidth = column.dataStore.get().width;
+                    if (colWidth > minColWidth) {
+                        this.updateColumnWidth(column, this.getColumnWidth(column) - minColWidth);
+                    }
+                } else {
+                    break;
+                }
+            }
+        }
+    }
 }

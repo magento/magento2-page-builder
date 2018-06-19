@@ -779,7 +779,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       var spreadAmount;
 
       for (var i = this.columnGroupUtils.getGridSize(); i > 0; i--) {
-        allowedColumnWidths.push(this.columnGroupUtils.getRoundedColumnWidth(100 / 6 * i));
+        allowedColumnWidths.push(this.columnGroupUtils.getRoundedColumnWidth(100 / this.columnGroupUtils.getGridSize() * i));
       } // Determine how we can spread the empty space across the columns
 
 

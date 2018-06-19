@@ -127,6 +127,7 @@ export default class Preview extends PreviewCollection {
             this.parent.parent.removeChild(this.parent);
             // Get default grid size from config
             const stageConfig = Config.getConfig("stage_config");
+            this.parent.parent.gridSize = stageConfig.column_grid_size;
             // Create a new instance of column group to wrap our columns with
             return createContentType(
                 Config.getContentTypeConfig("column-group"),

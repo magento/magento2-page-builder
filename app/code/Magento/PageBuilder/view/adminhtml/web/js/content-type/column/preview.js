@@ -117,8 +117,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
         this.parent.parent.removeChild(this.parent); // Get default grid size from config
 
-        var stageConfig = _config.getConfig("stage_config"); // Create a new instance of column group to wrap our columns with
+        var stageConfig = _config.getConfig("stage_config");
 
+        this.parent.parent.gridSize = stageConfig.column_grid_size; // Create a new instance of column group to wrap our columns with
 
         return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId, {
           gridSize: stageConfig.column_grid_size
