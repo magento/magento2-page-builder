@@ -23,13 +23,6 @@ define([
     });
 
     describe('Magento_PageBuilder/js/content-type/map/appearance/default/widget', function () {
-        it('Sets element height to 300px if no height is set', function () {
-            var el = document.createElement('div');
-
-            mapWidgetInitializer(undefined, el);
-
-            expect(el.style.height).toBe('300px');
-        });
 
         it('Does not call googleMap constructor if element is missing data-locations', function () {
             var el = document.createElement('div');
@@ -52,10 +45,6 @@ define([
                 el,
                 JSON.parse(locationsJSON),
                 {
-                    center: {
-                        latitude: 0,
-                        longitude: 0
-                    },
                     disableDefaultUI: false,
                     mapTypeControl: true
                 }
