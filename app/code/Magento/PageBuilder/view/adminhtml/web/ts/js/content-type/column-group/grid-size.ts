@@ -47,7 +47,7 @@ export function resizeGrid(columnGroup: ContentTypeCollectionInterface<ColumnGro
 
     // Validate against the max grid size
     if (newGridSize > getMaxGridSize()) {
-        throw RangeError(`The maximum grid size supported is ${getMaxGridSize()}.`);
+        throw new GridSizeError(`The maximum grid size supported is ${getMaxGridSize()}.`);
     }
 
     // Validate that the operation will be successful
@@ -60,7 +60,7 @@ export function resizeGrid(columnGroup: ContentTypeCollectionInterface<ColumnGro
                 }
             });
         if (numEmptyColumns >= currentGridSize - newGridSize) {
-            throw RangeError("Grid size cannot be smaller than the current total amount of columns, minus any " +
+            throw new GridSizeError("Grid size cannot be smaller than the current total amount of columns, minus any " +
                 "empty columns.");
         }
     }
@@ -115,5 +115,12 @@ export function resizeGrid(columnGroup: ContentTypeCollectionInterface<ColumnGro
                 break;
             }
         }
+    }
+}
+
+export class GridSizeError extends Error {
+    constructor(m: string) {
+        super(m);
+        Object.setPrototypeOf(this, GridSizeError.prototype);
     }
 }

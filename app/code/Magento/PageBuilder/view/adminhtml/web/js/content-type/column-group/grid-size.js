@@ -1,9 +1,6 @@
 /*eslint-disable */
 define(["Magento_PageBuilder/js/config"], function (_config) {
-  /**
-   * Copyright © Magento, Inc. All rights reserved.
-   * See COPYING.txt for license details.
-   */
+  function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
    * Retrieve default  grid size
@@ -45,7 +42,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
     var numColumns = columnGroup.getChildren()().length; // Validate against the max grid size
 
     if (newGridSize > getMaxGridSize()) {
-      throw RangeError("The maximum grid size supported is " + getMaxGridSize() + ".");
+      throw new GridSizeError("The maximum grid size supported is " + getMaxGridSize() + ".");
     } // Validate that the operation will be successful
 
 
@@ -58,7 +55,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
       });
 
       if (numEmptyColumns >= currentGridSize - newGridSize) {
-        throw RangeError("Grid size cannot be smaller than the current total amount of columns, minus any " + "empty columns.");
+        throw new GridSizeError("Grid size cannot be smaller than the current total amount of columns, minus any " + "empty columns.");
       }
     }
 
@@ -118,10 +115,27 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
     }
   }
 
+  var GridSizeError =
+  /*#__PURE__*/
+  function (_Error) {
+    _inheritsLoose(GridSizeError, _Error);
+
+    function GridSizeError(m) {
+      var _this;
+
+      _this = _Error.call(this, m) || this;
+      Object.setPrototypeOf(_this, GridSizeError.prototype);
+      return _this;
+    }
+
+    return GridSizeError;
+  }(Error);
+
   return {
     getDefaultGridSize: getDefaultGridSize,
     getMaxGridSize: getMaxGridSize,
-    resizeGrid: resizeGrid
+    resizeGrid: resizeGrid,
+    GridSizeError: GridSizeError
   };
 });
 //# sourceMappingURL=grid-size.js.map

@@ -118,7 +118,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
             (0, _gridSize.resizeGrid)(this.parent, newGridSize);
             this.gridSizeError("");
           } catch (e) {
-            if (e instanceof RangeError) {
+            if (e instanceof _gridSize.GridSizeError) {
               this.gridSizeError(e.message);
             } else {
               throw e;

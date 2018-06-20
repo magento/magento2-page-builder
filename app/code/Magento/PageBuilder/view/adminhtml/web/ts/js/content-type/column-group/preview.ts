@@ -22,7 +22,7 @@ import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
-import {resizeGrid} from "./grid-size";
+import {GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import ResizeUtils from "./resize";
 
@@ -142,7 +142,7 @@ export default class Preview extends PreviewCollection {
                     resizeGrid((this.parent as ContentTypeCollectionInterface<Preview>), newGridSize);
                     this.gridSizeError("");
                 } catch (e) {
-                    if (e instanceof RangeError) {
+                    if (e instanceof GridSizeError) {
                         this.gridSizeError(e.message);
                     } else {
                         throw e;
