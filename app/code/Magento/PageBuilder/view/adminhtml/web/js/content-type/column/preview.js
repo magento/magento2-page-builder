@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column-group/grid-size"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _config, _contentTypeFactory, _option, _preview, _previewCollection, _gridSize) {
+define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/grid-size", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection", "Magento_PageBuilder/js/content-type/column/resize"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _config, _contentTypeFactory, _option, _gridSize, _preview, _previewCollection, _resize) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -172,8 +172,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
               }
             }
 
-            resizeUtils.updateColumnWidth(contentType, resizeUtils.getAcceptedColumnWidth(originalWidth.toString()));
-            resizeUtils.updateColumnWidth(duplicateContentType, resizeUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
+            (0, _resize.updateColumnWidth)(contentType, resizeUtils.getAcceptedColumnWidth(originalWidth.toString()));
+            (0, _resize.updateColumnWidth)(duplicateContentType, resizeUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
             return duplicateContentType;
           });
         }
@@ -186,8 +186,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
           if (shrinkableClone) {
             shrinkableClone.then(function (duplicateContentType) {
-              resizeUtils.updateColumnWidth(shrinkableColumn, resizeUtils.getAcceptedColumnWidth((resizeUtils.getColumnWidth(shrinkableColumn) - resizeUtils.getSmallestColumnWidth()).toString()));
-              resizeUtils.updateColumnWidth(duplicateContentType, resizeUtils.getSmallestColumnWidth());
+              (0, _resize.updateColumnWidth)(shrinkableColumn, resizeUtils.getAcceptedColumnWidth((resizeUtils.getColumnWidth(shrinkableColumn) - resizeUtils.getSmallestColumnWidth()).toString()));
+              (0, _resize.updateColumnWidth)(duplicateContentType, resizeUtils.getSmallestColumnWidth());
               return duplicateContentType;
             });
           }
