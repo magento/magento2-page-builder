@@ -3,26 +3,15 @@
  * See COPYING.txt for license details.
  */
 
-import {ConverterInterface} from "../converter-interface";
+import {ConverterInterface} from "../../../../converter/converter-interface";
 
 export default class Margins implements ConverterInterface {
     /**
-     * Convert value to internal format
-     *
-     * @param value string
-     * @returns {string | object}
+     * @param {string} value
+     * @returns {Object | string}
      */
     public fromDom(value: string): string | object {
-        const result = {};
-        if (undefined !== value.margin) {
-            result.margin = {
-                top: value.margin.top.replace("px", ""),
-                left: value.margin.left.replace("px", ""),
-                right: value.margin.right.replace("px", ""),
-                bottom: value.margin.bottom.replace("px", ""),
-            };
-        }
-        return result;
+        return value;
     }
 
     /**
@@ -35,15 +24,18 @@ export default class Margins implements ConverterInterface {
     public toDom(name: string, data: object): string | object {
         const result = {};
         let value = data[name];
+
         if (value && typeof value === "string") {
             value = JSON.parse(value);
         }
-        if (value && undefined !== value.margin) {
+
+        if (undefined !== value && undefined !== value.margin) {
             result.marginLeft = value.margin.left + "px";
             result.marginTop = value.margin.top + "px";
             result.marginRight = value.margin.right + "px";
-            result.marginBottom = value.margin.bottom + "px";
+            result.marginBottom = (value.margin.bottom !== "0" ? value.margin.bottom : 1) + "px";
         }
+
         return result;
     }
 }
