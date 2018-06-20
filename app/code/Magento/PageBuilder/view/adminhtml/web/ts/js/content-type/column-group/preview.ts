@@ -426,12 +426,12 @@ export default class Preview extends PreviewCollection {
      * @param {Event} event
      */
     public onGridClick(context: Preview, event: Event): void {
+        events.trigger("interaction:start");
         const target = $("." + (event.currentTarget as HTMLElement).className)
             .find(".pagebuilder-grid-panel");
         target.addClass("pagebuilder-grid-panel-visible");
         _.delay(() => {
             target.find(".admin__control-text").focus();
-            events.trigger("interaction:start");
         }, 100); // 100 ms delay to allow for grid panel to render
     }
 

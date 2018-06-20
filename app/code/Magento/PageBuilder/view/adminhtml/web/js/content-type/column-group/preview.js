@@ -403,13 +403,13 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.onGridClick = function onGridClick(context, event) {
+      _uiEvents.trigger("interaction:start");
+
       var target = (0, _jquery)("." + event.currentTarget.className).find(".pagebuilder-grid-panel");
       target.addClass("pagebuilder-grid-panel-visible");
 
       _underscore.delay(function () {
         target.find(".admin__control-text").focus();
-
-        _uiEvents.trigger("interaction:start");
       }, 100); // 100 ms delay to allow for grid panel to render
 
     };

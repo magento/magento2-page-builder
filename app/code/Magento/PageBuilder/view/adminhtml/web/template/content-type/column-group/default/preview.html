@@ -14,7 +14,7 @@
         <div class="focus-options">
             <div class="pagebuilder-grid-panel" css="gridSizePanelStyle">
                 <div class="pagebuilder-grid-panel-wrapper">
-                    <ul class="pagebuilder-grid-panel-links">
+                    <ul class="pagebuilder-grid-panel-links" event="{focusout: onFocusOut}">
                         <li class="pagebuilder-grid-panel-link">
                             <div class="panel-title">
                                 Grid Size
@@ -23,7 +23,7 @@
                         <li class="pagebuilder-grid-panel-link">
                             <div class="pagebuilder-grid-panel-link-wrapper">
                                 <input type="number"
-                                       event="{focusout: onFocusOut, keyup: updateGridSize, blur: updateGridSize}"
+                                       event="{keyup: updateGridSize, blur: updateGridSize}"
                                        min="1" max="100"
                                        class="admin__control-text"
                                        ko-value="gridSize"/>
