@@ -20,6 +20,7 @@ import ColumnGroupPreview from "../column-group/preview";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
+import {getDefaultGridSize} from "../column-group/grid-size";
 
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
@@ -123,7 +124,7 @@ export default class Preview extends PreviewCollection {
                 Config.getContentTypeConfig("column-group"),
                 this.parent.parent,
                 this.parent.stageId,
-                {gridSize: Config.getConfig("stage_config").column_grid_size},
+                {gridSize: getDefaultGridSize()},
             ).then((columnGroup: ContentTypeCollectionInterface) => {
                 return Promise.all([
                     createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
