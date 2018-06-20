@@ -12,6 +12,9 @@ class Config
     const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/content-type/preview';
     const DEFAULT_MASTER_COMPONENT = 'Magento_PageBuilder/js/content-type/master';
 
+    const XML_COLUMN_GRID_DEFAULT = 'cms/pagebuilder/column_grid_default';
+    const XML_COLUMN_GRID_MAX = 'cms/pagebuilder/column_grid_max';
+
     /**
      * @var \Magento\PageBuilder\Model\Config\ConfigInterface
      */
@@ -38,12 +41,17 @@ class Config
     private $frontendUrlBuilder;
 
     /**
-     * Constructor
-     *
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    private $scopeConfig;
+
+    /**
+     * Config constructor.
      * @param \Magento\PageBuilder\Model\Config\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
-     * @param \Magento\Framework\UrlInterface $urlBuilder
+     * @param UrlInterface $urlBuilder
      * @param \Magento\Framework\Url $frontendUrlBuilder
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param array $data
      */
     public function __construct(
@@ -51,12 +59,14 @@ class Config
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Framework\Url $frontendUrlBuilder,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data = []
     ) {
         $this->config = $config;
         $this->uiComponentConfig = $uiComponentConfig;
         $this->urlBuilder = $urlBuilder;
         $this->frontendUrlBuilder = $frontendUrlBuilder;
+        $this->scopeConfig = $scopeConfig;
         $this->data = $data;
     }
 
@@ -72,7 +82,9 @@ class Config
             'content_types' => $this->getContentTypes(),
             'stage_config' => $this->data,
             'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
-            'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview')
+            'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview'),
+            'column_grid_default' => $this->scopeConfig->getValue(self::XML_COLUMN_GRID_DEFAULT),
+            'column_grid_max' => $this->scopeConfig->getValue(self::XML_COLUMN_GRID_MAX),
         ];
     }
 
