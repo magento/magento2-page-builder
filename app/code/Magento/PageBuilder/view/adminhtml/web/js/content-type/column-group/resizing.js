@@ -25,6 +25,16 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       return parseInt(state.gridSize, 10);
     };
     /**
+     * Retrieve the max grid size
+     *
+     * @returns {number}
+     */
+
+
+    _proto.getMaxGridSize = function getMaxGridSize() {
+      return 20;
+    };
+    /**
      * Get the smallest column width possible
      *
      * @returns {number}
@@ -397,7 +407,8 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       column.dataStore.update(parseFloat(width.toString()) + "%", "width");
     };
     /**
-     * Determine if a grid can be resized to the requested size.
+     * Apply the new grid size, adjusting the existing columns as needed.
+     * Assume we have previously validated that the new grid size is attainable for the current configuration.
      *
      * Rules for resizing the grid:
      *  - The grid size can always be increased up to the configured maximum value. (Assume this validation is done
@@ -407,13 +418,19 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      *    to accommodate the new size.
      *
      * @param {number} newGridSize
-     * @returns {boolean}
      */
 
 
-    _proto.canResizeGrid = function canResizeGrid(newGridSize) {
+    _proto.resizeGrid = function resizeGrid(newGridSize) {
+      var _this4 = this;
+
       var currentGridSize = this.getGridSize();
-      var numColumns = this.columnGroup.getChildren().length;
+      var numColumns = this.columnGroup.getChildren()().length; // Validate against the max grid size
+
+      if (newGridSize > this.getMaxGridSize()) {
+        throw RangeError("The maximum grid size supported is " + this.getMaxGridSize() + ".");
+      } // Validate that the operation will be successful
+
 
       if (newGridSize < currentGridSize && numColumns > newGridSize) {
         var numEmptyColumns = 0;
@@ -422,24 +439,13 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
             numEmptyColumns++;
           }
         });
-        return numEmptyColumns >= currentGridSize - newGridSize;
+
+        if (numEmptyColumns >= currentGridSize - newGridSize) {
+          throw RangeError("Grid size cannot be smaller than the current total amount of columns, minus any " + "empty columns.");
+        }
       }
 
-      return true;
-    };
-    /**
-     * Apply the new grid size, adjusting the existing columns as needed.
-     * Assume we have previously validated that the new grid size is attainable for the current configuration.
-     *
-     * @param {number} newGridSize
-     */
-
-
-    _proto.resizeGrid = function resizeGrid(newGridSize) {
-      var _this4 = this;
-
-      var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
-      var numColumns = this.columnGroup.getChildren()().length; // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
+      var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0); // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
 
       if (newGridSize < numColumns) {
         this.columnGroup.getChildren()().forEach(function (column) {
@@ -476,22 +482,20 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       this.columnGroup.dataStore.update(newGridSize, "gridSize"); // apply leftover columns if the new grid size did not distribute evenly into existing columns
 
       if (Math.round(this.getColumnsWidth()) < 100) {
-        for (var _iterator = this.columnGroup.getChildren()(), _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-          var _ref;
+        var column;
 
+        for (var _iterator = this.columnGroup.getChildren()(), _isArray = Array.isArray(_iterator), _i2 = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
           if (_isArray) {
             if (_i2 >= _iterator.length) break;
-            _ref = _iterator[_i2++];
+            column = _iterator[_i2++];
           } else {
             _i2 = _iterator.next();
             if (_i2.done) break;
-            _ref = _i2.value;
+            column = _i2.value;
           }
 
-          var _column = _ref;
-
           if (Math.round(this.getColumnsWidth()) < 100) {
-            this.updateColumnWidth(_column, parseFloat(this.getColumnWidth(_column)) + parseFloat(minColWidth));
+            this.updateColumnWidth(column, parseFloat(this.getColumnWidth(column).toString()) + parseFloat(minColWidth));
           } else {
             break;
           }

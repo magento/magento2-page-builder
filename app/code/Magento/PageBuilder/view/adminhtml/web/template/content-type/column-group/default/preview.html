@@ -23,7 +23,11 @@
                         </li>
                         <li class="pagebuilder-options-link">
                             <div class="pagebuilder-grid-link-wrapper">
-                                <input type="text" class="admin__control-text"/>
+                                <input type="number"
+                                       min="1" max="100"
+                                       class="admin__control-text"
+                                       event="keyup: updateGridSize, blur: updateGridSize"
+                                       ko-value="gridSize"/>
                             </div>
                         </li>
                         <li class="pagebuilder-options-link">
@@ -39,6 +43,7 @@
                             </div>
                         </li>
                     </ul>
+                    <div if="gridSizeError" html="gridSizeError" class="admin__field-error"></div>
                 </div>
             </div>
         </div>

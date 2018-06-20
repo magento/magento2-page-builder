@@ -11,6 +11,7 @@ import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ContentTypeConfigInterface from "../../content-type-config.d";
+import {DataObject} from "../../data-store";
 import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
@@ -23,7 +24,6 @@ import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 import ColumnGroupUtils from "./resizing";
-import {DataObject} from "../../data-store";
 
 interface ContentTypeRemovedParams {
     parent: ColumnGroup;
@@ -43,7 +43,9 @@ export default class Preview extends PreviewCollection {
             });
         return empty;
     });
+    public gridSize: KnockoutObservable<number> = ko.observable();
     public gridSizeArray: KnockoutObservableArray<any[]> = ko.observableArray([]);
+    public gridSizeError: KnockoutObservable<string> = ko.observable();
     private dropPlaceholder: JQuery<HTMLElement>;
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;
@@ -82,14 +84,11 @@ export default class Preview extends PreviewCollection {
         this.columnGroupUtils = new ColumnGroupUtils(this.parent);
 
         // Keep track of the grid size in an observable
-        let originalGridSize = this.columnGroupUtils.getGridSize();
         this.parent.dataStore.subscribe((state: DataObject) => {
-            const newGridSize = parseInt(state.gridSize.toString(), 10);
-            if (originalGridSize !== newGridSize) {
-                this.gridSizeArray(new Array(newGridSize));
-                originalGridSize = newGridSize;
-            }
-        });
+            const gridSize = parseInt(state.gridSize.toString(), 10);
+            this.gridSize(gridSize);
+            this.gridSizeArray(new Array(gridSize));
+        }, "gridSize");
 
         events.on("contentType:removed", (args: ContentTypeRemovedParams) => {
             if (args.parent.id === this.parent.id) {
@@ -117,6 +116,28 @@ export default class Preview extends PreviewCollection {
                 50,
             ),
         );
+    }
+
+    /**
+     * Update the grid size on enter or blur of the input
+     *
+     * @param {Preview} context
+     * @param {KeyboardEvent & Event} event
+     */
+    public updateGridSize(context: Preview, event: KeyboardEvent & Event) {
+        if ((event.type === "keydown" && event.which === 13 || event.keyCode === 13) || event.type === "blur") {
+            const newGridSize = parseInt($(event.target).val().toString(), 10);
+            if (newGridSize) {
+                try {
+                    this.columnGroupUtils.resizeGrid(newGridSize);
+                    this.gridSizeError("");
+                } catch (e) {
+                    if (e instanceof RangeError) {
+                        this.gridSizeError(e.message);
+                    }
+                }
+            }
+        }
     }
 
     /**

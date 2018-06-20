@@ -29,7 +29,9 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
         return empty;
       });
+      _this.gridSize = _knockout.observable();
       _this.gridSizeArray = _knockout.observableArray([]);
+      _this.gridSizeError = _knockout.observable();
       _this.dropPlaceholder = void 0;
       _this.movePlaceholder = void 0;
       _this.groupElement = void 0;
@@ -54,17 +56,13 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.columnGroupUtils = void 0;
       _this.columnGroupUtils = new _resizing(_this.parent); // Keep track of the grid size in an observable
 
-      var originalGridSize = _this.columnGroupUtils.getGridSize();
-
       _this.parent.dataStore.subscribe(function (state) {
-        var newGridSize = parseInt(state.gridSize.toString(), 10);
+        var gridSize = parseInt(state.gridSize.toString(), 10);
 
-        if (originalGridSize !== newGridSize) {
-          _this.gridSizeArray(new Array(newGridSize));
+        _this.gridSize(gridSize);
 
-          originalGridSize = newGridSize;
-        }
-      });
+        _this.gridSizeArray(new Array(gridSize));
+      }, "gridSize");
 
       _uiEvents.on("contentType:removed", function (args) {
         if (args.parent.id === _this.parent.id) {
@@ -92,13 +90,37 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       return _this;
     }
     /**
+     * Update the grid size on enter or blur of the input
+     *
+     * @param {Preview} context
+     * @param {KeyboardEvent & Event} event
+     */
+
+
+    var _proto = Preview.prototype;
+
+    _proto.updateGridSize = function updateGridSize(context, event) {
+      if (event.type === "keydown" && event.which === 13 || event.keyCode === 13 || event.type === "blur") {
+        var newGridSize = parseInt((0, _jquery)(event.target).val().toString(), 10);
+
+        if (newGridSize) {
+          try {
+            this.columnGroupUtils.resizeGrid(newGridSize);
+            this.gridSizeError("");
+          } catch (e) {
+            if (e instanceof RangeError) {
+              this.gridSizeError(e.message);
+            }
+          }
+        }
+      }
+    };
+    /**
      * Handle a new column being dropped into the group
      *
      * @param {DropPosition} dropPosition
      */
 
-
-    var _proto = Preview.prototype;
 
     _proto.onNewColumnDrop = function onNewColumnDrop(dropPosition) {
       var _this2 = this;
