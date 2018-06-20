@@ -56,14 +56,13 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
     // Validate against the max grid size
     if (newGridSize > getMaxGridSize()) {
       throw new GridSizeError((0, _translate)("The maximum grid size supported is " + getMaxGridSize() + "."));
-    } else if (newGridSize < columnGroup.getChildren()().length) {
-      throw new GridSizeError((0, _translate)("Grid size cannot be smaller than the number of columns."));
     } // Validate that the operation will be successful
 
 
+    var numCols = columnGroup.getChildren()().length;
     var currentGridSize = parseInt(columnGroup.dataStore.getKey("gridSize").toString(), 10);
 
-    if (newGridSize < currentGridSize && columnGroup.getChildren()().length > newGridSize) {
+    if (newGridSize < currentGridSize && numCols > newGridSize) {
       var numEmptyColumns = 0;
       columnGroup.getChildren()().forEach(function (column) {
         if (column.getChildren()().length === 0) {
@@ -71,7 +70,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
         }
       });
 
-      if (newGridSize < currentGridSize - numEmptyColumns) {
+      if (newGridSize < numCols - numEmptyColumns) {
         throw new GridSizeError((0, _translate)("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."));
       }
     }

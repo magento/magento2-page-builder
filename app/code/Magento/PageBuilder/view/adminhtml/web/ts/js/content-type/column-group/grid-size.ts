@@ -62,13 +62,12 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
     // Validate against the max grid size
     if (newGridSize > getMaxGridSize()) {
         throw new GridSizeError($t(`The maximum grid size supported is ${getMaxGridSize()}.`));
-    } else if (newGridSize < columnGroup.getChildren()().length) {
-        throw new GridSizeError($t("Grid size cannot be smaller than the number of columns."));
     }
 
     // Validate that the operation will be successful
+    const numCols = columnGroup.getChildren()().length;
     const currentGridSize = parseInt(columnGroup.dataStore.getKey("gridSize").toString(), 10);
-    if (newGridSize < currentGridSize && columnGroup.getChildren()().length > newGridSize) {
+    if (newGridSize < currentGridSize && numCols > newGridSize) {
         let numEmptyColumns = 0;
         columnGroup.getChildren()().forEach(
             (column: ContentTypeCollectionInterface<ColumnPreview>) => {
@@ -76,7 +75,7 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
                     numEmptyColumns++;
                 }
             });
-        if (newGridSize < currentGridSize - numEmptyColumns) {
+        if (newGridSize < numCols - numEmptyColumns) {
             throw new GridSizeError(
                 $t("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."),
             );
