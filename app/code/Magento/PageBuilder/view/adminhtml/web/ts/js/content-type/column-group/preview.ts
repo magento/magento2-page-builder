@@ -20,7 +20,7 @@ import {default as ColumnGroupPreview} from "../column-group/preview";
 import ColumnPreview from "../column/preview";
 import ResizeUtils, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
-    getRoundedColumnWidth, updateColumnWidth
+    getRoundedColumnWidth, updateColumnWidth,
 } from "../column/resize";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
@@ -50,7 +50,7 @@ export default class Preview extends PreviewCollection {
     public gridSize: KnockoutObservable<number> = ko.observable();
     public gridSizeArray: KnockoutObservableArray<any[]> = ko.observableArray([]);
     public gridSizeError: KnockoutObservable<string> = ko.observable();
-    public gridSizePanelStyle: KnockoutObservable<string> =ko.observable();
+    public gridSizePanelStyle: KnockoutObservable<string> = ko.observable();
     private dropPlaceholder: JQuery<HTMLElement>;
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;
