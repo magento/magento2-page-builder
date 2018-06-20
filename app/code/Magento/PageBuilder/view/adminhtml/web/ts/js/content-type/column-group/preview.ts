@@ -393,6 +393,35 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Hide grid size panel on focus out
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onFocusOut(context: Preview, event: Event): void {
+        const target = $(`.${(event.currentTarget as HTMLElement).className}`)
+            .closest(".pagebuilder-grid-panel");
+        target.removeClass("pagebuilder-grid-panel-visible");
+        events.trigger("interaction:stop");
+    }
+
+    /**
+     * Show grid size panel on click and start interaction
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+    public onGridClick(context: Preview, event: Event): void {
+        const target = $("." + (event.currentTarget as HTMLElement).className)
+            .find(".pagebuilder-grid-panel");
+        target.addClass("pagebuilder-grid-panel-visible");
+        _.delay(() => {
+            target.find(".admin__control-text").focus();
+            events.trigger("interaction:start");
+        }, 100); // 100 ms delay to allow for grid panel to render
+    }
+
+    /**
      * Set columns in the group as resizing
      *
      * @param {ContentTypeCollectionInterface} columns

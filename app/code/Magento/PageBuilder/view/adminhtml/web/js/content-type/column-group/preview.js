@@ -371,6 +371,39 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       });
     };
     /**
+     * Hide grid size panel on focus out
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onFocusOut = function onFocusOut(context, event) {
+      var target = (0, _jquery)("." + event.currentTarget.className).closest(".pagebuilder-grid-panel");
+      target.removeClass("pagebuilder-grid-panel-visible");
+
+      _uiEvents.trigger("interaction:stop");
+    };
+    /**
+     * Show grid size panel on click and start interaction
+     *
+     * @param {Preview} context
+     * @param {Event} event
+     */
+
+
+    _proto.onGridClick = function onGridClick(context, event) {
+      var target = (0, _jquery)("." + event.currentTarget.className).find(".pagebuilder-grid-panel");
+      target.addClass("pagebuilder-grid-panel-visible");
+
+      _underscore.delay(function () {
+        target.find(".admin__control-text").focus();
+
+        _uiEvents.trigger("interaction:start");
+      }, 100); // 100 ms delay to allow for grid panel to render
+
+    };
+    /**
      * Set columns in the group as resizing
      *
      * @param {ContentTypeCollectionInterface} columns

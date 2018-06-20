@@ -6,33 +6,32 @@
 -->
 
 <div class="pagebuilder-column-group"
-     css="{'resizing': resizing, 'empty-child': hasEmptyChild}"
-     event="{ mouseover: onMouseOver, mouseout: onMouseOut },  mouseoverBubble: false">
-    <div class="pagebuilder-column-grid-options">
-        <div class="pagebuilder-column-grid-options-wrapper">
+     css="{'resizing': resizing, 'empty-child': hasEmptyChild}">
+    <div class="pagebuilder-grid-size-indicator" event="{click: onGridClick}, mouseoverBubble: false">
+        <div class="pagebuilder-grid-size-indicator-wrapper">
             <i class="icon-pagebuilder-grid-options"></i>
         </div>
         <div class="focus-options">
-            <div class="pagebuilder-options">
-                <div class="pagebuilder-options-wrapper">
-                    <ul class="pagebuilder-options-links">
-                        <li class="pagebuilder-options-link">
-                            <div class="option-title">
+            <div class="pagebuilder-grid-panel">
+                <div class="pagebuilder-grid-panel-wrapper">
+                    <ul class="pagebuilder-grid-panel-links">
+                        <li class="pagebuilder-grid-panel-link">
+                            <div class="panel-title">
                                 Grid Size
                             </div>
                         </li>
-                        <li class="pagebuilder-options-link">
-                            <div class="pagebuilder-grid-link-wrapper">
+                        <li class="pagebuilder-grid-panel-link">
+                            <div class="pagebuilder-grid-panel-link-wrapper">
                                 <input type="number"
+                                       event="{focusout: onFocusOut, keyup: updateGridSize, blur: updateGridSize}"
                                        min="1" max="100"
                                        class="admin__control-text"
-                                       event="keyup: updateGridSize, blur: updateGridSize"
                                        ko-value="gridSize"/>
                             </div>
                         </li>
-                        <li class="pagebuilder-options-link">
-                            <div class="pagebuilder-grid-link-wrapper">
-                                <div class="pagebuilder-grid-options-help">
+                        <li class="pagebuilder-grid-panel-link">
+                         x   <div class="pagebuilder-grid-panel-link-wrapper">
+                                <div class="pagebuilder-grid-panel-tooltip">
                                     ?
                                     <span class="tooltip-content"
                                           role="tooltip">
