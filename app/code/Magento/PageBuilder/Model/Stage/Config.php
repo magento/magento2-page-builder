@@ -83,7 +83,8 @@ class Config
             'content_types' => $this->getContentTypes(),
             'stage_config' => $this->data,
             'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
-            'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview')
+            'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview'),
+            'block_data_url' => $this->urlBuilder->getUrl('pagebuilder/contenttype_block/dataprovider')
         ];
     }
 

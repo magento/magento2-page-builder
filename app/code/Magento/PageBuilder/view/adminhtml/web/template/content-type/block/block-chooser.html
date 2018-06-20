@@ -1,0 +1,27 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div>
+    <div if="$data.meta && $data.meta().title" data-bind="{text:$data.meta().title}"></div>
+    <div ifnot="$data.meta">No Block Selected</div>
+
+    <div ko-scope="getButton()">
+        <render/>
+    </div>
+
+    <table class="data-grid" data-role="grid">
+        <tbody>
+            <tr class="data-row _odd-row">
+                <td>
+                    <div class="data-grid-cell-content"><strong data-bind="{text:$t('Status')}"></strong></div>
+                </td>
+                <td>
+                    <div class="data-grid-cell-content" data-bind="{text:$data.meta().is_active === '1' ? $t('Active') : $t('Inactive')}"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -74,20 +74,71 @@
         <settings>
             <label/>
         </settings>
-        <field name="identifier" sortOrder="20" formElement="input">
+        <component component="Magento_PageBuilder/js/content-type/block/block-chooser" template="Magento_PageBuilder/content-type/block/block-chooser" name="block_chooser">
             <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">page</item>
+                <item name="js_config" xsi:type="array">
+                    <item name="requestParameter" xsi:type="string">block_id</item>
+                    <!-- Need a dynamic way of providing this URL -->
+                    <item name="dataUrlConfigKey" xsi:type="string">block_data_url</item>
+                    <item name="modalName" xsi:type="string">ns = ${ $.ns }, index = modal</item>
+                    <item name="buttonTitle" xsi:type="string" translate="true">Select Block...</item>
                 </item>
             </argument>
             <settings>
-                <dataScope>identifier</dataScope>
+                <imports>
+                    <link name="id">ns = ${ $.ns }, index = block_id:value</link>
+                </imports>
+            </settings>
+        </component>
+        <field name="block_id" formElement="hidden">
+            <settings>
                 <dataType>text</dataType>
-                <label translate="true">Block</label>
-                <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
-                </validation>
+                <label>block_id</label>
+                <imports>
+                    <link name="value">${ $.ns }.${ $.ns }.modal.pagebuilder_block_chooser_listing:externalValue</link>
+                </imports>
             </settings>
         </field>
     </fieldset>
+    <modal name="modal">
+        <settings>
+            <options>
+                <option name="title" xsi:type="string" translate="true">Select Block...</option>
+                <option name="buttons" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="text" xsi:type="string" translate="true">Cancel</item>
+                        <item name="actions" xsi:type="array">
+                            <item name="0" xsi:type="string">closeModal</item>
+                        </item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="text" xsi:type="string">Add Selected</item>
+                        <item name="class" xsi:type="string">action-primary</item>
+                        <item name="actions" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="targetName" xsi:type="string">${ $.ns }.${ $.ns }.modal.pagebuilder_block_chooser_listing</item>
+                                <item name="actionName" xsi:type="string">save</item>
+                            </item>
+                            <item name="1" xsi:type="string">closeModal</item>
+                        </item>
+                    </item>
+                </option>
+            </options>
+        </settings>
+        <insertListing name="pagebuilder_block_chooser_listing">
+            <settings>
+                <externalData>block_id</externalData>
+                <externalProvider>${ $.ns }.pagebuilder_block_chooser_listing_data_source</externalProvider>
+                <loading>false</loading>
+                <selectionsProvider>${ $.ns }.${ $.ns }.columns.ids</selectionsProvider>
+                <autoRender>true</autoRender>
+                <dataScope>select_id</dataScope>
+                <ns>pagebuilder_block_chooser_listing</ns>
+                <dataLinks>
+                    <imports>false</imports>
+                    <exports>true</exports>
+                </dataLinks>
+            </settings>
+        </insertListing>
+    </modal>
 </form>
