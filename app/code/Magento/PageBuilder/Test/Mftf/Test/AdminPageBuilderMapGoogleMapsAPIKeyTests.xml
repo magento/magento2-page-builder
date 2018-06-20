@@ -101,12 +101,12 @@
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
         <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.empty}}" stepKey="seeKeyEmpty"/>
     </test>
-    <test name="GoogleMapsGetAPIKeyFieldAppearance">
+    <test name="GoogleMapsAPIKeyFieldAppearance">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Google Maps API Key"/>
-            <title value="Validate Google Maps Get API Key Field Appearance"/>
-            <description value="Tests the following for  Google Maps API Key field: 1) Global config key, 2) Helper text, 3) Default Test Key button is disabled, 4) Correct Get API Key link."/>
+            <title value="Validate Google Maps API Key Field Appearance"/>
+            <description value="Tests the following for Google Maps API Key field: 1) Global config key, 2) Helper text, 3) Default Test Key button is disabled, 4) Correct Get API Key link."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
             <testCaseId value="MAGETWO-91918"/>
@@ -118,6 +118,7 @@
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
         </before>
         <after>
+            <closeTab stepKey="closeTab"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <!-- Go To AdminContentManagementPage -->
@@ -140,7 +141,7 @@
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsGetAPIKeyLink}}" stepKey="waitForLink"/>
         <click selector="{{ContentManagementSection.GoogleMapsGetAPIKeyLink}}" stepKey="clickLink"/>
         <switchToNextTab stepKey="switchToNextTab"/>
-        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <seeCurrentUrlEquals url="https://developers.google.com/maps/documentation/javascript/get-api-key" stepKey="validateURL"/>
     </test>
     <test name="GoogleMapsAPIKeyTestKeyButtonValidKey">
@@ -343,7 +344,7 @@
     <test name="MapInvalidAPIKeyWarningMessage">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
+            <stories value="Google Maps API Key"/>
             <title value="Map - Invalid API Key Warning Message"/>
             <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront."/>
             <severity value="CRITICAL"/>
@@ -406,7 +407,7 @@
     <test name="MapInvalidAPIKeyWarningMessageOnExistingPage">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
+            <stories value="Google Maps API Key"/>
             <title value="Map - Invalid API Key Warning Message On Existing Page"/>
             <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront on existing page."/>
             <severity value="CRITICAL"/>
@@ -484,7 +485,7 @@
     <test name="MapInvalidAPIKeyWarningMessageLink">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
+            <stories value="Google Maps API Key"/>
             <title value="Map - Invalid API Key Warning Message Link"/>
             <description value="A user should see a warning message on the configuration panel with a link that takes you to the configuration page."/>
             <severity value="CRITICAL"/>
@@ -521,7 +522,7 @@
     <test name="MapDoesNotRenderWithInvalidAPIKey">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
+            <stories value="Google Maps API Key"/>
             <title value="Map Does Not Render With Invalid API Key"/>
             <description value="A user should not see a map rendered on the configuration panel, Stage and Storefront."/>
             <severity value="CRITICAL"/>
@@ -553,18 +554,14 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanel"/>
         <!-- Validate Map Does Not Render On Stage -->
         <comment userInput="Validate Map Does Not Render On Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateMapErrorMessage" stepKey="validateMapErrorMessageOnStage">
-            <argument name="page" value="MapOnStage"/>
-        </actionGroup>
+        <actionGroup ref="validateMapErrorMessageStage" stepKey="validateMapErrorMessageOnStage"/>
         <!-- Save Page -->
         <comment userInput="Save Page" stepKey="commentSavePage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Map Does Not Render On Stage After Save -->
         <comment userInput="Validate Map Does Not Render On Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateMapErrorMessage" stepKey="validateMapErrorMessageOnStageAfterSave">
-            <argument name="page" value="MapOnStage"/>
-        </actionGroup>
+        <actionGroup ref="validateMapErrorMessageStage" stepKey="validateMapErrorMessageOnStageAfterSave"/>
         <!-- Validate Map Does Not Render On Storefront -->
         <comment userInput="Validate Map Does Not Render On Storefront" stepKey="commentValidateStorefront"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
@@ -576,7 +573,7 @@
     <test name="MapDoesNotRenderWithInvalidAPIKeyOnExistingPage">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
+            <stories value="Google Maps API Key"/>
             <title value="Map Does Not Render With Invalid API Key On Existing Page"/>
             <description value="A user should not see a map rendered on the configuration panel, Stage and Storefront on existing page."/>
             <severity value="CRITICAL"/>
@@ -632,9 +629,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Map Does Not Render On Stage -->
         <comment userInput="Validate Map Does Not Render On Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateMapErrorMessage" stepKey="validateMapErrorMessageOnStage">
-            <argument name="page" value="MapOnStage"/>
-        </actionGroup>
+        <actionGroup ref="validateMapErrorMessageStage" stepKey="validateMapErrorMessageOnStage"/>
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderMapContentType"/>
         </actionGroup>
@@ -656,11 +651,17 @@
         <actionGroup ref="verifyMapHasPin" stepKey="validateMapStorefront">
             <argument name="page" value="MapOnStorefront"/>
         </actionGroup>
+        <!-- Clean Cache & Validate Map Has Google Error -->
+        <comment userInput="Validate Map Still Renders On Storefront" stepKey="commentValidateStorefrontAfterCacheClean"/>
+        <magentoCLI command="cache:clean" stepKey="cleanCache"/>
+        <reloadPage stepKey="reloadPage3"/>
+        <waitForPageLoad stepKey="waitForPageLoad3"/>
+        <actionGroup ref="validateMapErrorMessageStorefront" stepKey="validateMapErrorMessageStorefront"/>
     </test>
     <test name="MapCannotAddNewLocationWithInvalidAPIKey">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
+            <stories value="Google Maps API Key"/>
             <title value="Cannot Add New Location With Invalid API Key"/>
             <description value="A user should not be able to add a new location with an invalid API key."/>
             <severity value="CRITICAL"/>
@@ -693,7 +694,7 @@
     <test name="MapCanEditLocationWithInvalidAPIKey">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
+            <stories value="Google Maps API Key"/>
             <title value="Can Edit Location With Invalid API Key"/>
             <description value="A user should be able to edit a location with an invalid API key."/>
             <severity value="CRITICAL"/>
@@ -807,7 +808,7 @@
     <test name="MapCanDeleteLocationWithInvalidAPIKey">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Map"/>
+            <stories value="Google Maps API Key"/>
             <title value="Can Delete Location With Invalid API Key"/>
             <description value="A user should be able to delete a location with an invalid API key."/>
             <severity value="CRITICAL"/>

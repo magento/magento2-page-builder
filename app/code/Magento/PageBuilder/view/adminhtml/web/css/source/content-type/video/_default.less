@@ -7,8 +7,39 @@
 //  Default appearance styles
 //  _____________________________________________
 
-.pagebuilder-video iframe {
-    height: 400px;
-    max-width: 100%;
-    width: 100%;
+.pagebuilder-content-type {
+    .pagebuilder-video-placeholder {
+        align-items: center;
+        background-color: @color-gray98;
+        display: flex;
+        justify-content: center;
+    }
+    .icon-pagebuilder-video:before {
+        color: @color-gray65-lighten;
+        font-size: 80px;
+    }
+    .pagebuilder-video {
+        display: flex;
+
+        > div:first-child,
+        .pagebuilder-video-wrapper,
+        .pagebuilder-video-container {
+            display: flex;
+            flex-grow: 1;
+        }
+        .pagebuilder-video-container {
+            padding-top: 56.25%;
+            position: relative;
+        }
+        iframe,
+        .pagebuilder-video-placeholder {
+            height: 100%;
+            left: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+    }
 }
+
