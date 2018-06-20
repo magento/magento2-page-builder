@@ -16,11 +16,12 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
+import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import {getDefaultGridSize} from "../column-group/grid-size";
+import {updateColumnWidth} from "./resize";
 
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
@@ -184,11 +185,11 @@ export default class Preview extends PreviewCollection {
                             --splitTimes;
                         }
                     }
-                    resizeUtils.updateColumnWidth(
+                    updateColumnWidth(
                         contentType,
                         resizeUtils.getAcceptedColumnWidth(originalWidth.toString()),
                     );
-                    resizeUtils.updateColumnWidth(
+                    updateColumnWidth(
                         duplicateContentType,
                         resizeUtils.getAcceptedColumnWidth(duplicateWidth.toString()),
                     );
@@ -203,14 +204,14 @@ export default class Preview extends PreviewCollection {
                 const shrinkableClone = super.clone(contentType, autoAppend);
                 if (shrinkableClone) {
                     shrinkableClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
-                        resizeUtils.updateColumnWidth(
+                        updateColumnWidth(
                             shrinkableColumn,
                             resizeUtils.getAcceptedColumnWidth(
                                 (resizeUtils.getColumnWidth(shrinkableColumn)
                                     - resizeUtils.getSmallestColumnWidth()).toString(),
                             ),
                         );
-                        resizeUtils.updateColumnWidth(
+                        updateColumnWidth(
                             duplicateContentType,
                             resizeUtils.getSmallestColumnWidth(),
                         );

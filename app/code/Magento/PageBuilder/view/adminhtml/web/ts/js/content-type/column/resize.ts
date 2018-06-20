@@ -5,8 +5,94 @@
 
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import {outwardSearch} from "../../utils/array";
-import ColumnPreview from "../column/preview";
-import {ColumnWidth, GroupPositionCache, MaxGhostWidth, ResizeHistory} from "./preview";
+import {ColumnWidth, GroupPositionCache, MaxGhostWidth, ResizeHistory} from "../column-group/preview";
+import ColumnPreview from "./preview";
+
+/**
+ * Retrieve the index of the column within it's group
+ *
+ * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+ * @returns {number}
+ */
+export function getColumnIndexInGroup(column: ContentTypeCollectionInterface<ColumnPreview>): number {
+    return column.parent.children().indexOf(column);
+}
+
+/**
+ * Retrieve the adjacent column based on a direction of +1 or -1
+ *
+ * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+ * @param {"+1" | "-1"} direction
+ * @returns {ContentTypeCollectionInterface<ColumnPreview>}
+ */
+export function getAdjacentColumn(
+    column: ContentTypeCollectionInterface<ColumnPreview>, direction: "+1" | "-1",
+): ContentTypeCollectionInterface<ColumnPreview> {
+    const currentIndex = getColumnIndexInGroup(column);
+    if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
+        return column.parent.children()[currentIndex + parseInt(direction, 10)];
+    }
+    return null;
+}
+
+/**
+ * Determine the max ghost width based on the calculated columns
+ *
+ * @param {ColumnWidth[]} columnWidths
+ * @returns {MaxGhostWidth}
+ */
+export function determineMaxGhostWidth(columnWidths: ColumnWidth[]): MaxGhostWidth {
+    const leftColumns = columnWidths.filter((width) => {
+        return width.forColumn === "left";
+    });
+    const rightColumns = columnWidths.filter((width) => {
+        return width.forColumn === "right";
+    });
+    return {
+        left: leftColumns[0].position,
+        right: rightColumns[rightColumns.length - 1].position,
+    };
+}
+
+/**
+ * Return the column width to 8 decimal places if it's not a whole number
+ *
+ * @param {number} width
+ * @returns {string}
+ */
+export function getRoundedColumnWidth(width: number): number {
+    return Number((width).toFixed(
+        Math.round(width) !== width ? 8 : 0,
+    ));
+}
+
+/**
+ * Compare if two numbers are within a certain threshold of each other
+ *
+ * comparator(10,11,2) => true
+ * comparator(1.1,1.11,0.5) => true
+ *
+ * @param {number} num1
+ * @param {number} num2
+ * @param {number} threshold
+ * @returns {boolean}
+ */
+export function comparator(num1: number, num2: number, threshold: number): boolean {
+    return (num1 > (num2 - (threshold / 2)) && num1 < (num2 + (threshold / 2)));
+}
+
+/**
+ * Update the width of a column
+ *
+ * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+ * @param {number} width
+ */
+export function updateColumnWidth(column: ContentTypeCollectionInterface<ColumnPreview>, width: number): void {
+    column.dataStore.update(
+        parseFloat(width.toString()) + "%",
+        "width",
+    );
+}
 
 export default class ResizeUtils {
     private columnGroup: ContentTypeCollectionInterface;
@@ -69,33 +155,6 @@ export default class ResizeUtils {
     }
 
     /**
-     * Retrieve the index of the column within it's group
-     *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @returns {number}
-     */
-    public getColumnIndexInGroup(column: ContentTypeCollectionInterface<ColumnPreview>): number {
-        return column.parent.children().indexOf(column);
-    }
-
-    /**
-     * Retrieve the adjacent column based on a direction of +1 or -1
-     *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @param {"+1" | "-1"} direction
-     * @returns {ContentTypeCollectionInterface<ColumnPreview>}
-     */
-    public getAdjacentColumn(
-        column: ContentTypeCollectionInterface<ColumnPreview>, direction: "+1" | "-1",
-    ): ContentTypeCollectionInterface<ColumnPreview> {
-        const currentIndex = this.getColumnIndexInGroup(column);
-        if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
-            return column.parent.children()[currentIndex + parseInt(direction, 10)];
-        }
-        return null;
-    }
-
-    /**
      * Get the total width of all columns in the group
      *
      * @returns {number}
@@ -123,7 +182,7 @@ export default class ResizeUtils {
     ): ColumnWidth[] {
         const gridSize = this.getGridSize();
         const singleColumnWidth = groupPosition.outerWidth / gridSize;
-        const adjacentColumn = this.getAdjacentColumn(column, "+1");
+        const adjacentColumn = getAdjacentColumn(column, "+1");
         const columnWidths = [];
         const columnLeft = column.preview.element.offset().left
             - parseInt(column.preview.element.css("margin-left"), 10);
@@ -131,7 +190,7 @@ export default class ResizeUtils {
             adjacentColumn.preview.element.outerWidth(true);
 
         // Determine the maximum size (in pixels) that this column can be dragged to
-        const columnsToRight = column.parent.children().length - (this.getColumnIndexInGroup(column) + 1);
+        const columnsToRight = column.parent.children().length - (getColumnIndexInGroup(column) + 1);
         const leftMaxWidthFromChildren = groupPosition.left + groupPosition.outerWidth -
             (columnsToRight * singleColumnWidth) + 10;
         const rightMaxWidthFromChildren = groupPosition.left +
@@ -149,7 +208,7 @@ export default class ResizeUtils {
                     forColumn: "left", // These positions are for the left column in the pair
                     name: i + "/" + gridSize,
                     position,
-                    width: this.getRoundedColumnWidth(100 / gridSize * i),
+                    width: getRoundedColumnWidth(100 / gridSize * i),
                 },
             );
         }
@@ -165,31 +224,12 @@ export default class ResizeUtils {
                     forColumn: "right", // These positions are for the left column in the pair
                     name: i + "/" + gridSize,
                     position,
-                    width: this.getRoundedColumnWidth(100 / gridSize * i),
+                    width: getRoundedColumnWidth(100 / gridSize * i),
                 },
             );
         }
 
         return columnWidths;
-    }
-
-    /**
-     * Determine the max ghost width based on the calculated columns
-     *
-     * @param {ColumnWidth[]} columnWidths
-     * @returns {MaxGhostWidth}
-     */
-    public determineMaxGhostWidth(columnWidths: ColumnWidth[]): MaxGhostWidth {
-        const leftColumns = columnWidths.filter((width) => {
-            return width.forColumn === "left";
-        });
-        const rightColumns = columnWidths.filter((width) => {
-            return width.forColumn === "right";
-        });
-        return {
-            left: leftColumns[0].position,
-            right: rightColumns[rightColumns.length - 1].position,
-        };
     }
 
     /**
@@ -203,7 +243,7 @@ export default class ResizeUtils {
         column: ContentTypeCollectionInterface<ColumnPreview>,
         direction: "left" | "right",
     ): ContentTypeCollectionInterface<ColumnPreview> {
-        const currentIndex = this.getColumnIndexInGroup(column);
+        const currentIndex = getColumnIndexInGroup(column);
         const parentChildren = column.parent.children();
         let searchArray: Array<ContentTypeCollectionInterface<ColumnPreview>>;
         switch (direction) {
@@ -230,23 +270,11 @@ export default class ResizeUtils {
     ): ContentTypeCollectionInterface<ColumnPreview> {
         return outwardSearch(
             column.parent.children(),
-            this.getColumnIndexInGroup(column),
+            getColumnIndexInGroup(column),
             (neighbourColumn) => {
                 return this.getColumnWidth(neighbourColumn) > this.getSmallestColumnWidth();
             },
         );
-    }
-
-    /**
-     * Return the column width to 8 decimal places if it's not a whole number
-     *
-     * @param {number} width
-     * @returns {string}
-     */
-    public getRoundedColumnWidth(width: number): number {
-        return Number((width).toFixed(
-            Math.round(width) !== width ? 8 : 0,
-        ));
     }
 
     /**
@@ -335,26 +363,11 @@ export default class ResizeUtils {
                 modifyColumnInPair = history.right.reverse()[0].modifyColumnInPair;
             } else {
                 // If we're shrinking our column we can just increase the adjacent column
-                adjustedColumn = this.getAdjacentColumn(column, "+1");
+                adjustedColumn = getAdjacentColumn(column, "+1");
             }
         }
 
         return [adjustedColumn, modifyColumnInPair, usedHistory];
-    }
-
-    /**
-     * Compare if two numbers are within a certain threshold of each other
-     *
-     * comparator(10,11,2) => true
-     * comparator(1.1,1.11,0.5) => true
-     *
-     * @param {number} num1
-     * @param {number} num2
-     * @param {number} threshold
-     * @returns {boolean}
-     */
-    public comparator(num1: number, num2: number, threshold: number): boolean {
-        return (num1 > (num2 - (threshold / 2)) && num1 < (num2 + (threshold / 2)));
     }
 
     /**
@@ -389,28 +402,12 @@ export default class ResizeUtils {
             ) {
                 allowedToShrink = false;
             } else {
-                this.updateColumnWidth(
-                    shrinkableColumn,
-                    shrinkableSize,
-                );
+                updateColumnWidth(shrinkableColumn, shrinkableSize);
             }
         }
 
         if (allowedToShrink) {
-            this.updateColumnWidth(column, width);
+            updateColumnWidth(column, width);
         }
-    }
-
-    /**
-     * Update the width of a column
-     *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @param {number} width
-     */
-    public updateColumnWidth(column: ContentTypeCollectionInterface<ColumnPreview>, width: number): void {
-        column.dataStore.update(
-            parseFloat(width.toString()) + "%",
-            "width",
-        );
     }
 }

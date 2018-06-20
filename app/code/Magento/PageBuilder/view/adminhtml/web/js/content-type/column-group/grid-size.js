@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/config"], function (_config) {
+define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/column/resize"], function (_config, _resize) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -22,12 +22,10 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
   }
   /**
    * Apply the new grid size, adjusting the existing columns as needed.
-   * Assume we have previously validated that the new grid size is attainable for the current configuration.
    *
    * Rules for resizing the grid:
-   *  - The grid size can always be increased up to the configured maximum value. (Assume this validation is done
-   *    on entry)
-   *  - The grid size can be reduced only if the number of non-empty columns is less than or equal to the new size.
+   *  - The grid size can be increased up to the configured maximum value.
+   *  - The grid size can be decreased only if the number of non-empty columns is less than or equal to the new size.
    *  - If the new grid size is less than the number of columns currently in the grid, empty columns will be deleted
    *    to accommodate the new size.
    *
@@ -88,7 +86,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
       }
 
       totalNewWidths += parseFloat(newWidth);
-      resizeUtils.updateColumnWidth(column, parseFloat(newWidth));
+      (0, _resize.updateColumnWidth)(column, parseFloat(newWidth));
     }); // persist new grid size so upcoming calls to get column widths are calculated correctly
 
     columnGroup.dataStore.update(newGridSize, "gridSize"); // apply leftover columns if the new grid size did not distribute evenly into existing columns
@@ -107,7 +105,7 @@ define(["Magento_PageBuilder/js/config"], function (_config) {
         }
 
         if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
-          resizeUtils.updateColumnWidth(column, parseFloat(resizeUtils.getColumnWidth(column).toString()) + parseFloat(minColWidth));
+          (0, _resize.updateColumnWidth)(column, parseFloat(resizeUtils.getColumnWidth(column).toString()) + parseFloat(minColWidth));
         } else {
           break;
         }
