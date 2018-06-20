@@ -17,17 +17,10 @@
                             <xs:element name="type" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:all>
-                                        <xs:element type="xs:string" name="label" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="icon" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="component" minOccurs="0" maxOccurs="1"/>
-                                        <xs:element type="xs:string" name="preview_component" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="master_component" minOccurs="0"/>
                                         <xs:element type="xs:string" name="preview_template" minOccurs="0"/>
                                         <xs:element type="xs:string" name="render_template" minOccurs="0"/>
                                         <xs:element type="xs:string" name="backend_block" minOccurs="0"/>
                                         <xs:element type="xs:string" name="backend_template" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="form" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="group" minOccurs="0"/>
                                         <xs:element type="allowed_parents" name="allowed_parents" minOccurs="0" maxOccurs="1"/>
                                         <xs:element name="appearances" minOccurs="0" maxOccurs="1">
                                             <xs:complexType>
@@ -42,6 +35,13 @@
                                     <xs:attribute type="xs:string" name="name" use="required"/>
                                     <xs:attribute type="xs:string" name="translate" use="optional"/>
                                     <xs:attribute type="xs:byte" name="sortOrder" use="optional"/>
+                                    <xs:attribute type="xs:string" name="label" use="optional"/>
+                                    <xs:attribute type="xs:string" name="icon" use="optional"/>
+                                    <xs:attribute type="xs:string" name="component" use="required"/>
+                                    <xs:attribute type="xs:string" name="preview_component" use="optional"/>
+                                    <xs:attribute type="xs:string" name="master_component" use="optional"/>
+                                    <xs:attribute type="xs:string" name="form" use="optional"/>
+                                    <xs:attribute type="xs:string" name="group" use="optional"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>

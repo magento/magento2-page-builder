@@ -17,17 +17,10 @@
                             <xs:element name="type" minOccurs="0" maxOccurs="unbounded">
                                 <xs:complexType>
                                     <xs:all>
-                                        <xs:element type="xs:string" name="label"/>
-                                        <xs:element type="xs:string" name="icon"/>
-                                        <xs:element type="xs:string" name="component" minOccurs="1" maxOccurs="1"/>
-                                        <xs:element type="xs:string" name="preview_component" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="master_component" minOccurs="0"/>
                                         <xs:element type="xs:string" name="preview_template" minOccurs="0"/>
                                         <xs:element type="xs:string" name="render_template" minOccurs="0"/>
                                         <xs:element type="xs:string" name="backend_block" minOccurs="0"/>
                                         <xs:element type="xs:string" name="backend_template" minOccurs="0"/>
-                                        <xs:element type="xs:string" name="form"/>
-                                        <xs:element type="xs:string" name="group"/>
                                         <xs:element type="allowed_parents" name="allowed_parents" minOccurs="0" maxOccurs="1"/>
                                         <xs:element name="appearances" minOccurs="0" maxOccurs="1">
                                             <xs:complexType>
@@ -42,6 +35,13 @@
                                     <xs:attribute type="xs:string" name="name" use="required"/>
                                     <xs:attribute type="xs:string" name="translate" use="required"/>
                                     <xs:attribute type="xs:byte" name="sortOrder" use="optional"/>
+                                    <xs:attribute type="xs:string" name="label" use="optional"/>
+                                    <xs:attribute type="xs:string" name="icon" use="optional"/>
+                                    <xs:attribute type="xs:string" name="component" use="required"/>
+                                    <xs:attribute type="xs:string" name="preview_component"  use="optional"/>
+                                    <xs:attribute type="xs:string" name="master_component" use="optional"/>
+                                    <xs:attribute type="xs:string" name="form" use="optional"/>
+                                    <xs:attribute type="xs:string" name="group" use="optional"/>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
@@ -62,14 +62,14 @@
                 </xs:complexType>
             </xs:element>
             <xs:element type="data_mapping" name="data_mapping" minOccurs="0"/>
-            <xs:element type="xs:string" name="preview_template" minOccurs="1" maxOccurs="1"/>
-            <xs:element type="xs:string" name="render_template" minOccurs="1" maxOccurs="1"/>
-            <xs:element type="xs:string" name="reader" minOccurs="0" maxOccurs="1"/>
             <xs:element type="readers" name="readers" minOccurs="0" maxOccurs="1"/>
             <xs:element type="xs:string" name="form" minOccurs="0" maxOccurs="1"/>
         </xs:choice>
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:boolean" name="default"/>
+        <xs:attribute type="xs:boolean" name="default" use="optional"/>
+        <xs:attribute type="xs:string" name="preview_template" use="required"/>
+        <xs:attribute type="xs:string" name="render_template" use="required"/>
+        <xs:attribute type="xs:string" name="reader" use="optional"/>
     </xs:complexType>
     <xs:complexType name="allowed_parents">
         <xs:sequence>
@@ -117,6 +117,9 @@
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="item">
+        <xs:sequence>
+            <xs:element type="item" name="item" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="value" use="required"/>
     </xs:complexType>
@@ -140,7 +143,7 @@
     </xs:complexType>
     <xs:complexType name="additional_data">
         <xs:choice maxOccurs="unbounded">
-            <xs:element type="argumentType" name="arguments" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element type="item" name="item" minOccurs="1" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
     <xs:complexType name="property">
