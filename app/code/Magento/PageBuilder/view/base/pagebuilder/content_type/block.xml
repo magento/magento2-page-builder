@@ -7,13 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="block" sortOrder="1" translate="label">
-            <label>Block</label>
-            <icon>icon-pagebuilder-block</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/content-type/block/preview</preview_component>
-            <form>pagebuilder_block_form</form>
-            <group>magento</group>
+        <type name="block" sortOrder="1" translate="label" label="Block" icon="icon-pagebuilder-block" component="Magento_PageBuilder/js/content-type" preview_component="Magento_PageBuilder/js/content-type/block/preview" form="pagebuilder_block_form" group="magento">
             <backend_block>Magento\PageBuilder\Block\ContentType\Block</backend_block>
             <allowed_parents>
                 <parent name="row"/>
@@ -21,7 +15,7 @@
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true" name="default" preview_template="Magento_PageBuilder/content-type/block/default/preview" render_template="Magento_PageBuilder/content-type/block/default/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -43,9 +37,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/block/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/block/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

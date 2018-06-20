@@ -7,20 +7,14 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="map" sortOrder="20" translate="label">
-            <label>Map</label>
-            <icon>icon-pagebuilder-map</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/content-type/map/preview</preview_component>
-            <form>pagebuilder_map_form</form>
-            <group>interactive</group>
+        <type name="map" sortOrder="20" translate="label" label="Map" icon="icon-pagebuilder-map" component="Magento_PageBuilder/js/content-type" preview_component="Magento_PageBuilder/js/content-type/map/preview" form="pagebuilder_map_form" group="interactive">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true" name="default" preview_template="Magento_PageBuilder/content-type/map/default/preview" render_template="Magento_PageBuilder/content-type/map/default/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -43,9 +37,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/map/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/map/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

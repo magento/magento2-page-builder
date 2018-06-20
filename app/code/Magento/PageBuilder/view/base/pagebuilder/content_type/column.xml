@@ -7,21 +7,14 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="column" sortOrder="15" translate="label">
-            <label>Column</label>
-            <icon>icon-pagebuilder-column</icon>
-            <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/content-type/column/preview</preview_component>
-            <master_component>Magento_PageBuilder/js/content-type/master-collection</master_component>
-            <form>pagebuilder_column_form</form>
-            <group>general</group>
+        <type name="column" sortOrder="15" translate="label" label="Column" icon="icon-pagebuilder-column" component="Magento_PageBuilder/js/content-type-collection" preview_component="Magento_PageBuilder/js/content-type/column/preview" master_component="Magento_PageBuilder/js/content-type/master-collection" form="pagebuilder_column_form" group="general">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column-group"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="full-height">
+                <appearance default="true" name="full-height" preview_template="Magento_PageBuilder/content-type/column/full-height/preview" render_template="Magento_PageBuilder/content-type/column/full-height/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -61,11 +54,8 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance name="align-top">
+                <appearance name="align-top" preview_template="Magento_PageBuilder/content-type/column/full-height/preview" render_template="Magento_PageBuilder/content-type/column/full-height/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -105,11 +95,8 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance name="align-center">
+                <appearance name="align-center" preview_template="Magento_PageBuilder/content-type/column/full-height/preview" render_template="Magento_PageBuilder/content-type/column/full-height/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -149,11 +136,8 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance name="align-bottom">
+                <appearance name="align-bottom" preview_template="Magento_PageBuilder/content-type/column/full-height/preview" render_template="Magento_PageBuilder/content-type/column/full-height/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -193,9 +177,6 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/column/full-height/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/column/full-height/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

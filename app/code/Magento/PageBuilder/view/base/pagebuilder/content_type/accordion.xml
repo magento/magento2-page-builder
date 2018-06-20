@@ -7,23 +7,14 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="accordion" sortOrder="10" translate="label">
-            <label>Accordion</label>
-            <icon>icon-pagebuilder-accordian</icon>
-            <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/content-type/accordion/preview</preview_component>
-            <master_component>Magento_PageBuilder/js/content-type/accordion/master</master_component>
-            <form>pagebuilder_accordion_form</form>
-            <group>interactive</group>
+        <type name="accordion" sortOrder="10" translate="label" label="Accordion" icon="icon-pagebuilder-accordian" component="Magento_PageBuilder/js/content-type-collection" preview_component="Magento_PageBuilder/js/content-type/accordion/preview" master_component="Magento_PageBuilder/js/content-type/accordion/master" form="pagebuilder_accordion_form" group="interactive">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
-                    <preview_template>Magento_PageBuilder/content-type/accordion/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/accordion/default/master</render_template>
+                <appearance default="true" name="default" preview_template="Magento_PageBuilder/content-type/accordion/default/preview" render_template="Magento_PageBuilder/content-type/accordion/default/master">
                     <readers>
                         <reader component="Magento_PageBuilder/js/master-format/read/default" name="default"/>
                         <reader component="Magento_PageBuilder/js/master-format/read/accordion" name="accordion"/>

@@ -7,20 +7,13 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="button-item" translate="label">
-            <label>Button</label>
-            <icon>icon-pagebuilder-button</icon>
-            <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/content-type/button-item/preview</preview_component>
-            <master_component>Magento_PageBuilder/js/content-type/master</master_component>
-            <form>pagebuilder_button_item_form</form>
-            <group>general</group>
+        <type name="button-item" translate="label" label="Button" icon="icon-pagebuilder-button" component="Magento_PageBuilder/js/content-type-collection" preview_component="Magento_PageBuilder/js/content-type/button-item/preview" master_component="Magento_PageBuilder/js/content-type/master" form="pagebuilder_button_item_form" group="general">
             <allowed_parents>
                 <parent name="buttons"/>
             </allowed_parents>
             <is_visible>false</is_visible>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true" name="default" preview_template="Magento_PageBuilder/content-type/button-item/default/preview" render_template="Magento_PageBuilder/content-type/button-item/default/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -54,9 +47,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/button-item/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/button-item/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
