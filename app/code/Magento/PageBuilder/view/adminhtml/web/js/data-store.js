@@ -22,6 +22,16 @@ define(["jquery"], function (_jquery) {
       return this.state;
     };
     /**
+     * Get a specific key of data
+     *
+     * @param {string} key
+     */
+
+
+    _proto.getKey = function getKey(key) {
+      return this.state[key];
+    };
+    /**
      * Update the state for the content type
      *
      * @param {DataObject | string | number | boolean | any[] | null | undefined} data

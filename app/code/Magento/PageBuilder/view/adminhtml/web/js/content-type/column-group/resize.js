@@ -401,4 +401,4 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
   return ResizeUtils;
 });
-//# sourceMappingURL=resizing.js.map
+//# sourceMappingURL=resize.js.map

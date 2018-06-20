@@ -5,7 +5,7 @@
 
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ColumnPreview from "../column/preview";
-import ColumnGroupUtils from "./resizing";
+import ColumnGroupPreview from "./preview";
 
 /**
  * Calculate the drop positions of a column group
@@ -13,14 +13,14 @@ import ColumnGroupUtils from "./resizing";
  * @param {ContentTypeCollectionInterface} group
  * @returns {any[]}
  */
-export function calculateDropPositions(group: ContentTypeCollectionInterface): DropPosition[] {
-    const columnGroupUtils = new ColumnGroupUtils(group);
+export function calculateDropPositions(group: ContentTypeCollectionInterface<ColumnGroupPreview>): DropPosition[] {
+    const resizeUtils = group.preview.getResizeUtils();
     const dropPositions: any[] = [];
     group.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
         const left = column.preview.element.position().left;
         const width = column.preview.element.outerWidth(true);
-        const canShrink = columnGroupUtils.getAcceptedColumnWidth(columnGroupUtils.getColumnWidth(column).toString()) >
-            columnGroupUtils.getSmallestColumnWidth();
+        const canShrink = resizeUtils.getAcceptedColumnWidth(resizeUtils.getColumnWidth(column).toString()) >
+            resizeUtils.getSmallestColumnWidth();
         dropPositions.push(
             {
                 affectedColumn: column, canShrink,

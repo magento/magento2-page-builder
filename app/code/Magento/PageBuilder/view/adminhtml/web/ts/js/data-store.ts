@@ -27,6 +27,15 @@ export default class DataStore {
     }
 
     /**
+     * Get a specific key of data
+     *
+     * @param {string} key
+     */
+    public getKey(key: string) {
+        return this.state[key];
+    }
+
+    /**
      * Update the state for the content type
      *
      * @param {DataObject | string | number | boolean | any[] | null | undefined} data

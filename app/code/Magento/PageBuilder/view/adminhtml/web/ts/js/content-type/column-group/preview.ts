@@ -22,8 +22,9 @@ import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
+import {resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
-import ColumnGroupUtils from "./resizing";
+import ResizeUtils from "./resize";
 
 interface ContentTypeRemovedParams {
     parent: ColumnGroup;
@@ -67,7 +68,7 @@ export default class Preview extends PreviewCollection {
     private dropPosition: DropPosition;
     private movePosition: DropPosition;
     private groupPositionCache: GroupPositionCache;
-    private columnGroupUtils: ColumnGroupUtils;
+    private resizeUtils: ResizeUtils;
 
     /**
      *
@@ -81,7 +82,7 @@ export default class Preview extends PreviewCollection {
         observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
-        this.columnGroupUtils = new ColumnGroupUtils(this.parent);
+        this.resizeUtils = new ResizeUtils(this.parent);
 
         // Keep track of the grid size in an observable
         this.parent.dataStore.subscribe((state: DataObject) => {
@@ -119,6 +120,15 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Retrieve the resize utils
+     *
+     * @returns {ResizeUtils}
+     */
+    public getResizeUtils(): ResizeUtils {
+        return this.resizeUtils;
+    }
+
+    /**
      * Update the grid size on enter or blur of the input
      *
      * @param {Preview} context
@@ -129,11 +139,13 @@ export default class Preview extends PreviewCollection {
             const newGridSize = parseInt($(event.target).val().toString(), 10);
             if (newGridSize) {
                 try {
-                    this.columnGroupUtils.resizeGrid(newGridSize);
+                    resizeGrid((this.parent as ContentTypeCollectionInterface<Preview>), newGridSize);
                     this.gridSizeError("");
                 } catch (e) {
                     if (e instanceof RangeError) {
                         this.gridSizeError(e.message);
+                    } else {
+                        throw e;
                     }
                 }
             }
@@ -149,16 +161,16 @@ export default class Preview extends PreviewCollection {
         // Create our new column
         createColumn(
             this.parent,
-            this.columnGroupUtils.getSmallestColumnWidth(),
+            this.resizeUtils.getSmallestColumnWidth(),
             dropPosition.insertIndex,
         ).then(() => {
-            const newWidth = this.columnGroupUtils.getAcceptedColumnWidth(
-                (this.columnGroupUtils.getColumnWidth(dropPosition.affectedColumn) -
-                    this.columnGroupUtils.getSmallestColumnWidth()).toString(),
+            const newWidth = this.resizeUtils.getAcceptedColumnWidth(
+                (this.resizeUtils.getColumnWidth(dropPosition.affectedColumn) -
+                    this.resizeUtils.getSmallestColumnWidth()).toString(),
             );
 
             // Reduce the affected columns width by the smallest column width
-            this.columnGroupUtils.updateColumnWidth(dropPosition.affectedColumn, newWidth);
+            this.resizeUtils.updateColumnWidth(dropPosition.affectedColumn, newWidth);
         });
     }
 
@@ -172,37 +184,37 @@ export default class Preview extends PreviewCollection {
         let modifyOldNeighbour;
 
         // Determine which old neighbour we should modify
-        const oldWidth = this.columnGroupUtils.getColumnWidth(column);
+        const oldWidth = this.resizeUtils.getColumnWidth(column);
 
         // Retrieve the adjacent column either +1 or -1
-        if (this.columnGroupUtils.getAdjacentColumn(column, "+1")) {
-            modifyOldNeighbour = this.columnGroupUtils.getAdjacentColumn(column, "+1");
-        } else if (this.columnGroupUtils.getAdjacentColumn(column, "-1")) {
-            modifyOldNeighbour = this.columnGroupUtils.getAdjacentColumn(column, "-1");
+        if (this.resizeUtils.getAdjacentColumn(column, "+1")) {
+            modifyOldNeighbour = this.resizeUtils.getAdjacentColumn(column, "+1");
+        } else if (this.resizeUtils.getAdjacentColumn(column, "-1")) {
+            modifyOldNeighbour = this.resizeUtils.getAdjacentColumn(column, "-1");
         }
 
         // Set the column to it's smallest column width
-        this.columnGroupUtils.updateColumnWidth(column, this.columnGroupUtils.getSmallestColumnWidth());
+        this.resizeUtils.updateColumnWidth(column, this.resizeUtils.getSmallestColumnWidth());
 
         // Move the content type
         moveContentType(column, movePosition.insertIndex, this.parent);
 
         // Modify the old neighbour
         if (modifyOldNeighbour) {
-            const oldNeighbourWidth = this.columnGroupUtils.getAcceptedColumnWidth(
-                (oldWidth + this.columnGroupUtils.getColumnWidth(modifyOldNeighbour)).toString(),
+            const oldNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth(
+                (oldWidth + this.resizeUtils.getColumnWidth(modifyOldNeighbour)).toString(),
             );
-            this.columnGroupUtils.updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
+            this.resizeUtils.updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
         }
 
         // Modify the columns new neighbour
-        const newNeighbourWidth = this.columnGroupUtils.getAcceptedColumnWidth(
-            (this.columnGroupUtils.getColumnWidth(movePosition.affectedColumn) -
-                this.columnGroupUtils.getSmallestColumnWidth()).toString(),
+        const newNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth(
+            (this.resizeUtils.getColumnWidth(movePosition.affectedColumn) -
+                this.resizeUtils.getSmallestColumnWidth()).toString(),
         );
 
         // Reduce the affected columns width by the smallest column width
-        this.columnGroupUtils.updateColumnWidth(movePosition.affectedColumn, newNeighbourWidth);
+        this.resizeUtils.updateColumnWidth(movePosition.affectedColumn, newNeighbourWidth);
     }
 
     /**
@@ -212,7 +224,7 @@ export default class Preview extends PreviewCollection {
      * @param {number} newIndex
      */
     public onColumnSort(column: ContentTypeCollectionInterface<ColumnPreview>, newIndex: number) {
-        const currentIndex = this.columnGroupUtils.getColumnIndexInGroup(column);
+        const currentIndex = this.resizeUtils.getColumnIndexInGroup(column);
         if (currentIndex !== newIndex) {
             if (currentIndex < newIndex) {
                 // As we're moving an array item the keys all reduce by 1
@@ -236,7 +248,7 @@ export default class Preview extends PreviewCollection {
         width: number,
         adjustedColumn: ContentTypeCollectionInterface<ColumnPreview>,
     ) {
-        this.columnGroupUtils.resizeColumn(column, width, adjustedColumn);
+        this.resizeUtils.resizeColumn(column, width, adjustedColumn);
     }
 
     /**
@@ -294,14 +306,14 @@ export default class Preview extends PreviewCollection {
             this.resizing(true);
 
             this.resizeColumnInstance = column;
-            this.resizeColumnWidths = this.columnGroupUtils.determineColumnWidths(
+            this.resizeColumnWidths = this.resizeUtils.determineColumnWidths(
                 this.resizeColumnInstance,
                 groupPosition,
             );
-            this.resizeMaxGhostWidth = this.columnGroupUtils.determineMaxGhostWidth(this.resizeColumnWidths);
+            this.resizeMaxGhostWidth = this.resizeUtils.determineMaxGhostWidth(this.resizeColumnWidths);
 
             // Set a flag of the columns which are currently being resized
-            this.setColumnsAsResizing(column, this.columnGroupUtils.getAdjacentColumn(column, "+1"));
+            this.setColumnsAsResizing(column, this.resizeUtils.getAdjacentColumn(column, "+1"));
 
             // Force the cursor to resizing
             $("body").css("cursor", "col-resize");
@@ -574,14 +586,14 @@ export default class Preview extends PreviewCollection {
             let usedHistory: string; // Was the adjusted column pulled from history?
 
             // Determine which column in the group should be adjusted for this action
-            [adjustedColumn, modifyColumnInPair, usedHistory] = this.columnGroupUtils.determineAdjustedColumn(
+            [adjustedColumn, modifyColumnInPair, usedHistory] = this.resizeUtils.determineAdjustedColumn(
                 currentPos,
                 this.resizeColumnInstance,
                 this.resizeHistory,
             );
 
             // Calculate the ghost width based on mouse position and bounds of allowed sizes
-            const ghostWidth = this.columnGroupUtils.calculateGhostWidth(
+            const ghostWidth = this.resizeUtils.calculateGhostWidth(
                 groupPosition,
                 currentPos,
                 this.resizeColumnInstance,
@@ -593,7 +605,7 @@ export default class Preview extends PreviewCollection {
 
             if (adjustedColumn && this.resizeColumnWidths) {
                 newColumnWidth = this.resizeColumnWidths.find((val) => {
-                    return this.columnGroupUtils.comparator(currentPos, val.position, 35)
+                    return this.resizeUtils.comparator(currentPos, val.position, 35)
                         && val.forColumn === modifyColumnInPair;
                 });
 
@@ -601,14 +613,14 @@ export default class Preview extends PreviewCollection {
                     let mainColumn = this.resizeColumnInstance;
                     // If we're using the left data set, we're actually resizing the right column of the group
                     if (modifyColumnInPair === "right") {
-                        mainColumn = this.columnGroupUtils.getAdjacentColumn(this.resizeColumnInstance, "+1");
+                        mainColumn = this.resizeUtils.getAdjacentColumn(this.resizeColumnInstance, "+1");
                     }
 
                     // Ensure we aren't resizing multiple times, also validate the last resize isn't the same as the
                     // one being performed now. This occurs as we re-calculate the column positions on resize, we have
                     // to use the comparator as the calculation may result in slightly different numbers due to rounding
-                    if (this.columnGroupUtils.getColumnWidth(mainColumn) !== newColumnWidth.width &&
-                        !this.columnGroupUtils.comparator(this.resizeLastPosition, newColumnWidth.position, 10)
+                    if (this.resizeUtils.getColumnWidth(mainColumn) !== newColumnWidth.width &&
+                        !this.resizeUtils.comparator(this.resizeLastPosition, newColumnWidth.position, 10)
                     ) {
                         // If our previous action was to resize the right column in pair, and we're now dragging back
                         // to the right, but have matched a column for the left we need to fix the columns being
@@ -618,7 +630,7 @@ export default class Preview extends PreviewCollection {
                         ) {
                             const originalMainColumn = mainColumn;
                             mainColumn = adjustedColumn;
-                            adjustedColumn = this.columnGroupUtils.getAdjacentColumn(originalMainColumn, "+1");
+                            adjustedColumn = this.resizeUtils.getAdjacentColumn(originalMainColumn, "+1");
                         }
 
                         this.recordResizeHistory(
@@ -640,11 +652,11 @@ export default class Preview extends PreviewCollection {
                         // Wait for the render cycle to finish from the above resize before re-calculating
                         _.defer(() => {
                             // If we do a resize, re-calculate the column widths
-                            this.resizeColumnWidths = this.columnGroupUtils.determineColumnWidths(
+                            this.resizeColumnWidths = this.resizeUtils.determineColumnWidths(
                                 this.resizeColumnInstance,
                                 groupPosition,
                             );
-                            this.resizeMaxGhostWidth = this.columnGroupUtils.determineMaxGhostWidth(
+                            this.resizeMaxGhostWidth = this.resizeUtils.determineMaxGhostWidth(
                                 this.resizeColumnWidths,
                             );
                         });
@@ -682,8 +694,8 @@ export default class Preview extends PreviewCollection {
                     // Only ever look for the left placement, except the last item where we look on the right
                     const placement = (currentX >= insertLastPos ? "right" : "left");
                     // There is 200px area over each column borders
-                    return this.columnGroupUtils.comparator(currentX, position[placement], 100) &&
-                        !this.columnGroupUtils.comparator(currentX, currentColumnRight, 100) &&
+                    return this.resizeUtils.comparator(currentX, position[placement], 100) &&
+                        !this.resizeUtils.comparator(currentX, currentColumnRight, 100) &&
                         position.affectedColumn !== columnInstance && // Check affected column isn't the current column
                         position.placement === placement; // Verify the position, we only check left on sorting
                 });
@@ -713,7 +725,7 @@ export default class Preview extends PreviewCollection {
                         right: (this.movePosition.placement === "right" ?
                                 groupPosition.width - this.movePosition.right : ""
                         ),
-                        width: groupPosition.width / this.columnGroupUtils.getGridSize() + "px",
+                        width: groupPosition.width / this.resizeUtils.getGridSize() + "px",
                     }).addClass(this.movePosition.placement);
                 } else {
                     this.dropPlaceholder.removeClass("left right");
@@ -752,7 +764,7 @@ export default class Preview extends PreviewCollection {
                     left: (this.dropPosition.placement === "left" ? this.dropPosition.left : ""),
                     right:
                         (this.dropPosition.placement === "right" ? groupPosition.width - this.dropPosition.right : ""),
-                    width: groupPosition.width / this.columnGroupUtils.getGridSize() + "px",
+                    width: groupPosition.width / this.resizeUtils.getGridSize() + "px",
                 }).addClass(this.dropPosition.placement);
             }
         } else if (this.dropOverElement) {
@@ -846,16 +858,16 @@ export default class Preview extends PreviewCollection {
             return;
         }
 
-        const availableWidth = 100 - this.columnGroupUtils.getColumnsWidth();
-        const formattedAvailableWidth = this.columnGroupUtils.getRoundedColumnWidth(availableWidth);
+        const availableWidth = 100 - this.resizeUtils.getColumnsWidth();
+        const formattedAvailableWidth = this.resizeUtils.getRoundedColumnWidth(availableWidth);
         const totalChildColumns = this.parent.children().length;
         const allowedColumnWidths = [];
         let spreadAcross = 1;
         let spreadAmount;
 
-        for (let i = this.columnGroupUtils.getGridSize(); i > 0; i--) {
+        for (let i = this.resizeUtils.getGridSize(); i > 0; i--) {
             allowedColumnWidths.push(
-                this.columnGroupUtils.getRoundedColumnWidth(100 / this.columnGroupUtils.getGridSize() * i),
+                this.resizeUtils.getRoundedColumnWidth(100 / this.resizeUtils.getGridSize() * i),
             );
         }
 
@@ -889,9 +901,9 @@ export default class Preview extends PreviewCollection {
                 columnToModify = this.parent.children()[params.index - i];
             }
             if (columnToModify) {
-                this.columnGroupUtils.updateColumnWidth(
+                this.resizeUtils.updateColumnWidth(
                     columnToModify,
-                    this.columnGroupUtils.getColumnWidth(columnToModify) + spreadAmount,
+                    this.resizeUtils.getColumnWidth(columnToModify) + spreadAmount,
                 );
             }
         }

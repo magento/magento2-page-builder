@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/resizing", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _config, _contentTypeFactory, _option, _resizing, _previewCollection) {
+define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/content-type-menu/option", "Magento_PageBuilder/js/content-type/column-group/preview", "Magento_PageBuilder/js/content-type/preview-collection"], function (_jquery, _knockout, _translate, _alert, _uiEvents, _config, _contentTypeFactory, _option, _preview, _previewCollection) {
   function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
@@ -17,11 +17,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
     function Preview(parent, config, observableUpdater) {
       var _this;
 
-      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this;
+      _this = _PreviewCollection.call(this, parent, config, observableUpdater) || this; // Update the width label for the column
+
       _this.resizing = _knockout.observable(false);
       _this.element = void 0;
-      _this.columnGroupUtils = void 0;
-      _this.columnGroupUtils = new _resizing(_this.parent.parent); // Update the width label for the column
 
       _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
 
@@ -140,19 +139,18 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
 
     _proto.clone = function clone(contentType, autoAppend) {
-      var _this4 = this;
-
       if (autoAppend === void 0) {
         autoAppend = true;
       }
 
-      // Are we duplicating from a parent?
-      if (contentType.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && this.columnGroupUtils.getColumnsWidth() < 100) {
+      var resizeUtils = this.parent.parent.preview.getResizeUtils(); // Are we duplicating from a parent?
+
+      if (contentType.config.name !== "column" || this.parent.parent.children().length === 0 || this.parent.parent.children().length > 0 && resizeUtils.getColumnsWidth() < 100) {
         return _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
       } // Attempt to split the current column into parts
 
 
-      var splitTimes = Math.round(this.columnGroupUtils.getColumnWidth(contentType) / this.columnGroupUtils.getSmallestColumnWidth());
+      var splitTimes = Math.round(resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth());
 
       if (splitTimes > 1) {
         var splitClone = _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
@@ -164,36 +162,32 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
             for (var i = 0; i <= splitTimes; i++) {
               if (splitTimes > 0) {
-                originalWidth += _this4.columnGroupUtils.getSmallestColumnWidth();
+                originalWidth += resizeUtils.getSmallestColumnWidth();
                 --splitTimes;
               }
 
               if (splitTimes > 0) {
-                duplicateWidth += _this4.columnGroupUtils.getSmallestColumnWidth();
+                duplicateWidth += resizeUtils.getSmallestColumnWidth();
                 --splitTimes;
               }
             }
 
-            _this4.columnGroupUtils.updateColumnWidth(contentType, _this4.columnGroupUtils.getAcceptedColumnWidth(originalWidth.toString()));
-
-            _this4.columnGroupUtils.updateColumnWidth(duplicateContentType, _this4.columnGroupUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
-
+            resizeUtils.updateColumnWidth(contentType, resizeUtils.getAcceptedColumnWidth(originalWidth.toString()));
+            resizeUtils.updateColumnWidth(duplicateContentType, resizeUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
             return duplicateContentType;
           });
         }
       } else {
         // Conduct an outward search on the children to locate a suitable shrinkable column
-        var shrinkableColumn = this.columnGroupUtils.findShrinkableColumn(contentType);
+        var shrinkableColumn = resizeUtils.findShrinkableColumn(contentType);
 
         if (shrinkableColumn) {
           var shrinkableClone = _PreviewCollection.prototype.clone.call(this, contentType, autoAppend);
 
           if (shrinkableClone) {
             shrinkableClone.then(function (duplicateContentType) {
-              _this4.columnGroupUtils.updateColumnWidth(shrinkableColumn, _this4.columnGroupUtils.getAcceptedColumnWidth((_this4.columnGroupUtils.getColumnWidth(shrinkableColumn) - _this4.columnGroupUtils.getSmallestColumnWidth()).toString()));
-
-              _this4.columnGroupUtils.updateColumnWidth(duplicateContentType, _this4.columnGroupUtils.getSmallestColumnWidth());
-
+              resizeUtils.updateColumnWidth(shrinkableColumn, resizeUtils.getAcceptedColumnWidth((resizeUtils.getColumnWidth(shrinkableColumn) - resizeUtils.getSmallestColumnWidth()).toString()));
+              resizeUtils.updateColumnWidth(duplicateContentType, resizeUtils.getSmallestColumnWidth());
               return duplicateContentType;
             });
           }
@@ -269,10 +263,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
 
     _proto.updateDisplayLabel = function updateDisplayLabel() {
-      var newWidth = parseFloat(this.parent.dataStore.get().width.toString());
-      var gridSize = this.columnGroupUtils.getGridSize();
-      var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
-      this.displayLabel((0, _translate)("Column") + " " + newLabel);
+      if (this.parent.parent.preview instanceof _preview) {
+        var resizeUtils = this.parent.parent.preview.getResizeUtils();
+        var newWidth = parseFloat(this.parent.dataStore.get().width.toString());
+        var gridSize = resizeUtils.getGridSize();
+        var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
+        this.displayLabel((0, _translate)("Column") + " " + newLabel);
+      }
     };
 
     return Preview;

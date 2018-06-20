@@ -16,7 +16,7 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
-import ColumnGroupUtils from "../column-group/resizing";
+import ColumnGroupPreview from "../column-group/preview";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
@@ -24,7 +24,6 @@ import PreviewCollection from "../preview-collection";
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
     public element: JQuery<Element>;
-    private columnGroupUtils: ColumnGroupUtils;
 
     /**
      * @param {ContentTypeInterface} parent
@@ -37,7 +36,6 @@ export default class Preview extends PreviewCollection {
         observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
-        this.columnGroupUtils = new ColumnGroupUtils(this.parent.parent);
 
         // Update the width label for the column
         this.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
@@ -155,17 +153,18 @@ export default class Preview extends PreviewCollection {
         contentType: ContentTypeCollectionInterface<Preview>,
         autoAppend: boolean = true,
     ): Promise<ContentTypeCollectionInterface> | void {
+        const resizeUtils = (this.parent.parent.preview as ColumnGroupPreview).getResizeUtils();
         // Are we duplicating from a parent?
         if ( contentType.config.name !== "column"
             || this.parent.parent.children().length === 0
-            || (this.parent.parent.children().length > 0 && this.columnGroupUtils.getColumnsWidth() < 100)
+            || (this.parent.parent.children().length > 0 && resizeUtils.getColumnsWidth() < 100)
         ) {
             return super.clone(contentType, autoAppend);
         }
 
         // Attempt to split the current column into parts
         let splitTimes = Math.round(
-            this.columnGroupUtils.getColumnWidth(contentType) / this.columnGroupUtils.getSmallestColumnWidth(),
+            resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth(),
         );
         if (splitTimes > 1) {
             const splitClone = super.clone(contentType, autoAppend);
@@ -176,21 +175,21 @@ export default class Preview extends PreviewCollection {
 
                     for (let i = 0; i <= splitTimes; i++) {
                         if (splitTimes > 0) {
-                            originalWidth += this.columnGroupUtils.getSmallestColumnWidth();
+                            originalWidth += resizeUtils.getSmallestColumnWidth();
                             --splitTimes;
                         }
                         if (splitTimes > 0) {
-                            duplicateWidth += this.columnGroupUtils.getSmallestColumnWidth();
+                            duplicateWidth += resizeUtils.getSmallestColumnWidth();
                             --splitTimes;
                         }
                     }
-                    this.columnGroupUtils.updateColumnWidth(
+                    resizeUtils.updateColumnWidth(
                         contentType,
-                        this.columnGroupUtils.getAcceptedColumnWidth(originalWidth.toString()),
+                        resizeUtils.getAcceptedColumnWidth(originalWidth.toString()),
                     );
-                    this.columnGroupUtils.updateColumnWidth(
+                    resizeUtils.updateColumnWidth(
                         duplicateContentType,
-                        this.columnGroupUtils.getAcceptedColumnWidth(duplicateWidth.toString()),
+                        resizeUtils.getAcceptedColumnWidth(duplicateWidth.toString()),
                     );
 
                     return duplicateContentType;
@@ -198,21 +197,21 @@ export default class Preview extends PreviewCollection {
             }
         } else {
             // Conduct an outward search on the children to locate a suitable shrinkable column
-            const shrinkableColumn = this.columnGroupUtils.findShrinkableColumn(contentType);
+            const shrinkableColumn = resizeUtils.findShrinkableColumn(contentType);
             if (shrinkableColumn) {
                 const shrinkableClone = super.clone(contentType, autoAppend);
                 if (shrinkableClone) {
                     shrinkableClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
-                        this.columnGroupUtils.updateColumnWidth(
+                        resizeUtils.updateColumnWidth(
                             shrinkableColumn,
-                            this.columnGroupUtils.getAcceptedColumnWidth(
-                                (this.columnGroupUtils.getColumnWidth(shrinkableColumn)
-                                    - this.columnGroupUtils.getSmallestColumnWidth()).toString(),
+                            resizeUtils.getAcceptedColumnWidth(
+                                (resizeUtils.getColumnWidth(shrinkableColumn)
+                                    - resizeUtils.getSmallestColumnWidth()).toString(),
                             ),
                         );
-                        this.columnGroupUtils.updateColumnWidth(
+                        resizeUtils.updateColumnWidth(
                             duplicateContentType,
-                            this.columnGroupUtils.getSmallestColumnWidth(),
+                            resizeUtils.getSmallestColumnWidth(),
                         );
 
                         return duplicateContentType;
@@ -277,9 +276,12 @@ export default class Preview extends PreviewCollection {
      * Update the display label for the column
      */
     private updateDisplayLabel() {
-        const newWidth = parseFloat(this.parent.dataStore.get().width.toString());
-        const gridSize = this.columnGroupUtils.getGridSize();
-        const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
-        this.displayLabel(`${$t("Column")} ${newLabel}`);
+        if (this.parent.parent.preview instanceof ColumnGroupPreview) {
+            const resizeUtils = (this.parent.parent.preview as ColumnGroupPreview).getResizeUtils();
+            const newWidth = parseFloat(this.parent.dataStore.get().width.toString());
+            const gridSize = resizeUtils.getGridSize();
+            const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
+            this.displayLabel(`${$t("Column")} ${newLabel}`);
+        }
     }
 }
