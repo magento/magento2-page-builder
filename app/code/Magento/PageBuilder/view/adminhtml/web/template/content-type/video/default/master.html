@@ -6,5 +6,9 @@
 -->
 
 <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
-    <iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen attr="data.video.attributes" ko-style="data.video.style" css="data.video.css"></iframe>
+    <div class="pagebuilder-video-wrapper" attr="data.wrapper.attributes" ko-style="data.wrapper.style" css="data.wrapper.css">
+        <div class="pagebuilder-video-container" if="data.video.attributes().src">
+            <iframe frameborder="0" allowfullscreen attr="data.video.attributes"/>
+        </div>
+    </div>
 </div>

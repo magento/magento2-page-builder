@@ -14,14 +14,21 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="url" defaultValue=""/>
             <argument name="width" defaultValue=""/>
-            <argument name="height" defaultValue=""/>
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
-        <waitForElementVisible selector="{{page.height(index, height.value)}}" stepKey="waitForHeight"/>
         <waitForElementVisible selector="{{page.width(index, width.value)}}" stepKey="waitForWidth"/>
+        <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
+        <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
+        <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
+        <executeJS function="return Math.abs(window.calculatedHeight - window.actualHeight)" stepKey="ratioDifference"/>
+        <assertLessThanOrEqual stepKey="assertRatio">
+            <!-- This is 2 because the width and the height may both have fractions that could round by a maximum of 1 for each which makes the maximum 2-->
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">ratioDifference</actualResult>
+        </assertLessThanOrEqual>
     </actionGroup>
-    <actionGroup name="validateVideoEmptyHeightEmptyWidth">
+    <actionGroup name="validateVideoEmptyWidth">
         <arguments>
             <argument name="page" defaultValue=""/>
             <argument name="index" defaultValue="1" type="string"/>
@@ -29,8 +36,16 @@
         </arguments>
         <waitForElementVisible selector="{{page.base(index)}}" stepKey="waitForElement"/>
         <waitForElementVisible selector="{{page.source(index, url.renderedValue)}}" stepKey="waitForUrl"/>
-        <waitForElementVisible selector="{{page.noHeight(index)}}" stepKey="waitForHeight"/>
         <waitForElementVisible selector="{{page.noWidth(index)}}" stepKey="waitForWidth"/>
+        <comment userInput="Validate Aspect Ratio" stepKey="commentValidateAspectRatio"/>
+        <executeJS function="return window.calculatedHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).width) / 16 * 9" stepKey="calculatedHeight"/>
+        <executeJS function="return window.actualHeight = parseInt(getComputedStyle(document.evaluate(&quot;{{page.iframe(index)}}&quot;,document.body).iterateNext()).height)" stepKey="actualHeight"/>
+        <executeJS function="return Math.abs(window.calculatedHeight - window.actualHeight)" stepKey="ratioDifference"/>
+        <assertLessThanOrEqual stepKey="assertRatio">
+            <!-- This is 2 because the width and the height may both have fractions that could round by a maximum of 1 for each which makes the maximum 2-->
+            <expectedResult type="int">2</expectedResult>
+            <actualResult type="variable">ratioDifference</actualResult>
+        </assertLessThanOrEqual>
     </actionGroup>
     <actionGroup name="validateEmptyVideoStage">
         <arguments>
@@ -38,6 +53,5 @@
         </arguments>
         <waitForElementVisible selector="{{VideoOnStage.empty(index)}}" stepKey="waitForEmptyVideo"/>
         <waitForElementVisible selector="{{VideoOnStage.icon(index)}}" stepKey="waitForIcon"/>
-        <waitForElementVisible selector="{{VideoOnStage.text(index, PageBuilderVideoUrl_Default.text)}}" stepKey="waitForText"/>
     </actionGroup>
 </actionGroups>
