@@ -47,6 +47,8 @@ export function resizeGrid(columnGroup: ContentTypeCollectionInterface<ColumnGro
     // Validate against the max grid size
     if (newGridSize > getMaxGridSize()) {
         throw new GridSizeError(`The maximum grid size supported is ${getMaxGridSize()}.`);
+    } else if (newGridSize < numColumns) {
+        throw new GridSizeError("Grid size cannot be smaller than the number of columns.");
     }
 
     // Validate that the operation will be successful

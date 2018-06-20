@@ -48,6 +48,7 @@ export default class Preview extends PreviewCollection {
     public gridSize: KnockoutObservable<number> = ko.observable();
     public gridSizeArray: KnockoutObservableArray<any[]> = ko.observableArray([]);
     public gridSizeError: KnockoutObservable<string> = ko.observable();
+    public gridSizePanelStyle: KnockoutObservable<string> =ko.observable();
     private dropPlaceholder: JQuery<HTMLElement>;
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;
@@ -118,6 +119,14 @@ export default class Preview extends PreviewCollection {
                 50,
             ),
         );
+        this.gridSizePanelStyle = ko.pureComputed(() => {
+            if (!this.gridSizeError()) {
+                return "";
+            } else if (this.gridSizeError()[0] === "T") {
+                return "pagebuilder-grid-panel-max-error";
+            }
+            return "pagebuilder-grid-panel-min-error";
+        });
     }
 
     /**

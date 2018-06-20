@@ -7,12 +7,12 @@
 
 <div class="pagebuilder-column-group"
      css="{'resizing': resizing, 'empty-child': hasEmptyChild}">
-    <div class="pagebuilder-grid-size-indicator" event="{click: onGridClick}, mouseoverBubble: false">
+    <div class="pagebuilder-grid-size-indicator" event="{click: onGridClick}">
         <div class="pagebuilder-grid-size-indicator-wrapper">
             <i class="icon-pagebuilder-grid-options"></i>
         </div>
         <div class="focus-options">
-            <div class="pagebuilder-grid-panel">
+            <div class="pagebuilder-grid-panel" css="gridSizePanelStyle">
                 <div class="pagebuilder-grid-panel-wrapper">
                     <ul class="pagebuilder-grid-panel-links">
                         <li class="pagebuilder-grid-panel-link">
@@ -30,7 +30,7 @@
                             </div>
                         </li>
                         <li class="pagebuilder-grid-panel-link">
-                         x   <div class="pagebuilder-grid-panel-link-wrapper">
+                           <div class="pagebuilder-grid-panel-link-wrapper">
                                 <div class="pagebuilder-grid-panel-tooltip">
                                     ?
                                     <span class="tooltip-content"
@@ -39,10 +39,14 @@
                                         <p>Select a value between 2 and 16.</p>
                                     </span>
                                 </div>
-                            </div>
+                           </div>
                         </li>
                     </ul>
-                    <div if="gridSizeError" html="gridSizeError" class="admin__field-error"></div>
+                    <ul class="pagebuilder-grid-panel-links">
+                        <li class="pagebuilder-grid-panel-link">
+                            <div if="gridSizeError" html="gridSizeError" class="admin__field-error"></div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

@@ -32,6 +32,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.gridSize = _knockout.observable();
       _this.gridSizeArray = _knockout.observableArray([]);
       _this.gridSizeError = _knockout.observable();
+      _this.gridSizePanelStyle = _knockout.observable();
       _this.dropPlaceholder = void 0;
       _this.movePlaceholder = void 0;
       _this.groupElement = void 0;
@@ -87,6 +88,15 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
       _this.parent.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_this), 50));
 
+      _this.gridSizePanelStyle = _knockout.pureComputed(function () {
+        if (!_this.gridSizeError()) {
+          return "";
+        } else if (_this.gridSizeError()[0] === "T") {
+          return "pagebuilder-grid-panel-max-error";
+        }
+
+        return "pagebuilder-grid-panel-min-error";
+      });
       return _this;
     }
     /**
