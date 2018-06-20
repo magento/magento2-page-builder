@@ -215,7 +215,7 @@ export default class Preview extends PreviewCollection {
      *
      * @returns {object}
      */
-    public getChildrenStyles() {
+    public getChildrenStyles(): {display?: string, flexDirection?: string, justifyContent?: string} {
         const styles = this.data.main.style();
         if (_.isEmpty(styles.display)) {
             return {};
