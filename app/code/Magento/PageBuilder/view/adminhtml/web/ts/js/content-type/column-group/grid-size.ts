@@ -62,7 +62,7 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
     // Validate against the max grid size
     if (newGridSize > getMaxGridSize()) {
         throw new GridSizeError($t(`The maximum grid size supported is ${getMaxGridSize()}.`));
-    } else if (newGridSize < numColumns) {
+    } else if (newGridSize < columnGroup.getChildren()().length) {
         throw new GridSizeError($t("Grid size cannot be smaller than the number of columns."));
     }
 

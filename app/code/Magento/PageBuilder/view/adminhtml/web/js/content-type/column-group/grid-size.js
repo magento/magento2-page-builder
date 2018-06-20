@@ -56,7 +56,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
     // Validate against the max grid size
     if (newGridSize > getMaxGridSize()) {
       throw new GridSizeError((0, _translate)("The maximum grid size supported is " + getMaxGridSize() + "."));
-    } else if (newGridSize < numColumns) {
+    } else if (newGridSize < columnGroup.getChildren()().length) {
       throw new GridSizeError((0, _translate)("Grid size cannot be smaller than the number of columns."));
     } // Validate that the operation will be successful
 
