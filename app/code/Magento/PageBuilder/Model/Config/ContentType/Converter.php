@@ -55,6 +55,13 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         /** @var \DOMNode $contentType */
         foreach ($contentTypes as $contentType) {
             $name = $contentType->attributes->getNamedItem('name')->nodeValue;
+            /** @var \DOMElement $key */
+            /** @var \DOMElement $value */
+            foreach ($contentType->attributes as $key => $value) {
+                $typesData[$name][$key] = $contentType->hasAttribute($key)
+                    ? $contentType->attributes->getNamedItem($key)->nodeValue
+                    : null;
+            }
             /** @var \DOMElement $childNode */
             foreach ($contentType->childNodes as $childNode) {
                 if ($this->isConfigNode($childNode)) {
@@ -113,14 +120,6 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             $appearanceData,
             $this->convertAppearanceProperties($appearanceNode)
         );
-        $previewTemplateNode = $appearanceNode->getElementsByTagName('preview_template')->item(0);
-        if ($previewTemplateNode) {
-            $appearanceData['preview_template'] = $previewTemplateNode->nodeValue;
-        }
-        $renderTemplateNode = $appearanceNode->getElementsByTagName('render_template')->item(0);
-        if ($renderTemplateNode) {
-            $appearanceData['render_template'] = $renderTemplateNode->nodeValue;
-        }
         $readerNode = $appearanceNode->getElementsByTagName('reader')->item(0);
         if ($readerNode && $readerNode->nodeValue) {
             $appearanceData['readers'] = [$readerNode->nodeValue];
@@ -131,6 +130,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         if ($dataMappingNode) {
             $appearanceData['data_mapping'] = $this->convertDataMapping($dataMappingNode);
         }
+        $appearanceData['preview_template'] = $this->getAttributeValue($appearanceNode, 'preview_template');
+        $appearanceData['render_template'] = $this->getAttributeValue($appearanceNode, 'render_template');
+        $appearanceData['reader'] = $this->getAttributeValue($appearanceNode, 'reader');
         $appearanceData['default'] = $this->getAttributeValue($appearanceNode, 'default');
         $formNode = $appearanceNode->getElementsByTagName('form')->item(0);
         if ($formNode && $formNode->nodeValue) {
@@ -232,22 +234,23 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
     private function convertAdditionalData(\DOMElement $elementNode): array
     {
         $additionalData = [];
-        $xmlArgumentsNodes = $elementNode->getElementsByTagName('arguments');
+        $xmlItemNodes = $elementNode->childNodes;
 
-        if (!$xmlArgumentsNodes->length) {
+        if (!$xmlItemNodes->length) {
             return $additionalData;
         }
 
-        /** @var $xmlArgumentsNode \DOMElement */
-        foreach ($xmlArgumentsNodes as $xmlArgumentsNode) {
-            $parsedArgumentsData = $this->parser->parse($xmlArgumentsNode);
-            $argumentName = $xmlArgumentsNode->attributes->getNamedItem('name')->nodeValue;
+        /** @var $xmlItemNode \DOMElement */
+        foreach ($xmlItemNodes as $xmlItemNode) {
+            if ($xmlItemNode->nodeType == XML_ELEMENT_NODE && $xmlItemNode->nodeName === 'item') {
+                $parsedItemData = $this->parser->parse($xmlItemNode);
+                $itemName = $xmlItemNode->attributes->getNamedItem('name')->nodeValue;
 
-            if (!isset($additionalData[$argumentName])) {
-                $additionalData[$argumentName] = [];
+                if (!isset($additionalData[$itemName])) {
+                    $additionalData[$itemName] = [];
+                }
+                $additionalData[$itemName] += $parsedItemData;
             }
-
-            $additionalData[$argumentName] += $parsedArgumentsData;
         }
 
         return $additionalData;

@@ -117,9 +117,6 @@
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="item">
-        <xs:sequence>
-            <xs:element type="item" name="item" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
         <xs:attribute type="xs:string" name="value" use="required"/>
     </xs:complexType>
@@ -143,7 +140,7 @@
     </xs:complexType>
     <xs:complexType name="additional_data">
         <xs:choice maxOccurs="unbounded">
-            <xs:element type="item" name="item" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element type="argumentType" name="item" minOccurs="1" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
     <xs:complexType name="property">

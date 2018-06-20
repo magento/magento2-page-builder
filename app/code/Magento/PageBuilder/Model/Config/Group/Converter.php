@@ -40,14 +40,11 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
             if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
                 $name = $group->attributes->getNamedItem('name')->nodeValue;
                 /** @var \DOMElement $childNode */
-                foreach ($group->childNodes as $childNode) {
-                    if ($this->isConfigNode($childNode)) {
-                        $groupsData[$name][$childNode->nodeName] = $childNode->nodeValue;
-                    }
+                foreach ($group->attributes as $key => $value) {
+                    $groupsData[$name][$key] = $group->hasAttribute($key)
+                        ? $group->attributes->getNamedItem($key)->nodeValue
+                        : null;
                 }
-                $groupsData[$name]['sortOrder'] = $group->hasAttribute('sortOrder')
-                    ? $group->attributes->getNamedItem('sortOrder')->nodeValue
-                    : null;
             }
         }
         uasort($groupsData, function ($firstElement, $secondElement) {
