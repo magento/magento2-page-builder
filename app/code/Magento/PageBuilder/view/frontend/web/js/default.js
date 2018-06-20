@@ -97,8 +97,8 @@ requirejs([
             });
         });
 
-        showOverlayOnHover($('div[data-role="banner"][data-show-overlay="on_hover"] > a'));
-        showButtonOnHover($('div[data-role="banner"][data-show-button="on_hover"] > a'), '.pagebuilder-banner-button');
+        showOverlayOnHover($('div[data-role="banner"][data-show-overlay="hover"] > a'));
+        showButtonOnHover($('div[data-role="banner"][data-show-button="hover"] > a'), '.pagebuilder-banner-button');
 
         showOverlayOnHover($('div[data-role="slide"][data-show-overlay="hover"] > a'));
         showButtonOnHover($('div[data-role="slide"][data-show-button="hover"] > a'), '.pagebuilder-slide-button');
@@ -130,21 +130,22 @@ requirejs([
             controls,
             mapOptions = {};
 
-        /**
-         * Sets height to 300px as default if no height input. But will not be saved to database
-         */
-        if ($(element).context.style.height === '') {
-            $(element).height('300px');
-        }
+        if (element.hasAttribute('data-locations')) {
 
-        if (element.hasAttribute('data-locations') && element.getAttribute('data-locations') !== '[]') {
+            /**
+             * Set map display to none if no locations
+             */
+            if (element.getAttribute('data-locations') === '[]') {
+                $(element).hide();
+
+                return;
+            }
             locations = JSON.parse(element.getAttribute('data-locations'));
             locations.forEach(function (location) {
                 location.position.latitude = parseFloat(location.position.latitude);
                 location.position.longitude = parseFloat(location.position.longitude);
             });
             controls = element.getAttribute('data-show-controls');
-            mapOptions.center = locations[0].position;
             mapOptions.disableDefaultUI = controls !== 'true';
             mapOptions.mapTypeControl = controls === 'true';
             new GoogleMap(element, locations, mapOptions);

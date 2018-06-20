@@ -12,7 +12,7 @@ define(['jquery'], function($) {
      * @param {Object} config
      * @param {HTMLElement} el
      */
-    var GoogleMapsApiValidator = function(config, el) {
+    var GoogleMapsApiKeyValidator = function(config, el) {
         var sourceElement = $('#' + config.sourceField),
             initialValue = sourceElement.val(),
             resultElement = $('#' + config.elementId + ' > .result');
@@ -50,5 +50,5 @@ define(['jquery'], function($) {
         })
     };
 
-    return GoogleMapsApiValidator;
+    return GoogleMapsApiKeyValidator;
 });

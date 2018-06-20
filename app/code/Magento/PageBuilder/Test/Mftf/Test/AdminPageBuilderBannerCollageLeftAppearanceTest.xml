@@ -65,25 +65,25 @@
             <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
-            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSizeCoverProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSizeCoverProperty">
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -117,8 +117,11 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBannerMinHeight">
             <argument name="property" value="PageBuilderBannerMinimumHeightProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingProperty40"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -155,19 +158,19 @@
             <argument name="property" value="PageBuilderBannerNewTabProperty"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeBackgroundColorFFFFFFOnForm">
-            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPositionCenteredOnForm">
-            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundSizeCoverOnForm">
-            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsCheckedSlideOutProperty" stepKey="seeOnBackgroundRepeatOnForm">
-            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundAttachmentScrollOnForm">
-            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandAdvancedSection2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAppearanceCollageLeftOnForm">
@@ -197,6 +200,9 @@
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="seeUniqueMarginsInAdmin">
             <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
         </actionGroup>
+        <actionGroup ref="seeInPaddingFieldsSlideOutPanel" stepKey="seeUniquePaddingInAdmin">
+            <argument name="property" value="PageBuilderPaddingProperty40"/>
+        </actionGroup>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
         </actionGroup>
@@ -210,7 +216,7 @@
         <seeElement selector="{{BannerOnFrontend.bannerBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyleInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.bannerBorderRadiusStyle(PageBuilderAdvancedBorderRadiusProperty12.value)}}" stepKey="verifyBorderRadiusStyleInFrontend"/>
         <seeElement selector="{{BannerOnFrontend.bannerClass(PageBuilderAdvancedCssClassesPropertyThreeClasses.value)}}" stepKey="verifyClassInFrontend"/>
-        <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
+        <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{BannerOnFrontend.linkUrl(PageBuilderBannerLinkUrlProperty.value)}}" stepKey="seeLinkUrl"/>
@@ -278,10 +284,10 @@
             <argument name="property" value="PageBuilderPaddingProperty40"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -363,7 +369,7 @@
             <argument name="property" value="PageBuilderPaddingProperty40"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -442,10 +448,10 @@
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -476,8 +482,11 @@
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterAdvancedBorderRadiusProperty">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty12"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldMarginsAndPadding" stepKey="enterAdvancedMarginsAndPaddingProperty">
-            <argument name="property" value="PageBuilderBannerAdvancedMarginsAndPaddingProperty"/>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMargins">
+            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPadding">
+            <argument name="property" value="PageBuilderPaddingProperty40"/>
         </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAdvancedAlignmentProperty">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -492,7 +501,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentTypePreviewInStage(PageBuilderBannerContentType.role)}}" stepKey="waitForVideoPreviewInStager" />
-        <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
+        <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{BannerOnBackend.bannerBorderStyle(PageBuilderAdvancedBorderWidthProperty10.value, PageBuilderAdvancedBorderPropertyDotted.value, PageBuilderAdvancedBorderColorProperty_ffffff.rbg)}}" stepKey="verifyBorderStyle"/>
@@ -539,10 +548,10 @@
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <!-- Fill button fields -->
         <comment userInput="Fill button fields" stepKey="commentFillButtons"/>
@@ -667,10 +676,10 @@
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBannerButtonShowOnHover">
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
@@ -780,10 +789,10 @@
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -873,10 +882,10 @@
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -977,10 +986,10 @@
             <argument name="property" value="PageBuilderBannerCollageLeftProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderMobileFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBannerButtonShowOnHover">
             <argument name="property" value="PageBuilderBannerShowButtonOnHoverProperty"/>
