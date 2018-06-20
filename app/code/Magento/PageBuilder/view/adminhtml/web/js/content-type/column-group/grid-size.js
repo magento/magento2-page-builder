@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/column/resize"], function (_config, _resize) {
+define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/column/resize"], function (_translate, _config, _resize) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   /**
@@ -35,48 +35,82 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/co
 
 
   function resizeGrid(columnGroup, newGridSize) {
-    var resizeUtils = columnGroup.preview.getResizeUtils();
-    var currentGridSize = parseInt(columnGroup.dataStore.getKey("gridSize").toString(), 10);
-    var numColumns = columnGroup.getChildren()().length; // Validate against the max grid size
+    validateNewGridSize(columnGroup, newGridSize); // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
 
+    if (newGridSize < columnGroup.getChildren()().length) {
+      removeEmptyColumnsToFit(columnGroup, newGridSize);
+    } // update column widths
+
+
+    redistributeColumnWidths(columnGroup, newGridSize);
+  }
+  /**
+   * Validate that the new grid size is within the configured limits and can be achieved.
+   *
+   * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+   * @param {number} newGridSize
+   */
+
+
+  function validateNewGridSize(columnGroup, newGridSize) {
+    // Validate against the max grid size
     if (newGridSize > getMaxGridSize()) {
-      throw new GridSizeError("The maximum grid size supported is " + getMaxGridSize() + ".");
+      throw new GridSizeError((0, _translate)("The maximum grid size supported is " + getMaxGridSize() + "."));
     } else if (newGridSize < numColumns) {
-      throw new GridSizeError("Grid size cannot be smaller than the number of columns.");
+      throw new GridSizeError((0, _translate)("Grid size cannot be smaller than the number of columns."));
     } // Validate that the operation will be successful
 
 
-    if (newGridSize < currentGridSize && numColumns > newGridSize) {
+    var currentGridSize = parseInt(columnGroup.dataStore.getKey("gridSize").toString(), 10);
+
+    if (newGridSize < currentGridSize && columnGroup.getChildren()().length > newGridSize) {
       var numEmptyColumns = 0;
       columnGroup.getChildren()().forEach(function (column) {
-        if (column.getChildren().length === 0) {
+        if (column.getChildren()().length === 0) {
           numEmptyColumns++;
         }
       });
 
-      if (numEmptyColumns >= currentGridSize - newGridSize) {
-        throw new GridSizeError("Grid size cannot be smaller than the current total amount of columns, minus any " + "empty columns.");
+      if (newGridSize < currentGridSize - numEmptyColumns) {
+        throw new GridSizeError((0, _translate)("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."));
       }
     }
-
-    var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0); // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
-
-    if (newGridSize < numColumns) {
-      columnGroup.getChildren()().forEach(function (column) {
-        if (newGridSize < numColumns && column.getChildren().length === 0) {
-          columnGroup.removeChild(column);
-          numColumns--;
-        }
-      });
-      columnGroup.dataStore.update(numColumns, "gridSize");
-    } // update column widths
+  }
+  /**
+   * Remove empty columns so we can accommodate the new grid size
+   *
+   * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+   * @param {number} newGridSize
+   */
 
 
+  function removeEmptyColumnsToFit(columnGroup, newGridSize) {
+    var numColumns = columnGroup.getChildren()().length;
+    columnGroup.getChildren()().forEach(function (column) {
+      if (newGridSize < numColumns && column.getChildren()().length === 0) {
+        columnGroup.removeChild(column);
+        numColumns--;
+      }
+    });
+  }
+  /**
+   * Adjust columns widths across the new grid size, making sure each column is at least one grid size in width
+   * and the entire grid size is distributed.
+   *
+   * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+   * @param {number} newGridSize
+   */
+
+
+  function redistributeColumnWidths(columnGroup, newGridSize) {
+    var resizeUtils = columnGroup.preview.getResizeUtils();
+    var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
     var totalNewWidths = 0;
+    var numColumns = columnGroup.getChildren()().length;
     columnGroup.getChildren()().forEach(function (column, index) {
       var newWidth = (100 * Math.floor(resizeUtils.getColumnWidth(column) / 100 * newGridSize) / newGridSize).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0); // make sure the column is at least one grid size wide
 
-      if (newWidth < minColWidth) {
+      if (parseFloat(newWidth) < parseFloat(minColWidth)) {
         newWidth = minColWidth;
       } // make sure we leave enough space for other columns
 
@@ -94,23 +128,36 @@ define(["Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/co
     columnGroup.dataStore.update(newGridSize, "gridSize"); // apply leftover columns if the new grid size did not distribute evenly into existing columns
 
     if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
-      var column;
+      applyLeftoverColumns(columnGroup, newGridSize);
+    }
+  }
+  /**
+   * Make sure the full grid size is distributed across the columns
+   *
+   * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+   * @param {number} newGridSize
+   */
 
-      for (var _iterator = columnGroup.getChildren()(), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
-        if (_isArray) {
-          if (_i >= _iterator.length) break;
-          column = _iterator[_i++];
-        } else {
-          _i = _iterator.next();
-          if (_i.done) break;
-          column = _i.value;
-        }
 
-        if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
-          (0, _resize.updateColumnWidth)(column, parseFloat(resizeUtils.getColumnWidth(column).toString()) + parseFloat(minColWidth));
-        } else {
-          break;
-        }
+  function applyLeftoverColumns(columnGroup, newGridSize) {
+    var resizeUtils = columnGroup.preview.getResizeUtils();
+    var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
+    var column;
+
+    for (var _iterator = columnGroup.getChildren()(), _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
+      if (_isArray) {
+        if (_i >= _iterator.length) break;
+        column = _iterator[_i++];
+      } else {
+        _i = _iterator.next();
+        if (_i.done) break;
+        column = _i.value;
+      }
+
+      if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
+        (0, _resize.updateColumnWidth)(column, parseFloat(resizeUtils.getColumnWidth(column).toString()) + parseFloat(minColWidth));
+      } else {
+        break;
       }
     }
   }

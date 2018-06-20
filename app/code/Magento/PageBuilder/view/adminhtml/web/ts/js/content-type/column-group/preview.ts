@@ -18,8 +18,10 @@ import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import ColumnPreview from "../column/preview";
-import ResizeUtils, {comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
-    getRoundedColumnWidth, updateColumnWidth} from "../column/resize";
+import ResizeUtils, {
+    comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
+    getRoundedColumnWidth, updateColumnWidth
+} from "../column/resize";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";

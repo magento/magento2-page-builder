@@ -3,6 +3,7 @@
  * See COPYING.txt for license details.
  */
 
+import $t from "mage/translate";
 import Config from "../../config";
 import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ColumnPreview from "../column/preview";
@@ -40,54 +41,88 @@ export function getMaxGridSize(): number {
  * @param {number} newGridSize
  */
 export function resizeGrid(columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number) {
-    const resizeUtils = columnGroup.preview.getResizeUtils();
-    const currentGridSize = parseInt(columnGroup.dataStore.getKey("gridSize").toString(), 10);
-    let numColumns = columnGroup.getChildren()().length;
+    validateNewGridSize(columnGroup, newGridSize);
 
-    // Validate against the max grid size
-    if (newGridSize > getMaxGridSize()) {
-        throw new GridSizeError(`The maximum grid size supported is ${getMaxGridSize()}.`);
-    } else if (newGridSize < numColumns) {
-        throw new GridSizeError("Grid size cannot be smaller than the number of columns.");
-    }
-
-    // Validate that the operation will be successful
-    if (newGridSize < currentGridSize && numColumns > newGridSize) {
-        let numEmptyColumns = 0;
-        columnGroup.getChildren()().forEach(
-            (column: ContentTypeCollectionInterface<ColumnPreview>) => {
-                if (column.getChildren().length === 0) {
-                    numEmptyColumns++;
-                }
-            });
-        if (numEmptyColumns >= currentGridSize - newGridSize) {
-            throw new GridSizeError("Grid size cannot be smaller than the current total amount of columns, minus any " +
-                "empty columns.");
-        }
-    }
-
-    const minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(
-        Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0,
-    );
     // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
-    if (newGridSize < numColumns) {
-        columnGroup.getChildren()().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
-            if (newGridSize < numColumns && column.getChildren().length === 0) {
-                columnGroup.removeChild(column);
-                numColumns--;
-            }
-        });
-        columnGroup.dataStore.update(numColumns, "gridSize");
+    if (newGridSize < columnGroup.getChildren()().length) {
+        removeEmptyColumnsToFit(columnGroup, newGridSize);
     }
 
     // update column widths
+    redistributeColumnWidths(columnGroup, newGridSize);
+}
+
+/**
+ * Validate that the new grid size is within the configured limits and can be achieved.
+ *
+ * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+ * @param {number} newGridSize
+ */
+function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number) {
+    // Validate against the max grid size
+    if (newGridSize > getMaxGridSize()) {
+        throw new GridSizeError($t(`The maximum grid size supported is ${getMaxGridSize()}.`));
+    } else if (newGridSize < numColumns) {
+        throw new GridSizeError($t("Grid size cannot be smaller than the number of columns."));
+    }
+
+    // Validate that the operation will be successful
+    const currentGridSize = parseInt(columnGroup.dataStore.getKey("gridSize").toString(), 10);
+    if (newGridSize < currentGridSize && columnGroup.getChildren()().length > newGridSize) {
+        let numEmptyColumns = 0;
+        columnGroup.getChildren()().forEach(
+            (column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                if (column.getChildren()().length === 0) {
+                    numEmptyColumns++;
+                }
+            });
+        if (newGridSize < currentGridSize - numEmptyColumns) {
+            throw new GridSizeError(
+                $t("Grid size cannot be smaller than the current total amount of columns, minus any empty columns."),
+            );
+        }
+    }
+}
+
+/**
+ * Remove empty columns so we can accommodate the new grid size
+ *
+ * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+ * @param {number} newGridSize
+ */
+function removeEmptyColumnsToFit(columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number) {
+    let numColumns = columnGroup.getChildren()().length;
+    columnGroup.getChildren()().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
+        if (newGridSize < numColumns && column.getChildren()().length === 0) {
+            columnGroup.removeChild(column);
+            numColumns--;
+        }
+    });
+}
+
+/**
+ * Adjust columns widths across the new grid size, making sure each column is at least one grid size in width
+ * and the entire grid size is distributed.
+ *
+ * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+ * @param {number} newGridSize
+ */
+function redistributeColumnWidths(
+    columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number,
+) {
+    const resizeUtils = columnGroup.preview.getResizeUtils();
+    const minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(
+        Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0,
+    );
     let totalNewWidths = 0;
+    const numColumns = columnGroup.getChildren()().length;
     columnGroup.getChildren()().forEach(
         (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
             let newWidth = (100 * Math.floor((resizeUtils.getColumnWidth(column) / 100) * newGridSize) / newGridSize)
                 .toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
+
             // make sure the column is at least one grid size wide
-            if (newWidth < minColWidth) {
+            if (parseFloat(newWidth) < parseFloat(minColWidth)) {
                 newWidth = minColWidth;
             }
             // make sure we leave enough space for other columns
@@ -105,16 +140,30 @@ export function resizeGrid(columnGroup: ContentTypeCollectionInterface<ColumnGro
 
     // apply leftover columns if the new grid size did not distribute evenly into existing columns
     if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
-        let column: ContentTypeCollectionInterface<ColumnPreview>;
-        for (column of (columnGroup.getChildren()() as Array<ContentTypeCollectionInterface<ColumnPreview>>)) {
-            if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
-                updateColumnWidth(
-                    column,
-                    parseFloat(resizeUtils.getColumnWidth(column).toString()) + parseFloat(minColWidth),
-                );
-            } else {
-                break;
-            }
+        applyLeftoverColumns(columnGroup, newGridSize);
+    }
+}
+
+/**
+ * Make sure the full grid size is distributed across the columns
+ *
+ * @param {ContentTypeCollectionInterface<Preview>} columnGroup
+ * @param {number} newGridSize
+ */
+function applyLeftoverColumns(columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number) {
+    const resizeUtils = columnGroup.preview.getResizeUtils();
+    const minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(
+        Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0,
+    );
+    let column: ContentTypeCollectionInterface<ColumnPreview>;
+    for (column of (columnGroup.getChildren()() as Array<ContentTypeCollectionInterface<ColumnPreview>>)) {
+        if (Math.round(resizeUtils.getColumnsWidth()) < 100) {
+            updateColumnWidth(
+                column,
+                parseFloat(resizeUtils.getColumnWidth(column).toString()) + parseFloat(minColWidth),
+            );
+        } else {
+            break;
         }
     }
 }
