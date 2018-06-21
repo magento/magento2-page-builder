@@ -7,7 +7,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="video" sortOrder="10" translate="label" label="Video" icon="icon-pagebuilder-video" component="Magento_PageBuilder/js/content-type" form="pagebuilder_video_form" group="media">
+        <type name="video" sortOrder="10" translate="label" label="Video" icon="icon-pagebuilder-video" component="Magento_PageBuilder/js/content-type" preview_component="Magento_PageBuilder/js/content-type/video/preview" form="pagebuilder_video_form" group="media">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
@@ -19,28 +19,28 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property name="text_align" source="text_align"/>
+                                    <property name="text_align" source="justify_content"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
                                     <attribute name="appearance" source="data-appearance"/>
                                 </attributes>
+                                <css name="css_classes"/>
                             </element>
-                            <element name="video" path=".//iframe">
+                            <element name="wrapper" path=".//div[contains(@class,'pagebuilder-video-wrapper')]">
                                 <style_properties>
-                                    <property name="width" source="width"/>
-                                    <property name="height" source="height"/>
-                                    <property name="text_align" source="text_align"/>
+                                    <property name="max_width" source="max_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
                                 </style_properties>
+                            </element>
+                            <element name="video" path=".//iframe">
                                 <attributes>
                                     <attribute name="video_source" source="src" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src" preview_converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src"/>
                                 </attributes>
-                                <css name="css_classes"/>
                             </element>
                         </elements>
                     </data_mapping>

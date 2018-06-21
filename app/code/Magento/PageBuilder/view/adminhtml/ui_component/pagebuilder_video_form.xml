@@ -77,41 +77,33 @@
         <field name="video_source" formElement="input">
             <settings>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-video-url" xsi:type="boolean">true</rule>
                 </validation>
                 <dataType>text</dataType>
-                <label translate="true">Video Embed URL</label>
-                <notice translate="true">Supports YouTube &amp; Vimeo.</notice>
-                <tooltip>
-                    <description translate="true">Please enter the full embed URL for the video e.g. https://www.youtube.com/embed/slOtnjsbff0. You can retrieve this URL via the "Share" option under the video.</description>
-                </tooltip>
+                <label translate="true">Video URL</label>
+                <notice translate="true">YouTube and Vimeo supported</notice>
             </settings>
         </field>
-        <field name="width" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">block</item>
-                </item>
-            </argument>
+        <field name="max_width" formElement="input">
             <settings>
                 <dataType>text</dataType>
-                <label translate="true">Width</label>
-                <addAfter translate="true">px or %</addAfter>
-                <notice translate="true">Example: 50px or 100%</notice>
+                <label translate="true">Maximum Width</label>
+                <addAfter translate="true">px</addAfter>
+                <additionalClasses>
+                    <class name="admin__field-small">true</class>
+                </additionalClasses>
             </settings>
         </field>
-        <field name="height" formElement="input">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="source" xsi:type="string">block</item>
-                </item>
-            </argument>
-            <settings>
-                <dataType>text</dataType>
-                <label translate="true">Height</label>
-                <addAfter translate="true">px or %</addAfter>
-                <notice translate="true">Example: 50px or 100%</notice>
-            </settings>
+    </fieldset>
+    <fieldset name="advanced">
+        <field name="text_align">
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\PageBuilder\Model\Source\VideoAlignmentSource"/>
+                    </settings>
+                </select>
+            </formElements>
         </field>
     </fieldset>
 </form>
