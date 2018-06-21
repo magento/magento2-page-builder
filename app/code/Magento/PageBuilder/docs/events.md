@@ -76,6 +76,7 @@ This document contains reference information for events dispatched in Page Build
 * [stage:updated](#stageupdated)
 * [state](#state)
 * [{{id}}:updated](#idupdated)
+* [googleMaps:authFailure](#googlemapsauthFailure)
 
 ## `contentType:*` events
 All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:contentType:{{event}}`) like the following:
@@ -521,6 +522,18 @@ Error
     paramObj: [key: string]: Stage
 }
 ```
+
+[Back to top]
+
+## `googleMaps:authFailure`
+
+**Triggers**
+
+* `window.gm_authFailure`
+
+**Params**
+
+_none_
 
 [Back to top]
 

@@ -5,8 +5,11 @@
 
 define([
     'underscore',
+    'module',
+    'uiEvents',
+    'mage/translate',
     'googleMaps'
-], function (_) {
+], function (_, module, events, $t) {
     'use strict';
 
     var google = window.google || {},
@@ -19,11 +22,54 @@ define([
          */
         getGoogleLatitudeLongitude = function (position) {
             return new google.maps.LatLng(position.latitude, position.longitude);
+        },
+        gmAuthFailure = false;
+
+    // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+    /**
+     * Google's error listener for map loader failures
+     */
+    window.gm_authFailure = function () {
+        events.trigger('googleMaps:authFailure');
+        gmAuthFailure = true;
+    };
+    // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+
+    return function (element, markers, additionalOptions) {
+        var options,
+            style;
+
+        /**
+         * Replace the content of element with a placeholder
+         *
+         * @param {Element} container
+         */
+        this.usePlaceholder = function (container) {
+            var placeholder = document.createElement('div');
+
+            placeholder.innerHTML = $t('Enter API Key to use Google Maps');
+            placeholder.classList.add('google-map-auth-failure-placeholder');
+            container.innerHTML = '';
+            container.appendChild(placeholder);
         };
 
-    return function (element, markers, options) {
+        //Terminate map early and add placeholder if gm_authFailure is true
+        if (gmAuthFailure) {
+            this.usePlaceholder(element);
 
-        var mapOptions = _.extend({
+            return;
+        }
+
+        /**
+         * Just in case of a bad JSON that bypassed validation
+         */
+        try {
+            style = module.config().style ? JSON.parse(module.config().style) : [];
+        }
+        catch (error) {
+            style = [];
+        }
+        options = _.extend({
             zoom: 8,
             center: getGoogleLatitudeLongitude({
                 latitude: 30.2672,
@@ -35,11 +81,12 @@ define([
             mapTypeControl: true,
             mapTypeControlOptions: {
                 style: google.maps.MapTypeControlStyle.DEFAULT
-            }
-        }, options);
+            },
+            styles: style
+        }, additionalOptions);
 
         /* Create the map */
-        this.map = new google.maps.Map(element, mapOptions);
+        this.map = new google.maps.Map(element, options);
         this.markers = [];
 
         /**
