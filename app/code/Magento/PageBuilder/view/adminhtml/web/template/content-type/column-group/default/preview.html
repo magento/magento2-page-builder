@@ -10,11 +10,14 @@
     <div class="pagebuilder-grid-size-indicator">
         <div class="pagebuilder-grid-size-indicator-wrapper" event="{ click: openGridForm }">
             <i class="icon-pagebuilder-grid-options"></i>
-        </div>
-        <div class="focus-options">
             <div class="pagebuilder-grid-panel"
                  css="{ 'pagebuilder-grid-panel-visible': gridFormOpen, 'pagebuilder-grid-panel-error': gridSizeError }">
                 <div class="pagebuilder-grid-panel-wrapper">
+                    <ul class="pagebuilder-grid-panel-links">
+                        <li class="pagebuilder-grid-panel-link">
+                            <div if="gridSizeError" html="gridSizeError" class="admin__field-error"></div>
+                        </li>
+                    </ul>
                     <ul class="pagebuilder-grid-panel-links">
                         <li class="pagebuilder-grid-panel-link">
                             <div class="panel-title">
@@ -31,21 +34,16 @@
                             </div>
                         </li>
                         <li class="pagebuilder-grid-panel-link">
-                           <div class="pagebuilder-grid-panel-link-wrapper">
+                            <div class="pagebuilder-grid-panel-link-wrapper">
                                 <div class="pagebuilder-grid-panel-tooltip">
                                     ?
                                     <span class="tooltip-content"
                                           role="tooltip">
-                                        <p>Grid size determines the maximum number of columns available.</p>
-                                        <p>Select a value between 2 and 16.</p>
-                                    </span>
+                                    <p>Grid size determines the maximum number of columns available.</p>
+                                    <p>Select a value between 2 and 16.</p>
+                                </span>
                                 </div>
-                           </div>
-                        </li>
-                    </ul>
-                    <ul class="pagebuilder-grid-panel-links">
-                        <li class="pagebuilder-grid-panel-link">
-                            <div if="gridSizeError" html="gridSizeError" class="admin__field-error"></div>
+                            </div>
                         </li>
                     </ul>
                 </div>
