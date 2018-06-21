@@ -33,10 +33,8 @@ export default class Display implements ConverterInterface {
             && data.show_button === "never"
             && data.show_overlay === "never"
         ) {
-
             return "none";
         }
-
         return;
     }
 }
