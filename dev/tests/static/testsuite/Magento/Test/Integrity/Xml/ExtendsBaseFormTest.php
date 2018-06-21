@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\Test\Integrity\Xml;
 
 use Magento\Framework\Component\ComponentRegistrar;
@@ -15,8 +18,9 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
         $invoker(
             /**
              * @param string $filename
+             * @param string $expectedBaseForm
              */
-            function ($filename) {
+            function ($filename, $expectedBaseForm) {
                 $dom = new \DOMDocument();
                 $dom->loadXML(file_get_contents($filename));
                 $errors = libxml_get_errors();
@@ -29,22 +33,25 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
                 );
 
                 $this->assertEquals(
-                    'pagebuilder_base_form',
+                    $expectedBaseForm,
                     $dom->getElementsByTagName('form')->item(0)->getAttribute('extends'),
-                    'The XML file ' . $filename . ' does not extend "pagebuilder_base_form"'
+                    'The XML file ' . $filename . ' does not extend "'. $expectedBaseForm . '"'
                 );
             },
             $this->getXmlFiles()
         );
     }
 
-    private function getXmlFiles()
+    private function getXmlFiles(): array
     {
         $data = [];
         $ignoreFiles = [
-            'pagebuilder_base_form.xml',
-            'pagebuilder_modal_form.xml',
-            'pagebuilder_map_location_form.xml'
+            'pagebuilder_modal_form.xml'
+        ];
+        $overrideFiles = [
+            'pagebuilder_base_form.xml' => '',
+            'pagebuilder_map_location_form.xml' => '',
+            'pagebuilder_banner_form.xml' => 'pagebuilder_base_form_with_background_attributes'
         ];
         $componentRegistrar = new ComponentRegistrar();
         $modulePath = $componentRegistrar->getPath(ComponentRegistrar::MODULE, 'Magento_PageBuilder');
@@ -56,7 +63,8 @@ class ExtendsBaseFormTest extends \PHPUnit\Framework\TestCase
             if (in_array($fileName, $ignoreFiles)) {
                 continue;
             }
-            $data[$fileName] = [$file];
+            $baseForm = $overrideFiles[$fileName] ?? 'pagebuilder_base_form';
+            $data[$fileName] = [$file, $baseForm];
         }
 
         return $data;

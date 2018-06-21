@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Stage;
 
 use Magento\Framework\UrlInterface;
@@ -41,6 +44,11 @@ class Config
     private $frontendUrlBuilder;
 
     /**
+     * @var \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser
+     */
+    private $additionalDataParser;
+
+    /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
      */
     private $scopeConfig;
@@ -51,6 +59,7 @@ class Config
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param UrlInterface $urlBuilder
      * @param \Magento\Framework\Url $frontendUrlBuilder
+     * @param \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param array $data
      */
@@ -59,6 +68,7 @@ class Config
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Framework\Url $frontendUrlBuilder,
+        \Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Parser $additionalDataParser,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         array $data = []
     ) {
@@ -66,6 +76,7 @@ class Config
         $this->uiComponentConfig = $uiComponentConfig;
         $this->urlBuilder = $urlBuilder;
         $this->frontendUrlBuilder = $frontendUrlBuilder;
+        $this->additionalDataParser = $additionalDataParser;
         $this->scopeConfig = $scopeConfig;
         $this->data = $data;
     }
@@ -153,7 +164,9 @@ class Config
             'allowed_parents' => isset($contentType['allowed_parents']) ? $contentType['allowed_parents'] : [],
             'readers' => isset($contentType['readers']) ? $contentType['readers'] : [],
             'appearances' => isset($contentType['appearances']) ? $contentType['appearances'] : [],
-            'additional_data' => isset($contentType['additional_data']) ? $contentType['additional_data'] : [],
+            'additional_data' => isset($contentType['additional_data'])
+                ? $this->additionalDataParser->toArray($contentType['additional_data'])
+                : [],
             'data_mapping' => isset($contentType['data_mapping']) ? $contentType['data_mapping'] : [],
             'is_visible' => isset($contentType['is_visible']) && $contentType['is_visible'] === 'false' ? false : true
         ];

@@ -11,6 +11,7 @@
             <label>Video</label>
             <icon>icon-pagebuilder-video</icon>
             <component>Magento_PageBuilder/js/content-type</component>
+            <preview_component>Magento_PageBuilder/js/content-type/video/preview</preview_component>
             <form>pagebuilder_video_form</form>
             <group>media</group>
             <allowed_parents>
@@ -24,28 +25,28 @@
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <property name="text_align" source="text_align"/>
+                                    <property name="text_align" source="justify_content"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
                                     <attribute name="appearance" source="data-appearance"/>
                                 </attributes>
+                                <css name="css_classes"/>
                             </element>
-                            <element name="video" path=".//iframe">
+                            <element name="wrapper" path=".//div[contains(@class,'pagebuilder-video-wrapper')]">
                                 <style_properties>
-                                    <property name="width" source="width"/>
-                                    <property name="height" source="height"/>
-                                    <property name="text_align" source="text_align"/>
+                                    <property name="max_width" source="max_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border" source="border_style" converter="Magento_PageBuilder/js/converter/style/border-style"/>
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
                                 </style_properties>
+                            </element>
+                            <element name="video" path=".//iframe">
                                 <attributes>
                                     <attribute name="video_source" source="src" converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src" preview_converter="Magento_PageBuilder/js/content-type/video/converter/attribute/src"/>
                                 </attributes>
-                                <css name="css_classes"/>
                             </element>
                         </elements>
                     </data_mapping>
