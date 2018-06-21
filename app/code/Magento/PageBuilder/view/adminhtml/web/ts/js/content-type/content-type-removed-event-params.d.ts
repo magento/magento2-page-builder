@@ -3,11 +3,12 @@
  * See COPYING.txt for license details.
  */
 
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeInterface from "../content-type.d";
 
 export default interface ContentTypeRemovedEventParamsInterface {
-    contentType: ContentTypeInterface;
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
     index: number;
-    parent: ContentTypeInterface;
+    parent: ContentTypeCollectionInterface;
     stageId: string;
 }

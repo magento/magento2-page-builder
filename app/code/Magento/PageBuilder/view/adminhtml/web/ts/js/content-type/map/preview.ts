@@ -5,6 +5,7 @@
 
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
 import events from "uiEvents";
+import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
@@ -16,7 +17,7 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         // When a map is dropped for the first time open the edit panel
-        events.on("map:contentType:dropped:create", (args: {[key: string]: any}) => {
+        events.on("map:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 setTimeout(() => {
                     this.edit.open();
