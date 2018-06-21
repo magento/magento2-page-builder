@@ -20,6 +20,7 @@ import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type-after-render-event-params";
 import ContentTypeCreateEventParamsInterface from "../content-type-create-event-params.d";
+import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ContentTypeDuplicateEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
@@ -305,7 +306,7 @@ export default class Preview extends PreviewCollection {
         });
 
         // ContentType being mounted onto container
-        events.on("slider:contentType:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("slider:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
             }
