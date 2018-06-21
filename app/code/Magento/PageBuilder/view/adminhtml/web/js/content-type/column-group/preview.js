@@ -57,6 +57,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.movePosition = void 0;
       _this.groupPositionCache = void 0;
       _this.resizeUtils = void 0;
+      _this.gridSizeHistory = new Map();
 
       _this.onDocumentClick = function (event) {
         // Verify the click event wasn't within our form
@@ -373,7 +374,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       if (newGridSize) {
         if (newGridSize !== this.resizeUtils.getGridSize()) {
           try {
-            (0, _gridSize.resizeGrid)(this.parent, newGridSize);
+            (0, _gridSize.resizeGrid)(this.parent, newGridSize, this.gridSizeHistory);
+            this.recordGridResize(newGridSize);
             this.gridSizeError(null); // Make the grid "flash" on successful change
 
             this.gridChange(true);
@@ -439,6 +441,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       var _this6 = this;
 
       if (!this.gridFormOpen()) {
+        this.gridSizeHistory = new Map();
+        this.recordGridResize(this.gridSize());
         this.gridFormOpen(true); // Wait for animation to complete
 
         _underscore.delay(function () {
@@ -959,6 +963,18 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       if (this.parent.children().length === 0) {
         this.parent.parent.removeChild(this.parent);
         return;
+      }
+    };
+
+    _proto.recordGridResize = function recordGridResize(newGridSize) {
+      var _this9 = this;
+
+      if (!this.gridSizeHistory.has(newGridSize)) {
+        var columnWidths = [];
+        this.parent.getChildren()().forEach(function (column) {
+          columnWidths.push(_this9.resizeUtils.getColumnWidth(column));
+        });
+        this.gridSizeHistory.set(newGridSize, columnWidths);
       }
     };
 

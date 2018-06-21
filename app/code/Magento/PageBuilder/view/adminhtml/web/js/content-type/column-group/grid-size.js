@@ -34,7 +34,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
    */
 
 
-  function resizeGrid(columnGroup, newGridSize) {
+  function resizeGrid(columnGroup, newGridSize, gridSizeHistory) {
     if (newGridSize === columnGroup.preview.getResizeUtils().getGridSize()) {
       return;
     }
@@ -46,7 +46,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
     } // update column widths
 
 
-    redistributeColumnWidths(columnGroup, newGridSize);
+    redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory);
   }
   /**
    * Validate that the new grid size is within the configured limits and can be achieved.
@@ -88,13 +88,18 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
 
   function removeEmptyColumnsToFit(columnGroup, newGridSize) {
-    var numColumns = columnGroup.getChildren()().length;
-    columnGroup.getChildren()().forEach(function (column) {
+    var columns = columnGroup.getChildren()();
+    var numColumns = columns.length;
+    var i;
+
+    for (i = numColumns - 1; i >= 0; i--) {
+      var column = columns[i];
+
       if (newGridSize < numColumns && column.getChildren()().length === 0) {
         columnGroup.removeChild(column);
         numColumns--;
       }
-    });
+    }
   }
   /**
    * Adjust columns widths across the new grid size, making sure each column is at least one grid size in width
@@ -105,7 +110,17 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
    */
 
 
-  function redistributeColumnWidths(columnGroup, newGridSize) {
+  function redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory) {
+    // apply known column widths if we have resized before
+    if (gridSizeHistory.has(newGridSize) && gridSizeHistory.get(newGridSize).length === columnGroup.getChildren()().length) {
+      var columnWidths = gridSizeHistory.get(newGridSize);
+      columnGroup.getChildren()().forEach(function (column, index) {
+        (0, _resize.updateColumnWidth)(column, columnWidths[index]);
+      });
+      columnGroup.dataStore.update(newGridSize, "gridSize");
+      return;
+    }
+
     var resizeUtils = columnGroup.preview.getResizeUtils();
     var minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0);
     var totalNewWidths = 0;

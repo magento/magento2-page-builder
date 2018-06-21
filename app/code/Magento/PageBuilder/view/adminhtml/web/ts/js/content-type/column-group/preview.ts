@@ -75,6 +75,7 @@ export default class Preview extends PreviewCollection {
     private movePosition: DropPosition;
     private groupPositionCache: GroupPositionCache;
     private resizeUtils: ResizeUtils;
+    private gridSizeHistory: Map<number, number[]> = new Map();
 
     /**
      *
@@ -388,7 +389,12 @@ export default class Preview extends PreviewCollection {
         if (newGridSize) {
             if (newGridSize !== this.resizeUtils.getGridSize()) {
                 try {
-                    resizeGrid((this.parent as ContentTypeCollectionInterface<Preview>), newGridSize);
+                    resizeGrid(
+                        (this.parent as ContentTypeCollectionInterface<Preview>),
+                        newGridSize,
+                        this.gridSizeHistory,
+                    );
+                    this.recordGridResize(newGridSize);
                     this.gridSizeError(null);
 
                     // Make the grid "flash" on successful change
@@ -445,6 +451,9 @@ export default class Preview extends PreviewCollection {
      */
     public openGridForm(): void {
         if (!this.gridFormOpen()) {
+            this.gridSizeHistory = new Map();
+            this.recordGridResize(this.gridSize());
+
             this.gridFormOpen(true);
             // Wait for animation to complete
             _.delay(() => {
@@ -995,6 +1004,17 @@ export default class Preview extends PreviewCollection {
         if (this.parent.children().length === 0) {
             this.parent.parent.removeChild(this.parent);
             return;
+        }
+    }
+
+    private recordGridResize(newGridSize: number) {
+        if (!this.gridSizeHistory.has(newGridSize)) {
+            const columnWidths: number[] = [];
+            this.parent.getChildren()().forEach(
+                (column: ContentTypeCollectionInterface<ColumnPreview>) => {
+                    columnWidths.push(this.resizeUtils.getColumnWidth(column));
+                });
+            this.gridSizeHistory.set(newGridSize, columnWidths);
         }
     }
 }

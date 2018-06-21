@@ -40,7 +40,11 @@ export function getMaxGridSize(): number {
  * @param {ContentTypeCollectionInterface<Preview>} columnGroup
  * @param {number} newGridSize
  */
-export function resizeGrid(columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number) {
+export function resizeGrid(
+    columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>,
+    newGridSize: number,
+    gridSizeHistory: Map<number, number[]>,
+) {
     if (newGridSize === columnGroup.preview.getResizeUtils().getGridSize()) {
         return;
     }
@@ -53,7 +57,7 @@ export function resizeGrid(columnGroup: ContentTypeCollectionInterface<ColumnGro
     }
 
     // update column widths
-    redistributeColumnWidths(columnGroup, newGridSize);
+    redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory);
 }
 
 /**
@@ -94,13 +98,16 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
  * @param {number} newGridSize
  */
 function removeEmptyColumnsToFit(columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number) {
-    let numColumns = columnGroup.getChildren()().length;
-    columnGroup.getChildren()().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
+    const columns = columnGroup.getChildren()();
+    let numColumns = columns.length;
+    let i;
+    for (i = numColumns - 1; i >= 0; i--) {
+        const column: ContentTypeCollectionInterface<ColumnPreview> = columns[i];
         if (newGridSize < numColumns && column.getChildren()().length === 0) {
             columnGroup.removeChild(column);
             numColumns--;
         }
-    });
+    }
 }
 
 /**
@@ -111,8 +118,22 @@ function removeEmptyColumnsToFit(columnGroup: ContentTypeCollectionInterface<Col
  * @param {number} newGridSize
  */
 function redistributeColumnWidths(
-    columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number,
+    columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>,
+    newGridSize: number,
+    gridSizeHistory: Map<number, number[]>,
 ) {
+    // apply known column widths if we have resized before
+    if (gridSizeHistory.has(newGridSize) &&
+        gridSizeHistory.get(newGridSize).length === columnGroup.getChildren()().length) {
+        const columnWidths: number[] = gridSizeHistory.get(newGridSize);
+        columnGroup.getChildren()().forEach(
+            (column: ContentTypeCollectionInterface<ColumnPreview>, index: number) => {
+                updateColumnWidth(column, columnWidths[index]);
+            });
+        columnGroup.dataStore.update(newGridSize, "gridSize");
+        return;
+    }
+
     const resizeUtils = columnGroup.preview.getResizeUtils();
     const minColWidth = parseFloat((100 / newGridSize).toString()).toFixed(
         Math.round(100 / newGridSize) !== 100 / newGridSize ? 8 : 0,
