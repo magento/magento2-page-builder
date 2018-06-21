@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="openPageBuilderEditPanel">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="offsetXCoordinate" defaultValue="10" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(contentType.role)}}" stepKey="waitForOptions"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeEdit(contentType.role)}}" stepKey="clickEditContentType"/>
+        <waitForPageLoad time="30" stepKey="waitForEditFormToLoad"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
+        <see userInput="Edit {{contentType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation2"/>
+    </actionGroup>
+    <actionGroup name="openPageBuilderEditPanelByIndex">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+            <argument name="contentTypeXCoordinate" defaultValue="10" type="string"/>
+            <argument name="contentTypeYCoordinate" defaultValue="0" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" x="{{contentTypeXCoordinate}}" y="{{contentTypeYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickEditContentType"/>
+        <waitForPageLoad stepKey="waitForAnimation1" time="30"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
+        <see userInput="Edit {{contentType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
+        <waitForPageLoad stepKey="waitForAnimation2" time="30"/>
+    </actionGroup>
+    <actionGroup name="openPageBuilderEditPanelSmallByIndex">
+        <arguments>
+            <argument name="contentType" defaultValue=""/>
+            <argument name="contentTypeIndex" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForButtonElement"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickButtonElement"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForEditButton"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeEditByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickEditButton"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <see userInput="Edit {{contentType.name}}" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+    <actionGroup name="duplicateContentType">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+            <argument name="expectedIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeDuplicate(contentType.role, targetIndex)}}" stepKey="clickDuplicateContentType"/>
+        <waitForPageLoad time="30" stepKey="waitForAnimation"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, expectedIndex)}}" stepKey="waitForDuplicateContentType"/>
+    </actionGroup>
+    <actionGroup name="duplicateSmallContentType">
+        <arguments>
+            <argument name="contentType" defaultValue=""/>
+            <argument name="targetIndex" defaultValue="1" type="string"/>
+            <argument name="expectedIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="waitForContentTypeInStageVisible"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, targetIndex)}}" stepKey="clickContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, targetIndex)}}" stepKey="waitForOptionsMenu"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeDuplicate(contentType.role, targetIndex)}}" stepKey="clickDuplicateContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, expectedIndex)}}" stepKey="waitForDuplicateContentType"/>
+    </actionGroup>
+    <actionGroup name="removeEmptyContentTypeFromStage">
+        <!-- Remove a content type which is in it's default state -->
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="offsetXCoordinate" defaultValue="10" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="5" type="string"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForOptionsAnimation"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, '1')}}" stepKey="waitForOptions" />
+        <click selector="{{PageBuilderActionsSection.contentTypeRemove(contentType.role)}}" stepKey="clickRemoveContentType"/>
+        <waitForPageLoad stepKey="waitForRemoveAnimation"/>
+    </actionGroup>
+    <actionGroup name="removeContentTypeFromStage">
+        <!-- Remove a content type which has been configured with data or has children -->
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="offsetXCoordinate" defaultValue="10" type="string"/>
+            <argument name="offsetYCoordinate" defaultValue="0" type="string"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" x="{{offsetXCoordinate}}" y="{{offsetYCoordinate}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad1" />
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(contentType.role)}}" stepKey="waitForOptions" />
+        <click selector="{{PageBuilderActionsSection.contentTypeRemove(contentType.role)}}" stepKey="clickRemoveContentType"/>
+        <waitForPageLoad stepKey="waitForRemoveModal" />
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal" />
+        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalOk" />
+        <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
+        <waitForPageLoad time="30" stepKey="waitForRemoveAnimation"/>
+        <waitForElementNotVisible time="30" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide"/>
+        <waitForElementVisible time="30" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow"/>
+        <!-- Follow with confirmRemovalModal actionGroup -->
+    </actionGroup>
+    <actionGroup name="removeContentTypeFromStageByIndex">
+        <arguments>
+            <argument name="contentType"/>
+            <argument name="contentTypeNumber" defaultValue="2" type="string"/>
+            <argument name="x" defaultValue="null" type="string"/>
+            <argument name="y" defaultValue="null" type="string"/>
+        </arguments>
+        <seeElement selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="seeContentTypeInStage" />
+        <waitForElementVisible time="20" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForContentTypeInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeNumber)}}" x="{{x}}" y="{{y}}" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForOptionsAnimation"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeNumber)}}" stepKey="waitForOptions" />
+        <click selector="{{PageBuilderActionsSection.contentTypeRemoveByIndex(contentType.role, contentTypeNumber)}}" stepKey="clickRemoveContentType"/>
+        <waitForPageLoad time="30" stepKey="waitForRemoveAnimation"/>
+        <!-- Follow with confirmRemovalModal actionGroup -->
+    </actionGroup>
+    <actionGroup name="removeContentTypeFromStageSmallByIndex">
+        <arguments>
+            <argument name="contentType" defaultValue=""/>
+            <argument name="contentTypeIndex" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForButtonElement"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickButtonElement"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeRemoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForRemoveButton"/>
+        <click selector="{{PageBuilderActionsSection.contentTypeRemoveByIndex(contentType.role, contentTypeIndex)}}" stepKey="clickRemoveContentType"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+    <actionGroup name="confirmRemovalModal">
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModal"/>
+        <seeElement selector="{{PageBuilderActionsSection.modal}}" stepKey="seeRemovalModal"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalOk" />
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
+        <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="confirmRemoveModal"/>
+        <waitForElementNotVisible time="1" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="waitForModalHide" />
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
+    </actionGroup>
+    <actionGroup name="validateOnHoverOptionMenu">
+        <arguments>
+            <argument name="contentType"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(contentType.role)}}" stepKey="onMouseOverStage"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(contentType.role)}}" stepKey="waitForOptionsMenu" />
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeMove(contentType.role)}}" stepKey="seeOptionsMove"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeEdit(contentType.role)}}" stepKey="seeOptionsEdit"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeDuplicate(contentType.role, '1')}}" stepKey="seeOptionsDuplicate"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeRemove(contentType.role)}}" stepKey="seeOptionsRemove"/>
+        <see selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(contentType.role)}}" userInput="{{contentType.name}}" stepKey="seeOptionMenuTitle"/>
+    </actionGroup>
+</actionGroups>
