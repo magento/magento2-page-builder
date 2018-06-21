@@ -55,12 +55,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         /** @var \DOMNode $contentType */
         foreach ($contentTypes as $contentType) {
             $name = $contentType->attributes->getNamedItem('name')->nodeValue;
-            /** @var \DOMElement $key */
-            /** @var \DOMElement $value */
-            foreach ($contentType->attributes as $key => $value) {
-                $typesData[$name][$key] = $contentType->hasAttribute($key)
-                    ? $contentType->attributes->getNamedItem($key)->nodeValue
-                    : null;
+            /** @var \DOMElement $attributeValue */
+            foreach ($contentType->attributes as $attributeName => $attributeValue) {
+                $typesData[$name][$attributeName] = $attributeValue->nodeValue;
             }
             /** @var \DOMElement $childNode */
             foreach ($contentType->childNodes as $childNode) {

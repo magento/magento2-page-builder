@@ -39,11 +39,9 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         foreach ($groups->item(0)->childNodes as $group) {
             if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
                 $name = $group->attributes->getNamedItem('name')->nodeValue;
-                /** @var \DOMElement $childNode */
-                foreach ($group->attributes as $key => $value) {
-                    $groupsData[$name][$key] = $group->hasAttribute($key)
-                        ? $group->attributes->getNamedItem($key)->nodeValue
-                        : null;
+                /** @var \DOMElement $attributeValue */
+                foreach ($group->attributes as $attributeName => $attributeValue) {
+                    $groupsData[$name][$attributeName] = $attributeValue->nodeValue;
                 }
             }
         }
@@ -52,19 +50,5 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         });
 
         return $groupsData;
-    }
-
-    /**
-     * Check if node is configuration node
-     *
-     * @param \DOMNode $node
-     * @return bool
-     */
-    private function isConfigNode(\DOMNode $node): bool
-    {
-        return $node->nodeType === XML_ELEMENT_NODE
-            || ($node->nodeType === XML_CDATA_SECTION_NODE
-                || $node->nodeType === XML_TEXT_NODE
-                && trim($node->nodeValue) !== '');
     }
 }
