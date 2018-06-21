@@ -82,16 +82,6 @@
         <fillField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="fillPropertyField"/>
         <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
-    <actionGroup name="fillSlideOutPanelFieldAlternate">
-        <!-- todo: When is this used? -->
-        <arguments>
-            <argument name="property"/>
-            <argument name="input"/>
-        </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement"/>
-        <fillField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{input}}" stepKey="fillPropertyField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
-    </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldAndExpectToSeeErrorInFieldset">
         <arguments>
             <argument name="property"/>
