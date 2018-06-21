@@ -19,6 +19,8 @@
             <testCaseId value="MAGETWO-90360"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -75,6 +77,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -209,6 +213,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -276,7 +282,7 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImageProperty.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImageProperty.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
@@ -287,7 +293,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImageProperty.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImageProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
@@ -301,7 +307,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImageProperty.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImageProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSize1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
@@ -313,7 +319,7 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImageProperty.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImageProperty.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSize2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
@@ -331,6 +337,8 @@
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
             <group value="pagebuilder-tabconfiguration"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -392,7 +400,7 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
@@ -402,7 +410,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
@@ -415,7 +423,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeatYes"/>
@@ -426,7 +434,7 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2BackgroundRepeatYes"/>
@@ -442,6 +450,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -509,7 +519,7 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2StageBackgroundRepeatYes"/>
@@ -519,7 +529,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1StageBackgroundRepeatYes"/>
@@ -532,7 +542,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab1BackgroundRepeatYes"/>
@@ -543,7 +553,7 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatYes.style)}}" stepKey="seeTab2BackgroundRepeatYes"/>
@@ -559,6 +569,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -632,7 +644,7 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
@@ -643,7 +655,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
@@ -657,7 +669,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSize1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
@@ -669,7 +681,7 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
@@ -686,6 +698,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -753,7 +767,7 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
@@ -763,7 +777,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
@@ -773,7 +787,7 @@
         <comment userInput="Verify tabs on stage after save" stepKey="checkAfterSave"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
@@ -784,7 +798,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2AfterSave"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1AfterSave"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSizeAdmin2AfterSave"/>
@@ -796,7 +810,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
@@ -807,7 +821,7 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2BackgroundRepeatNo"/>
@@ -823,6 +837,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -890,7 +906,7 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
@@ -900,7 +916,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1StageBackgroundRepeatNo"/>
@@ -913,7 +929,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundRepeat('1', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab1BackgroundRepeatNo"/>
@@ -924,7 +940,7 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImage3Property.path,PageBuilderTabBackgroundImage3Property.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeCover.value)}}" stepKey="seeTabBackgroundSize2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
@@ -941,6 +957,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1018,7 +1036,7 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
@@ -1030,7 +1048,7 @@
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
         <seeElement selector="{{TabOnStage.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTabMinHeightAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
@@ -1040,7 +1058,7 @@
         <comment userInput="Verify tabs on stage after save" stepKey="checkAfterSave"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
@@ -1051,7 +1069,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2AfterSave"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1AfterSave"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2AfterSave"/>
@@ -1064,7 +1082,7 @@
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
         <seeElement selector="{{TabOnStorefront.tabContentMinimumHeight('1', PageBuilderTabMinimumHeight200Property.value)}}" stepKey="seeTab1MinHeight"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSize1"/>
@@ -1076,7 +1094,7 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize2"/>
@@ -1093,6 +1111,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1166,7 +1186,7 @@
 
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
@@ -1176,7 +1196,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <see selector="{{TabOnStage.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleAdmin"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
@@ -1190,7 +1210,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTab1BackgroundSize"/>
@@ -1200,7 +1220,7 @@
             <argument name="to" value="2"/>
         </actionGroup>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabImageGifProperty.path,PageBuilderTabImageGifProperty.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionCentered.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTab2BackgroundSize"/>
@@ -1219,6 +1239,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1227,21 +1249,13 @@
         </before>
         <after>
             <closeTab stepKey="closeTab"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage">
-                <argument name="contentType" value="PageBuilderRowContentType"/>
-                <argument name="contentTypeIndex" value="1"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder">
+                <argument name="FolderName" value="{{PageBuilderTabBackgroundImagePngProperty.path}}"/>
             </actionGroup>
-            <click selector="{{RowOnBackend.selectFromGallery}}" stepKey="clickImageSelectFromGalleryBtn2"/>
-            <waitForPageLoad stepKey="waitForPageLoad3" />
-            <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup2">
-                <argument name="FolderName" value="wysiwyg"/>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage">
+                <argument name="Image" value="PageBuilderTabBackgroundImagePngProperty"/>
             </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteUploadedImageFromStorage">
-                <argument name="Image" value="PageBuilderTabBackgroundImagePngProperty" />
-            </actionGroup>
-            <waitForPageLoad stepKey="waitForPageLoad4" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -1308,7 +1322,7 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
@@ -1319,7 +1333,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
@@ -1330,7 +1344,7 @@
         <comment userInput="Verify tabs on stage after save" stepKey="checkAfterSave"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <scrollTo selector="{{CmsNewPagePageActionsSection.contentSectionName}}" stepKey="scrollToTopOfStage"/>
-        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
+        <waitForElementVisible selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin1AfterSave"/>
@@ -1341,7 +1355,7 @@
         </actionGroup>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2AfterSave"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1AfterSave"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage2AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTabBackgroundPositionAdmin2AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2AfterSave"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin2AfterSave"/>
@@ -1354,7 +1368,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize1"/>
@@ -1366,7 +1380,7 @@
         </actionGroup>
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionBottom.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSize2"/>
@@ -1383,6 +1397,8 @@
             <testCaseId value="MAGETWO-90000"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1456,7 +1472,7 @@
         <comment userInput="Verify tab 2 on stage" stepKey="AC3"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="seeTabHeader2"/>
         <see selector="{{TabOnStage.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleAdmin1"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInStage2"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
@@ -1467,7 +1483,7 @@
             <argument name="to" value="1"/>
         </actionGroup>
         <comment userInput="Verify tab 1 on stage" stepKey="AC4"/>
-        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInStage1"/>
+        <seeElementInDOM selector="{{TabOnStage.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInStage1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTabBackgroundPositionAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTabBackgroundAttachmentAdmin1"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSizeAdmin1"/>
@@ -1481,7 +1497,7 @@
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
         <waitForElementVisible selector="{{TabOnStorefront.tabHeader('1')}}" stepKey="seeTabHeader1Storefront"/>
         <see selector="{{TabOnStorefront.tabHeader('1')}}" userInput="{{PageBuilderTabNameRandom1.value}}" stepKey="seeTab1TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInDom1"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('1',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInDom1"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('1', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab1BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('1', PageBuilderTabBackgroundAttachmentScroll.value)}}" stepKey="seeTab1BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('1', PageBuilderTabBackgroundSizeContain.value)}}" stepKey="seeTabBackgroundSize1"/>
@@ -1494,7 +1510,7 @@
 
         <comment userInput="Verify tab 2 on storefront" stepKey="AC6"/>
         <see selector="{{TabOnStorefront.tabHeader('2')}}" userInput="{{PageBuilderTabNameRandom2.value}}" stepKey="seeTab2TitleStorefront"/>
-        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.fileType)}}" stepKey="seeBackgroundImageInDom2"/>
+        <seeElementInDOM selector="{{TabOnStorefront.tabContentBackgroundImage('2',PageBuilderTabBackgroundImagePngProperty.path,PageBuilderTabBackgroundImagePngProperty.extension)}}" stepKey="seeBackgroundImageInDom2"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundPosition('2', PageBuilderTabBackgroundPositionTop.style)}}" stepKey="seeTab2BackgroundPosition"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentFixed.value)}}" stepKey="seeTab2BackgroundAttachment"/>
         <seeElement selector="{{TabOnStorefront.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeAuto.value)}}" stepKey="seeTabBackgroundSize2"/>
@@ -1511,6 +1527,8 @@
             <testCaseId value="MAGETWO-89997"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-tabs"/>
+            <!--Skipped due to MAGETWO-92406-->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>

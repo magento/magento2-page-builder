@@ -8,162 +8,6 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="EditPanelColorPickerFunctionality">
-        <annotations>
-            <features value="Pagebuilder: Row"/>
-            <stories value="MAGETWO-71622: [UI Component] Color Picker"/>
-            <title value="Add background color to PageBuilder using Color Picker UI component"/>
-            <description value="Color picker extends input field in the form and allows user conveniently specify color value."/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-89768 MAGETWO-89770"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-row"/>
-            <group value="pagebuilder-rowGeneral"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
-        </before>
-        <after>
-            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
-            <actionGroup ref="logout" stepKey="logout"/>
-            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
-        </after>
-        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
-            <argument name="CMSPage" value="$$createCMSPage$$"/>
-        </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragRowIntoStage">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
-
-        <!-- I see empty color swatch and empty color input field -->
-        <comment userInput="I see empty color swatch and empty color input field" stepKey="comment1"/>
-        <actionGroup ref="seeNoColorInColorSwatch" stepKey="seeColorSwatch">
-            <argument name="property" value="PageBuilderRowBackgroundColor_Default"/>
-        </actionGroup>
-        <actionGroup ref="validateSlideOutPanelFieldPlaceholderText" stepKey="seeEmptyField">
-            <argument name="property" value="PageBuilderRowBackgroundColor_Default"/>
-        </actionGroup>
-
-        <!-- I input invalid HEX color code into input field -->
-        <comment userInput="I input invalid HEX color code into input field" stepKey="comment2"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputWrongFormatColorCodeIntoInputField">
-            <argument name="property" value="PageBuilderRowBackgroundColor_invalid"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateError">
-            <argument name="property" value="PageBuilderRowBackgroundColor_invalid"/>
-        </actionGroup>
-
-        <!-- I input HEX color code into input field -->
-        <comment userInput="I input HEX color code into input field" stepKey="comment3"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField1">
-            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
-        </actionGroup>
-        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchInYellow">
-            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField1">
-            <argument name="property" value="PageBuilderRowBackgroundColor_Yellow"/>
-        </actionGroup>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch1" />
-        <seeElement selector="{{ColorPicker.colorWheel}}" stepKey="seeColorPickerWindow" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_Yellow.value}}" stepKey="seeYellowHEXOnInputFieldOfColorPicker" />
-
-
-        <!-- I input HSL color code into input field -->
-        <comment userInput="I input HSL color code into input field" stepKey="comment4"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField2">
-            <argument name="property" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField2">
-            <argument name="property" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
-        </actionGroup>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch2" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_OrangeHSL.editPanelValue}}" stepKey="seeOrangeHEXOnInputFieldOfColorPicker" />
-
-
-        <!-- I input RGB color code into input field -->
-        <comment userInput="I input RGB color code into input field" stepKey="comment5"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField3">
-            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField3">
-            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
-        </actionGroup>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch3" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_rgb_0_0_255.editPanelValue}}" stepKey="seeGreenHEXOnInputFieldOfColorPicker" />
-
-
-        <!-- I input RGBA color code into input field -->
-        <comment userInput="I input RGBA color code into input field" stepKey="comment6"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField4">
-            <argument name="property" value="PageBuilderRowBackgroundColor_BlueRGBa"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField4">
-            <argument name="property" value="PageBuilderRowBackgroundColor_BlueRGBa"/>
-        </actionGroup>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch4" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_BlueRGBa.value}}" stepKey="seeBlueRGBAOnInputFieldOfColorPicker" />
-
-        <!-- I input color name into input field -->
-        <comment userInput="I input color name into input field" stepKey="comment7"/>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputColorCodeIntoInputField5">
-            <argument name="property" value="PageBuilderRowBackgroundColor_green"/>
-        </actionGroup>
-        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField5">
-            <argument name="property" value="PageBuilderRowBackgroundColor_green"/>
-        </actionGroup>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch5" />
-        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_green.editPanelValue}}" stepKey="seePurpleHEXOnInputFieldOfColorPicker" />
-
-
-        <!-- I click Color Wheel -->
-        <comment userInput="I click Color Wheel" stepKey="comment8"/>
-        <click selector="{{ColorPicker.firstColorBox}}" stepKey="clickOnRedColorBoxOfColorPicker" />
-        <click selector="{{ColorPicker.colorWheel}}" stepKey="clickOnColorWheel" />
-        <click selector="{{ColorPicker.applyBtn}}" stepKey="clickOnApplyBtn" />
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField6">
-            <argument name="property" value="PageBuilderRowBackgroundColor_804042"/>
-        </actionGroup>
-        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchInYellow2">
-            <argument name="property" value="PageBuilderRowBackgroundColor_804042"/>
-        </actionGroup>
-
-        <!-- Verify color picking from input field and Cancel button -->
-        <comment userInput="Verify color picking from input field and Cancel button" stepKey="comment9"/>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch6" />
-        <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHEXcodeIntoInputField1" />
-        <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{PageBuilderRowBackgroundColor_rgb_0_0_255.editPanelValue}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
-        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField7">
-            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
-        </actionGroup>
-        <click selector="{{ColorPicker.cancelBtn}}" stepKey="cancelSelection"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField8">
-            <argument name="property" value="PageBuilderRowBackgroundColor_804042"/>
-        </actionGroup>
-        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchInYellow3">
-            <argument name="property" value="PageBuilderRowBackgroundColor_804042"/>
-        </actionGroup>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch7" />
-        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_rgb_0_0_255.editPanelValue}}" stepKey="inputBlueHEXcodeIntoInputField2" />
-        <click selector="{{ColorPicker.applyBtn}}" stepKey="applySelection"/>
-        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField9">
-            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
-        </actionGroup>
-
-        <!-- click Out Side color picker to select a color -->
-        <comment userInput="click Out Side color picker to select a color" stepKey="comment10"/>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch8" />
-        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderRowBackgroundColor_FF0000.value}}" stepKey="inputRedHEXcodeIntoInputField" />
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName, PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.name)}}" stepKey="lostFocusFromInputField8"/>
-        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHEXInField10">
-            <argument name="property" value="PageBuilderRowBackgroundColor_FF0000"/>
-        </actionGroup>
-        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
-    </test>
     <test name="RowInitializeWithRow">
         <annotations>
             <features value="Pagebuilder: Row"/>
@@ -224,14 +68,14 @@
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeElementRow"/>
         <comment userInput="Stage: Check Background Color is present for first row" stepKey="commentStageCheckBackground"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage">
+            <argument name="section" value="RowOnStage"/>
             <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <comment userInput="Stage: Check Background Color not present for new row" stepKey="commentStageCheckNoBackground"/>
-        <actionGroup ref="validateRowNoBackgroundColor" stepKey="validateNewRowNoColor">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNewRowNoColor">
+            <argument name="section" value="RowOnStage"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <comment userInput="Stage: Check Drop Zones still present before, between, and after rows" stepKey="commentDropZones"/>
@@ -278,14 +122,14 @@
         </actionGroup>
         <seeNumberOfElements selector="{{RowOnStage.allRows}}" userInput="2" stepKey="seeElementRow"/>
         <comment userInput="Stage: Check Background Color is present for existing row" stepKey="commentStageCheckBackground"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage">
+            <argument name="section" value="RowOnStage"/>
             <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_CCCCCC"/>
             <argument name="index" value="2"/>
         </actionGroup>
         <comment userInput="Stage: Check Background Color not present for new row" stepKey="commentStageCheckNoBackground"/>
-        <actionGroup ref="validateRowNoBackgroundColor" stepKey="validateNewRowNoColor">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateNewRowNoColor">
+            <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <comment userInput="Stage: Check Drop Zones still present before, between, and after rows" stepKey="commentDropZones"/>
@@ -891,7 +735,7 @@
         <!-- Validate Background Fields Not Required -->
         <comment userInput="Validate Background Fields Not Required" stepKey="commentBackground"/>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_Default"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsNotRequired" stepKey="validateBackgroundImage">
             <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>

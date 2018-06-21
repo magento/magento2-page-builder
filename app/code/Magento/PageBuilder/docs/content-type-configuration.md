@@ -18,11 +18,11 @@
     1. **Content type configuration**
     1. [How to add a new content type]
     1. [Events]
-    1. [Bindings]
     1. [Master format]
-    1. [Visual select]   
+    1. [Visual select] 
+    1. [Reuse product conditions in content types]
+    1. [Store component master format as widget directive]
     1. [Custom Toolbar] 
-    1. [Add image uploader to content type]
 5. [Roadmap and known issues]
 
 [Introduction]: README.md
@@ -38,11 +38,11 @@
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
-[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
+[Reuse product conditions in content types]: product-conditions.md
+[Store component master format as widget directive]: widget-directive.md
 [Custom Toolbar]: toolbar.md
-[Add image uploader to content type]: image-uploader.md
 [Roadmap and known issues]: roadmap.md
 
 ## Configuration
@@ -77,7 +77,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
         <icon>icon-pagebuilder-image</icon>
         <component>Magento_PageBuilder/js/content-type</component>
         <preview_component>Magento_PageBuilder/js/content-type/banner/preview</preview_component>
-        <master_component>Magento_PageBuilder/js/content-type/master</master_component>
+        <content_component>Magento_PageBuilder/js/content-type/content</content_component>
         <form>pagebuilder_banner_form</form>
         <group>media</group>
         <allowed_parents>
@@ -197,7 +197,7 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | `icon`              | Icon displayed on the menu.                                                                                                                 |
 | `component`         | View model responsible for rendering the preview and master format.                                                                         |
 | `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
-| `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
+| `content_component` | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
 | `form`              | UI component form used for editing the content type                                                                                         |
 | `group`             | Existing menu group that contains this content type.                                                                                        |
 | `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                          |
@@ -404,6 +404,84 @@ The `tag` element allows you to read the tag name of the element and map back to
 
 ``` xml
 <tag name="heading_type"/>
+```
+
+## Add custom logic to content types
+
+You can customize Page Builder content types by adding your own logic on the frontend.
+
+To add custom logic to content types:
+1. [Create a JavaScript widget](#create-a-javascript-widget)
+2. [Add XML configuration to load it on the frontend](#add-xml-configuration-to-load-it-on-the-frontend)
+
+### Create a JavaScript widget
+
+Create a JavaScript widget in your module's `/view/frontend/web/js/content-type/{content-type-name}/appearance/{appearance-name}/widget.js` file:
+
+``` javascript
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+define([
+    'jquery',
+    'slick'
+], function ($) {
+    'use strict';
+
+    return function (config, sliderElement) {
+
+        var $element = $(sliderElement);
+
+        /**
+         * Prevent each slick slider from being initialized more than once which could throw an error.
+         */
+        if ($element.hasClass('slick-initialized')) {
+            $element.slick('unslick');
+        }
+
+        $element.slick({
+            autoplay: $element.data('autoplay') === 1,
+            autoplaySpeed: $element.data('autoplay-speed') || 0,
+            fade: $element.data('fade') === 1,
+            infinite: $element.data('is-infinite') === 1,
+            arrows: $element.data('show-arrows') === 1,
+            dots: $element.data('show-dots') === 1
+        });
+    };
+});
+
+``` 
+
+### Add XML configuration to load it on the frontend
+
+To load this file on the frontend, add the following configuration to the `default.xml` file in your custom module's `frontend/layout/` directory:
+
+``` xml
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="pagebuilder.widget.initializer">
+            <arguments>
+                <argument name="config" xsi:type="array">
+                    <item name="%content-type-name%" xsi:type="array">
+                        <item name="default" xsi:type="array">
+                            <!--required argument-->
+                            <item name="component" xsi:type="string">%{vendor-path}/js/content-type/{content-type-name}/appearance/{appearance-name}/widget%</item>
+                            <!--optional if you need provide some config for your widget-->                          
+                            <item name="config" xsi:type="array">
+                                <item name="buttonSelector" xsi:type="string">.pagebuilder-slide-button</item>
+                                <item name="showOverlay" xsi:type="string">hover</item>
+                            </item>
+                            <!--optional if you want load widget per appearance-->
+                            <item name="appearance" xsi:type="string">default</item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
 ```
 
 ## Converter Interfaces
