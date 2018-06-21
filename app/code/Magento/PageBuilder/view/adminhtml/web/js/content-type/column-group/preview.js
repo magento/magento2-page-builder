@@ -143,9 +143,10 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
     _proto.onExistingColumnDrop = function onExistingColumnDrop(movePosition) {
       var column = (0, _registry2.getDragColumn)();
+      var sourceGroup = column.parent.preview;
       var modifyOldNeighbour; // Determine which old neighbour we should modify
 
-      var oldWidth = this.resizeUtils.getColumnWidth(column); // Retrieve the adjacent column either +1 or -1
+      var oldWidth = sourceGroup.getResizeUtils().getColumnWidth(column); // Retrieve the adjacent column either +1 or -1
 
       if ((0, _resize.getAdjacentColumn)(column, "+1")) {
         modifyOldNeighbour = (0, _resize.getAdjacentColumn)(column, "+1");
@@ -159,7 +160,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       (0, _moveContentType.moveContentType)(column, movePosition.insertIndex, this.parent); // Modify the old neighbour
 
       if (modifyOldNeighbour) {
-        var oldNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth((oldWidth + this.resizeUtils.getColumnWidth(modifyOldNeighbour)).toString());
+        var oldNeighbourWidth = sourceGroup.getResizeUtils().getAcceptedColumnWidth((oldWidth + sourceGroup.getResizeUtils().getColumnWidth(modifyOldNeighbour)).toString());
+        console.log(oldWidth, oldNeighbourWidth);
         (0, _resize.updateColumnWidth)(modifyOldNeighbour, oldNeighbourWidth);
       } // Modify the columns new neighbour
 

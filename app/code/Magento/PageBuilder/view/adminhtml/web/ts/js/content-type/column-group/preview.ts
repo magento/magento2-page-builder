@@ -166,10 +166,11 @@ export default class Preview extends PreviewCollection {
      */
     public onExistingColumnDrop(movePosition: DropPosition) {
         const column = getDragColumn();
+        const sourceGroup = column.parent.preview as ColumnGroupPreview;
         let modifyOldNeighbour;
 
         // Determine which old neighbour we should modify
-        const oldWidth = this.resizeUtils.getColumnWidth(column);
+        const oldWidth = sourceGroup.getResizeUtils().getColumnWidth(column);
 
         // Retrieve the adjacent column either +1 or -1
         if (getAdjacentColumn(column, "+1")) {
@@ -186,9 +187,10 @@ export default class Preview extends PreviewCollection {
 
         // Modify the old neighbour
         if (modifyOldNeighbour) {
-            const oldNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth(
-                (oldWidth + this.resizeUtils.getColumnWidth(modifyOldNeighbour)).toString(),
+            const oldNeighbourWidth = sourceGroup.getResizeUtils().getAcceptedColumnWidth(
+                (oldWidth + sourceGroup.getResizeUtils().getColumnWidth(modifyOldNeighbour)).toString(),
             );
+            console.log(oldWidth, oldNeighbourWidth);
             updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
         }
 
