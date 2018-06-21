@@ -38,6 +38,7 @@ It replaces the default WYSIWYG Editor in the Admin area with a highly configura
 [Content type configuration]: content-type-configuration.md
 [How to add a new content type]: how-to-add-new-content-type.md
 [Events]: events.md
+[Bindings]: bindings.md
 [Master format]: master-format.md
 [Visual select]: visual-select.md
 [Reuse product conditions in content types]: product-conditions.md

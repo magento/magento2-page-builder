@@ -260,16 +260,16 @@
         <seeElement selector="{{ImageOnStage.uploadImageBtn}}" stepKey="seeUploadImageBtn" />
         <seeElement selector="{{ImageOnStage.selectFromGalleryBtn}}" stepKey="seeSelectFromGalleryBtn" />
         <!-- Attach image A to PageBuilder stage-->
-        <attachFile userInput="{{PageBuilderImageOnStage.value}}" selector="{{ImageOnStage.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
+        <attachFile userInput="{{PageBuilderImageProperty_StageJPG.value}}" selector="{{ImageOnStage.attachImageBtn}}" stepKey="attachImageFileOnStage"/>
         <waitForElementVisible selector="{{ImageOnStage.imagePreview}}" stepKey="waitForImagePreview"/>
         <waitForElementVisible selector="{{ImageOnStage.imageSourceOnStage('magentoStage')}}" stepKey="waitForImageSource"/>
         <seeElement selector="{{ImageOnStage.imageSourceOnStage('magentoStage')}}" stepKey="seeImageSourceOnStage" />
-        <seeElement selector="{{ImageOnStage.imageContentTypeByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageOnStage"/>
+        <seeElement selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImageOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <!-- Verify Image in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
-        <seeElement selector="{{ImageOnStorefront.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeImage2Source"/>
+        <seeElement selector="{{ImageOnStorefront.imageSource(PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2Source"/>
     </test>
     <test name="CanAddVideoToTab">
         <annotations>
@@ -281,6 +281,7 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-89958"/>
             <group value="pagebuilder"/>
+            <group value="pagebuilder-video"/>
             <group value="pagebuilder-tabs-content"/>
         </annotations>
         <before>
@@ -314,17 +315,11 @@
             <argument name="containerTargetIndex" value="1" />
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
-            <argument name="contentType" value="PageBuilderVideoContentType"/>
-        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
             <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoWidthProperty">
             <argument name="property" value="PageBuilderVideoWidth_500"/>
-        </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoHeightProperty">
-            <argument name="property" value="PageBuilderVideoHeight_200"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -335,7 +330,6 @@
             <argument name="page" value="VideoOnStorefront"/>
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
             <argument name="width" value="PageBuilderVideoWidth_500"/>
-            <argument name="height" value="PageBuilderVideoHeight_200"/>
         </actionGroup>
     </test>
     <test name="CanAddBannerToTab">
@@ -467,12 +461,13 @@
         <!-- Verify Slider in Tab on storefront -->
         <comment userInput="View Tab on storefront" stepKey="viewTabOnStorefront"/>
         <amOnPage url="tabs{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="waitForSliderElementVisable"/>
         <seeElement selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <seeElement selector="{{SlideOnFrontend.slide('1')}}" stepKey="seeSlide1InSlider"/>
         <see userInput="{{PageBuilderSlideItemContent1.value}}" selector="{{SlideOnFrontend.slideContent('0')}}" stepKey="seeSlide1ContentDisplayed"/>
         <see userInput="{{PageBuilderSlideItemButtonText1.value}}" selector="{{SlideOnFrontend.slideButtonText('0')}}" stepKey="seeSlide1ButtonTextDisplayed"/>
         <seeElement selector="{{SlideOnFrontend.slideLinkURL1(PageBuilderSlideItemLinkURL1.value)}}" stepKey="seeSlide1LinkURL"/>
-        <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.fileType)}}" stepKey="seeSlide1Background"/>
+        <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('0',PageBuilderSlideBackgroundImageProperty1.path, PageBuilderSlideBackgroundImageProperty1.extension)}}" stepKey="seeSlide1Background"/>
         <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
     </test>
     <test name="CanAddMapToTab">

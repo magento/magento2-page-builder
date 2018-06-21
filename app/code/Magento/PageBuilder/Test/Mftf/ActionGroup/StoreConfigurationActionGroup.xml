@@ -18,6 +18,14 @@
         <click selector="{{StoreConfigSection.Save}}" stepKey="clickSaveButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
+    <actionGroup name="saveStoreConfigurationAndValidateFieldError">
+        <comment userInput="saveStoreConfigurationAndValidateFieldError" stepKey="comment"/>
+        <waitForElementVisible selector="{{StoreConfigSection.Save}}" stepKey="waitForSaveButton"/>
+        <click selector="{{StoreConfigSection.Save}}" stepKey="clickSaveButton"/>
+        <waitForElement selector="{{ContentManagementSection.GoogleMapsStyleInputFieldError}}" stepKey="waitForErrorField"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}" stepKey="waitForErrorMessage"/>
+        <see selector="{{ContentManagementSection.GoogleMapsStyleErrorMessage}}" userInput="{{googleMapsStyle.errorMessage}}" stepKey="seeErrorMessage"/>
+    </actionGroup>
     <actionGroup name="enablePageBuilderSetting">
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
         <waitForPageLoad stepKey="wait1"/>
@@ -84,5 +92,13 @@
         <click selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="clickTestKeyButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyResult(expectedResult)}}" stepKey="waitForTestKeyButtonResult"/>
+    </actionGroup>
+    <actionGroup name="inputGoogleMapsStyle">
+        <arguments>
+            <argument name="style" defaultValue="{{googleMapsStyle.valid}}" type="string"/>
+        </arguments>
+        <comment userInput="inputGoogleMapsStyle" stepKey="comment"/>
+        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" stepKey="waitForGoogleMapsStyleInputField"/>
+        <fillField selector="{{ContentManagementSection.GoogleMapsStyleInputField}}" userInput="{{style}}" stepKey="inputStyle"/>
     </actionGroup>
 </actionGroups>

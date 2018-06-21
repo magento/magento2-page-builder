@@ -555,6 +555,15 @@
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
     </actionGroup>
+    <actionGroup name="clickSelectFromGallerySlideOut">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <waitForElementVisible selector="{{EditPanelForm.selectFromGalleryBtn(property.section, property.fieldName)}}" stepKey="waitForSelectFromGalleryBtn"/>
+        <click selector="{{EditPanelForm.selectFromGalleryBtn(property.section, property.fieldName)}}" stepKey="clickSelectFromGalleryBtn"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+    </actionGroup>
     <actionGroup name="conditionalClickSlideOutPanelFieldGeneral">
     <arguments>
         <argument name="property"/>
@@ -600,7 +609,7 @@
             <argument name="property"/>
         </arguments>
         <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormUploadedImageSource(property.section, property.fieldName, property.fileName, property.fileType)}}" stepKey="seeUploadedFile"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormUploadedImageSource(property.section, property.fieldName, property.fileName, property.extension)}}" stepKey="seeUploadedFile"/>
     </actionGroup>
     <actionGroup name="seeNoImageUploadedOnSlideOut">
         <arguments>
@@ -677,11 +686,20 @@
         <waitForElement time="2" selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <dontSeeCheckboxIsChecked selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="dontSeeOptionIsCheckedProperty"/>
     </actionGroup>
+    <actionGroup name="openAndValidateColorPickerValue">
+        <arguments>
+            <argument name="color" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="waitForColorSwatch"/>
+        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindow"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{color}}" stepKey="seeExpectedColor"/>
+    </actionGroup>
     <actionGroup name="seeColorInColorSwatch">
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(property.section, property.fieldName, property.rgb)}}" stepKey="waitForColorSwatch"/>
+        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(property.section, property.fieldName, property.rgb)}}" stepKey="waitForColorSwatchColor"/>
     </actionGroup>
     <actionGroup name="seeNoColorInColorSwatch">
         <arguments>
@@ -695,12 +713,25 @@
         </arguments>
         <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="waitForImageUpload"/>
+        <waitForElementVisible selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="waitForImageUpload"/>
+    </actionGroup>
+    <actionGroup name="attachInvalidFileOnSlideOut">
+        <arguments>
+            <argument name="property"/>
+        </arguments>
+        <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
+        <waitForElementVisible selector="{{EditPanelForm.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
+        <waitForElementVisible selector="{{EditPanelForm.invalidUploadOkBtn}}" stepKey="waitForInvalidUploadBtn"/>
+        <click selector="{{EditPanelForm.invalidUploadOkBtn}}" stepKey="clickInvalidUploadBtn"/>
+        <waitForElementNotVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForModalGone"/>
+        <dontSeeElementInDOM selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="dontSeeImage"/>
     </actionGroup>
     <actionGroup name="saveEditPanelSettings">
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton"/>
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveColumn"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton"/>
+        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveButton"/>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
         <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible"/>
         <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>

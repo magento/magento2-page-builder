@@ -53,8 +53,8 @@ class Driver implements RendererInterface
         $rootElementAttributes = [
             'data-role' => 'banner',
             'data-appearance' => 'poster',
-            'data-show-button' => 'never_show',
-            'data-show-overlay' => 'never_show',
+            'data-show-button' => 'never',
+            'data-show-overlay' => 'never',
             'class' => $eavData['css_classes'] ?? ''
         ];
 
