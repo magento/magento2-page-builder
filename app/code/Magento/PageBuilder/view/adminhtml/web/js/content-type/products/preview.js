@@ -28,8 +28,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Mage
       _BasePreview.prototype.bindEvents.call(this); // When a products type is dropped for the first time open the edit panel
 
 
-      _uiEvents.on("products:contentType:dropped:create", function (event, params) {
-        if (event.id === _this2.parent.id) {
+      _uiEvents.on("products:contentType:dropped:create", function (args) {
+        if (args.id === _this2.parent.id) {
           setTimeout(function () {
             _this2.edit.open();
           }, 300);

@@ -3,9 +3,11 @@
  * See COPYING.txt for license details.
  */
 
+import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeInterface from "../content-type.d";
 
 export default interface ContentTypeDuplicateEventParamsInterface {
-    id: string;
-    contentType: ContentTypeInterface;
+    originalContentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    duplicateContentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    index: number;
 }
