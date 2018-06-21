@@ -30,9 +30,10 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         return empty;
       });
       _this.gridSize = _knockout.observable();
+      _this.gridSizeInput = _knockout.observable();
       _this.gridSizeArray = _knockout.observableArray([]);
       _this.gridSizeError = _knockout.observable();
-      _this.gridSizePanelStyle = _knockout.observable();
+      _this.gridFormOpen = _knockout.observable(false);
       _this.dropPlaceholder = void 0;
       _this.movePlaceholder = void 0;
       _this.groupElement = void 0;
@@ -55,6 +56,14 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.movePosition = void 0;
       _this.groupPositionCache = void 0;
       _this.resizeUtils = void 0;
+
+      _this.onDocumentClick = function (event) {
+        // Verify the click event wasn't within our form
+        if (!_jquery.contains((0, _jquery)(_this.wrapperElement).find(".pagebuilder-grid-size-indicator")[0], (0, _jquery)(event.target)[0])) {
+          _this.closeGridForm();
+        }
+      };
+
       _this.resizeUtils = new _resize(_this.parent); // Keep track of the grid size in an observable
 
       _this.parent.dataStore.subscribe(function (state) {
@@ -62,7 +71,11 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
         _this.gridSize(gridSize);
 
-        _this.gridSizeArray(new Array(gridSize));
+        _this.gridSizeInput(gridSize);
+
+        if (gridSize) {
+          _this.gridSizeArray(new Array(gridSize));
+        }
       }, "gridSize");
 
       _uiEvents.on("contentType:removed", function (args) {
@@ -88,15 +101,6 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
       _this.parent.children.subscribe(_underscore.debounce(_this.removeIfEmpty.bind(_this), 50));
 
-      _this.gridSizePanelStyle = _knockout.pureComputed(function () {
-        if (!_this.gridSizeError()) {
-          return "";
-        } else if (_this.gridSizeError()[0] === "T") {
-          return "pagebuilder-grid-panel-max-error";
-        }
-
-        return "pagebuilder-grid-panel-min-error";
-      });
       return _this;
     }
     /**
@@ -110,32 +114,6 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
     _proto.getResizeUtils = function getResizeUtils() {
       return this.resizeUtils;
-    };
-    /**
-     * Update the grid size on enter or blur of the input
-     *
-     * @param {Preview} context
-     * @param {KeyboardEvent & Event} event
-     */
-
-
-    _proto.updateGridSize = function updateGridSize(context, event) {
-      if (event.type === "keydown" && event.which === 13 || event.keyCode === 13 || event.type === "blur") {
-        var newGridSize = parseInt((0, _jquery)(event.target).val().toString(), 10);
-
-        if (newGridSize) {
-          try {
-            (0, _gridSize.resizeGrid)(this.parent, newGridSize);
-            this.gridSizeError("");
-          } catch (e) {
-            if (e instanceof _gridSize.GridSizeError) {
-              this.gridSizeError(e.message);
-            } else {
-              throw e;
-            }
-          }
-        }
-      }
     };
     /**
      * Handle a new column being dropped into the group
@@ -381,45 +359,97 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       });
     };
     /**
-     * Hide grid size panel on focus out
-     *
-     * @param {Preview} context
-     * @param {Event} event
+     * Update the grid size on enter or blur of the input
      */
 
 
-    _proto.onFocusOut = function onFocusOut(context, event) {
-      var target = (0, _jquery)("." + event.currentTarget.className).closest(".pagebuilder-grid-panel");
-      target.removeClass("pagebuilder-grid-panel-visible");
+    _proto.updateGridSize = function updateGridSize() {
+      var newGridSize = parseInt(this.gridSizeInput().toString(), 10);
 
-      _uiEvents.trigger("interaction:stop");
+      if (newGridSize) {
+        try {
+          (0, _gridSize.resizeGrid)(this.parent, newGridSize);
+          this.gridSizeError(null);
+        } catch (e) {
+          if (e instanceof _gridSize.GridSizeError) {
+            this.gridSizeError(e.message);
+          } else {
+            throw e;
+          }
+        }
+      }
+    };
+    /**
+     * On grid input key up, check if the enter key was used and submit
+     *
+     * @param {Preview} context
+     * @param {KeyboardEvent} event
+     */
+
+
+    _proto.onGridInputKeyUp = function onGridInputKeyUp(context, event) {
+      if (event.which === 13 || event.keyCode === 13) {
+        this.updateGridSize();
+      }
+    };
+    /**
+     * On grid input blur, update the grid size
+     */
+
+
+    _proto.onGridInputBlur = function onGridInputBlur() {
+      this.updateGridSize();
+    };
+    /**
+     * Hide grid size panel on focus out
+     */
+
+
+    _proto.closeGridForm = function closeGridForm() {
+      this.updateGridSize();
+
+      if (!this.gridSizeError()) {
+        this.gridFormOpen(false);
+
+        _uiEvents.trigger("interaction:stop");
+
+        (0, _jquery)(document).off("click focusin", this.onDocumentClick);
+      }
     };
     /**
      * Show grid size panel on click and start interaction
+     */
+
+
+    _proto.openGridForm = function openGridForm() {
+      var _this5 = this;
+
+      if (!this.gridFormOpen()) {
+        this.gridFormOpen(true); // Wait for animation to complete
+
+        _underscore.delay(function () {
+          (0, _jquery)(_this5.wrapperElement).find(".pagebuilder-grid-panel-link-wrapper input").focus().select();
+        }, 200);
+
+        (0, _jquery)(document).on("click focusin", this.onDocumentClick);
+
+        _uiEvents.trigger("interaction:start");
+      } else {
+        this.closeGridForm();
+      }
+    };
+    /**
+     * Handle a click on the document closing the grid form
      *
-     * @param {Preview} context
      * @param {Event} event
      */
 
 
-    _proto.onGridClick = function onGridClick(context, event) {
-      _uiEvents.trigger("interaction:start");
-
-      var target = (0, _jquery)("." + event.currentTarget.className).find(".pagebuilder-grid-panel");
-      target.addClass("pagebuilder-grid-panel-visible");
-
-      _underscore.delay(function () {
-        target.find(".admin__control-text").focus();
-      }, 100); // 100 ms delay to allow for grid panel to render
-
-    };
     /**
      * Set columns in the group as resizing
      *
      * @param {ContentTypeCollectionInterface} columns
      */
-
-
     _proto.setColumnsAsResizing = function setColumnsAsResizing() {
       for (var _len = arguments.length, columns = new Array(_len), _key = 0; _key < _len; _key++) {
         columns[_key] = arguments[_key];
@@ -481,11 +511,11 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.initMouseMove = function initMouseMove(group) {
-      var _this5 = this;
+      var _this6 = this;
 
       var intersects = false;
       (0, _jquery)(document).on("mousemove touchmove", function (event) {
-        var groupPosition = _this5.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
+        var groupPosition = _this6.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
 
 
         if (event.type === "touchmove") {
@@ -493,32 +523,32 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           event.pageY = event.originalEvent.pageY;
         }
 
-        if (_this5.eventIntersectsGroup(event, groupPosition)) {
+        if (_this6.eventIntersectsGroup(event, groupPosition)) {
           intersects = true;
 
-          _this5.onResizingMouseMove(event, group, groupPosition);
+          _this6.onResizingMouseMove(event, group, groupPosition);
 
-          _this5.onDraggingMouseMove(event, group, groupPosition);
+          _this6.onDraggingMouseMove(event, group, groupPosition);
 
-          _this5.onDroppingMouseMove(event, group, groupPosition);
+          _this6.onDroppingMouseMove(event, group, groupPosition);
         } else {
           intersects = false;
-          _this5.groupPositionCache = null;
-          _this5.dropPosition = null;
+          _this6.groupPositionCache = null;
+          _this6.dropPosition = null;
 
-          _this5.dropPlaceholder.removeClass("left right");
+          _this6.dropPlaceholder.removeClass("left right");
 
-          _this5.movePlaceholder.css("left", "").removeClass("active");
+          _this6.movePlaceholder.css("left", "").removeClass("active");
         }
       }).on("mouseup touchend", function () {
         if (intersects) {
-          _this5.handleMouseUp();
+          _this6.handleMouseUp();
         }
 
         intersects = false;
-        _this5.dropPosition = null;
+        _this6.dropPosition = null;
 
-        _this5.endAllInteractions();
+        _this6.endAllInteractions();
 
         _underscore.defer(function () {
           // Re-enable any disabled sortable areas
@@ -610,7 +640,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.onResizingMouseMove = function onResizingMouseMove(event, group, groupPosition) {
-      var _this6 = this;
+      var _this7 = this;
 
       var newColumnWidth;
 
@@ -671,8 +701,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
-                _this6.resizeColumnWidths = _this6.resizeUtils.determineColumnWidths(_this6.resizeColumnInstance, groupPosition);
-                _this6.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this6.resizeColumnWidths);
+                _this7.resizeColumnWidths = _this7.resizeUtils.determineColumnWidths(_this7.resizeColumnInstance, groupPosition);
+                _this7.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this7.resizeColumnWidths);
               });
             }
           }

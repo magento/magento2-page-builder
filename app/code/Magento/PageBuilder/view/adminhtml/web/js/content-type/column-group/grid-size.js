@@ -35,6 +35,10 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
 
   function resizeGrid(columnGroup, newGridSize) {
+    if (newGridSize === columnGroup.preview.getResizeUtils().getGridSize()) {
+      return;
+    }
+
     validateNewGridSize(columnGroup, newGridSize); // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
 
     if (newGridSize < columnGroup.getChildren()().length) {
@@ -60,7 +64,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
 
     var numCols = columnGroup.getChildren()().length;
-    var currentGridSize = parseInt(columnGroup.dataStore.getKey("gridSize").toString(), 10);
+    var currentGridSize = columnGroup.preview.getResizeUtils().getGridSize();
 
     if (newGridSize < currentGridSize && numCols > newGridSize) {
       var numEmptyColumns = 0;

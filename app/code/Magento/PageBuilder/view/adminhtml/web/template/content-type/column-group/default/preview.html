@@ -7,14 +7,15 @@
 
 <div class="pagebuilder-column-group"
      css="{'resizing': resizing, 'empty-child': hasEmptyChild}">
-    <div class="pagebuilder-grid-size-indicator" event="{click: onGridClick}">
-        <div class="pagebuilder-grid-size-indicator-wrapper">
+    <div class="pagebuilder-grid-size-indicator">
+        <div class="pagebuilder-grid-size-indicator-wrapper" event="{ click: openGridForm }">
             <i class="icon-pagebuilder-grid-options"></i>
         </div>
         <div class="focus-options">
-            <div class="pagebuilder-grid-panel" css="gridSizePanelStyle">
+            <div class="pagebuilder-grid-panel"
+                 css="{ 'pagebuilder-grid-panel-visible': gridFormOpen, 'pagebuilder-grid-panel-error': gridSizeError }">
                 <div class="pagebuilder-grid-panel-wrapper">
-                    <ul class="pagebuilder-grid-panel-links" event="{focusout: onFocusOut}">
+                    <ul class="pagebuilder-grid-panel-links">
                         <li class="pagebuilder-grid-panel-link">
                             <div class="panel-title">
                                 Grid Size
@@ -23,10 +24,10 @@
                         <li class="pagebuilder-grid-panel-link">
                             <div class="pagebuilder-grid-panel-link-wrapper">
                                 <input type="number"
-                                       event="{keyup: updateGridSize, blur: updateGridSize}"
+                                       event="{keyup: onGridInputKeyUp, blur: onGridInputBlur}"
                                        min="1" max="100"
                                        class="admin__control-text"
-                                       ko-value="gridSize"/>
+                                       data-bind="textInput: gridSizeInput"/>
                             </div>
                         </li>
                         <li class="pagebuilder-grid-panel-link">

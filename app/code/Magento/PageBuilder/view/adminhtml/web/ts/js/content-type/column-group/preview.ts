@@ -48,9 +48,10 @@ export default class Preview extends PreviewCollection {
         return empty;
     });
     public gridSize: KnockoutObservable<number> = ko.observable();
+    public gridSizeInput: KnockoutObservable<number> = ko.observable();
     public gridSizeArray: KnockoutObservableArray<any[]> = ko.observableArray([]);
     public gridSizeError: KnockoutObservable<string> = ko.observable();
-    public gridSizePanelStyle: KnockoutObservable<string> = ko.observable();
+    public gridFormOpen: KnockoutObservable<boolean> = ko.observable(false);
     private dropPlaceholder: JQuery<HTMLElement>;
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;
@@ -92,7 +93,10 @@ export default class Preview extends PreviewCollection {
         this.parent.dataStore.subscribe((state: DataObject) => {
             const gridSize = parseInt(state.gridSize.toString(), 10);
             this.gridSize(gridSize);
-            this.gridSizeArray(new Array(gridSize));
+            this.gridSizeInput(gridSize);
+            if (gridSize) {
+                this.gridSizeArray(new Array(gridSize));
+            }
         }, "gridSize");
 
         events.on("contentType:removed", (args: ContentTypeRemovedParams) => {
@@ -121,14 +125,6 @@ export default class Preview extends PreviewCollection {
                 50,
             ),
         );
-        this.gridSizePanelStyle = ko.pureComputed(() => {
-            if (!this.gridSizeError()) {
-                return "";
-            } else if (this.gridSizeError()[0] === "T") {
-                return "pagebuilder-grid-panel-max-error";
-            }
-            return "pagebuilder-grid-panel-min-error";
-        });
     }
 
     /**
@@ -138,30 +134,6 @@ export default class Preview extends PreviewCollection {
      */
     public getResizeUtils(): ResizeUtils {
         return this.resizeUtils;
-    }
-
-    /**
-     * Update the grid size on enter or blur of the input
-     *
-     * @param {Preview} context
-     * @param {KeyboardEvent & Event} event
-     */
-    public updateGridSize(context: Preview, event: KeyboardEvent & Event) {
-        if ((event.type === "keydown" && event.which === 13 || event.keyCode === 13) || event.type === "blur") {
-            const newGridSize = parseInt($(event.target).val().toString(), 10);
-            if (newGridSize) {
-                try {
-                    resizeGrid((this.parent as ContentTypeCollectionInterface<Preview>), newGridSize);
-                    this.gridSizeError("");
-                } catch (e) {
-                    if (e instanceof GridSizeError) {
-                        this.gridSizeError(e.message);
-                    } else {
-                        throw e;
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -407,32 +379,82 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Hide grid size panel on focus out
+     * Update the grid size on enter or blur of the input
+     */
+    public updateGridSize() {
+        const newGridSize = parseInt(this.gridSizeInput().toString(), 10);
+        if (newGridSize) {
+            try {
+                resizeGrid((this.parent as ContentTypeCollectionInterface<Preview>), newGridSize);
+                this.gridSizeError(null);
+            } catch (e) {
+                if (e instanceof GridSizeError) {
+                    this.gridSizeError(e.message);
+                } else {
+                    throw e;
+                }
+            }
+        }
+    }
+
+    /**
+     * On grid input key up, check if the enter key was used and submit
      *
      * @param {Preview} context
-     * @param {Event} event
+     * @param {KeyboardEvent} event
      */
-    public onFocusOut(context: Preview, event: Event): void {
-        const target = $(`.${(event.currentTarget as HTMLElement).className}`)
-            .closest(".pagebuilder-grid-panel");
-        target.removeClass("pagebuilder-grid-panel-visible");
-        events.trigger("interaction:stop");
+    public onGridInputKeyUp(context: Preview, event: KeyboardEvent) {
+        if (event.which === 13 || event.keyCode === 13) {
+            this.updateGridSize();
+        }
+    }
+
+    /**
+     * On grid input blur, update the grid size
+     */
+    public onGridInputBlur() {
+        this.updateGridSize();
+    }
+
+    /**
+     * Hide grid size panel on focus out
+     */
+    public closeGridForm(): void {
+        this.updateGridSize();
+        if (!this.gridSizeError()) {
+            this.gridFormOpen(false);
+            events.trigger("interaction:stop");
+            $(document).off("click focusin", this.onDocumentClick);
+        }
     }
 
     /**
      * Show grid size panel on click and start interaction
+     */
+    public openGridForm(): void {
+        if (!this.gridFormOpen()) {
+            this.gridFormOpen(true);
+            // Wait for animation to complete
+            _.delay(() => {
+                $(this.wrapperElement).find(".pagebuilder-grid-panel-link-wrapper input").focus().select();
+            }, 200);
+            $(document).on("click focusin", this.onDocumentClick);
+            events.trigger("interaction:start");
+        } else {
+            this.closeGridForm();
+        }
+    }
+
+    /**
+     * Handle a click on the document closing the grid form
      *
-     * @param {Preview} context
      * @param {Event} event
      */
-    public onGridClick(context: Preview, event: Event): void {
-        events.trigger("interaction:start");
-        const target = $("." + (event.currentTarget as HTMLElement).className)
-            .find(".pagebuilder-grid-panel");
-        target.addClass("pagebuilder-grid-panel-visible");
-        _.delay(() => {
-            target.find(".admin__control-text").focus();
-        }, 100); // 100 ms delay to allow for grid panel to render
+    private onDocumentClick = (event: Event) => {
+        // Verify the click event wasn't within our form
+        if (!$.contains($(this.wrapperElement).find(".pagebuilder-grid-size-indicator")[0], $(event.target)[0])) {
+            this.closeGridForm();
+        }
     }
 
     /**

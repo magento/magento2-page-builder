@@ -41,6 +41,10 @@ export function getMaxGridSize(): number {
  * @param {number} newGridSize
  */
 export function resizeGrid(columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number) {
+    if (newGridSize === columnGroup.preview.getResizeUtils().getGridSize()) {
+        return;
+    }
+
     validateNewGridSize(columnGroup, newGridSize);
 
     // if we have more columns than the new grid size allows, remove empty columns until we are at the correct size
@@ -66,7 +70,7 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
 
     // Validate that the operation will be successful
     const numCols = columnGroup.getChildren()().length;
-    const currentGridSize = parseInt(columnGroup.dataStore.getKey("gridSize").toString(), 10);
+    const currentGridSize = columnGroup.preview.getResizeUtils().getGridSize();
     if (newGridSize < currentGridSize && numCols > newGridSize) {
         let numEmptyColumns = 0;
         columnGroup.getChildren()().forEach(
