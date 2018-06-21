@@ -52,6 +52,7 @@ export default class Preview extends PreviewCollection {
     public gridSizeArray: KnockoutObservableArray<any[]> = ko.observableArray([]);
     public gridSizeError: KnockoutObservable<string> = ko.observable();
     public gridFormOpen: KnockoutObservable<boolean> = ko.observable(false);
+    public gridChange: KnockoutObservable<boolean> = ko.observable(false);
     private dropPlaceholder: JQuery<HTMLElement>;
     private movePlaceholder: JQuery<HTMLElement>;
     private groupElement: JQuery<HTMLElement>;
@@ -165,10 +166,11 @@ export default class Preview extends PreviewCollection {
      */
     public onExistingColumnDrop(movePosition: DropPosition) {
         const column = getDragColumn();
+        const sourceGroupPreview = column.parent.preview as ColumnGroupPreview;
         let modifyOldNeighbour;
 
         // Determine which old neighbour we should modify
-        const oldWidth = this.resizeUtils.getColumnWidth(column);
+        const oldWidth = sourceGroupPreview.getResizeUtils().getColumnWidth(column);
 
         // Retrieve the adjacent column either +1 or -1
         if (getAdjacentColumn(column, "+1")) {
@@ -185,8 +187,8 @@ export default class Preview extends PreviewCollection {
 
         // Modify the old neighbour
         if (modifyOldNeighbour) {
-            const oldNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth(
-                (oldWidth + this.resizeUtils.getColumnWidth(modifyOldNeighbour)).toString(),
+            const oldNeighbourWidth = sourceGroupPreview.getResizeUtils().getAcceptedColumnWidth(
+                (oldWidth + sourceGroupPreview.getResizeUtils().getColumnWidth(modifyOldNeighbour)).toString(),
             );
             updateColumnWidth(modifyOldNeighbour, oldNeighbourWidth);
         }
@@ -384,15 +386,25 @@ export default class Preview extends PreviewCollection {
     public updateGridSize() {
         const newGridSize = parseInt(this.gridSizeInput().toString(), 10);
         if (newGridSize) {
-            try {
-                resizeGrid((this.parent as ContentTypeCollectionInterface<Preview>), newGridSize);
-                this.gridSizeError(null);
-            } catch (e) {
-                if (e instanceof GridSizeError) {
-                    this.gridSizeError(e.message);
-                } else {
-                    throw e;
+            if (newGridSize !== this.resizeUtils.getGridSize()) {
+                try {
+                    resizeGrid((this.parent as ContentTypeCollectionInterface<Preview>), newGridSize);
+                    this.gridSizeError(null);
+
+                    // Make the grid "flash" on successful change
+                    this.gridChange(true);
+                    _.delay(() => {
+                        this.gridChange(false);
+                    }, 1000);
+                } catch (e) {
+                    if (e instanceof GridSizeError) {
+                        this.gridSizeError(e.message);
+                    } else {
+                        throw e;
+                    }
                 }
+            } else {
+                this.gridSizeError(null);
             }
         }
     }

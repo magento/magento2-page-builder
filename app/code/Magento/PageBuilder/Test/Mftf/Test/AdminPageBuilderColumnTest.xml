@@ -132,7 +132,7 @@
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundImageProperty">
-            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundPositionProperty">
             <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
@@ -296,7 +296,7 @@
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="enterBackgroundPositionProperty">
             <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
@@ -371,7 +371,7 @@
             <argument name="property" value="PageBuilderBackgroundAttachmentProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
@@ -524,7 +524,7 @@
             <argument name="property" value="PageBuilderBackgroundSizeProperty"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickBackgroundProperty">
             <argument name="property" value="PageBuilderBackgroundRepeatProperty"/>
@@ -545,7 +545,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
         </actionGroup>
-        <seeElementInDOM selector="{{PageBuilderColumnSection.backgroundImagePreview}}" stepKey="backgroundImagePreview"/>
+        <seeElementInDOM selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="backgroundImagePreview"/>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeBackgroundPositionProperty">
             <argument name="property" value="PageBuilderBackgroundPositionProperty"/>
         </actionGroup>
@@ -588,7 +588,7 @@
             <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
     </test>
     <test name="ValidateBackgroundImageUrl">
@@ -621,13 +621,13 @@
             <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
-            <argument name="property" value="PageBuilderBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="column{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
-        <seeElementInDOM selector="{{ColumnsOnFrontend.backgroundImageSource(PageBuilderBackgroundImageProperty.path,PageBuilderBackgroundImageProperty.fileType)}}" stepKey="seeBackgroundImageInDom"/>
+        <seeElementInDOM selector="{{ColumnsOnFrontend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path,PageBuilderBackgroundImage_JPG.extension)}}" stepKey="seeBackgroundImageInDom"/>
         <dontSeeInPageSource userInput=".png%22" stepKey="dontSeeEscapedQuoteInPageSource"/>
     </test>
     <test name="ColumnBackgroundColorPreserved">
@@ -1038,8 +1038,6 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
@@ -1066,8 +1064,9 @@
         <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
 
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
-        <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
-        <waitForPageLoad time="30" stepKey="waitForPageLoad1" />
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
+            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -1131,6 +1130,70 @@
         </actionGroup>
         <!-- We validate for 6 columns as each group automatically creates 2 columns -->
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="6" stepKey="validateColumnsAdded"/>
+    </test>
+    <test name="CanAddVideoToColumn">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Add Video to Column container and view on Admin and Storefront"/>
+            <description value="As a Content Manager I want column to be a container so that I can add video inside the column"/>
+            <useCaseId value="MAGETWO-87081"/>
+            <testCaseId value="MAGETWO-92791"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-video"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <!-- Add Column to Stage -->
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Add Video to Column -->
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup2">
+            <argument name="group" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragVideoOntoColumn">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetIndex" value="1" />
+        </actionGroup>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoadingMaskToDisappear"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoUrlProperty">
+            <argument name="property" value="PageBuilderVideoUrl_YouTube"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterVideoWidthProperty">
+            <argument name="property" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <!-- Verify Video in Tab on stage -->
+        <comment userInput="View video on stage" stepKey="viewTabOnStage"/>
+        <actionGroup ref="validateVideo" stepKey="validateStage">
+            <argument name="page" value="VideoOnStage"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!-- Verify Video in Tab on storefront -->
+        <comment userInput="View Video on Storefront" stepKey="viewTabOnStorefront"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
+            <argument name="contentType" value="PageBuilderVideoContentType"/>
+        </actionGroup>
+        <actionGroup ref="validateVideo" stepKey="validateStorefront">
+            <argument name="page" value="VideoOnStorefront"/>
+            <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
+            <argument name="width" value="PageBuilderVideoWidth_500"/>
+        </actionGroup>
     </test>
     <test name="DuplicatingColumnWillDivideSourceColumn">
         <annotations>

@@ -75,13 +75,19 @@
         <settings>
             <label />
         </settings>
-        <htmlContent name="conditions_form" template="Magento_PageBuilder/content-type/products/content">
+        <htmlContent name="conditions_form" template="Magento_PageBuilder/form/element/widget-conditions">
             <settings>
                 <additionalClasses>
                     <class name="admin__field">true</class>
                 </additionalClasses>
             </settings>
-            <block name="conditions_form" class="Magento\PageBuilder\Block\Adminhtml\ContentType\Products\Conditions" />
+            <block name="conditions_form" class="Magento\PageBuilder\Block\Adminhtml\Form\Element\ProductConditions">
+                <arguments>
+                    <argument name="formNamespace" xsi:type="string">pagebuilder_products_form</argument>
+                    <argument name="attribute" xsi:type="string">conditions_encoded</argument>
+                    <argument name="label" xsi:type="string" translate="true">Condition</argument>
+                </arguments>
+            </block>
         </htmlContent>
         <field name="products_count" sortOrder="10" formElement="input">
             <argument name="data" xsi:type="array">

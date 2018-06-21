@@ -18,6 +18,8 @@
             <testCaseId value="MAGETWO-89375"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-image"/>
+            <!-- MAGETWO-92859 -->
+            <group value="skip" />
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -25,28 +27,19 @@
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
-            <closeTab stepKey="closeTab"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-            <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage3">
-                <argument name="contentType" value="PageBuilderImageContentType"/>
-                <argument name="contentTypeIndex" value="1"/>
+            <actionGroup ref="navigateToMediaGallery" stepKey="navigateToMediaGallery"/>
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder1">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
             </actionGroup>
-            <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn2"/>
-            <waitForPageLoad stepKey="waitForPageLoad3" />
-            <waitForLoadingMaskToDisappear stepKey="waitForLoading3" />
-            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup2">
-                <argument name="FolderName" value="wysiwyg"/>
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage1">
+                <argument name="Image" value="PageBuilderImageProperty_StageJPG"/>
             </actionGroup>
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteUploadedImageFromStorage">
-                <argument name="Image" value="PageBuilderImageOnStage" />
+            <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToFolder2">
+                <argument name="FolderName" value="{{PageBuilderImageProperty_JPG2.path}}"/>
             </actionGroup>
-            <waitForPageLoad stepKey="waitForPageLoad4" />
-            <waitForLoadingMaskToDisappear stepKey="waitForLoading4" />
-            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteUploadedImageFromStorage2">
-                <argument name="Image" value="PageBuilderLocalImagePropertyJpg" />
+            <actionGroup ref="DeleteImageFromStorageActionGroup" stepKey="DeleteImageFromStorage2">
+                <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
             </actionGroup>
-            <waitForPageLoad stepKey="waitForPageLoad5" />
-            <waitForLoadingMaskToDisappear stepKey="waitForLoading5" />
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -64,7 +57,7 @@
         <waitForElementVisible selector="{{ImageOnStage.selectFromGalleryBtn}}" stepKey="seeSelectFromGalleryBtn1" />
         <!-- Attach image A to PageBuilder stage -->
         <actionGroup ref="addImageToStage" stepKey="addImageToStage">
-            <argument name="property" value="PageBuilderImageOnStage"/>
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <!-- Hover uploaded image to check Upload New Image button and Select From Gallery button -->
         <comment userInput="verify Upload Image Buttons" stepKey="commentVerifyUploadImageButtons"/>
@@ -84,35 +77,34 @@
         <!-- Verify image A display on preview of slide-out -->
         <comment userInput="Verify image A display on preview of slide-out" stepKey="commentVerifyImageOnSlideout"/>
         <actionGroup ref="verifyImageOnSlideout" stepKey="verifyImageOnSlideout">
-            <argument name="property" value="PageBuilderImageOnStage"/>
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
         <!-- Verify image A stored in the root folder of Magento Media Gallery -->
         <comment userInput="Verify image A stored in the root folder of Magento Media Gallery" stepKey="commentVerifyImage2"/>
-        <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
-        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
-            <argument name="FolderName" value="wysiwyg"/>
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
+            <argument name="property" value="PageBuilderImageProperty_StageJPG"/>
         </actionGroup>
-        <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderImageOnStage.value)}}" stepKey="wait" />
+        <actionGroup ref="NavigateToMediaFolderActionGroup" stepKey="NavigateToWYSIWYGFolderActionGroup">
+            <argument name="FolderName" value="{{PageBuilderImageProperty_StageJPG.path}}"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{MediaGallerySection.image(PageBuilderImageProperty_StageJPG.value)}}" stepKey="wait" />
         <click selector="{{MediaGallerySection.CancelBtn}}" stepKey="closeSlideOut"/>
         <!-- Upload image B to replace image A -->
         <comment userInput="Upload image B to replace image A" stepKey="commentUpload"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderLocalImagePropertyJpg"/>
+            <argument name="property" value="PageBuilderImageProperty_JPG2"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageContentTypeByIndex(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeLocalImagePropertyOnStage"/>
-        <waitForElementVisible selector="{{ImageOnStage.imageContentTypeByIndex(PageBuilderImageOnStage.fileName)}}" stepKey="seeImageOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('1', PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeImage1SourceOnStage"/>
+        <waitForElementVisible selector="{{ImageOnStage.imageSourceByIndex('2', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStage"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
-        <openNewTab stepKey="openNewTab"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeImage1Source"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageOnStage.fileName)}}" stepKey="seeImage2Source"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('1', PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeImage1SourceOnStorefront"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSourceByIndex('2', PageBuilderImageProperty_StageJPG.fileName)}}" stepKey="seeImage2SourceOnStorefront"/>
     </test>
     <test name="ImageAddImageContentTypeToCMSPage">
         <annotations>
@@ -151,15 +143,13 @@
         <dontSeeElement selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="dontSeeImageAppearanceField"/>
         <grabValueFrom selector="[name='{{PageBuilderImageAppearance.fieldName}}']" stepKey="defaultAppearanceValue"/>
         <assertEquals expected="full-width" expectedType="string" actual="defaultAppearanceValue" actualType="variable" message="pass" stepKey="assertDefaultAppearanceValue"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
         <!-- Upload image from local machine using image placeholder button -->
         <comment userInput="Upload image from local machine using image placeholder button" stepKey="commentUpload"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderLocalImagePropertyJpg"/>
+            <argument name="property" value="PageBuilderImageProperty_JPG"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(PageBuilderLocalImagePropertyJpg.value)}}" stepKey="waitForUploadImage1" />
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource1"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImageProperty_JPG.value)}}" stepKey="waitForUploadImage1" />
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG.fileName)}}" stepKey="seeMainImageSource1"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
         <!-- Remove uploaded image by TrashBin icon -->
         <comment userInput="Remove uploaded image by TrashBin icon" stepKey="commentRemoveImage"/>
@@ -168,29 +158,28 @@
         <!-- Upload image from local machine using image placeholder button -->
         <comment userInput="Upload image from local machine using image placeholder button" stepKey="commentUpload2"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderImagePropertyJpg"/>
+            <argument name="property" value="PageBuilderImageProperty_JPG2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="waitForUploadImage2" />
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource2"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImageProperty_JPG2.value)}}" stepKey="waitForUploadImage2" />
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeMainImageSource2"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
         <!-- Overwrite uploaded image by selecting image from Media Gallery Storage -->
         <comment userInput="Overwrite uploaded image by selecting image from Media Gallery Storage" stepKey="commentOverwrite"/>
-        <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
+            <argument name="property" value="PageBuilderImageProperty_JPG2"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="SelectImageFromMediaStorage">
-            <argument name="Image" value="PageBuilderImagePropertyJpg"/>
+            <argument name="Image" value="PageBuilderImageProperty_JPG2"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
         <!-- Validate Edit Panel 2 -->
         <comment userInput="Validate Edit Panel 2" stepKey="commentValidateEditPanel2"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpg.value)}}" stepKey="seeImageNameOnPreview3"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource3"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImageProperty_JPG2.value)}}" stepKey="seeImageNameOnPreview3"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeMainImageSource3"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Mobile Image')}}" stepKey="seeSelectFromGalleryBtnOnMobileImage"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Mobile Image')}}" stepKey="seeImagePlaceHolderOnMobileImage1"/>
         <!-- Fill Remaining Edit Panel -->
         <comment userInput="Fill Remaining Edit Panel" stepKey="commentEditPanel"/>
@@ -219,7 +208,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{ImageOnStorefront.imageDisplay}}" stepKey="seeMainImageDisplayed"/>
-        <waitForElementVisible selector="{{ImageOnStorefront.imageSource(PageBuilderImagePropertyJpg.fileName)}}" stepKey="seeMainImageSource4"/>
+        <waitForElementVisible selector="{{ImageOnStorefront.imageSource(PageBuilderImageProperty_JPG2.fileName)}}" stepKey="seeMainImageSource4"/>
         <assertElementContainsAttribute selector="{{ImageOnStorefront.imageElement('1')}}" attribute="style" expectedValue="max-width: 100%" stepKey="assertImageHasFullWidthStyle"/>
         <seeElementInDOM selector="{{ImageOnStorefront.imageLink(PageBuilderImageLinkProperty.value)}}" stepKey="seeImageLinkInDOM"/>
         <seeElementInDOM selector="{{ImageOnStorefront.imageLinkTarget(PageBuilderImageNewTab_True.stageValue)}}" stepKey="seeImageTargetInDOM"/>
@@ -424,7 +413,7 @@
             <argument name="contentType" value="PageBuilderImageContentType"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderLocalImagePropertyJpg"/>
+            <argument name="property" value="PageBuilderImageProperty_JPG"/>
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->

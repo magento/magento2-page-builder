@@ -36,7 +36,7 @@
         </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor"/>
+        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor"/>
         <assertEmpty actual="getBackgroundColor" actualType="variable" message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor"/>
         <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage">
             <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>
@@ -56,8 +56,8 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <actionGroup ref="validateRowBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage">
+            <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Default"/>
             <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Default"/>
@@ -68,8 +68,8 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage After Save -->
         <comment userInput="Validate Stage After Save" stepKey="commentValidateStage2"/>
-        <actionGroup ref="validateRowBackgroundAttributesWithNoImageOrColor" stepKey="validateStage2">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage2">
+            <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
             <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Default"/>
             <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Default"/>
@@ -81,7 +81,7 @@
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor2"/>
+        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor2"/>
         <assertEmpty actual="getBackgroundColor2" actualType="variable" message="Text field has text: $getBackgroundColor2" stepKey="assertBackgroundColor2"/>
         <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage2">
             <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>
@@ -103,8 +103,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <actionGroup ref="validateRowBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
-            <argument name="page" value="RowOnStorefront"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+            <argument name="section" value="RowOnStorefront"/>
             <argument name="index" value="1"/>
             <argument name="backgroundPosition" value="PageBuilderRowBackgroundPosition_Default"/>
             <argument name="backgroundSize" value="PageBuilderRowBackgroundSize_Default"/>
@@ -141,21 +141,21 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_Default"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
-        <actionGroup ref="validateRowNoBackgroundColor" stepKey="validateStage1">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage1">
+            <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
-        <actionGroup ref="validateRowNoBackgroundColor" stepKey="validateStage2">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage2">
+            <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit Panel: Check Background Color -->
@@ -164,17 +164,17 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="seeNoColorInColorSwatch" stepKey="validateBackgroundColorSwatch">
-            <argument name="property" value="PageBuilderRowBackgroundColor_Default"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Default"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderRowBackgroundColor_Default.section, PageBuilderRowBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor"/>
+        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor"/>
         <assertEmpty actual="getBackgroundColor" actualType="variable" message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Storefront: Check Background Color -->
         <comment userInput="Storefront: Check Background Color" stepKey="commentStorefrontCheck"/>
-        <actionGroup ref="validateRowNoBackgroundColor" stepKey="validateStorefront">
-            <argument name="page" value="RowOnStorefront"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStorefront">
+            <argument name="section" value="RowOnStorefront"/>
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
@@ -207,23 +207,23 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_green"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage1">
-            <argument name="page" value="RowOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_green"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage2">
-            <argument name="page" value="RowOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_green"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit Panel: Check Background Color -->
@@ -232,19 +232,19 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="seeColorInColorSwatch" stepKey="validateBackgroundColorSwatch">
-            <argument name="property" value="PageBuilderRowBackgroundColor_green"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColorField">
-            <argument name="property" value="PageBuilderRowBackgroundColor_green"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Storefront: Check Background Color -->
         <comment userInput="Storefront: Check Background Color" stepKey="commentStorefrontCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStorefront">
-            <argument name="page" value="RowOnStorefront"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_green"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_Plaintext_Green"/>
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
@@ -282,8 +282,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage1">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage1">
+            <argument name="section" value="RowOnStage"/>
             <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_FF0000"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -291,8 +291,8 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage2">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage2">
+            <argument name="section" value="RowOnStage"/>
             <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_FF0000"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -312,8 +312,8 @@
         </actionGroup>
         <!-- Storefront: Check Background Color -->
         <comment userInput="Storefront: Check Background Color" stepKey="commentStorefrontCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStorefront">
-            <argument name="page" value="RowOnStorefront"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStorefront">
+            <argument name="section" value="RowOnStorefront"/>
             <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_FF0000"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -347,23 +347,23 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage1">
-            <argument name="page" value="RowOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_RGB_Blue"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage2">
-            <argument name="page" value="RowOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_RGB_Blue"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit Panel: Check Background Color -->
@@ -372,19 +372,19 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="seeColorInColorSwatch" stepKey="validateBackgroundColorSwatch">
-            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColorField">
-            <argument name="property" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Storefront: Check Background Color -->
         <comment userInput="Storefront: Check Background Color" stepKey="commentStorefrontCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStorefront">
-            <argument name="page" value="RowOnStorefront"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_rgb_0_0_255"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_RGB_Blue"/>
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
@@ -417,21 +417,21 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_BlueRGBa"/>
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
         <!-- Not using action group due to open issue for inconsistent background color on Stage in DOM before page save: MAGETWO-90694 -->
         <waitForElementVisible selector="{{RowOnStage.base('1')}}" stepKey="waitForRow"/>
-        <waitForElementVisible selector="{{RowOnStage.backgroundColor('1', PageBuilderRowBackgroundColor_BlueRGBa.value)}}" stepKey="waitForBackgroundColor"/>
+        <waitForElementVisible selector="{{RowOnStage.backgroundColor('1', PageBuilderBackgroundColor_RGBa_Blue.value)}}" stepKey="waitForBackgroundColor"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage2">
-            <argument name="page" value="RowOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_BlueRGBa"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_RGBa_Blue"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit Panel: Check Background Color -->
@@ -440,10 +440,10 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="seeColorInColorSwatch" stepKey="validateBackgroundColorSwatch">
-            <argument name="property" value="PageBuilderRowBackgroundColor_BlueRGBa"/>
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColorField">
-            <argument name="property" value="PageBuilderRowBackgroundColor_BlueRGBa"/>
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
@@ -452,7 +452,7 @@
         <comment userInput="Storefront: Check Background Color" stepKey="commentStorefrontCheck"/>
         <!-- Not using action group due to open issue for inconsistent background color on Storefront in DOM: MAGETWO-90694 -->
         <waitForElementVisible selector="{{RowOnStorefront.base('1')}}" stepKey="waitForRow2"/>
-        <waitForElementVisible selector="{{RowOnStorefront.backgroundColor('1', PageBuilderRowBackgroundColor_BlueRGBa.value)}}" stepKey="waitForBackgroundColor2"/>
+        <waitForElementVisible selector="{{RowOnStorefront.backgroundColor('1', PageBuilderBackgroundColor_RGBa_Blue.value)}}" stepKey="waitForBackgroundColor2"/>
     </test>
     <test name="RowEditBackgroundColorHSL">
         <annotations>
@@ -483,23 +483,23 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage1">
-            <argument name="page" value="RowOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage1">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_HSL_Orange"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage2">
-            <argument name="page" value="RowOnStage"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage2">
+            <argument name="section" value="RowOnStage"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_HSL_Orange"/>
             <argument name="index" value="1"/>
         </actionGroup>
         <!-- Edit Panel: Check Background Color -->
@@ -508,19 +508,19 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="seeColorInColorSwatch" stepKey="validateBackgroundColorSwatch">
-            <argument name="property" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColorField">
-            <argument name="property" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
         </actionGroup>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <!-- Storefront: Check Background Color -->
         <comment userInput="Storefront: Check Background Color" stepKey="commentStorefrontCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStorefront">
-            <argument name="page" value="RowOnStorefront"/>
-            <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_OrangeHSL"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStorefront">
+            <argument name="section" value="RowOnStorefront"/>
+            <argument name="backgroundColor" value="PageBuilderBackgroundColor_HSL_Orange"/>
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
@@ -558,8 +558,8 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage1">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage1">
+            <argument name="section" value="RowOnStage"/>
             <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_Yellow"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -567,8 +567,8 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <!-- Stage: Check Background Color After Save -->
         <comment userInput="Stage: Check Background Color After Save" stepKey="commentStageCheckAfterSave"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStage2">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStage2">
+            <argument name="section" value="RowOnStage"/>
             <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_Yellow"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -588,8 +588,8 @@
         </actionGroup>
         <!-- Storefront: Check Background Color -->
         <comment userInput="Storefront: Check Background Color" stepKey="commentStorefrontCheck"/>
-        <actionGroup ref="validateRowBackgroundColor" stepKey="validateStorefront">
-            <argument name="page" value="RowOnStorefront"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImage" stepKey="validateStorefront">
+            <argument name="section" value="RowOnStorefront"/>
             <argument name="backgroundColor" value="PageBuilderRowBackgroundColor_Yellow"/>
             <argument name="index" value="1"/>
         </actionGroup>
@@ -623,16 +623,16 @@
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterBackgroundColor">
-            <argument name="property" value="PageBuilderRowBackgroundColor_invalid"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Invalid"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateError">
-            <argument name="property" value="PageBuilderRowBackgroundColor_invalid"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Invalid"/>
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Stage: Check Background Color -->
         <comment userInput="Stage: Check Background Color" stepKey="commentStageCheck"/>
-        <actionGroup ref="validateRowNoBackgroundColor" stepKey="validateStage1">
-            <argument name="page" value="RowOnStage"/>
+        <actionGroup ref="validateBackgroundAttributesWithNoImageOrColor" stepKey="validateStage1">
+            <argument name="section" value="RowOnStage"/>
             <argument name="index" value="1"/>
         </actionGroup>
     </test>
@@ -678,9 +678,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage1">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <waitForElementVisible time="2" selector="{{RowOnBackend.backgroundSectionName}}" stepKey="waitForBackgroundForm"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
@@ -708,9 +705,9 @@
         <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed2"/>
 
         <!--Overwrite uploaded image by selecting image from Media Gallery Storage-->
-        <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad2" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
+            <argument name="property" value="PageBuilderBackgroundImagePropertyJpg"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -786,7 +783,7 @@
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
         <waitForElementVisible selector="{{RowOnStage.backgroundColor('1', PageBuilderRowBackgroundColor_CCCCCC.rgb)}}" stepKey="seeBackgroundColorAdminPreview"/>
-        <waitForElementVisible selector="{{RowOnStage.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.fileName, PageBuilderRowBackgroundImage_MagentoJpg.fileType)}}" stepKey="seeBackgroundImageAdminPreview"/>
+        <waitForElementVisible selector="{{RowOnStage.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.fileName, PageBuilderRowBackgroundImage_MagentoJpg.extension)}}" stepKey="seeBackgroundImageAdminPreview"/>
         <waitForElementVisible selector="{{RowOnStage.backgroundPosition('1', PageBuilderRowBackgroundPosition_TopAligned.styleValue)}}" stepKey="seeBackgroundPositionAdminPreview"/>
         <waitForElementVisible selector="{{RowOnStage.backgroundSize('1', PageBuilderRowBackgroundSize_Cover.value)}}" stepKey="seeBackgroundSizeAdminPreview"/>
         <waitForElementVisible selector="{{RowOnStage.backgroundRepeat('1', PageBuilderRowBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatAdminPreview"/>
@@ -820,7 +817,7 @@
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <waitForElementVisible selector="{{RowOnStorefront.backgroundColor('1', PageBuilderRowBackgroundColor_CCCCCC.rgb)}}" stepKey="seeBackgroundColorSet"/>
-        <waitForElementVisible selector="{{RowOnStorefront.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.fileName, PageBuilderRowBackgroundImage_MagentoJpg.fileType)}}" stepKey="seeBackgroundImageSet"/>
+        <waitForElementVisible selector="{{RowOnStorefront.backgroundImage('1', PageBuilderRowBackgroundImage_MagentoJpg.fileName, PageBuilderRowBackgroundImage_MagentoJpg.extension)}}" stepKey="seeBackgroundImageSet"/>
         <waitForElementVisible selector="{{RowOnStorefront.backgroundPosition('1', PageBuilderRowBackgroundPosition_TopAligned.styleValue)}}" stepKey="seeBackgroundPositionSet"/>
         <waitForElementVisible selector="{{RowOnStorefront.backgroundSize('1', PageBuilderRowBackgroundSize_Cover.value)}}" stepKey="seeBackgroundSizeSet"/>
         <waitForElementVisible selector="{{RowOnStorefront.backgroundRepeat('1', PageBuilderRowBackgroundRepeat_Enabled.styleValue)}}" stepKey="seeBackgroundRepeatSet"/>

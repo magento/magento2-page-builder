@@ -3,6 +3,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 
 use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
@@ -41,65 +44,111 @@ class Video implements RendererInterface
             throw new \InvalidArgumentException('entityId is missing.');
         }
         $eavData = $this->eavAttributeLoader->load($itemData['entityId']);
+        $formData = $itemData['formData'] ?? [];
 
-        $rootElementAttributes = [
+        $rootAttributes = $this->getRootElementAttributes($eavData, $formData);
+        $wrapperAttributes = $this->getWrapperElementAttributes($eavData, $formData);
+        $iframeAttributes = $this->getIframeAttributes($eavData);
+
+        $rootElementOpenTag = $this->createOpenTagWithAttributes('div', $rootAttributes);
+        $wrapperElementOpenTag = $this->createOpenTagWithAttributes('div', $wrapperAttributes);
+        $iframeContainer = $this->createOpenTagWithAttributes('div', ['class' => 'pagebuilder-video-container']);
+        $iframeOpenTag = $this->createOpenTagWithAttributes('iframe', $iframeAttributes);
+
+        return $rootElementOpenTag . $wrapperElementOpenTag . $iframeContainer . $iframeOpenTag
+            . '</iframe></div></div></div>';
+    }
+
+    /**
+     * Creates an open tag with the given name and attributes
+     *
+     * @param string $elementName
+     * @param array $attributes
+     * @return string
+     */
+    private function createOpenTagWithAttributes(string $elementName, array $attributes): string
+    {
+        $elementHtml = '<' . $elementName;
+        foreach ($attributes as $attributeName => $attributeValue) {
+            $elementHtml .= ' ' . $attributeName . (isset($attributeValue) ? '="' . $attributeValue . '"' : '');
+        }
+        return $elementHtml . '>';
+    }
+
+    /**
+     * Get attributes, style, and classes for the root element
+     *
+     * @param array $eavData
+     * @param array $formData
+     * @return array
+     */
+    private function getRootElementAttributes(array $eavData, array $formData): array
+    {
+        $attributes = [
             'data-role' => 'video',
             'data-appearance' => 'default',
+            'class' => $eavData['css_classes'] ?? ''
         ];
 
-        $formData = $itemData['formData'] ?? [];
-        if (isset($formData['align']) && $formData['align'] !== '') {
-            $rootElementAttributes['style'] = 'text-align: ' . $formData['align'] . ';';
+        $justifyMap = [
+            'left' => 'flex-start',
+            'center' => 'center',
+            'right' => 'flex-end'
+        ];
+
+        if (isset($formData['align']) && isset($justifyMap[$formData['align']])) {
+            $attributes['style'] = 'justify-content: ' . $justifyMap[$formData['align']] . ';';
             unset($formData['align']);
         }
 
-        $iframeElementAttributes = $this->getIframeAttributes($eavData, $formData);
+        return $attributes;
+    }
 
-        $rootElementHtml = '<div';
-        foreach ($rootElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
-        }
-        $rootElementHtml .= '><iframe frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen';
-        foreach ($iframeElementAttributes as $attributeName => $attributeValue) {
-            $rootElementHtml .= $attributeValue ? " $attributeName=\"$attributeValue\"" : '';
-        }
-        $rootElementHtml .= '></iframe></div>';
+    /**
+     * Get attributes, style, and classes for the wrapper
+     *
+     * @param array $eavData
+     * @param array $formData
+     * @return array
+     */
+    private function getWrapperElementAttributes(array $eavData, array $formData): array
+    {
+        $attributes = [
+            'class' => 'pagebuilder-video-wrapper'
+        ];
 
-        return $rootElementHtml;
+        $style = $this->styleExtractor->extractStyle($formData);
+
+        if (isset($eavData['video_width'])) {
+            $style .= 'max-width: ' . $this->normalizeSizeDimension($eavData['video_width']) . ';';
+        }
+
+        if ($style) {
+            $attributes['style'] = $style;
+        }
+
+        return $attributes;
     }
 
     /**
      * Get attributes, style, and classes for the iframe
      *
      * @param array $eavData
-     * @param array $formData
      * @return array
      */
-    private function getIframeAttributes($eavData, $formData)
+    private function getIframeAttributes(array $eavData): array
     {
-        $iframeElementAttributes = [
-            'class' => $eavData['css_classes'] ?? '',
-            'src' => $eavData['video_url']
+        $attributes = [
+            'src' => $eavData['video_url'],
+            'frameborder' => '0',
+            'allowfullscreen' => null
         ];
 
-        if (isset($eavData['video_width'])) {
-            $iframeElementAttributes['width'] = $this->normalizeSizeDimension($eavData['video_width']);
-        }
-
-        if (isset($eavData['video_height'])) {
-            $iframeElementAttributes['height'] = $this->normalizeSizeDimension($eavData['video_height']);
-        }
-
-        $style = $this->styleExtractor->extractStyle($formData);
-        if ($style) {
-            $iframeElementAttributes['style'] = $style;
-        }
-
-        return $iframeElementAttributes;
+        return $attributes;
     }
 
     /**
-     * Normalize value for width/height
+     * Normalize value for width
      *
      * @param string $value
      * @return string

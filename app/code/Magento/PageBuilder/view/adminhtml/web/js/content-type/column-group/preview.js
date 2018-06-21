@@ -34,6 +34,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.gridSizeArray = _knockout.observableArray([]);
       _this.gridSizeError = _knockout.observable();
       _this.gridFormOpen = _knockout.observable(false);
+      _this.gridChange = _knockout.observable(false);
       _this.dropPlaceholder = void 0;
       _this.movePlaceholder = void 0;
       _this.groupElement = void 0;
@@ -142,9 +143,10 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
     _proto.onExistingColumnDrop = function onExistingColumnDrop(movePosition) {
       var column = (0, _registry2.getDragColumn)();
+      var sourceGroupPreview = column.parent.preview;
       var modifyOldNeighbour; // Determine which old neighbour we should modify
 
-      var oldWidth = this.resizeUtils.getColumnWidth(column); // Retrieve the adjacent column either +1 or -1
+      var oldWidth = sourceGroupPreview.getResizeUtils().getColumnWidth(column); // Retrieve the adjacent column either +1 or -1
 
       if ((0, _resize.getAdjacentColumn)(column, "+1")) {
         modifyOldNeighbour = (0, _resize.getAdjacentColumn)(column, "+1");
@@ -158,7 +160,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       (0, _moveContentType.moveContentType)(column, movePosition.insertIndex, this.parent); // Modify the old neighbour
 
       if (modifyOldNeighbour) {
-        var oldNeighbourWidth = this.resizeUtils.getAcceptedColumnWidth((oldWidth + this.resizeUtils.getColumnWidth(modifyOldNeighbour)).toString());
+        var oldNeighbourWidth = sourceGroupPreview.getResizeUtils().getAcceptedColumnWidth((oldWidth + sourceGroupPreview.getResizeUtils().getColumnWidth(modifyOldNeighbour)).toString());
         (0, _resize.updateColumnWidth)(modifyOldNeighbour, oldNeighbourWidth);
       } // Modify the columns new neighbour
 
@@ -364,18 +366,30 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.updateGridSize = function updateGridSize() {
+      var _this5 = this;
+
       var newGridSize = parseInt(this.gridSizeInput().toString(), 10);
 
       if (newGridSize) {
-        try {
-          (0, _gridSize.resizeGrid)(this.parent, newGridSize);
-          this.gridSizeError(null);
-        } catch (e) {
-          if (e instanceof _gridSize.GridSizeError) {
-            this.gridSizeError(e.message);
-          } else {
-            throw e;
+        if (newGridSize !== this.resizeUtils.getGridSize()) {
+          try {
+            (0, _gridSize.resizeGrid)(this.parent, newGridSize);
+            this.gridSizeError(null); // Make the grid "flash" on successful change
+
+            this.gridChange(true);
+
+            _underscore.delay(function () {
+              _this5.gridChange(false);
+            }, 1000);
+          } catch (e) {
+            if (e instanceof _gridSize.GridSizeError) {
+              this.gridSizeError(e.message);
+            } else {
+              throw e;
+            }
           }
+        } else {
+          this.gridSizeError(null);
         }
       }
     };
@@ -422,13 +436,13 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.openGridForm = function openGridForm() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (!this.gridFormOpen()) {
         this.gridFormOpen(true); // Wait for animation to complete
 
         _underscore.delay(function () {
-          (0, _jquery)(_this5.wrapperElement).find(".pagebuilder-grid-panel-link-wrapper input").focus().select();
+          (0, _jquery)(_this6.wrapperElement).find(".pagebuilder-grid-panel-link-wrapper input").focus().select();
         }, 200);
 
         (0, _jquery)(document).on("click focusin", this.onDocumentClick);
@@ -511,11 +525,11 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.initMouseMove = function initMouseMove(group) {
-      var _this6 = this;
+      var _this7 = this;
 
       var intersects = false;
       (0, _jquery)(document).on("mousemove touchmove", function (event) {
-        var groupPosition = _this6.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
+        var groupPosition = _this7.getGroupPosition(group); // If we're handling a touch event we need to pass through the page X & Y
 
 
         if (event.type === "touchmove") {
@@ -523,32 +537,32 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
           event.pageY = event.originalEvent.pageY;
         }
 
-        if (_this6.eventIntersectsGroup(event, groupPosition)) {
+        if (_this7.eventIntersectsGroup(event, groupPosition)) {
           intersects = true;
 
-          _this6.onResizingMouseMove(event, group, groupPosition);
+          _this7.onResizingMouseMove(event, group, groupPosition);
 
-          _this6.onDraggingMouseMove(event, group, groupPosition);
+          _this7.onDraggingMouseMove(event, group, groupPosition);
 
-          _this6.onDroppingMouseMove(event, group, groupPosition);
+          _this7.onDroppingMouseMove(event, group, groupPosition);
         } else {
           intersects = false;
-          _this6.groupPositionCache = null;
-          _this6.dropPosition = null;
+          _this7.groupPositionCache = null;
+          _this7.dropPosition = null;
 
-          _this6.dropPlaceholder.removeClass("left right");
+          _this7.dropPlaceholder.removeClass("left right");
 
-          _this6.movePlaceholder.css("left", "").removeClass("active");
+          _this7.movePlaceholder.css("left", "").removeClass("active");
         }
       }).on("mouseup touchend", function () {
         if (intersects) {
-          _this6.handleMouseUp();
+          _this7.handleMouseUp();
         }
 
         intersects = false;
-        _this6.dropPosition = null;
+        _this7.dropPosition = null;
 
-        _this6.endAllInteractions();
+        _this7.endAllInteractions();
 
         _underscore.defer(function () {
           // Re-enable any disabled sortable areas
@@ -640,7 +654,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
 
     _proto.onResizingMouseMove = function onResizingMouseMove(event, group, groupPosition) {
-      var _this7 = this;
+      var _this8 = this;
 
       var newColumnWidth;
 
@@ -701,8 +715,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
               _underscore.defer(function () {
                 // If we do a resize, re-calculate the column widths
-                _this7.resizeColumnWidths = _this7.resizeUtils.determineColumnWidths(_this7.resizeColumnInstance, groupPosition);
-                _this7.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this7.resizeColumnWidths);
+                _this8.resizeColumnWidths = _this8.resizeUtils.determineColumnWidths(_this8.resizeColumnInstance, groupPosition);
+                _this8.resizeMaxGhostWidth = (0, _resize.determineMaxGhostWidth)(_this8.resizeColumnWidths);
               });
             }
           }

@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/** @var $block \Magento\PageBuilder\Block\Adminhtml\Form\Element\ProductConditions */
+$attribute = $block->getData('attribute');
+$id = $block->getData('formNamespace') . '_' . $attribute;
+$role = 'pagebuilder-conditions-form-placeholder-' . $attribute;
+?>
+<label class="admin__field-label">
+    <span><?= $block->escapeHtml($block->getData('label')) ?></span>
+</label>
+<div class="admin__field-control">
+    <div class="rule-tree">
+        <fieldset id="<?= $block->escapeHtmlAttr($id) ?>" class="fieldset">
+            <div class="rule-tree-wrapper">
+                <div data-role="<?= $block->escapeHtmlAttr($role) ?>"></div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+
+<script type="text/x-magento-init"><?= /* @noEscape */ $block->getConfigJson() ?></script>
