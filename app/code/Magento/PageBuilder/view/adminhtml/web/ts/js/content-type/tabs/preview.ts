@@ -19,13 +19,11 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
-import ContentTypeDroppedCreateEventParams from "../content-type-dropped-create-event-params";
-import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 
 export default class Preview extends PreviewCollection {
     public static focusOperationTime: number;
