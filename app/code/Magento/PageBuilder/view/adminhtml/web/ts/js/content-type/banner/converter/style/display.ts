@@ -30,8 +30,8 @@ export default class Display implements ConverterInterface {
             && data.background_image.length === 0
             && (!data.link_url || !data.link_url.default || data.link_url.default === "")
             && data.message === ""
-            && data.show_button === "never_show"
-            && data.show_overlay === "never_show"
+            && data.show_button === "never"
+            && data.show_overlay === "never"
         ) {
 
             return "none";

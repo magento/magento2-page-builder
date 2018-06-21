@@ -30,7 +30,7 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      if (data.background_color === "" && data.background_image.length === 0 && (!data.link_url || !data.link_url.default || data.link_url.default === "") && data.message === "" && data.show_button === "never_show" && data.show_overlay === "never_show") {
+      if (data.background_color === "" && data.background_image.length === 0 && (!data.link_url || !data.link_url.default || data.link_url.default === "") && data.message === "" && data.show_button === "never" && data.show_overlay === "never") {
         return "none";
       }
 
