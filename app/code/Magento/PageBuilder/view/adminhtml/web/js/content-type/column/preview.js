@@ -157,21 +157,8 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
         if (splitClone) {
           splitClone.then(function (duplicateContentType) {
-            var originalWidth = 0;
-            var duplicateWidth = 0;
-
-            for (var i = 0; i <= splitTimes; i++) {
-              if (splitTimes > 0) {
-                originalWidth += resizeUtils.getSmallestColumnWidth();
-                --splitTimes;
-              }
-
-              if (splitTimes > 0) {
-                duplicateWidth += resizeUtils.getSmallestColumnWidth();
-                --splitTimes;
-              }
-            }
-
+            var originalWidth = (Math.floor(splitTimes / 2) + splitTimes % 2) * resizeUtils.getSmallestColumnWidth();
+            var duplicateWidth = Math.floor(splitTimes / 2) * resizeUtils.getSmallestColumnWidth();
             (0, _resize.updateColumnWidth)(contentType, resizeUtils.getAcceptedColumnWidth(originalWidth.toString()));
             (0, _resize.updateColumnWidth)(duplicateContentType, resizeUtils.getAcceptedColumnWidth(duplicateWidth.toString()));
             return duplicateContentType;
