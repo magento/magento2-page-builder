@@ -107,7 +107,15 @@
             }
         }
 
-        &.resizing {
+        &.grid-change {
+            animation-duration: 650ms;
+            animation-name: box-shadow-flash;
+            animation-iteration-count: 1;
+            animation-timing-function: ease-out;
+        }
+
+        &.resizing,
+        &.grid-form-open {
             .resize-grid {
                 opacity: 1;
                 transition: .5s opacity;
@@ -373,5 +381,17 @@
                 color: rgba(153, 153, 153, .8);
             }
         }
+    }
+}
+
+@keyframes box-shadow-flash {
+    0% {
+        box-shadow: 0 0 0 0 rgba(153, 153, 153, 0);
+    }
+    10% {
+        box-shadow: 0 0 0 4px rgba(153, 153, 153, .35);
+    }
+    100% {
+        box-shadow: 0 0 0 1px rgba(153, 153, 153, 0);
     }
 }
