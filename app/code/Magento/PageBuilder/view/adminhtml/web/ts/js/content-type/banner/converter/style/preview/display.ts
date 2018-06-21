@@ -11,9 +11,9 @@ export default class Display implements ConverterInterface {
      * Convert value to internal format
      *
      * @param value string
-     * @returns {string | object}
+     * @returns {void}
      */
-    public fromDom(value: string): string | object {
+    public fromDom(value: string): void {
         return;
     }
 
@@ -22,9 +22,9 @@ export default class Display implements ConverterInterface {
      *
      * @param name string
      * @param data DataObject
-     * @returns {string | object}
+     * @returns {void}
      */
-    public toDom(name: string, data: DataObject): string | object {
+    public toDom(name: string, data: DataObject): void {
         return;
     }
 }
