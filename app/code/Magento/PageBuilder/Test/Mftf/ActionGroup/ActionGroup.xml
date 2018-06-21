@@ -367,13 +367,6 @@
         <seeElement selector="{{VisualSelectComponent.firstSelection(property2.value)}}" stepKey="seeSecondSelection"/>
         <seeElement selector="{{VisualSelectComponent.firstSelection(property3.value)}}" stepKey="seeThirdSelection"/>
     </actionGroup>
-    <actionGroup name="validateSelectedVisualSelect">
-        <arguments>
-            <argument name="property" defaultValue=""/>
-        </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <seeElement selector="{{VisualSelectComponent.selected(property.value)}}" stepKey="seeSelectionIsActive"/>
-    </actionGroup>
     <actionGroup name="validateSlideOutPanelField">
         <arguments>
             <argument name="property"/>
