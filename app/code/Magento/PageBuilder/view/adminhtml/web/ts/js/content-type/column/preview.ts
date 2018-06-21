@@ -165,26 +165,15 @@ export default class Preview extends PreviewCollection {
         }
 
         // Attempt to split the current column into parts
-        let splitTimes = Math.round(
-            resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth(),
-        );
+        const splitTimes = Math.round(resizeUtils.getColumnWidth(contentType) / resizeUtils.getSmallestColumnWidth());
         if (splitTimes > 1) {
             const splitClone = super.clone(contentType, autoAppend);
             if (splitClone) {
                 splitClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
-                    let originalWidth = 0;
-                    let duplicateWidth = 0;
+                    const originalWidth = (Math.floor(splitTimes / 2) + (splitTimes % 2))
+                        * resizeUtils.getSmallestColumnWidth();
+                    const duplicateWidth = Math.floor(splitTimes / 2) * resizeUtils.getSmallestColumnWidth();
 
-                    for (let i = 0; i <= splitTimes; i++) {
-                        if (splitTimes > 0) {
-                            originalWidth += resizeUtils.getSmallestColumnWidth();
-                            --splitTimes;
-                        }
-                        if (splitTimes > 0) {
-                            duplicateWidth += resizeUtils.getSmallestColumnWidth();
-                            --splitTimes;
-                        }
-                    }
                     updateColumnWidth(
                         contentType,
                         resizeUtils.getAcceptedColumnWidth(originalWidth.toString()),
