@@ -190,9 +190,6 @@
         </actionGroup>
         <!-- Validate Vertical Alignment Fields -->
         <comment userInput="Validate vertical alignment fields" stepKey="commentVerticalAlignment"/>
-        <actionGroup ref="validateSlideOutPanelField" stepKey="seeAppearanceMinHeightProperty">
-            <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-        </actionGroup>
         <actionGroup ref="validateVerticalAlignmentVisualSelects" stepKey="validateVerticalAlignment">
             <argument name="property1" value="PageBuilderVerticalAlignmentPropertyTop"/>
             <argument name="property2" value="PageBuilderVerticalAlignmentPropertyCenter"/>
@@ -304,7 +301,6 @@
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <waitForPageLoad stepKey="waitForStoreFrontPageLoad"/>
         <seeElement selector="{{ColumnsOnFrontend.columnStyle('1', PageBuilderColumnStyles.verticalAlignmentTop)}}" stepKey="seeColumn1VerticalAlignmentTopApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.columnStyle('2', PageBuilderColumnStyles.verticalAlignmentCenter)}}" stepKey="seeColumn2VerticalAlignmentCenterApplied"/>
         <seeElement selector="{{ColumnsOnFrontend.columnStyle('3', PageBuilderColumnStyles.verticalAlignmentBottom)}}" stepKey="seeColumn2VerticalAlignmentBottomApplied"/>
