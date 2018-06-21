@@ -37,12 +37,12 @@
             </settings>
         </dataProvider>
     </dataSource>
-    <container name="listing_top" template="Magento_Staging/grid/toolbar">
+    <listingToolbar name="listing_top">
         <filters name="listing_filters"/>
         <filterSearch name="title"/>
         <paging name="listing_paging"/>
-    </container>
-    <columns name="columns" template="Magento_Staging/grid/listing-disabled">
+    </listingToolbar>
+    <columns name="columns">
         <settings>
             <childDefaults>
                 <param name="clickAction" xsi:type="string">view</param>
@@ -86,9 +86,9 @@
                 </options>
             </settings>
         </column>
-        <column name="is_active_label" class="Magento\Banner\Ui\Component\Listing\Columns\StatusText">
+        <column name="is_active_label" class="Magento\PageBuilder\Ui\Component\Listing\Columns\BlockStatusText">
             <settings>
-                <label translate="true">Status Label</label>
+                <label translate="true">Status</label>
                 <visible>false</visible>
             </settings>
         </column>

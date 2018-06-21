@@ -76,17 +76,16 @@
         </settings>
         <component component="Magento_PageBuilder/js/content-type/block/block-chooser" template="Magento_PageBuilder/content-type/block/block-chooser" name="block_chooser">
             <argument name="data" xsi:type="array">
-                <item name="js_config" xsi:type="array">
+                <item name="config" xsi:type="array">
                     <item name="requestParameter" xsi:type="string">block_id</item>
-                    <!-- Need a dynamic way of providing this URL -->
-                    <item name="dataUrlConfigKey" xsi:type="string">block_data_url</item>
+                    <item name="dataUrlConfigPath" xsi:type="string">content_types.block.additional_data.chooser_config.data_url</item>
                     <item name="modalName" xsi:type="string">ns = ${ $.ns }, index = modal</item>
                     <item name="buttonTitle" xsi:type="string" translate="true">Select Block...</item>
                 </item>
             </argument>
             <settings>
                 <imports>
-                    <link name="id">ns = ${ $.ns }, index = block_id:value</link>
+                    <link name="id">${ $.ns }.${ $.ns }.general.block_id:value</link>
                 </imports>
             </settings>
         </component>
@@ -116,7 +115,7 @@
                         <item name="class" xsi:type="string">action-primary</item>
                         <item name="actions" xsi:type="array">
                             <item name="0" xsi:type="array">
-                                <item name="targetName" xsi:type="string">${ $.ns }.${ $.ns }.modal.pagebuilder_block_chooser_listing</item>
+                                <item name="targetName" xsi:type="string">${ $.name }.pagebuilder_block_chooser_listing</item>
                                 <item name="actionName" xsi:type="string">save</item>
                             </item>
                             <item name="1" xsi:type="string">closeModal</item>

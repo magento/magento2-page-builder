@@ -10,7 +10,7 @@ namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Block;
 
 use Magento\Framework\Controller\ResultFactory;
 
-class DataProvider extends \Magento\Framework\App\Action\Action
+class Metadata extends \Magento\Framework\App\Action\Action
 {
     /**
      * @var \Magento\Cms\Model\ResourceModel\Block\CollectionFactory
@@ -18,7 +18,7 @@ class DataProvider extends \Magento\Framework\App\Action\Action
     private $blockCollectionFactory;
 
     /**
-     * BannerState constructor.
+     * DataProvider constructor.
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
      */
@@ -36,11 +36,11 @@ class DataProvider extends \Magento\Framework\App\Action\Action
         $params = $this->getRequest()->getParams();
         try {
             $collection = $this->blockCollectionFactory->create();
-            $banners = $collection
+            $blocks = $collection
                 ->addFieldToSelect(['title','is_active'])
                 ->addFieldToFilter('block_id', ['eq' => $params['block_id']])
                 ->load();
-            $result = $banners->getFirstItem()->toArray();
+            $result = $blocks->getFirstItem()->toArray();
         } catch (\Exception $e) {
             $result = [
                 'error' => $e->getMessage(),
