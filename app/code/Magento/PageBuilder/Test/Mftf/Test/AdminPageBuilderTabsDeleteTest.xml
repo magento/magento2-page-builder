@@ -46,10 +46,10 @@
         <comment userInput="When I view options menu for single Tab" stepKey="AC2"/>
         <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForContentTypeInStageVisible" />
         <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader('1')}}"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
+        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'edit')}}" stepKey="seeTabOptionsEdit"/>
         <!-- Verify Remove option is disabled -->
         <comment userInput="User sees that removing last tab from the Tabs content type is disabled" stepKey="AC3"/>
-        <seeElement selector="{{TabOnStage.tabOptionsRemoveDisabled}}" stepKey="seeTabRemoveOptionDisabled"/>
+        <seeElement selector="{{TabOnStage.optionsMenuButtonDisabled('1', 'remove')}}" stepKey="seeTabRemoveOptionDisabled"/>
         <comment userInput="User remove default state Tabs content type with confirmation." stepKey="AC4"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeContentTypeFromStage">
@@ -91,7 +91,9 @@
         </actionGroup>
 
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -102,14 +104,11 @@
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusTabsElement"/>
         <!-- Add second tab -->
         <actionGroup ref="addTab" stepKey="addSecondTab"/>
-        <waitForPageLoad stepKey="waitForLoadingMaskToDisappear"/>
-        <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="confirmSecondTab"/>
         <comment userInput="When I delete second default state Tab from the stage" stepKey="AC2"/>
-        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader('2')}}" stepKey="waitForContentTypeInStageVisible" />
-        <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader('2')}}"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
         <!-- Remove second tab -->
-        <click selector="{{TabOnStage.tabOptionsRemove}}" stepKey="clickRemoveOption"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <comment userInput="Removal confirmation modal not displayed when removing default state individual Tab" stepKey="AC3"/>
         <waitForElementNotVisible time="30" selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
         <waitForElementNotVisible time="30" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader"/>
@@ -146,7 +145,9 @@
         </after>
         <comment userInput="Given I have added a second Tab on the stage and customized it" stepKey="AC1"/>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -169,12 +170,12 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
 
-        <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader('2')}}"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
         <comment userInput="User deletes tab with customization from Tabs, user sees warning message" stepKey="AC2"/>
         <!-- Remove second tab -->
-        <click selector="{{TabOnStage.tabOptionsRemove}}" stepKey="clickRemoveOption"/>
-        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <comment userInput="User confirms deleting tab with customization, it disappears from Admin preview" stepKey="AC3"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
@@ -205,7 +206,9 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -214,16 +217,19 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('2')}}" stepKey="confirmSecondTab"/>
         <click selector="{{TabsOnStage.tabsContainer}}" stepKey="focusOnContentType"/>
         <comment userInput="Given I have added a Text content type to the second Tab" stepKey="AC2"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup2">
+            <argument name="group" value="PageBuilderTextContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragTextOntoTab">
             <argument name="contentType" value="PageBuilderTextContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
-            <argument name="containerTargetIndex" value="1" />
+            <argument name="containerTargetIndex" value="2" />
         </actionGroup>
         <comment userInput="User deletes tab with content from Tabs, user sees warning message" stepKey="AC3"/>
-        <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader('2')}}"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsRemove}}" stepKey="clickRemoveOption"/>
-        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
         <comment userInput="User confirms deleting tab with content, it disappears from Admin preview" stepKey="AC4"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
@@ -260,7 +266,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Given I have customized the Edit Tabs container advanced settings" stepKey="AC1"/>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -302,7 +310,9 @@
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <comment userInput="Given I have added Tabs container with 3 Tabs to the stage" stepKey="AC1"/>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -314,9 +324,10 @@
         <waitForElementVisible selector="{{TabOnStage.tabHeader('3')}}" stepKey="waitForNewTabHeader3"/>
         <comment userInput="When I delete third Tab from the stage" stepKey="AC2"/>
         <click stepKey="clickTabHeader3" selector="{{TabOnStage.tabHeader('3')}}"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsRemove}}" stepKey="clickRemoveOption"/>
-        <waitForPageLoad stepKey="waitForDeleteTab" />
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
         <dontSeeElement selector="{{TabOnStage.tabHeader('3')}}" stepKey="dontSeeThirdTabOnStorefront"/>
         <comment userInput="Second Tab becomes both active and focused" stepKey="AC3"/>
         <waitForPageLoad stepKey="waitForTabChangeAnimation" />
@@ -350,12 +361,15 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit1"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterFirstTabName">
             <argument name="property" value="PageBuilderTabNameRandom1"/>
         </actionGroup>
@@ -365,17 +379,19 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForPageLoad stepKey="waitForNewTab" time="30"/>
 
-        <actionGroup ref="duplicateTabByIndex" stepKey="duplicateTabByIndex1">
-            <argument name="index" value="1"/>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType1">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="1"/>
         </actionGroup>
-        <actionGroup ref="duplicateTabByIndex" stepKey="duplicateTabByIndex2">
-            <argument name="index" value="2"/>
+        <actionGroup ref="duplicateSmallContentType" stepKey="duplicateSmallContentType2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
         </actionGroup>
         <comment userInput="When I delete customized Tab from the stage and dismiss the warning on confirmation modal" stepKey="AC2"/>
-        <click stepKey="clickTabHeader3" selector="{{TabOnStage.tabHeader('3')}}"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit2"/>
-        <click selector="{{TabOnStage.tabOptionsRemove}}" stepKey="clickRemoveOption"/>
-        <waitForPageLoad stepKey="waitForDeleteTab3" time="30"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage1">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="3"/>
+        </actionGroup>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
         <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
@@ -386,10 +402,10 @@
         <dontSeeElement selector="{{TabOnStage.tabHeader('3')}}" stepKey="dontSeeThirdTab"/>
 
         <comment userInput="Deleting another customized Tab from the stage does not show confirmation modal" stepKey="AC3"/>
-        <click stepKey="clickTabHeader2" selector="{{TabOnStage.tabHeader('2')}}"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit3"/>
-        <click selector="{{TabOnStage.tabOptionsRemove}}" stepKey="clickRemoveOption2"/>
-        <waitForPageLoad stepKey="waitForDeleteTab2" time="30"/>
+        <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeTabFromStage2">
+            <argument name="section" value="TabOnStage"/>
+            <argument name="targetIndex" value="2"/>
+        </actionGroup>
         <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
         <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTabOnStage"/>

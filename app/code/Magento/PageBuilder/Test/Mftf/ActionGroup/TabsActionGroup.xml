@@ -31,65 +31,24 @@
         <waitForPageLoad stepKey="waitForNewTab" time="30"/>
         <waitForElementVisible selector="{{TabOnStage.tabContent(to)}}" stepKey="waitForNewTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader(to)}}" stepKey="waitForNewTabHeader"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsByIndex(to)}}" stepKey="waitForTabOptionsPanel"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit2"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType2"/>
+        <waitForElementVisible selector="{{TabOnStage.optionsMenu(to)}}" stepKey="waitForTabOptionsPanel"/>
+        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton(to, 'edit)}}" stepKey="seeTabOptionsEdit2"/>
+        <click selector="{{TabOnStage.optionsMenuButton(to, 'edit')}}" stepKey="clickEditContentType2"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <!-- Required time wait due to animation -->
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
     </actionGroup>
-    <actionGroup name="duplicateTabByIndex">
+    <actionGroup name="switchTabs">
         <arguments>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentTypeInStageVisible" />
-        <click selector="{{TabOnStage.tabHeader(index)}}" stepKey="clickTabTitle"/>
-        <waitForElementVisible time="30" selector="{{TabOnStage.tabOptionsByIndex(index)}}" stepKey="waitForTabOptionsPanel"/>
-        <grabTextFrom selector="{{TabOnStage.tabHeader(index)}}" stepKey="grabNameFromInitialTab"/>
-        <waitForElementVisible time="30" selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="seeTabOptionsDuplicate"/>
-        <click selector="{{TabOnStage.tabOptionsDuplicate}}" stepKey="clickDuplicateTab"/>
-        <executeJS function="return Math.round({{index}}+1)" stepKey="newTabIndex"/>
-        <waitForElementVisible time="30" selector="{{TabOnStage.tabHeader('${newTabIndex}')}}" stepKey="waitForNewTabVisible" />
-        <waitForElementVisible time="30" selector="{{TabOnStage.tabOptionsByIndex('${newTabIndex}')}}" stepKey="waitForNewTabOptionsPanel"/>
-        <see userInput="{$grabNameFromInitialTab} copy" selector="{{TabOnStage.tabHeader('${newTabIndex}')}}" stepKey="seeDuplicatedTabName"/>
-    </actionGroup>
-    <actionGroup name="openTabOptionsByIndex">
-        <arguments>
-            <argument name="index" defaultValue="1" type="string"/>
-        </arguments>
-        <waitForElementVisible time="10" selector="{{TabOnStage.tabHeader(index)}}" stepKey="waitForContentTypeInStageVisible" />
-        <click stepKey="clickTabTitle" selector="{{TabOnStage.tabHeader(index)}}"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <!-- Required time wait due to animation -->
-        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
-        <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
-    </actionGroup>
-    <actionGroup name="switchTabsAdmin">
-        <arguments>
+            <argument name="section"/>
             <argument name="from" defaultValue="1" type="string"/>
             <argument name="to" defaultValue="2" type="string"/>
         </arguments>
-        <click selector="{{TabOnStage.tabHeader(to)}}" stepKey="switchToTab"/>
-        <waitForPageLoad stepKey="waitForTabChangeAnimation" time="30"/>
-        <waitForElementVisible time="30" selector="{{TabOnStage.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
-        <assertElementContainsAttribute selector="{{TabOnStage.tabPanel(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
-    </actionGroup>
-    <actionGroup name="switchTabsStorefront">
-        <arguments>
-            <argument name="from" defaultValue="1" type="string"/>
-            <argument name="to" defaultValue="2" type="string"/>
-        </arguments>
-        <click selector="{{TabOnStorefront.tabHeader(to)}}" stepKey="switchToTab"/>
-        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront1" time="30"/>
-        <scrollToTopOfPage stepKey="scrollToTopOfPage"/>
-        <wait time="2" stepKey="waitForTabRender"/>
-        <waitForPageLoad stepKey="waitForTabChangeAnimationStorefront2" time="30"/>
-        <waitForElementVisible time="30" selector="{{TabOnStorefront.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
-        <assertElementContainsAttribute selector="{{TabOnStorefront.tabContent(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
+        <click selector="{{section.tabHeader(to)}}" stepKey="switchToTab"/>
+        <waitForPageLoad stepKey="waitForPageLoad" time="30"/>
+        <waitForElementVisible time="30" selector="{{section.tabHeaderItemActive(to)}}" stepKey="seeNewTabActive"/>
+        <assertElementContainsAttribute selector="{{section.tabPanel(from)}}" attribute="aria-hidden" expectedValue="true" stepKey="assertOldTabHidden"/>
+        <assertElementContainsAttribute selector="{{section.tabPanel(to)}}" attribute="aria-hidden" expectedValue="false" stepKey="assertNewTabVisible"/>
     </actionGroup>
 </actionGroups>

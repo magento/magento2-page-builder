@@ -135,7 +135,9 @@
         <seeElement selector="{{SlideOnBackend.collageBackgroundAttachment}}" stepKey="verifyCollageBackgroundAttachmentInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <seeElementInDOM selector="{{SlideOnBackend.editFormBackgroundImagePreview}}" stepKey="seeBackgroundImageOnForm"/>
@@ -562,7 +564,9 @@
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOverlayBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.collageLeft}}" stepKey="moveMouseOverBackendSlide"/>
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyStillDontSeeOverlayBackend"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <dontSeeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderSlideButtonTextProperty.section, PageBuilderSlideButtonTextProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
@@ -1059,7 +1063,9 @@
         <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonIsEditable"/>
         <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="clickButtonToEdit"/>
         <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm">
