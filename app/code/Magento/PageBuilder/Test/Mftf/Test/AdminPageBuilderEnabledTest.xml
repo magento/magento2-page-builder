@@ -31,31 +31,31 @@
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage" />
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <see userInput="Advanced Content Tools" stepKey="seeAdvancedContentToolTab"/>
-        <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
-        <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="seeYESOptionIsSelected"/>
+        <conditionalClick stepKey="expandPageBuilderTab" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilderVisible" />
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="seeYESOptionIsSelected"/>
         <grabTextFrom selector="//tr[@id='row_cms_pagebuilder_enabled']/td[@class='value']//span" stepKey="grabTextFromDisclaimerMsg"/>
         <assertEquals stepKey="assertEquals2" expected="Includes advanced tools to design page layouts, add Magento content (Product and Category data, CMS content and Blocks), and format text.\n\nFor Product Attributes — Page Builder can be selected as the “input type” to design layouts and create content." expectedType="string" actual="grabTextFromDisclaimerMsg" actualType="variable" message="pass"/>
 
         <!--Disable PageBuilder-->
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNO1"/>
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}"  stepKey="waitForPopUpMsg1" />
-        <seeElement selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="seePopUp1" />
-        <click selector="{{PageBuilderCollapsibleSection.CancelBtn}}" stepKey="selectCancel" />
-        <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="popupClose1"/>
-        <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="seeYesIsSelected" />
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNO2"/>
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
-        <click selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="selectTurnOff" />
-        <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="popupClose2"/>
-        <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="seeNoIsSelected" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO1"/>
+        <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}"  stepKey="waitForPopUpMsg1" />
+        <seeElement selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="seePopUp1" />
+        <click selector="{{ContentManagementSection.CancelBtn}}" stepKey="selectCancel" />
+        <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="popupClose1"/>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="seeYesIsSelected" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO2"/>
+        <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
+        <click selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="selectTurnOff" />
+        <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="popupClose2"/>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="seeNoIsSelected" />
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig" />
 
         <!-- I switch between NO -> YES - > NO without saving the Config, Then: Warning message will not appear on page-->
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNO3"/>
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="Yes" stepKey="selectYes"/>
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNO4"/>
-        <dontSee selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="dontSeePopUp"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO3"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="Yes" stepKey="selectYes"/>
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNO4"/>
+        <dontSee selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="dontSeePopUp"/>
     </test>
     <test name="VerifyPageBuilderVisibleOnCatalog">
         <annotations>

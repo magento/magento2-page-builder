@@ -48,15 +48,15 @@
         <!-- NOW disable -->
         <amOnPage url="{{AdminContentManagementPage.url}}" stepKey="navigateToConfigurationPage2" />
         <waitForPageLoad stepKey="waitForPageLoad2"/>
-        <conditionalClick stepKey="expandPageBuilderTab" selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" dependentSelector="{{PageBuilderCollapsibleSection.CheckIfTabOpen}}" visible="true" />
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" stepKey="waitForEnablePageBuilderVisible" />
-        <selectOption selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="selectNo"/>
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
-        <waitForElementVisible selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="waitForTurnOffButton"/>
-        <click selector="{{PageBuilderCollapsibleSection.TurnOffBtn}}" stepKey="selectTurnOff" />
-        <waitForElementNotVisible selector="{{PageBuilderCollapsibleSection.DisclaimerMessage}}" stepKey="waitForPopupClose2"/>
-        <seeOptionIsSelected selector="{{PageBuilderCollapsibleSection.EnablePageBuilderDrp}}" userInput="No" stepKey="verifyNoSelected"/>
-        <click selector="{{PageBuilderCollapsibleSection.AdvancedContentToolsTab}}" stepKey="collapseAdvancedContentToolsTab" />
+        <conditionalClick stepKey="expandPageBuilderTab" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true" />
+        <waitForElementVisible selector="{{ContentManagementSection.EnablePageBuilder}}" stepKey="waitForEnablePageBuilderVisible" />
+        <selectOption selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="selectNo"/>
+        <waitForElementVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopUpMsg2"/>
+        <waitForElementVisible selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="waitForTurnOffButton"/>
+        <click selector="{{ContentManagementSection.TurnOffBtn}}" stepKey="selectTurnOff" />
+        <waitForElementNotVisible selector="{{ContentManagementSection.DisclaimerMessage}}" stepKey="waitForPopupClose2"/>
+        <seeOptionIsSelected selector="{{ContentManagementSection.EnablePageBuilder}}" userInput="No" stepKey="verifyNoSelected"/>
+        <click selector="{{ContentManagementSection.PageBuilderOptions}}" stepKey="collapseAdvancedContentToolsTab" />
         <click selector="{{ContentManagementSection.Save}}" stepKey="saveConfig2" />
         <waitForPageLoad stepKey="waitForPageLoad3"/>
     </actionGroup>
