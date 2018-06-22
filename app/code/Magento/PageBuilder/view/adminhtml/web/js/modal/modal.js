@@ -5,7 +5,7 @@
 
 define([
     'Magento_Ui/js/modal/modal-component',
-    'uiEvents'
+    'Magento_PageBuilder/js/events'
 ], function (ModalComponent, events) {
     'use strict';
 

@@ -9,7 +9,7 @@ export default {
      * @param {Function} ns
      * @return {object}
      */
-    on(events, callback, ns) {
+    on: (events, callback, ns) => {
         uiEvents.on(events, callback, ns);
         return this;
     },
@@ -20,7 +20,7 @@ export default {
      * @param {string} ns
      * @return {object}
      */
-    off(ns) {
+    off: (ns) => {
         uiEvents.off(ns);
         return this;
     },
@@ -29,9 +29,10 @@ export default {
      * Triggers event and executes all attached callbacks
      *
      * @param {string} name
+     * @param {any} arguments
      * @returns {boolean}
      */
-    trigger(name) {
-        return uiEvents.trigger(name);
-    },
+    trigger: (name, arguments) => {
+        return uiEvents.trigger(name, arguments);
+    }
 };

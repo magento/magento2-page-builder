@@ -5,7 +5,7 @@
 
 define([
     'Magento_Ui/js/form/provider',
-    'uiEvents'
+    'Magento_PageBuilder/js/events'
 ], function (Provider, events) {
     'use strict';
 

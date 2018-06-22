@@ -8,7 +8,7 @@ define([
     'underscore',
     'uiRegistry',
     'Magento_Ui/js/form/element/image-uploader',
-    'uiEvents',
+    'Magento_PageBuilder/js/events',
     'mage/translate'
 ], function ($, _, uiRegistry, Uploader, events, $t) {
     'use strict';

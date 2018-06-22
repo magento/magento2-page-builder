@@ -5,7 +5,7 @@
 
 define([
     'Magento_Ui/js/dynamic-rows/dynamic-rows',
-    'uiEvents',
+    'Magento_PageBuilder/js/events',
     'underscore',
     'jquery'
 ], function (dynamicRows, Events, _, $) {

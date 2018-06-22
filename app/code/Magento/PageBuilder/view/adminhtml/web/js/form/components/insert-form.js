@@ -5,7 +5,7 @@
 
 define([
     'Magento_Ui/js/form/components/insert-form',
-    'uiEvents',
+    'Magento_PageBuilder/js/events',
     'jquery'
 ], function (Insert, events, $) {
     'use strict';
