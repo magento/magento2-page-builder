@@ -36,11 +36,42 @@
         </actionGroup>
         <comment userInput="Validate default grid size on initial drop" stepKey="commentValidateInitial"/>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
-        <seeInField selector="{{PageBuilderColumnSection.gridSizeInput}}" userInput="12" stepKey="seeDefaultGridSize"/>
+        <seeInField selector="{{PageBuilderColumnSection.gridSizeInput}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSize"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <comment userInput="Validate default grid size after save" stepKey="commentValidateAfterSave"/>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeFormAfterSave" />
-        <seeInField selector="{{PageBuilderColumnSection.gridSizeInput}}" userInput="12" stepKey="seeDefaultGridSizeAfterSave"/>
+        <seeInField selector="{{PageBuilderColumnSection.gridSizeInput}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSizeAfterSave"/>
+    </test>
+    <test name="ValidateGridInputFocusedOnOpen">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Verify input is auto focused"/>
+            <description value="Verify when the grid form is opened the field is focused"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2281"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <comment userInput="Validate input is focused" stepKey="commentValidateInitial"/>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <executeJS function="return window.getSelection().toString();" stepKey="getSelectedTextFromWindow"/>
+        <assertEquals stepKey="assertSelectionIsDefaultGridSize">
+            <expectedResult type="variable">getSelectedTextFromWindow</expectedResult>
+            <actualResult type="string">{{PageBuilderGridSize.defaultGridSize}}</actualResult>
+        </assertEquals>
     </test>
 </tests>
