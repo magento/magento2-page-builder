@@ -17,25 +17,20 @@ import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
+import ColumnBindResizeHandleEventParamsInterface from "../column/column-bind-resize-handle-event-params";
+import ColumnInitElementEventParamsInterface from "../column/column-init-element-event-params";
 import ColumnPreview from "../column/preview";
 import ResizeUtils, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
     getRoundedColumnWidth, updateColumnWidth,
 } from "../column/resize";
+import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
 import {GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
-import {ColumnInitElementEventParamsInterface} from "../column/column-init-element-event-params";
-import {ColumnBindResizeHandleEventParamsInterface} from "../column/column-bind-resize-handle-event-params";
-
-interface ContentTypeRemovedParams {
-    parent: ColumnGroup;
-    contentType: ContentTypeCollectionInterface;
-    index: number;
-}
 
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
@@ -103,7 +98,7 @@ export default class Preview extends PreviewCollection {
             }
         }, "gridSize");
 
-        events.on("contentType:removed", (args: ContentTypeRemovedParams) => {
+        events.on("contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 this.spreadWidth(event, args);
             }
@@ -941,9 +936,9 @@ export default class Preview extends PreviewCollection {
      * Spread any empty space across the other columns
      *
      * @param {Event} event
-     * @param {ContentTypeRemovedParams} params
+     * @param {ContentTypeRemovedEventParamsInterface} params
      */
-    private spreadWidth(event: Event, params: ContentTypeRemovedParams): void {
+    private spreadWidth(event: Event, params: ContentTypeRemovedEventParamsInterface): void {
         if (this.parent.children().length === 0) {
             return;
         }

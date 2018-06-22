@@ -898,7 +898,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
      * Spread any empty space across the other columns
      *
      * @param {Event} event
-     * @param {ContentTypeRemovedParams} params
+     * @param {ContentTypeRemovedEventParamsInterface} params
      */
 
 
