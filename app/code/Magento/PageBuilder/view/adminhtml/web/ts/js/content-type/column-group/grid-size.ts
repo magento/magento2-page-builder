@@ -39,6 +39,7 @@ export function getMaxGridSize(): number {
  *
  * @param {ContentTypeCollectionInterface<Preview>} columnGroup
  * @param {number} newGridSize
+ * @param {Map<number, number[]>} gridSizeHistory
  */
 export function resizeGrid(
     columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>,
@@ -98,7 +99,7 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
  * @param {number} newGridSize
  */
 function removeEmptyColumnsToFit(columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>, newGridSize: number) {
-    const columns = columnGroup.getChildren()();
+    const columns = columnGroup.getChildren()() as Array<ContentTypeCollectionInterface<ColumnPreview>>;
     let numColumns = columns.length;
     let i;
     for (i = numColumns - 1; i >= 0; i--) {
@@ -116,6 +117,7 @@ function removeEmptyColumnsToFit(columnGroup: ContentTypeCollectionInterface<Col
  *
  * @param {ContentTypeCollectionInterface<Preview>} columnGroup
  * @param {number} newGridSize
+ * @param {Map<number, number[]>} gridSizeHistory
  */
 function redistributeColumnWidths(
     columnGroup: ContentTypeCollectionInterface<ColumnGroupPreview>,

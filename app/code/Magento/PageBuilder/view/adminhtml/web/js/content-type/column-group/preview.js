@@ -251,7 +251,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
      * Register a resize handle within a child column
      *
      * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @param {JQuery<HTMLElement>} handle
+     * @param {JQuery} handle
      */
 
 
@@ -524,7 +524,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Init the resizing events on the group
      *
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQuery} group
      */
 
 
@@ -598,7 +598,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Does the current event intersect with the group?
      *
-     * @param {JQuery.Event} event
+     * @param {JQueryEventObject} event
      * @param {GroupPositionCache} groupPosition
      * @returns {boolean}
      */
@@ -610,7 +610,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Cache the groups positions
      *
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQuery} group
      */
 
 
@@ -651,8 +651,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Handle the resizing on mouse move, we always resize a pair of columns at once
      *
-     * @param {JQuery.Event} event
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQueryEventObject} event
+     * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
      */
 
@@ -730,8 +730,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Handle a column being dragged around the group
      *
-     * @param {JQuery.Event} event
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQueryEventObject} event
+     * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
      */
 
@@ -793,8 +793,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Handle mouse move events on when dropping elements
      *
-     * @param {JQuery.Event} event
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQueryEventObject} event
+     * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
      */
 
@@ -833,7 +833,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Init the droppable functionality for new columns
      *
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQuery} group
      */
 
 

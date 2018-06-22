@@ -337,10 +337,10 @@ export default class Preview extends PreviewCollection {
                 /**
                  * Provide custom placeholder element
                  *
-                 * @param {JQuery<Element>} item
-                 * @returns {JQuery<Element>}
+                 * @param {JQuery} item
+                 * @returns {JQuery}
                  */
-                element(item: JQuery<Element>) {
+                element(item: JQuery) {
                     const placeholder = item
                         .clone()
                         .show()

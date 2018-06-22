@@ -17,10 +17,10 @@ export const animationTime = 350;
 /**
  * Lock the containers min height to it's current height, not allowing the height to change when the content does
  *
- * @param {JQuery<Element>} element
+ * @param {JQuery} element
  * @returns {boolean}
  */
-export function lockContainerHeight(element: JQuery<HTMLElement>): boolean {
+export function lockContainerHeight(element: JQuery): boolean {
     if (element[0].style.minHeight === "") {
         element.css({
             minHeight: element.height(),
@@ -36,12 +36,12 @@ export function lockContainerHeight(element: JQuery<HTMLElement>): boolean {
  *
  * @param {boolean} containerLocked
  * @param {ContentType} block
- * @param {JQuery<Element>} element
+ * @param {JQuery} element
  */
 export function bindAfterRenderForAnimation(
     containerLocked: boolean,
     block: ContentTypeInterface,
-    element: JQuery<HTMLElement>,
+    element: JQuery,
 ) {
     if (containerLocked) {
         // Wait for mount then animate the container
@@ -61,9 +61,9 @@ export function bindAfterRenderForAnimation(
  * Animate the container height to the new value
  *
  * @param {boolean} containerLocked
- * @param {JQuery<Element>} element
+ * @param {JQuery} element
  */
-export function animateContainerHeight(containerLocked: boolean, element: JQuery<HTMLElement>) {
+export function animateContainerHeight(containerLocked: boolean, element: JQuery) {
     if (containerLocked) {
         _.defer(() => {
             element.css({
@@ -83,10 +83,10 @@ export function animateContainerHeight(containerLocked: boolean, element: JQuery
 /**
  * Make a clone of the container and remove the forced min height to determine it's actual height
  *
- * @param {JQuery<Element>} element
+ * @param {JQuery} element
  * @returns {number}
  */
-function getContainerActualHeight(element: JQuery<Element>): number {
+function getContainerActualHeight(element: JQuery): number {
     const clone = element.clone().css({
         minHeight: "",
         position: "absolute",

@@ -14,7 +14,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
   /**
    * Lock the containers min height to it's current height, not allowing the height to change when the content does
    *
-   * @param {JQuery<Element>} element
+   * @param {JQuery} element
    * @returns {boolean}
    */
 
@@ -34,7 +34,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
    *
    * @param {boolean} containerLocked
    * @param {ContentType} block
-   * @param {JQuery<Element>} element
+   * @param {JQuery} element
    */
 
 
@@ -61,7 +61,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
    * Animate the container height to the new value
    *
    * @param {boolean} containerLocked
-   * @param {JQuery<Element>} element
+   * @param {JQuery} element
    */
 
 
@@ -89,7 +89,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
   /**
    * Make a clone of the container and remove the forced min height to determine it's actual height
    *
-   * @param {JQuery<Element>} element
+   * @param {JQuery} element
    * @returns {number}
    */
 

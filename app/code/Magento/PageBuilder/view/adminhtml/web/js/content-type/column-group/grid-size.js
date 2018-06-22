@@ -31,6 +31,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
    *
    * @param {ContentTypeCollectionInterface<Preview>} columnGroup
    * @param {number} newGridSize
+   * @param {Map<number, number[]>} gridSizeHistory
    */
 
 
@@ -107,6 +108,7 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
    *
    * @param {ContentTypeCollectionInterface<Preview>} columnGroup
    * @param {number} newGridSize
+   * @param {Map<number, number[]>} gridSizeHistory
    */
 
 

@@ -20,7 +20,7 @@ export default class ContentType implements ContentTypeInterface {
     public config: ContentTypeConfigInterface;
     public data = {};
     public wrapperStyle: KnockoutObservable<object> = ko.observable({width: "100%"});
-    public element: JQuery<HTMLElement>;
+    public element: JQuery;
     public dataStore: DataStore = new DataStore();
     public preview: Preview;
     public content: Master;

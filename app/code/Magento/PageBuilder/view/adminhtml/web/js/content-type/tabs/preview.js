@@ -347,8 +347,8 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
           /**
            * Provide custom placeholder element
            *
-           * @param {JQuery<Element>} item
-           * @returns {JQuery<Element>}
+           * @param {JQuery} item
+           * @returns {JQuery}
            */
           element: function element(item) {
             var placeholder = item.clone().show().css({

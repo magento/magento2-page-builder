@@ -25,7 +25,7 @@ import {updateColumnWidth} from "./resize";
 
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
-    public element: JQuery<Element>;
+    public element: JQuery;
 
     /**
      * @param {ContentTypeInterface} parent

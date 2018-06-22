@@ -53,10 +53,10 @@ export default class Preview extends PreviewCollection {
     public gridSizeError: KnockoutObservable<string> = ko.observable();
     public gridFormOpen: KnockoutObservable<boolean> = ko.observable(false);
     public gridChange: KnockoutObservable<boolean> = ko.observable(false);
-    private dropPlaceholder: JQuery<HTMLElement>;
-    private movePlaceholder: JQuery<HTMLElement>;
-    private groupElement: JQuery<HTMLElement>;
-    private resizeGhost: JQuery<HTMLElement>;
+    private dropPlaceholder: JQuery;
+    private movePlaceholder: JQuery;
+    private groupElement: JQuery;
+    private resizeGhost: JQuery;
     private resizeColumnInstance: ContentTypeCollectionInterface<ColumnPreview>;
     private resizeColumnWidths: ColumnWidth[] = [];
     private resizeMaxGhostWidth: MaxGhostWidth;
@@ -283,9 +283,9 @@ export default class Preview extends PreviewCollection {
      * Register a resize handle within a child column
      *
      * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @param {JQuery<HTMLElement>} handle
+     * @param {JQuery} handle
      */
-    public registerResizeHandle(column: ContentTypeCollectionInterface<ColumnPreview>, handle: JQuery<HTMLElement>) {
+    public registerResizeHandle(column: ContentTypeCollectionInterface<ColumnPreview>, handle: JQuery) {
         handle.off("mousedown touchstart");
         handle.on("mousedown touchstart", (event) => {
             event.preventDefault();
@@ -471,7 +471,7 @@ export default class Preview extends PreviewCollection {
      *
      * @param {Event} event
      */
-    private onDocumentClick = (event: Event) => {
+    private onDocumentClick = (event: JQueryEventObject) => {
         // Verify the click event wasn't within our form
         if (!$.contains($(this.wrapperElement).find(".pagebuilder-grid-size-indicator")[0], $(event.target)[0])) {
             this.closeGridForm();
@@ -531,11 +531,11 @@ export default class Preview extends PreviewCollection {
     /**
      * Init the resizing events on the group
      *
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQuery} group
      */
-    private initMouseMove(group: JQuery<HTMLElement>) {
+    private initMouseMove(group: JQuery) {
         let intersects: boolean = false;
-        $(document).on("mousemove touchmove", (event: JQuery.Event) => {
+        $(document).on("mousemove touchmove", (event: JQueryEventObject) => {
             const groupPosition = this.getGroupPosition(group);
 
             // If we're handling a touch event we need to pass through the page X & Y
@@ -595,11 +595,11 @@ export default class Preview extends PreviewCollection {
     /**
      * Does the current event intersect with the group?
      *
-     * @param {JQuery.Event} event
+     * @param {JQueryEventObject} event
      * @param {GroupPositionCache} groupPosition
      * @returns {boolean}
      */
-    private eventIntersectsGroup(event: JQuery.Event, groupPosition: GroupPositionCache) {
+    private eventIntersectsGroup(event: JQueryEventObject, groupPosition: GroupPositionCache) {
         return event.pageY > groupPosition.top &&
             event.pageY < (groupPosition.top + groupPosition.outerHeight) &&
             event.pageX > groupPosition.left &&
@@ -609,9 +609,9 @@ export default class Preview extends PreviewCollection {
     /**
      * Cache the groups positions
      *
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQuery} group
      */
-    private getGroupPosition(group: JQuery<HTMLElement>) {
+    private getGroupPosition(group: JQuery) {
         if (!this.groupPositionCache) {
             this.groupPositionCache = {
                 top: group.offset().top,
@@ -652,11 +652,11 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle the resizing on mouse move, we always resize a pair of columns at once
      *
-     * @param {JQuery.Event} event
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQueryEventObject} event
+     * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
      */
-    private onResizingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
+    private onResizingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache) {
         let newColumnWidth: ColumnWidth;
 
         if (this.resizeMouseDown) {
@@ -753,11 +753,11 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle a column being dragged around the group
      *
-     * @param {JQuery.Event} event
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQueryEventObject} event
+     * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
      */
-    private onDraggingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
+    private onDraggingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache) {
         const dragColumn = getDragColumn();
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
@@ -823,11 +823,11 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle mouse move events on when dropping elements
      *
-     * @param {JQuery.Event} event
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQueryEventObject} event
+     * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
      */
-    private onDroppingMouseMove(event: JQuery.Event, group: JQuery<HTMLElement>, groupPosition: GroupPositionCache) {
+    private onDroppingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache) {
         const elementChildrenParent = group.parents(".element-children");
         // Only initiate this process if we're within the group by a buffer to allow for sortable to function correctly
         if (
@@ -866,9 +866,9 @@ export default class Preview extends PreviewCollection {
     /**
      * Init the droppable functionality for new columns
      *
-     * @param {JQuery<HTMLElement>} group
+     * @param {JQuery} group
      */
-    private initDroppable(group: JQuery<HTMLElement>) {
+    private initDroppable(group: JQuery) {
         const self = this;
         let headStyles: HTMLStyleElement;
 
