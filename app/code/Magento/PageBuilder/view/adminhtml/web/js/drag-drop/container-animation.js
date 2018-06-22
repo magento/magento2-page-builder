@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
+define(["jquery", "uiEvents", "underscore"], function (_jquery, _uiEvents, _underscore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -77,6 +77,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
             minHeight: "",
             transition: ""
           });
+          cleanupClones();
         }, animationTime + 150);
       });
     } else if (element[0] && element[0].style.transition !== "") {
@@ -84,6 +85,7 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
         minHeight: "",
         transition: ""
       });
+      cleanupClones();
     }
   }
   /**
@@ -99,11 +101,21 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
       minHeight: "",
       position: "absolute",
       left: "-99999px"
-    });
+    }).addClass("container-height-clone");
     element.parent().append(clone);
     var height = clone.height();
     clone.remove();
     return height;
+  }
+  /**
+   * Clean up any left over clone elements
+   */
+
+
+  function cleanupClones() {
+    if ((0, _jquery)(".container-height-clone").length) {
+      (0, _jquery)(".container-height-clone").remove();
+    }
   }
 
   return {

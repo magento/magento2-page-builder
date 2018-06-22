@@ -2,6 +2,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+
+import $ from "jquery";
 import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeInterface from "../content-type";
@@ -73,10 +75,12 @@ export function animateContainerHeight(containerLocked: boolean, element: JQuery
             // Remove the properties after a delay longer than the animation time
             _.delay(() => {
                 element.css({minHeight: "", transition: ""});
+                cleanupClones();
             }, animationTime + 150);
         });
     } else if (element[0] && element[0].style.transition !== "") {
         element.css({minHeight: "", transition: ""});
+        cleanupClones();
     }
 }
 
@@ -91,9 +95,18 @@ function getContainerActualHeight(element: JQuery): number {
         minHeight: "",
         position: "absolute",
         left: "-99999px",
-    });
+    }).addClass("container-height-clone");
     element.parent().append(clone);
     const height = clone.height();
     clone.remove();
     return height;
+}
+
+/**
+ * Clean up any left over clone elements
+ */
+function cleanupClones() {
+    if ($(".container-height-clone").length) {
+        $(".container-height-clone").remove();
+    }
 }
