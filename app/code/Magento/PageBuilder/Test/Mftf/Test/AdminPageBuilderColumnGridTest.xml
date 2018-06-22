@@ -229,4 +229,34 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
     </test>
+    <test name="ValidateUnfocusUpdatesGrid">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Unfocus updates grid"/>
+            <description value="Checks if unfocusing / clicking out of the column group updates the grid size"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2286"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="8" stepKey="enterGridSize"/>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking" />
+        <waitForElementNotVisible selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" stepKey="waitForGridFormNotVisible" />
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','4/8')}}" stepKey="checkWidthFirstColumn"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2','4/8')}}" stepKey="checkWidthSecondColumn"/>
+    </test>
 </tests>
