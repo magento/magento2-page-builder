@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents"], function (_uiEvents) {
+define(["Magento_PageBuilder/js/events"], function (_events) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -19,7 +19,7 @@ define(["uiEvents"], function (_uiEvents) {
       this.instance = instance;
       this.dataStore = dataStore;
 
-      _uiEvents.on("form:save:" + this.instance.id, function (data) {
+      _events.on("form:save:" + this.instance.id, function (data) {
         _this.dataStore.update(data);
       });
     }
@@ -38,7 +38,7 @@ define(["uiEvents"], function (_uiEvents) {
         formNamespace = this.instance.config.appearances[contentTypeData.appearance].form;
       }
 
-      _uiEvents.trigger("form:render", {
+      _events.trigger("form:render", {
         data: contentTypeData,
         appearances: this.instance.config.appearances,
         defaultNamespace: this.instance.config.form,

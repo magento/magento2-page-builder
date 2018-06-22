@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
+define(["underscore", "Magento_PageBuilder/js/events"], function (_underscore, _events) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -43,11 +43,11 @@ define(["uiEvents", "underscore"], function (_uiEvents, _underscore) {
       // Wait for mount then animate the container
       var ns = block.id + ".afterRender.container.animate";
 
-      _uiEvents.on("contentType:afterRender", function (args) {
+      _events.on("contentType:afterRender", function (args) {
         if (args.contentType.parent === block.parent) {
           animateContainerHeight(true, element);
 
-          _uiEvents.off(ns);
+          _events.off(ns);
         }
       }, ns);
     } else if (element[0] && element[0].style.transition !== "") {

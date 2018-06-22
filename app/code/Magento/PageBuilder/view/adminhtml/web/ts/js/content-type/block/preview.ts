@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
-import events from "uiEvents";
 import Config from "../../config";
+import events from "../../events";
 import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {

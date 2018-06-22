@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents", "uiLayout", "uiRegistry"], function (_uiEvents, _uiLayout, _uiRegistry) {
+define(["uiLayout", "uiRegistry", "Magento_PageBuilder/js/events"], function (_uiLayout, _uiRegistry, _events) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -54,7 +54,7 @@ define(["uiEvents", "uiLayout", "uiRegistry"], function (_uiEvents, _uiLayout, _
 
 
     _proto.onUploaded = function onUploaded(callback) {
-      _uiEvents.on("image:uploaded:" + this.id, callback);
+      _events.on("image:uploaded:" + this.id, callback);
     };
     /**
      * Instantiate uploader through layout UI component renderer

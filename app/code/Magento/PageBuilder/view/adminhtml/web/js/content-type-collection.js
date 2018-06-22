@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type"], function (_uiEvents, _underscore, _collection, _contentType) {
+define(["events", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/content-type"], function (_events, _underscore, _collection, _contentType) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -23,7 +23,7 @@ define(["uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_
       _this.collection = new _collection();
 
       _this.collection.getChildren().subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
+        return _events.trigger("stage:updated", {
           stageId: _this.stageId
         });
       });
@@ -55,12 +55,12 @@ define(["uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_
       this.collection.addChild(child, index); // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
 
       _underscore.defer(function () {
-        _uiEvents.trigger("contentType:mount", {
+        _events.trigger("contentType:mount", {
           id: child.id,
           contentType: child
         });
 
-        _uiEvents.trigger(child.config.name + ":contentType:mount", {
+        _events.trigger(child.config.name + ":contentType:mount", {
           id: child.id,
           contentType: child
         });

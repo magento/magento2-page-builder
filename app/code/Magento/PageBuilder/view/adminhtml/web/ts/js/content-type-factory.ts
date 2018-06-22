@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
+import events from "events";
 import loadModule from "Magento_PageBuilder/js/loader";
-import events from "uiEvents";
 import _ from "underscore";
 import ConfigFieldInterface from "./config-field.d";
 import ContentTypeConfigInterface from "./content-type-config.d";

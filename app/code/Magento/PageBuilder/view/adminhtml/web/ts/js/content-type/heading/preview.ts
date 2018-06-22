@@ -4,12 +4,12 @@
  */
 
 import $ from "jquery";
-import events from "uiEvents";
 import _ from "underscore";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Toolbar from "../../content-type-toolbar";
 import ToolbarOptionInterface from "../../content-type-toolbar/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import events from "../../events";
 import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";

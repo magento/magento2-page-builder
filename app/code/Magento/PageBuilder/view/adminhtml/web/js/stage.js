@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _jqueryUiTouchPunch, _alert, _uiEvents, _underscore, _collection, _dataStore, _matrix, _sortable, _render, _stageBuilder) {
+define(["events", "knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_events, _knockout, _translate, _jqueryUiTouchPunch, _alert, _underscore, _collection, _dataStore, _matrix, _sortable, _render, _stageBuilder) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
@@ -51,7 +51,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
 
 
     _proto.ready = function ready() {
-      _uiEvents.trigger("stage:ready:" + this.id, {
+      _events.trigger("stage:ready:" + this.id, {
         stage: this
       });
 
@@ -136,12 +136,12 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
       var _this = this;
 
       this.collection.getChildren().subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
+        return _events.trigger("stage:updated", {
           stageId: _this.id
         });
       }); // ContentType being removed from container
 
-      _uiEvents.on("contentType:removed", function (args) {
+      _events.on("contentType:removed", function (args) {
         if (args.stageId === _this.id) {
           _this.onContentTypeRemoved(args);
         }
@@ -149,17 +149,17 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
 
 
       this.dataStore.subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
+        return _events.trigger("stage:updated", {
           stageId: _this.id
         });
       }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
       // can occur concurrently.
 
-      _uiEvents.on("stage:updated", function (args) {
+      _events.on("stage:updated", function (args) {
         if (args.stageId === _this.id) {
           _underscore.debounce(function () {
             _this.render.applyBindings(_this.children).then(function (renderedOutput) {
-              return _uiEvents.trigger("stage:renderTree:" + _this.id, {
+              return _events.trigger("stage:renderTree:" + _this.id, {
                 value: renderedOutput
               });
             });
@@ -167,11 +167,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
         }
       });
 
-      _uiEvents.on("interaction:start", function () {
+      _events.on("interaction:start", function () {
         return _this.interacting(true);
       });
 
-      _uiEvents.on("interaction:stop", function () {
+      _events.on("interaction:stop", function () {
         return _this.interacting(false);
       });
     };

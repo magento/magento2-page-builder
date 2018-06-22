@@ -3,10 +3,10 @@
  * See COPYING.txt for license details.
  */
 
+import events from "events";
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
-import events from "uiEvents";
 import _ from "underscore";
 import "./binding/draggable";
 import Config from "./config";

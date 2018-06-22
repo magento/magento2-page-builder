@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import events from "events";
 import ko from "knockout";
 import mageUtils from "mageUtils";
-import events from "uiEvents";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import ContentTypeInterface from "./content-type.d";
 import Master from "./content-type/master";

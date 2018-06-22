@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "uiEvents";
+import events from "events";
 import _ from "underscore";
 import Collection from "./collection";
 import ContentType from "./content-type";

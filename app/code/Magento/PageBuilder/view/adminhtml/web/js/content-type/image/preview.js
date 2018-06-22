@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_uiEvents, _preview, _uploader) {
+define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview", "Magento_PageBuilder/js/content-type/uploader"], function (_events, _preview, _uploader) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -37,15 +37,15 @@ define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_Page
 
       _BasePreview.prototype.bindEvents.call(this);
 
-      _uiEvents.on(this.parent.id + ":updated", function () {
+      _events.on(this.parent.id + ":updated", function () {
         var dataStore = _this2.parent.dataStore.get();
 
         var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
+        _events.trigger("image:assigned:" + _this2.parent.id, imageObject);
       });
 
-      _uiEvents.on(this.config.name + ":contentType:ready", function () {
+      _events.on(this.config.name + ":contentType:ready", function () {
         var dataStore = _this2.parent.dataStore.get();
 
         var initialImageValue = dataStore[_this2.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader

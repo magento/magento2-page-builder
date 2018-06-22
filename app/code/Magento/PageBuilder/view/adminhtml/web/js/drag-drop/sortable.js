@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry"], function (_jquery, _knockout, _uiEvents, _contentTypeFactory, _containerAnimation, _dropIndicators, _matrix, _moveContentType, _registry) {
+define(["jquery", "knockout", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/drag-drop/container-animation", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/move-content-type", "Magento_PageBuilder/js/drag-drop/registry"], function (_jquery, _knockout, _contentTypeFactory, _events, _containerAnimation, _dropIndicators, _matrix, _moveContentType, _registry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -93,7 +93,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
   function onSortStart(preview, event, ui) {
     // Verify we're sorting an already created item
     if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
-      _uiEvents.trigger("interaction:start");
+      _events.trigger("interaction:start");
 
       var contentTypeInstance = _knockout.dataFor(ui.item[0]);
 
@@ -149,7 +149,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
     (0, _dropIndicators.hideDropIndicators)();
     (0, _registry.setDraggedContentTypeConfig)(null);
 
-    _uiEvents.trigger("interaction:stop");
+    _events.trigger("interaction:stop");
   }
   /**
    * Handle receiving a content type from the left panel
@@ -191,12 +191,12 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/content-type-f
         (0, _containerAnimation.bindAfterRenderForAnimation)(containerLocked, contentType, parentContainerElement);
         getParentProxy(preview).addChild(contentType, index);
 
-        _uiEvents.trigger("contentType:dropped:create", {
+        _events.trigger("contentType:dropped:create", {
           id: contentType.id,
           contentType: contentType
         });
 
-        _uiEvents.trigger(contentTypeConfig.name + ":contentType:dropped:create", {
+        _events.trigger(contentTypeConfig.name + ":contentType:dropped:create", {
           id: contentType.id,
           contentType: contentType
         });

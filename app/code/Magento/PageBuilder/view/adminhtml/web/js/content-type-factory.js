@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_loader, _uiEvents, _underscore, _masterFactory, _previewFactory) {
+define(["events", "Magento_PageBuilder/js/loader", "underscore", "Magento_PageBuilder/js/content-type/master-factory", "Magento_PageBuilder/js/content-type/preview-factory"], function (_events, _loader, _underscore, _masterFactory, _previewFactory) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
@@ -37,12 +37,12 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
         });
       });
     }).then(function (contentType) {
-      _uiEvents.trigger("contentType:create", {
+      _events.trigger("contentType:create", {
         id: contentType.id,
         contentType: contentType
       });
 
-      _uiEvents.trigger(config.name + ":contentType:create", {
+      _events.trigger(config.name + ":contentType:create", {
         id: contentType.id,
         contentType: contentType
       });
@@ -83,12 +83,12 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
 
   function fireContentTypeReadyEvent(contentType, childrenLength) {
     var fire = function fire() {
-      _uiEvents.trigger("contentType:ready", {
+      _events.trigger("contentType:ready", {
         id: contentType.id,
         contentType: contentType
       });
 
-      _uiEvents.trigger(contentType.config.name + ":contentType:ready", {
+      _events.trigger(contentType.config.name + ":contentType:ready", {
         id: contentType.id,
         contentType: contentType
       });
@@ -99,14 +99,14 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
     } else {
       var mountCounter = 0;
 
-      _uiEvents.on("contentType:mount", function (args) {
+      _events.on("contentType:mount", function (args) {
         if (args.contentType.parent.id === contentType.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
             fire();
 
-            _uiEvents.off("contentType:mount:" + contentType.id);
+            _events.off("contentType:mount:" + contentType.id);
           }
         }
       }, "contentType:mount:" + contentType.id);

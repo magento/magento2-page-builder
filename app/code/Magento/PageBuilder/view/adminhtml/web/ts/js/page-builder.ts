@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+import events from "events";
 import ko from "knockout";
 import utils from "mageUtils";
-import events from "uiEvents";
 import _ from "underscore";
 import Config from "./config";
 import PageBuilderInterface from "./page-builder.d";

@@ -5,8 +5,8 @@
 
 import $ from "jquery";
 import ko from "knockout";
-import events from "uiEvents";
 import Config from "../../config";
+import events from "../../events";
 import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {

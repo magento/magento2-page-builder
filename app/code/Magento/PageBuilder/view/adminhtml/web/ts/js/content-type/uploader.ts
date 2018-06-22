@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import events from "uiEvents";
 import layout from "uiLayout";
 import registry from "uiRegistry";
+import events from "../events";
 
 export default class Uploader {
     /**

@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["knockout", "uiEvents", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _uiEvents, _preview) {
+define(["knockout", "Magento_PageBuilder/js/events", "Magento_PageBuilder/js/content-type/preview"], function (_knockout, _events, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -32,7 +32,7 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/content-type/preview"], 
       _BasePreview.prototype.bindEvents.call(this); // When a map is dropped for the first time open the edit panel
 
 
-      _uiEvents.on("video:contentType:dropped:create", function (args) {
+      _events.on("video:contentType:dropped:create", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
             _this2.edit.open();
