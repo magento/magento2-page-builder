@@ -44,6 +44,10 @@
         <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
         <waitForPageLoad stepKey="waitForAnimation" />
     </actionGroup>
+    <actionGroup name="closeGridSizeForm">
+        <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
+        <waitForPageLoad stepKey="waitForAnimation" />
+    </actionGroup>
     <actionGroup name="updateGridSize">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
