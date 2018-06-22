@@ -33,6 +33,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.gridSizeInput = _knockout.observable();
       _this.gridSizeArray = _knockout.observableArray([]);
       _this.gridSizeError = _knockout.observable();
+      _this.gridSizeMax = _knockout.observable((0, _gridSize.getMaxGridSize)());
       _this.gridFormOpen = _knockout.observable(false);
       _this.gridChange = _knockout.observable(false);
       _this.dropPlaceholder = void 0;

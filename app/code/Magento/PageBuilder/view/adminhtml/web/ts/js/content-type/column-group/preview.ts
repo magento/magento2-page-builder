@@ -29,7 +29,7 @@ import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
-import {GridSizeError, resizeGrid} from "./grid-size";
+import {getMaxGridSize, GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
 
 export default class Preview extends PreviewCollection {
@@ -48,6 +48,7 @@ export default class Preview extends PreviewCollection {
     public gridSizeInput: KnockoutObservable<number> = ko.observable();
     public gridSizeArray: KnockoutObservableArray<any[]> = ko.observableArray([]);
     public gridSizeError: KnockoutObservable<string> = ko.observable();
+    public gridSizeMax: KnockoutObservable<number> = ko.observable(getMaxGridSize());
     public gridFormOpen: KnockoutObservable<boolean> = ko.observable(false);
     public gridChange: KnockoutObservable<boolean> = ko.observable(false);
     private dropPlaceholder: JQuery;
