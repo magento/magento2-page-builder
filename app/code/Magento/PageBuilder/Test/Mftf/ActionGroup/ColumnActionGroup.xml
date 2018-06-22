@@ -35,4 +35,24 @@
         <waitForElementVisible selector="{{PageBuilderColumnSection.columnMoveByIndex(contentTypeIndex)}}" stepKey="waitForMoveHandle"/>
         <dragAndDrop selector1="{{PageBuilderColumnSection.columnMoveByIndex(contentTypeIndex)}}" selector2="{{PageBuilderActionsSection.contentTypeContainer(contentType.role, containerTargetIndex)}}" stepKey="moveContentTypeIntoContainer"/>
     </actionGroup>
+    <actionGroup name="openGridSizeForm">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="waitForGridSizeButtonVisible" />
+        <click selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="clickGridSizeButton" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
+    </actionGroup>
+    <actionGroup name="updateGridSize">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="value" defaultValue="12" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="waitForGridSizeButtonVisible" />
+        <click selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="clickGridSizeButton" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
+        <fillField selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" userInput="{{value}}" stepKey="enterGridSize"/>
+        <waitForPageLoad stepKey="waitForUpdate" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel(index, '/{{value}}')}}" stepKey="validateGridSize" />
+    </actionGroup>
 </actionGroups>

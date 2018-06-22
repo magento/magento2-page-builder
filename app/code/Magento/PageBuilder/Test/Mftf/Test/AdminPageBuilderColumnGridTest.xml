@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
+    <test name="ValidateGridDefaultSizeOnStage">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Verify default grid size"/>
+            <description value="Verify the default grid size (12) is set correctly within the stage."/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2280"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <comment userInput="Validate default grid size on initial drop" stepKey="commentValidateInitial"/>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <seeInField selector="{{PageBuilderColumnSection.gridSizeInput}}" userInput="12" stepKey="seeDefaultGridSize"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        <comment userInput="Validate default grid size after save" stepKey="commentValidateAfterSave"/>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeFormAfterSave" />
+        <seeInField selector="{{PageBuilderColumnSection.gridSizeInput}}" userInput="12" stepKey="seeDefaultGridSizeAfterSave"/>
+    </test>
+</tests>
