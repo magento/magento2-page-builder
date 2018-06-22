@@ -78,13 +78,16 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">page</item>
-                    <item name="default" xsi:type="string" translate="true">Type your HTML here...</item>
                 </item>
             </argument>
             <settings>
+                <additionalClasses>
+                    <class name="admin__field-wide">true</class>
+                    <class name="admin__font-console">true</class>
+                </additionalClasses>
                 <dataScope>html</dataScope>
                 <dataType>text</dataType>
-                <label translate="true">HTML</label>
+                <placeholder translate="true">Enter HTML, CSS or JavaScript code</placeholder>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
