@@ -47,14 +47,15 @@
     <actionGroup name="updateGridSize">
         <arguments>
             <argument name="index" defaultValue="1" type="string"/>
-            <argument name="value" defaultValue="12" type="string"/>
+            <argument name="gridSize" defaultValue="12" type="string"/>
         </arguments>
         <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="waitForGridSizeButtonVisible" />
         <click selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="clickGridSizeButton" />
         <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
         <waitForPageLoad stepKey="waitForAnimation" />
-        <fillField selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" userInput="{{value}}" stepKey="enterGridSize"/>
+        <fillField selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" userInput="{{gridSize}}" stepKey="enterGridSize"/>
+        <pressKey selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
         <waitForPageLoad stepKey="waitForUpdate" />
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel(index, '/{{value}}')}}" stepKey="validateGridSize" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabelGridSize(index, gridSize)}}" stepKey="validateGridSize" />
     </actionGroup>
 </actionGroups>

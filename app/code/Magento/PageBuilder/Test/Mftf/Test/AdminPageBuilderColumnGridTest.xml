@@ -74,4 +74,45 @@
             <actualResult type="string">{{PageBuilderGridSize.defaultGridSize}}</actualResult>
         </assertEquals>
     </test>
+    <test name="SetDefaultGridSize14">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Set the grid size to 14"/>
+            <description value="Set the grid size to 14 and validate columns width doesn't change"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2281"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12"/>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo14">
+            <argument name="gridSize" value="14"/>
+        </actionGroup>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid14"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid14"/>
+        <comment userInput="Validate first column unchanged" stepKey="commentValidateFirstCommentUnchanged"/>
+        <assertEquals stepKey="assertFirstColumnsWidth">
+            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
+            <actualResult type="variable">columnOneWidthGrid14</actualResult>
+        </assertEquals>
+        <comment userInput="Validate second column unchanged" stepKey="commentValidateSecondCommentUnchanged"/>
+        <assertEquals stepKey="assertSecondColumnsWidth">
+            <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid14</actualResult>
+        </assertEquals>
+    </test>
 </tests>
