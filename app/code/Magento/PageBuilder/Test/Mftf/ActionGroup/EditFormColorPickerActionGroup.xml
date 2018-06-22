@@ -12,7 +12,7 @@
         <arguments>
             <argument name="colorCode"/>
         </arguments>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(colorCode.section, colorCode.fieldName)}}" stepKey="clickColorSwatch"/>
+        <click selector="{{ColorPicker.panelColorSwatch(colorCode.section, colorCode.fieldName)}}" stepKey="clickColorSwatch"/>
         <waitForElementVisible selector="{{ColorPicker.inputField}}" stepKey="waitForColorPicker"/>
         <fillField selector="{{ColorPicker.inputField}}" userInput=" " stepKey="inputBlueHexCodeIntoInputField1"/>
         <pressKey selector="{{ColorPicker.inputField}}" parameterArray="['{{colorCode.value}}',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
@@ -21,20 +21,20 @@
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatch(property.section, property.fieldName)}}" stepKey="waitForColorSwatch"/>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(property.section, property.fieldName)}}" stepKey="openColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatch(property.section, property.fieldName)}}" stepKey="waitForColorSwatch"/>
+        <click selector="{{ColorPicker.panelColorSwatch(property.section, property.fieldName)}}" stepKey="openColorSwatch"/>
         <waitForElementVisible selector="{{ColorPicker.colorBox(property.rgb)}}" stepKey="waitForColorPalleteCell"/>
         <click selector="{{ColorPicker.colorBox(property.rgb)}}" stepKey="clickColorPalletteCell"/>
         <waitForElementVisible selector="{{ColorPicker.applyBtn}}" stepKey="waitForApply"/>
         <click selector="{{ColorPicker.applyBtn}}" stepKey="clickApply"/>
-        <seeInField selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeColorInField"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" userInput="{{property.value}}" stepKey="seeColorInField"/>
     </actionGroup>
     <actionGroup name="openAndValidateColorPickerValue">
         <arguments>
             <argument name="color" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="waitForColorSwatch"/>
-        <click selector="{{PageBuilderActionsSection.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="waitForColorSwatch"/>
+        <click selector="{{ColorPicker.panelColorSwatch(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="clickColorSwatch"/>
         <waitForElementVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindow"/>
         <seeInField selector="{{ColorPicker.inputField}}" userInput="{{color}}" stepKey="seeExpectedColor"/>
     </actionGroup>
@@ -42,12 +42,12 @@
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(property.section, property.fieldName, property.rgb)}}" stepKey="waitForColorSwatchColor"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(property.section, property.fieldName, property.rgb)}}" stepKey="waitForColorSwatchColor"/>
     </actionGroup>
     <actionGroup name="seeNoColorInColorSwatch">
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelEmptyColorSwatch(property.section, property.fieldName)}}" stepKey="waitForEmptyColorSwatch"/>
+        <waitForElementVisible selector="{{ColorPicker.panelEmptyColorSwatch(property.section, property.fieldName)}}" stepKey="waitForEmptyColorSwatch"/>
     </actionGroup>
 </actionGroups>

@@ -12,7 +12,7 @@
         <arguments>
             <argument name="property"/>
         </arguments>
-        <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
+        <attachFile userInput="{{property.value}}" selector='{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
         <waitForElementVisible selector="{{EditPanelForm.backgroundImagePreview}}" stepKey="waitForImageUpload"/>
     </actionGroup>
@@ -20,16 +20,16 @@
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForImageElement"/>
-        <attachFile userInput="{{property.value}}" selector='{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachImageFile"/>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForImageElement"/>
+        <attachFile userInput="{{property.value}}" selector='{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachImageFile"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoading"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
+        <waitForElementVisible time="10" selector="{{EditPanelForm.editFormUploadedImage(property.section, property.fieldName)}}" stepKey="waitForImageUploaded"/>
     </actionGroup>
     <actionGroup name="attachInvalidFileOnSlideOut">
         <arguments>
             <argument name="property"/>
         </arguments>
-        <attachFile userInput="{{property.value}}" selector='{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
+        <attachFile userInput="{{property.value}}" selector='{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}' stepKey="attachBackgroundImageFile"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{EditPanelForm.invalidUploadTitle}}" stepKey="waitForInvalidUploadTitle"/>
         <waitForElementVisible selector="{{EditPanelForm.invalidUploadMessage(property.errorMessage)}}" stepKey="waitForInvalidUploadMessage"/>
@@ -51,14 +51,14 @@
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormUploadedImageSource(property.section, property.fieldName, property.fileName, property.extension)}}" stepKey="seeUploadedFile"/>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
+        <waitForElementVisible selector="{{EditPanelForm.editFormUploadedImageSource(property.section, property.fieldName, property.fileName, property.extension)}}" stepKey="seeUploadedFile"/>
     </actionGroup>
     <actionGroup name="seeNoImageUploadedOnSlideOut">
         <arguments>
             <argument name="property"/>
         </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormNoUploadedImage(property.name)}}" stepKey="seeNoUploadedFile"/>
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement"/>
+        <waitForElementVisible selector="{{EditPanelForm.editFormNoUploadedImage(property.name)}}" stepKey="seeNoUploadedFile"/>
     </actionGroup>
 </actionGroups>

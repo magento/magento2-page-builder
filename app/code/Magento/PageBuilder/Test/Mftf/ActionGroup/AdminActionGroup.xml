@@ -40,7 +40,7 @@
         <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
         <waitForPageLoad time="30" stepKey="waitForStageToLoad"/>
         <!-- Wait for the first row to be added into the stage for it to be "ready" -->
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.stageLoading}}" stepKey="waitForStageLoadingGraphicNotVisible"/>
+        <waitForElementNotVisible selector="{{PageBuilderStage.stageLoading}}" stepKey="waitForStageLoadingGraphicNotVisible"/>
         <waitForElementVisible time="30" selector="{{RowOnStage.base('1')}}" stepKey="waitForPageBuilderRow"/>
     </actionGroup>
     <actionGroup name="saveAndContinueEditCmsPage">
@@ -59,16 +59,16 @@
         <see userInput="You saved the page." selector="{{CmsPagesPageActionsSection.savePageSuccessMessage}}" stepKey="assertSavePageSuccessMessage"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnPage">
-        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderVisibleOnStaging">
-        <scrollTo selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="scrollToIdentifyPageBuilder"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible"/>
+        <scrollTo selector="{{PageBuilderPanel.generalGroup}}" stepKey="scrollToIdentifyPageBuilder"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="seePageBuilderVisible"/>
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
     </actionGroup>
     <actionGroup name="verifyPageBuilderNotVisibleOnPage">
         <dontSee userInput="Enable Advanced CMS" stepKey="dontSeeEnableAdvancedCMSBtn"/>
-        <dontSee selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="seePageBuilderVisible"/>
+        <dontSee selector="{{PageBuilderPanel.generalGroup}}" stepKey="seePageBuilderVisible"/>
     </actionGroup>
 </actionGroups>

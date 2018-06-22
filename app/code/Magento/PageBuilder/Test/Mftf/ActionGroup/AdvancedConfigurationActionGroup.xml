@@ -12,31 +12,31 @@
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <fillField selector="{{AdvancedForm.advancedMarginTop}}" userInput="{{property.marginTop}}" stepKey="fillMarginTopField"/>
         <fillField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="fillMarginRightField"/>
         <fillField selector="{{AdvancedForm.advancedMarginLeft}}" userInput="{{property.marginLeft}}" stepKey="fillMarginLeftField"/>
         <fillField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="fillMarginBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldPadding">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <fillField selector="{{AdvancedForm.advancedPaddingTop}}" userInput="{{property.paddingTop}}" stepKey="fillPaddingTopField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="fillSlideOutPanelFieldMarginsAndPadding">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <fillField selector="{{AdvancedForm.advancedMarginTop}}" userInput="{{property.marginTop}}" stepKey="fillMarginTopField"/>
         <fillField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="fillMarginRightField"/>
         <fillField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="fillMarginBottomField"/>
@@ -45,37 +45,37 @@
         <fillField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="fillPaddingRightField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="fillPaddingBottomField"/>
         <fillField selector="{{AdvancedForm.advancedPaddingLeft}}" userInput="{{property.paddingLeft}}" stepKey="fillPaddingLeftField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldMargins">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
         <clearField selector="{{AdvancedForm.advancedMarginTop}}" stepKey="clearMarginTopField"/>
         <clearField selector="{{AdvancedForm.advancedMarginRight}}" stepKey="clearMarginRightField"/>
         <clearField selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="clearMarginLeftField"/>
         <clearField selector="{{AdvancedForm.advancedMarginBottom}}" stepKey="clearMarginBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldPadding">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElement" />
         <clearField selector="{{AdvancedForm.advancedPaddingTop}}" stepKey="clearPaddingTopField"/>
         <clearField selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="clearPaddingRightField"/>
         <clearField selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="clearPaddingLeftField"/>
         <clearField selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="clearPaddingBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="clearSlideOutPanelFieldMarginsAndPadding">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
         <waitForLoadingMaskToDisappear stepKey="waitForSpinner"/>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
-        <see userInput="{{property.name}}" selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <see userInput="{{property.name}}" selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="seePropertyLabel"/>
         <clearField selector="{{AdvancedForm.advancedMarginTop}}" stepKey="clearMarginTopField"/>
         <clearField selector="{{AdvancedForm.advancedMarginRight}}" stepKey="clearMarginRightField"/>
         <clearField selector="{{AdvancedForm.advancedMarginLeft}}" stepKey="clearMarginLeftField"/>
@@ -84,13 +84,13 @@
         <clearField selector="{{AdvancedForm.advancedPaddingRight}}" stepKey="clearPaddingRightField"/>
         <clearField selector="{{AdvancedForm.advancedPaddingLeft}}" stepKey="clearPaddingLeftField"/>
         <clearField selector="{{AdvancedForm.advancedPaddingBottom}}" stepKey="clearPaddingBottomField"/>
-        <click selector="{{PageBuilderActionsSection.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
+        <click selector="{{EditPanelForm.panelFieldLabel(property.section, property.fieldName, property.section, property.name)}}" stepKey="clickOnFieldLabel"/>
     </actionGroup>
     <actionGroup name="seeInMarginFieldsSlideOutPanel">
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <seeInField selector="{{AdvancedForm.advancedMarginTop}}" userInput="{{property.marginTop}}" stepKey="seeMarginTopField"/>
         <seeInField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="seeMarginRightField"/>
         <seeInField selector="{{AdvancedForm.advancedMarginBottom}}" userInput="{{property.marginBottom}}" stepKey="seeMarginBottomField"/>
@@ -100,7 +100,7 @@
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <seeInField selector="{{AdvancedForm.advancedPaddingTop}}" userInput="{{property.paddingTop}}" stepKey="seePaddingTopField"/>
         <seeInField selector="{{AdvancedForm.advancedPaddingRight}}" userInput="{{property.paddingRight}}" stepKey="seePaddingRightField"/>
         <seeInField selector="{{AdvancedForm.advancedPaddingBottom}}" userInput="{{property.paddingBottom}}" stepKey="seePaddingBottomField"/>
@@ -110,7 +110,7 @@
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <seeInField selector="{{AdvancedForm.advancedMarginTop}}" userInput="{{property.marginTop}}" stepKey="fillMarginTopField"/>
         <seeInField selector="{{AdvancedForm.advancedMarginRight}}" userInput="{{property.marginRight}}" stepKey="fillMarginRightField"/>
         <seeInField selector="{{AdvancedForm.advancedMarginLeft}}" userInput="{{property.marginLeft}}" stepKey="fillMarginLeftField"/>
@@ -124,7 +124,7 @@
         <arguments>
             <argument name="property" defaultValue="PageBuilderAdvancedMarginsAndPaddingDefaultProperty"/>
         </arguments>
-        <waitForElement time="2" selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
+        <waitForElement time="2" selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible"/>
         <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingTop', property.placeholderPaddingTop)}}" stepKey="seePaddingTopPlaceholder"/>
         <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingRight', property.placeholderPaddingRight)}}" stepKey="seePaddingRightPlaceholder"/>
         <seeElement selector="{{AdvancedForm.advancedMarginAndPaddingPlaceholderText('paddingBottom', property.placeholderPaddingBottom)}}" stepKey="seePaddingBottomPlaceholder"/>
@@ -425,7 +425,7 @@
         <arguments>
             <argument name="property" defaultValue=""/>
         </arguments>
-        <waitForElement selector="{{PageBuilderActionsSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
+        <waitForElement selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForElementVisible" />
         <seeElement selector="//li[@name='{{property.value}}' and contains(@class,'active')]" stepKey="alignmentIsSelected" />
     </actionGroup>
 </actionGroups>

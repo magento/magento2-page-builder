@@ -12,44 +12,44 @@
         <arguments>
             <argument name="group"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroup(group.section)}}" stepKey="waitForGroupVisible"/>
-        <conditionalClick selector="{{PageBuilderActionsSection.panelGroup(group.section)}}" dependentSelector="{{PageBuilderActionsSection.panelGroupActive(group.name)}}" visible="false" stepKey="expandGroup"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelGroupActive(group.section)}}" stepKey="waitForGroupExpanded"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.panelGroup(group.section)}}" stepKey="waitForGroupVisible"/>
+        <conditionalClick selector="{{PageBuilderPanel.panelGroup(group.section)}}" dependentSelector="{{PageBuilderPanel.panelGroupActive(group.name)}}" visible="false" stepKey="expandGroup"/>
+        <waitForElementVisible selector="{{PageBuilderPanel.panelGroupActive(group.section)}}" stepKey="waitForGroupExpanded"/>
     </actionGroup>
     <actionGroup name="closePageBuilderPanelGroups">
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <click selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
-        <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
+        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <click selector="{{PageBuilderPanel.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <click selector="{{PageBuilderPanel.otherGroup}}" stepKey="clickOtherGroup"/>
     </actionGroup>
     <actionGroup name="validateGroupsAndContentTypes">
-        <see userInput="General" selector="{{PageBuilderActionsSection.generalGroup}}" stepKey="seeGeneralGroup"/>
-        <see userInput="Row" selector="{{PageBuilderActionsSection.generalGroupContentType}}" stepKey="seeGeneralGroupRow"/>
-        <see userInput="Column" selector="{{PageBuilderActionsSection.generalGroupContentType}}" stepKey="seeGeneralGroupColumn"/>
-        <see userInput="Text" selector="{{PageBuilderActionsSection.generalGroupContentType}}" stepKey="seeGeneralGroupText"/>
-        <see userInput="Heading" selector="{{PageBuilderActionsSection.generalGroupContentType}}" stepKey="seeGeneralGroupHeading"/>
-        <see userInput="Buttons" selector="{{PageBuilderActionsSection.generalGroupContentType}}" stepKey="seeGeneralGroupButtons"/>
-        <see userInput="Divider" selector="{{PageBuilderActionsSection.generalGroupContentType}}" stepKey="seeGeneralGroupDivider"/>
-        <click selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="clickMediaGroup"/>
-        <see userInput="Media" selector="{{PageBuilderActionsSection.mediaGroup}}" stepKey="seeMediaGroup"/>
-        <see userInput="Image" selector="{{PageBuilderActionsSection.mediaGroupContentType}}" stepKey="seeMediaGroupImage"/>
-        <see userInput="Banner" selector="{{PageBuilderActionsSection.mediaGroupContentType}}" stepKey="seeMediaGroupBanner"/>
-        <see userInput="Video" selector="{{PageBuilderActionsSection.mediaGroupContentType}}" stepKey="seeMediaGroupVideo"/>
-        <see userInput="Slider" selector="{{PageBuilderActionsSection.mediaGroupContentType}}" stepKey="seeMediaGroupSlider"/>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
-        <see userInput="Interactive" selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="seeInteractiveGroup"/>
-        <see userInput="Tabs" selector="{{PageBuilderActionsSection.interactiveGroupContentType}}" stepKey="seeInteractiveGroupTabs"/>
-        <see userInput="Accordion" selector="{{PageBuilderActionsSection.interactiveGroupContentType}}" stepKey="seeInteractiveGroupAccordion"/>
-        <see userInput="Map" selector="{{PageBuilderActionsSection.interactiveGroupContentType}}" stepKey="seeInteractiveGroupMap"/>
-        <see userInput="Newsletter" selector="{{PageBuilderActionsSection.interactiveGroupContentType}}" stepKey="seeInteractiveGroupNewsletter"/>
-        <click selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="clickMagentoGroup"/>
-        <see userInput="Magento" selector="{{PageBuilderActionsSection.magentoGroup}}" stepKey="seeMagentoGroup"/>
-        <see userInput="Block" selector="{{PageBuilderActionsSection.magentoGroupContentType}}" stepKey="seeMagentoGroupBlock"/>
-        <see userInput="Product" selector="{{PageBuilderActionsSection.magentoGroupContentType}}" stepKey="seeMagentoGroupProduct"/>
-        <click selector="{{PageBuilderActionsSection.otherGroup}}" stepKey="clickOtherGroup"/>
-        <see userInput="Anchor" selector="{{PageBuilderActionsSection.otherGroupContentType}}" stepKey="seeOtherGroupAnchor"/>
-        <dontSee userInput="Code" selector="{{PageBuilderActionsSection.otherGroupContentType}}" stepKey="dontSeeOtherGroupCode"/>
-        <see userInput="Html" selector="{{PageBuilderActionsSection.otherGroupContentType}}" stepKey="seeOtherGroupHtml"/>
-        <dontSee userInput="Search" selector="{{PageBuilderActionsSection.otherGroupContentType}}" stepKey="dontSeeOtherGroupSearch"/>
+        <see userInput="General" selector="{{PageBuilderPanel.generalGroup}}" stepKey="seeGeneralGroup"/>
+        <see userInput="Row" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupRow"/>
+        <see userInput="Column" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupColumn"/>
+        <see userInput="Text" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupText"/>
+        <see userInput="Heading" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupHeading"/>
+        <see userInput="Buttons" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupButtons"/>
+        <see userInput="Divider" selector="{{PageBuilderPanel.generalGroupContentType}}" stepKey="seeGeneralGroupDivider"/>
+        <click selector="{{PageBuilderPanel.mediaGroup}}" stepKey="clickMediaGroup"/>
+        <see userInput="Media" selector="{{PageBuilderPanel.mediaGroup}}" stepKey="seeMediaGroup"/>
+        <see userInput="Image" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupImage"/>
+        <see userInput="Banner" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupBanner"/>
+        <see userInput="Video" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupVideo"/>
+        <see userInput="Slider" selector="{{PageBuilderPanel.mediaGroupContentType}}" stepKey="seeMediaGroupSlider"/>
+        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <see userInput="Interactive" selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="seeInteractiveGroup"/>
+        <see userInput="Tabs" selector="{{PageBuilderPanel.interactiveGroupContentType}}" stepKey="seeInteractiveGroupTabs"/>
+        <see userInput="Accordion" selector="{{PageBuilderPanel.interactiveGroupContentType}}" stepKey="seeInteractiveGroupAccordion"/>
+        <see userInput="Map" selector="{{PageBuilderPanel.interactiveGroupContentType}}" stepKey="seeInteractiveGroupMap"/>
+        <see userInput="Newsletter" selector="{{PageBuilderPanel.interactiveGroupContentType}}" stepKey="seeInteractiveGroupNewsletter"/>
+        <click selector="{{PageBuilderPanel.magentoGroup}}" stepKey="clickMagentoGroup"/>
+        <see userInput="Magento" selector="{{PageBuilderPanel.magentoGroup}}" stepKey="seeMagentoGroup"/>
+        <see userInput="Block" selector="{{PageBuilderPanel.magentoGroupContentType}}" stepKey="seeMagentoGroupBlock"/>
+        <see userInput="Product" selector="{{PageBuilderPanel.magentoGroupContentType}}" stepKey="seeMagentoGroupProduct"/>
+        <click selector="{{PageBuilderPanel.otherGroup}}" stepKey="clickOtherGroup"/>
+        <see userInput="Anchor" selector="{{PageBuilderPanel.otherGroupContentType}}" stepKey="seeOtherGroupAnchor"/>
+        <dontSee userInput="Code" selector="{{PageBuilderPanel.otherGroupContentType}}" stepKey="dontSeeOtherGroupCode"/>
+        <see userInput="Html" selector="{{PageBuilderPanel.otherGroupContentType}}" stepKey="seeOtherGroupHtml"/>
+        <dontSee userInput="Search" selector="{{PageBuilderPanel.otherGroupContentType}}" stepKey="dontSeeOtherGroupSearch"/>
     </actionGroup>
 </actionGroups>

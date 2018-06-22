@@ -102,8 +102,8 @@
         </actionGroup>
         <!-- Check Drop Down Counts -->
         <comment userInput="Check Drop Down Counts" stepKey="commentCheckDropDownCounts"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountAlignment"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountBorder"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedAlignmentPropertyDefault.section, PageBuilderAdvancedAlignmentPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountAlignment"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="value" stepKey="getDropDownCountBorder"/>
         <assertCount actual="getDropDownCountBorder" actualType="variable" expected="10" expectedType="int" stepKey="assertDropDownCountBorder"/>
         <!-- Check Placeholder Text -->
         <comment userInput="Check Placeholder Text" stepKey="commentCheckPlaceholderText"/>
@@ -964,7 +964,7 @@
         <actionGroup ref="saveEditPanelAndValidateFieldError" stepKey="validateError">
             <argument name="property" value="PageBuilderAdvancedBorderColorProperty_invalid"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="clickCloseButton"/>
+        <click selector="{{EditPanelForm.editFormClose}}" stepKey="clickCloseButton"/>
         <!-- Stage: Check Border Color: Empty -->
         <comment userInput="Stage: Check Border Color: Empty" stepKey="commentStageCheckEmpty"/>
         <actionGroup ref="validateAdvancedStyleWithNoAlignment" stepKey="validateStageEmpty">

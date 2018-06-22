@@ -17,7 +17,7 @@
         <waitForElementVisible selector="{{SlideOnFrontend.slide(index)}}" stepKey="waitForSlide"/>
     </actionGroup>
     <actionGroup name="unfocusSlideOptions">
-        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementNotVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="dontSeeSlideOptionsEdit"/>
     </actionGroup>
@@ -28,8 +28,8 @@
         <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
         <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentType"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
+        <waitForElementVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm" />
+        <see userInput="Edit Slide" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="openSlideOptionsByIndex">
         <arguments>
@@ -41,8 +41,8 @@
         <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
         <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentType"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
-        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
+        <waitForElementVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm" />
+        <see userInput="Edit Slide" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
     </actionGroup>
     <actionGroup name="removeSlide">
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />

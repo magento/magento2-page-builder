@@ -16,7 +16,7 @@
             <argument name="expectedPaddingTop" defaultValue="1"/>
             <argument name="expectedPaddingBottom" defaultValue="1"/>
         </arguments>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
         <executeJS function="return Math.round({{containerDefaultHeight.value}}+{{expectedPaddingTop.paddingTop}}+{{expectedPaddingBottom.paddingBottom}})" stepKey="expectedContentTypeHeightWithPadding"/>
         <assertEquals stepKey="assertHeightOnStageMatchesExpected">
             <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
@@ -29,7 +29,7 @@
             <argument name="index" defaultValue="1" type="string"/>
             <argument name="containerDefaultHeight" defaultValue="1"/>
         </arguments>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(contentType.role,index)}}" stepKey="actualStageContentTypeHeight"/>
         <executeJS function="return Math.round({{containerDefaultHeight.value}})" stepKey="expectedContentTypeHeightWithPadding"/>
         <assertEquals stepKey="assertHeightOnStageMatchesExpected">
             <expectedResult type="variable">actualStageContentTypeHeight</expectedResult>
@@ -44,6 +44,6 @@
             <argument name="containerTargetIndex" defaultValue="1" type="string"/>
             <argument name="positionInContainer" defaultValue="1" type="string"/>
         </arguments>
-        <waitForElementVisible time="30" selector="{{PageBuilderActionsSection.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStage"/>
+        <waitForElementVisible time="30" selector="{{PageBuilderStage.contentTypeInsideContainerStage(containerTargetType.role, containerTargetIndex, positionInContainer, contentType.role, contentTypeIndex)}}" stepKey="waitForContentTypeStage"/>
     </actionGroup>
 </actionGroups>

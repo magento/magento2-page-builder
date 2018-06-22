@@ -48,9 +48,9 @@
             <argument name="expectedPaddingTop" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
             <argument name="expectedPaddingBottom" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
         </actionGroup>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
         <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop}}+{{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
         <assertEquals stepKey="assertRowHeightAdjustsToColumnHeight">
             <expectedResult type="variable">actualStageInitialColumnHeight</expectedResult>
@@ -124,7 +124,9 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
-        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAppearanceMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
@@ -253,13 +255,12 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeElement selector="{{PageBuilderActionsSection.editForm}}" stepKey="seeEditForm"/>
+        <seeElement selector="{{EditPanelForm.editForm}}" stepKey="seeEditForm"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementNotVisible time="2" selector="{{PageBuilderColumnSection.editFormSpinner}}" stepKey="waitForSpinner" />
-        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForEditFormClose"/>
-        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="clickEditFormClose"/>
-        <waitForElementNotVisible time="2" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitClose" />
-        <dontSeeElement selector="{{PageBuilderActionsSection.editForm}}" stepKey="dontSeeEditForm"/>
+        <waitForElementVisible time="2" selector="{{EditPanelForm.editFormClose}}" stepKey="waitForEditFormClose"/>
+        <click selector="{{EditPanelForm.editFormClose}}" stepKey="clickEditFormClose"/>
+        <waitForElementNotVisible time="2" selector="{{EditPanelForm.editForm}}" stepKey="waitClose" />
+        <dontSeeElement selector="{{EditPanelForm.editForm}}" stepKey="dontSeeEditForm"/>
     </test>
     <test name="ColumnSettingsAppearInAdmin">
         <annotations>
@@ -284,7 +285,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceAlignmentProperty">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
         </actionGroup>
@@ -607,7 +610,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
@@ -777,7 +782,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -785,7 +790,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
@@ -1025,7 +1030,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">
