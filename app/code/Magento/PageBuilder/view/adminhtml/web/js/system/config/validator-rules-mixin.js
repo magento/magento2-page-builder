@@ -25,6 +25,22 @@ define([
             $.mage.__('Google Maps Style JSON is invalid. Please paste the valid JSON style.')
         );
 
+        $.validator.addMethod(
+            'validate-greater-than-one',
+            function (value) {
+                return !(value < 1);
+            },
+            $.mage.__('Please enter a number 1 or greater in this field.')
+        );
+
+        $.validator.addMethod(
+            'validate-default-grid-size',
+            function (value) {
+                return !(value > $("[name='groups[pagebuilder][fields][column_grid_max][value]']").val());
+            },
+            $.mage.__('Default grid size must be less than the maximum grid size.')
+        );
+
         return target;
     };
 });
