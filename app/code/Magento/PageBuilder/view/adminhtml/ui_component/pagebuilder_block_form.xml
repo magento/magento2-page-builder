@@ -74,11 +74,11 @@
         <settings>
             <label/>
         </settings>
-        <component component="Magento_PageBuilder/js/content-type/block/block-chooser" template="Magento_PageBuilder/content-type/block/block-chooser" name="block_chooser">
+        <component component="Magento_PageBuilder/js/form/element/block-chooser" template="Magento_PageBuilder/form/element/block-chooser" name="block_chooser" sortOrder="10">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="requestParameter" xsi:type="string">block_id</item>
-                    <item name="dataUrlConfigPath" xsi:type="string">content_types.block.additional_data.chooser_config.data_url</item>
+                    <item name="dataUrlConfigPath" xsi:type="string">content_types.block.additional_data.chooserConfig.dataUrl</item>
                     <item name="modalName" xsi:type="string">ns = ${ $.ns }, index = modal</item>
                     <item name="buttonTitle" xsi:type="string" translate="true">Select Block...</item>
                 </item>
@@ -89,17 +89,16 @@
                 </imports>
             </settings>
         </component>
-        <field name="block_id" formElement="hidden">
+        <field name="block_id" formElement="hidden" sortOrder="20">
             <settings>
                 <dataType>text</dataType>
-                <label>block_id</label>
                 <imports>
                     <link name="value">${ $.ns }.${ $.ns }.modal.pagebuilder_block_chooser_listing:externalValue</link>
                 </imports>
             </settings>
         </field>
     </fieldset>
-    <modal name="modal">
+    <modal name="modal" sortOrder="30">
         <settings>
             <options>
                 <option name="title" xsi:type="string" translate="true">Select Block...</option>
@@ -124,7 +123,7 @@
                 </option>
             </options>
         </settings>
-        <insertListing name="pagebuilder_block_chooser_listing">
+        <insertListing name="pagebuilder_block_chooser_listing" sortOrder="10">
             <settings>
                 <externalData>block_id</externalData>
                 <externalProvider>${ $.ns }.pagebuilder_block_chooser_listing_data_source</externalProvider>
