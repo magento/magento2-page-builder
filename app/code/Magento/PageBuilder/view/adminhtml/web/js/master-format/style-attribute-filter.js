@@ -12,7 +12,7 @@ define(["underscore"], function (_underscore) {
   /*#__PURE__*/
   function () {
     function StyleAttributeFilter() {
-      this.allowedAttributes = ["align_self", "background_color", "background_image", "background_size", "background_attachment", "background_repeat", "background_position", "border", "border_style", "border_width", "border_color", "border_radius", "color", "display", "height", "justify_content", "min_height", "margin_bottom", "margin_left", "margin_right", "margin_top", "mobile_image", "padding_bottom", "padding_left", "padding_right", "padding_top", "text_align", "margins_and_padding", "width"];
+      this.allowedAttributes = ["align_self", "background_color", "background_image", "background_size", "background_attachment", "background_repeat", "background_position", "border", "border_style", "border_width", "border_color", "border_radius", "color", "display", "height", "min_height", "margin_bottom", "margin_left", "margin_right", "margin_top", "mobile_image", "padding_bottom", "padding_left", "padding_right", "padding_top", "text_align", "margins_and_padding", "width"];
     }
 
     var _proto = StyleAttributeFilter.prototype;
