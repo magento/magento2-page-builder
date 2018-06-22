@@ -15,11 +15,13 @@ define([
                 if ($.mage.isEmptyNoTrim(value)) {
                     return true;
                 }
+
                 try {
                     JSON.parse(value);
                 } catch (e) {
                     return false;
                 }
+
                 return true;
             },
             $.mage.__('Google Maps Style JSON is invalid. Please paste the valid JSON style.')
@@ -36,7 +38,9 @@ define([
         $.validator.addMethod(
             'validate-default-grid-size',
             function (value) {
-                return !(value > $("[name='groups[pagebuilder][fields][column_grid_max][value]']").val());
+                return !(parseInt(value, 10) >
+                    parseInt($("[name='groups[pagebuilder][fields][column_grid_max][value]']").val(), 10)
+                );
             },
             $.mage.__('Default grid size must be less than the maximum grid size.')
         );
