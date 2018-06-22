@@ -8,35 +8,35 @@
 <div class="pagebuilder-column-group"
      css="{'resizing': resizing, 'empty-child': hasEmptyChild, 'grid-change': gridChange, 'grid-form-open': gridFormOpen}">
     <div class="pagebuilder-grid-size-indicator">
-        <div class="pagebuilder-grid-size-indicator-wrapper" event="{ click: openGridForm }">
+        <div class="indicator-wrapper" event="{ click: openGridForm }">
             <i class="icon-pagebuilder-grid-options"></i>
             <div class="pagebuilder-grid-panel"
-                 css="{ 'pagebuilder-grid-panel-visible': gridFormOpen, 'pagebuilder-grid-panel-error': gridSizeError }">
-                <div class="pagebuilder-grid-panel-wrapper" css="{'pagebuilder-grid-panel-wrapper-error': gridSizeError}">
-                    <ul class="pagebuilder-grid-panel-items">
-                        <li class="pagebuilder-grid-panel-item">
+                 css="{ 'grid-panel-visible': gridFormOpen, 'grid-panel-error': gridSizeError }">
+                <div class="grid-panel-wrapper">
+                    <ul class="grid-panel-items">
+                        <li class="grid-panel-item">
                             <div if="gridSizeError" html="gridSizeError" class="admin__field-error"></div>
                         </li>
                     </ul>
-                    <ul class="pagebuilder-grid-panel-items">
-                        <li class="pagebuilder-grid-panel-item">
-                            <div class="panel-title">
+                    <ul class="grid-panel-items">
+                        <li class="grid-panel-item">
+                            <div class="grid-panel-title">
                                 Grid Size
                             </div>
                         </li>
-                        <li class="pagebuilder-grid-panel-item">
-                            <div class="pagebuilder-grid-panel-item-wrapper">
+                        <li class="grid-panel-item">
+                            <div class="grid-panel-item-wrapper">
                                 <input type="number"
-                                       css="{'pagebuilder-grid-panel-field-error': gridSizeError}"
+                                       css="{'grid-panel-field-error': gridSizeError}"
                                        event="{keyup: onGridInputKeyUp, blur: onGridInputBlur}"
                                        min="1" max="100"
                                        class="admin__control-text"
                                        data-bind="textInput: gridSizeInput"/>
                             </div>
                         </li>
-                        <li class="pagebuilder-grid-panel-item">
-                            <div class="pagebuilder-grid-panel-item-wrapper">
-                                <div class="pagebuilder-grid-panel-tooltip">
+                        <li class="grid-panel-item">
+                            <div class="grid-panel-item-wrapper">
+                                <div class="grid-panel-tooltip">
                                     <span class="tooltip-content"
                                           role="tooltip">
                                     <p>Grid size determines the maximum number of columns available.</p>
