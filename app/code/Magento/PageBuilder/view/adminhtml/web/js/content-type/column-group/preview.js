@@ -445,7 +445,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         this.gridFormOpen(true); // Wait for animation to complete
 
         _underscore.delay(function () {
-          (0, _jquery)(_this6.wrapperElement).find(".pagebuilder-grid-panel-link-wrapper input").focus().select();
+          (0, _jquery)(_this6.wrapperElement).find(".pagebuilder-grid-panel-item-wrapper input").focus().select();
         }, 200);
 
         (0, _jquery)(document).on("click focusin", this.onDocumentClick);

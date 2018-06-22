@@ -453,7 +453,7 @@ export default class Preview extends PreviewCollection {
             this.gridFormOpen(true);
             // Wait for animation to complete
             _.delay(() => {
-                $(this.wrapperElement).find(".pagebuilder-grid-panel-link-wrapper input").focus().select();
+                $(this.wrapperElement).find(".pagebuilder-grid-panel-item-wrapper input").focus().select();
             }, 200);
             $(document).on("click focusin", this.onDocumentClick);
             events.trigger("interaction:start");

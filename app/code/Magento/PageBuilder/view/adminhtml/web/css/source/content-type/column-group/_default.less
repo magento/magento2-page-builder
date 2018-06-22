@@ -156,13 +156,6 @@
     transition: opacity 200ms, visibility 200ms, transform 200ms;
     visibility: hidden;
     z-index: 30;
-    
-    &.pagebuilder-grid-panel-error {
-        -moz-transition: none;
-        -o-transition: none;
-        -webkit-transition: none;
-        transition: none;
-    }
 
     .pagebuilder-grid-panel-wrapper {
         background: @color-white;
@@ -173,25 +166,7 @@
         padding: 2px 0px 2px 5px;
         z-index: 99;
 
-        .pagebuilder-name {
-            display: inline-block;
-            font-size: 14px;
-            height: 38px;
-            padding: 10px 0;
-            vertical-align: bottom;
-            white-space: nowrap;
-        }
-
-        a {
-            color: @color-very-dark-grayish-orange;
-            text-decoration: none;
-
-            &:hover {
-                background-color: @color-gray-darken0;
-            }
-        }
-
-        .pagebuilder-grid-panel-links {
+        .pagebuilder-grid-panel-items {
             background: @color-white;
             display: flex;
             list-style: none;
@@ -199,31 +174,8 @@
             vertical-align: middle;
             z-index: 2;
 
-            .pagebuilder-grid-panel-link {
+            .pagebuilder-grid-panel-item {
                 vertical-align: top;
-
-                > a {
-                    color: @color-very-dark-grayish-orange;
-                    display: block;
-                    height: 36px;
-                    text-align: center;
-                    text-decoration: none;
-                    transition: background .2s, color .2s;
-                    vertical-align: middle;
-                    width: 36px;
-
-                    i {
-                        font-size: 18px;
-                        line-height: 36px;
-                        text-decoration: none;
-                        vertical-align: middle;
-                    }
-
-                    &:hover:not(&.option-title) {
-                        background-color: @color-gray-darken0;
-                        color: @color-very-dark-gray-black;
-                    }
-                }
 
                 > .panel-title {
                     cursor: default;
@@ -237,18 +189,19 @@
                     text-decoration: none;
                     white-space: nowrap;
                 }
-
-                &:first-child {
-                    > .option-title {
-                        padding-left: 16px;
-                    }
-                }
             }
         }
     }
 
-    .pagebuilder-grid-panel-wrapper-error {
-        padding-top: 6px;
+    &.pagebuilder-grid-panel-error {
+        -moz-transition: none;
+        -o-transition: none;
+        -webkit-transition: none;
+        transition: none;
+
+        .pagebuilder-grid-panel-wrapper {
+            padding-top: 6px;
+        }
     }
 
     &:after {
@@ -274,7 +227,7 @@
 }
 
 .pagebuilder-grid-size-indicator {
-    background: rgb(255, 255, 255);
+    background: @color-white;
     border: 1px solid rgba(153, 153, 153, .4);
     border-radius: 10px;
     cursor: pointer;
@@ -297,15 +250,15 @@
     }
 
     .admin__field-error {
-        margin: 4px 0px 6px 4px;
+        margin: 4px 0 6px 4px;
         width: 135px;
     }
 
     .pagebuilder-grid-panel-field-error {
-        border: 1px solid #ee7d7d;
+        border: 1px solid @error_color;
     }
 
-    .pagebuilder-grid-panel-link-wrapper {
+    .pagebuilder-grid-panel-item-wrapper {
         align-items: center;
         display: flex;
         height: 100%;
@@ -313,14 +266,22 @@
     }
 
     .pagebuilder-grid-panel-tooltip {
-        background: #373330;
-        border-radius: 22px;
-        color: white;
-        font-size: 16px;
-        height: 22px;
         position: relative;
         vertical-align: top;
-        width: 22px;
+
+        &:after {
+            color: @color-pagebuilder-dark-gray;
+            content: '\e633';
+            display: inline-block;
+            font-family: 'Admin Icons';
+            font-size: 2.2rem;
+            font-weight: normal;
+            line-height: 24px;
+            overflow: hidden;
+            speak: none;
+            text-align: center;
+            vertical-align: middle;
+        }
     }
 
     .tooltip-content {
@@ -330,7 +291,7 @@
         bottom: 175%;
         box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
         font-size: 14px;
-        left: -455%;
+        left: -390%;
         padding: .9rem 1.8rem;
         position: absolute;
         text-align: left;
@@ -381,10 +342,8 @@
     &:hover {
         border: 1px solid rgba(153, 153, 153, .8);
 
-        .pagebuilder-grid-size-indicator-wrapper {
-            .icon-pagebuilder-grid-options {
-                color: rgba(153, 153, 153, .8);
-            }
+        .icon-pagebuilder-grid-options {
+            color: rgba(153, 153, 153, .8);
         }
     }
 }
