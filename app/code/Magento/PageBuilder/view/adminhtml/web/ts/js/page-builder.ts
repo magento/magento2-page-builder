@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "events";
+import events from "./events";
 import ko from "knockout";
 import utils from "mageUtils";
 import _ from "underscore";

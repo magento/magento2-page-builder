@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "events";
+import events from "./events";
 import ko from "knockout";
 import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min";

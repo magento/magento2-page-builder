@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["events", "knockout", "mageUtils", "Magento_PageBuilder/js/data-store"], function (_events, _knockout, _mageUtils, _dataStore) {
+define(["Magento_PageBuilder/js/events", "knockout", "mageUtils", "Magento_PageBuilder/js/data-store"], function (_events, _knockout, _mageUtils, _dataStore) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

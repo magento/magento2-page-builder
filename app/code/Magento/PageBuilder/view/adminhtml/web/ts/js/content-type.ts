@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "events";
+import events from "./events";
 import ko from "knockout";
 import mageUtils from "mageUtils";
 import ContentTypeConfigInterface from "./content-type-config.d";

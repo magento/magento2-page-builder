@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "events";
+import events from "./events";
 import $t from "mage/translate";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";

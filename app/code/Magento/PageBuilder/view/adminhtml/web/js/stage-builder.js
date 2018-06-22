@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["events", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/master-format/read/composite", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives"], function (_events, _translate, _alert, _, _config, _contentTypeFactory, _composite, _validator, _directives) {
+define(["Magento_PageBuilder/js/events", "mage/translate", "Magento_Ui/js/modal/alert", "underscore", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/master-format/read/composite", "Magento_PageBuilder/js/master-format/validator", "Magento_PageBuilder/js/utils/directives"], function (_events, _translate, _alert, _, _config, _contentTypeFactory, _composite, _validator, _directives) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

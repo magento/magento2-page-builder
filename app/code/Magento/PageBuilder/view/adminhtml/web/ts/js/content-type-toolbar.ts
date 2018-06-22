@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "events";
+import events from "./events";
 import $ from "jquery";
 import ko from "knockout";
 import OptionInterface from "./content-type-toolbar/option.d";
