@@ -147,9 +147,9 @@ export default class Preview extends PreviewCollection {
     /**
      * Duplicate a child of the current instance
      *
-     * @param {ContentTypeInterface} contentType
+     * @param {ContentTypeCollectionInterface<Preview>} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface> | void}
+     * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
     public clone(
         contentType: ContentTypeCollectionInterface<Preview>,
@@ -170,6 +170,10 @@ export default class Preview extends PreviewCollection {
             const splitClone = super.clone(contentType, autoAppend);
             if (splitClone) {
                 splitClone.then((duplicateContentType: ContentTypeCollectionInterface<Preview>) => {
+                    /**
+                     * Distribute the width across the original & duplicated columns, if the we have an odd number of
+                     * split times apply it to the original.
+                     */
                     const originalWidth = (Math.floor(splitTimes / 2) + (splitTimes % 2))
                         * resizeUtils.getSmallestColumnWidth();
                     const duplicateWidth = Math.floor(splitTimes / 2) * resizeUtils.getSmallestColumnWidth();

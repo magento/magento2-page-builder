@@ -132,9 +132,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
     /**
      * Duplicate a child of the current instance
      *
-     * @param {ContentTypeInterface} contentType
+     * @param {ContentTypeCollectionInterface<Preview>} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface> | void}
+     * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
 
 
@@ -157,6 +157,10 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
         if (splitClone) {
           splitClone.then(function (duplicateContentType) {
+            /**
+             * Distribute the width across the original & duplicated columns, if the we have an odd number of
+             * split times apply it to the original.
+             */
             var originalWidth = (Math.floor(splitTimes / 2) + splitTimes % 2) * resizeUtils.getSmallestColumnWidth();
             var duplicateWidth = Math.floor(splitTimes / 2) * resizeUtils.getSmallestColumnWidth();
             (0, _resize.updateColumnWidth)(contentType, resizeUtils.getAcceptedColumnWidth(originalWidth.toString()));

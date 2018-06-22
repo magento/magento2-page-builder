@@ -291,7 +291,6 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
      * Bind draggable instances to the child columns
      *
      * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @returns {JQuery<TElement extends Node>}
      */
 
 
@@ -466,7 +465,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
     /**
      * Set columns in the group as resizing
      *
-     * @param {ContentTypeCollectionInterface} columns
+     * @param {Array<ContentTypeCollectionInterface<ColumnPreview>>} columns
      */
     _proto.setColumnsAsResizing = function setColumnsAsResizing() {
       for (var _len = arguments.length, columns = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -611,6 +610,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
      * Cache the groups positions
      *
      * @param {JQuery} group
+     * @returns {GroupPositionCache}
      */
 
 
@@ -965,6 +965,12 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         return;
       }
     };
+    /**
+     * Record the grid resize operation into a history for later restoration
+     *
+     * @param {number} newGridSize
+     */
+
 
     _proto.recordGridResize = function recordGridResize(newGridSize) {
       var _this9 = this;

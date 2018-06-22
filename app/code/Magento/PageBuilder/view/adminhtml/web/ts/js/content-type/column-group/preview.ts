@@ -28,6 +28,8 @@ import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
 import {GridSizeError, resizeGrid} from "./grid-size";
 import {getDragColumn, removeDragColumn, setDragColumn} from "./registry";
+import {ColumnInitElementEventParamsInterface} from "../column/column-init-element-event-params";
+import {ColumnBindResizeHandleEventParamsInterface} from "../column/column-bind-resize-handle-event-params";
 
 interface ContentTypeRemovedParams {
     parent: ColumnGroup;
@@ -108,13 +110,13 @@ export default class Preview extends PreviewCollection {
         });
 
         // Listen for resizing events from child columns
-        events.on("column:bindResizeHandle", (args: any) => {
+        events.on("column:bindResizeHandle", (args: ColumnBindResizeHandleEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
                 (this as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
             }
         });
-        events.on("column:initElement", (args: any) => {
+        events.on("column:initElement", (args: ColumnInitElementEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
                 (this as ColumnGroupPreview).bindDraggable(args.column);
@@ -322,9 +324,8 @@ export default class Preview extends PreviewCollection {
      * Bind draggable instances to the child columns
      *
      * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @returns {JQuery<TElement extends Node>}
      */
-    public bindDraggable(column: ContentTypeCollectionInterface<ColumnPreview>) {
+    public bindDraggable(column: ContentTypeCollectionInterface<ColumnPreview>): void {
         column.preview.element.draggable({
             appendTo: "body",
             containment: "body",
@@ -481,9 +482,9 @@ export default class Preview extends PreviewCollection {
     /**
      * Set columns in the group as resizing
      *
-     * @param {ContentTypeCollectionInterface} columns
+     * @param {Array<ContentTypeCollectionInterface<ColumnPreview>>} columns
      */
-    private setColumnsAsResizing(...columns: Array<ContentTypeCollectionInterface<ColumnPreview>>) {
+    private setColumnsAsResizing(...columns: Array<ContentTypeCollectionInterface<ColumnPreview>>): void {
         columns.forEach((column) => {
             column.preview.resizing(true);
             column.preview.element.css({transition: `width ${animationTime}ms ease-in-out`});
@@ -493,9 +494,9 @@ export default class Preview extends PreviewCollection {
     /**
      * Unset resizing flag on all child columns
      */
-    private unsetResizingColumns() {
+    private unsetResizingColumns(): void {
         this.parent.children().forEach((column: ContentTypeCollectionInterface<ColumnPreview>) => {
-            (column.preview as ColumnPreview).resizing(false);
+            column.preview.resizing(false);
             if (column.preview.element) {
                 column.preview.element.css({transition: ""});
             }
@@ -505,7 +506,7 @@ export default class Preview extends PreviewCollection {
     /**
      * End all current interactions
      */
-    private endAllInteractions() {
+    private endAllInteractions(): void {
         if (this.resizing() === true) {
             events.trigger("interaction:stop", {stageId: this.parent.stageId});
         }
@@ -533,7 +534,7 @@ export default class Preview extends PreviewCollection {
      *
      * @param {JQuery} group
      */
-    private initMouseMove(group: JQuery) {
+    private initMouseMove(group: JQuery): void {
         let intersects: boolean = false;
         $(document).on("mousemove touchmove", (event: JQueryEventObject) => {
             const groupPosition = this.getGroupPosition(group);
@@ -579,7 +580,7 @@ export default class Preview extends PreviewCollection {
     /**
      * Handle the mouse up action, either adding a new column or moving an existing
      */
-    private handleMouseUp() {
+    private handleMouseUp(): void {
         if (this.dropOverElement && this.dropPosition) {
             this.onNewColumnDrop(this.dropPosition);
             this.dropOverElement = null;
@@ -599,7 +600,7 @@ export default class Preview extends PreviewCollection {
      * @param {GroupPositionCache} groupPosition
      * @returns {boolean}
      */
-    private eventIntersectsGroup(event: JQueryEventObject, groupPosition: GroupPositionCache) {
+    private eventIntersectsGroup(event: JQueryEventObject, groupPosition: GroupPositionCache): boolean {
         return event.pageY > groupPosition.top &&
             event.pageY < (groupPosition.top + groupPosition.outerHeight) &&
             event.pageX > groupPosition.left &&
@@ -610,8 +611,9 @@ export default class Preview extends PreviewCollection {
      * Cache the groups positions
      *
      * @param {JQuery} group
+     * @returns {GroupPositionCache}
      */
-    private getGroupPosition(group: JQuery) {
+    private getGroupPosition(group: JQuery): GroupPositionCache {
         if (!this.groupPositionCache) {
             this.groupPositionCache = {
                 top: group.offset().top,
@@ -639,7 +641,7 @@ export default class Preview extends PreviewCollection {
         direction: string,
         adjustedColumn: ContentTypeCollectionInterface<ColumnPreview>,
         modifyColumnInPair: string,
-    ) {
+    ): void {
         if (usedHistory) {
             this.resizeHistory[usedHistory].pop();
         }
@@ -656,7 +658,7 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
      */
-    private onResizingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache) {
+    private onResizingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache): void {
         let newColumnWidth: ColumnWidth;
 
         if (this.resizeMouseDown) {
@@ -757,7 +759,7 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
      */
-    private onDraggingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache) {
+    private onDraggingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache): void {
         const dragColumn = getDragColumn();
         if (dragColumn) {
             // If the drop positions haven't been calculated for this group do so now
@@ -827,7 +829,7 @@ export default class Preview extends PreviewCollection {
      * @param {JQuery} group
      * @param {GroupPositionCache} groupPosition
      */
-    private onDroppingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache) {
+    private onDroppingMouseMove(event: JQueryEventObject, group: JQuery, groupPosition: GroupPositionCache): void {
         const elementChildrenParent = group.parents(".element-children");
         // Only initiate this process if we're within the group by a buffer to allow for sortable to function correctly
         if (
@@ -868,7 +870,7 @@ export default class Preview extends PreviewCollection {
      *
      * @param {JQuery} group
      */
-    private initDroppable(group: JQuery) {
+    private initDroppable(group: JQuery): void {
         const self = this;
         let headStyles: HTMLStyleElement;
 
@@ -941,7 +943,7 @@ export default class Preview extends PreviewCollection {
      * @param {Event} event
      * @param {ContentTypeRemovedParams} params
      */
-    private spreadWidth(event: Event, params: ContentTypeRemovedParams) {
+    private spreadWidth(event: Event, params: ContentTypeRemovedParams): void {
         if (this.parent.children().length === 0) {
             return;
         }
@@ -1000,14 +1002,19 @@ export default class Preview extends PreviewCollection {
     /**
      * Remove self if we contain no children
      */
-    private removeIfEmpty() {
+    private removeIfEmpty(): void {
         if (this.parent.children().length === 0) {
             this.parent.parent.removeChild(this.parent);
             return;
         }
     }
 
-    private recordGridResize(newGridSize: number) {
+    /**
+     * Record the grid resize operation into a history for later restoration
+     *
+     * @param {number} newGridSize
+     */
+    private recordGridResize(newGridSize: number): void {
         if (!this.gridSizeHistory.has(newGridSize)) {
             const columnWidths: number[] = [];
             this.parent.getChildren()().forEach(

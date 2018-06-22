@@ -21,12 +21,13 @@ export function getColumnIndexInGroup(column: ContentTypeCollectionInterface<Col
 /**
  * Retrieve the adjacent column based on a direction of +1 or -1
  *
- * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+ * @param {ContentTypeCollectionInterface<Preview>} column
  * @param {"+1" | "-1"} direction
- * @returns {ContentTypeCollectionInterface<ColumnPreview>}
+ * @returns {ContentTypeCollectionInterface<Preview>}
  */
 export function getAdjacentColumn(
-    column: ContentTypeCollectionInterface<ColumnPreview>, direction: "+1" | "-1",
+    column: ContentTypeCollectionInterface<ColumnPreview>,
+    direction: "+1" | "-1",
 ): ContentTypeCollectionInterface<ColumnPreview> {
     const currentIndex = getColumnIndexInGroup(column);
     if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
@@ -115,7 +116,7 @@ export default class ResizeUtils {
      *
      * @returns {number}
      */
-    public getSmallestColumnWidth() {
+    public getSmallestColumnWidth(): number {
         const gridSize = this.getGridSize();
         return this.getAcceptedColumnWidth(parseFloat((100 / gridSize).toString()).toFixed(
             Math.round(100 / gridSize) !== 100 / gridSize ? 8 : 0,
@@ -125,10 +126,10 @@ export default class ResizeUtils {
     /**
      * Get an accepted column width to resolve rounding issues, e.g. turn 49.995% into 50%
      *
-     * @param width
+     * @param {string} width
      * @returns {number}
      */
-    public getAcceptedColumnWidth(width: string) {
+    public getAcceptedColumnWidth(width: string): number {
         const gridSize = this.getGridSize();
         let newWidth = 0;
         for (let i = gridSize; i > 0; i--) {
@@ -373,15 +374,15 @@ export default class ResizeUtils {
     /**
      * Resize a column to a specific width
      *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @param {ContentTypeCollectionInterface<Preview>} column
      * @param {number} width
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} shrinkableColumn
+     * @param {ContentTypeCollectionInterface<Preview>} shrinkableColumn
      */
     public resizeColumn(
         column: ContentTypeCollectionInterface<ColumnPreview>,
         width: number,
         shrinkableColumn: ContentTypeCollectionInterface<ColumnPreview>,
-    ) {
+    ): void {
         const current = this.getColumnWidth(column);
         const difference = (parseFloat(width.toString()) - current).toFixed(8);
 

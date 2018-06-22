@@ -17,9 +17,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
   /**
    * Retrieve the adjacent column based on a direction of +1 or -1
    *
-   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+   * @param {ContentTypeCollectionInterface<Preview>} column
    * @param {"+1" | "-1"} direction
-   * @returns {ContentTypeCollectionInterface<ColumnPreview>}
+   * @returns {ContentTypeCollectionInterface<Preview>}
    */
 
 
@@ -124,7 +124,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Get an accepted column width to resolve rounding issues, e.g. turn 49.995% into 50%
      *
-     * @param width
+     * @param {string} width
      * @returns {number}
      */
 
@@ -363,9 +363,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Resize a column to a specific width
      *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @param {ContentTypeCollectionInterface<Preview>} column
      * @param {number} width
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} shrinkableColumn
+     * @param {ContentTypeCollectionInterface<Preview>} shrinkableColumn
      */
 
 
