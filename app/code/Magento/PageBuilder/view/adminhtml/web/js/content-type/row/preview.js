@@ -48,7 +48,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       _this.parent.dataStore.subscribe(_this.buildJarallax);
 
-      _uiEvents.on("row:contentType:ready", function (args) {
+      _uiEvents.on("row:mountAfter", function (args) {
         if (args.id === _this.parent.id) {
           _this.buildJarallax();
         }

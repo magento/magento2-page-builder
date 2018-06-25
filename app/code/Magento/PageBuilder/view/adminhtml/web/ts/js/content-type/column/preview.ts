@@ -56,7 +56,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column-group")) {
-            events.on("column:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("column:createAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === this.parent.id) {
                     this.createColumnGroup();
                 }

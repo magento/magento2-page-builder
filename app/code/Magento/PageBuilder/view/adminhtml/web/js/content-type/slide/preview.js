@@ -414,7 +414,7 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
         _uiEvents.trigger("image:" + _this3.parent.id + ":assignAfter", imageObject);
       });
 
-      _uiEvents.on(this.config.name + ":contentType:ready", function () {
+      _uiEvents.on(this.config.name + ":mountAfter", function () {
         var dataStore = _this3.parent.dataStore.get();
 
         var initialImageValue = dataStore[_this3.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader

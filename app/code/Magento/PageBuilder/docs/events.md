@@ -50,9 +50,8 @@ This document contains reference information for events dispatched in Page Build
 ## Events list
 
 * [contentType:create](#contenttypecreate)
-* [contentType:ready](#contenttypeready)
-* [contentType:createAfter](#contenttypedroppedcreate)
-* [contentType:mountAfter](#contenttypemount)
+* [contentType:createAfter](#contenttypecreateafter)
+* [contentType:mountAfter](#contenttypemountafter)
 * [contentType:afterRender](#contenttypeafterrender)
 * [contentType:removeAfter](#contenttyperemoved)
 * [contentType:duplicateAfter](#contenttypeduplicate)
@@ -62,7 +61,7 @@ This document contains reference information for events dispatched in Page Build
 * [column:dragStop](#columndragstop)
 * [column:initElementAfter](#columninitelementafter)
 * [image:{{id}}:assignAfter](#imageidassignafter)
-* [image:contentType:ready](#imagecontenttypeready)
+* [image:mountAfter](#imagemountafter)
 * [image:uploadAfter](#imageuploadafter)
 * [stage:interactionStart](#stageinteractionstart)
 * [stage:interactionStop](#stageinteractionstop)
@@ -81,7 +80,7 @@ This document contains reference information for events dispatched in Page Build
 ## `contentType:*` events
 All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:contentType:{{event}}`) like the following:
 * `text:contentType:create`
-* `row:contentType:ready`
+* `row:mountAfter`
 * `tab-item:contentType:mountAfter`
 
 ### `contentType:create`
@@ -102,7 +101,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:ready`
+### `contentType:mountAfter`
 
 **Triggers**
 
@@ -313,7 +312,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 object
 
-### `image:contentType:ready`
+### `image:mountAfter`
 
 **Triggers**
 

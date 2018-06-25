@@ -45,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       _PreviewCollection.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
-        _uiEvents.on("column:mountAfter", function (args) {
+        _uiEvents.on("column:createAfter", function (args) {
           if (args.id === _this2.parent.id) {
             _this2.createColumnGroup();
           }

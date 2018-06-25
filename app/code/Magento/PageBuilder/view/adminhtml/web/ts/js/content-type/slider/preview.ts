@@ -250,7 +250,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
         // We only start forcing the containers height once the slider is ready
         let sliderReady: boolean = false;
-        events.on("slider:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("slider:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 sliderReady = true;
             }

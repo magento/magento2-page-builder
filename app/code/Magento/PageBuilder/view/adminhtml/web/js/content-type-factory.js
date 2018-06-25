@@ -83,12 +83,12 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
 
   function fireContentTypeReadyEvent(contentType, childrenLength) {
     var fire = function fire() {
-      _uiEvents.trigger("contentType:ready", {
+      _uiEvents.trigger("contentType:mountAfter", {
         id: contentType.id,
         contentType: contentType
       });
 
-      _uiEvents.trigger(contentType.config.name + ":contentType:ready", {
+      _uiEvents.trigger(contentType.config.name + ":mountAfter", {
         id: contentType.id,
         contentType: contentType
       });

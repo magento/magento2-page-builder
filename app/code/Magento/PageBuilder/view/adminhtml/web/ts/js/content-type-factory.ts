@@ -88,8 +88,8 @@ function prepareData(config, data: {}) {
  */
 function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
     const fire = () => {
-        events.trigger("contentType:ready", {id: contentType.id, contentType});
-        events.trigger(contentType.config.name + ":contentType:ready", {id: contentType.id, contentType});
+        events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+        events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
     };
 
     if (childrenLength === 0) {

@@ -66,7 +66,7 @@ export default class Preview extends PreviewCollection {
         super(parent, config, observableUpdater);
 
         this.parent.dataStore.subscribe(this.buildJarallax);
-        events.on("row:contentType:ready", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("row:mountAfter", (args: ContentTypeReadyEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 this.buildJarallax();
             }

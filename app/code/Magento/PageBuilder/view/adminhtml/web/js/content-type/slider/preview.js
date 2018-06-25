@@ -242,7 +242,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       var sliderReady = false;
 
-      _uiEvents.on("slider:contentType:ready", function (args) {
+      _uiEvents.on("slider:mountAfter", function (args) {
         if (args.id === _this3.parent.id) {
           sliderReady = true;
         }
