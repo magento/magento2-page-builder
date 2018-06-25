@@ -14,7 +14,6 @@
             <preview_component>Magento_PageBuilder/js/content-type/block/preview</preview_component>
             <form>pagebuilder_block_form</form>
             <group>magento</group>
-            <backend_block>Magento\PageBuilder\Block\ContentType\Block</backend_block>
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
@@ -36,18 +35,29 @@
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
                                     <attribute name="appearance" source="data-appearance"/>
-                                    <attribute name="identifier" source="data-identifier"/>
                                 </attributes>
                                 <html name="html"/>
                                 <css name="css_classes"/>
                             </element>
                         </elements>
+                        <converters>
+                            <converter component="Magento_PageBuilder/js/content-type/block/mass-converter/widget-directive" name="widget_directive">
+                                <config>
+                                    <item name="html_variable" value="html"/>
+                                </config>
+                            </converter>
+                        </converters>
                     </data_mapping>
                     <preview_template>Magento_PageBuilder/content-type/block/default/preview</preview_template>
                     <render_template>Magento_PageBuilder/content-type/block/default/master</render_template>
                     <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
+            <additional_data>
+                <arguments name="chooserConfig" xsi:type="array">
+                    <item name="dataUrl" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\BlockDataUrl</item>
+                </arguments>
+            </additional_data>
         </type>
     </content_types>
 </config>

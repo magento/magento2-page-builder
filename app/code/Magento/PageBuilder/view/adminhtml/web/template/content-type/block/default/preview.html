@@ -6,7 +6,11 @@
 -->
 
 <div class="pagebuilder-content-type pagebuilder-block" event="{ mouseover: onMouseOver, mouseout: onMouseOut }, mouseoverBubble: false">
-    <div if="data.main.html()" attr="data.main.attributes" css="data.main.css" ko-style="data.main.style" html="data.main.html"></div>
-    <div ifnot="data.main.html()" class="placeholder-text" translate="'Block'"></div>
+    <div attr="data.main.attributes" ko-style="data.main.style" css="data.main.css">
+        <div if="displayPreview" class="rendered-content" html="data.main.html"></div>
+        <div ifnot="displayPreview" class="pagebuilder-block-placeholder">
+            <span class="placeholder-text" text="placeholderText"/>
+        </div>
+    </div>
     <render args="getOptions().template" />
 </div>
