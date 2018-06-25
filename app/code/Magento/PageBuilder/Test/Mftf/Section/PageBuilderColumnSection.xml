@@ -54,7 +54,7 @@
         <element name="panelFieldDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @disabled]' parameterized="true"/>
         <element name="panelFieldNotDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and not(@disabled)]' parameterized="true"/>
         <element name="columnSaveButton" type="button" selector=".page-main-actions .page-actions [data-ui-id='column-form-page-actions-save']" timeout="30"/>
-        <element name="displayLabel" type="button" selector='(//div[contains(@class, "pagebuilder-display-label")])[{{arg1}}][contains(text(), "{{arg2}}")]' parameterized="true"/>
+        <element name="displayLabel" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[{{arg1}}]/descendant::div[contains(@class, "pagebuilder-display-label")][contains(text(), "{{arg2}}")]' parameterized="true"/>
         <element name="empty" type="button" selector="(//div[contains(@class,'empty-container')]//div[contains(@class,'element-children') and contains(@class,'column-container')])[{{arg1}}]" parameterized="true"/>
         <element name="dropPlaceholder" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[{{arg1}}]//div[contains(@class,"drop-placeholder")][{{arg2}}]' parameterized="true"/>
         <element name="optionsPanel" type="button" selector=".pagebuilder-options-wrapper"/>

@@ -773,18 +773,15 @@
         </actionGroup>
         <actionGroup ref="updateGridSize" stepKey="updateGridSize1">
             <argument name="index" value="1"/>
-            <argument name="gridSize" value="6"/>
-        </actionGroup>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSize2">
-            <argument name="index" value="2"/>
             <argument name="gridSize" value="8"/>
         </actionGroup>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking" />
         <actionGroup ref="dragColumnToAnotherColumnGroup" stepKey="moveColumnToSecondGroup">
-            <argument name="contentTypeIndex" value="2"/>
+            <argument name="contentTypeIndex" value="1"/>
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
-        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1', '6/6')}}" stepKey="verifyOriginalColumGroup"/>
-        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2', '1/8')}}" stepKey="verifyMovedColum"/>
+        <waitForPageLoad stepKey="waitForDragOperation" />
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1', '8/8')}}" stepKey="verifyOriginalColumGroup"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2', '1/12')}}" stepKey="verifyMovedColum"/>
     </test>
 </tests>
