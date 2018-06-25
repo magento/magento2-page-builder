@@ -458,8 +458,6 @@ export default class Preview extends PreviewCollection {
             }, 200);
             $(document).on("click focusin", this.onDocumentClick);
             events.trigger("interaction:start");
-        } else {
-            this.closeGridForm();
         }
     }
 
