@@ -5,6 +5,11 @@
 
 import BaseWidgetDirective from "../../../mass-converter/widget-directive-abstract";
 
+/**
+ * Enables the settings of the content type to be stored as a widget directive.
+ *
+ * @api
+ */
 export default class WidgetDirective extends BaseWidgetDirective {
     /**
      * Convert value to internal format

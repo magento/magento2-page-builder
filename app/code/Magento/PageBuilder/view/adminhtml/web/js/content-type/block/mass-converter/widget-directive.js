@@ -2,6 +2,11 @@
 define(["Magento_PageBuilder/js/mass-converter/widget-directive-abstract"], function (_widgetDirectiveAbstract) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
+  /**
+   * Enables the settings of the content type to be stored as a widget directive.
+   *
+   * @api
+   */
   var WidgetDirective =
   /*#__PURE__*/
   function (_BaseWidgetDirective) {

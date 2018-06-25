@@ -932,13 +932,12 @@ Inline styles
 ## Block
 
 ```
-<div data-role="block" data-appearance="default" data-identifier="block-identifier" style="..."></div>
+<div data-role="block" data-appearance="default">{{widget type="Magento\Cms\Block\Widget\Block" template="widget/static_block/default.phtml" block_id="123" type_name="CMS Static Block"}}</div>
 ```
 
 Attributes
 1. data-role [block]
 2. data-appearance [default]
-3. data-identifier
 4. class
 
 Inline styles

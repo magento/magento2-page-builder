@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _uiEvents, _config, _preview) {
+define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _uiEvents, _config, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -14,7 +14,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Mage
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.displayPreview = _knockout.observable(false), _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.displayPreview = _knockout.observable(false), _this.placeholderText = _knockout.observable((0, _translate)("Empty Products")), _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -41,6 +41,8 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Mage
           return;
         }
 
+        _this2.placeholderText((0, _translate)("Loading..."));
+
         _this2.displayPreview(false);
 
         var data = _this2.parent.dataStore.get();
@@ -51,21 +53,28 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Mage
 
         var url = _config.getConfig("preview_url");
 
-        var requestData = {
-          role: _this2.config.name,
-          directive: _this2.data.main.html()
+        var requestConfig = {
+          method: 'GET',
+          data: {
+            role: _this2.config.name,
+            directive: _this2.data.main.html()
+          }
         };
 
-        _jquery.post(url, requestData, function (response) {
+        _jquery.ajax(url, requestConfig).done(function (response) {
           var content = response.content !== undefined ? response.content.trim() : "";
 
           if (content.length === 0) {
+            _this2.placeholderText((0, _translate)("Empty Products"));
+
             return;
           }
 
           _this2.data.main.html(content);
 
           _this2.displayPreview(true);
+        }).fail(function () {
+          _this2.placeholderText((0, _translate)("An unknown error occurred. Please try again."));
         });
       });
     };

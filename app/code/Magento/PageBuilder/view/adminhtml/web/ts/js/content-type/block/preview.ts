@@ -33,6 +33,7 @@ export default class Preview extends BasePreview {
             if (args.preview.parent.id !== this.parent.id) {
                 return;
             }
+            this.placeholderText($t("Loading..."));
             this.displayPreview(false);
 
             const data = this.parent.dataStore.get();
@@ -42,29 +43,43 @@ export default class Preview extends BasePreview {
             }
 
             const url = Config.getConfig("preview_url");
-            const requestData = {
-                role: this.config.name,
-                block_id: data.block_id,
-                directive: this.data.main.html(),
+            const requestConfig = {
+                method: "GET",
+                data: {
+                    role: this.config.name,
+                    block_id: data.block_id,
+                    directive: this.data.main.html()
+                }
             };
 
-            $.post(url, requestData, (response) => {
-                const content = response.content !== undefined ? response.content.trim() : "";
-                if (content.length === 0) {
-                    return;
-                }
+            // Retrieve a state object representing the block from the preview controller and process it on the stage
+            $.ajax(url, requestConfig)
+                .done((response) => {
+                    const content = response.content !== undefined ? response.content.trim() : "";
 
-                const blockData = $.parseJSON(content);
+                    // Empty content means something bad happened in the controller that didn't trigger a 5xx
+                    if (content.length === 0) {
+                        this.placeholderText($t("An unknown error occurred. Please try again."));
 
-                this.displayLabel(blockData.name ? blockData.name : this.config.label);
+                        return;
+                    }
 
-                if (blockData.html) {
-                    this.displayPreview(true);
-                    this.data.main.html(blockData.html);
-                } else if (blockData.message) {
-                    this.placeholderText(blockData.message);
-                }
-            });
+                    // The state object will contain the block name and either html or a message why there isn't any.
+                    const blockData = $.parseJSON(content);
+
+                    // Update the stage content type label with the real block title if provided
+                    this.displayLabel(blockData.blockTitle ? blockData.blockTitle : this.config.label);
+
+                    if (blockData.html) {
+                        this.displayPreview(true);
+                        this.data.main.html(blockData.html);
+                    } else if (blockData.errorMessage) {
+                        this.placeholderText(blockData.errorMessage);
+                    }
+                })
+                .fail(() => {
+                    this.placeholderText($t("An unknown error occurred. Please try again."));
+                });
         });
     }
 }
