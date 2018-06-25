@@ -348,6 +348,8 @@
         </after>
         <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
+        <conditionalClick stepKey="uncheckUseSystemValueMax" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_max')}}" visible="true"/>
         <comment userInput="Enter Invalid Default Grid Size" stepKey="comment1"/>
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_50}}"/>
@@ -375,8 +377,8 @@
         <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration4"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage2"/>
         <comment userInput="Restore Default Values for Default and Maximum Grid Size" stepKey="comment5"/>
-        <actionGroup ref="updateDefaultGridSizeConfig" stepKey="restoreDefaultGridSize"/>
-        <actionGroup ref="updateMaxGridSizeConfig" stepKey="restoreDefaultMaxGridSize"/>
+        <click selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" stepKey="restoreDefaultGridSize" />
+        <click selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" stepKey="restoreDefaultMaxGridSize" />
         <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration5"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage3"/>
     </test>
