@@ -45,7 +45,7 @@ define([
 
             this._super();
 
-            events.on('image:assignAfter:' + this.id, this.onAssignedFile.bind(this));
+            events.on('image:' + this.id +':assignAfter', this.onAssignedFile.bind(this));
 
             // bind dropzone highlighting using event delegation only once
             if (!initializedOnce) {
