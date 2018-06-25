@@ -36,7 +36,6 @@ export default class Preview extends BasePreview {
             this.placeholderText($t("Loading..."));
             this.displayPreview(false);
 
-
             const data = this.parent.dataStore.get();
 
             if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
