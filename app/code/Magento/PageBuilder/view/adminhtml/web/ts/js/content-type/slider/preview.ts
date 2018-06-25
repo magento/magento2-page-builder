@@ -107,9 +107,9 @@ export default class Preview extends PreviewCollection {
         // Set the stage to interacting when a slide is focused
         this.focusedSlide.subscribe((value: number) => {
             if (value !== null) {
-                events.trigger("interaction:start");
+                events.trigger("stage:interactionStart");
             } else {
-                events.trigger("interaction:stop");
+                events.trigger("stage:interactionStop");
             }
         });
     }
@@ -221,15 +221,15 @@ export default class Preview extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((slide) => {
-            events.on("slide:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === slide.id) {
                     _.delay(() => {
                         this.navigateToSlide(this.parent.children().length - 1);
                         slide.preview.onOptionEdit();
                     }, 500 );
-                    events.off(`slide:contentType:mount:${slide.id}`);
+                    events.off(`slide:mountAfter:${slide.id}`);
                 }
-            }, `slide:contentType:mount:${slide.id}`);
+            }, `slide:mountAfter:${slide.id}`);
             this.parent.addChild(slide, this.parent.children().length);
         });
     }
@@ -267,7 +267,7 @@ export default class Preview extends PreviewCollection {
         // When a slide content type is removed
         // we need to force update the content of the slider due to KO rendering issues
         let newItemIndex: number;
-        events.on("slide:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
+        events.on("slide:contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.contentType.parent.id === this.parent.id) {
                 // Mark the previous slide as active
                 newItemIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
@@ -306,7 +306,7 @@ export default class Preview extends PreviewCollection {
         });
 
         // ContentType being mounted onto container
-        events.on("slider:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("slider:createAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
             }
@@ -315,13 +315,13 @@ export default class Preview extends PreviewCollection {
         // Capture when a content type is duplicated within the container
         let duplicatedSlide: Slide;
         let duplicatedSlideIndex: number;
-        events.on("slide:contentType:duplicate", (args: ContentTypeDuplicateEventParamsInterface) => {
+        events.on("slide:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
             if (args.duplicateContentType.parent.id === this.parent.id) {
                 duplicatedSlide = (args.duplicateContentType as Slide);
                 duplicatedSlideIndex = args.index;
             }
         });
-        events.on("slide:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("slide:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedSlide && args.id === duplicatedSlide.id) {
                 _.defer(() => {
                     // Mark the new duplicate slide as active

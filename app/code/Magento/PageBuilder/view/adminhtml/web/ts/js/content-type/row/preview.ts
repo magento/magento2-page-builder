@@ -71,7 +71,7 @@ export default class Preview extends PreviewCollection {
                 this.buildJarallax();
             }
         });
-        events.on("contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (args.contentType.parent.id === this.parent.id) {
                 this.buildJarallax();
             }

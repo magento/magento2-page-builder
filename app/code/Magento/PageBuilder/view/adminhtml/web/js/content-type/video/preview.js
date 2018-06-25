@@ -32,7 +32,7 @@ define(["knockout", "uiEvents", "Magento_PageBuilder/js/content-type/preview"], 
       _BasePreview.prototype.bindEvents.call(this); // When a map is dropped for the first time open the edit panel
 
 
-      _uiEvents.on("video:contentType:dropped:create", function (args) {
+      _uiEvents.on("video:createAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
             _this2.edit.open();

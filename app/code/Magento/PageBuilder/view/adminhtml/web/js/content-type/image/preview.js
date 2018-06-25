@@ -37,12 +37,12 @@ define(["uiEvents", "Magento_PageBuilder/js/content-type/preview", "Magento_Page
 
       _BasePreview.prototype.bindEvents.call(this);
 
-      _uiEvents.on(this.parent.id + ":updated", function () {
+      _uiEvents.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this2.parent.dataStore.get();
 
         var imageObject = dataStore[_this2.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _uiEvents.trigger("image:assigned:" + _this2.parent.id, imageObject);
+        _uiEvents.trigger("image:" + _this2.parent.id + ":assignAfter", imageObject);
       });
 
       _uiEvents.on(this.config.name + ":contentType:ready", function () {

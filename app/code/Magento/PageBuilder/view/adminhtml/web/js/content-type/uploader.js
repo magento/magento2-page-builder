@@ -54,7 +54,7 @@ define(["uiEvents", "uiLayout", "uiRegistry"], function (_uiEvents, _uiLayout, _
 
 
     _proto.onUploaded = function onUploaded(callback) {
-      _uiEvents.on("image:uploaded:" + this.id, callback);
+      _uiEvents.on("image:uploadAfter:" + this.id, callback);
     };
     /**
      * Instantiate uploader through layout UI component renderer

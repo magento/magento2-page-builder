@@ -36,14 +36,14 @@ define(["knockout", "mageUtils", "uiEvents", "Magento_PageBuilder/js/data-store"
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      var eventName = this.id + ":updated";
+      var eventName = this.config.name + ":" + this.id + ":updateAfter";
       var paramObj = {};
       paramObj[this.id] = this;
       this.dataStore.subscribe(function () {
         return _uiEvents.trigger(eventName, paramObj);
       });
       this.dataStore.subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
+        return _uiEvents.trigger("stage:updateAfter", {
           stageId: _this.stageId
         });
       });

@@ -73,9 +73,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       _this.focusedSlide.subscribe(function (value) {
         if (value !== null) {
-          _uiEvents.trigger("interaction:start");
+          _uiEvents.trigger("stage:interactionStart");
         } else {
-          _uiEvents.trigger("interaction:stop");
+          _uiEvents.trigger("stage:interactionStop");
         }
       });
 
@@ -204,7 +204,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       var _this2 = this;
 
       (0, _contentTypeFactory)(_config.getConfig("content_types").slide, this.parent, this.parent.stageId).then(function (slide) {
-        _uiEvents.on("slide:contentType:mount", function (args) {
+        _uiEvents.on("slide:mountAfter", function (args) {
           if (args.id === slide.id) {
             _underscore.delay(function () {
               _this2.navigateToSlide(_this2.parent.children().length - 1);
@@ -212,9 +212,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
               slide.preview.onOptionEdit();
             }, 500);
 
-            _uiEvents.off("slide:contentType:mount:" + slide.id);
+            _uiEvents.off("slide:mountAfter:" + slide.id);
           }
-        }, "slide:contentType:mount:" + slide.id);
+        }, "slide:mountAfter:" + slide.id);
 
         _this2.parent.addChild(slide, _this2.parent.children().length);
       });
@@ -261,7 +261,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       var newItemIndex;
 
-      _uiEvents.on("slide:contentType:removed", function (args) {
+      _uiEvents.on("slide:contentType:removeAfter", function (args) {
         if (args.contentType.parent.id === _this3.parent.id) {
           // Mark the previous slide as active
           newItemIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
@@ -304,7 +304,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       }); // ContentType being mounted onto container
 
 
-      _uiEvents.on("slider:contentType:dropped:create", function (args) {
+      _uiEvents.on("slider:createAfter", function (args) {
         if (args.id === _this3.parent.id && _this3.parent.children().length === 0) {
           _this3.addSlide();
         }
@@ -314,14 +314,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
       var duplicatedSlide;
       var duplicatedSlideIndex;
 
-      _uiEvents.on("slide:contentType:duplicate", function (args) {
+      _uiEvents.on("slide:duplicateAfter", function (args) {
         if (args.duplicateContentType.parent.id === _this3.parent.id) {
           duplicatedSlide = args.duplicateContentType;
           duplicatedSlideIndex = args.index;
         }
       });
 
-      _uiEvents.on("slide:contentType:mount", function (args) {
+      _uiEvents.on("slide:mountAfter", function (args) {
         if (duplicatedSlide && args.id === duplicatedSlide.id) {
           _underscore.defer(function () {
             // Mark the new duplicate slide as active

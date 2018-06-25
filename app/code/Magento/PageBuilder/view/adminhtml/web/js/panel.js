@@ -35,7 +35,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _uiEvents.on("stage:ready:" + this.id, function () {
+      _uiEvents.on("stage:" + this.id + ":readyAfter", function () {
         _this.populateContentTypes();
 
         _this.isVisible(true);
@@ -83,7 +83,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
 
 
     _proto.fullScreen = function fullScreen() {
-      _uiEvents.trigger("pagebuilder:toggleFullScreen:" + this.parent.id);
+      _uiEvents.trigger("stage:toggleFullscreen:" + this.parent.id);
     };
     /**
      * Collapse the panel into the side of the UI
@@ -140,7 +140,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
             (0, _dropIndicators.showDropIndicators)(block.config.name);
             (0, _registry.setDraggedContentTypeConfig)(block.config);
 
-            _uiEvents.trigger("interaction:start", {
+            _uiEvents.trigger("stage:interactionStart", {
               stage: self.parent.stage
             });
           }
@@ -154,7 +154,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
           (0, _dropIndicators.hideDropIndicators)();
           (0, _registry.setDraggedContentTypeConfig)(null);
 
-          _uiEvents.trigger("interaction:stop", {
+          _uiEvents.trigger("stage:interactionStop", {
             stage: self.parent.stage
           });
         }

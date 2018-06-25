@@ -63,18 +63,18 @@ define([
 
         /** Toggle PageBuilder full screen. */
         toggleFullScreen: function () {
-            events.trigger('pagebuilder:toggleFullScreen:' + this.pageBuilder.id, {});
+            events.trigger('stage:toggleFullscreen:' + this.pageBuilder.id, {});
         },
 
         /** Init listeners of stage. */
         initPageBuilderListeners: function () {
             var id = this.pageBuilder.id;
 
-            events.on('stage:ready:' + id, function () {
+            events.on('stage:'+ id +':readyAfter', function () {
                 this.isComponentInitialized = true;
                 this.loading(false);
             }.bind(this));
-            events.on('stage:renderTree:' + id, function (args) {
+            events.on('stage:' + id + ':masterFormatRenderAfter', function (args) {
                 this.value(args.value);
             }.bind(this));
             events.on('pagebuilder:fullScreen:' + id, function (args) {

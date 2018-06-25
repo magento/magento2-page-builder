@@ -53,7 +53,7 @@ export default class Uploader {
      * @param {Function} callback - callback function containing array of file objects as argument
      */
     public onUploaded(callback: (files: object[]) => any) {
-        events.on("image:uploaded:" + this.id, callback);
+        events.on("image:uploadAfter:" + this.id, callback);
     }
 
     /**

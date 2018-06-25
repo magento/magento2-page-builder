@@ -21,7 +21,7 @@ export default class Preview extends PreviewCollection {
     public bindEvents() {
         super.bindEvents();
 
-        events.on("buttons:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("buttons:createAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addButton();
             }

@@ -68,13 +68,13 @@ export default class Preview extends PreviewCollection {
                 this.buildTabs();
             }
         });
-        events.on("tab-item:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (this.element && args.contentType.parent.id === this.parent.id) {
                 this.refreshTabs();
             }
         });
         // Set the active tab to the new position of the sorted tab
-        events.on("tab-item:contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
+        events.on("tab-item:contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 this.refreshTabs();
 
@@ -181,9 +181,9 @@ export default class Preview extends PreviewCollection {
         _.delay(() => {
             if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
                 if (index !== null) {
-                    events.trigger("interaction:start");
+                    events.trigger("stage:interactionStart");
                 } else {
-                    events.trigger("interaction:stop");
+                    events.trigger("stage:interactionStop");
                 }
             }
         }, ((index === null) ? 200 : 0));
@@ -219,12 +219,12 @@ export default class Preview extends PreviewCollection {
             this.parent,
             this.parent.stageId,
         ).then((tab) => {
-            events.on("tab-item:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === tab.id) {
                     this.setFocusedTab(this.parent.children().length - 1);
-                    events.off(`tab-item:contentType:mount:${tab.id}`);
+                    events.off(`tab-item:mountAfter:${tab.id}`);
                 }
-            }, `tab-item:contentType:mount:${tab.id}`);
+            }, `tab-item:mountAfter:${tab.id}`);
             this.parent.addChild(tab, this.parent.children().length);
 
             // Update the default tab title when adding a new tab
@@ -317,7 +317,7 @@ export default class Preview extends PreviewCollection {
                 }
 
                 ui.helper.css("width", "");
-                events.trigger("interaction:start");
+                events.trigger("stage:interactionStart");
                 self.disableInteracting = true;
             },
 
@@ -329,7 +329,7 @@ export default class Preview extends PreviewCollection {
              */
             stop(event: Event, ui: JQueryUI.SortableUIParams) {
                 $(this).css("paddingLeft", "");
-                events.trigger("interaction:stop");
+                events.trigger("stage:interactionStop");
                 self.disableInteracting = false;
             },
 
@@ -367,13 +367,13 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
         // ContentType being mounted onto container
 
-        events.on("tabs:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("tabs:createAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addTab();
             }
         });
         // ContentType being removed from container
-        events.on("tab-item:contentType:removed", (args: ContentTypeRemovedParamsInterface) => {
+        events.on("tab-item:contentType:removeAfter", (args: ContentTypeRemovedParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 // Mark the previous tab as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);
@@ -383,7 +383,7 @@ export default class Preview extends PreviewCollection {
         // Capture when a content type is duplicated within the container
         let duplicatedTab: ContentTypeInterface;
         let duplicatedTabIndex: number;
-        events.on("tab-item:contentType:duplicate", (args: ContentTypeDuplicateEventParamsInterface) => {
+        events.on("tab-item:duplicateAfter", (args: ContentTypeDuplicateEventParamsInterface) => {
             if (this.parent.id === args.duplicateContentType.parent.id) {
                 const tabData = args.duplicateContentType.dataStore.get(args.duplicateContentType.id);
                 args.duplicateContentType.dataStore.update(
@@ -395,7 +395,7 @@ export default class Preview extends PreviewCollection {
             }
             this.buildTabs(args.index);
         });
-        events.on("tab-item:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (duplicatedTab && args.id === duplicatedTab.id) {
                 this.refreshTabs(duplicatedTabIndex, true);
                 duplicatedTab = duplicatedTabIndex = null;

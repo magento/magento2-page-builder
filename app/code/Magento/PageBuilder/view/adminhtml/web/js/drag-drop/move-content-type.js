@@ -58,7 +58,7 @@ define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
     } // Trigger our content type move event
 
 
-    _uiEvents.trigger("contentType:move", {
+    _uiEvents.trigger("contentType:moveAfter", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,

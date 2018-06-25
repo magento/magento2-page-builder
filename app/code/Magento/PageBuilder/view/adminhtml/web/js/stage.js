@@ -51,7 +51,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
 
 
     _proto.ready = function ready() {
-      _uiEvents.trigger("stage:ready:" + this.id, {
+      _uiEvents.trigger("stage:" + this.id + ":readyAfter", {
         stage: this
       });
 
@@ -136,12 +136,12 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
       var _this = this;
 
       this.collection.getChildren().subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
+        return _uiEvents.trigger("stage:updateAfter", {
           stageId: _this.id
         });
       }); // ContentType being removed from container
 
-      _uiEvents.on("contentType:removed", function (args) {
+      _uiEvents.on("contentType:removeAfter", function (args) {
         if (args.stageId === _this.id) {
           _this.onContentTypeRemoved(args);
         }
@@ -149,17 +149,17 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
 
 
       this.dataStore.subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
+        return _uiEvents.trigger("stage:updateAfter", {
           stageId: _this.id
         });
       }); // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
       // can occur concurrently.
 
-      _uiEvents.on("stage:updated", function (args) {
+      _uiEvents.on("stage:updateAfter", function (args) {
         if (args.stageId === _this.id) {
           _underscore.debounce(function () {
             _this.render.applyBindings(_this.children).then(function (renderedOutput) {
-              return _uiEvents.trigger("stage:renderTree:" + _this.id, {
+              return _uiEvents.trigger("stage:" + _this.id + ":masterFormatRenderAfter", {
                 value: renderedOutput
               });
             });
@@ -167,11 +167,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
         }
       });
 
-      _uiEvents.on("interaction:start", function () {
+      _uiEvents.on("stage:interactionStart", function () {
         return _this.interacting(true);
       });
 
-      _uiEvents.on("interaction:stop", function () {
+      _uiEvents.on("stage:interactionStop", function () {
         return _this.interacting(false);
       });
     };

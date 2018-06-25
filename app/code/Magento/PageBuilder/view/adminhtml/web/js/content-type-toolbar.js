@@ -52,7 +52,7 @@ define(["jquery", "knockout", "uiEvents"], function (_jquery, _knockout, _uiEven
       var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
 
-      _uiEvents.trigger("interaction:start");
+      _uiEvents.trigger("stage:interactionStart");
     };
     /**
      * Set state based on toolbar focusout event for the preview
@@ -66,7 +66,7 @@ define(["jquery", "knockout", "uiEvents"], function (_jquery, _knockout, _uiEven
       var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
 
-      _uiEvents.trigger("interaction:stop");
+      _uiEvents.trigger("stage:interactionStop");
     };
 
     _createClass(Toolbar, [{

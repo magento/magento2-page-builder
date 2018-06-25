@@ -40,7 +40,7 @@ define(["jquery", "uiEvents", "underscore", "Magento_PageBuilder/js/content-type
       _BasePreview.prototype.bindEvents.call(this); // When a heading is dropped for the first time show heading toolbar
 
 
-      _uiEvents.on("heading:contentType:dropped:create", function (args) {
+      _uiEvents.on("heading:createAfter", function (args) {
         if (args.id === _this2.parent.id) {
           _underscore.delay(function () {
             (0, _jquery)(_this2.element).focus();

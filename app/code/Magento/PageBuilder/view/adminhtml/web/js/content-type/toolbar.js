@@ -15,7 +15,7 @@ define(["jquery", "uiEvents"], function (_jquery, _uiEvents) {
       var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
 
-      _uiEvents.trigger("interaction:start");
+      _uiEvents.trigger("stage:interactionStart");
     },
 
     /**
@@ -28,7 +28,7 @@ define(["jquery", "uiEvents"], function (_jquery, _uiEvents) {
       var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
 
-      _uiEvents.trigger("interaction:stop");
+      _uiEvents.trigger("stage:interactionStop");
     }
   };
   return _default;

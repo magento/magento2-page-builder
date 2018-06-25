@@ -406,12 +406,12 @@ define(["knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/conten
 
       _BasePreview.prototype.bindEvents.call(this);
 
-      _uiEvents.on(this.parent.id + ":updated", function () {
+      _uiEvents.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this3.parent.dataStore.get();
 
         var imageObject = dataStore[_this3.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _uiEvents.trigger("image:assigned:" + _this3.parent.id, imageObject);
+        _uiEvents.trigger("image:" + _this3.parent.id + ":assignAfter", imageObject);
       });
 
       _uiEvents.on(this.config.name + ":contentType:ready", function () {

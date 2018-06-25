@@ -100,7 +100,7 @@ let sortedContentType: ContentTypeInterface;
 function onSortStart(preview: Preview, event: Event, ui: JQueryUI.SortableUIParams) {
     // Verify we're sorting an already created item
     if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
-        events.trigger("interaction:start");
+        events.trigger("stage:interactionStart");
         const contentTypeInstance: ContentTypeInterface = ko.dataFor(ui.item[0]);
         if (contentTypeInstance) {
             // Ensure the original item is displayed but with reduced opacity
@@ -155,7 +155,7 @@ function onSortStop(preview: Preview, event: Event, ui: JQueryUI.SortableUIParam
     ui.item.removeClass("pagebuilder-sorting-original");
     hideDropIndicators();
     setDraggedContentTypeConfig(null);
-    events.trigger("interaction:stop");
+    events.trigger("stage:interactionStop");
 }
 
 /**
@@ -202,9 +202,9 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
                 bindAfterRenderForAnimation(containerLocked, contentType, parentContainerElement);
 
                 getParentProxy(preview).addChild(contentType, index);
-                events.trigger("contentType:dropped:create", {id: contentType.id, contentType});
+                events.trigger("contentType:createAfter", {id: contentType.id, contentType});
                 events.trigger(
-                    contentTypeConfig.name + ":contentType:dropped:create",
+                    contentTypeConfig.name + ":createAfter",
                     {
                         id: contentType.id,
                         contentType,

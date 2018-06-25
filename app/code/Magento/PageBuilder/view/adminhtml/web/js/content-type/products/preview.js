@@ -28,7 +28,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Mage
       _BasePreview.prototype.bindEvents.call(this); // When a products type is dropped for the first time open the edit panel
 
 
-      _uiEvents.on("products:contentType:dropped:create", function (args) {
+      _uiEvents.on("products:createAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
             _this2.edit.open();
@@ -36,7 +36,7 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Mage
         }
       });
 
-      _uiEvents.on("previewObservables:updated", function (event, params) {
+      _uiEvents.on("previewData:updateAfter", function (event, params) {
         if (event.preview.parent.id !== _this2.parent.id) {
           return;
         }

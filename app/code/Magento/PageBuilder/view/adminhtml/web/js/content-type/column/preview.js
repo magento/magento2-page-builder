@@ -45,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       _PreviewCollection.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
-        _uiEvents.on("column:contentType:mount", function (args) {
+        _uiEvents.on("column:mountAfter", function (args) {
           if (args.id === _this2.parent.id) {
             _this2.createColumnGroup();
           }
@@ -62,7 +62,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
     _proto.initColumn = function initColumn(element) {
       this.parent.element = (0, _jquery)(element);
 
-      _uiEvents.trigger("column:initElement", {
+      _uiEvents.trigger("column:initElementAfter", {
         column: this.parent,
         element: (0, _jquery)(element),
         parent: this.parent.parent
@@ -92,7 +92,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
 
     _proto.bindResizeHandle = function bindResizeHandle(handle) {
-      _uiEvents.trigger("column:bindResizeHandle", {
+      _uiEvents.trigger("column:bindResizeHandleAfter", {
         column: this.parent,
         handle: (0, _jquery)(handle),
         parent: this.parent.parent
@@ -239,12 +239,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
       }
 
       contentTypes.forEach(function (contentType) {
-        _uiEvents.trigger("contentType:mount", {
+        _uiEvents.trigger("contentType:mountAfter", {
           id: contentType.id,
           contentType: contentType
         });
 
-        _uiEvents.trigger(contentType.config.name + ":contentType:mount", {
+        _uiEvents.trigger(contentType.config.name + ":mountAfter", {
           id: contentType.id,
           contentType: contentType
         });

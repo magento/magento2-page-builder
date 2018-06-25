@@ -99,17 +99,17 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
     } else {
       var mountCounter = 0;
 
-      _uiEvents.on("contentType:mount", function (args) {
+      _uiEvents.on("contentType:mountAfter", function (args) {
         if (args.contentType.parent.id === contentType.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
             fire();
 
-            _uiEvents.off("contentType:mount:" + contentType.id);
+            _uiEvents.off("contentType:mountAfter:" + contentType.id);
           }
         }
-      }, "contentType:mount:" + contentType.id);
+      }, "contentType:mountAfter:" + contentType.id);
     }
   }
 

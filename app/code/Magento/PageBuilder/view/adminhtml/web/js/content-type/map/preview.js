@@ -35,7 +35,7 @@ define(["Magento_PageBuilder/js/utils/map", "uiEvents", "Magento_PageBuilder/js/
       }); // When a map is dropped for the first time open the edit panel
 
 
-      _uiEvents.on("map:contentType:dropped:create", function (args) {
+      _uiEvents.on("map:createAfter", function (args) {
         if (args.id === _this2.parent.id) {
           setTimeout(function () {
             _this2.edit.open();

@@ -37,7 +37,7 @@ define(["knockout", "mageUtils", "uiEvents", "underscore", "Magento_PageBuilder/
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _uiEvents.on("pagebuilder:toggleFullScreen:" + this.id, function () {
+      _uiEvents.on("stage:toggleFullscreen:" + this.id, function () {
         return _this.toggleFullScreen();
       });
 

@@ -275,8 +275,8 @@ export default class Preview {
                     parent: this.parent.parent,
                     stageId: this.parent.stageId,
                 };
-                events.trigger("contentType:removed", params);
-                events.trigger(this.parent.config.name + ":contentType:removed", params);
+                events.trigger("contentType:removeAfter", params);
+                events.trigger(this.parent.config.name + ":contentType:removeAfter", params);
             };
 
             if (this.wrapperElement) {
@@ -410,8 +410,8 @@ export default class Preview {
             index,
         };
 
-        events.trigger("contentType:duplicate", duplicateEventParams);
-        events.trigger(originalContentType.config.name + ":contentType:duplicate", duplicateEventParams);
+        events.trigger("contentType:duplicateAfter", duplicateEventParams);
+        events.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
     }
 
     /**
@@ -546,6 +546,6 @@ export default class Preview {
             _.extend({}, this.parent.dataStore.get()),
         );
         this.afterObservablesUpdated();
-        events.trigger("previewObservables:updated", {preview: this});
+        events.trigger("previewData:updateAfter", {preview: this});
     }
 }

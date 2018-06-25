@@ -37,7 +37,7 @@ export default class PageBuilder implements PageBuilderInterface {
      * Init listeners.
      */
     public initListeners() {
-        events.on(`pagebuilder:toggleFullScreen:${ this.id }`, () => this.toggleFullScreen());
+        events.on(`stage:toggleFullscreen:${ this.id }`, () => this.toggleFullScreen());
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 

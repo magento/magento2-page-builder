@@ -96,15 +96,15 @@ function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLe
         fire();
     } else {
         let mountCounter = 0;
-        events.on("contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (args.contentType.parent.id === contentType.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
                     fire();
-                    events.off(`contentType:mount:${contentType.id}`);
+                    events.off(`contentType:mountAfter:${contentType.id}`);
                 }
             }
-        }, `contentType:mount:${contentType.id}` );
+        }, `contentType:mountAfter:${contentType.id}` );
     }
 }

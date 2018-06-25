@@ -23,7 +23,7 @@ define(["uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_
       _this.collection = new _collection();
 
       _this.collection.getChildren().subscribe(function () {
-        return _uiEvents.trigger("stage:updated", {
+        return _uiEvents.trigger("stage:updateAfter", {
           stageId: _this.stageId
         });
       });
@@ -55,12 +55,12 @@ define(["uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_
       this.collection.addChild(child, index); // Trigger a mount event when a child is added into a parent, meaning it'll be re-rendered
 
       _underscore.defer(function () {
-        _uiEvents.trigger("contentType:mount", {
+        _uiEvents.trigger("contentType:mountAfter", {
           id: child.id,
           contentType: child
         });
 
-        _uiEvents.trigger(child.config.name + ":contentType:mount", {
+        _uiEvents.trigger(child.config.name + ":mountAfter", {
           id: child.id,
           contentType: child
         });
