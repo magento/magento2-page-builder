@@ -97,7 +97,7 @@
                 </imports>
             </settings>
         </field>
-        <field name="template" formElement="select" sortOrder="30">
+        <field name="template" formElement="select" sortOrder="30" component="Magento_PageBuilder/js/form/element/dependent-select">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="default" xsi:type="string">default</item>
@@ -109,9 +109,6 @@
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
-                <imports>
-                    <link name="visible">${ $.name }:options.length</link>
-                </imports>
             </settings>
             <formElements>
                 <select>
