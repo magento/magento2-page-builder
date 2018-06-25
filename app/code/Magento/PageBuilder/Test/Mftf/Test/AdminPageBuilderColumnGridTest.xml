@@ -388,7 +388,7 @@
             <description value="Verify we can resize columns on uneven grid sizes"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-2295"/>
-            <group value="run"/>
+            <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
         </annotations>
@@ -420,6 +420,7 @@
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('5')}}').clientWidth" stepKey="guideWidth"/>
         <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1"/>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill32"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','5/7')}}" stepKey="checkWidthFirstColumn"/>
     </test>
     <test name="ValidateResizeHistory">
         <annotations>
