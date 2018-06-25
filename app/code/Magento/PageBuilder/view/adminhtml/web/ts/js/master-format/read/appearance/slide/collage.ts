@@ -9,6 +9,9 @@ import extractAlphaFromRgba from "../../../../utils/extract-alpha-from-rgba";
 import {decodeUrl} from "../../../../utils/image";
 import {ReadInterface} from "../../../read-interface";
 
+/**
+ * @api
+ */
 export default class Collage implements ReadInterface {
     private linkConverter: Link = new Link();
 

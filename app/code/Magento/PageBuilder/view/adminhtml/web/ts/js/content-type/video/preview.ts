@@ -7,6 +7,9 @@ import ko from "knockout";
 import events from "uiEvents";
 import BasePreview from "../preview";
 
+/**
+ * @api
+ */
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
 

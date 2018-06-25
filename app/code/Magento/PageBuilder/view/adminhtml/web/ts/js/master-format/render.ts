@@ -10,6 +10,9 @@ import ContentTypeInterface from "../content-type.d";
 import decodeAllDataUrlsInString from "../utils/directives";
 import filterHtml from "./filter-html";
 
+/**
+ * @api
+ */
 export default class MasterFormatRenderer {
     private rootTemplate: string = "Magento_PageBuilder/content-type/master";
 

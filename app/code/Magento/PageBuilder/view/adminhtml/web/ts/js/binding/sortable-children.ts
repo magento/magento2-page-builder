@@ -2,7 +2,9 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
+/**
+ * @api
+ */
 import $ from "jquery";
 import ko from "knockout";
 import events from "uiEvents";
@@ -66,12 +68,6 @@ ko.bindingHandlers.sortableChildren = {
             });
     },
 };
-
-export interface PreviewSortableSortStartEventParams {
-    instance: ContentTypeInterface;
-    originalPosition: number;
-    ui: JQueryUI.SortableUIParams;
-}
 
 export interface PreviewSortableSortUpdateEventParams {
     instance: ContentTypeInterface;

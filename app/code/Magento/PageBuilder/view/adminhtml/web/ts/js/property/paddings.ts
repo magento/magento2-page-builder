@@ -4,7 +4,9 @@
  */
 
 import PropertyReaderInterface from "./property-reader-interface";
-
+/**
+ * @api
+ */
 export default class Paddings implements PropertyReaderInterface {
     /**
      * Read paddings from element

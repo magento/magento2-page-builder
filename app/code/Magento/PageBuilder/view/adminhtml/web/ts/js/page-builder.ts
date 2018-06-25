@@ -12,6 +12,9 @@ import PageBuilderInterface from "./page-builder.d";
 import Panel from "./panel";
 import Stage from "./stage";
 
+/**
+ * @api
+ */
 export default class PageBuilder implements PageBuilderInterface {
     public template: string = "Magento_PageBuilder/page-builder";
     public panel: Panel;

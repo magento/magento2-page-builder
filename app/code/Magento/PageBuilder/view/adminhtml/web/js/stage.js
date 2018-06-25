@@ -1,9 +1,12 @@
 /*eslint-disable */
-define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/collection", "Magento_PageBuilder/js/data-store", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/master-format/render", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _jqueryUiTouchPunch, _alert, _uiEvents, _underscore, _collection, _dataStore, _matrix, _sortable, _render, _stageBuilder) {
+define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min", "Magento_Ui/js/modal/alert", "uiEvents", "underscore", "Magento_PageBuilder/js/drag-drop/matrix", "Magento_PageBuilder/js/drag-drop/sortable", "Magento_PageBuilder/js/stage-builder"], function (_knockout, _translate, _jqueryUiTouchPunch, _alert, _uiEvents, _underscore, _matrix, _sortable, _stageBuilder) {
   function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+  /**
+   * @api
+   */
   var Stage =
   /*#__PURE__*/
   function () {
@@ -23,10 +26,10 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
       this.interacting = _knockout.observable(false);
       this.userSelect = _knockout.observable(true);
       this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
-      this.dataStore = new _dataStore();
+      this.dataStore = new DataStore();
       this.template = "Magento_PageBuilder/content-type/preview";
-      this.render = new _render();
-      this.collection = new _collection();
+      this.render = new Render();
+      this.collection = new Collection();
       this.parent = parent;
       this.id = parent.id;
       this.initListeners();

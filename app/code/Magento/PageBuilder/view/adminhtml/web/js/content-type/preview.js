@@ -4,6 +4,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+  /**
+   * @api
+   */
   var Preview =
   /*#__PURE__*/
   function () {

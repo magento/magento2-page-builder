@@ -1,8 +1,12 @@
 /*eslint-disable */
-define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_jquery, _knockout, _translate, _uiEvents, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType) {
+define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/binding/draggable", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/drag-drop/drop-indicators", "Magento_PageBuilder/js/drag-drop/registry", "Magento_PageBuilder/js/panel/group", "Magento_PageBuilder/js/panel/group/content-type"], function (_jquery, _knockout, _uiEvents, _underscore, _draggable, _config, _dropIndicators, _registry, _group, _contentType) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
+   */
+
+  /**
+   * @api
    */
   var Panel =
   /*#__PURE__*/
@@ -14,10 +18,10 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
       this.isVisible = _knockout.observable(false);
       this.searching = _knockout.observable(false);
       this.searchValue = _knockout.observable("");
-      this.searchPlaceholder = (0, _translate)("Find items");
-      this.searchNoResult = (0, _translate)("Nothing found");
-      this.fullScreenTitle = (0, _translate)("Full Screen");
-      this.searchTitle = (0, _translate)("Clear Search");
+      this.searchPlaceholder = $t("Find items");
+      this.searchNoResult = $t("Nothing found");
+      this.fullScreenTitle = $t("Full Screen");
+      this.searchTitle = $t("Clear Search");
       this.parent = void 0;
       this.id = void 0;
       this.template = "Magento_PageBuilder/panel";

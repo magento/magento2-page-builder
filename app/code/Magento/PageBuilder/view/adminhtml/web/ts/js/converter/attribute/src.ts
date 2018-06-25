@@ -4,11 +4,13 @@
  */
 
 import Config from "../../config";
-import {toDataUrl} from "../../utils/directives";
 import {decodeUrl} from "../../utils/image";
 import {convertUrlToPathIfOtherUrlIsOnlyAPath} from "../../utils/url";
 import ConverterInterface from "../converter-interface";
 
+/**
+ * @api
+ */
 export default class Src implements ConverterInterface {
     /**
      * Convert value to internal format

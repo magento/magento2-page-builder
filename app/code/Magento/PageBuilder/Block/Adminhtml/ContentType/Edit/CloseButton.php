@@ -9,6 +9,10 @@ namespace Magento\PageBuilder\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
+/**
+ * Close button on edit panel for Content Type
+ * @api
+ */
 class CloseButton implements ButtonProviderInterface
 {
     /**
@@ -31,7 +35,7 @@ class CloseButton implements ButtonProviderInterface
      *
      * @return array
      */
-    public function getButtonData()
+    public function getButtonData() : array
     {
         return [
             'label' => __('Close'),

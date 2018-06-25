@@ -4,6 +4,9 @@ define(["jquery", "knockout", "uiEvents"], function (_jquery, _knockout, _uiEven
 
   function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+  /**
+   * @api
+   */
   var Toolbar =
   /*#__PURE__*/
   function () {

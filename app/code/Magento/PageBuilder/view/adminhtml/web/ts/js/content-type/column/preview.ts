@@ -24,6 +24,9 @@ import ContentTypeMountEventParamsInterface from "../content-type-mount-event-pa
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
 

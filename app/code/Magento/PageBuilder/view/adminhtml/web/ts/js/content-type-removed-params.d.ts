@@ -5,6 +5,9 @@
 
 import ContentTypeInterface from "./content-type.d";
 
+/**
+ * @api
+ */
 export default interface ContentTypeRemovedParamsInterface {
     parent: ContentTypeInterface;
     index: number;

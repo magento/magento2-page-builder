@@ -4,6 +4,10 @@ define(["Magento_PageBuilder/js/property/link", "Magento_PageBuilder/js/utils/co
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var Collage =
   /*#__PURE__*/
   function () {

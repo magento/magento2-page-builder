@@ -5,6 +5,9 @@
 
 import PropertyReaderInterface from "./property-reader-interface";
 
+/**
+ * @api
+ */
 export default class Margins implements PropertyReaderInterface {
     /**
      * Read margins from element

@@ -3,10 +3,16 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Block\Adminhtml\ContentType\Edit;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
+/**
+ * Reset button on edit panel for Content Type
+ * @api
+ */
 class ResetButton implements ButtonProviderInterface
 {
     /**
@@ -14,7 +20,7 @@ class ResetButton implements ButtonProviderInterface
      *
      * @return array
      */
-    public function getButtonData()
+    public function getButtonData() : array
     {
         return [
             'label' => __('Reset'),

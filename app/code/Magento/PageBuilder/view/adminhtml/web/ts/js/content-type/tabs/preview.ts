@@ -25,6 +25,9 @@ import ContentTypeRemovedEventParamsInterface from "../content-type-removed-even
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 
+/**
+ * @api
+ */
 export default class Preview extends PreviewCollection {
     public static focusOperationTime: number;
     public focusedTab: KnockoutObservable<number> = ko.observable();

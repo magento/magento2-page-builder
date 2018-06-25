@@ -5,6 +5,10 @@
  */
 namespace Magento\PageBuilder\Model\Config;
 
+/**
+ * Content Type ConfigInterface
+ * @api
+ */
 interface ConfigInterface
 {
     /**

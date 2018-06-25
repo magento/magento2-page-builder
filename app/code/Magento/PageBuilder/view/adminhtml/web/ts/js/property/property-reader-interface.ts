@@ -3,6 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+/**
+ * @api
+ */
 export interface PropertyReaderInterface {
     /**
      * Read element data

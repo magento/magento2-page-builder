@@ -3,6 +3,9 @@
  * See COPYING.txt for license details.
  */
 
+/**
+ * @api
+ */
 import ValueInterface from "./value.d";
 
 export interface OptionInterface {

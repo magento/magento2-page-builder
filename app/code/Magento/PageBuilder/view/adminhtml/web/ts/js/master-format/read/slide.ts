@@ -10,6 +10,9 @@ import {decodeUrl} from "../../utils/image";
 import {ReadInterface} from "../read-interface";
 import Default from "./default";
 
+/**
+ * @api
+ */
 export default class Slide implements ReadInterface {
     private defaultReader: Default = new Default();
     private linkConverter: Link = new Link();

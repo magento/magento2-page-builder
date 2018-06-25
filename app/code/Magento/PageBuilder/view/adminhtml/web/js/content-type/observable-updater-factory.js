@@ -11,6 +11,7 @@ define(["Magento_PageBuilder/js/converter/converter-pool-factory", "Magento_Page
    * @param {ContentTypeConfigInterface} config
    * @param {Function} converterResolver
    * @returns {Promise<ObservableUpdater>}
+   * @api
    */
   function create(config, converterResolver) {
     var promises = [(0, _converterPoolFactory)(config.name), (0, _converterPoolFactory2)(config.name)];

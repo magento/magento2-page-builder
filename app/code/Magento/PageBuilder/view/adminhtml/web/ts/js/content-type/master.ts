@@ -14,6 +14,9 @@ import appearanceConfig from "./appearance-config";
 import ObservableObject from "./observable-object.d";
 import ObservableUpdater from "./observable-updater";
 
+/**
+ * @api
+ */
 export default class Master {
     public data: ObservableObject = {};
     protected parent: ContentTypeInterface;

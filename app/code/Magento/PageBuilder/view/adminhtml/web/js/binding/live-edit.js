@@ -14,6 +14,10 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/key-codes"], function (_jquery,
    */
 
   /**
+   * @api
+   */
+
+  /**
    * Add or remove the placeholder-text class from the element based on its content
    *
    * @param {Element} element

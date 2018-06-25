@@ -4,6 +4,10 @@ define(["Magento_PageBuilder/js/property/margins", "Magento_PageBuilder/js/prope
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var MarginsAndPaddings =
   /*#__PURE__*/
   function () {

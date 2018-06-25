@@ -11,6 +11,7 @@ define([], function () {
    * @param hexValue
    * @param alphaValue optional
    * @returns {string}
+   * @api
    */
   function fromHex(hexValue, alphaValue) {
     var shorthandHexRegEx = /^#([a-f\d])([a-f\d])([a-f\d])$/i;
@@ -36,6 +37,7 @@ define([], function () {
    * Adds 0 if HEX value is string character
    *
    * @returns string
+   * @api
    */
 
 
@@ -51,6 +53,7 @@ define([], function () {
    *
    * @param value "rgba(255,85,51,0.2)"
    * @returns {string}
+   * @api
    */
 
 

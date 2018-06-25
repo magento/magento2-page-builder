@@ -14,6 +14,9 @@ import propertyReaderPoolFactory from "../../property/property-reader-pool-facto
 import {fromSnakeToCamelCase} from "../../utils/string";
 import ReadInterface from "../read-interface";
 
+/**
+ * @api
+ */
 export default class Configurable implements ReadInterface {
 
     /**

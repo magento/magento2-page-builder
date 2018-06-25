@@ -12,6 +12,7 @@ use Magento\Backend\Block\Template;
 
 /**
  * The block used to render the conditions rule tree form within the PageBuilder interface.
+ * @api
  */
 class ProductConditions extends Template
 {

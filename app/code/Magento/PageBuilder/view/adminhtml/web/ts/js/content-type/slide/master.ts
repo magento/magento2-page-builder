@@ -11,6 +11,9 @@ import {getImageUrl} from "../../utils/directives";
 import {percentToDecimal} from "../../utils/number-converter";
 import BaseMaster from "../master";
 
+/**
+ * @api
+ */
 export default class Master extends BaseMaster {
 
     private createValueForHref: CreateValueForHref = new CreateValueForHref();

@@ -14,6 +14,7 @@ import ObservableUpdater from "./observable-updater";
  * @param {ContentTypeConfigInterface} config
  * @param {Function} converterResolver
  * @returns {Promise<ObservableUpdater>}
+ * @api
  */
 export default function create(
     config: ContentTypeConfigInterface,

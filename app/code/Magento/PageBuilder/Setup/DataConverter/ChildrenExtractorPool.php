@@ -7,6 +7,7 @@ namespace Magento\PageBuilder\Setup\DataConverter;
 
 /**
  * Pool of children extractors for content types
+ * @api
  */
 class ChildrenExtractorPool
 {

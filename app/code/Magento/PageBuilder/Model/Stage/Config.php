@@ -10,6 +10,10 @@ namespace Magento\PageBuilder\Model\Stage;
 
 use Magento\Framework\UrlInterface;
 
+/**
+ * Class Config
+ * @api
+ */
 class Config
 {
     const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/content-type/preview';

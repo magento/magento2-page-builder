@@ -7,6 +7,9 @@ import Margins from "./margins";
 import Paddings from "./paddings";
 import PropertyReaderInterface from "./property-reader-interface";
 
+/**
+ * @api
+ */
 export default class MarginsAndPaddings implements PropertyReaderInterface {
     private margins: Margins;
     private paddings: Paddings;

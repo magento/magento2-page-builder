@@ -9,9 +9,10 @@ declare(strict_types=1);
 namespace Magento\PageBuilder\Model\Source;
 
 /**
- * Prepares options for Visual Select
+ * Prepares options for Visual Select component
+ * @api
  */
-class VisualSelect extends \Magento\Eav\Model\Adminhtml\System\Config\Source\Inputtype
+class VisualSelect implements \Magento\Framework\Data\OptionSourceInterface
 {
     /**
      * @var \Magento\Framework\View\Asset\Repository

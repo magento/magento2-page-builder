@@ -8,6 +8,7 @@
  *
  * @param {String} url
  * @returns {Boolean}
+ * @api
  */
 function isPathOnly(url: string): boolean {
     return url.indexOf("/") === 0;
@@ -18,6 +19,7 @@ function isPathOnly(url: string): boolean {
  *
  * @param {String} url
  * @returns {String}
+ * @api
  */
 function getPathFromUrl(url: string): string {
     const a = document.createElement("a");
@@ -33,6 +35,7 @@ function getPathFromUrl(url: string): string {
  * @param {string} url
  * @param {string} otherUrl
  * @returns {string}
+ * @api
  */
 export function convertUrlToPathIfOtherUrlIsOnlyAPath(url: string, otherUrl: string): string {
     return isPathOnly(otherUrl) ? getPathFromUrl(url) : url;

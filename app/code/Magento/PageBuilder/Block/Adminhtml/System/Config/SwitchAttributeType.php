@@ -8,6 +8,10 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Block\Adminhtml\System\Config;
 
+/**
+ * Class SwitchAttributeType renders modal window to confirm changing attribute type
+ * @api
+ */
 class SwitchAttributeType extends \Magento\Config\Block\System\Config\Form\Field
 {
     /**
@@ -26,7 +30,7 @@ class SwitchAttributeType extends \Magento\Config\Block\System\Config\Form\Field
      *
      * @return string
      */
-    public function getModalSelector()
+    public function getModalSelector() : string
     {
         return '#frontend_input';
     }
@@ -34,9 +38,9 @@ class SwitchAttributeType extends \Magento\Config\Block\System\Config\Form\Field
     /**
      * Get text for the modal title heading when user switches to disable
      *
-     * @return string
+     * @return \Magento\Framework\Phrase
      */
-    public function getModalTitleText()
+    public function getModalTitleText() : \Magento\Framework\Phrase
     {
         return __('Product data may be lost');
     }
@@ -46,7 +50,7 @@ class SwitchAttributeType extends \Magento\Config\Block\System\Config\Form\Field
      *
      * @return string
      */
-    public function getModalContentBody()
+    public function getModalContentBody() :string
     {
         $content = __("Changing the Input Type may result in product data loss. Proceed with caution.");
         return '<div class="pagebuilder-modal-content-body">' . $content . '</div>';

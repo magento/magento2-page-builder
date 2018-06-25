@@ -15,6 +15,7 @@ import ColumnGroup from "./preview";
  * @param {number} width
  * @param {number} index
  * @returns {Promise<Column>}
+ * @api
  */
 export function createColumn(parent: ColumnGroup, width: number, index?: number): Promise<Column> {
     return createContentType(

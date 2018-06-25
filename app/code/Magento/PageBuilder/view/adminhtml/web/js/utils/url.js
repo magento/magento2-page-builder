@@ -10,6 +10,7 @@ define([], function () {
    *
    * @param {String} url
    * @returns {Boolean}
+   * @api
    */
   function isPathOnly(url) {
     return url.indexOf("/") === 0;
@@ -19,6 +20,7 @@ define([], function () {
    *
    * @param {String} url
    * @returns {String}
+   * @api
    */
 
 
@@ -33,6 +35,7 @@ define([], function () {
    * @param {string} url
    * @param {string} otherUrl
    * @returns {string}
+   * @api
    */
 
 

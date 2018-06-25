@@ -10,6 +10,9 @@ import OptionInterface from "./content-type-toolbar/option.d";
 import ValueInterface from "./content-type-toolbar/value.d";
 import Preview from "./content-type/preview";
 
+/**
+ * @api
+ */
 export default class Toolbar {
     public options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
     private preview: Preview;

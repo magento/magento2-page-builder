@@ -4,6 +4,10 @@ define(["jquery", "knockout", "Magento_Ui/js/lib/knockout/template/engine", "Mag
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
+
+  /**
+   * @api
+   */
   var MasterFormatRenderer =
   /*#__PURE__*/
   function () {

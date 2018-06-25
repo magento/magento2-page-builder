@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Model\Template;
 
 class Filter
@@ -56,7 +58,7 @@ class Filter
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function filter($html)
+    public function filter($html) : string
     {
         $domDocument = new \DOMDocument('1.0', 'UTF-8');
         set_error_handler(

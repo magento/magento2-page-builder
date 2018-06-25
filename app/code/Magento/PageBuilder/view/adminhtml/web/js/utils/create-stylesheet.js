@@ -10,6 +10,7 @@ define([], function () {
    *
    * @param {StyleBlocks} blocks
    * @returns {HTMLStyleElement}
+   * @api
    */
   function createStyleSheet(blocks) {
     var style = document.createElement("style");
@@ -25,6 +26,7 @@ define([], function () {
    *
    * @param {StyleBlock} block
    * @returns {string}
+   * @api
    */
 
 
@@ -39,6 +41,7 @@ define([], function () {
    * @param {string} property
    * @param {string | number} value
    * @returns {string}
+   * @api
    */
 
 
@@ -50,6 +53,7 @@ define([], function () {
    *
    * @param {string} property
    * @returns {string}
+   * @api
    */
 
 

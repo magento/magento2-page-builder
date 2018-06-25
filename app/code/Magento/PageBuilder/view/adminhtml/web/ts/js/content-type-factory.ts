@@ -23,6 +23,7 @@ import FieldDefaultsInterface from "./field-defaults.d";
  * @param {object} data
  * @param {number} childrenLength
  * @returns {Promise<ContentTypeInterface>}
+ * @api
  */
 export default function createContentType(
     config: ContentTypeConfigInterface,
@@ -85,6 +86,7 @@ function prepareData(config, data: {}) {
  *
  * @param {ContentType} contentType
  * @param {number} childrenLength
+ * @api
  */
 function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
     const fire = () => {
