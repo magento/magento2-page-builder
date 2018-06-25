@@ -41,12 +41,16 @@
         </arguments>
         <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="waitForGridSizeButtonVisible" />
         <click selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="clickGridSizeButton" />
-        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
         <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
     </actionGroup>
     <actionGroup name="closeGridSizeForm">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
         <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
         <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForElementNotVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridNotVisible" />
     </actionGroup>
     <actionGroup name="updateGridSize">
         <arguments>
@@ -55,25 +59,11 @@
         </arguments>
         <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="waitForGridSizeButtonVisible" />
         <click selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="clickGridSizeButton" />
-        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
         <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" userInput="{{gridSize}}" stepKey="enterGridSize"/>
         <pressKey selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
         <waitForPageLoad stepKey="waitForUpdate" />
         <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabelGridSize(index, gridSize)}}" stepKey="validateGridSize" />
-    </actionGroup>
-    <actionGroup name="updateDefaultGridSizeConfig">
-        <arguments>
-            <argument name="gridSize" defaultValue="12" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridDefaultInputField}}" stepKey="waitForDefaultGridSizeInputFieldVisible"/>
-        <fillField selector="{{ContentManagementSection.ColumnGridDefaultInputField}}" userInput="{{gridSize}}" stepKey="enterDefaultGridSize"/>
-    </actionGroup>
-    <actionGroup name="updateMaxGridSizeConfig">
-        <arguments>
-            <argument name="gridSize" defaultValue="16" type="string"/>
-        </arguments>
-        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridMaxInputField}}" stepKey="waitForMaxGridSizeInputFieldVisible"/>
-        <fillField selector="{{ContentManagementSection.ColumnGridMaxInputField}}" userInput="{{gridSize}}" stepKey="enterMaxGridSize"/>
     </actionGroup>
 </actionGroups>
