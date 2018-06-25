@@ -128,15 +128,29 @@ export default class Preview extends PreviewCollection {
             // Remove child instantly to stop content jumping around
             this.parent.parent.removeChild(this.parent);
             // Create a new instance of column group to wrap our columns with
+            const defaultGridSize = getDefaultGridSize();
             return createContentType(
                 Config.getContentTypeConfig("column-group"),
                 this.parent.parent,
                 this.parent.stageId,
-                {gridSize: getDefaultGridSize()},
+                {gridSize: defaultGridSize},
             ).then((columnGroup: ContentTypeCollectionInterface) => {
+                const col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(
+                    Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0,
+                );
                 return Promise.all([
-                    createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
-                    createContentType(this.parent.config, columnGroup, columnGroup.stageId, {width: "50%"}),
+                    createContentType(
+                        this.parent.config,
+                        columnGroup,
+                        columnGroup.stageId,
+                        {width: col1Width + "%"},
+                    ),
+                    createContentType(
+                        this.parent.config,
+                        columnGroup,
+                        columnGroup.stageId,
+                        {width: (100 - parseFloat(col1Width)) + "%"},
+                    ),
                 ]).then(
                     (columns: [ContentTypeCollectionInterface<Preview>, ContentTypeCollectionInterface<Preview>]) => {
                         columnGroup.addChild(columns[0], 0);

@@ -115,13 +115,15 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
         this.parent.parent.removeChild(this.parent); // Create a new instance of column group to wrap our columns with
 
+        var defaultGridSize = (0, _gridSize.getDefaultGridSize)();
         return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId, {
-          gridSize: (0, _gridSize.getDefaultGridSize)()
+          gridSize: defaultGridSize
         }).then(function (columnGroup) {
+          var col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0);
           return Promise.all([(0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
-            width: "50%"
+            width: col1Width + "%"
           }), (0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {
-            width: "50%"
+            width: 100 - parseFloat(col1Width) + "%"
           })]).then(function (columns) {
             columnGroup.addChild(columns[0], 0);
             columnGroup.addChild(columns[1], 1);
