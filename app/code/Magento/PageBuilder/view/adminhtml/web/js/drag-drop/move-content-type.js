@@ -29,6 +29,14 @@ define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
       stageId: contentType.stageId
     });
 
+    _uiEvents.trigger(contentType.config.name + ":contentType:beforeMove", {
+      contentType: contentType,
+      sourceParent: sourceParent,
+      targetParent: targetParent,
+      targetIndex: targetIndex,
+      stageId: contentType.stageId
+    });
+
     if (targetParent && sourceParent !== targetParent) {
       contentType.parent = targetParent; // Handle dragging between sortable elements
 
@@ -59,6 +67,14 @@ define(["knockout", "uiEvents"], function (_knockout, _uiEvents) {
 
 
     _uiEvents.trigger("contentType:move", {
+      contentType: contentType,
+      sourceParent: sourceParent,
+      targetParent: targetParent,
+      targetIndex: targetIndex,
+      stageId: contentType.stageId
+    });
+
+    _uiEvents.trigger(contentType.config.name + ":contentType:move", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,

@@ -33,6 +33,13 @@ export function moveContentType(
         targetIndex,
         stageId: contentType.stageId,
     });
+    events.trigger(`${contentType.config.name}:contentType:beforeMove`, {
+        contentType,
+        sourceParent,
+        targetParent,
+        targetIndex,
+        stageId: contentType.stageId,
+    });
 
     if (targetParent && sourceParent !== targetParent) {
         contentType.parent = targetParent;
@@ -65,6 +72,13 @@ export function moveContentType(
 
     // Trigger our content type move event
     events.trigger("contentType:move", {
+        contentType,
+        sourceParent,
+        targetParent,
+        targetIndex,
+        stageId: contentType.stageId,
+    });
+    events.trigger(`${contentType.config.name}:contentType:move`, {
         contentType,
         sourceParent,
         targetParent,

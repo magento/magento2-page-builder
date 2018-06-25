@@ -19,6 +19,7 @@ import {StyleAttributeMapperResult} from "../../master-format/style-attribute-ma
 import {getDefaultGridSize} from "../column-group/grid-size";
 import ColumnGroupPreview from "../column-group/preview";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
+import {ContentTypeMoveEventParamsInterface} from "../content-type-move-event-params";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
 import {updateColumnWidth} from "./resize";
@@ -49,6 +50,12 @@ export default class Preview extends PreviewCollection {
      */
     public bindEvents() {
         super.bindEvents();
+
+        events.on("column:contentType:move", (args: ContentTypeMoveEventParamsInterface) => {
+            if (args.contentType.id === this.parent.id) {
+                this.updateDisplayLabel();
+            }
+        });
 
         if (Config.getContentTypeConfig("column-group")) {
             events.on("column:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {

@@ -40,6 +40,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
       _PreviewCollection.prototype.bindEvents.call(this);
 
+      _uiEvents.on("column:contentType:move", function (args) {
+        if (args.contentType.id === _this2.parent.id) {
+          _this2.updateDisplayLabel();
+        }
+      });
+
       if (_config.getContentTypeConfig("column-group")) {
         _uiEvents.on("column:contentType:mount", function (args) {
           if (args.id === _this2.parent.id) {
