@@ -41,6 +41,8 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
           return;
         }
 
+        _this2.placeholderText((0, _translate)("Loading..."));
+
         _this2.displayPreview(false);
 
         var data = _this2.parent.dataStore.get();
@@ -51,30 +53,39 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
 
         var url = _config.getConfig("preview_url");
 
-        var requestData = {
-          role: _this2.config.name,
-          block_id: data.block_id,
-          directive: _this2.data.main.html()
-        };
+        var requestConfig = {
+          method: "GET",
+          data: {
+            role: _this2.config.name,
+            block_id: data.block_id,
+            directive: _this2.data.main.html()
+          }
+        }; // Retrieve a state object representing the block from the preview controller and process it on the stage
 
-        _jquery.post(url, requestData, function (response) {
-          var content = response.content !== undefined ? response.content.trim() : "";
+        _jquery.ajax(url, requestConfig).done(function (response) {
+          var content = response.content !== undefined ? response.content.trim() : ""; // Empty content means something bad happened in the controller that didn't trigger a 5xx
 
           if (content.length === 0) {
+            _this2.placeholderText((0, _translate)("An unknown error occurred. Please try again."));
+
             return;
-          }
+          } // The state object will contain the block name and either html or a message why there isn't any.
 
-          var blockData = _jquery.parseJSON(content);
 
-          _this2.displayLabel(blockData.name ? blockData.name : _this2.config.label);
+          var blockData = _jquery.parseJSON(content); // Update the stage content type label with the real block title if provided
+
+
+          _this2.displayLabel(blockData.blockTitle ? blockData.blockTitle : _this2.config.label);
 
           if (blockData.html) {
             _this2.displayPreview(true);
 
             _this2.data.main.html(blockData.html);
-          } else if (blockData.message) {
-            _this2.placeholderText(blockData.message);
+          } else if (blockData.errorMessage) {
+            _this2.placeholderText(blockData.errorMessage);
           }
+        }).fail(function () {
+          _this2.placeholderText((0, _translate)("An unknown error occurred. Please try again."));
         });
       });
     };

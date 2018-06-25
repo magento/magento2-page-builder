@@ -10,8 +10,10 @@ namespace Magento\PageBuilder\Model\Stage\Renderer;
 
 /**
  * Renders a CMS Block for the stage
+ *
+ * @api
  */
-class CmsBlock extends WidgetDirective
+class CmsStaticBlock extends WidgetDirective
 {
     /**
      * @var \Magento\Cms\Model\ResourceModel\Block\CollectionFactory
@@ -21,7 +23,7 @@ class CmsBlock extends WidgetDirective
     /**
      * @var \Magento\Framework\Serialize\Serializer\Json
      */
-    private $json;
+    private $jsonSerializer;
 
     /**
      * Constructor
@@ -30,19 +32,19 @@ class CmsBlock extends WidgetDirective
      * @param \Magento\Widget\Model\Template\Filter $directiveFilter
      * @param \Magento\Framework\Controller\ResultFactory $resultFactory
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
-     * @param \Magento\Framework\Serialize\Serializer\Json $json
+     * @param \Magento\Framework\Serialize\Serializer\Json $jsonSerializer
      */
     public function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Widget\Model\Template\Filter $directiveFilter,
         \Magento\Framework\Controller\ResultFactory $resultFactory,
         \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
-        \Magento\Framework\Serialize\Serializer\Json $json
+        \Magento\Framework\Serialize\Serializer\Json $jsonSerializer
     ) {
         parent::__construct($storeManager, $directiveFilter, $resultFactory);
 
         $this->blockCollectionFactory = $blockCollectionFactory;
-        $this->json = $json;
+        $this->jsonSerializer = $jsonSerializer;
     }
 
     /**
@@ -57,7 +59,11 @@ class CmsBlock extends WidgetDirective
             return '';
         }
 
-        $result = [];
+        $result = [
+            'blockTitle' => null,
+            'html' => null,
+            'errorMessage' => null
+        ];
         $collection = $this->blockCollectionFactory->create();
         $blocks = $collection
             ->addFieldToSelect(['title', 'is_active'])
@@ -65,20 +71,23 @@ class CmsBlock extends WidgetDirective
             ->load();
 
         if ($blocks->count() === 0) {
-            $result['message'] = sprintf(__('Block with ID: %s doesn\'t exist'), $params['block_id']);
+            $result['errorMessage'] = sprintf(__('Block with ID: %s doesn\'t exist'), $params['block_id']);
 
-            return $this->json->serialize($result);
+            return $this->jsonSerializer->serialize($result);
         }
 
+        /**
+         * @var \Magento\Cms\Model\Block $block
+         */
         $block = $blocks->getFirstItem();
-        $result['name'] = $block->getTitle();
+        $result['blockTitle'] = $block->getTitle();
 
         if ($block->isActive()) {
             $result['html'] = parent::render($params);
         } else {
-            $result['message'] = __('Block disabled');
+            $result['errorMessage'] = __('Block disabled');
         }
 
-        return $this->json->serialize($result);
+        return $this->jsonSerializer->serialize($result);
     }
 }
