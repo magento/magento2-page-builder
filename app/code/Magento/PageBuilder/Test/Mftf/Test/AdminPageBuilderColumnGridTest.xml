@@ -554,7 +554,7 @@
             <title value="Cant set grid size above max"/>
             <description value="Checks if setting the grid size above the max prompts an error"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MC-2286"/>
+            <testCaseId value="MC-2299"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
@@ -572,7 +572,8 @@
         </actionGroup>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="50" stepKey="enterGridSize"/>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking" />
+        <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
+        <waitForPageLoad stepKey="waitForAnimation" />v
         <seeElement selector="{{PageBuilderColumnSection.maxError}}" stepKey="verifyMaxError"/>
     </test>
     <test name="ValidateInvalidGridSizeError">
@@ -582,7 +583,7 @@
             <title value="Cant set grid size above to invalid number"/>
             <description value="Checks if setting the grid size to negative prompts an error"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MC-2286"/>
+            <testCaseId value="MC-2302"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
@@ -600,7 +601,8 @@
         </actionGroup>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="-50" stepKey="enterGridSize"/>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking" />
+        <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
+        <waitForPageLoad stepKey="waitForAnimation" />
         <seeElement selector="{{PageBuilderColumnSection.minError}}" stepKey="verifyMinError"/>
     </test>
     <test name="ValidateDifferentGridSizePerGroup">
@@ -610,7 +612,7 @@
             <title value="Set different grid sizes for multiple groups"/>
             <description value="Checks if able to set separate grid sizes for multiple column groups"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MC-2286"/>
+            <testCaseId value="MC-2301"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
@@ -652,7 +654,7 @@
             <title value="Grid open is open with error"/>
             <description value="Verify the grid panel is displayed always when an error is present"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MC-2286"/>
+            <testCaseId value="MC-2304"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
@@ -670,7 +672,8 @@
         </actionGroup>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="50" stepKey="enterInvalidGridSize"/>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking" />
+        <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
+        <waitForPageLoad stepKey="waitForAnimation" />
         <seeElement selector="{{PageBuilderColumnSection.maxError}}" stepKey="verifyMaxError"/>
         <click selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="clickOtherArea"/>
         <seeElement selector="{{PageBuilderColumnSection.maxError}}" stepKey="verifyMaxError2"/>
@@ -685,7 +688,7 @@
             <title value="Cant reduce grid size lower than full columns"/>
             <description value="Verify that setting the grid size lower than full columns prompts error"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MC-2286"/>
+            <testCaseId value="MC-2300"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
@@ -735,7 +738,8 @@
         </actionGroup>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="3" stepKey="enterInvalidGridSize"/>
-        <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking" />
+        <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
+        <waitForPageLoad stepKey="waitForAnimation" />
         <seeElement selector="{{PageBuilderColumnSection.minError}}" stepKey="verifyMinError"/>
     </test>
     <test name="MoveColumnBetweenGroupsOfDifferentGridSize">
@@ -745,7 +749,7 @@
             <title value="Move columns between different groups of different sizes"/>
             <description value="Verify that columns can be moved between column groups of varying grid size"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MC-2286"/>
+            <testCaseId value="MC-2303"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>
