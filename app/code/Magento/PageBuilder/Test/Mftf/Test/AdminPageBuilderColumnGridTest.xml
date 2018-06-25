@@ -785,8 +785,35 @@
             <argument name="containerTargetIndex" value="3"/>
         </actionGroup>
         <waitForPageLoad stepKey="waitForDragOperation" />
-        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1', '8/8')}}" stepKey="verifyOriginalColumGroup"/>
-        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2', '1/12')}}" stepKey="verifyMovedColum"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1', '8/8')}}" stepKey="verifyOriginalColumnGroup"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2', '1/12')}}" stepKey="verifyMovedColumn"/>
+    </test>
+    <test name="ValidateGridPanelWontCloseOnArrowClick">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Extensible grid form shouldn't close after clicking number spinners"/>
+            <description value="Verify that the grid form stays open after clicking the number spinners in input"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-230"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <click selector="{{PageBuilderColumnSection.gridSizeTooltip}}" stepKey="clickWithinPanel"/>
+        <seeElement selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" stepKey="verifyPanelStillOpen"/>
     </test>
     <test name="ValidateOddDefaultGridSizeIsSplitCorrectly">
         <annotations>

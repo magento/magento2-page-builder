@@ -452,8 +452,6 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         (0, _jquery)(document).on("click focusin", this.onDocumentClick);
 
         _uiEvents.trigger("interaction:start");
-      } else {
-        this.closeGridForm();
       }
     };
     /**
