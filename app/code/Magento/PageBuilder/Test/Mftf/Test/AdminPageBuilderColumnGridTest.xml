@@ -15,6 +15,7 @@
             <title value="Verify default grid size"/>
             <description value="Verify the default grid size (12) is set correctly within the stage."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2280"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -50,6 +51,7 @@
             <title value="Verify input is auto focused"/>
             <description value="Verify when the grid form is opened the field is focused"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2281"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -66,6 +68,7 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
+        <!-- Validate input is focused -->
         <comment userInput="Validate input is focused" stepKey="commentValidateInitial"/>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
         <executeJS function="return window.getSelection().toString();" stepKey="getSelectedTextFromWindow"/>
@@ -81,6 +84,7 @@
             <title value="Set the grid size to 14"/>
             <description value="Set the grid size to 14 and validate columns width doesn't change"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2281"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -104,11 +108,13 @@
         </actionGroup>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid14"/>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid14"/>
+        <!--V alidate first column unchanged -->
         <comment userInput="Validate first column unchanged" stepKey="commentValidateFirstCommentUnchanged"/>
         <assertEquals stepKey="assertFirstColumnsWidth">
             <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
             <actualResult type="variable">columnOneWidthGrid14</actualResult>
         </assertEquals>
+        <!-- Validate second column unchanged -->
         <comment userInput="Validate second column unchanged" stepKey="commentValidateSecondCommentUnchanged"/>
         <assertEquals stepKey="assertSecondColumnsWidth">
             <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
@@ -122,6 +128,7 @@
             <title value="Set the grid size to 7"/>
             <description value="Set the grid size to 14 and validate columns adjust to fit new grid size"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2283"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -140,16 +147,18 @@
         </actionGroup>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12"/>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12"/>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo14">
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo7">
             <argument name="gridSize" value="7"/>
         </actionGroup>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid7"/>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid7"/>
+        <!-- Validate first column grew larger -->
         <comment userInput="Validate first column grew larger" stepKey="commentValidateFirstCommentUnchanged"/>
         <assertGreaterThan stepKey="assertOriginalWidthGreaterThanNewWidth">
             <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
             <actualResult type="variable">columnOneWidthGrid7</actualResult>
         </assertGreaterThan>
+        <!-- Validate second column shrunk -->
         <comment userInput="Validate second column shrunk" stepKey="commentValidateSecondCommentUnchanged"/>
         <assertLessThan stepKey="assertOriginalWidthLessThanNewWidth">
             <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
@@ -165,6 +174,7 @@
             <title value="Set the grid size to 1"/>
             <description value="Set grid size to 1 validate empty column is removed and single 100% column persists"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2284"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -191,9 +201,10 @@
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Column"/>
-            <title value="Set the grid size to 1"/>
-            <description value="Set grid size to 1 validate empty column is removed and single 100% column persists"/>
+            <title value="Check the stage can't be interacted with when the grid size form is open."/>
+            <description value="Check the stage can't be interacted with when the grid size form is open."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2284"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -214,15 +225,20 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <!-- Validate column options dont display -->
         <comment userInput="Validate column options dont display" stepKey="commentColumnOptionsHidden"/>
-        <moveMouseOver selector="{{PageBuilderColumnSection.columnX('2')}}" x="10" y="10" stepKey="moveMouseOverColumn" />
+        <moveMouseOver selector="{{PageBuilderColumnSection.columnX('2')}}" stepKey="moveMouseOverColumn" />
         <waitForPageLoad stepKey="waitForAnimations" />
+        <waitForElement selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="waitForColumnOptions" />
         <dontSee selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="dontSeeColumnOptions" />
         <waitForElementNotVisible selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="notVisibleColumnOptions" />
+        <!-- Validate row options dont display -->
         <comment userInput="Validate row options dont display" stepKey="commentRowOptionsHidden"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(PageBuilderRowContentType.role, '2')}}" x="10" y="10" stepKey="moveMouseOverRow" />
         <waitForPageLoad stepKey="waitForRowAnimations" />
+        <waitForElement selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '2')}}" stepKey="waitForRowOptions" />
         <dontSee selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '2')}}" stepKey="dontSeeRowOptions" />
+        <!-- Close grid form and check options are restored -->
         <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm" />
         <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderRowContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
@@ -236,6 +252,7 @@
             <title value="Unfocus updates grid"/>
             <description value="Checks if unfocusing / clicking out of the column group updates the grid size"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2286"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -255,7 +272,6 @@
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="8" stepKey="enterGridSize"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking" />
-        <waitForElementNotVisible selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" stepKey="waitForGridFormNotVisible" />
         <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','4/8')}}" stepKey="checkWidthFirstColumn"/>
         <seeElement selector="{{PageBuilderColumnSection.displayLabel('2','4/8')}}" stepKey="checkWidthSecondColumn"/>
     </test>
@@ -266,6 +282,7 @@
             <title value="Set grid size smaller to remove column"/>
             <description value="Check if empty columns will be deleted when reducing the grid size under the amount of columns"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2287"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -303,31 +320,6 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seeNumberOfColumns3"/>
     </test>
-    <test name="ValidateDefaultAndMaxGridSizesInSystemConfig">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Column"/>
-            <title value="Verify the default grid size and max size in system config"/>
-            <description value="Verify the default grid size and max size in system config"/>
-            <severity value="CRITICAL"/>
-            <testCaseId value="MC-2291"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-column"/>
-            <group value="pagebuilder-columnGridSize"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <!-- see correct default grid size and max size -->
-        <comment userInput="Verify Default Grid Size and Maximum Grid Size" stepKey="comment"/>
-        <seeInField selector="{{ContentManagementSection.ColumnGridDefaultInputField}}" userInput="{{PageBuilderGridSize.defaultGridSize}}" stepKey="seeDefaultGridSize"/>
-        <seeInField selector="{{ContentManagementSection.ColumnGridMaxInputField}}" userInput="{{PageBuilderGridSize.defaultMaxGridSize}}" stepKey="seeMaxGridSize"/>
-    </test>
     <test name="ValidateGridSettingsValidationInSystemConfig">
         <annotations>
             <features value="Pagebuilder"/>
@@ -335,6 +327,7 @@
             <title value="Verify you cannot set the grid default size higher than the max size."/>
             <description value="Verify you cannot set the grid default size higher than the max size."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2293"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -350,32 +343,41 @@
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
         <conditionalClick stepKey="uncheckUseSystemValueMax" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_max')}}" visible="true"/>
+        <!-- Enter Invalid Default Grid Size -->
         <comment userInput="Enter Invalid Default Grid Size" stepKey="comment1"/>
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_50}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration1"/>
-        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}" stepKey="waitForInvalidDefaultGridSizeErrorMessage"/>
-        <see selector="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}" userInput="{{PageBuilderGridSize.invalidDefaultGridSizeErrorMessage}}" stepKey="seeInvalidDefaultGridSizeErrorMessage"/>
+        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError1">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderGridSize.invalidDefaultGridSizeErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Valid Default Grid Size -->
         <comment userInput="Enter Valid Default Grid Size" stepKey="comment2"/>
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterValidDefaultGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_6}}"/>
         </actionGroup>
         <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration2"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage1"/>
-        <comment userInput="Enter Invalid Maxiimum Grid Size" stepKey="comment3"/>
+        <!-- Enter Invalid Maximum Grid Size -->
+        <comment userInput="Enter Invalid Maximum Grid Size" stepKey="comment3"/>
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidMaxGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_3}}"/>
         </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration3"/>
-        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}" stepKey="waitForInvalidMaxGridSizeErrorMessage"/>
-        <see selector="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}" userInput="{{PageBuilderGridSize.invalidDefaultGridSizeErrorMessage}}" stepKey="seeInvalidMaxGridSizeErrorMessage"/>
+        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError2">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderGridSize.invalidDefaultGridSizeErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Valid Maximum Grid Size -->
         <comment userInput="Enter Valid Maximum Grid Size" stepKey="comment4"/>
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidMaxGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_32}}"/>
         </actionGroup>
         <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration4"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage2"/>
+        <!-- Restore Default Values for Default and Maximum Grid Size -->
         <comment userInput="Restore Default Values for Default and Maximum Grid Size" stepKey="comment5"/>
         <click selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" stepKey="restoreDefaultGridSize" />
         <click selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" stepKey="restoreDefaultMaxGridSize" />
@@ -389,6 +391,7 @@
             <title value="Verify we can resize columns on uneven grid sizes"/>
             <description value="Verify we can resize columns on uneven grid sizes"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2295"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -416,10 +419,11 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill3"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
-        <comment userInput="Resize Column 1" stepKey="comment1"/>
         <!-- Grab grid guide location for column 1 -->
         <comment userInput="Grab grid guide width" stepKey="context0"/>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('5')}}').clientWidth" stepKey="guideWidth"/>
+        <!-- Resize Column 1 -->
+        <comment userInput="Resize Column 1" stepKey="comment1"/>
         <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1"/>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill32"/>
         <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','5/7')}}" stepKey="checkWidthFirstColumn"/>
@@ -431,6 +435,7 @@
             <title value="Verify when changing back to previous grid size the original division is restored."/>
             <description value="Verify when changing back to previous grid size the original division is restored."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2296"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -458,6 +463,7 @@
         </actionGroup>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid13"/>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid13"/>
+        <!-- Validate first column grew larger -->
         <comment userInput="Validate first column grew larger" stepKey="commentValidateFirstCommentUnchanged"/>
         <assertGreaterThan stepKey="assertColumnOneGreaterThanColumnTwo">
             <expectedResult type="variable">columnTwoWidthGrid13</expectedResult>
@@ -468,9 +474,18 @@
         <waitForPageLoad stepKey="waitForUpdate" />
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidthGrid12Restored"/>
         <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidthGrid12Restored"/>
-        <comment userInput="Validate column are equal again" stepKey="commentValidateColumnsEqual"/>
-        <assertEquals stepKey="assertColumnAreEqualAgain">
+        <!-- Validate columns are equal again -->
+        <comment userInput="Validate columns are equal again" stepKey="commentValidateColumnsEqual"/>
+        <assertEquals stepKey="assertColumnsAreEqualAgain">
             <expectedResult type="variable">columnOneWidthGrid12Restored</expectedResult>
+            <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertColumn1IsRestored">
+            <expectedResult type="variable">columnOneWidthGrid12</expectedResult>
+            <actualResult type="variable">columnOneWidthGrid12Restored</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertColumn2IsRestored">
+            <expectedResult type="variable">columnTwoWidthGrid12</expectedResult>
             <actualResult type="variable">columnTwoWidthGrid12Restored</actualResult>
         </assertEquals>
     </test>
@@ -481,6 +496,7 @@
             <title value="Verify we can add a column into a grid with a small size."/>
             <description value="Set grid size to 3, add new column, validate existence and equal widths for all columns."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2297"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -518,6 +534,7 @@
             <title value="Verify we cannot add a column to a full group with a small grid size."/>
             <description value="Set grid size to 2, attempt to add additional column, validate no column added."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2298"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -544,6 +561,7 @@
             <argument name="expectedIndex" value="2"/>
         </actionGroup>
         <waitForElementVisible selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeCannotDuplicateColumnModal"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnCannotDuplicateModal}}" stepKey="seeErrorMessage"/>
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="closeModal"/>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
     </test>
@@ -554,6 +572,7 @@
             <title value="Cant set grid size above max"/>
             <description value="Checks if setting the grid size above the max prompts an error"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2299"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -574,7 +593,7 @@
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="50" stepKey="enterGridSize"/>
         <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
         <waitForPageLoad stepKey="waitForAnimation" />
-        <seeElement selector="{{PageBuilderColumnSection.maxError}}" stepKey="verifyMaxError"/>
+        <seeElement selector="{{PageBuilderColumnSection.gridSizeError('maximum grid size supported')}}" stepKey="verifyMaxError"/>
     </test>
     <test name="ValidateInvalidGridSizeError">
         <annotations>
@@ -583,6 +602,7 @@
             <title value="Cant set grid size above to invalid number"/>
             <description value="Checks if setting the grid size to negative prompts an error"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2302"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -603,7 +623,7 @@
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="-50" stepKey="enterGridSize"/>
         <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
         <waitForPageLoad stepKey="waitForAnimation" />
-        <seeElement selector="{{PageBuilderColumnSection.minError}}" stepKey="verifyMinError"/>
+        <seeElement selector="{{PageBuilderColumnSection.gridSizeError('cannot be smaller')}}" stepKey="verifyMinError"/>
     </test>
     <test name="ValidateDifferentGridSizePerGroup">
         <annotations>
@@ -612,6 +632,7 @@
             <title value="Set different grid sizes for multiple groups"/>
             <description value="Checks if able to set separate grid sizes for multiple column groups"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2301"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -654,6 +675,7 @@
             <title value="Grid open is open with error"/>
             <description value="Verify the grid panel is displayed always when an error is present"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2304"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -674,11 +696,12 @@
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="50" stepKey="enterInvalidGridSize"/>
         <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
         <waitForPageLoad stepKey="waitForAnimation" />
-        <seeElement selector="{{PageBuilderColumnSection.maxError}}" stepKey="verifyMaxError"/>
+        <seeElement selector="{{PageBuilderColumnSection.gridSizeError('maximum grid size supported')}}" stepKey="verifyMaxError"/>
         <click selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="clickOtherArea"/>
-        <seeElement selector="{{PageBuilderColumnSection.maxError}}" stepKey="verifyMaxError2"/>
+        <seeElement selector="{{PageBuilderColumnSection.gridSizeError('maximum grid size supported')}}" stepKey="verifyMaxError2"/>
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="8" stepKey="enterValidGridSize"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking2" />
+        <waitForElement selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" stepKey="waitForValidatePanelClosed"/>
         <dontSeeElement selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" stepKey="validatePanelClosed"/>
     </test>
     <test name="ValidateGridSizeLargerThanColumnsError">
@@ -688,6 +711,7 @@
             <title value="Cant reduce grid size lower than full columns"/>
             <description value="Verify that setting the grid size lower than full columns prompts error"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2300"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -740,7 +764,7 @@
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="3" stepKey="enterInvalidGridSize"/>
         <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
         <waitForPageLoad stepKey="waitForAnimation" />
-        <seeElement selector="{{PageBuilderColumnSection.minError}}" stepKey="verifyMinError"/>
+        <seeElement selector="{{PageBuilderColumnSection.gridSizeError('cannot be smaller')}}" stepKey="verifyMinError"/>
     </test>
     <test name="MoveColumnBetweenGroupsOfDifferentGridSize">
         <annotations>
@@ -749,6 +773,7 @@
             <title value="Move columns between different groups of different sizes"/>
             <description value="Verify that columns can be moved between column groups of varying grid size"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2303"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -795,6 +820,7 @@
             <title value="Verify that the initial two column split is correct when the default grid size is odd."/>
             <description value="Verify that the initial two column split is correct when the default grid size is odd."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2309"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -809,6 +835,7 @@
         <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
+        <!-- Enter Odd Default Grid Size -->
         <comment userInput="Enter Odd Default Grid Size" stepKey="comment1"/>
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterValidDefaultGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_5}}"/>

@@ -57,12 +57,11 @@
         <element name="displayLabel" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[{{arg1}}]/descendant::div[contains(@class, "pagebuilder-display-label")][contains(text(), "{{arg2}}")]' parameterized="true"/>
         <element name="empty" type="button" selector="(//div[contains(@class,'empty-container')]//div[contains(@class,'element-children') and contains(@class,'column-container')])[{{arg1}}]" parameterized="true"/>
         <element name="dropPlaceholder" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[{{arg1}}]//div[contains(@class,"drop-placeholder")][{{arg2}}]' parameterized="true"/>
-        <element name="optionsPanel" type="button" selector=".pagebuilder-options-wrapper"/>
         <element name="displayLabelGridSize" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[{{arg1}}]//div[contains(@class, "pagebuilder-display-label")][1][contains(text(), "/{{arg2}}")]' parameterized="true"/>
         <element name="gridSizeButton" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'indicator-wrapper')]" parameterized="true"/>
         <element name="gridSizeInput" type="input" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'grid-panel-item-wrapper')]/input" parameterized="true"/>
-        <element name="maxError" type="button" selector="//div[contains(@class, 'admin__field-error') and contains(text(), 'maximum grid size supported')]"/>
-        <element name="minError" type="button" selector="//div[contains(@class, 'admin__field-error') and contains(text(), 'cannot be smaller')]"/>
+        <element name="gridSizeError" type="button" selector="//div[contains(@class, 'admin__field-error') and contains(text(), '{{arg1}}')]" parameterized="true"/>
+        <element name="columnCannotDuplicateModal" type="button" selector="//div[@class='modal-content']//div[contains(text(), 'There is no free space within the column group to perform this action')]"/>
     </section>
     <section name="ColumnsOnFrontend">
         <element name="columnGroup" type="block" selector=".pagebuilder-column-group"/>
