@@ -74,7 +74,7 @@ export default class Preview extends PreviewCollection {
             }
         });
         // Set the active tab to the new position of the sorted tab
-        events.on("tab-item:contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
+        events.on("tab-item:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 this.refreshTabs();
 
@@ -373,7 +373,7 @@ export default class Preview extends PreviewCollection {
             }
         });
         // ContentType being removed from container
-        events.on("tab-item:contentType:removeAfter", (args: ContentTypeRemovedParamsInterface) => {
+        events.on("tab-item:removeAfter", (args: ContentTypeRemovedParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 // Mark the previous tab as active
                 const newIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);

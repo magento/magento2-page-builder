@@ -267,7 +267,7 @@ export default class Preview extends PreviewCollection {
         // When a slide content type is removed
         // we need to force update the content of the slider due to KO rendering issues
         let newItemIndex: number;
-        events.on("slide:contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
+        events.on("slide:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.contentType.parent.id === this.parent.id) {
                 // Mark the previous slide as active
                 newItemIndex = (args.index - 1 >= 0 ? args.index - 1 : 0);

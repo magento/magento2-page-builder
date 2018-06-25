@@ -268,7 +268,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/modal/di
 
           _uiEvents.trigger("contentType:removeAfter", params);
 
-          _uiEvents.trigger(_this3.parent.config.name + ":contentType:removeAfter", params);
+          _uiEvents.trigger(_this3.parent.config.name + ":removeAfter", params);
         };
 
         if (_this3.wrapperElement) {

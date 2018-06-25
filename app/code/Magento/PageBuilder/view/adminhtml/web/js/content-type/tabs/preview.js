@@ -59,7 +59,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       }); // Set the active tab to the new position of the sorted tab
 
 
-      _uiEvents.on("tab-item:contentType:removeAfter", function (args) {
+      _uiEvents.on("tab-item:removeAfter", function (args) {
         if (args.parent.id === _this.parent.id) {
           _this.refreshTabs(); // We need to wait for the tabs to refresh before executing the focus
 
@@ -382,7 +382,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
       }); // ContentType being removed from container
 
 
-      _uiEvents.on("tab-item:contentType:removeAfter", function (args) {
+      _uiEvents.on("tab-item:removeAfter", function (args) {
         if (args.parent.id === _this4.parent.id) {
           // Mark the previous tab as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;

@@ -261,7 +261,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
 
       var newItemIndex;
 
-      _uiEvents.on("slide:contentType:removeAfter", function (args) {
+      _uiEvents.on("slide:removeAfter", function (args) {
         if (args.contentType.parent.id === _this3.parent.id) {
           // Mark the previous slide as active
           newItemIndex = args.index - 1 >= 0 ? args.index - 1 : 0;

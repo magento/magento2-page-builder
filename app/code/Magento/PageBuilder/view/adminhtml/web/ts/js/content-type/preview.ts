@@ -276,7 +276,7 @@ export default class Preview {
                     stageId: this.parent.stageId,
                 };
                 events.trigger("contentType:removeAfter", params);
-                events.trigger(this.parent.config.name + ":contentType:removeAfter", params);
+                events.trigger(this.parent.config.name + ":removeAfter", params);
             };
 
             if (this.wrapperElement) {
