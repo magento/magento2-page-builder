@@ -30,9 +30,9 @@ define([
         $.validator.addMethod(
             'validate-greater-than-one',
             function (value) {
-                return !(value < 1);
+                return !(value <= 1);
             },
-            $.mage.__('Please enter a number 1 or greater in this field.')
+            $.mage.__('Please enter a number greater than 1 in this field.')
         );
 
         $.validator.addMethod(
