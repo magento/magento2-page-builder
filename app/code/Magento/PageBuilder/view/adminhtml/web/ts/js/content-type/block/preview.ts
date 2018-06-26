@@ -39,6 +39,8 @@ export default class Preview extends BasePreview {
             const data = this.parent.dataStore.get();
 
             if (!data.block_id || data.template.length === 0) {
+                this.placeholderText($t("Empty Block"));
+
                 return;
             }
 

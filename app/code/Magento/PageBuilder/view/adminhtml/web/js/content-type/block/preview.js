@@ -48,6 +48,8 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         var data = _this2.parent.dataStore.get();
 
         if (!data.block_id || data.template.length === 0) {
+          _this2.placeholderText((0, _translate)("Empty Block"));
+
           return;
         }
 
