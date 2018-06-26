@@ -7,7 +7,15 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="newsletter" sortOrder="30" translate="label" label="Newsletter" icon="icon-pagebuilder-newsletter" component="Magento_PageBuilder/js/content-type" preview_component="Magento_PageBuilder/js/content-type/newsletter/preview" form="pagebuilder_newsletter_form" group="interactive">
+        <type name="newsletter"
+              label="Newsletter"
+              component="Magento_PageBuilder/js/content-type"
+              preview_component="Magento_PageBuilder/js/content-type/newsletter/preview"
+              form="pagebuilder_newsletter_form"
+              group="interactive"
+              icon="icon-pagebuilder-newsletter"
+              sortOrder="30"
+              translate="label">
             <backend_block>Magento\PageBuilder\Block\ContentType\Newsletter</backend_block>
             <backend_template>Magento_PageBuilder::content_type/newsletter.phtml</backend_template>
             <allowed_parents>

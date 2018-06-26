@@ -52,7 +52,14 @@ To add configuration for a new content type, create a file under the following l
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Vendor_ModuleName:etc/content_type.xsd">
     <content_types>
-        <type name="simple" sortOrder="35" translate="label" label="Simple" icon="icon-modulename-simple" component="Vendor_ModuleName/js/content-type" form="modulename_simple_form" group="general">
+        <type name="simple"
+              label="Simple"
+              component="Vendor_ModuleName/js/content-type"
+              form="modulename_simple_form"
+              group="general"
+              icon="icon-modulename-simple"
+              sortOrder="35"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
             </allowed_parents>
@@ -242,7 +249,16 @@ Now, let's add content type that can contain other content types. Create configu
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="complex" sortOrder="35" translate="label" labe="Complex" icon="icon-vendorname-complex" component="Magento_PageBuilder/js/content-type-collection" preview_component="Magento_PageBuilder/js/content-type/preview-collection" master_component="Magento_PageBuilder/js/content-type/content-collection" form="vendorname_complex_form" group="general">
+        <type name="complex"
+              labe="Complex"
+              component="Magento_PageBuilder/js/content-type-collection"
+              preview_component="Magento_PageBuilder/js/content-type/preview-collection"
+              master_component="Magento_PageBuilder/js/content-type/content-collection"
+              form="vendorname_complex_form"
+              group="general"
+              icon="icon-vendorname-complex"
+              sortOrder="35"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>

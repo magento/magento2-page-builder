@@ -72,7 +72,15 @@ The following is an example of a content type configuration in `view/adminhtml/p
 ``` xml
 <content_types>
     <!-- Content type declaration -->
-    <type name="banner" sortOrder="1" translate="label" label="Banner" icon="icon-pagebuilder-image" component="Magento_PageBuilder/js/content-type" preview_component="Magento_PageBuilder/js/content-type/banner/preview" form="pagebuilder_banner_form" group="media">
+    <type name="banner"
+          label="Banner"
+          component="Magento_PageBuilder/js/content-type"
+          preview_component="Magento_PageBuilder/js/content-type/banner/preview"
+          form="pagebuilder_banner_form"
+          group="media"
+          icon="icon-pagebuilder-image"
+          sortOrder="1"
+          translate="label">
         <allowed_parents>
             <parent name="row"/>
             <parent name="column"/>
