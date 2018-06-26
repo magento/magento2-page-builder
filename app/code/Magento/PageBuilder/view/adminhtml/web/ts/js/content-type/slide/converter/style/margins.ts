@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import {ConverterInterface} from "../converter-interface";
+import {ConverterInterface} from "../../../../converter/converter-interface";
 
 export default class Margins implements ConverterInterface {
     /**
@@ -13,15 +13,16 @@ export default class Margins implements ConverterInterface {
      * @returns {string | object}
      */
     public fromDom(value: string): string | object {
-        const result = {};
+        const result: any = {};
         if (undefined !== value.margin) {
             result.margin = {
-                top: value.margin.top.replace("px", ""),
+                bottom: value.margin.bottom.replace("px", ""),
                 left: value.margin.left.replace("px", ""),
                 right: value.margin.right.replace("px", ""),
-                bottom: value.margin.bottom.replace("px", ""),
+                top: value.margin.top.replace("px", ""),
             };
         }
+
         return result;
     }
 
