@@ -294,7 +294,7 @@ export default class Preview extends PreviewCollection {
     private updateDisplayLabel() {
         if (this.parent.parent.preview instanceof ColumnGroupPreview) {
             const resizeUtils = (this.parent.parent.preview as ColumnGroupPreview).getResizeUtils();
-            const newWidth = parseFloat(this.parent.dataStore.get().width.toString());
+            const newWidth = parseFloat(this.parent.dataStore.get("width").toString());
             const gridSize = resizeUtils.getGridSize();
             const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
             this.displayLabel(`${$t("Column")} ${newLabel}`);

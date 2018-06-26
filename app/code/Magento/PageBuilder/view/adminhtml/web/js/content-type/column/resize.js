@@ -155,7 +155,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
 
     _proto.getColumnWidth = function getColumnWidth(column) {
-      return this.getAcceptedColumnWidth(column.dataStore.get().width.toString());
+      return this.getAcceptedColumnWidth(column.dataStore.get("width").toString());
     };
     /**
      * Get the total width of all columns in the group

@@ -93,7 +93,7 @@ export default class Preview {
      * @param {string} value
      */
     public updateData(key: string, value: string) {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
 
         data[key] = value;
         this.parent.dataStore.update(data);
@@ -242,10 +242,10 @@ export default class Preview {
      * @returns {Promise<ContentTypeInterface> | void}
      */
     public clone(
-        contentType: ContentTypeInterface & ContentTypeCollectionInterface,
+        contentType: ContentTypeInterface | ContentTypeCollectionInterface,
         autoAppend: boolean = true,
     ): Promise<ContentTypeInterface> | void {
-        const contentTypeData = contentType.dataStore.get();
+        const contentTypeData = contentType.dataStore.get() as DataObject;
         const index = contentType.parent.getChildren()().indexOf(contentType) + 1 || null;
 
         return new Promise((resolve) => {
@@ -509,7 +509,7 @@ export default class Preview {
      * @returns {boolean}
      */
     protected isConfigured() {
-        const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get() as DataObject;
         let hasDataChanges = false;
         _.each(this.parent.config.fields, (field, key: string) => {
             if (this.fieldsToIgnoreOnRemove && this.fieldsToIgnoreOnRemove.includes(key)) {
@@ -546,7 +546,7 @@ export default class Preview {
     private updateObservables(): void {
         this.observableUpdater.update(
             this,
-            _.extend({}, this.parent.dataStore.get()),
+            _.extend({}, this.parent.dataStore.get() as DataObject),
         );
         this.afterObservablesUpdated();
         events.trigger("previewObservables:updated", {preview: this});

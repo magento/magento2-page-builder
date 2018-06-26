@@ -264,7 +264,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
     _proto.updateDisplayLabel = function updateDisplayLabel() {
       if (this.parent.parent.preview instanceof _preview) {
         var resizeUtils = this.parent.parent.preview.getResizeUtils();
-        var newWidth = parseFloat(this.parent.dataStore.get().width.toString());
+        var newWidth = parseFloat(this.parent.dataStore.get("width").toString());
         var gridSize = resizeUtils.getGridSize();
         var newLabel = Math.round(newWidth / (100 / gridSize)) + "/" + gridSize;
         this.displayLabel((0, _translate)("Column") + " " + newLabel);

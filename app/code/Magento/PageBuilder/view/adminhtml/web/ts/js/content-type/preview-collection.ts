@@ -6,6 +6,7 @@
 import ContentTypeCollectionInterface from "../content-type-collection.d";
 import createContentType from "../content-type-factory";
 import ContentTypeInterface from "../content-type.d";
+import {DataObject} from "../data-store";
 import Preview from "./preview";
 
 export default class PreviewCollection extends Preview {
@@ -36,7 +37,7 @@ export default class PreviewCollection extends Preview {
                 contentType.config,
                 contentType.parent,
                 contentType.stageId,
-                contentType.dataStore.get(),
+                contentType.dataStore.get() as DataObject,
             ).then((duplicate: ContentTypeCollectionInterface) => {
                 if (contentType.children && contentType.children().length > 0) {
                     // Duplicate the instances children into the new duplicate

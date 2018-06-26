@@ -6,6 +6,7 @@
 import events from "uiEvents";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
+import {DataObject} from "../../data-store";
 
 export default class Preview extends BasePreview {
     /**
@@ -29,13 +30,13 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         events.on(`${this.parent.id}:updated`, () => {
-            const dataStore = this.parent.dataStore.get();
+            const dataStore = this.parent.dataStore.get() as DataObject;
             const imageObject = dataStore[this.config.additional_data.uploaderConfig.dataScope][0] || {};
             events.trigger(`image:assigned:${this.parent.id}`, imageObject);
         });
 
         events.on(`${this.config.name}:contentType:ready`, () => {
-            const dataStore = this.parent.dataStore.get();
+            const dataStore = this.parent.dataStore.get() as DataObject;
             const initialImageValue = dataStore[this.config.additional_data.uploaderConfig.dataScope] || "";
 
             // Create uploader

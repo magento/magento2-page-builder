@@ -27,10 +27,10 @@ export default class DataStore {
      */
     public get(key?: string): DataObject | undefined | null | string | number | boolean | any[] {
         if (key) {
-            return this.state[key];
+            return this.state[key] as undefined | null | string | number | boolean | any[];
         }
 
-        return this.state;
+        return this.state as DataObject;
     }
 
     /**

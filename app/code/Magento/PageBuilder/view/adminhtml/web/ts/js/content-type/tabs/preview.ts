@@ -19,6 +19,7 @@ import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
+import {DataObject} from "../../data-store";
 import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
@@ -415,7 +416,7 @@ export default class Preview extends PreviewCollection {
     private updateTabNamesInDataStore() {
         const activeOptions: ActiveOptionsInterface[] = [];
         this.parent.children().forEach((tab: ContentTypeInterface, index: number) => {
-            const tabData = tab.dataStore.get();
+            const tabData = tab.dataStore.get() as DataObject;
             activeOptions.push({
                 label: tabData.tab_name.toString(),
                 labeltitle: tabData.tab_name.toString(),

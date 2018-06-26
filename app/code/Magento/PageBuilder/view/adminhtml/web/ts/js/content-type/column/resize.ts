@@ -154,7 +154,7 @@ export default class ResizeUtils {
      * @returns {number}
      */
     public getColumnWidth(column: ContentTypeCollectionInterface<ColumnPreview>): number {
-        return this.getAcceptedColumnWidth(column.dataStore.get().width.toString());
+        return this.getAcceptedColumnWidth(column.dataStore.get("width").toString());
     }
 
     /**
