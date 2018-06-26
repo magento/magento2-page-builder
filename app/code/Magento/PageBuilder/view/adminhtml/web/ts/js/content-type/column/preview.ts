@@ -211,23 +211,6 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
-     * Get the CSS styles for the children element
-     *
-     * @returns {object}
-     */
-    public getChildrenStyles(): {display?: string, flexDirection?: string, justifyContent?: string} {
-        const styles = this.data.main.style();
-        if (_.isEmpty(styles.display)) {
-            return {};
-        }
-        return {
-            display: styles.display,
-            flexDirection: styles.flexDirection,
-            justifyContent: styles.justifyContent,
-        };
-    }
-
-    /**
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
      *
      * @returns styles
