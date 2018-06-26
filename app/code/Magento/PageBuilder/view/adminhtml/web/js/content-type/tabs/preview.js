@@ -224,9 +224,9 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
           if (args.id === tab.id) {
             _this3.setFocusedTab(_this3.parent.children().length - 1);
 
-            _uiEvents.off("mount:" + tab.id + ":tab-item");
+            _uiEvents.off("tab-item:" + tab.id + ":mountAfter");
           }
-        }, "mount:" + tab.id + ":tab-item");
+        }, "tab-item:" + tab.id + ":mountAfter");
 
         _this3.parent.addChild(tab, _this3.parent.children().length); // Update the default tab title when adding a new tab
 

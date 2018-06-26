@@ -222,9 +222,9 @@ export default class Preview extends PreviewCollection {
             events.on("tab-item:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === tab.id) {
                     this.setFocusedTab(this.parent.children().length - 1);
-                    events.off(`mount:${tab.id}:tab-item`);
+                    events.off(`tab-item:${tab.id}:mountAfter`);
                 }
-            }, `mount:${tab.id}:tab-item`);
+            }, `tab-item:${tab.id}:mountAfter`);
             this.parent.addChild(tab, this.parent.children().length);
 
             // Update the default tab title when adding a new tab
