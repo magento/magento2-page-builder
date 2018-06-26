@@ -34,6 +34,7 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.columnMoveByIndex(contentTypeIndex)}}" stepKey="waitForMoveHandle"/>
         <dragAndDrop selector1="{{PageBuilderColumnSection.columnMoveByIndex(contentTypeIndex)}}" selector2="{{PageBuilderActionsSection.contentTypeContainer(contentType.role, containerTargetIndex)}}" stepKey="moveContentTypeIntoContainer"/>
+        <waitForPageLoad stepKey="waitForDragOperation" />
     </actionGroup>
     <actionGroup name="openGridSizeForm">
         <arguments>
@@ -65,5 +66,16 @@
         <pressKey selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
         <waitForPageLoad stepKey="waitForUpdate" />
         <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabelGridSize(index, gridSize)}}" stepKey="validateGridSize" />
+    </actionGroup>
+    <actionGroup name="updateGridSizeInvalid">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="gridSize" defaultValue="12" type="string"/>
+            <argument name="errorMessage" type="string"/>
+        </arguments>
+        <fillField selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" userInput="{{gridSize}}" stepKey="enterGridSize"/>
+        <click selector="{{PageBuilderColumnSection.columnX(index)}}" stepKey="clickColumn" />
+        <waitForPageLoad stepKey="waitForAnimation" />
+        <seeElement selector="{{PageBuilderColumnSection.gridSizeError(errorMessage)}}" stepKey="verifyError"/>
     </actionGroup>
 </actionGroups>
