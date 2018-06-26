@@ -383,7 +383,7 @@ export default class Preview extends PreviewCollection {
      */
     public updateGridSize() {
         const newGridSize = parseInt(this.gridSizeInput().toString(), 10);
-        if (newGridSize) {
+        if (newGridSize || newGridSize === 0) {
             if (newGridSize !== this.resizeUtils.getGridSize()) {
                 try {
                     resizeGrid(

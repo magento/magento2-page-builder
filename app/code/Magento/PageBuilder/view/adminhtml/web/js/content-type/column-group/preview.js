@@ -371,7 +371,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
       var newGridSize = parseInt(this.gridSizeInput().toString(), 10);
 
-      if (newGridSize) {
+      if (newGridSize || newGridSize === 0) {
         if (newGridSize !== this.resizeUtils.getGridSize()) {
           try {
             (0, _gridSize.resizeGrid)(this.parent, newGridSize, this.gridSizeHistory);
