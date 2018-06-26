@@ -50,8 +50,8 @@ export default class Preview extends BasePreview {
                 data: {
                     role: this.config.name,
                     block_id: data.block_id,
-                    directive: this.data.main.html()
-                }
+                    directive: this.data.main.html(),
+                },
             };
 
             // Retrieve a state object representing the block from the preview controller and process it on the stage

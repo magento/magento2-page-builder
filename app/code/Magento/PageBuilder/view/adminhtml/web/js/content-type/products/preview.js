@@ -54,7 +54,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         var url = _config.getConfig("preview_url");
 
         var requestConfig = {
-          method: 'GET',
+          method: "GET",
           data: {
             role: _this2.config.name,
             directive: _this2.data.main.html()

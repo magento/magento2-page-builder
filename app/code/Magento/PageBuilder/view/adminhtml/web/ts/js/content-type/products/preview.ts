@@ -44,11 +44,11 @@ export default class Preview extends BasePreview {
 
             const url = Config.getConfig("preview_url");
             const requestConfig = {
-                method: 'GET',
+                method: "GET",
                 data: {
                     role: this.config.name,
                     directive: this.data.main.html(),
-                }
+                },
             };
 
             $.ajax(url, requestConfig)
