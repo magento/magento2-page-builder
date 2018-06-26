@@ -736,7 +736,17 @@
         <actionGroup ref="updateGridSizeInvalid" stepKey="enterNegativeGridSize">
             <argument name="gridSize" value="-50"/>
             <argument name="index" value="1"/>
-            <argument name="errorMessage" value="cannot be smaller"/>
+            <argument name="errorMessage" value="minimum grid size supported"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize1">
+            <argument name="gridSize" value="1"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="minimum grid size supported"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize0">
+            <argument name="gridSize" value="0"/>
+            <argument name="index" value="1"/>
+            <argument name="errorMessage" value="minimum grid size supported"/>
         </actionGroup>
     </test>
     <test name="ValidateDifferentGridSizePerGroup">
@@ -1016,9 +1026,9 @@
         </after>
         <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
+        <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
         <comment userInput="Enter Odd Default Grid Size" stepKey="comment1"/>
-        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidDefaultGridSize">
+        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidMaxGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_5}}"/>
         </actionGroup>
         <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
