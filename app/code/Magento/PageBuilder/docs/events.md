@@ -74,6 +74,10 @@ This document contains reference information for events dispatched in Page Build
 * [stage:ready:{{id}}](#stagereadyid)
 * [stage:renderTree:{{id}}](#stagerendertreeid)
 * [stage:updated](#stageupdated)
+* [focusChild:start](#focuschildstart)
+* [focusChild:stop](#focuschildstop)
+* [interaction:start](#interactionstart)
+* [interaction:stop](#interactionstop)
 * [state](#state)
 * [{{id}}:updated](#idupdated)
 * [googleMaps:authFailure](#googlemapsauthFailure)
@@ -489,6 +493,22 @@ Error
     stageId: number
 }
 ```
+
+[Back to top]
+
+### `focusChild:start`
+
+[Back to top]
+
+### `focusChild:stop`
+
+[Back to top]
+
+### `interaction:start`
+
+[Back to top]
+
+### `interaction:stop`
 
 [Back to top]
 

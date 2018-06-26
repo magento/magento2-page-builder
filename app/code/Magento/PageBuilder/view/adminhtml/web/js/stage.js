@@ -22,6 +22,7 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
       this.showBorders = _knockout.observable(false);
       this.interacting = _knockout.observable(false);
       this.userSelect = _knockout.observable(true);
+      this.focusChild = _knockout.observable(false);
       this.stageLoadingMessage = (0, _translate)("Please hold! we're just retrieving your content...");
       this.dataStore = new _dataStore();
       this.template = "Magento_PageBuilder/content-type/preview";
@@ -173,6 +174,14 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/resource/jquery/ui
 
       _uiEvents.on("interaction:stop", function () {
         return _this.interacting(false);
+      });
+
+      _uiEvents.on("focusChild:start", function () {
+        return _this.focusChild(true);
+      });
+
+      _uiEvents.on("focusChild:stop", function () {
+        return _this.focusChild(false);
       });
     };
     /**

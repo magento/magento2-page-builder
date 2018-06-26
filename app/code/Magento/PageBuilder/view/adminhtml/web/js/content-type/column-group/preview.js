@@ -429,6 +429,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
 
         _uiEvents.trigger("interaction:stop");
 
+        _uiEvents.trigger("focusChild:stop");
+
         (0, _jquery)(document).off("click focusin", this.onDocumentClick);
       }
     };
@@ -452,6 +454,8 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         (0, _jquery)(document).on("click focusin", this.onDocumentClick);
 
         _uiEvents.trigger("interaction:start");
+
+        _uiEvents.trigger("focusChild:start");
       }
     };
     /**

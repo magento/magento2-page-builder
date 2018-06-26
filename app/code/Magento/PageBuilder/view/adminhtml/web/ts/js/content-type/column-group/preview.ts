@@ -439,6 +439,7 @@ export default class Preview extends PreviewCollection {
         if (!this.gridSizeError()) {
             this.gridFormOpen(false);
             events.trigger("interaction:stop");
+            events.trigger("focusChild:stop");
             $(document).off("click focusin", this.onDocumentClick);
         }
     }
@@ -458,6 +459,7 @@ export default class Preview extends PreviewCollection {
             }, 200);
             $(document).on("click focusin", this.onDocumentClick);
             events.trigger("interaction:start");
+            events.trigger("focusChild:start");
         }
     }
 
