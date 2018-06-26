@@ -19,7 +19,7 @@ define(["uiEvents"], function (_uiEvents) {
       this.instance = instance;
       this.dataStore = dataStore;
 
-      _uiEvents.on("form:save:" + this.instance.id, function (data) {
+      _uiEvents.on("form:" + this.instance.id + ":save", function (data) {
         _this.dataStore.update(data);
       });
     }

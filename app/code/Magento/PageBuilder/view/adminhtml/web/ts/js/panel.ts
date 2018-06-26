@@ -93,7 +93,7 @@ export default class Panel implements PanelInterface {
      * Traverse up to the WYSIWYG component and set as full screen
      */
     public fullScreen(): void {
-        events.trigger(`stage:toggleFullscreen:${ this.parent.id }`);
+        events.trigger(`stage:${ this.parent.id }:toggleFullscreen`);
     }
 
     /**

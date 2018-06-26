@@ -227,9 +227,9 @@ export default class Preview extends PreviewCollection {
                         this.navigateToSlide(this.parent.children().length - 1);
                         slide.preview.onOptionEdit();
                     }, 500 );
-                    events.off(`slide:mountAfter:${slide.id}`);
+                    events.off(`mount:${slide.id}:slide`);
                 }
-            }, `slide:mountAfter:${slide.id}`);
+            }, `mount:${slide.id}:slide`);
             this.parent.addChild(slide, this.parent.children().length);
         });
     }

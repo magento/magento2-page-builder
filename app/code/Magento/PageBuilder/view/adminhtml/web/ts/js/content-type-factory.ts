@@ -102,9 +102,9 @@ function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLe
 
                 if (mountCounter === childrenLength) {
                     fire();
-                    events.off(`contentType:mountAfter:${contentType.id}`);
+                    events.off(`contentType:${contentType.id}:mountAfter`);
                 }
             }
-        }, `contentType:mountAfter:${contentType.id}` );
+        }, `contentType:${contentType.id}:mountAfter` );
     }
 }

@@ -126,7 +126,7 @@ define([
         addFile: function (file) {
             this._super();
 
-            events.trigger('image:uploadAfter:' + this.id, [file]);
+            events.trigger('image:' + this.id + ':uploadAfter', [file]);
 
             return this;
         },

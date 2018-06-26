@@ -106,10 +106,10 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
           if (mountCounter === childrenLength) {
             fire();
 
-            _uiEvents.off("contentType:mountAfter:" + contentType.id);
+            _uiEvents.off("contentType:" + contentType.id + ":mountAfter");
           }
         }
-      }, "contentType:mountAfter:" + contentType.id);
+      }, "contentType:" + contentType.id + ":mountAfter");
     }
   }
 

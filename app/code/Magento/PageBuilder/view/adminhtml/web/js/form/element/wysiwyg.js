@@ -63,7 +63,7 @@ define([
 
         /** Toggle PageBuilder full screen. */
         toggleFullScreen: function () {
-            events.trigger('stage:toggleFullscreen:' + this.pageBuilder.id, {});
+            events.trigger('stage:' + this.pageBuilder.id + ':toggleFullscreen', {});
         },
 
         /** Init listeners of stage. */
@@ -77,7 +77,7 @@ define([
             events.on('stage:' + id + ':masterFormatRenderAfter', function (args) {
                 this.value(args.value);
             }.bind(this));
-            events.on('pagebuilder:fullScreen:' + id, function (args) {
+            events.on('pagebuilder:' + id + 'fullScreen', function (args) {
                 if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(false);
                 } else if (args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {

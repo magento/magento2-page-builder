@@ -83,7 +83,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
 
 
     _proto.fullScreen = function fullScreen() {
-      _uiEvents.trigger("stage:toggleFullscreen:" + this.parent.id);
+      _uiEvents.trigger("stage:" + this.parent.id + ":toggleFullscreen");
     };
     /**
      * Collapse the panel into the side of the UI

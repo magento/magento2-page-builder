@@ -65,7 +65,7 @@ This document contains reference information for events dispatched in Page Build
 * [image:uploadAfter](#imageuploadafter)
 * [stage:interactionStart](#stageinteractionstart)
 * [stage:interactionStop](#stageinteractionstop)
-* [stage:toggleFullscreen:{{id}}](#stagetogglefullscreenid)
+* [stage:{{id}}:toggleFullscreen](#stageidtogglefullscreen)
 * [previewData:updateAfter](#previewdataupdateafter)
 * [previewSortable:sortstart](#previewsortablesortstart)
 * [previewSortable:sortupdate](#previewsortablesortupdate)
@@ -78,10 +78,10 @@ This document contains reference information for events dispatched in Page Build
 * [googleMaps:authFailure](#googlemapsauthFailure)
 
 ## `contentType:*` events
-All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:contentType:{{event}}`) like the following:
+All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
 * `text:contentType:create`
 * `row:mountAfter`
-* `tab-item:contentType:mountAfter`
+* `tab-item:mountAfter`
 
 ### `contentType:create`
 
@@ -371,7 +371,7 @@ Function
 
 [Back to top]
 
-### `stage:toggleFullscreen:{{id}}`
+### `stage:{{id}}:toggleFullscreen`
 
 **Triggers**
 

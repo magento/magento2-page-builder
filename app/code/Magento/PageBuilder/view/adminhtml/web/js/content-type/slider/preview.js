@@ -212,9 +212,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/resource
               slide.preview.onOptionEdit();
             }, 500);
 
-            _uiEvents.off("slide:mountAfter:" + slide.id);
+            _uiEvents.off("mount:" + slide.id + ":slide");
           }
-        }, "slide:mountAfter:" + slide.id);
+        }, "mount:" + slide.id + ":slide");
 
         _this2.parent.addChild(slide, _this2.parent.children().length);
       });

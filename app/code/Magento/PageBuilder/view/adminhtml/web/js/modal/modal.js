@@ -33,7 +33,7 @@ define([
          * @param {String} id
          */
         startListen: function (id) {
-            events.on('form:save:' + id, function () {
+            events.on('form:' + id + ':save', function () {
                 this.closeModal();
             }.bind(this));
 
