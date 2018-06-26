@@ -16,23 +16,21 @@ export interface DataObject {
 
 export default class DataStore {
     private state: DataObject = {};
-    private events: JQuery.PlainObject = $({});
+    private events: JQuery = $({});
     private previousState: DataObject = {};
 
     /**
      * Retrieve data from the state for an editable area
-     */
-    public get(): DataObject {
-        return this.state;
-    }
-
-    /**
-     * Get a specific key of data
      *
      * @param {string} key
+     * @returns {DataObject | string | number | boolean | any[] | null | undefined}
      */
-    public getKey(key: string) {
-        return this.state[key];
+    public get(key?: string): DataObject | undefined | null | string | number | boolean | any[] {
+        if (key) {
+            return this.state[key];
+        }
+
+        return this.state;
     }
 
     /**
@@ -78,7 +76,9 @@ export default class DataStore {
                     handler(data.state, event);
                 }
             } else {
-                handler(data.state, event);
+                if (this.previousState !== data.state) {
+                    handler(data.state, event);
+                }
             }
         });
     }

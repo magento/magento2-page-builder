@@ -17,19 +17,16 @@ define(["jquery"], function (_jquery) {
 
     /**
      * Retrieve data from the state for an editable area
-     */
-    _proto.get = function get() {
-      return this.state;
-    };
-    /**
-     * Get a specific key of data
      *
      * @param {string} key
+     * @returns {DataObject | string | number | boolean | any[] | null | undefined}
      */
+    _proto.get = function get(key) {
+      if (key) {
+        return this.state[key];
+      }
 
-
-    _proto.getKey = function getKey(key) {
-      return this.state[key];
+      return this.state;
     };
     /**
      * Update the state for the content type
@@ -79,7 +76,9 @@ define(["jquery"], function (_jquery) {
             handler(data.state, event);
           }
         } else {
-          handler(data.state, event);
+          if (_this.previousState !== data.state) {
+            handler(data.state, event);
+          }
         }
       });
     };

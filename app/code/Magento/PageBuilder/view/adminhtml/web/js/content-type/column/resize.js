@@ -108,7 +108,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     var _proto = ResizeUtils.prototype;
 
     _proto.getGridSize = function getGridSize() {
-      return parseInt(this.columnGroup.dataStore.getKey("gridSize").toString(), 10);
+      return parseInt(this.columnGroup.dataStore.get("gridSize").toString(), 10);
     };
     /**
      * Get the smallest column width possible

@@ -108,7 +108,7 @@ export default class ResizeUtils {
      * @returns {number}
      */
     public getGridSize(): number {
-        return parseInt(this.columnGroup.dataStore.getKey("gridSize").toString(), 10);
+        return parseInt(this.columnGroup.dataStore.get("gridSize").toString(), 10);
     }
 
     /**
