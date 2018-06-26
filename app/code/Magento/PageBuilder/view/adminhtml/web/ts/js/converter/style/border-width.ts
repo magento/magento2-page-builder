@@ -24,6 +24,8 @@ export default class BorderWidth implements ConverterInterface {
      * @returns {string | object}
      */
     public toDom(name: string, data: object): string | object {
-        return data[name] + "px";
+        if (data[name]) {
+            return data[name] + "px";
+        }
     }
 }
