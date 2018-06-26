@@ -15,8 +15,8 @@ class Config
     const DEFAULT_PREVIEW_COMPONENT = 'Magento_PageBuilder/js/content-type/preview';
     const DEFAULT_MASTER_COMPONENT = 'Magento_PageBuilder/js/content-type/master';
 
-    const XML_COLUMN_GRID_DEFAULT = 'cms/pagebuilder/column_grid_default';
-    const XML_COLUMN_GRID_MAX = 'cms/pagebuilder/column_grid_max';
+    const XML_PATH_COLUMN_GRID_DEFAULT = 'cms/pagebuilder/column_grid_default';
+    const XML_PATH_COLUMN_GRID_MAX = 'cms/pagebuilder/column_grid_max';
 
     /**
      * @var \Magento\PageBuilder\Model\Config\ConfigInterface
@@ -94,8 +94,8 @@ class Config
             'stage_config' => $this->data,
             'media_url' => $this->urlBuilder->getBaseUrl(['_type' => UrlInterface::URL_TYPE_MEDIA]),
             'preview_url' => $this->frontendUrlBuilder->getUrl('pagebuilder/contenttype/preview'),
-            'column_grid_default' => $this->scopeConfig->getValue(self::XML_COLUMN_GRID_DEFAULT),
-            'column_grid_max' => $this->scopeConfig->getValue(self::XML_COLUMN_GRID_MAX),
+            'column_grid_default' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_DEFAULT),
+            'column_grid_max' => $this->scopeConfig->getValue(self::XML_PATH_COLUMN_GRID_MAX),
         ];
     }
 
