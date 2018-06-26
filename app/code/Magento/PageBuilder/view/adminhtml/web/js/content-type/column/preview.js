@@ -24,7 +24,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
       _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
 
-      _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "gridSize");
+      _this.parent.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "grid_size");
 
       return _this;
     }
@@ -117,7 +117,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
         var defaultGridSize = (0, _gridSize.getDefaultGridSize)();
         return (0, _contentTypeFactory)(_config.getContentTypeConfig("column-group"), this.parent.parent, this.parent.stageId, {
-          gridSize: defaultGridSize
+          grid_size: defaultGridSize
         }).then(function (columnGroup) {
           var col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0);
           return Promise.all([(0, _contentTypeFactory)(_this3.parent.config, columnGroup, columnGroup.stageId, {

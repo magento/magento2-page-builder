@@ -42,7 +42,7 @@ export default class Preview extends PreviewCollection {
 
         // Update the width label for the column
         this.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "width");
-        this.parent.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "gridSize");
+        this.parent.parent.dataStore.subscribe(this.updateDisplayLabel.bind(this), "grid_size");
     }
 
     /**
@@ -133,7 +133,7 @@ export default class Preview extends PreviewCollection {
                 Config.getContentTypeConfig("column-group"),
                 this.parent.parent,
                 this.parent.stageId,
-                {gridSize: defaultGridSize},
+                {grid_size: defaultGridSize},
             ).then((columnGroup: ContentTypeCollectionInterface) => {
                 const col1Width = (Math.ceil(defaultGridSize / 2) * 100 / defaultGridSize).toFixed(
                     Math.round(100 / defaultGridSize) !== 100 / defaultGridSize ? 8 : 0,

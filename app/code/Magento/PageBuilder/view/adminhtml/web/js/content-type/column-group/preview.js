@@ -70,7 +70,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
       _this.resizeUtils = new _resize(_this.parent); // Keep track of the grid size in an observable
 
       _this.parent.dataStore.subscribe(function (state) {
-        var gridSize = parseInt(state.gridSize.toString(), 10);
+        var gridSize = parseInt(state.grid_size.toString(), 10);
 
         _this.gridSize(gridSize);
 
@@ -79,7 +79,7 @@ define(["jquery", "knockout", "uiEvents", "underscore", "Magento_PageBuilder/js/
         if (gridSize) {
           _this.gridSizeArray(new Array(gridSize));
         }
-      }, "gridSize");
+      }, "grid_size");
 
       _uiEvents.on("contentType:removed", function (args) {
         if (args.parent.id === _this.parent.id) {

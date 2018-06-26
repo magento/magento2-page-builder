@@ -17,8 +17,8 @@ import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
-import ColumnBindResizeHandleEventParamsInterface from "../column/column-bind-resize-handle-event-params";
-import ColumnInitElementEventParamsInterface from "../column/column-init-element-event-params";
+import BindResizeHandleEventParamsInterface from "../column/bind-resize-handle-event-params";
+import InitElementEventParamsInterface from "../column/init-element-event-params";
 import ColumnPreview from "../column/preview";
 import ResizeUtils, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
@@ -36,7 +36,7 @@ export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
     public hasEmptyChild: KnockoutComputed<boolean> = ko.computed(() => {
         let empty: boolean = false;
-        (this.parent as ColumnGroup).getChildren()()
+        this.parent.getChildren()()
             .forEach((column: ColumnGroup) => {
                 if (column.getChildren()().length === 0) {
                     empty = true;
@@ -91,13 +91,13 @@ export default class Preview extends PreviewCollection {
 
         // Keep track of the grid size in an observable
         this.parent.dataStore.subscribe((state: DataObject) => {
-            const gridSize = parseInt(state.gridSize.toString(), 10);
+            const gridSize = parseInt(state.grid_size.toString(), 10);
             this.gridSize(gridSize);
             this.gridSizeInput(gridSize);
             if (gridSize) {
                 this.gridSizeArray(new Array(gridSize));
             }
-        }, "gridSize");
+        }, "grid_size");
 
         events.on("contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
@@ -106,13 +106,13 @@ export default class Preview extends PreviewCollection {
         });
 
         // Listen for resizing events from child columns
-        events.on("column:bindResizeHandle", (args: ColumnBindResizeHandleEventParamsInterface) => {
+        events.on("column:bindResizeHandle", (args: BindResizeHandleEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
                 (this as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
             }
         });
-        events.on("column:initElement", (args: ColumnInitElementEventParamsInterface) => {
+        events.on("column:initElement", (args: InitElementEventParamsInterface) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
                 (this as ColumnGroupPreview).bindDraggable(args.column);

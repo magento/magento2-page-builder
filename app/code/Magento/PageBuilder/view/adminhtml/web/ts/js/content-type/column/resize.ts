@@ -8,93 +8,6 @@ import {outwardSearch} from "../../utils/array";
 import {ColumnWidth, GroupPositionCache, MaxGhostWidth, ResizeHistory} from "../column-group/preview";
 import ColumnPreview from "./preview";
 
-/**
- * Retrieve the index of the column within it's group
- *
- * @param {ContentTypeCollectionInterface<ColumnPreview>} column
- * @returns {number}
- */
-export function getColumnIndexInGroup(column: ContentTypeCollectionInterface<ColumnPreview>): number {
-    return column.parent.children().indexOf(column);
-}
-
-/**
- * Retrieve the adjacent column based on a direction of +1 or -1
- *
- * @param {ContentTypeCollectionInterface<Preview>} column
- * @param {"+1" | "-1"} direction
- * @returns {ContentTypeCollectionInterface<Preview>}
- */
-export function getAdjacentColumn(
-    column: ContentTypeCollectionInterface<ColumnPreview>,
-    direction: "+1" | "-1",
-): ContentTypeCollectionInterface<ColumnPreview> {
-    const currentIndex = getColumnIndexInGroup(column);
-    if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
-        return column.parent.children()[currentIndex + parseInt(direction, 10)];
-    }
-    return null;
-}
-
-/**
- * Determine the max ghost width based on the calculated columns
- *
- * @param {ColumnWidth[]} columnWidths
- * @returns {MaxGhostWidth}
- */
-export function determineMaxGhostWidth(columnWidths: ColumnWidth[]): MaxGhostWidth {
-    const leftColumns = columnWidths.filter((width) => {
-        return width.forColumn === "left";
-    });
-    const rightColumns = columnWidths.filter((width) => {
-        return width.forColumn === "right";
-    });
-    return {
-        left: leftColumns[0].position,
-        right: rightColumns[rightColumns.length - 1].position,
-    };
-}
-
-/**
- * Return the column width to 8 decimal places if it's not a whole number
- *
- * @param {number} width
- * @returns {string}
- */
-export function getRoundedColumnWidth(width: number): number {
-    return Number((width).toFixed(
-        Math.round(width) !== width ? 8 : 0,
-    ));
-}
-
-/**
- * Compare if two numbers are within a certain threshold of each other
- *
- * comparator(10,11,2) => true
- * comparator(1.1,1.11,0.5) => true
- *
- * @param {number} num1
- * @param {number} num2
- * @param {number} threshold
- * @returns {boolean}
- */
-export function comparator(num1: number, num2: number, threshold: number): boolean {
-    return (num1 > (num2 - (threshold / 2)) && num1 < (num2 + (threshold / 2)));
-}
-
-/**
- * Update the width of a column
- *
- * @param {ContentTypeCollectionInterface<ColumnPreview>} column
- * @param {number} width
- */
-export function updateColumnWidth(column: ContentTypeCollectionInterface<ColumnPreview>, width: number): void {
-    column.dataStore.update(
-        parseFloat(width.toString()) + "%",
-        "width",
-    );
-}
-
 export default class ResizeUtils {
     private columnGroup: ContentTypeCollectionInterface;
 
@@ -108,7 +21,7 @@ export default class ResizeUtils {
      * @returns {number}
      */
     public getGridSize(): number {
-        return parseInt(this.columnGroup.dataStore.get("gridSize").toString(), 10);
+        return parseInt(this.columnGroup.dataStore.get("grid_size").toString(), 10);
     }
 
     /**
@@ -414,3 +327,91 @@ export default class ResizeUtils {
         }
     }
 }
+
+/**
+ * Retrieve the index of the column within it's group
+ *
+ * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+ * @returns {number}
+ */
+export function getColumnIndexInGroup(column: ContentTypeCollectionInterface<ColumnPreview>): number {
+    return column.parent.children().indexOf(column);
+}
+
+/**
+ * Retrieve the adjacent column based on a direction of +1 or -1
+ *
+ * @param {ContentTypeCollectionInterface<Preview>} column
+ * @param {"+1" | "-1"} direction
+ * @returns {ContentTypeCollectionInterface<Preview>}
+ */
+export function getAdjacentColumn(
+    column: ContentTypeCollectionInterface<ColumnPreview>,
+    direction: "+1" | "-1",
+): ContentTypeCollectionInterface<ColumnPreview> {
+    const currentIndex = getColumnIndexInGroup(column);
+    if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
+        return column.parent.children()[currentIndex + parseInt(direction, 10)];
+    }
+    return null;
+}
+
+/**
+ * Determine the max ghost width based on the calculated columns
+ *
+ * @param {ColumnWidth[]} columnWidths
+ * @returns {MaxGhostWidth}
+ */
+export function determineMaxGhostWidth(columnWidths: ColumnWidth[]): MaxGhostWidth {
+    const leftColumns = columnWidths.filter((width) => {
+        return width.forColumn === "left";
+    });
+    const rightColumns = columnWidths.filter((width) => {
+        return width.forColumn === "right";
+    });
+    return {
+        left: leftColumns[0].position,
+        right: rightColumns[rightColumns.length - 1].position,
+    };
+}
+
+/**
+ * Return the column width to 8 decimal places if it's not a whole number
+ *
+ * @param {number} width
+ * @returns {string}
+ */
+export function getRoundedColumnWidth(width: number): number {
+    return Number((width).toFixed(
+        Math.round(width) !== width ? 8 : 0,
+    ));
+}
+
+/**
+ * Compare if two numbers are within a certain threshold of each other
+ *
+ * comparator(10,11,2) => true
+ * comparator(1.1,1.11,0.5) => true
+ *
+ * @param {number} num1
+ * @param {number} num2
+ * @param {number} threshold
+ * @returns {boolean}
+ */
+export function comparator(num1: number, num2: number, threshold: number): boolean {
+    return (num1 > (num2 - (threshold / 2)) && num1 < (num2 + (threshold / 2)));
+}
+
+/**
+ * Update the width of a column
+ *
+ * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+ * @param {number} width
+ */
+export function updateColumnWidth(column: ContentTypeCollectionInterface<ColumnPreview>, width: number): void {
+    column.dataStore.update(
+        parseFloat(width.toString()) + "%",
+        "width",
+    );
+}
+

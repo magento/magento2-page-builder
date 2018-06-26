@@ -7,8 +7,8 @@ import ContentTypeCollectionInterface from "../../content-type-collection.d";
 import ColumnGroupPreview from "../column-group/preview";
 import ColumnPreview from "./preview";
 
-export default interface ColumnInitElementEventParamsInterface {
+export default interface BindResizeHandleEventParamsInterface {
     column: ContentTypeCollectionInterface<ColumnPreview>;
-    element: JQuery;
+    handle: JQuery;
     parent: ContentTypeCollectionInterface<ColumnGroupPreview>;
 }

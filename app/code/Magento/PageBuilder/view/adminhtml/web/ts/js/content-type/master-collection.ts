@@ -5,7 +5,7 @@
 
 import BaseMaster from "./master";
 
-export default class ContentCollection extends BaseMaster {
+export default class MasterCollection extends BaseMaster {
     /**
      * Retrieve the child template
      *

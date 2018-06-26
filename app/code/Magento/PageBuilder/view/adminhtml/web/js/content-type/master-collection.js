@@ -6,16 +6,16 @@ define(["Magento_PageBuilder/js/content-type/master"], function (_master) {
 
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
-  var ContentCollection =
+  var MasterCollection =
   /*#__PURE__*/
   function (_BaseMaster) {
-    _inheritsLoose(ContentCollection, _BaseMaster);
+    _inheritsLoose(MasterCollection, _BaseMaster);
 
-    function ContentCollection() {
+    function MasterCollection() {
       return _BaseMaster.apply(this, arguments) || this;
     }
 
-    _createClass(ContentCollection, [{
+    _createClass(MasterCollection, [{
       key: "renderChildTemplate",
 
       /**
@@ -28,9 +28,9 @@ define(["Magento_PageBuilder/js/content-type/master"], function (_master) {
       }
     }]);
 
-    return ContentCollection;
+    return MasterCollection;
   }(_master);
 
-  return ContentCollection;
+  return MasterCollection;
 });
 //# sourceMappingURL=master-collection.js.map

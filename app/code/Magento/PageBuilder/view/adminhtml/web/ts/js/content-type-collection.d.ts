@@ -4,10 +4,12 @@
  */
 
 import ContentTypeInterface from "./content-type.d";
-import Master from "./content-type/master";
-import Preview from "./content-type/preview";
+import MasterCollection from "./content-type/master-collection";
+import PreviewCollection from "./content-type/preview-collection";
 
-export default interface ContentTypeCollectionInterface<P = Preview, M = Master> extends ContentTypeInterface<P, M> {
+export default interface ContentTypeCollectionInterface<P = PreviewCollection, M = MasterCollection>
+    extends ContentTypeInterface<P, M>
+{
     children: KnockoutObservableArray<any>;
 
     addChild(child: ContentTypeInterface, index?: number): void;

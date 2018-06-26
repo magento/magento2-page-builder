@@ -4,93 +4,6 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-
-  /**
-   * Retrieve the index of the column within it's group
-   *
-   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-   * @returns {number}
-   */
-  function getColumnIndexInGroup(column) {
-    return column.parent.children().indexOf(column);
-  }
-  /**
-   * Retrieve the adjacent column based on a direction of +1 or -1
-   *
-   * @param {ContentTypeCollectionInterface<Preview>} column
-   * @param {"+1" | "-1"} direction
-   * @returns {ContentTypeCollectionInterface<Preview>}
-   */
-
-
-  function getAdjacentColumn(column, direction) {
-    var currentIndex = getColumnIndexInGroup(column);
-
-    if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
-      return column.parent.children()[currentIndex + parseInt(direction, 10)];
-    }
-
-    return null;
-  }
-  /**
-   * Determine the max ghost width based on the calculated columns
-   *
-   * @param {ColumnWidth[]} columnWidths
-   * @returns {MaxGhostWidth}
-   */
-
-
-  function determineMaxGhostWidth(columnWidths) {
-    var leftColumns = columnWidths.filter(function (width) {
-      return width.forColumn === "left";
-    });
-    var rightColumns = columnWidths.filter(function (width) {
-      return width.forColumn === "right";
-    });
-    return {
-      left: leftColumns[0].position,
-      right: rightColumns[rightColumns.length - 1].position
-    };
-  }
-  /**
-   * Return the column width to 8 decimal places if it's not a whole number
-   *
-   * @param {number} width
-   * @returns {string}
-   */
-
-
-  function getRoundedColumnWidth(width) {
-    return Number(width.toFixed(Math.round(width) !== width ? 8 : 0));
-  }
-  /**
-   * Compare if two numbers are within a certain threshold of each other
-   *
-   * comparator(10,11,2) => true
-   * comparator(1.1,1.11,0.5) => true
-   *
-   * @param {number} num1
-   * @param {number} num2
-   * @param {number} threshold
-   * @returns {boolean}
-   */
-
-
-  function comparator(num1, num2, threshold) {
-    return num1 > num2 - threshold / 2 && num1 < num2 + threshold / 2;
-  }
-  /**
-   * Update the width of a column
-   *
-   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-   * @param {number} width
-   */
-
-
-  function updateColumnWidth(column, width) {
-    column.dataStore.update(parseFloat(width.toString()) + "%", "width");
-  }
-
   var ResizeUtils =
   /*#__PURE__*/
   function () {
@@ -108,7 +21,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     var _proto = ResizeUtils.prototype;
 
     _proto.getGridSize = function getGridSize() {
-      return parseInt(this.columnGroup.dataStore.get("gridSize").toString(), 10);
+      return parseInt(this.columnGroup.dataStore.get("grid_size").toString(), 10);
     };
     /**
      * Get the smallest column width possible
@@ -400,6 +313,93 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
     return ResizeUtils;
   }();
+  /**
+   * Retrieve the index of the column within it's group
+   *
+   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+   * @returns {number}
+   */
+
+
+  function getColumnIndexInGroup(column) {
+    return column.parent.children().indexOf(column);
+  }
+  /**
+   * Retrieve the adjacent column based on a direction of +1 or -1
+   *
+   * @param {ContentTypeCollectionInterface<Preview>} column
+   * @param {"+1" | "-1"} direction
+   * @returns {ContentTypeCollectionInterface<Preview>}
+   */
+
+
+  function getAdjacentColumn(column, direction) {
+    var currentIndex = getColumnIndexInGroup(column);
+
+    if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
+      return column.parent.children()[currentIndex + parseInt(direction, 10)];
+    }
+
+    return null;
+  }
+  /**
+   * Determine the max ghost width based on the calculated columns
+   *
+   * @param {ColumnWidth[]} columnWidths
+   * @returns {MaxGhostWidth}
+   */
+
+
+  function determineMaxGhostWidth(columnWidths) {
+    var leftColumns = columnWidths.filter(function (width) {
+      return width.forColumn === "left";
+    });
+    var rightColumns = columnWidths.filter(function (width) {
+      return width.forColumn === "right";
+    });
+    return {
+      left: leftColumns[0].position,
+      right: rightColumns[rightColumns.length - 1].position
+    };
+  }
+  /**
+   * Return the column width to 8 decimal places if it's not a whole number
+   *
+   * @param {number} width
+   * @returns {string}
+   */
+
+
+  function getRoundedColumnWidth(width) {
+    return Number(width.toFixed(Math.round(width) !== width ? 8 : 0));
+  }
+  /**
+   * Compare if two numbers are within a certain threshold of each other
+   *
+   * comparator(10,11,2) => true
+   * comparator(1.1,1.11,0.5) => true
+   *
+   * @param {number} num1
+   * @param {number} num2
+   * @param {number} threshold
+   * @returns {boolean}
+   */
+
+
+  function comparator(num1, num2, threshold) {
+    return num1 > num2 - threshold / 2 && num1 < num2 + threshold / 2;
+  }
+  /**
+   * Update the width of a column
+   *
+   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+   * @param {number} width
+   */
+
+
+  function updateColumnWidth(column, width) {
+    column.dataStore.update(parseFloat(width.toString()) + "%", "width");
+  }
 
   return Object.assign(ResizeUtils, {
     getColumnIndexInGroup: getColumnIndexInGroup,
