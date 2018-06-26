@@ -71,6 +71,8 @@ function validateNewGridSize(columnGroup: ContentTypeCollectionInterface<ColumnG
     // Validate against the max grid size
     if (newGridSize > getMaxGridSize()) {
         throw new GridSizeError($t(`The maximum grid size supported is ${getMaxGridSize()}.`));
+    } else if (newGridSize < 2) {
+        throw new GridSizeError($t("The minimum grid size supported is 2."));
     }
 
     // Validate that the operation will be successful
