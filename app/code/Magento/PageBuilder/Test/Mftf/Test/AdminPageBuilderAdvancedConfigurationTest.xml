@@ -2487,35 +2487,8 @@
             <argument name="property" value="PageBuilderPaddingPropertyUnique"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
-        <!-- Stage: Check All Attributes -->
-        <comment userInput="Stage: Check All Attributes" stepKey="commentStageCheck1"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateStage1">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
-            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
-        </actionGroup>
-        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <!-- Stage: Check All Attributes -->
-        <comment userInput="Stage: Check All Attributes" stepKey="commentStageCheck2"/>
-        <actionGroup ref="validateAdvancedStyleWithAllUpdated" stepKey="validateStage2">
-            <argument name="page" value="TextOnStage"/>
-            <argument name="alignment" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
-            <argument name="border" value="PageBuilderAdvancedBorderPropertySolid"/>
-            <argument name="borderColor" value="PageBuilderAdvancedBorderColorProperty_green"/>
-            <argument name="borderWidth" value="PageBuilderAdvancedBorderWidthProperty10"/>
-            <argument name="borderRadius" value="PageBuilderAdvancedBorderRadiusProperty12"/>
-            <argument name="cssClasses" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
-            <argument name="margin" value="PageBuilderMarginsPropertyUnique"/>
-            <argument name="padding" value="PageBuilderPaddingPropertyUnique"/>
-        </actionGroup>
         <!-- Clear Advanced Configuration Section -->
         <comment userInput="Clear Advanced Configuration Section" stepKey="commentClearAdvancedConfigurationSection"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditMenuOnStage2">
@@ -2529,32 +2502,34 @@
         <actionGroup ref="selectSlideOutPanelFieldGeneral" stepKey="selectBorderDefault">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderColor">
-            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_green"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderColorEmpty">
+            <argument name="property" value="PageBuilderAdvancedBorderColorProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderWidth">
-            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty500"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderWidthEmpty">
+            <argument name="property" value="PageBuilderAdvancedBorderWidthProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearBorderRadius">
-            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty500"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterBorderRadiusEmpty">
+            <argument name="property" value="PageBuilderAdvancedBorderRadiusProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldGeneral" stepKey="clearCSSClasses">
-            <argument name="property" value="PageBuilderAdvancedCssClassesPropertyThreeClasses"/>
+        <actionGroup ref="fillSlideOutPanelField" stepKey="enterCSSClassesEmpty">
+            <argument name="property" value="PageBuilderAdvancedCssClassesProperty_Empty"/>
         </actionGroup>
-        <actionGroup ref="clearSlideOutPanelFieldMarginsAndPadding" stepKey="clearMarginsAndPaddings">
-            <argument name="property" value="PageBuilderMarginsPropertyUnique"/>
+        <actionGroup ref="fillSlideOutPanelFieldMargins" stepKey="enterMarginsEmpty">
+            <argument name="property" value="PageBuilderMarginsProperty_Empty"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldPadding" stepKey="enterPaddingEmpty">
+            <argument name="property" value="PageBuilderPaddingProperty_Empty"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <!-- Stage: Check All Attributes -->
-        <comment userInput="Stage: Check All Attributes" stepKey="commentStageCheck3"/>
+        <comment userInput="Stage: Check All Attributes" stepKey="commentStageCheck2"/>
         <actionGroup ref="validateAdvancedStyleWithNoConfiguration" stepKey="validateStage3">
             <argument name="page" value="TextOnStage"/>
         </actionGroup>
-        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave2"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Stage: Check All Attributes -->
-        <comment userInput="Stage: Check All Attributes" stepKey="commentStageCheck4"/>
+        <comment userInput="Validate Stage After Save" stepKey="commentStageAfterSave3"/>
         <actionGroup ref="validateAdvancedStyleWithNoConfiguration" stepKey="validateStage4">
             <argument name="page" value="TextOnStage"/>
         </actionGroup>
