@@ -76,8 +76,6 @@ This document contains reference information for events dispatched in Page Build
 * [stage:updated](#stageupdated)
 * [focusChild:start](#focuschildstart)
 * [focusChild:stop](#focuschildstop)
-* [interaction:start](#interactionstart)
-* [interaction:stop](#interactionstop)
 * [state](#state)
 * [{{id}}:updated](#idupdated)
 * [googleMaps:authFailure](#googlemapsauthFailure)
@@ -501,14 +499,6 @@ Error
 [Back to top]
 
 ### `focusChild:stop`
-
-[Back to top]
-
-### `interaction:start`
-
-[Back to top]
-
-### `interaction:stop`
 
 [Back to top]
 
