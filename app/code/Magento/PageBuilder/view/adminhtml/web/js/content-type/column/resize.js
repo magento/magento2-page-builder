@@ -113,24 +113,26 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     /**
      * Get the smallest column width possible
      *
+     * @param {number} gridSize
      * @returns {number}
      */
 
 
-    _proto.getSmallestColumnWidth = function getSmallestColumnWidth() {
-      var gridSize = this.getGridSize();
+    _proto.getSmallestColumnWidth = function getSmallestColumnWidth(gridSize) {
+      gridSize = gridSize || this.getGridSize();
       return this.getAcceptedColumnWidth(parseFloat((100 / gridSize).toString()).toFixed(Math.round(100 / gridSize) !== 100 / gridSize ? 8 : 0));
     };
     /**
      * Get an accepted column width to resolve rounding issues, e.g. turn 49.995% into 50%
      *
      * @param {string} width
+     * @param {number} gridSize
      * @returns {number}
      */
 
 
-    _proto.getAcceptedColumnWidth = function getAcceptedColumnWidth(width) {
-      var gridSize = this.getGridSize();
+    _proto.getAcceptedColumnWidth = function getAcceptedColumnWidth(width, gridSize) {
+      gridSize = gridSize || this.getGridSize();
       var newWidth = 0;
 
       for (var i = gridSize; i > 0; i--) {

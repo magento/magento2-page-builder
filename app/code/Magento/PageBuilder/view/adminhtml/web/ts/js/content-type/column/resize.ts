@@ -114,10 +114,11 @@ export default class ResizeUtils {
     /**
      * Get the smallest column width possible
      *
+     * @param {number} gridSize
      * @returns {number}
      */
-    public getSmallestColumnWidth(): number {
-        const gridSize = this.getGridSize();
+    public getSmallestColumnWidth(gridSize?: number): number {
+        gridSize = gridSize || this.getGridSize();
         return this.getAcceptedColumnWidth(parseFloat((100 / gridSize).toString()).toFixed(
             Math.round(100 / gridSize) !== 100 / gridSize ? 8 : 0,
         ));
@@ -127,10 +128,11 @@ export default class ResizeUtils {
      * Get an accepted column width to resolve rounding issues, e.g. turn 49.995% into 50%
      *
      * @param {string} width
+     * @param {number} gridSize
      * @returns {number}
      */
-    public getAcceptedColumnWidth(width: string): number {
-        const gridSize = this.getGridSize();
+    public getAcceptedColumnWidth(width: string, gridSize?: number): number {
+        gridSize = gridSize || this.getGridSize();
         let newWidth = 0;
         for (let i = gridSize; i > 0; i--) {
             const percentage = parseFloat((100 / gridSize * i).toFixed(

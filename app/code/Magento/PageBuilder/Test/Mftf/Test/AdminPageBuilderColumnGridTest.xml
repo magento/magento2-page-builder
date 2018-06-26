@@ -126,7 +126,7 @@
             <features value="Pagebuilder"/>
             <stories value="Column"/>
             <title value="Set the grid size to 7"/>
-            <description value="Set the grid size to 14 and validate columns adjust to fit new grid size"/>
+            <description value="Set the grid size to 7 and validate columns adjust to fit new grid size"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-950"/>
             <testCaseId value="MC-2283"/>
@@ -196,6 +196,57 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="1" stepKey="seeNumberOfColumns1"/>
         <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','1/1')}}" stepKey="validateSingleColumnOfFullWidth"/>
+    </test>
+    <test name="ValidateColumnsMaintainRatioWithoutHistory">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Set the grid size and restore without history"/>
+            <description value="Set the grid size to 6, change 1st column to 1/6 clear history and change back to 12 grid size"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2332"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+            <group value="pagebuilder-divider"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo6">
+            <argument name="gridSize" value="6"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','3/6')}}" stepKey="validateLeftColumnWidth"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2','3/6')}}" stepKey="validateRightColumnWidth"/>
+        <!-- Drag divider into first column to clear history -->
+        <comment userInput="Drag divider into first column to clear history" stepKey="commentAddDividerToColumn" />
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragIntoStage">
+            <argument name="contentType" value="PageBuilderDividerContentType"/>
+            <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <!-- Resize first column to 1/6 -->
+        <comment userInput="Resize first column to 1/6" stepKey="commentResizeColumn" />
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','1/6')}}" stepKey="validateLeftColumnWidth2"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2','5/6')}}" stepKey="validateRightColumnWidth2"/>
+        <!-- Change grid size back to 12 and validate column maintained ratio -->
+        <comment userInput="Change grid size back to 12 and validate column maintained ratio" stepKey="commentSetGridSizeTo12" />
+        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo12">
+            <argument name="gridSize" value="12"/>
+        </actionGroup>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','2/12')}}" stepKey="validateLeftColumnWidth3"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2','10/12')}}" stepKey="validateRightColumnWidth3"/>
     </test>
     <test name="ValidateGridSizeFormDisablesStage">
         <annotations>
