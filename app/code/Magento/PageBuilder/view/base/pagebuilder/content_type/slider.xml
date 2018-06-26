@@ -7,21 +7,27 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="slider" sortOrder="30" translate="label">
-            <label>Slider</label>
-            <icon>icon-pagebuilder-slider</icon>
-            <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/content-type/slider/preview</preview_component>
-            <master_component>Magento_PageBuilder/js/content-type/master-collection</master_component>
-            <form>pagebuilder_slider_form</form>
-            <group>media</group>
+        <type name="slider"
+              label="Slider"
+              component="Magento_PageBuilder/js/content-type-collection"
+              preview_component="Magento_PageBuilder/js/content-type/slider/preview"
+              master_component="Magento_PageBuilder/js/content-type/master-collection"
+              form="pagebuilder_slider_form"
+              group="media"
+              icon="icon-pagebuilder-slider"
+              sortOrder="30"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Magento_PageBuilder/content-type/slider/default/preview"
+                            render_template="Magento_PageBuilder/content-type/slider/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -35,7 +41,7 @@
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
                                 </style_properties>
                                 <attributes>
-                                    <attribute name="name" source="data-role" />
+                                    <attribute name="name" source="data-role"/>
                                     <attribute name="appearance" source="data-appearance"/>
                                     <attribute name="autoplay" source="data-autoplay"/>
                                     <attribute name="autoplay_speed" source="data-autoplay-speed"/>
@@ -48,9 +54,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/slider/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/slider/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

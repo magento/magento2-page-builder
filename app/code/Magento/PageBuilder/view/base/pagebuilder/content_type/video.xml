@@ -7,20 +7,26 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="video" sortOrder="10" translate="label">
-            <label>Video</label>
-            <icon>icon-pagebuilder-video</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/content-type/video/preview</preview_component>
-            <form>pagebuilder_video_form</form>
-            <group>media</group>
+        <type name="video"
+              label="Video"
+              component="Magento_PageBuilder/js/content-type"
+              preview_component="Magento_PageBuilder/js/content-type/video/preview"
+              form="pagebuilder_video_form"
+              group="media"
+              icon="icon-pagebuilder-video"
+              sortOrder="10"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Magento_PageBuilder/content-type/video/default/preview"
+                            render_template="Magento_PageBuilder/content-type/video/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -50,9 +56,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/video/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/video/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

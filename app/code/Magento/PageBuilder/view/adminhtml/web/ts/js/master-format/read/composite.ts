@@ -35,7 +35,9 @@ export default class AttributeReaderComposite implements ReadInterface {
             if (!this.contentTypeConfig.hasOwnProperty(role)) {
                 resolve(result);
             } else {
-                const readerComponents = appearanceConfig(role, element.dataset.appearance).readers;
+                const readerComponents = appearanceConfig(role, element.dataset.appearance).reader ?
+                    [appearanceConfig(role, element.dataset.appearance).reader] :
+                    appearanceConfig(role, element.dataset.appearance).readers;
                 try {
                     loadComponent(readerComponents, (...readers: any[]) => {
                         const readerPromises: Array<Promise<any>> = [];

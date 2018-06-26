@@ -7,19 +7,25 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="html" sortOrder="20" translate="label">
-            <label>HTML</label>
-            <icon>icon-pagebuilder-code</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <form>pagebuilder_html_form</form>
-            <group>other</group>
+        <type name="html"
+              label="HTML"
+              component="Magento_PageBuilder/js/content-type"
+              form="pagebuilder_html_form"
+              group="other"
+              icon="icon-pagebuilder-code"
+              sortOrder="20"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Magento_PageBuilder/content-type/html/default/preview"
+                            render_template="Magento_PageBuilder/content-type/html/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -40,9 +46,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/html/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/html/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
