@@ -86,7 +86,11 @@ The following is an example of a content type configuration in `view/adminhtml/p
             <parent name="column"/>
         </allowed_parents>
         <appearances>
-            <appearance default="true" name="poster" preview_template="Magento_PageBuilder/content-type/banner/poster/preview" render_template="Magento_PageBuilder/content-type/banner/poster/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <appearance default="true"
+                        name="poster"
+                        preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
+                        render_template="Magento_PageBuilder/content-type/banner/poster/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <data_mapping>
                     <elements>
                         <element name="main" path=".">
@@ -173,13 +177,22 @@ The following is an example of a content type configuration in `view/adminhtml/p
                     </converters>
                 </data_mapping>
             </appearance>
-            <appearance name="collage-left" preview_template="Magento_PageBuilder/content-type/banner/collage-left/preview" render_template="Magento_PageBuilder/content-type/banner/collage-left/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <appearance name="collage-left"
+                        preview_template="Magento_PageBuilder/content-type/banner/collage-left/preview"
+                        render_template="Magento_PageBuilder/content-type/banner/collage-left/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <!-- Collage left appearance configuration -->
             </appearance>
-            <appearance name="collage-centered" preview_template="Magento_PageBuilder/content-type/banner/collage-centered/preview" render_template="Magento_PageBuilder/content-type/banner/collage-centered/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <appearance name="collage-centered"
+                        preview_template="Magento_PageBuilder/content-type/banner/collage-centered/preview"
+                        render_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <!-- Collage centered appearance configuration -->
             </appearance>
-            <appearance name="collage-right" preview_template="Magento_PageBuilder/content-type/banner/collage-right/preview" render_template="Magento_PageBuilder/content-type/banner/collage-right/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
+            <appearance name="collage-right"
+                        preview_template="Magento_PageBuilder/content-type/banner/collage-right/preview"
+                        render_template="Magento_PageBuilder/content-type/banner/collage-right/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <!-- Collage right appearance configuration -->
             </appearance>
         </appearances>
@@ -250,7 +263,11 @@ It reads data based on the configuration specified in `data_mapping`.
 
 **Example:**
 ``` xml
-<appearance default="true" name="poster" preview_template="Magento_PageBuilder/content-type/banner/poster/preview" render_template="Magento_PageBuilder/content-type/banner/poster/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
+<appearance default="true"
+            name="poster"
+            preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
+            render_template="Magento_PageBuilder/content-type/banner/poster/master"
+            reader="Magento_PageBuilder/js/master-format/read/configurable">
     <data_mapping/>
 </appearance>
 ```

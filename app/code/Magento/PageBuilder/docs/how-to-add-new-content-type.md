@@ -64,7 +64,11 @@ To add configuration for a new content type, create a file under the following l
                 <parent name="row"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default" preview_template="Vendor_ModuleNameCustom/content-type/simple/default/preview" render_template="Vendor_ModuleNameCustom/content-type/simple/default/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Vendor_ModuleNameCustom/content-type/simple/default/preview"
+                            render_template="Vendor_ModuleNameCustom/content-type/simple/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -250,7 +254,7 @@ Now, let's add content type that can contain other content types. Create configu
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
         <type name="complex"
-              labe="Complex"
+              label="Complex"
               component="Magento_PageBuilder/js/content-type-collection"
               preview_component="Magento_PageBuilder/js/content-type/preview-collection"
               master_component="Magento_PageBuilder/js/content-type/content-collection"
@@ -264,7 +268,11 @@ Now, let's add content type that can contain other content types. Create configu
                 <parent name="column"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default" preview_template="Vendor_ModuleName/content-type/complex/default/preview" render_template="Vendor_ModuleName/content-type/complex/default/master" reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Vendor_ModuleName/content-type/complex/default/preview"
+                            render_template="Vendor_ModuleName/content-type/complex/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
