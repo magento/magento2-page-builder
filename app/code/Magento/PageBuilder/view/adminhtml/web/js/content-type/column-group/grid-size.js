@@ -44,8 +44,9 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
 
     if (newGridSize < columnGroup.getChildren()().length) {
       removeEmptyColumnsToFit(columnGroup, newGridSize);
-    } // update column widths
+    }
 
+    columnGroup.preview.gridSize(newGridSize); // update column widths
 
     redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory);
   }
@@ -182,6 +183,8 @@ define(["mage/translate", "Magento_PageBuilder/js/config", "Magento_PageBuilder/
         totalNewWidths += parseFloat(newWidth);
         (0, _resize.updateColumnWidth)(column, parseFloat(newWidth));
       }
+
+      column.preview.updateDisplayLabel.bind(column)();
     }); // persist new grid size so upcoming calls to get column widths are calculated correctly
 
     columnGroup.dataStore.update(newGridSize, "grid_size"); // apply leftover columns if the new grid size did not distribute evenly into existing columns

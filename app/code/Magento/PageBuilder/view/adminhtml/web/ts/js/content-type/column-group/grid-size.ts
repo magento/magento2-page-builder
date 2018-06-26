@@ -56,6 +56,7 @@ export function resizeGrid(
     if (newGridSize < columnGroup.getChildren()().length) {
         removeEmptyColumnsToFit(columnGroup, newGridSize);
     }
+    columnGroup.preview.gridSize(newGridSize);
 
     // update column widths
     redistributeColumnWidths(columnGroup, newGridSize, gridSizeHistory);
@@ -207,6 +208,7 @@ function redistributeColumnWidths(
                 totalNewWidths += parseFloat(newWidth);
                 updateColumnWidth(column, parseFloat(newWidth));
             }
+            (column.preview as ColumnPreview).updateDisplayLabel.bind(column)();
         },
     );
 

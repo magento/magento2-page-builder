@@ -244,6 +244,18 @@ export default class Preview extends PreviewCollection {
     }
 
     /**
+     * Update the display label for the column
+     */
+    public updateDisplayLabel() {
+        if (this.parent.parent.preview instanceof ColumnGroupPreview) {
+            const newWidth = parseFloat(this.parent.dataStore.get("width").toString());
+            const gridSize = (this.parent.parent.preview as ColumnGroupPreview).gridSize();
+            const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
+            this.displayLabel(`${$t("Column")} ${newLabel}`);
+        }
+    }
+
+    /**
      * Update the style attribute mapper converts images to directives, override it to include the correct URL
      *
      * @returns styles
@@ -286,18 +298,5 @@ export default class Preview extends PreviewCollection {
             events.trigger("contentType:mount", {id: contentType.id, contentType});
             events.trigger(contentType.config.name + ":contentType:mount", {id: contentType.id, contentType});
         });
-    }
-
-    /**
-     * Update the display label for the column
-     */
-    private updateDisplayLabel() {
-        if (this.parent.parent.preview instanceof ColumnGroupPreview) {
-            const resizeUtils = (this.parent.parent.preview as ColumnGroupPreview).getResizeUtils();
-            const newWidth = parseFloat(this.parent.dataStore.get("width").toString());
-            const gridSize = resizeUtils.getGridSize();
-            const newLabel = `${Math.round(newWidth / (100 / gridSize))}/${gridSize}`;
-            this.displayLabel(`${$t("Column")} ${newLabel}`);
-        }
     }
 }
