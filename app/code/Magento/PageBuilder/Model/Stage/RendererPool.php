@@ -9,6 +9,8 @@ namespace Magento\PageBuilder\Model\Stage;
 
 /**
  * Pool of renderers for content types
+ *
+ * @api
  */
 class RendererPool
 {
