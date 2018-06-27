@@ -14,9 +14,9 @@
         </arguments>
         <comment userInput="Adding Button" stepKey="comment"/>
         <executeJS function="return Math.round(document.getElementsByClassName('pagebuilder-button-item').length+1)" stepKey="initialNumberOfButtonsPlusOne"/>
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(PageBuilderButtonsContentType.role, buttonGroupIndex)}}" stepKey="mouseOverButtonsGroup"/>
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderButtonsContentType.role, buttonGroupIndex)}}" stepKey="mouseOverButtonsGroup"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="waitForOptionsMenu"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderButtonsContentType.role)}}" stepKey="waitForOptionsMenu"/>
         <waitForElementVisible time="10" selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="seeAddButton"/>
         <click selector="{{ButtonGroupOnStage.addNewButtonItemOption(buttonGroupIndex)}}" stepKey="clickAddButton"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
@@ -25,7 +25,7 @@
             <expectedResult type="variable">initialNumberOfButtonsPlusOne</expectedResult>
             <actualResult type="variable">numberOfButtonsAfterAdd</actualResult>
         </assertEquals>
-        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="unfocusButtonLiveEdit"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusButtonLiveEdit"/>
     </actionGroup>
     <actionGroup name="validateButtonItemContent">
         <arguments>
@@ -53,7 +53,7 @@
         <waitForElementVisible selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" stepKey="waitForButtonEditable"/>
         <pressKey selector="{{ButtonItemOnStage.editableButtonItemElement(index)}}" userInput="{{text.value}}" stepKey="enterButtonText"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.buttonItemText(index, text.value)}}" stepKey="waitForButtonText"/>
-        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="unfocusLiveEdit"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="unfocusLiveEdit"/>
         <waitForPageLoad stepKey="waitForUnfocus"/>
     </actionGroup>
     <actionGroup name="moveButton">
@@ -67,8 +67,8 @@
         <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton1"/>
         <click selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="clickButton"/>
         <waitForPageLoad stepKey="waitForPageLoad1"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.contentTypeMoveByIndex(PageBuilderButtonItemContentType.role, buttonIndexToMove)}}" stepKey="waitForMoveButton"/>
-        <dragAndDrop selector1="{{PageBuilderActionsSection.contentTypeMoveByIndex(PageBuilderButtonItemContentType.role, buttonIndexToMove)}}" selector2="{{targetSelector}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropButton"/>
+        <waitForElementVisible selector="{{PageBuilderContentTypeOptionsMenu.contentTypeMoveByIndex(PageBuilderButtonItemContentType.role, buttonIndexToMove)}}" stepKey="waitForMoveButton"/>
+        <dragAndDrop selector1="{{PageBuilderContentTypeOptionsMenu.contentTypeMoveByIndex(PageBuilderButtonItemContentType.role, buttonIndexToMove)}}" selector2="{{targetSelector}}" x="{{x}}" y="{{y}}" stepKey="dragAndDropButton"/>
         <waitForPageLoad stepKey="waitForPageLoad2"/>
         <waitForElementVisible selector="{{ButtonItemOnStage.base(buttonIndexToMove)}}" stepKey="waitForButton2"/>
     </actionGroup>

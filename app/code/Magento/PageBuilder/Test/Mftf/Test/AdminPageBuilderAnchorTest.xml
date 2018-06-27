@@ -188,7 +188,7 @@
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
             <argument name="contentType" value="PageBuilderAnchorContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderAnchorContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderAnchorContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="AnchorValidateGeneralDefaultValues">
         <annotations>
@@ -223,7 +223,7 @@
         </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAnchorIdentifier_Default.section, PageBuilderAnchorIdentifier_Default.fieldName)}}" stepKey="getIdentifier"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAnchorIdentifier_Default.section, PageBuilderAnchorIdentifier_Default.fieldName)}}" stepKey="getIdentifier"/>
         <assertEmpty actual="getIdentifier" actualType="variable" message="Text field has text: $getIdentifier" stepKey="assertIdentifier"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Stage -->
@@ -239,7 +239,7 @@
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAnchorIdentifier_Default.section, PageBuilderAnchorIdentifier_Default.fieldName)}}" stepKey="getIdentifier2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAnchorIdentifier_Default.section, PageBuilderAnchorIdentifier_Default.fieldName)}}" stepKey="getIdentifier2"/>
         <assertEmpty actual="getIdentifier2" actualType="variable" message="Text field has text: $getIdentifier2" stepKey="assertIdentifier2"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderAnchorContentType"/>
@@ -289,7 +289,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -297,7 +297,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
@@ -342,7 +342,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
         <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -350,7 +350,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
         <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins2">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>

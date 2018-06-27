@@ -96,7 +96,7 @@
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnBackgroundImage"/>
         <comment userInput="Tab has default value empty for Background Mobile image - This feature is not yet available" stepKey="AC13"/>
         <comment userInput="Tab has default value empty for Background Color" stepKey="commentDefaultBackgroundColor"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderTabBackgroundColorProperty.section, PageBuilderTabBackgroundColorProperty.fieldName)}}" stepKey="getBackgroundColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderTabBackgroundColorProperty.section, PageBuilderTabBackgroundColorProperty.fieldName)}}" stepKey="getBackgroundColor"/>
         <assertEmpty actual="getBackgroundColor" actualType="variable" message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor"/>
 
         <comment userInput="Tab has default value Top Aligned for Background Position" stepKey="commentDefaultBackgroundPosition"/>
@@ -104,7 +104,7 @@
             <argument name="property" value="PageBuilderTabBackgroundPositionTop"/>
         </actionGroup>
         <comment userInput="Background Position has expected dropdown values" stepKey="commentDefaultBackgroundPositionValues"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundPositionDefault.section, PageBuilderTabBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderTabBackgroundPositionDefault.section, PageBuilderTabBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionOptions"/>
         <assertEquals expected="{{PageBuilderTabBackgroundPositionDefault.optionsList}}" expectedType="array" actual="grabBackgroundPositionOptions" actualType="variable" message="Verify Background Position dropdown options" stepKey="assertBackgroundPositionOptions"/>
 
         <comment userInput="Tab has default value Cover for Background Size" stepKey="commentDefaultBackgroundSize"/>
@@ -112,7 +112,7 @@
             <argument name="property" value="PageBuilderTabBackgroundSizeCover"/>
         </actionGroup>
         <comment userInput="Background Size has expected dropdown values" stepKey="commentDefaultBackgroundSizeValues"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundSizeDefault.section, PageBuilderTabBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderTabBackgroundSizeDefault.section, PageBuilderTabBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeOptions"/>
         <assertEquals expected="{{PageBuilderTabBackgroundSizeDefault.optionsList}}" expectedType="array" actual="grabBackgroundSizeOptions" actualType="variable" message="Verify Background Size dropdown options" stepKey="assertBackgroundSizeOptions"/>
 
         <comment userInput="Tab has default value No for Background Repeat" stepKey="commentDefaultBackgroundRepeat"/>
@@ -124,7 +124,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBackgroundAttachment">
             <argument name="property" value="PageBuilderTabBackgroundAttachmentScroll"/>
         </actionGroup>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderTabBackgroundAttachmentDefault.section, PageBuilderTabBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderTabBackgroundAttachmentDefault.section, PageBuilderTabBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentOptions"/>
         <assertEquals expected="{{PageBuilderTabBackgroundAttachmentDefault.optionsList}}" expectedType="array" actual="grabBackgroundAttachmentOptions" actualType="variable" message="Verify Background Attachment dropdown options" stepKey="assertBackgroundAttachmentOptions"/>
 
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettingsForTab1"/>
@@ -223,11 +223,11 @@
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
         <comment userInput="Border: available values None, Default, Dotted, Dashed, Solid, Double, Groove, Ridge, Inset, Outset" stepKey="AC2"/>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="innerText" stepKey="grabBorderOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderAdvancedBorderPropertyDefault.section, PageBuilderAdvancedBorderPropertyDefault.fieldName)}}" userInput="innerText" stepKey="grabBorderOptions"/>
         <assertEquals expected="{{PageBuilderAdvancedBorderDefaultSlideProperty.optionsList}}" expectedType="array" actual="grabBorderOptions" actualType="variable" message="Verify Border dropdown options" stepKey="assertBorderOptions2"/>
         <!-- Border Color -->
         <comment userInput="Border Color: input defaults to empty." stepKey="AC3"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getTextFromBorderColorAttribute"/>
         <assertEmpty stepKey="assertBorderColorEmpty" message="Border Color has text: getTextFromBorderColorAttribute">
             <actualResult type="variable">getTextFromBorderColorAttribute</actualResult>
         </assertEmpty>
@@ -278,7 +278,7 @@
         <actionGroup ref="validateSlideOutPanelFieldIsNotDisabled" stepKey="validateCSSClassesAttributeNotDisabled">
             <argument name="property" value="PageBuilderAdvancedCssClassesDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getTextFromCSSClassesAttribute"/>
         <assertEmpty stepKey="assertGetTextFromCSSClassesAttribute" message="CSS Classes field was not empty. Had text: $getTextFromCSSClassesAttribute">
             <actualResult type="variable">getTextFromCSSClassesAttribute</actualResult>
         </assertEmpty>

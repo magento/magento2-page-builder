@@ -33,8 +33,8 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle1">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="tabs" stepKey="fillSearch"/>
-        <see userInput="Tabs" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="tabs" stepKey="fillSearch"/>
+        <see userInput="Tabs" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateSearchResults"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeToStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
@@ -58,7 +58,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <comment userInput="No Tabs shown on the stage after save nor on the storefront" stepKey="AC5"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
@@ -110,13 +110,13 @@
             <argument name="section" value="TabOnStage"/>
         </actionGroup>
         <comment userInput="Removal confirmation modal not displayed when removing default state individual Tab" stepKey="AC3"/>
-        <waitForElementNotVisible time="30" selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
-        <waitForElementNotVisible time="30" selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader"/>
+        <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <waitForElementNotVisible time="30" selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader"/>
         <comment userInput="Tabs with single Tab shown on the stage after save and on the storefront" stepKey="AC4"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
         <waitForPageLoad stepKey="waitForStoreFrontPageLoad" time="30"/>
@@ -237,7 +237,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage2"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTab2"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
+        <seeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderTabsContentType.role)}}" stepKey="seeTabsInStage"/>
         <comment userInput="User goes to the storefront and sees 2 tabs not being displayed" stepKey="AC6"/>
         <amOnPage url="{{PageBuilderTabsContentType.name}}{{PageBuilderPageTitle.pageName}}" stepKey="amOnPageBuilderPage"/>
         <reloadPage stepKey="reloadPage"/>
@@ -392,11 +392,11 @@
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="3"/>
         </actionGroup>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.modal}}" stepKey="waitForModalVisible"/>
-        <seeElementInDOM selector="{{PageBuilderActionsSection.modal}}" stepKey="seeModal"/>
-        <seeElementInDOM selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeModalOk" />
-        <waitForElementVisible selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
-        <click selector="{{PageBuilderActionsSection.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.modal}}" stepKey="waitForModalVisible"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modal}}" stepKey="seeModal"/>
+        <seeElementInDOM selector="{{PageBuilderStage.modalOk}}" stepKey="seeModalOk" />
+        <waitForElementVisible selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="waitForDoNotShowThisAgain"/>
+        <click selector="{{PageBuilderStage.modalDoNotShowThisAgain}}" stepKey="clickDoNotShowThisAgain"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmRemoval"/>
         <waitForPageLoad stepKey="waitForRemovalModal" time="30"/>
         <dontSeeElement selector="{{TabOnStage.tabHeader('3')}}" stepKey="dontSeeThirdTab"/>
@@ -406,8 +406,8 @@
             <argument name="section" value="TabOnStage"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeader"/>
-        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeader" />
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeader"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeader" />
         <dontSeeElement selector="{{TabOnStage.tabHeader('2')}}" stepKey="dontSeeSecondTabOnStage"/>
 
         <comment userInput="Deleting a customized Heading from the stage does not show confirmation modal in same session" stepKey="AC4"/>
@@ -440,9 +440,9 @@
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeHeader">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>
-        <dontSee selector="{{PageBuilderActionsSection.modal}}" stepKey="dontSeeModalHeaderAfterHeader"/>
-        <dontSee selector="{{PageBuilderActionsSection.modalOk}}" stepKey="dontSeeModalOkHeaderAfterHeader" />
+        <dontSee selector="{{PageBuilderStage.modal}}" stepKey="dontSeeModalHeaderAfterHeader"/>
+        <dontSee selector="{{PageBuilderStage.modalOk}}" stepKey="dontSeeModalOkHeaderAfterHeader" />
         <!-- Validate the items are removed -->
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage"/>
     </test>
 </tests>

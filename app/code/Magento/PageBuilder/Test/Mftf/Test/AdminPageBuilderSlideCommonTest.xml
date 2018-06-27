@@ -291,7 +291,7 @@
         <assertElementContainsAttribute selector="{{SliderInAdmin.slideWrapper}}" attribute="style" expectedValue="border-radius: 0px;" stepKey="verifyBorderRadius0"/>
         <!-- Slide order in option panel -->
         <comment userInput="User sees Slide order number in slide option panel" stepKey="AC7"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
         <waitForElementVisible time="10" selector="{{SlideOnBackend.optionTitle}}" stepKey="waitForOptionTitle" />
         <grabTextFrom selector="{{SlideOnBackend.optionTitle}}" stepKey="grabSlide1OptionTitle"/>
         <assertEquals expected="Slide 1" expectedType="string" actual="{$grabSlide1OptionTitle}" actualType="string" message="Slide order number in option panel" stepKey="assertSlideOrderInOption"/>
@@ -396,24 +396,24 @@
         <wait time="0.5" stepKey="waitForMouseOverAnimation" />
         <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
 
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeContentTypeOptionsMenu"/>
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverOptionsMenu"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeContentTypeOptionsMenu"/>
+        <moveMouseOver selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverOptionsMenu"/>
 
         <comment userInput="User doesn't see Slide Option panel, both option panels not displayed at once." stepKey="AC8"/>
         <waitForElementNotVisible time="5" selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="waitForSlideOptionsPanelNotVisible" />
         <dontSeeElement selector="{{SlideOnBackend.optionsMenu('1')}}" stepKey="seeSlideOptionsPanelStillHidden"/>
 
         <comment userInput="User sees button (+) inside the Slider Option Panel. Tooltip shows Add New Slide" stepKey="AC9"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="seeAddNewSlideChild"/>
-        <assertElementContainsAttribute selector="{{PageBuilderActionsSection.contentTypeAdd(PageBuilderSliderContentType.role)}}" attribute="title" expectedValue="Add" stepKey="assertAddSlideName"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="seeAddNewSlideChild"/>
+        <assertElementContainsAttribute selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" attribute="title" expectedValue="Add" stepKey="assertAddSlideName"/>
 
         <comment userInput="User clicks (+) icon, sees new slide added to to the right." stepKey="AC10"/>
         <actionGroup ref="addSlide" stepKey="addSecondSlide"/>
 
         <comment userInput="User sees slide configuration opened with a delay." stepKey="AC11"/>
         <waitForLoadingMaskToDisappear stepKey="waitForSlideAnimation2" />
-        <waitForElementVisible stepKey="waitForNewSlide2" selector="{{PageBuilderActionsSection.editFormClose}}" time="10"/>
-        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditSlide2"/>
+        <waitForElementVisible stepKey="waitForNewSlide2" selector="{{EditPanelForm.editFormClose}}" time="10"/>
+        <see userInput="Edit Slide" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeEditSlide2"/>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel2"/>
 
         <comment userInput="New slide is focused, its option panel is displayed on top of the slider dot" stepKey="AC12"/>
@@ -423,8 +423,7 @@
 
         <comment userInput="Slide has default title Title N that reflects the order of the slide in the Slider." stepKey="AC13"/>
         <see userInput="Slide 2" selector="{{SlideOnBackend.optionsMenuTitle('2')}}" stepKey="seeSlideOptionsAppearWithSlide2DefaultTitle"/>
-        <click stepKey="focusOutsideStage" selector="{{PageBuilderActionsSection.searchPanel}}"/>
-
+        <click stepKey="focusOutsideStage" selector="{{PageBuilderPanel.searchPanel}}"/>
         <comment userInput="User updates settings of second slide and saves configuration." stepKey="AC14"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
             <argument name="section" value="SlideOnBackend"/>
@@ -476,7 +475,7 @@
         </actionGroup>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="SlideCanDeleteSlide">
         <annotations>
@@ -538,12 +537,11 @@
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="2" stepKey="validate2SlidesAgain"/>
         <comment userInput="Remove slide with custom content has confirmation modal" stepKey="removeSlideWithContent"/>
-
         <actionGroup ref="removeContentTypeFromStageSmallByIndex" stepKey="removeFromStage2">
             <argument name="section" value="SlideOnBackend"/>
             <argument name="targetIndex" value="2"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.modal}}" time="10" stepKey="waitForModal"/>
+        <waitForElementVisible selector="{{PageBuilderStage.modal}}" time="10" stepKey="waitForModal"/>
         <actionGroup ref="confirmRemovalModal" stepKey="confirmSlideRemoval"/>
         <seeNumberOfElements selector="{{SliderInAdmin.allNavigationDots}}" userInput="1" stepKey="validateNumberOfSlides0"/>
     </test>
@@ -588,7 +586,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -596,7 +594,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
@@ -645,7 +643,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -653,7 +651,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
@@ -934,11 +932,11 @@
             <argument name="Category" value="$$createPreReqCategory$$"/>
         </actionGroup>
         <click selector="{{AdminProductFormSection.contentTab}}" stepKey="clickContentTab"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.openPageBuilderCatalog}}" stepKey="waitForPageBuilderBtn" />
+        <waitForElementVisible selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="waitForPageBuilderBtn" />
         <see userInput="Edit with Page Builder" stepKey="seePageBuilderBtn"/>
-        <click selector="{{PageBuilderActionsSection.openPageBuilderCatalog}}" stepKey="clickOnPageBuilderBtn" />
+        <click selector="{{PageBuilderCatalog.openPageBuilder}}" stepKey="clickOnPageBuilderBtn" />
         <!--See PageBuilder fullsize-->
-        <waitForElementVisible selector="{{PageBuilderActionsSection.identifyPageBuilder}}" stepKey="waiForPageBuilderVisible" />
+        <waitForElementVisible selector="{{PageBuilderPanel.generalGroup}}" stepKey="waiForPageBuilderVisible" />
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
             <argument name="group" value="PageBuilderSliderContentType"/>
         </actionGroup>
@@ -989,9 +987,9 @@
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderSlideBackgroundImageProperty1.fileName)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton"/>
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSaveButton"/>
-        <waitForElementNotVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditFormNotVisible"/>
+        <waitForElementVisible time="5" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveButton"/>
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSaveButton"/>
+        <waitForElementNotVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditFormNotVisible"/>
         <waitForElementVisible selector=".icon-pagebuilder-fullscreen-exit" stepKey="waitForExitPageBuilderFullScreen"/>
         <click selector=".icon-pagebuilder-fullscreen-exit" stepKey="exitPageBuilderFullScreen"/>
         <waitForElementVisible selector="{{AdminCategoryMainActionsSection.SaveButton}}" stepKey="waitForSaveCategory"/>
@@ -1156,8 +1154,8 @@
         </actionGroup>
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <comment userInput="Attempt to drag heading block onto top part of slider" stepKey="commentValidateAboveSlider"/>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageSliderHeight"/>
-        <executeJS function="{{PageBuilderActionsSection.computedWidthOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageSliderWidth"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageSliderHeight"/>
+        <executeJS function="{{PageBuilderStage.computedWidthOnStage(PageBuilderSliderContentType.role,'1')}}" stepKey="actualStageSliderWidth"/>
         <executeJS function="return Math.round({$actualStageSliderWidth}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingLeft}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingRight}})" stepKey="sliderWidthSansPadding"/>
         <executeJS function="return Math.round({$sliderWidthSansPadding}/20)" stepKey="sliderWidthOffset"/>
         <executeJS function="return Math.round({$actualStageSliderHeight}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingTop}}-{{PageBuilderAdvancedMarginsAndPaddingPropertyDefaultSlide.paddingBottom}})" stepKey="sliderHeightSansPadding"/>
@@ -1168,8 +1166,8 @@
             <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
             <argument name="offsetYCoordinate" value="$sliderHeightOffset"/>
         </actionGroup>
-        <moveMouseOver selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="moveMouseOutsideLiveEdit1"/>
-        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit1"/>
+        <moveMouseOver selector="{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit1"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit1"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation1"/>
         <comment userInput="Attempt to drag heading block onto bottom part of slider" stepKey="commentValidateBelowSlider"/>
         <actionGroup ref="dragContentTypeToContentType" stepKey="dragHeadingOntoSliderBottom">
@@ -1178,8 +1176,8 @@
             <argument name="offsetXCoordinate" value="$sliderWidthOffset"/>
             <argument name="offsetYCoordinate" value="$sliderHeightSansPadding"/>
         </actionGroup>
-        <moveMouseOver selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="moveMouseOutsideLiveEdit2"/>
-        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit2"/>
+        <moveMouseOver selector="{{PageBuilderPanel.searchPanel}}" stepKey="moveMouseOutsideLiveEdit2"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit2"/>
         <waitForPageLoad time="30" stepKey="waitForAnimation2"/>
         <actionGroup ref="validateContentTypeInsideContainerStage" stepKey="validateHeadingFirst">
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -1241,8 +1239,8 @@
         <actionGroup ref="removeContentTypeFromStage" stepKey="removeSliderFromStage">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
         </actionGroup>
-        <waitForElementNotVisible selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInContent" />
-        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInDOM" />
+        <waitForElementNotVisible selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInContent" />
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStage(PageBuilderSliderContentType.role)}}" stepKey="dontSeeSliderInDOM" />
     </test>
     <test name="AddImageToSliderStage">
         <annotations>
@@ -1280,11 +1278,11 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="section" value="PageBuilderActionsSection"/>
+            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
-        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderActionsSection.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderStage.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
         <waitForPageLoad stepKey="waitForPageLoad4" />
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG.fileName)}}" stepKey="waitForMainImageSource1"/>
         <!--Upload image from Media Gallery Storage -->
@@ -1316,7 +1314,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <waitForElement selector="{{PageBuilderStoreFront.imageSourceOnFrontEnd(PageBuilderSliderBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnSliderStageDependOnEachTypeOfAppearance">
         <annotations>
@@ -1357,7 +1355,7 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons1" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="section" value="PageBuilderActionsSection"/>
+            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Center-->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel1">
@@ -1371,7 +1369,7 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons2" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="section" value="PageBuilderActionsSection"/>
+            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Right-->
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel2">
@@ -1386,7 +1384,7 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons3" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3" >
             <argument name="contentType" value="PageBuilderSliderContentType"/>
-            <argument name="section" value="PageBuilderActionsSection"/>
+            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
     </test>
     <test name="SlideBorderIsVisible">

@@ -18,7 +18,7 @@
         <waitForElementVisible selector="{{section.slide(index)}}" stepKey="waitForSlide"/>
     </actionGroup>
     <actionGroup name="unfocusSlideOptions">
-        <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
         <waitForPageLoad stepKey="waitForAnimation" time="30"/>
         <waitForElementNotVisible selector="{{SlideOnBackend.optionTitle}}" stepKey="dontSeeSlideOptionsEdit"/>
     </actionGroup>
@@ -28,9 +28,9 @@
         <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeContentTypeOptionsMenu"/>
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverOptionsMenu"/>
-        <click selector="{{PageBuilderActionsSection.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="clickAddNewSlideChild"/>
+        <waitForElementVisible time="5" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeContentTypeOptionsMenu"/>
+        <moveMouseOver selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverOptionsMenu"/>
+        <click selector="{{PageBuilderContentTypeOptionsMenu.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="clickAddNewSlideChild"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimation"/>
     </actionGroup>
 </actionGroups>

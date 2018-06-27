@@ -86,8 +86,8 @@
         </actionGroup>
         <!-- Validate Required Fields -->
         <comment userInput="Validate Required Fields" stepKey="commentValidateRequired"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormAllRequiredFields}}" stepKey="waitForRequiredClassInEditForm"/>
-        <seeNumberOfElements selector="{{PageBuilderActionsSection.editFormAllRequiredFields}}" userInput="1" stepKey="seeNumberOfRequiredElements"/>
+        <waitForElementVisible selector="{{EditPanelForm.editFormAllRequiredFields}}" stepKey="waitForRequiredClassInEditForm"/>
+        <seeNumberOfElements selector="{{EditPanelForm.editFormAllRequiredFields}}" userInput="1" stepKey="seeNumberOfRequiredElements"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <waitForElementVisible time="10" selector="{{CmsNewPagePageActionsSection.saveAndContinueEdit}}" stepKey="waitForCmsPageSaveButton"/>
     </test>
@@ -590,8 +590,8 @@
         </actionGroup>
         <!-- Validate Don't See Old Add Button -->
         <comment userInput="Validate Don't See Old Add Button" stepKey="commentValidate"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderRowContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderButtonsContentType.role)}}" stepKey="onMouseOverButtonsContentTypeStage1"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderRowContentType.role)}}" stepKey="waitForContentTypeInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderButtonsContentType.role)}}" stepKey="onMouseOverButtonsContentTypeStage1"/>
         <dontSeeElement selector="{{ButtonGroupOnStage.oldAddNewButtonItem}}" stepKey="dontSeeOldAddButton"/>
         <seeElement selector="{{ButtonItemOnStage.emptyButtonItemElement('1')}}" stepKey="seeEmptyButton"/>
     </test>

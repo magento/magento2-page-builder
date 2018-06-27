@@ -440,8 +440,8 @@
         <waitForElementVisible selector="{{TabOnStage.tabContent('1')}}" stepKey="waitForFirstTabContent"/>
         <waitForElementVisible selector="{{TabOnStage.tabHeader('1')}}" stepKey="waitForFirstTabHeader"/>
         <!-- Add Slider to Tab -->
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
-        <see userInput="Slider" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="slider" stepKey="fillSearch"/>
+        <see userInput="Slider" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateSearchResults"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragSliderOntoTab">
             <argument name="contentType" value="PageBuilderSliderContentType"/>
             <argument name="containerTargetType" value="PageBuilderTabContentType"/>
@@ -451,8 +451,8 @@
         <!--Edit First Slide -->
         <comment userInput="First Slide opens when add Slider to stage" stepKey="EditFirstSlide"/>
         <waitForLoadingMaskToDisappear stepKey="waitForAnimationOnFirstSlide" />
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="waitForEditSlide" />
-        <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeEditSlide"/>
+        <waitForElementVisible selector="{{EditPanelForm.editFormTitle}}" stepKey="waitForEditSlide" />
+        <see userInput="Edit Slide" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeEditSlide"/>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterSlideTitle1">
             <argument name="property" value="PageBuilderSlideItemName1"/>
         </actionGroup>
@@ -581,9 +581,8 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty1">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
@@ -593,9 +592,8 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
