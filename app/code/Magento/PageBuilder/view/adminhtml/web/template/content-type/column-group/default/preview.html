@@ -5,12 +5,50 @@
  */
 -->
 
-<div class="pagebuilder-column-group" css="{'resizing': resizing, 'empty-child': hasEmptyChild}">
-    <div class="resize-grid">
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
+<div class="pagebuilder-column-group"
+     css="{'resizing': resizing, 'empty-child': hasEmptyChild, 'grid-change': gridChange, 'grid-form-open': gridFormOpen}">
+    <div class="pagebuilder-grid-size-indicator">
+        <div class="indicator-wrapper" event="{ click: openGridForm }">
+            <i class="icon-pagebuilder-grid-options"></i>
+            <div class="pagebuilder-grid-panel"
+                 css="{ 'grid-panel-visible': gridFormOpen, 'grid-panel-error': gridSizeError }">
+                <div class="grid-panel-wrapper">
+                    <ul class="grid-panel-items">
+                        <li class="grid-panel-item">
+                            <div if="gridSizeError" html="gridSizeError" class="admin__field-error"></div>
+                        </li>
+                    </ul>
+                    <ul class="grid-panel-items">
+                        <li class="grid-panel-item">
+                            <div class="grid-panel-title" translate="'Grid Size'"></div>
+                        </li>
+                        <li class="grid-panel-item">
+                            <div class="grid-panel-item-wrapper">
+                                <input type="number"
+                                       css="{'grid-panel-field-error': gridSizeError}"
+                                       event="{keyup: onGridInputKeyUp, blur: onGridInputBlur}"
+                                       min="2"
+                                       class="admin__control-text"
+                                       data-bind="textInput: gridSizeInput, attr: {max: gridSizeMax}"/>
+                            </div>
+                        </li>
+                        <li class="grid-panel-item">
+                            <div class="grid-panel-item-wrapper">
+                                <div class="grid-panel-tooltip">
+                                    <span class="tooltip-content"
+                                          role="tooltip">
+                                        <p translate="'Grid size determines the maximum number of columns available.'"></p>
+                                        <p><span translate="'Select a value between 2 and'"></span> <span html="gridSizeMax"></span>.</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="resize-grid" each="gridSizeArray">
         <div class="grid-line"></div>
     </div>
     <div class="resize-ghost" afterRender="function (element) { bindGhost.call($data, element); }"></div>
