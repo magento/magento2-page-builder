@@ -52,7 +52,6 @@ class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterf
      *
      * @param array $params
      * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function render(array $params): string
     {
@@ -60,12 +59,16 @@ class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterf
             return '';
         }
 
-        $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-        $pageResult->initLayout();
-        $storeId = $this->storeManager->getStore()->getId();
-        $content = $this->directiveFilter
-            ->setStoreId($storeId)
-            ->filter($params['directive']);
+        try {
+            $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+            $pageResult->initLayout();
+            $storeId = $this->storeManager->getStore()->getId();
+            $content = $this->directiveFilter
+                ->setStoreId($storeId)
+                ->filter($params['directive']);
+        } catch (\Exception $e) {
+            $content = __($e->getMessage());
+        }
 
         return $content;
     }
