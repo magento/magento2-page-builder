@@ -11,13 +11,13 @@ import Config from "../../config";
 import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
-    public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
-    public placeholderText: KnockoutObservable<string> = ko.observable($t("Block Not Selected"));
     private messages = {
-        EMPTY_BLOCK: $t("Empty Block"),
+        NOT_SELECTED: $t("Block Not Selected"),
         LOADING: $t("Loading..."),
         UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
     };
+    public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
+    public placeholderText: KnockoutObservable<string> = ko.observable(this.messages.NOT_SELECTED);
 
     /**
      * Bind events
@@ -35,16 +35,13 @@ export default class Preview extends BasePreview {
         });
 
         events.on("afterObservablesUpdated", (args) => {
-            if (args.preview.parent.id !== this.parent.id) {
-                return;
-            }
             this.placeholderText(this.messages.LOADING);
             this.displayPreview(false);
 
             const data = this.parent.dataStore.get();
 
             if (!data.block_id || data.template.length === 0) {
-                this.placeholderText(this.messages.EMPTY_BLOCK);
+                this.placeholderText(this.messages.NOT_SELECTED);
 
                 return;
             }

@@ -14,11 +14,11 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.displayPreview = _knockout.observable(false), _this.placeholderText = _knockout.observable((0, _translate)("Block Not Selected")), _this.messages = {
-        EMPTY_BLOCK: (0, _translate)("Empty Block"),
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.messages = {
+        NOT_SELECTED: (0, _translate)("Block Not Selected"),
         LOADING: (0, _translate)("Loading..."),
         UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
-      }, _temp) || _this;
+      }, _this.displayPreview = _knockout.observable(false), _this.placeholderText = _knockout.observable(_this.messages.NOT_SELECTED), _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -41,10 +41,6 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       });
 
       _uiEvents.on("afterObservablesUpdated", function (args) {
-        if (args.preview.parent.id !== _this2.parent.id) {
-          return;
-        }
-
         _this2.placeholderText(_this2.messages.LOADING);
 
         _this2.displayPreview(false);
@@ -52,7 +48,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         var data = _this2.parent.dataStore.get();
 
         if (!data.block_id || data.template.length === 0) {
-          _this2.placeholderText(_this2.messages.EMPTY_BLOCK);
+          _this2.placeholderText(_this2.messages.NOT_SELECTED);
 
           return;
         }
