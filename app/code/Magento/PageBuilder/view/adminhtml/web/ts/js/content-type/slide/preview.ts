@@ -5,13 +5,13 @@
 
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import ContentTypeCollectionInterface from "../../content-type-collection";
 import ContentTypeConfigInterface from "../../content-type-config.d";
 import Options from "../../content-type-menu";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import events from "../../events";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import {fromHex} from "../../utils/color-converter";
 import {percentToDecimal} from "../../utils/number-converter";

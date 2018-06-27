@@ -2,10 +2,10 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import ContentTypeInterface from "../content-type";
 import ContentTypeAfterRenderEventParamsInterface from "../content-type/content-type-after-render-event-params";
-import events from "../events";
 
 /**
  * Animation time in ms for container animations

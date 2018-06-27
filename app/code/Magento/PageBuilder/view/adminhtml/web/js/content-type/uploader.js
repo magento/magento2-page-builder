@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["uiLayout", "uiRegistry", "Magento_PageBuilder/js/events"], function (_uiLayout, _uiRegistry, _events) {
+define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_events, _uiLayout, _uiRegistry) {
   /**
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.

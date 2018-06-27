@@ -4,13 +4,13 @@
  */
 
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import * as _ from "underscore";
 import Config from "./config";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import createContentType from "./content-type-factory";
 import ContentTypeInterface from "./content-type.d";
-import events from "./events";
 import AttributeReaderComposite from "./master-format/read/composite";
 import validateFormat from "./master-format/validator";
 import Stage from "./stage";

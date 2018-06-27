@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import events from "../../events";
+import events from "Magento_PageBuilder/js/events";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
 

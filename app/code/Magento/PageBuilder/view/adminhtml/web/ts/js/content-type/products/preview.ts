@@ -5,8 +5,8 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import events from "Magento_PageBuilder/js/events";
 import Config from "../../config";
-import events from "../../events";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import BasePreview from "../preview";
 

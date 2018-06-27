@@ -3,8 +3,8 @@
  * See COPYING.txt for license details.
  */
 
+import events from "Magento_PageBuilder/js/events";
 import GoogleMap from "Magento_PageBuilder/js/utils/map";
-import events from "../../events";
 import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import BasePreview from "../preview";
 

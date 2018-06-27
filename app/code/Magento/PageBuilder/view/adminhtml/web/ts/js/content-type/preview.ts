@@ -6,6 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import confirmationDialog from "Magento_PageBuilder/js/modal/dismissible-confirm";
 import _ from "underscore";
 import "../binding/live-edit";
@@ -23,7 +24,6 @@ import ContentTypeInterface from "../content-type.d";
 import {DataObject} from "../data-store";
 import {animateContainerHeight, animationTime, lockContainerHeight} from "../drag-drop/container-animation";
 import {getSortableOptions} from "../drag-drop/sortable";
-import events from "../events";
 import StyleAttributeFilter from "../master-format/style-attribute-filter";
 import StyleAttributeMapper, {StyleAttributeMapperResult} from "../master-format/style-attribute-mapper";
 import appearanceConfig from "./appearance-config";

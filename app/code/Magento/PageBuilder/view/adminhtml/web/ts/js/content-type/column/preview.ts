@@ -6,6 +6,7 @@
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
+import events from "Magento_PageBuilder/js/events";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import Config from "../../config";
 import ContentTypeConfigInterface from "../../content-type-config.d";
@@ -13,7 +14,6 @@ import createContentType from "../../content-type-factory";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
-import events from "../../events";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import ColumnGroup from "../column-group/preview";
 import {

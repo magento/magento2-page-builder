@@ -4,11 +4,11 @@
  */
 import $ from "jquery";
 import ko from "knockout";
+import events from "Magento_PageBuilder/js/events";
 import ContentTypeInterface from "../content-type";
 import ContentTypeCollectionInterface from "../content-type-collection";
 import createContentType from "../content-type-factory";
 import Preview from "../content-type/preview";
-import events from "../events";
 import Stage from "../stage";
 import {bindAfterRenderForAnimation, lockContainerHeight} from "./container-animation";
 import {hideDropIndicators, showDropIndicators} from "./drop-indicators";

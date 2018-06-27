@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import events from "Magento_PageBuilder/js/events";
 import _ from "underscore";
 import Config from "../../config";
 import ColumnGroup from "../../content-type-collection";
@@ -14,7 +15,6 @@ import ContentTypeInterface from "../../content-type.d";
 import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
-import events from "../../events";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";

@@ -5,9 +5,9 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import events from "Magento_PageBuilder/js/events";
 import ContentTypeInterface from "../content-type.d";
 import {moveContentType} from "../drag-drop/move-content-type";
-import events from "../events";
 import {moveArrayItem} from "../utils/array";
 
 let draggedContentType: ContentTypeInterface;

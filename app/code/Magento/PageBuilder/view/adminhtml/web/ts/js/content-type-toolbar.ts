@@ -5,10 +5,10 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import events from "Magento_PageBuilder/js/events";
 import OptionInterface from "./content-type-toolbar/option.d";
 import ValueInterface from "./content-type-toolbar/value.d";
 import Preview from "./content-type/preview";
-import events from "./events";
 
 export default class Toolbar {
     public options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
