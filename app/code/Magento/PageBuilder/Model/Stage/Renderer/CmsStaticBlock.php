@@ -49,7 +49,7 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     }
 
     /**
-     * Render HTML for the specified block
+     * Render a JSON state object for the specified block for the stage preview
      *
      * @param array $params
      * @return string

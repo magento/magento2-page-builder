@@ -14,7 +14,7 @@ namespace Magento\PageBuilder\Model\Stage;
 interface RendererInterface
 {
     /**
-     * Render HTML for content type
+     * Render data that the stage can process for the provided parameters
      *
      * @param array $params
      * @return string

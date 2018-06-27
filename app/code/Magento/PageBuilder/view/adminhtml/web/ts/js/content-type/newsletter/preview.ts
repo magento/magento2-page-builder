@@ -29,7 +29,7 @@ export default class Preview extends BasePreview {
                 };
 
                 jQuery.post(url, requestData, (response) => {
-                    this.data.main.html(response.content !== undefined ? response.content.trim() : "");
+                    this.data.main.html(response.data !== undefined ? response.data.trim() : "");
                 });
             }
         });

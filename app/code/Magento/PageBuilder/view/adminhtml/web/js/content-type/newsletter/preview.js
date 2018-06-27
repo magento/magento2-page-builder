@@ -39,7 +39,7 @@ define(["uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/con
             title: attributes["data-title"]
           };
           jQuery.post(url, requestData, function (response) {
-            _this.data.main.html(response.content !== undefined ? response.content.trim() : "");
+            _this.data.main.html(response.data !== undefined ? response.data.trim() : "");
           });
         }
       });

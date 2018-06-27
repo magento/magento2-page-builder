@@ -38,9 +38,13 @@ class Preview extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         try {
+            $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+            // Some template filters and directive processors expect this to be called in order to function.
+            $pageResult->initLayout();
+
             $params = $this->getRequest()->getParams();
             $renderer = $this->rendererPool->getRenderer($params['role']);
-            $result = ['content' => $renderer->render($params)];
+            $result = ['data' => $renderer->render($params)];
         } catch (\Exception $e) {
             $result = [
                 'error' => $e->getMessage(),

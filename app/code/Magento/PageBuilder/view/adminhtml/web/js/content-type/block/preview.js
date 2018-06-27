@@ -76,7 +76,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       }; // Retrieve a state object representing the block from the preview controller and process it on the stage
 
       _jquery.ajax(url, requestConfig).done(function (response) {
-        var content = response.content !== undefined ? response.content.trim() : ""; // Empty content means something bad happened in the controller that didn't trigger a 5xx
+        var content = response.data !== undefined ? response.data.trim() : ""; // Empty content means something bad happened in the controller that didn't trigger a 5xx
 
         if (content.length === 0) {
           _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);

@@ -80,7 +80,7 @@ export default class Preview extends BasePreview {
         // Retrieve a state object representing the block from the preview controller and process it on the stage
         $.ajax(url, requestConfig)
             .done((response) => {
-                const content = response.content !== undefined ? response.content.trim() : "";
+                const content = response.data !== undefined ? response.data.trim() : "";
 
                 // Empty content means something bad happened in the controller that didn't trigger a 5xx
                 if (content.length === 0) {

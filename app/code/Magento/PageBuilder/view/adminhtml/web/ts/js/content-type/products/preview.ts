@@ -8,14 +8,34 @@ import ko from "knockout";
 import $t from "mage/translate";
 import events from "uiEvents";
 import Config from "../../config";
+import ContentTypeInterface from "../../content-type";
+import ContentTypeConfigInterface from "../../content-type-config";
+import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
-    public placeholderText: KnockoutObservable<string> = ko.observable($t("Empty Products"));
+    public placeholderText: KnockoutObservable<string>;
+    private messages = {
+        EMPTY: $t("Empty Products"),
+        LOADING: $t("Loading..."),
+        UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
+    };
 
     /**
-     * Bind events
+     * @inheritdoc
+     */
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(parent, config, observableUpdater);
+        this.placeholderText = ko.observable(this.messages.EMPTY);
+    }
+
+    /**
+     * @inheritdoc
      */
     protected bindEvents() {
         super.bindEvents();
@@ -30,14 +50,17 @@ export default class Preview extends BasePreview {
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     protected afterObservablesUpdated(): void {
         super.afterObservablesUpdated();
-        this.placeholderText($t("Loading..."));
         this.displayPreview(false);
 
         const data = this.parent.dataStore.get();
 
         if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
+            this.placeholderText(this.messages.EMPTY);
             return;
         }
 
@@ -50,11 +73,13 @@ export default class Preview extends BasePreview {
             },
         };
 
+        this.placeholderText(this.messages.LOADING);
+
         $.ajax(url, requestConfig)
             .done((response) => {
-                const content = response.content !== undefined ? response.content.trim() : "";
+                const content = response.data !== undefined ? response.data.trim() : "";
                 if (content.length === 0) {
-                    this.placeholderText($t("Empty Products"));
+                    this.placeholderText(this.messages.EMPTY);
 
                     return;
                 }
@@ -63,7 +88,7 @@ export default class Preview extends BasePreview {
                 this.displayPreview(true);
             })
             .fail(() => {
-                this.placeholderText($t("An unknown error occurred. Please try again."));
+                this.placeholderText(this.messages.UNKNOWN_ERROR);
             });
     }
 }

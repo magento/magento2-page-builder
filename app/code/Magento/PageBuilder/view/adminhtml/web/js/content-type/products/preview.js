@@ -7,21 +7,30 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
   function (_BasePreview) {
     _inheritsLoose(Preview, _BasePreview);
 
-    function Preview() {
-      var _temp, _this;
+    /**
+     * @inheritdoc
+     */
+    function Preview(parent, config, observableUpdater) {
+      var _this;
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.displayPreview = _knockout.observable(false), _this.placeholderText = _knockout.observable((0, _translate)("Empty Products")), _temp) || _this;
+      _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
+      _this.displayPreview = _knockout.observable(false);
+      _this.placeholderText = void 0;
+      _this.messages = {
+        EMPTY: (0, _translate)("Empty Products"),
+        LOADING: (0, _translate)("Loading..."),
+        UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
+      };
+      _this.placeholderText = _knockout.observable(_this.messages.EMPTY);
+      return _this;
     }
+    /**
+     * @inheritdoc
+     */
+
 
     var _proto = Preview.prototype;
 
-    /**
-     * Bind events
-     */
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 
@@ -36,17 +45,21 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         }
       });
     };
+    /**
+     * @inheritdoc
+     */
+
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this3 = this;
 
       _BasePreview.prototype.afterObservablesUpdated.call(this);
 
-      this.placeholderText((0, _translate)("Loading..."));
       this.displayPreview(false);
       var data = this.parent.dataStore.get();
 
       if (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0) {
+        this.placeholderText(this.messages.EMPTY);
         return;
       }
 
@@ -59,12 +72,13 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
           directive: this.data.main.html()
         }
       };
+      this.placeholderText(this.messages.LOADING);
 
       _jquery.ajax(url, requestConfig).done(function (response) {
-        var content = response.content !== undefined ? response.content.trim() : "";
+        var content = response.data !== undefined ? response.data.trim() : "";
 
         if (content.length === 0) {
-          _this3.placeholderText((0, _translate)("Empty Products"));
+          _this3.placeholderText(_this3.messages.EMPTY);
 
           return;
         }
@@ -73,7 +87,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
 
         _this3.displayPreview(true);
       }).fail(function () {
-        _this3.placeholderText((0, _translate)("An unknown error occurred. Please try again."));
+        _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
       });
     };
 

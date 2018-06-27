@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace Magento\PageBuilder\Model\Stage\Renderer;
 
-use Magento\Framework\Controller\ResultFactory;
-
 /**
  * Renders a widget directive for the stage
  *
@@ -28,25 +26,17 @@ class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterf
     private $directiveFilter;
 
     /**
-     * @var ResultFactory
-     */
-    private $resultFactory;
-
-    /**
      * Constructor
      *
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Widget\Model\Template\Filter $directiveFilter
-     * @param ResultFactory $resultFactory
      */
     public function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Widget\Model\Template\Filter $directiveFilter,
-        ResultFactory $resultFactory
+        \Magento\Widget\Model\Template\Filter $directiveFilter
     ) {
         $this->storeManager = $storeManager;
         $this->directiveFilter = $directiveFilter;
-        $this->resultFactory = $resultFactory;
     }
 
     /**
@@ -62,8 +52,6 @@ class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterf
         }
 
         try {
-            $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-            $pageResult->initLayout();
             $storeId = $this->storeManager->getStore()->getId();
             $content = $this->directiveFilter
                 ->setStoreId($storeId)
