@@ -21,7 +21,10 @@ define(["jquery"], function (_jquery) {
     });
     element.contents().filter(isWhiteSpaceOrComment).remove();
     element.find("*").each(function (index, value) {
-      if (value.tagName !== "IFRAME") {
+      var isIframe = value.tagName === "IFRAME";
+      var isPartOfHtmlContentType = !!(0, _jquery)(value).closest('[data-role="html"]').length;
+
+      if (!isIframe && !isPartOfHtmlContentType) {
         (0, _jquery)(value).contents().filter(isWhiteSpaceOrComment).remove();
       }
     });

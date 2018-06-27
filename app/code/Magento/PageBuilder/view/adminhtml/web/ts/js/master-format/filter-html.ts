@@ -21,7 +21,9 @@ export default function filterHtml(element: JQuery): JQuery {
     element.contents().filter(isWhiteSpaceOrComment).remove();
     element.find("*").each(
         (index, value) => {
-            if (value.tagName !== "IFRAME") {
+            const isIframe = value.tagName === "IFRAME";
+            const isPartOfHtmlContentType = !!$(value).closest('[data-role="html"]').length;
+            if (!isIframe && !isPartOfHtmlContentType) {
                 $(value).contents().filter(isWhiteSpaceOrComment).remove();
             }
         },
