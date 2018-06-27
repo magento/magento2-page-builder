@@ -4,9 +4,9 @@
  */
 
 import events from "uiEvents";
+import {DataObject} from "../../data-store";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
-import {DataObject} from "../../data-store";
 
 export default class Preview extends BasePreview {
     /**

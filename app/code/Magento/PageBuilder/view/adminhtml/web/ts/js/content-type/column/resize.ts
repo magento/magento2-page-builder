@@ -414,4 +414,3 @@ export function updateColumnWidth(column: ContentTypeCollectionInterface<ColumnP
         "width",
     );
 }
-

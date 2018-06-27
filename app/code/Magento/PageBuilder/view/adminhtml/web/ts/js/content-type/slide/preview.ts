@@ -12,13 +12,13 @@ import Options from "../../content-type-menu";
 import Option from "../../content-type-menu/option";
 import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeInterface from "../../content-type.d";
+import {DataObject} from "../../data-store";
 import {StyleAttributeMapperResult} from "../../master-format/style-attribute-mapper";
 import {fromHex} from "../../utils/color-converter";
 import {percentToDecimal} from "../../utils/number-converter";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 import Uploader from "../uploader";
-import {DataObject} from "../../data-store";
 
 export default class Preview extends BasePreview {
     private showOverlayHover: KnockoutObservable<boolean> = ko.observable(false);
