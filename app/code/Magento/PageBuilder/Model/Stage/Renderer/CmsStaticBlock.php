@@ -13,7 +13,7 @@ namespace Magento\PageBuilder\Model\Stage\Renderer;
  *
  * @api
  */
-class CmsStaticBlock extends WidgetDirective
+class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterface
 {
     /**
      * @var \Magento\Cms\Model\ResourceModel\Block\CollectionFactory
@@ -26,25 +26,26 @@ class CmsStaticBlock extends WidgetDirective
     private $jsonSerializer;
 
     /**
+     * @var WidgetDirective
+     */
+    private $widgetDirectiveRenderer;
+
+    /**
      * Constructor
      *
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Widget\Model\Template\Filter $directiveFilter
-     * @param \Magento\Framework\Controller\ResultFactory $resultFactory
+     * @param WidgetDirective $widgetDirectiveRenderer
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
      * @param \Magento\Framework\Serialize\Serializer\Json $jsonSerializer
      */
     public function __construct(
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Widget\Model\Template\Filter $directiveFilter,
-        \Magento\Framework\Controller\ResultFactory $resultFactory,
+        WidgetDirective $widgetDirectiveRenderer,
         \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
         \Magento\Framework\Serialize\Serializer\Json $jsonSerializer
     ) {
-        parent::__construct($storeManager, $directiveFilter, $resultFactory);
 
         $this->blockCollectionFactory = $blockCollectionFactory;
         $this->jsonSerializer = $jsonSerializer;
+        $this->widgetDirectiveRenderer = $widgetDirectiveRenderer;
     }
 
     /**
@@ -55,6 +56,7 @@ class CmsStaticBlock extends WidgetDirective
      */
     public function render(array $params): string
     {
+        // Short-circuit if needed fields aren't present
         if (empty($params['directive']) || empty($params['block_id'])) {
             return '';
         }
@@ -83,7 +85,7 @@ class CmsStaticBlock extends WidgetDirective
         $result['title'] = $block->getTitle();
 
         if ($block->isActive()) {
-            $result['html'] = parent::render($params);
+            $result['html'] = $this->widgetDirectiveRenderer->render($params);
         } else {
             $result['error_message'] = __('Block disabled');
         }

@@ -23,9 +23,7 @@ export default class Preview extends BasePreview {
     };
 
     /**
-     * @param {ContentTypeInterface} parent
-     * @param {ContentTypeConfigInterface} config
-     * @param {ObservableUpdater} observableUpdater
+     * @inheritdoc
      */
     constructor(
         parent: ContentTypeInterface,
@@ -37,7 +35,7 @@ export default class Preview extends BasePreview {
     }
 
     /**
-     * Bind events
+     * @inheritdoc
      */
     protected bindEvents() {
         super.bindEvents();
@@ -51,6 +49,10 @@ export default class Preview extends BasePreview {
             }
         });
     }
+
+    /**
+     * @inheritdoc
+     */
     protected afterObservablesUpdated(): void {
         super.afterObservablesUpdated();
 

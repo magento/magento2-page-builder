@@ -4,12 +4,14 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Ui\Component\Listing\Columns;
 
 /**
  * The purpose of this class is adding value of invisible 'is_active_label'
  */
-class BlockStatusLabel extends \Magento\Ui\Component\Listing\Columns\Column
+class BlockStatus extends \Magento\Ui\Component\Listing\Columns\Column
 {
     /** Status column name used to get its column value */
     const SOURCE_FIELD_NAME = 'is_active';

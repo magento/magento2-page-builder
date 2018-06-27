@@ -8,9 +8,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
     _inheritsLoose(Preview, _BasePreview);
 
     /**
-     * @param {ContentTypeInterface} parent
-     * @param {ContentTypeConfigInterface} config
-     * @param {ObservableUpdater} observableUpdater
+     * @inheritdoc
      */
     function Preview(parent, config, observableUpdater) {
       var _this;
@@ -27,7 +25,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       return _this;
     }
     /**
-     * Bind events
+     * @inheritdoc
      */
 
 
@@ -47,6 +45,10 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         }
       });
     };
+    /**
+     * @inheritdoc
+     */
+
 
     _proto.afterObservablesUpdated = function afterObservablesUpdated() {
       var _this3 = this;

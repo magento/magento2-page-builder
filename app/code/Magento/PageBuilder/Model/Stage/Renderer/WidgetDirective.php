@@ -12,6 +12,8 @@ use Magento\Framework\Controller\ResultFactory;
 
 /**
  * Renders a widget directive for the stage
+ *
+ * @api
  */
 class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterface
 {

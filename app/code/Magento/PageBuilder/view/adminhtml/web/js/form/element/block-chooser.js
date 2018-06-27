@@ -17,8 +17,13 @@ define([
         id: null,
         meta: {},
         errorMessage: null,
+        messages: {
+            UNKOWN_ERROR: $t('Sorry, there was an error getting requested content. ' +
+                'Please contact the store owner.'),
+            UNKNOWN_SELECTION: $t('The currently selected block does not exist.')
+        },
         defaults: {
-            template: 'Nathan_Mymod/block-picker',
+            template: 'Magento_PageBuilder/form/element/block-chooser',
             requestParameter: null,
             dataUrlConfigPath: null,
             modalName: null,
@@ -41,7 +46,9 @@ define([
             }
         },
 
-        /** @inheritdoc */
+        /**
+         * @inheritdoc
+         */
         initObservable: function () {
             return this._super()
                 .observe('id meta errorMessage');
@@ -49,10 +56,13 @@ define([
 
         /**
          * Updates the block data from the server
+         *
+         * @returns void
          */
         updateFromServer: function () {
             var requestData = $.extend(true, {}, this.requestData);
 
+            // The component hasn't be configured yet. Nothing to do.
             if (!this.id() || !this.requestParameter || !this.dataUrlConfigPath) {
                 return;
             }
@@ -68,13 +78,12 @@ define([
                 .done(function (response) {
                     if (typeof response !== 'object' || response.error) {
                         this.meta({});
-                        this.errorMessage($t('Sorry, there was an error getting requested content. ' +
-                            'Please contact the store owner.'));
+                        this.errorMessage(this.messages.UNKOWN_ERROR);
 
                         return;
                     } else if ($.isArray(response)) {
                         this.meta({});
-                        this.errorMessage($t('The currently selected block does not exist.'));
+                        this.errorMessage(this.messages.UNKNOWN_SELECTION);
 
                         return;
                     }
@@ -83,13 +92,13 @@ define([
                 }.bind(this))
                 .fail(function () {
                     this.meta({});
-                    this.errorMessage($t('Sorry, there was an error getting requested content. ' +
-                        'Please contact the store owner.'));
+                    this.errorMessage(this.messages.UNKOWN_ERROR);
                 }.bind(this));
         },
 
         /**
          * Creates the button component for rendering
+         *
          * @returns {Object} The button component
          */
         getButton: function () {
@@ -103,6 +112,7 @@ define([
 
         /**
          * Determines the status label for the currently loaded block
+         *
          * @returns {String}
          */
         getStatusLabel: function () {
