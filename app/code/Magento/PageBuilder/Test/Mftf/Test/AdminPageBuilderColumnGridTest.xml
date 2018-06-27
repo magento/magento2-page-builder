@@ -580,7 +580,7 @@
         <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSizeOverMax">
             <argument name="gridSize" value="50"/>
             <argument name="index" value="1"/>
-            <argument name="errorMessage" value="maximum grid size supported"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
         </actionGroup>
     </test>
     <test name="ValidateInvalidGridSizeError">
@@ -611,17 +611,17 @@
         <actionGroup ref="updateGridSizeInvalid" stepKey="enterNegativeGridSize">
             <argument name="gridSize" value="-50"/>
             <argument name="index" value="1"/>
-            <argument name="errorMessage" value="minimum grid size supported"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
         </actionGroup>
         <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize1">
             <argument name="gridSize" value="1"/>
             <argument name="index" value="1"/>
-            <argument name="errorMessage" value="minimum grid size supported"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
         </actionGroup>
         <actionGroup ref="updateGridSizeInvalid" stepKey="enterGridSize0">
             <argument name="gridSize" value="0"/>
             <argument name="index" value="1"/>
-            <argument name="errorMessage" value="minimum grid size supported"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.minimumGridSizeErrorMessage"/>
         </actionGroup>
     </test>
     <test name="ValidateDifferentGridSizePerGroup">
@@ -699,7 +699,7 @@
         <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSize">
             <argument name="gridSize" value="50"/>
             <argument name="index" value="1"/>
-            <argument name="errorMessage" value="maximum grid size supported"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.maximumGridSizeErrorMessage"/>
         </actionGroup>
         <click selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="clickOtherArea"/>
         <seeElement selector="{{PageBuilderColumnSection.gridSizeError('1', 'maximum grid size supported')}}" stepKey="verifyMaxError2"/>
@@ -768,7 +768,7 @@
         <actionGroup ref="updateGridSizeInvalid" stepKey="enterInvalidGridSize">
             <argument name="gridSize" value="3"/>
             <argument name="index" value="1"/>
-            <argument name="errorMessage" value="cannot be smaller"/>
+            <argument name="errorMessage" value="PageBuilderGridSize.smallerThanTotalColumnsErrorMessage"/>
         </actionGroup>
     </test>
     <test name="MoveColumnBetweenGroupsOfDifferentGridSize">
