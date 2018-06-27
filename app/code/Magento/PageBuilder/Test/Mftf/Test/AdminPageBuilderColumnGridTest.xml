@@ -296,6 +296,68 @@
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
     </test>
+    <test name="ValidateGridSizeFormDisablesStageAfterTabItemOptions">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Options panels should not appear when grid form is open"/>
+            <description value="Verify that switching directly from the tab items options to grid form keeps stage disabled"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2350"/>
+            <useCaseId value="MC-950"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSize"/>
+            <group value="pagebuilder-tabs"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logOut"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragAdditionalRow">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragAdditionalRow2">
+            <argument name="contentType" value="PageBuilderRowContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="1"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToContainer" stepKey="dragTabsIntoStage">
+            <argument name="contentType" value="PageBuilderTabsContentType"/>
+            <argument name="containerTargetType" value="PageBuilderRowContentType"/>
+            <argument name="containerTargetIndex" value="2"/>
+        </actionGroup>
+        <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
+        <!-- Validate column options don't display -->
+        <comment userInput="Validate column options don't display" stepKey="commentColumnOptionsHidden"/>
+        <moveMouseOver selector="{{PageBuilderColumnSection.columnX('2')}}" stepKey="moveMouseOverColumn" />
+        <waitForPageLoad stepKey="waitForAnimations" />
+        <waitForElement selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="waitForColumnOptions" />
+        <dontSee selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="dontSeeColumnOptions" />
+        <waitForElementNotVisible selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderColumnContentType.role, '2')}}" stepKey="notVisibleColumnOptions" />
+        <!-- Validate row options don't display -->
+        <comment userInput="Validate row options don't display" stepKey="commentRowOptionsHidden"/>
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(PageBuilderRowContentType.role, '3')}}" x="10" y="10" stepKey="moveMouseOverRow" />
+        <waitForPageLoad stepKey="waitForRowAnimations" />
+        <waitForElement selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '3')}}" stepKey="waitForRowOptions" />
+        <dontSee selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(PageBuilderRowContentType.role, '3')}}" stepKey="dontSeeRowOptions" />
+        <!-- Close grid form and check options are restored -->
+        <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
+        <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm" />
+        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderRowContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
+    </test>
     <test name="ValidateUnfocusUpdatesGrid">
         <annotations>
             <features value="Pagebuilder"/>
@@ -833,6 +895,7 @@
             <description value="Verify that the grid form stays open after clicking the number spinners in input"/>
             <severity value="CRITICAL"/>
             <testCaseId value="MC-2308"/>
+            <useCaseId value="MC-950"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
             <group value="pagebuilder-columnGridSize"/>

@@ -178,13 +178,28 @@ export default class Preview extends PreviewCollection {
         const focusTime = new Date().getTime();
         Preview.focusOperationTime = focusTime;
 
+        /**
+         * Keep a reference of the state of the interaction state on the stage to check if the interaction has
+         * restarted since we started our delay timer. This resolves issues with other aspects of the system starting
+         * an interaction during the delay period.
+         */
+        let interactionState: boolean = false;
+        events.on("interaction:start", () => {
+            interactionState = true;
+        });
+        events.on("interaction:stop", () => {
+            interactionState = false;
+        });
+
         // Add a 200ms delay after a null set to allow for clicks to be captured
         _.delay(() => {
             if (!this.disableInteracting && Preview.focusOperationTime === focusTime) {
                 if (index !== null) {
                     events.trigger("interaction:start");
                 } else {
-                    events.trigger("interaction:stop");
+                    if (interactionState !== true) {
+                        events.trigger("interaction:stop");
+                    }
                 }
             }
         }, ((index === null) ? 200 : 0));
