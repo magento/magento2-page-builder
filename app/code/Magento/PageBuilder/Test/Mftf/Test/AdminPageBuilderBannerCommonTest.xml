@@ -223,10 +223,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -243,19 +243,19 @@
             <argument name="newTab" value="PageBuilderBannerNewTabDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorFFFFFFProperty">
-            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSizeCoverProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSizeCoverProperty">
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowOverlayAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowContentOverlayAlwaysProperty"/>
@@ -275,7 +275,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentTypePreviewInStage(PageBuilderBannerContentType.role)}}" stepKey="waitForVideoPreviewInStager" />
-        <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
+        <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
     </test>
@@ -314,10 +314,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -342,22 +342,22 @@
         </actionGroup>
         <comment userInput="I fill out color using Color Picker" stepKey="comment"/>
         <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
-            <argument name="colorCode" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+            <argument name="colorCode" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
         <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="seeHEXInField7">
-            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundPositionCenteredProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundPositionCenteredProperty"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Center"/>
         </actionGroup>
-        <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundSizeCoverProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundSizeProperty"/>
+        <actionGroup ref="chooseVisualSelectOption" stepKey="selectBackgroundSizeCoverProperty">
+            <argument name="property" value="PageBuilderBackgroundSize_Cover"/>
         </actionGroup>
         <actionGroup ref="clickSlideOutPanelFieldGeneral" stepKey="clickOnBackgroundRepeatProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectBackgroundAttachmentScrollProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundAttachmentScrollProperty"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Scroll"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -366,7 +366,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBannerBackgroundImageProperty.path)}}" stepKey="seeMainImageDisplayed"/>
+        <seeElement selector="{{BannerOnFrontend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnFrontend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnFrontend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
         <seeElement selector="{{BannerOnFrontend.posterBackgroundColor}}" stepKey="verifyFrontendPosterBackgroundColor"/>
@@ -573,25 +573,25 @@
             <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundColorProperty">
-            <argument name="property" value="PageBuilderBannerWhiteBackgroundColorProperty"/>
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundImageProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeMobileImageProperty">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundPositionProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundPositionDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundSizeProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundSizeDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundRepeatProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeBackgroundAttachmentProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundAttachmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeMessageProperty">
             <argument name="property" value="PageBuilderBannerMessageProperty"/>
@@ -615,7 +615,7 @@
             <argument name="property" value="PageBuilderBannerShowContentOverlayDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeOverlayColorProperty">
-            <argument name="property" value="PageBuilderBannerWhiteOverlayColorProperty"/>
+            <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeOverlayTransparencyProperty">
             <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
@@ -626,16 +626,16 @@
             <argument name="property" value="PageBuilderBannerMinimumHeightDefaultProperty"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundPositionProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundPositionDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundPosition_Default"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundSizeProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundSizeDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundSize_Default"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultBackgroundRepeatProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundRepeatDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundRepeat_Default"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="seeDefaultBackgroundAttachmentProperty">
-            <argument name="property" value="PageBuilderBannerBackgroundAttachmentDefaultProperty"/>
+            <argument name="property" value="PageBuilderBackgroundAttachment_Default"/>
         </actionGroup>
         <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeDefaultOpenInNewTabProperty">
             <argument name="property" value="PageBuilderBannerNewTabDefaultProperty"/>
@@ -661,7 +661,7 @@
             <argument name="property" value="PageBuilderBannerButtonTypePrimaryProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerOverlayColorPropertyIsDisabled">
-            <argument name="property" value="PageBuilderBannerWhiteOverlayColorProperty"/>
+            <argument name="property" value="PageBuilderBannerContentOverlayColorProperty"/>
         </actionGroup>
         <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="seeBannerOverlayTransparencyPropertyIsDisabled">
             <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
@@ -724,7 +724,7 @@
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
         <!-- Validate Style On Stage -->
         <comment userInput="Validate Style On Stage" stepKey="CommentValidateStage"/>
-        <waitForElementVisible selector="{{BannerOnBackend.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderBannerBackgroundSizeDefaultProperty.value, PageBuilderBannerBackgroundRepeatDefaultProperty.stageValue, PageBuilderBannerBackgroundAttachmentDefaultProperty.value, PageBuilderPaddingProperty40.value)}}" stepKey="waitForStyle"/>
+        <waitForElementVisible selector="{{BannerOnBackend.default('1', PageBuilderAdvancedBorderPropertyNone.value, PageBuilderAdvancedBorderRadiusDefaultProperty.value, PageBuilderMarginsPropertyDefault.value, PageBuilderBackgroundSize_Default.value, PageBuilderBackgroundRepeat_Default.styleValue, PageBuilderBackgroundAttachment_Default.value, PageBuilderPaddingProperty40.value)}}" stepKey="waitForStyle"/>
     </test>
     <test name="BannerHasButtonStyled">
         <annotations>
@@ -762,10 +762,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -889,7 +889,7 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachBackgroundImageFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -953,10 +953,10 @@
         <!-- Fill Out Edit Panel -->
         <comment userInput="Fill Out Edit Panel" stepKey="commentFillEditPanel"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachMobileImageFile">
-            <argument name="property" value="PageBuilderBannerMobileImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundMobileImage_GIF"/>
         </actionGroup>
         <actionGroup ref="selectSlideOutPanelField" stepKey="selectShowButtonAlwaysProperty">
             <argument name="property" value="PageBuilderBannerShowButtonAlwaysProperty"/>
@@ -1015,16 +1015,14 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <seeElement selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="seeSelectFromGalleryBtnOnImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
         <!-- Upload image from local machine using image placeholder button -->
         <comment userInput="Upload image from local machine using image placeholder button" stepKey="commentUpload"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile1">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="waitForUploadImage1" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="seeImageNameOnPreview1"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource400"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="waitForUploadImage1" />
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="seeImageNameOnPreview1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSource400"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed100"/>
         <!-- Remove uploaded image by TrashBin icon -->
         <comment userInput="Remove uploaded image by TrashBin icon" stepKey="commentRemove"/>
@@ -1033,17 +1031,17 @@
         <!-- Upload image from local machine using image placeholder button -->
         <comment userInput="Upload image from local machine using image placeholder button" stepKey="commentUpload2"/>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachImageFile2">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
-        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="waitForUploadImage2" />
-        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBannerBackgroundImageProperty.value)}}" stepKey="seeImageNameOnPreview2"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSource2"/>
+        <waitForElementVisible  selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="waitForUploadImage2" />
+        <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderBackgroundImage_JPG.value)}}" stepKey="seeImageNameOnPreview2"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSource2"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imagePreview}}" stepKey="seeImageDisplayed1"/>
         <!-- Overwrite uploaded image by selecting image from Media Gallery Storage -->
         <comment userInput="Overwrite uploaded image by selecting image from Media Gallery Storage" stepKey="commentOverwrite"/>
-        <click selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Image')}}" stepKey="clickImageSelectFromGalleryBtn"/>
-        <waitForPageLoad stepKey="waitForPageLoad1" />
-        <waitForLoadingMaskToDisappear stepKey="waitForLoading2" />
+        <actionGroup ref="clickSelectFromGallerySlideOut" stepKey="clickSelectFromGallerySlideOut">
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
+        </actionGroup>
         <actionGroup ref="CreateImageFolder" stepKey="createImageFolder">
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
@@ -1054,10 +1052,6 @@
         <seeElement selector="{{ImageOnConfigurationPanel.imageName(PageBuilderImagePropertyJpgCopy.value)}}" stepKey="seeImageNameOnPreview3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImagePropertyJpgCopy.fileName)}}" stepKey="seeMainImageSource3"/>
         <seeElement selector="{{ImageOnConfigurationPanel.trashBinIcon}}" stepKey="seeTrashBinBtn"/>
-        <!-- Upload background mobile image -->
-        <comment userInput="Upload background mobile image" stepKey="commentUpload3"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.selectFromGalleryBtn('Background Mobile Image')}}" stepKey="seeSelectFromGalleryBtnOnMobileImage"/>
-        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Mobile Image')}}" stepKey="seeImagePlaceHolderOnMobileImage1"/>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCMSStorefront" />
@@ -1098,15 +1092,14 @@
         </actionGroup>
         <!--Verify there are 2 buttons when hovering-->
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderBannerContentType.role)}}" stepKey="onMouseOverBannerContentTypeStage"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="section" value="PageBuilderActionsSection"/>
         </actionGroup>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
-        <attachFile userInput="{{PageBuilderLocalImagePropertyJpg.value}}" selector="{{PageBuilderActionsSection.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
-        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderLocalImagePropertyJpg.fileName)}}" stepKey="waitForMainImageSource1"/>
+        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderActionsSection.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG.fileName)}}" stepKey="waitForMainImageSource1"/>
         <!--Upload image from Media Gallery Storage -->
         <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
         <click selector="{{ImageOnStage.selectFromGalleryImageBtn}}" stepKey="clickSelectFromGallery" />
@@ -1116,10 +1109,10 @@
             <argument name="ImageFolder" value="ImageFolder"/>
         </actionGroup>
         <actionGroup ref="attachImage" stepKey="attachImageFile1">
-            <argument name="Image" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="Image" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="saveImage" stepKey="saveImage"/>
-        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeImageInDOM"/>
+        <waitForElement selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeImageInDOM"/>
         <comment userInput="Go to Banner slide-out to verify uploaded image" stepKey="commentGoToBannerSlideOut"/>
         <!--Verify uploaded image is displayed on slide-out-->
         <comment userInput="Verify uploaded image is displayed on slide-out" stepKey="commentVerifyImageOnSlideout"/>
@@ -1127,7 +1120,7 @@
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
         <actionGroup ref="seeImageUploadedOnSlideOut" stepKey="seeImageOnSlideOut1">
-            <argument name="property" value="PageBuilderBannerBackgroundImageProperty"/>
+            <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
@@ -1135,13 +1128,13 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderBannerBackgroundImageProperty.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnBannerStageDependOnEachTypeOfAppearance">
         <annotations>
             <features value="Pagebuilder"/>
             <stories value="Banner"/>
-            <title value="Add image into Banner from the Stage"/>
+            <title value="Add image into Banner from the Stage For Different Appearances"/>
             <description value="A user should be able to add image to Banner stage when switching between appearance type"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-75104"/>
@@ -1176,7 +1169,6 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons1" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderBannerContentType.role)}}" stepKey="onMouseOverBannerContentTypeStage1"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="section" value="PageBuilderActionsSection"/>
@@ -1190,7 +1182,6 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons2" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderBannerContentType.role)}}" stepKey="onMouseOverBannerContentTypeStage2"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="section" value="PageBuilderActionsSection"/>
@@ -1204,7 +1195,6 @@
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons3" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderBannerContentType.role)}}" stepKey="onMouseOverBannerContentTypeStage3"/>
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
             <argument name="section" value="PageBuilderActionsSection"/>

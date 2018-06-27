@@ -1,5 +1,5 @@
 /*eslint-disable */
-define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/utils/delayed-promise", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _uiEvents, _config, _delayedPromise, _preview) {
+define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _uiEvents, _config, _preview) {
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -28,11 +28,11 @@ define(["jquery", "knockout", "uiEvents", "Magento_PageBuilder/js/config", "Mage
       _BasePreview.prototype.bindEvents.call(this); // When a products type is dropped for the first time open the edit panel
 
 
-      _uiEvents.on("products:contentType:dropped:create", function (event, params) {
-        if (event.id === _this2.parent.id) {
-          (0, _delayedPromise)(300)().then(function () {
+      _uiEvents.on("products:contentType:dropped:create", function (args) {
+        if (args.id === _this2.parent.id) {
+          setTimeout(function () {
             _this2.edit.open();
-          });
+          }, 300);
         }
       });
 

@@ -15,10 +15,10 @@ import ContentTypeInterface from "../../content-type.d";
 import {animationTime} from "../../drag-drop/container-animation";
 import {moveContentType} from "../../drag-drop/move-content-type";
 import {getDraggedContentTypeConfig} from "../../drag-drop/registry";
-import {moveArrayItem} from "../../utils/array";
 import {createStyleSheet} from "../../utils/create-stylesheet";
 import {default as ColumnGroupPreview} from "../column-group/preview";
 import Column from "../column/preview";
+import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params";
 import PreviewCollection from "../preview-collection";
 import {calculateDropPositions, DropPosition} from "./drag-and-drop";
 import {createColumn} from "./factory";
@@ -28,12 +28,6 @@ import {
     getAcceptedColumnWidth, getAdjacentColumn, getColumnIndexInGroup, getColumnsWidth, getColumnWidth, getMaxColumns,
     getRoundedColumnWidth, getSmallestColumnWidth, resizeColumn, updateColumnWidth,
 } from "./resizing";
-
-interface ContentTypeRemovedParams {
-    parent: ColumnGroup;
-    contentType: Column;
-    index: number;
-}
 
 export default class Preview extends PreviewCollection {
     public resizing: KnockoutObservable<boolean> = ko.observable(false);
@@ -81,7 +75,7 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, stageId);
 
-        events.on("contentType:removed", (args: ContentTypeRemovedParams) => {
+        events.on("contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 this.spreadWidth(event, args);
             }

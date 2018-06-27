@@ -42,34 +42,27 @@
 [Custom Toolbar]: toolbar.md
 [Roadmap and Known Issues]: roadmap.md
 
-This document contains reference information for events dispatched in PageBuilder.
+This document contains reference information for events dispatched in Page Builder.
 
 **Note:**
 *We are revising naming conventions for events, naming may change.*
 
 ## Events list
 
-* [block:dropped](#blockdropped)
-* [block:dropped:create](#blockdroppedcreate)
-* [block:instanceDropped](#blockinstancedropped)
-* [block:mount](#blockmount)
-* [block:moved](#blockmoved)
-* [block:removed](#blockremoved)
-* [block:sorted](#blocksorted)
-* [block:sortStart](#blocksortstart)
-* [block:sortStart](#blocksortstart)
-* [buttons:block:dropped:create](#buttonsblockdroppedcreate)
-* [colum:drag:start](#columdragstart)
-* [colum:drag:start](#columdragstart)
-* [drag:start](#dragstart)
+* [contentType:create](#contenttypecreate)
+* [contentType:ready](#contenttypeready)
+* [contentType:dropped:create](#contenttypedroppedcreate)
+* [contentType:mount](#contenttypemount)
+* [contentType:afterRender](#contenttypeafterrender)
+* [contentType:removed](#contenttyperemoved)
+* [contentType:duplicate](#contenttypeduplicate)
+* [contentType:beforeMove](#contenttypebeforemove)
+* [contentType:move](#contenttypemove)
+* [column:drag:start](#columdragstart)
 * [column:drag:stop](#columndragstop)
 * [column:initElement](#columninitelement)
-* [drag:start](#dragstart)
-* [drag:stop](#dragstop)
-* [form:render](#formrender)
-* [form:save](#formsave)
 * [image:assigned:{{id}}](#imageassignedid)
-* [image:block:ready](#imageblockready)
+* [image:contentType:ready](#imagecontenttypeready)
 * [image:uploaded](#imageuploaded)
 * [interaction:start](#interactionstart)
 * [interaction:stop](#interactionstop)
@@ -77,51 +70,25 @@ This document contains reference information for events dispatched in PageBuilde
 * [previewObservables:updated](#previewobservablesupdated)
 * [previewSortable:sortstart](#previewsortablesortstart)
 * [previewSortable:sortupdate](#previewsortablesortupdate)
-* [row:block:ready](#rowblockready)
-* [slide:block:create](#slideblockcreate)
-* [slider:block:dropped:create](#sliderblockdroppedcreate)
-* [slide:block:duplicate](#slideblockduplicate)
-* [slide:block:mount](#slideblockmount)
-* [slide:block:removed](#slideblockremoved)
-* [slider:block:ready](#sliderblockready)
 * [stage:error](#stageerror)
 * [stage:ready:{{id}}](#stagereadyid)
 * [stage:renderTree:{{id}}](#stagerendertreeid)
 * [stage:updated](#stageupdated)
 * [state](#state)
-* [tab-item:block:duplicate](#tab-itemblockduplicate)
-* [tab-item:block:mount](#tab-itemblockmount)
-* [tab-item:block:removed](#tab-itemblockremoved)
-* [tabs:block:dropped:create](#tabsblockdroppedcreate)
-* [tabs:block:ready](#tabsblockready)
 * [{{id}}:updated](#idupdated)
+* [googleMaps:authFailure](#googlemapsauthFailure)
 
-## `block:dropped`
+## `contentType:*` events
+All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:contentType:{{event}}`) like the following:
+* `text:contentType:create`
+* `row:contentType:ready`
+* `tab-item:contentType:mount`
 
-**Triggers**
-
-* `ko-sortable::onSortReceive`
-
-**Params**
-
-``` js
-{
-    parent: ContentTypeInterface;
-    index: number;
-    block: {
-        config: ContentTypeConfigInterface,
-    };
-    stageId: string;
-}
-```
-
-[Back to top]
-
-## `block:dropped:create`
+### `contentType:create`
 
 **Triggers**
 
-* `Stage::onBlockDropped`
+* `createContentType`
 
 
 **Params**
@@ -129,33 +96,49 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
 }
 ```
 
 [Back to top]
 
-## `block:instanceDropped`
+### `contentType:ready`
 
 **Triggers**
 
-* `ko-sortable::onSortUpdate`
-* `ColumnGroup.Preview::onExistingColumnDrop`
+* `createContentType`
+
 
 **Params**
 
 ``` js
 {
-    parent: ContentTypeInterface;
-    blockInstance: ContentTypeInterface;
-    index?: number;
-    stageId: string;
+    id: string;
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
 }
 ```
 
 [Back to top]
 
-## `block:mount`
+### `contentType:dropped:create`
+
+**Triggers**
+
+* `onSortReceive`
+
+
+**Params**
+
+``` js
+{
+    id: string;
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
+}
+```
+
+[Back to top]
+
+### `contentType:mount`
 
 **Triggers**
 
@@ -167,30 +150,31 @@ This document contains reference information for events dispatched in PageBuilde
 ``` js
 {
     id: string;
-    block: ContentTypeInterface;
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
 }
 ```
 
 [Back to top]
 
-## `block:moved`
+### `contentType:afterRender`
 
 **Triggers**
 
-* `Stage::onBlockInstanceDropped`
+* `Preview::dispatchAfterRenderEvent`
 
 **Params**
 
 ``` js
 {
-    block: ContentTypeInterface,
-    index: number,
-    newParent: ContentTypeInterface,
-    originalParent: ContentTypeInterface
+    id: string;
+    element: Element;
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
 }
 ```
 
-## `block:removed`
+[Back to top]
+
+### `contentType:removed`
 
 **Triggers**
 
@@ -200,92 +184,74 @@ This document contains reference information for events dispatched in PageBuilde
 
 ``` js
 {
-    parent: ContentTypeInterface;
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
     index: number;
-    block: ContentTypeInterface;
+    parent: ContentTypeCollectionInterface;
     stageId: string;
 }
 ```
 
-## `block:sorted`
+[Back to top]
+
+### `contentType:duplicate`
 
 **Triggers**
 
-* `ko-sortable::onSortUpdate`
+* `Preview::dispatchContentTypeCloneEvents`
 
 **Params**
 
 ``` js
 {
-    parent: ContentTypeInterface;
-    block: ContentTypeInterface;
+    originalContentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    duplicateContentType: ContentTypeInterface & ContentTypeCollectionInterface;
     index: number;
+}
+```
+
+[Back to top]
+
+### `contentType:beforeMove`
+
+**Triggers**
+
+* `moveContentType`
+
+**Params**
+
+``` js
+{
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    sourceParent: ContentTypeCollectionInterface;
+    targetParent: ContentTypeCollectionInterface;
+    targetIndex: number;
     stageId: string;
 }
 ```
 
 [Back to top]
 
-## `block:sortStart`
+### `contentType:move`
 
 **Triggers**
 
-* `ko-sortable::onSortStart`
+* `moveContentType`
 
 **Params**
 
 ``` js
 {
-    block: ContentTypeInterface;
-    event: Event;
-    originalEle: JQuery;
-    placeholder: JQuery;
-    helper?: any;
+    contentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    sourceParent: ContentTypeCollectionInterface;
+    targetParent: ContentTypeCollectionInterface;
+    targetIndex: number;
     stageId: string;
 }
 ```
 
 [Back to top]
 
-## `block:sortStop`
-
-**Triggers**
-
-* `ko-sortable::onSortStop`
-
-**Params**
-
-``` js
-{
-    block: ContentTypeInterface;
-    event: Event;
-    originalEle: JQuery;
-    placeholder: JQuery;
-    helper?: any;
-    stageId: string;
-}
-```
-
-[Back to top]
-
-## `buttons:block:dropped:create`
-
-**Triggers**
-
-* `Stage::onBlockDropped`
-
-**Params**
-
-``` js
-{
-    id: string;
-    block: ContentTypeInterface;
-}
-```
-
-[Back to top]
-
-## `colum:drag:start`
+### `column:drag:start`
 
 **Triggers**
 
@@ -302,41 +268,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `colum:drag:start`
-
-**Triggers**
-
-* `ColumnGroup.Preview::start`
-
-**Params**
-
-``` js
-{
-    column: Column;
-    stageId: string;
-}
-```
-
-## `drag:start`
-
-**Triggers**
-
-* `column:bindResizeHandle`
-* `Column.Preview::bindResizeHandle`
-
-**Params**
-
-``` js
-{
-    column: Column,
-    handle,
-    parent: ColumnGroup
-}
-```
-
-[Back to top]
-
-## `column:drag:stop`
+### `column:drag:stop`
 
 **Triggers**
 
@@ -353,7 +285,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `column:initElement`
+### `column:initElement`
 
 **Triggers**
 
@@ -371,77 +303,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 [Back to top]
 
-## `drag:start`
-
-**Triggers**
-
-* `ko-draggable::init`
-
-**Params**
-
-``` js
-{
-    event,
-    ui,
-    component
-}
-```
-
-[Back to top]
-
-## `drag:stop`
-
-**Triggers**
-
-* `ko-draggable::init`
-
-**Params**
-
-``` js
-{
-    event,
-    ui,
-    component
-}
-```
-
-[Back to top]
-
-## `form:render`
-
-**Triggers**
-
-* `Edit::open`
-
-**Params**
-
-``` js
-{
-    data,
-    appearances,
-    defaultNamespace,
-    id,
-    namespace,
-    title
-}
-```
-
-[Back to top]
-
-## `form:save`
-
-**Triggers**
-
-* `Provider::save`
-
-**Params**
-
-``` js
-```
-
-[Back to top]
-
-## `image:assigned:{{id}}`
+### `image:assigned:{{id}}`
 
 **Triggers**
 
@@ -451,7 +313,7 @@ This document contains reference information for events dispatched in PageBuilde
 
 object
 
-## `image:block:ready`
+### `image:contentType:ready`
 
 **Triggers**
 
@@ -463,7 +325,7 @@ Function
 
 [Back to top]
 
-## `image:uploaded`
+### `image:uploaded`
 
 **Triggers**
 
@@ -475,15 +337,15 @@ Function
 
 [Back to top]
 
-## `interaction:start`
+### `interaction:start`
 
 **Triggers**
 
-* `ko-draggable::init`
 * `Tabs.Preview::constructor`
 * `Slider.Preview::constructor`
 * `ColumnGroup.Preview::registerResizeHandle`
 * `ColumnGroup.Preview::start`
+* `drag-drop::onSortStart`
 
 **Params**
 
@@ -492,16 +354,16 @@ Function
 
 [Back to top]
 
-## `interaction:stop`
+### `interaction:stop`
 
 **Triggers**
 
-* `ko-draggable::init`
 * `Tabs.Preview::constructor`
 * `Tabs.Preview::setFocusedTab`
 * `Slider.Preview::constructor`
 * `ColumnGroup.Preview::endAllInteractions`
 * `ColumnGroup.Preview::stop`
+* `drag-drop::onSortStop`
 
 **Params**
 
@@ -510,7 +372,7 @@ Function
 
 [Back to top]
 
-## `pagebuilder:toggleFullScreen:{{id}}`
+### `pagebuilder:toggleFullScreen:{{id}}`
 
 **Triggers**
 
@@ -524,7 +386,7 @@ Function
 
 [Back to top]
 
-## `previewObservables:updated`
+### `previewObservables:updated`
 
 **Triggers**
 
@@ -540,7 +402,7 @@ Function
 
 [Back to top]
 
-## `previewSortable:sortstart`
+### `previewSortable:sortstart`
 
 **Triggers**
 
@@ -558,7 +420,7 @@ Function
 
 [Back to top]
 
-## `previewSortable:sortupdate`
+### `previewSortable:sortupdate`
 
 **Triggers**
 
@@ -576,129 +438,9 @@ Function
 }
 ```
 
-## `row:block:ready`
-
-**Triggers**
-
-* `ContentTypeFactory::fireBlockReadyEvent`
-
-**Params**
-
-``` js
-{
-    id: string;
-    block: ContentTypeInterface;
-}
-```
-
 [Back to top]
 
-## `slide:block:create`
-
-**Triggers**
-
-* `ContentTypeFactory::createContentType`
-
-**Params**
-
-``` js
-{
-    id: string;
-    block: ContentTypeInterface;
-}
-```
-
-## `slider:block:dropped:create`
-
-**Triggers**
-
-* `Stage::onBlockDropped`
-
-**Params**
-
-``` js
-{
-    id: string;
-    block: ContentTypeInterface;
-}
-```
-
-[Back to top]
-
-## `slide:block:duplicate`
-
-**Triggers**
-
-* `Preview::dispatchContentTypeCloneEvents`
-* `ContentTypeDuplicateEventParams`
-
-**Params**
-
-``` js
-{
-    original: originalBlock,
-    duplicateBlock,
-    index,
-}
-```
-
-[Back to top]
-
-## `slide:block:mount`
-
-**Triggers**
-
-* `ContentTypeCollection::addChild`
-* `Column.Preview::fireMountEvent`
-
-**Params**
-
-``` js
-{
-    id: string;
-    block: ContentTypeInterface;
-}
-```
-
-[Back to top]
-
-## `slide:block:removed`
-
-**Triggers**
-
-* `Preview::onOptionRemove`
-* `BlockRemovedParams`
-
-**Params**
-
-``` js
-{
-    parent: ColumnGroup;
-    block: Column;
-    index: number;
-}
-```
-
-[Back to top]
-
-## `slider:block:ready`
-
-**Triggers**
-
-* `ContentTypeFactory::fireBlockReadyEvent`
-
-**Params**
-
-``` js
-{
-    id: string;
-    block: ContentTypeInterface;
-}
-```
-
-[Back to top]
-
-## `stage:error`
+### `stage:error`
 
 **Triggers**
 
@@ -710,14 +452,14 @@ Error
 
 [Back to top]
 
-## `stage:ready:{{id}}`
+### `stage:ready:{{id}}`
 
 **Triggers**
 
 * `Stage::ready`
 * `stage instance`
 
-## `stage:renderTree:{{id}}`
+### `stage:renderTree:{{id}}`
 
 **Triggers**
 
@@ -733,7 +475,7 @@ Error
 
 [Back to top]
 
-## `stage:updated`
+### `stage:updated`
 
 **Triggers**
 
@@ -750,7 +492,7 @@ Error
 
 [Back to top]
 
-## `state`
+### `state`
 
 **Triggers**
 
@@ -766,98 +508,7 @@ Error
 
 [Back to top]
 
-## `tab-item:block:duplicate`
-
-**Triggers**
-
-* `Preview::dispatchContentTypeCloneEvents`
-* `ContentTypeDuplicateEventParams`
-
-**Params**
-
-``` js
-{
-    original: ContentTypeInterface,
-    duplicateBlock: ContentTypeInterface,
-    index: number,
-}
-```
-
-[Back to top]
-
-## `tab-item:block:mount`
-
-**Triggers**
-
-* `ContentTypeCollection::addChild`
-* `Column.Preview::fireMountEvent`
-
-**Params**
-
-``` js
-{
-    id: string;
-    block: ContentTypeInterface;
-}
-```
-
-[Back to top]
-
-## `tab-item:block:removed`
-
-**Triggers**
-
-* `Preview::onOptionRemove`
-* `BlockRemovedParams`
-
-**Params**
-
-``` js
-{
-    parent: ContentTypeInterface;
-    index: number;
-    block: ContentTypeInterface;
-    stageId: string;
-}
-```
-
-[Back to top]
-
-## `tabs:block:dropped:create`
-
-**Triggers**
-
-* `Stage::onBlockDropped`
-
-**Params**
-
-``` js
-{
-    id: string;
-    block: ContentTypeInterface;
-}
-```
-
-[Back to top]
-
-## `tabs:block:ready`
-
-**Triggers**
-
-* `ContentTypeFactory::fireBlockReadyEvent`
-
-**Params**
-
-``` js
-{
-    id: string;
-    block: ContentTypeInterface;
-}
-```
-
-[Back to top]
-
-## `{{id}}:updated`
+### `{{id}}:updated`
 
 **Triggers**
 
@@ -871,6 +522,18 @@ Error
     paramObj: [key: string]: Stage
 }
 ```
+
+[Back to top]
+
+## `googleMaps:authFailure`
+
+**Triggers**
+
+* `window.gm_authFailure`
+
+**Params**
+
+_none_
 
 [Back to top]
 

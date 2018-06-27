@@ -7,8 +7,9 @@
 
 define([
     'Magento_Ui/js/form/element/abstract',
+    'Magento_PageBuilder/js/utils/map',
     'googleMaps'
-], function (AbstractField) {
+], function (AbstractField, GoogleMap) {
     'use strict';
 
     var google = window.google || {};
@@ -28,24 +29,14 @@ define([
         renderMap: function (element) {
             // Get the start value and convert the value into an array
             var startValue = this.value(),
-                mapOptions;
+                mapOptions,
+                latitudeLongitude;
 
             if (typeof startValue === 'string' && startValue !== '') {
                 startValue = JSON.parse(startValue);
             }
 
             mapOptions = {
-                zoom: 8,
-                center: new google.maps.LatLng(
-                    !isNaN(startValue.latitude) && startValue.latitude !== '' ? startValue.latitude : 30.2672,
-                    !isNaN(startValue.longitude) && startValue.longitude !== '' ? startValue.longitude : -97.7431
-                ),
-                scrollwheel: false,
-                disableDoubleClickZoom: false,
-                mapTypeControl: true,
-                mapTypeControlOptions: {
-                    style: google.maps.MapTypeControlStyle.DEFAULT
-                },
                 navigationControl: true,
                 navigationControlOptions: {
                     style: google.maps.NavigationControlStyle.DEFAULT
@@ -53,16 +44,27 @@ define([
             };
 
             // Create the map
-            this.map = new google.maps.Map(element, mapOptions);
+            this.mapElement = new GoogleMap(element, [], mapOptions);
+
+            if (!this.mapElement.map) {
+
+                return;
+            }
 
             // Add marker if there is a start value
-            if (this.value()) {
+            if (startValue.latitude !== '' && startValue.longitude !== '') {
+                latitudeLongitude = new google.maps.LatLng(
+                    parseFloat(startValue.latitude),
+                    parseFloat(startValue.longitude)
+                );
+
+                this.mapElement.map.setCenter(latitudeLongitude);
                 this.addMarker(startValue.latitude, startValue.longitude);
             }
 
             // After click, add and update both Latitude and Longitude.
-            google.maps.event.addListener(this.map, 'click', this.onClick.bind(this));
-            google.maps.event.addListener(this.map, 'dblclick', this.onDblClick.bind(this));
+            google.maps.event.addListener(this.mapElement.map, 'click', this.onClick.bind(this));
+            google.maps.event.addListener(this.mapElement.map, 'dblclick', this.onDblClick.bind(this));
             google.maps.event.trigger(this.marker, 'click');
         },
 
@@ -75,7 +77,7 @@ define([
         addMarker: function (latitude, longitude) {
             this.marker = new google.maps.Marker({
                 draggable: true,
-                map: this.map,
+                map: this.mapElement.map,
                 position: new google.maps.LatLng(latitude, longitude)
             });
             google.maps.event.addListener(this.marker, 'dragend', this.onDragEnd.bind(this));
@@ -125,7 +127,7 @@ define([
             }
 
             if (!this.validateCoordinate(content) ||
-                !this.map ||
+                !this.mapElement.map ||
                 this.value() === '' ||
                 this.value() === this.exportValue()) {
                 return;
@@ -141,7 +143,7 @@ define([
             }
 
             this.marker.setPosition(latitudeLongitude);
-            this.map.setCenter(latitudeLongitude);
+            this.mapElement.map.setCenter(latitudeLongitude);
         },
 
         /**
@@ -176,7 +178,7 @@ define([
          */
         exportValue: function (coordinate) {
             var position = this.marker ?
-                this.marker.getPosition() : new google.maps.LatLng(this.map.center.lat(), this.map.center.lng()),
+                this.marker.getPosition() : new google.maps.LatLng(this.mapElement.map.center.lat(), this.mapElement.map.center.lng()),
                 currentCoordinate = coordinate ? coordinate : position;
 
             return {
