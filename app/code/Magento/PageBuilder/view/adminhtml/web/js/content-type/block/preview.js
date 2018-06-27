@@ -7,25 +7,32 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
   function (_BasePreview) {
     _inheritsLoose(Preview, _BasePreview);
 
-    function Preview() {
-      var _temp, _this;
+    /**
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    function Preview(parent, config, observableUpdater) {
+      var _this;
 
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.messages = {
+      _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
+      _this.displayPreview = _knockout.observable(false);
+      _this.placeholderText = void 0;
+      _this.messages = {
         NOT_SELECTED: (0, _translate)("Block Not Selected"),
         LOADING: (0, _translate)("Loading..."),
         UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
-      }, _this.displayPreview = _knockout.observable(false), _this.placeholderText = _knockout.observable(_this.messages.NOT_SELECTED), _temp) || _this;
+      };
+      _this.placeholderText = _knockout.observable(_this.messages.NOT_SELECTED);
+      return _this;
     }
-
-    var _proto = Preview.prototype;
-
     /**
      * Bind events
      */
+
+
+    var _proto = Preview.prototype;
+
     _proto.bindEvents = function bindEvents() {
       var _this2 = this;
 

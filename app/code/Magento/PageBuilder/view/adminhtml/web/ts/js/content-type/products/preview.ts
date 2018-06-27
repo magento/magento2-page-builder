@@ -28,44 +28,42 @@ export default class Preview extends BasePreview {
                 }, 300);
             }
         });
+    }
 
-        events.on("previewObservables:updated", (event, params) => {
-            if (event.preview.parent.id !== this.parent.id) {
-                return;
-            }
-            this.placeholderText($t("Loading..."));
-            this.displayPreview(false);
+    protected afterObservablesUpdated(): void {
+        super.afterObservablesUpdated();
+        this.placeholderText($t("Loading..."));
+        this.displayPreview(false);
 
-            const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get();
 
-            if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
-                return;
-            }
+        if ((typeof data.conditions_encoded !== "string") || data.conditions_encoded.length === 0) {
+            return;
+        }
 
-            const url = Config.getConfig("preview_url");
-            const requestConfig = {
-                method: "GET",
-                data: {
-                    role: this.config.name,
-                    directive: this.data.main.html(),
-                },
-            };
+        const url = Config.getConfig("preview_url");
+        const requestConfig = {
+            method: "GET",
+            data: {
+                role: this.config.name,
+                directive: this.data.main.html(),
+            },
+        };
 
-            $.ajax(url, requestConfig)
-                .done((response) => {
-                    const content = response.content !== undefined ? response.content.trim() : "";
-                    if (content.length === 0) {
-                        this.placeholderText($t("Empty Products"));
+        $.ajax(url, requestConfig)
+            .done((response) => {
+                const content = response.content !== undefined ? response.content.trim() : "";
+                if (content.length === 0) {
+                    this.placeholderText($t("Empty Products"));
 
-                        return;
-                    }
+                    return;
+                }
 
-                    this.data.main.html(content);
-                    this.displayPreview(true);
-                })
-                .fail(() => {
-                    this.placeholderText($t("An unknown error occurred. Please try again."));
-                });
-        });
+                this.data.main.html(content);
+                this.displayPreview(true);
+            })
+            .fail(() => {
+                this.placeholderText($t("An unknown error occurred. Please try again."));
+            });
     }
 }

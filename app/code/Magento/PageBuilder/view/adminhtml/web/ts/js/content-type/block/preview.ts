@@ -8,16 +8,33 @@ import ko from "knockout";
 import $t from "mage/translate";
 import events from "uiEvents";
 import Config from "../../config";
+import ContentTypeInterface from "../../content-type";
+import ContentTypeConfigInterface from "../../content-type-config";
+import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
+    public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
+    public placeholderText: KnockoutObservable<string>;
     private messages = {
         NOT_SELECTED: $t("Block Not Selected"),
         LOADING: $t("Loading..."),
         UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
     };
-    public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
-    public placeholderText: KnockoutObservable<string> = ko.observable(this.messages.NOT_SELECTED);
+
+    /**
+     * @param {ContentTypeInterface} parent
+     * @param {ContentTypeConfigInterface} config
+     * @param {ObservableUpdater} observableUpdater
+     */
+    constructor(
+        parent: ContentTypeInterface,
+        config: ContentTypeConfigInterface,
+        observableUpdater: ObservableUpdater,
+    ) {
+        super(parent, config, observableUpdater);
+        this.placeholderText = ko.observable(this.messages.NOT_SELECTED);
+    }
 
     /**
      * Bind events

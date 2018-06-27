@@ -35,47 +35,45 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
           }, 300);
         }
       });
+    };
 
-      _uiEvents.on("previewObservables:updated", function (event, params) {
-        if (event.preview.parent.id !== _this2.parent.id) {
+    _proto.afterObservablesUpdated = function afterObservablesUpdated() {
+      var _this3 = this;
+
+      _BasePreview.prototype.afterObservablesUpdated.call(this);
+
+      this.placeholderText((0, _translate)("Loading..."));
+      this.displayPreview(false);
+      var data = this.parent.dataStore.get();
+
+      if (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0) {
+        return;
+      }
+
+      var url = _config.getConfig("preview_url");
+
+      var requestConfig = {
+        method: "GET",
+        data: {
+          role: this.config.name,
+          directive: this.data.main.html()
+        }
+      };
+
+      _jquery.ajax(url, requestConfig).done(function (response) {
+        var content = response.content !== undefined ? response.content.trim() : "";
+
+        if (content.length === 0) {
+          _this3.placeholderText((0, _translate)("Empty Products"));
+
           return;
         }
 
-        _this2.placeholderText((0, _translate)("Loading..."));
+        _this3.data.main.html(content);
 
-        _this2.displayPreview(false);
-
-        var data = _this2.parent.dataStore.get();
-
-        if (typeof data.conditions_encoded !== "string" || data.conditions_encoded.length === 0) {
-          return;
-        }
-
-        var url = _config.getConfig("preview_url");
-
-        var requestConfig = {
-          method: "GET",
-          data: {
-            role: _this2.config.name,
-            directive: _this2.data.main.html()
-          }
-        };
-
-        _jquery.ajax(url, requestConfig).done(function (response) {
-          var content = response.content !== undefined ? response.content.trim() : "";
-
-          if (content.length === 0) {
-            _this2.placeholderText((0, _translate)("Empty Products"));
-
-            return;
-          }
-
-          _this2.data.main.html(content);
-
-          _this2.displayPreview(true);
-        }).fail(function () {
-          _this2.placeholderText((0, _translate)("An unknown error occurred. Please try again."));
-        });
+        _this3.displayPreview(true);
+      }).fail(function () {
+        _this3.placeholderText((0, _translate)("An unknown error occurred. Please try again."));
       });
     };
 
