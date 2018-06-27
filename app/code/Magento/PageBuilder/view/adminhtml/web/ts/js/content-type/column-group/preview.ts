@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 import events from "uiEvents";
 import _ from "underscore";
 import Config from "../../config";
@@ -382,6 +383,10 @@ export default class Preview extends PreviewCollection {
      * Update the grid size on enter or blur of the input
      */
     public updateGridSize() {
+        if (!$.isNumeric(this.gridSizeInput())) {
+            this.gridSizeError($t("Please enter a valid number."));
+        }
+
         const newGridSize = parseInt(this.gridSizeInput().toString(), 10);
         if (newGridSize || newGridSize === 0) {
             if (newGridSize !== this.resizeUtils.getGridSize()) {
