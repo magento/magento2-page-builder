@@ -58,6 +58,7 @@
         <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{SliderInAdmin.slideOptionsDuplicate}}" stepKey="clickRemoveContentBlock"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{SlideOnBackend.slideContainer('1', '2')}}" stepKey="waitForDuplicateSlide"/>
     </actionGroup>
     <actionGroup name="addSlide">
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
