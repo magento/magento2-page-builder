@@ -21,7 +21,7 @@ import {default as ColumnGroupPreview} from "../column-group/preview";
 import BindResizeHandleEventParamsInterface from "../column/bind-resize-handle-event-params";
 import InitElementEventParamsInterface from "../column/init-element-event-params";
 import ColumnPreview from "../column/preview";
-import ResizeUtils, {
+import Resize, {
     comparator, determineMaxGhostWidth, getAdjacentColumn, getColumnIndexInGroup,
     getRoundedColumnWidth, updateColumnWidth,
 } from "../column/resize";
@@ -73,7 +73,7 @@ export default class Preview extends PreviewCollection {
     private dropPosition: DropPosition;
     private movePosition: DropPosition;
     private groupPositionCache: GroupPositionCache;
-    private resizeUtils: ResizeUtils;
+    private resizeUtils: Resize;
     private gridSizeHistory: Map<number, number[]> = new Map();
 
     /**
@@ -88,7 +88,7 @@ export default class Preview extends PreviewCollection {
         observableUpdater: ObservableUpdater,
     ) {
         super(parent, config, observableUpdater);
-        this.resizeUtils = new ResizeUtils(this.parent);
+        this.resizeUtils = new Resize(this.parent);
 
         // Keep track of the grid size in an observable
         this.parent.dataStore.subscribe((state: DataObject) => {
@@ -131,9 +131,9 @@ export default class Preview extends PreviewCollection {
     /**
      * Retrieve the resize utils
      *
-     * @returns {ResizeUtils}
+     * @returns {Resize}
      */
-    public getResizeUtils(): ResizeUtils {
+    public getResizeUtils(): Resize {
         return this.resizeUtils;
     }
 

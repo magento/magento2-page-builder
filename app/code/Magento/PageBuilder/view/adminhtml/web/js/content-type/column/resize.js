@@ -4,10 +4,10 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var ResizeUtils =
+  var Resize =
   /*#__PURE__*/
   function () {
-    function ResizeUtils(columnGroup) {
+    function Resize(columnGroup) {
       this.columnGroup = void 0;
       this.columnGroup = columnGroup;
     }
@@ -18,7 +18,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      */
 
 
-    var _proto = ResizeUtils.prototype;
+    var _proto = Resize.prototype;
 
     _proto.getGridSize = function getGridSize() {
       return parseInt(this.columnGroup.dataStore.get("grid_size").toString(), 10);
@@ -311,7 +311,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
       }
     };
 
-    return ResizeUtils;
+    return Resize;
   }();
   /**
    * Retrieve the index of the column within it's group
@@ -401,7 +401,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     column.dataStore.update(parseFloat(width.toString()) + "%", "width");
   }
 
-  return Object.assign(ResizeUtils, {
+  return Object.assign(Resize, {
     getColumnIndexInGroup: getColumnIndexInGroup,
     getAdjacentColumn: getAdjacentColumn,
     determineMaxGhostWidth: determineMaxGhostWidth,
