@@ -67,17 +67,17 @@ define([], function () {
 
       if (value) {
         if (undefined !== value.margin) {
-          result.marginLeft = value.margin.left + "px";
-          result.marginTop = value.margin.top + "px";
-          result.marginRight = value.margin.right + "px";
-          result.marginBottom = value.margin.bottom + "px";
+          result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
+          result.marginTop = value.margin.top ? value.margin.top + "px" : "";
+          result.marginRight = value.margin.right ? value.margin.right + "px" : "";
+          result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : "";
         }
 
         if (undefined !== value.padding) {
-          result.paddingLeft = value.padding.left + "px";
-          result.paddingTop = value.padding.top + "px";
-          result.paddingRight = value.padding.right + "px";
-          result.paddingBottom = value.padding.bottom + "px";
+          result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";
+          result.paddingTop = value.padding.top ? value.padding.top + "px" : "";
+          result.paddingRight = value.padding.right ? value.padding.right + "px" : "";
+          result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : "";
         }
       }
 
