@@ -14,6 +14,7 @@
         </arguments>
         <waitForElementVisible selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="waitForSliderButton"/>
         <click selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="clickSliderButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible selector="{{SlideOnFrontend.slide(index)}}" stepKey="waitForSlide"/>
     </actionGroup>
     <actionGroup name="unfocusSlideOptions">
@@ -27,7 +28,7 @@
         <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.firstSlideNavigationDot}}"/>
         <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
         <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentType"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
     </actionGroup>
@@ -40,7 +41,7 @@
         <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.slideNavigationDot(index)}}"/>
         <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
         <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentType"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForPageLoad time="30" stepKey="waitForEditFormToLoad"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitForEditForm" />
         <see userInput="Edit Slide" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
     </actionGroup>
@@ -49,23 +50,24 @@
         <click selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="clickActiveSlideNavigationDot"/>
         <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentTypeOptionsMenu"/>
         <click selector="{{SliderInAdmin.slideOptionsRemove}}" stepKey="clickRemoveContentType"/>
-        <wait time="0.5" stepKey="waitForRemovalAnimation" />
+        <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="duplicateSlide">
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
         <click selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="clickActiveSlideNavigationDot"/>
         <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
         <click selector="{{SliderInAdmin.slideOptionsDuplicate}}" stepKey="clickRemoveContentBlock"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
     </actionGroup>
     <actionGroup name="addSlide">
         <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
         <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
         <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentTypeStage"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
         <waitForElementVisible time="5" selector="{{SliderInAdmin.sliderOptions}}" stepKey="seeContentTypeOptionsMenu"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
         <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickAddNewSlideChild"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
 </actionGroups>
