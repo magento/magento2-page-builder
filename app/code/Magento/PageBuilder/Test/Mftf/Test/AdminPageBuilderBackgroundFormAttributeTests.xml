@@ -197,7 +197,7 @@
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGBa">
             <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_RGBa_Blue.section, PageBuilderBackgroundColor_RGBa_Blue.fieldName, PageBuilderBackgroundColor_RGBa_Blue.value)}}" stepKey="waitForColorSwatchColor"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_RGBa_Blue.section, PageBuilderBackgroundColor_RGBa_Blue.fieldName, PageBuilderBackgroundColor_RGBa_Blue.value)}}" stepKey="waitForColorSwatchColor"/>
         <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGBa">
             <argument name="color" value="{{PageBuilderBackgroundColor_RGBa_Blue.value}}"/>
         </actionGroup>
@@ -260,28 +260,28 @@
         <comment userInput="Validate Color Wheel" stepKey="commentColorWheel"/>
         <waitForElementVisible selector="{{ColorPicker.colorWheelColor(PageBuilderBackgroundColor_Default.colorWheelDefault)}}" stepKey="waitForColorWheelDefaultColor"/>
         <click selector="{{ColorPicker.colorWheel}}" stepKey="clickColorWheel"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorPicker.section, PageBuilderBackgroundColor_CenterColorPicker.fieldName, PageBuilderBackgroundColor_CenterColorPicker.rgb)}}" stepKey="waitForColorSwatchColor"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorPicker.section, PageBuilderBackgroundColor_CenterColorPicker.fieldName, PageBuilderBackgroundColor_CenterColorPicker.rgb)}}" stepKey="waitForColorSwatchColor"/>
         <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorPicker.hex}}" stepKey="seeColorInInputField"/>
         <!-- Validate Clear Color Button-->
         <comment userInput="Validate Clear Color Button" stepKey="commentClearColorButton"/>
         <click selector="{{ColorPicker.clearColorBtn}}" stepKey="clickClearColorButton"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName, PageBuilderBackgroundColor_Default.colorSwatchColor)}}" stepKey="waitForColorSwatchColor2"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName, PageBuilderBackgroundColor_Default.colorSwatchColor)}}" stepKey="waitForColorSwatchColor2"/>
         <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Default.value}}" stepKey="seeColorInInputField2"/>
         <!-- Validate Hue Slider -->
         <comment userInput="Validate Hue Slider" stepKey="commentHueSlider"/>
         <click selector="{{ColorPicker.hueSlider}}" stepKey="clickHueSlider"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgb)}}" stepKey="waitForColorSwatchColor3"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgb)}}" stepKey="waitForColorSwatchColor3"/>
         <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.hex}}" stepKey="seeColorInInputField3"/>
         <!-- Validate Light/Dark Slider -->
         <comment userInput="Validate Light/Dark Slider" stepKey="commentLightDarkSlider"/>
         <click selector="{{ColorPicker.lightDarkSlider}}" stepKey="clickLightDarkSlider"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider)}}" stepKey="waitForColorSwatchColor4"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider)}}" stepKey="waitForColorSwatchColor4"/>
         <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider}}" stepKey="seeColorInInputField4"/>
         <!-- Validate Hex Input Field -->
         <comment userInput="Validate Hex Input Field" stepKey="commentHexInput"/>
         <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Plaintext_Green.value}}" stepKey="inputColorInInputField"/>
         <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_Plaintext_Green.section, PageBuilderBackgroundColor_Plaintext_Green.fieldName, PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForColorSwatchColor5"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Plaintext_Green.section, PageBuilderBackgroundColor_Plaintext_Green.fieldName, PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForColorSwatchColor5"/>
         <!-- Validate Apply Button -->
         <comment userInput="Validate Apply Button" stepKey="commentApplyButton"/>
         <click selector="{{ColorPicker.applyBtn}}" stepKey="clickApplyButton"/>
@@ -296,7 +296,7 @@
         </actionGroup>
         <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Hex_White.value}}" stepKey="inputColorInInputField2"/>
         <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField2"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.panelColorSwatchColor(PageBuilderBackgroundColor_Hex_White.section, PageBuilderBackgroundColor_Hex_White.fieldName, PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="waitForColorSwatchColor6"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Hex_White.section, PageBuilderBackgroundColor_Hex_White.fieldName, PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="waitForColorSwatchColor6"/>
         <click selector="{{ColorPicker.cancelBtn}}" stepKey="clickCancelButton"/>
         <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone2"/>
         <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColor2">
