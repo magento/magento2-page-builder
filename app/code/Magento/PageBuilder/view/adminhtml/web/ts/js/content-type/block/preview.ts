@@ -34,7 +34,10 @@ export default class Preview extends BasePreview {
             }
         });
 
-        events.on("afterObservablesUpdated", (args) => {
+        events.on("previewObservables:updated", (event, params) => {
+            if (event.preview.parent.id !== this.parent.id) {
+                return;
+            }
             this.placeholderText(this.messages.LOADING);
             this.displayPreview(false);
 

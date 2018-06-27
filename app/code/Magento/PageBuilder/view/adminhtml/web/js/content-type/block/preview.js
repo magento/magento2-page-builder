@@ -40,7 +40,11 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         }
       });
 
-      _uiEvents.on("afterObservablesUpdated", function (args) {
+      _uiEvents.on("previewObservables:updated", function (event, params) {
+        if (event.preview.parent.id !== _this2.parent.id) {
+          return;
+        }
+
         _this2.placeholderText(_this2.messages.LOADING);
 
         _this2.displayPreview(false);
