@@ -13,6 +13,11 @@ import BasePreview from "../preview";
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string> = ko.observable($t("Block Not Selected"));
+    private messages = {
+        EMPTY_BLOCK: $t("Empty Block"),
+        LOADING: $t("Loading..."),
+        UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
+    };
 
     /**
      * Bind events
@@ -29,17 +34,17 @@ export default class Preview extends BasePreview {
             }
         });
 
-        events.on("previewObservables:updated", (args) => {
+        events.on("afterObservablesUpdated", (args) => {
             if (args.preview.parent.id !== this.parent.id) {
                 return;
             }
-            this.placeholderText($t("Loading..."));
+            this.placeholderText(this.messages.LOADING);
             this.displayPreview(false);
 
             const data = this.parent.dataStore.get();
 
             if (!data.block_id || data.template.length === 0) {
-                this.placeholderText($t("Empty Block"));
+                this.placeholderText(this.messages.EMPTY_BLOCK);
 
                 return;
             }
@@ -61,7 +66,7 @@ export default class Preview extends BasePreview {
 
                     // Empty content means something bad happened in the controller that didn't trigger a 5xx
                     if (content.length === 0) {
-                        this.placeholderText($t("An unknown error occurred. Please try again."));
+                        this.placeholderText(this.messages.UNKNOWN_ERROR);
 
                         return;
                     }
@@ -70,17 +75,17 @@ export default class Preview extends BasePreview {
                     const blockData = $.parseJSON(content);
 
                     // Update the stage content type label with the real block title if provided
-                    this.displayLabel(blockData.blockTitle ? blockData.blockTitle : this.config.label);
+                    this.displayLabel(blockData.title ? blockData.title : this.config.label);
 
                     if (blockData.html) {
                         this.displayPreview(true);
                         this.data.main.html(blockData.html);
-                    } else if (blockData.errorMessage) {
-                        this.placeholderText(blockData.errorMessage);
+                    } else if (blockData.error_message) {
+                        this.placeholderText(blockData.error_message);
                     }
                 })
                 .fail(() => {
-                    this.placeholderText($t("An unknown error occurred. Please try again."));
+                    this.placeholderText(this.messages.UNKNOWN_ERROR);
                 });
         });
     }

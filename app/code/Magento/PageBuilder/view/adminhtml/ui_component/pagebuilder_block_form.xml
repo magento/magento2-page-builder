@@ -93,7 +93,7 @@
             <settings>
                 <dataType>text</dataType>
                 <imports>
-                    <link name="value">${ $.ns }.${ $.ns }.modal.pagebuilder_block_chooser_listing:externalValue</link>
+                    <link name="value">${ $.ns }.${ $.ns }.modal.pagebuilder_block_select_grid:externalValue</link>
                 </imports>
             </settings>
         </field>
@@ -140,7 +140,7 @@
                         <item name="class" xsi:type="string">action-primary</item>
                         <item name="actions" xsi:type="array">
                             <item name="0" xsi:type="array">
-                                <item name="targetName" xsi:type="string">${ $.name }.pagebuilder_block_chooser_listing</item>
+                                <item name="targetName" xsi:type="string">${ $.name }.pagebuilder_block_select_grid</item>
                                 <item name="actionName" xsi:type="string">save</item>
                             </item>
                             <item name="1" xsi:type="string">closeModal</item>
@@ -149,15 +149,15 @@
                 </option>
             </options>
         </settings>
-        <insertListing name="pagebuilder_block_chooser_listing" sortOrder="10">
+        <insertListing name="pagebuilder_block_select_grid" sortOrder="10">
             <settings>
                 <externalData>block_id</externalData>
-                <externalProvider>${ $.ns }.pagebuilder_block_chooser_listing_data_source</externalProvider>
+                <externalProvider>${ $.ns }.pagebuilder_block_select_grid_data_source</externalProvider>
                 <loading>false</loading>
                 <selectionsProvider>${ $.ns }.${ $.ns }.columns.ids</selectionsProvider>
                 <autoRender>true</autoRender>
                 <dataScope>select_id</dataScope>
-                <ns>pagebuilder_block_chooser_listing</ns>
+                <ns>pagebuilder_block_rg</ns>
                 <dataLinks>
                     <imports>false</imports>
                     <exports>true</exports>

@@ -8,16 +8,16 @@
 <listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">pagebuilder_block_chooser_listing.pagebuilder_block_chooser_listing_data_source</item>
+            <item name="provider" xsi:type="string">pagebuilder_block_select_grid.pagebuilder_block_select_grid_data_source</item>
         </item>
     </argument>
     <settings>
         <spinner>columns</spinner>
         <deps>
-            <dep>pagebuilder_block_chooser_listing.pagebuilder_block_chooser_listing_data_source</dep>
+            <dep>pagebuilder_block_select_grid.pagebuilder_block_select_grid_data_source</dep>
         </deps>
     </settings>
-    <dataSource name="pagebuilder_block_chooser_listing_data_source">
+    <dataSource name="pagebuilder_block_select_grid_data_source">
         <argument name="data" xsi:type="array">
             <item name="js_config" xsi:type="array">
                 <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
@@ -30,7 +30,7 @@
             <updateUrl path="mui/index/render"/>
         </settings>
         <aclResource>Magento_Cms::block</aclResource>
-        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="pagebuilder_block_chooser_listing_data_source">
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="pagebuilder_block_select_grid_data_source">
             <settings>
                 <requestFieldName>block_id</requestFieldName>
                 <primaryFieldName>block_id</primaryFieldName>

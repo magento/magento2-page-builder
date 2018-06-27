@@ -14,7 +14,11 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         args[_key] = arguments[_key];
       }
 
-      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.displayPreview = _knockout.observable(false), _this.placeholderText = _knockout.observable((0, _translate)("Block Not Selected")), _temp) || _this;
+      return (_temp = _this = _BasePreview.call.apply(_BasePreview, [this].concat(args)) || this, _this.displayPreview = _knockout.observable(false), _this.placeholderText = _knockout.observable((0, _translate)("Block Not Selected")), _this.messages = {
+        EMPTY_BLOCK: (0, _translate)("Empty Block"),
+        LOADING: (0, _translate)("Loading..."),
+        UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
+      }, _temp) || _this;
     }
 
     var _proto = Preview.prototype;
@@ -36,19 +40,19 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         }
       });
 
-      _uiEvents.on("previewObservables:updated", function (args) {
+      _uiEvents.on("afterObservablesUpdated", function (args) {
         if (args.preview.parent.id !== _this2.parent.id) {
           return;
         }
 
-        _this2.placeholderText((0, _translate)("Loading..."));
+        _this2.placeholderText(_this2.messages.LOADING);
 
         _this2.displayPreview(false);
 
         var data = _this2.parent.dataStore.get();
 
         if (!data.block_id || data.template.length === 0) {
-          _this2.placeholderText((0, _translate)("Empty Block"));
+          _this2.placeholderText(_this2.messages.EMPTY_BLOCK);
 
           return;
         }
@@ -68,7 +72,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
           var content = response.content !== undefined ? response.content.trim() : ""; // Empty content means something bad happened in the controller that didn't trigger a 5xx
 
           if (content.length === 0) {
-            _this2.placeholderText((0, _translate)("An unknown error occurred. Please try again."));
+            _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
 
             return;
           } // The state object will contain the block name and either html or a message why there isn't any.
@@ -77,17 +81,17 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
           var blockData = _jquery.parseJSON(content); // Update the stage content type label with the real block title if provided
 
 
-          _this2.displayLabel(blockData.blockTitle ? blockData.blockTitle : _this2.config.label);
+          _this2.displayLabel(blockData.title ? blockData.title : _this2.config.label);
 
           if (blockData.html) {
             _this2.displayPreview(true);
 
             _this2.data.main.html(blockData.html);
-          } else if (blockData.errorMessage) {
-            _this2.placeholderText(blockData.errorMessage);
+          } else if (blockData.error_message) {
+            _this2.placeholderText(blockData.error_message);
           }
         }).fail(function () {
-          _this2.placeholderText((0, _translate)("An unknown error occurred. Please try again."));
+          _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
         });
       });
     };

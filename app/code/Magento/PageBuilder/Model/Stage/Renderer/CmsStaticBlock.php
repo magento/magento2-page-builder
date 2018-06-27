@@ -62,7 +62,7 @@ class CmsStaticBlock extends WidgetDirective
         $result = [
             'blockTitle' => null,
             'html' => null,
-            'errorMessage' => null
+            'error_message' => null
         ];
         $collection = $this->blockCollectionFactory->create();
         $blocks = $collection
@@ -71,7 +71,7 @@ class CmsStaticBlock extends WidgetDirective
             ->load();
 
         if ($blocks->count() === 0) {
-            $result['errorMessage'] = sprintf(__('Block with ID: %s doesn\'t exist'), $params['block_id']);
+            $result['error_message'] = sprintf(__('Block with ID: %s doesn\'t exist'), $params['block_id']);
 
             return $this->jsonSerializer->serialize($result);
         }
@@ -80,12 +80,12 @@ class CmsStaticBlock extends WidgetDirective
          * @var \Magento\Cms\Model\Block $block
          */
         $block = $blocks->getFirstItem();
-        $result['blockTitle'] = $block->getTitle();
+        $result['title'] = $block->getTitle();
 
         if ($block->isActive()) {
             $result['html'] = parent::render($params);
         } else {
-            $result['errorMessage'] = __('Block disabled');
+            $result['error_message'] = __('Block disabled');
         }
 
         return $this->jsonSerializer->serialize($result);
