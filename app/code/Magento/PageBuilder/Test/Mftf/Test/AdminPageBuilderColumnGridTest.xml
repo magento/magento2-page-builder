@@ -167,36 +167,6 @@
         <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','4/7')}}" stepKey="checkWidthFirstColumn"/>
         <seeElement selector="{{PageBuilderColumnSection.displayLabel('2','3/7')}}" stepKey="checkWidthSecondColumn"/>
     </test>
-    <test name="SetDefaultGridSize1">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Column"/>
-            <title value="Set the grid size to 1"/>
-            <description value="Set grid size to 1 validate empty column is removed and single 100% column persists"/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MC-950"/>
-            <testCaseId value="MC-2284"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-column"/>
-            <group value="pagebuilder-columnGridSize"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logOut"/>
-        </after>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
-            <argument name="contentType" value="PageBuilderColumnContentType"/>
-        </actionGroup>
-        <actionGroup ref="updateGridSize" stepKey="updateGridSizeTo1">
-            <argument name="gridSize" value="1"/>
-        </actionGroup>
-        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="1" stepKey="seeNumberOfColumns1"/>
-        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','1/1')}}" stepKey="validateSingleColumnOfFullWidth"/>
-    </test>
     <test name="ValidateColumnsMaintainRatioWithoutHistory">
         <annotations>
             <features value="Pagebuilder"/>
