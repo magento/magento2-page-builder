@@ -436,14 +436,23 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill3"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridSizeForm"/>
+        <!-- Verify Initial Column Sizes -->
+        <comment userInput="Verify Initial Column Sizes " stepKey="context0"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','2/7')}}" stepKey="checkWidthFirstColumn"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2','2/7')}}" stepKey="checkWidthSecondColumn"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('3','3/7')}}" stepKey="checkWidthThirdColumn"/>
         <!-- Grab grid guide location for column 1 -->
-        <comment userInput="Grab grid guide width" stepKey="context0"/>
-        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('5')}}').clientWidth" stepKey="guideWidth"/>
+        <comment userInput="Grab grid guide width" stepKey="context1"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('1')}}').clientWidth" stepKey="guideWidth"/>
         <!-- Resize Column 1 -->
-        <comment userInput="Resize Column 1" stepKey="comment1"/>
-        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('5')}}" x="$guideWidth" stepKey="resizeColumn1"/>
+        <comment userInput="Resize Column 1" stepKey="context2"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('1')}}" x="$guideWidth" stepKey="resizeColumn1"/>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seeNumberOfColumnsStill32"/>
-        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','5/7')}}" stepKey="checkWidthFirstColumn"/>
+        <!-- Verify New Column Sizes -->
+        <comment userInput="Verify New Column Sizes " stepKey="context3"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1','1/7')}}" stepKey="checkWidthFirstColumn2"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2','3/7')}}" stepKey="checkWidthSecondColumn2"/>
+        <seeElement selector="{{PageBuilderColumnSection.displayLabel('3','3/7')}}" stepKey="checkWidthThirdColumn2"/>
     </test>
     <test name="ValidateResizeHistory">
         <annotations>
