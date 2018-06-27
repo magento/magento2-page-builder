@@ -85,6 +85,16 @@
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderGridSize.greaterThanOneErrorMessage}}"/>
         </actionGroup>
+        <!-- Enter Invalid Default Grid Size One -->
+        <comment userInput="Enter Invalid Default Grid Size One" stepKey="commentDefaultOne"/>
+        <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeOne">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorOne}}"/>
+        </actionGroup>
+        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldErrorOne">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridDefaultInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridDefaultInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderGridSize.greaterThanOneErrorMessage}}"/>
+        </actionGroup>
         <!-- Enter Invalid Default Grid Size Float -->
         <comment userInput="Enter Invalid Default Grid Size Float" stepKey="commentFloatNumber"/>
         <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterInvalidDefaultGridSizeFloat">
@@ -115,6 +125,16 @@
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorZero}}"/>
         </actionGroup>
         <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldError7">
+            <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
+            <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
+            <argument name="errorMessage" value="{{PageBuilderGridSize.greaterThanOneErrorMessage}}"/>
+        </actionGroup>
+        <!-- Enter Invalid Max Default Grid Size One -->
+        <comment userInput="Enter Invalid Max Default Grid Size One" stepKey="commentMaxOne"/>
+        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterInvalidMaxGridSizeOne">
+            <argument name="gridSize" value="{{PageBuilderGridSize.gridSizeErrorOne}}"/>
+        </actionGroup>
+        <actionGroup ref="saveStoreConfigurationAndValidateFieldError" stepKey="saveStoreConfigurationAndValidateFieldErrorMaxOne">
             <argument name="inputFieldError" value="{{ContentManagementSection.ColumnGridMaxInputField}}"/>
             <argument name="errorMessageSelector" value="{{ContentManagementSection.ColumnGridMaxInputFieldError}}"/>
             <argument name="errorMessage" value="{{PageBuilderGridSize.greaterThanOneErrorMessage}}"/>

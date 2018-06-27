@@ -32,7 +32,7 @@ define([
             function (value) {
                 return !(value <= 1);
             },
-            $.mage.__('Please enter a number greater than 1 in this field.')
+            $.mage.__('Please enter a number 2 or greater in this field.')
         );
 
         $.validator.addMethod(
