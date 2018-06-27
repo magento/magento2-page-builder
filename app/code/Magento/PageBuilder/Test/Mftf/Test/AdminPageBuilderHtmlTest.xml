@@ -319,6 +319,9 @@
         </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Update Values -->
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterHtmlContent">
+            <argument name="property" value="PageBuilderHtmlPropertyButton"/>
+        </actionGroup>
         <comment userInput="Update Values" stepKey="commentUpdateValues"/>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAlignment">
             <argument name="property" value="PageBuilderAdvancedAlignmentPropertyCenter"/>
@@ -746,13 +749,6 @@
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
             <argument name="contentType" value="PageBuilderHtmlContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="clearHTMLField">
-            <argument name="property" value="PageBuilderHtmlProperty_Empty"/>
-        </actionGroup>
-        <!-- Validate Error Message -->
-        <comment userInput="Validate Error Message" stepKey="commentValidateError"/>
-        <waitForElementVisible selector="{{HTMLOnConfiguration.htmlFieldError}}" stepKey="waitForFieldError"/>
-        <waitForElementVisible selector="{{HTMLOnConfiguration.htmlFieldErrorMessage(PageBuilderHtmlProperty_Empty.errorMessage)}}" stepKey="waitForErrorMessage"/>
         <!-- Validate Cannot Save -->
         <comment userInput="Validate Cannot Save" stepKey="commentValidateCannotSave"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForColumnSaveButton"/>
