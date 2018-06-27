@@ -27,15 +27,6 @@
         <element name="buttonText" type="text" selector="//button[text()='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="SliderInAdmin">
-        <element name="slideOptions" type="button" selector="div.slider-navigation div.pagebuilder-options ul.pagebuilder-options-links"/>
-        <element name="slideOptionsByIndex" type="button" selector="//div[contains(@class, 'slider-navigation')]//div[contains(@class, 'pagebuilder-options')][{{arg1}}]" parameterized="true"/>
-        <element name="slideOptionsTitle" type="button" selector="//div[contains(@class, 'navigation-dot active')]//li[contains(@class, 'pagebuilder-options-link')]//div[contains(@class, 'option-title')]"/>
-        <element name="slideOptionsEdit" type="button" selector="//div[contains(@class, 'navigation-dot active')]//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'edit-content-type')]"/>
-        <element name="slideOptionsRemove" type="button" selector="//div[contains(@class, 'navigation-dot active')]//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'remove-structural')]"/>
-        <element name="slideOptionsDuplicate" type="button" selector="//div[contains(@class, 'navigation-dot active')]//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'duplicate-structural')]"/>
-        <element name="slideOptionsRemoveDisabled" type="button" selector="//li[contains(@class, 'pagebuilder-options-link')]//a[contains(@class, 'disabled')]"/>
-        <element name="sliderOptions" type="button" selector="//div[contains(@class, 'pagebuilder-slider')]//ul[contains(@class, 'pagebuilder-options-links')]"/>
-        <element name="addNewSlide" type="button" selector="div.pagebuilder-slider div.pagebuilder-options ul.pagebuilder-options-links li.pagebuilder-options-link a.add-child"/>
         <element name="default" type="button" selector="(//div[@class='slider-container'])[{{arg1}}][(contains(@style, 'border-style: {{arg2}}')) and contains(@style, 'border-radius: {{arg3}}px') and contains(@style, 'margin: {{arg4}}px') and contains(@style, 'padding: {{arg5}}px') and contains(@style, 'min-height: {{arg6}}px')]" parameterized="true"/>
         <element name="sliderContainer" type="button" selector="div.element-children.slider-container"/>
         <element name="firstSlideNavigationDot" type="button" selector="(//div[contains(@class, 'navigation-dot')])[1]"/>
@@ -131,6 +122,12 @@
         <element name="computedBoxSizing" type="button" selector="return window.getComputedStyle(document.querySelector('[data-role=slide]')).boxSizing"/>
     </section>
     <section name="SlideOnBackend">
+        <element name="all" type="button" selector=".pagebuilder-slide"/>
+        <element name="openOptionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]" parameterized="true"/>
+        <element name="optionsMenu" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]" parameterized="true"/>
+        <element name="optionsMenuButton" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{arg2}}')]" parameterized="true"/>
+        <element name="optionsMenuButtonDisabled" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//a[contains(@class,'{{arg2}}') and contains(@class,'disabled')]" parameterized="true"/>
+        <element name="optionsMenuTitle" type="button" selector="(//div[contains(@class,'navigation-dot')])[{{arg1}}]//li[contains(@class,'pagebuilder-options-link')]//div[contains(@class,'option-title')]" parameterized="true"/>
         <element name="optionTitle" type="button" selector=".pagebuilder-slider .navigation-dot.active .option-title"/>
         <element name="collageOverlayGeneral" type="button" selector=".pagebuilder-collage-overlay"/>
         <element name="slideAppearancePoster" type="button" selector="[data-slick-index='{{arg1}}'] .pagebuilder-poster-content" parameterized="true"/>

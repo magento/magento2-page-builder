@@ -10,8 +10,8 @@
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="DefaultTabStateOnAddingNewTab">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
             <title value="Empty Tabs Default State on Admin Preview and Storefront"/>
             <description value="As a Content Manager I want to see empty tab preview on the stage so that I see its position and can access settings"/>
@@ -32,15 +32,17 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <comment userInput="User adds tabs and sees 1st default tab item created by default" stepKey="AC1"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!-- Open Tabs Panel -->
         <comment userInput="Tab option panel displayed on top of the new tab after adding it." stepKey="AC2"/>
-        <waitForElement selector="{{TabOnStage.tabOptionsByIndex('1')}}" stepKey="seeTabOptionsPanel" time="30"/>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEditVisible"/>
+        <waitForElement selector="{{TabOnStage.optionsMenu('1')}}" stepKey="seeTabOptionsPanel" time="30"/>
+        <waitForElementVisible selector="{{TabOnStage.optionsMenuButton('1', 'edit')}}" stepKey="seeTabOptionsEditVisible"/>
         <comment userInput="A placeholder indicates that content can be added inside the tab" stepKey="AC3"/>
         <see selector="{{TabOnStage.empty}}" userInput="Drag content types or columns here" stepKey="seeTabPlaceholder"/>
         <comment userInput="User sees the first tab to be active and focused." stepKey="AC4"/>
@@ -59,7 +61,8 @@
         <seeElement selector="{{TabOnStage.tabContentBackgroundSize('2', PageBuilderTabBackgroundSizeDefault.value)}}" stepKey="seeTabBackgroundSizeAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundAttachment('2', PageBuilderTabBackgroundAttachmentDefault.value)}}" stepKey="seeTabBackgroundAttachmentAdmin2"/>
         <seeElement selector="{{TabOnStage.tabContentBackgroundRepeat('2', PageBuilderTabBackgroundRepeatNo.style)}}" stepKey="seeTab2StageBackgroundRepeatNo"/>
-        <actionGroup ref="switchTabsAdmin" stepKey="switchTabsAdmin">
+        <actionGroup ref="switchTabs" stepKey="switchTabsAdmin">
+            <argument name="section" value="TabOnStage"/>
             <argument name="from" value="2"/>
             <argument name="to" value="1"/>
         </actionGroup>
@@ -81,8 +84,9 @@
         <seeElement selector="{{TabOnStage.tabContentPadding('1', PageBuilderPaddingProperty40.value)}}" stepKey="seeTab1Padding"/>
 
         <!-- Validate Default Values on Edit Tab for initial tab -->
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
 
         <comment userInput="Tab has default value Tab 1 for Tab Name" stepKey="AC11"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateDefaultTabName">
@@ -158,8 +162,8 @@
     </test>
     <test name="TabAdvancedSectionDefaults">
         <annotations>
-            <features value="PageBuilder"/>
-            <stories value="Tabs: Tab Configuration"/>
+            <features value="Pagebuilder"/>
+            <stories value="Tabs"/>
             <useCaseId value="MAGETWO-71593"/>
             <title value="Tab advanced configuration has default properties"/>
             <description value="New tab has default values on Advanced section"/>
@@ -180,15 +184,15 @@
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
         <!--Add Tabs to Stage -->
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderTabsContentType"/>
+        </actionGroup>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragTabsIntoStage">
             <argument name="contentType" value="PageBuilderTabsContentType"/>
         </actionGroup>
-        <waitForElementVisible selector="{{TabOnStage.tabOptionsEdit}}" stepKey="seeTabOptionsEdit"/>
-        <click selector="{{TabOnStage.tabOptionsEdit}}" stepKey="clickEditContentType"/>
-        <waitForElementVisible stepKey="wait1" selector="{{PageBuilderActionsSection.editFormTitle}}" time="10"/>
-        <see userInput="Edit Tab" selector="{{PageBuilderActionsSection.editFormTitle}}" stepKey="editTab"/>
-        <waitForPageLoad stepKey="waitForPageBuilderPageLoad"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="TabOnStage"/>
+        </actionGroup>
         <actionGroup ref="expandConfigurationSection" stepKey="expandConfigurationSection"/>
         <!-- Text Alignment -->
         <comment userInput="Text Alignment: dropdown defaults to Default and available values Default, Left, Center, Right" stepKey="AC0" />
