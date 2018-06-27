@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import events from "./events";
 import $ from "jquery";
 import ko from "knockout";
 import $t from "mage/translate";
@@ -13,6 +12,7 @@ import Config from "./config";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import {hideDropIndicators, showDropIndicators} from "./drag-drop/drop-indicators";
 import {setDraggedContentTypeConfig} from "./drag-drop/registry";
+import events from "./events";
 import PageBuilder from "./page-builder";
 import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";

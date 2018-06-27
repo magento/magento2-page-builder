@@ -1,6 +1,7 @@
 import uiEvents from "uiEvents";
 
 export default {
+
     /**
      * Calls callback when name event is triggered
      *
@@ -9,8 +10,8 @@ export default {
      * @param {Function} ns
      * @return {object}
      */
-    on: (events, callback, ns) => {
-        uiEvents.on(events, callback, ns);
+    on: (events: string, callback: () => {}, ns: () => {}) => {
+        uiEvents.on("pagebuilder:" + events, callback, "pagebuilder:" + ns);
         return this;
     },
 
@@ -20,8 +21,8 @@ export default {
      * @param {string} ns
      * @return {object}
      */
-    off: (ns) => {
-        uiEvents.off(ns);
+    off: (ns: string) => {
+        uiEvents.off("pagebuilder:" + ns);
         return this;
     },
 
@@ -29,10 +30,10 @@ export default {
      * Triggers event and executes all attached callbacks
      *
      * @param {string} name
-     * @param {any} arguments
+     * @param {any} args
      * @returns {boolean}
      */
-    trigger: (name, arguments) => {
-        return uiEvents.trigger(name, arguments);
-    }
+    trigger: (name: string, args: any) => {
+        return uiEvents.trigger("pagebuilder:" + name, args);
+    },
 };

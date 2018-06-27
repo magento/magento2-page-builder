@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import events from "./events";
 import ko from "knockout";
 import $t from "mage/translate";
 import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min";
@@ -16,6 +15,7 @@ import ContentTypeInterface from "./content-type.d";
 import DataStore from "./data-store";
 import {generateAllowedParents} from "./drag-drop/matrix";
 import {getSortableOptions} from "./drag-drop/sortable";
+import events from "./events";
 import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import buildStage from "./stage-builder";

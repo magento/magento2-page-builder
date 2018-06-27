@@ -1,7 +1,6 @@
 /*eslint-disable */
 define(["uiEvents"], function (_uiEvents) {
-  var _this = void 0,
-      _arguments = arguments;
+  var _this = void 0;
 
   var _default = {
     /**
@@ -13,7 +12,7 @@ define(["uiEvents"], function (_uiEvents) {
      * @return {object}
      */
     on: function on(events, callback, ns) {
-      _uiEvents.on(events, callback, ns);
+      _uiEvents.on("pagebuilder:" + events, callback, "pagebuilder:" + ns);
 
       return _this;
     },
@@ -25,7 +24,7 @@ define(["uiEvents"], function (_uiEvents) {
      * @return {object}
      */
     off: function off(ns) {
-      _uiEvents.off(ns);
+      _uiEvents.off("pagebuilder:" + ns);
 
       return _this;
     },
@@ -34,11 +33,11 @@ define(["uiEvents"], function (_uiEvents) {
      * Triggers event and executes all attached callbacks
      *
      * @param {string} name
-     * @param {any} arguments
+     * @param {any} args
      * @returns {boolean}
      */
-    trigger: function trigger(name, arguments) {
-      return _uiEvents.trigger(name, _arguments);
+    trigger: function trigger(name, args) {
+      return _uiEvents.trigger("pagebuilder:" + name, args);
     }
   };
   return _default;

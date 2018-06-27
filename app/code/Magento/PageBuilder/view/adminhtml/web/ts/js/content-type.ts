@@ -3,7 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-import events from "./events";
 import ko from "knockout";
 import mageUtils from "mageUtils";
 import ContentTypeConfigInterface from "./content-type-config.d";
@@ -11,6 +10,7 @@ import ContentTypeInterface from "./content-type.d";
 import Master from "./content-type/master";
 import Preview from "./content-type/preview";
 import DataStore from "./data-store";
+import events from "./events";
 
 export default class ContentType implements ContentTypeInterface {
     public id: string = mageUtils.uniqueid();

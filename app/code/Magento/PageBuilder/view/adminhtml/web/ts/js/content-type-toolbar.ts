@@ -3,12 +3,12 @@
  * See COPYING.txt for license details.
  */
 
-import events from "./events";
 import $ from "jquery";
 import ko from "knockout";
 import OptionInterface from "./content-type-toolbar/option.d";
 import ValueInterface from "./content-type-toolbar/value.d";
 import Preview from "./content-type/preview";
+import events from "./events";
 
 export default class Toolbar {
     public options: KnockoutObservableArray<OptionInterface> = ko.observableArray([]);
