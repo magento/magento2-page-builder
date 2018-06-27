@@ -39,60 +39,57 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
           }, 300);
         }
       });
+    };
 
-      _uiEvents.on("previewObservables:updated", function (event, params) {
-        if (event.preview.parent.id !== _this2.parent.id) {
-          return;
+    _proto.afterObservablesUpdated = function afterObservablesUpdated() {
+      var _this3 = this;
+
+      _BasePreview.prototype.afterObservablesUpdated.call(this);
+
+      this.placeholderText(this.messages.LOADING);
+      this.displayPreview(false);
+      var data = this.parent.dataStore.get();
+
+      if (!data.block_id || data.template.length === 0) {
+        this.placeholderText(this.messages.NOT_SELECTED);
+        return;
+      }
+
+      var url = _config.getConfig("preview_url");
+
+      var requestConfig = {
+        method: "GET",
+        data: {
+          role: this.config.name,
+          block_id: data.block_id,
+          directive: this.data.main.html()
         }
+      }; // Retrieve a state object representing the block from the preview controller and process it on the stage
 
-        _this2.placeholderText(_this2.messages.LOADING);
+      _jquery.ajax(url, requestConfig).done(function (response) {
+        var content = response.content !== undefined ? response.content.trim() : ""; // Empty content means something bad happened in the controller that didn't trigger a 5xx
 
-        _this2.displayPreview(false);
-
-        var data = _this2.parent.dataStore.get();
-
-        if (!data.block_id || data.template.length === 0) {
-          _this2.placeholderText(_this2.messages.NOT_SELECTED);
+        if (content.length === 0) {
+          _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
 
           return;
+        } // The state object will contain the block name and either html or a message why there isn't any.
+
+
+        var blockData = _jquery.parseJSON(content); // Update the stage content type label with the real block title if provided
+
+
+        _this3.displayLabel(blockData.title ? blockData.title : _this3.config.label);
+
+        if (blockData.html) {
+          _this3.displayPreview(true);
+
+          _this3.data.main.html(blockData.html);
+        } else if (blockData.error_message) {
+          _this3.placeholderText(blockData.error_message);
         }
-
-        var url = _config.getConfig("preview_url");
-
-        var requestConfig = {
-          method: "GET",
-          data: {
-            role: _this2.config.name,
-            block_id: data.block_id,
-            directive: _this2.data.main.html()
-          }
-        }; // Retrieve a state object representing the block from the preview controller and process it on the stage
-
-        _jquery.ajax(url, requestConfig).done(function (response) {
-          var content = response.content !== undefined ? response.content.trim() : ""; // Empty content means something bad happened in the controller that didn't trigger a 5xx
-
-          if (content.length === 0) {
-            _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
-
-            return;
-          } // The state object will contain the block name and either html or a message why there isn't any.
-
-
-          var blockData = _jquery.parseJSON(content); // Update the stage content type label with the real block title if provided
-
-
-          _this2.displayLabel(blockData.title ? blockData.title : _this2.config.label);
-
-          if (blockData.html) {
-            _this2.displayPreview(true);
-
-            _this2.data.main.html(blockData.html);
-          } else if (blockData.error_message) {
-            _this2.placeholderText(blockData.error_message);
-          }
-        }).fail(function () {
-          _this2.placeholderText(_this2.messages.UNKNOWN_ERROR);
-        });
+      }).fail(function () {
+        _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
       });
     };
 

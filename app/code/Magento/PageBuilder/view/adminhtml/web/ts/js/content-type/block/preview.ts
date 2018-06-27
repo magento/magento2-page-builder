@@ -33,60 +33,58 @@ export default class Preview extends BasePreview {
                 }, 300);
             }
         });
+    }
+    protected afterObservablesUpdated(): void {
+        super.afterObservablesUpdated();
 
-        events.on("previewObservables:updated", (event, params) => {
-            if (event.preview.parent.id !== this.parent.id) {
-                return;
-            }
-            this.placeholderText(this.messages.LOADING);
-            this.displayPreview(false);
+        this.placeholderText(this.messages.LOADING);
+        this.displayPreview(false);
 
-            const data = this.parent.dataStore.get();
+        const data = this.parent.dataStore.get();
 
-            if (!data.block_id || data.template.length === 0) {
-                this.placeholderText(this.messages.NOT_SELECTED);
+        if (!data.block_id || data.template.length === 0) {
+            this.placeholderText(this.messages.NOT_SELECTED);
 
-                return;
-            }
+            return;
+        }
 
-            const url = Config.getConfig("preview_url");
-            const requestConfig = {
-                method: "GET",
-                data: {
-                    role: this.config.name,
-                    block_id: data.block_id,
-                    directive: this.data.main.html(),
-                },
-            };
+        const url = Config.getConfig("preview_url");
+        const requestConfig = {
+            method: "GET",
+            data: {
+                role: this.config.name,
+                block_id: data.block_id,
+                directive: this.data.main.html(),
+            },
+        };
 
-            // Retrieve a state object representing the block from the preview controller and process it on the stage
-            $.ajax(url, requestConfig)
-                .done((response) => {
-                    const content = response.content !== undefined ? response.content.trim() : "";
+        // Retrieve a state object representing the block from the preview controller and process it on the stage
+        $.ajax(url, requestConfig)
+            .done((response) => {
+                const content = response.content !== undefined ? response.content.trim() : "";
 
-                    // Empty content means something bad happened in the controller that didn't trigger a 5xx
-                    if (content.length === 0) {
-                        this.placeholderText(this.messages.UNKNOWN_ERROR);
-
-                        return;
-                    }
-
-                    // The state object will contain the block name and either html or a message why there isn't any.
-                    const blockData = $.parseJSON(content);
-
-                    // Update the stage content type label with the real block title if provided
-                    this.displayLabel(blockData.title ? blockData.title : this.config.label);
-
-                    if (blockData.html) {
-                        this.displayPreview(true);
-                        this.data.main.html(blockData.html);
-                    } else if (blockData.error_message) {
-                        this.placeholderText(blockData.error_message);
-                    }
-                })
-                .fail(() => {
+                // Empty content means something bad happened in the controller that didn't trigger a 5xx
+                if (content.length === 0) {
                     this.placeholderText(this.messages.UNKNOWN_ERROR);
-                });
-        });
+
+                    return;
+                }
+
+                // The state object will contain the block name and either html or a message why there isn't any.
+                const blockData = $.parseJSON(content);
+
+                // Update the stage content type label with the real block title if provided
+                this.displayLabel(blockData.title ? blockData.title : this.config.label);
+
+                if (blockData.html) {
+                    this.displayPreview(true);
+                    this.data.main.html(blockData.html);
+                } else if (blockData.error_message) {
+                    this.placeholderText(blockData.error_message);
+                }
+            })
+            .fail(() => {
+                this.placeholderText(this.messages.UNKNOWN_ERROR);
+            });
     }
 }
