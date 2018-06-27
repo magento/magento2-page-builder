@@ -37,9 +37,7 @@ export default class Configurable implements ReadInterface {
                 for (const elementName of Object.keys(config.elements)) {
                     const elementConfig = config.elements[elementName];
                     // Do not read if path is optional
-                    console.log(elementConfig);
                     if (elementConfig.path !== "") {
-                        console.log("path");
                         const xpathResult = document.evaluate(
                             elementConfig.path,
                             element,
@@ -78,8 +76,6 @@ export default class Configurable implements ReadInterface {
                         if (undefined !== elementConfig.css.var) {
                             data = this.readCss(elementConfig, currentElement, data);
                         }
-                    } else {
-                        console.log("no path");
                     }
                 }
                 data = this.convertData(config, data, massConverterPool);

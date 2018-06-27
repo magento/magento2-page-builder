@@ -34,10 +34,7 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
             var elementName = _arr[_i];
             var elementConfig = config.elements[elementName]; // Do not read if path is optional
 
-            console.log(elementConfig);
-
             if (elementConfig.path !== "") {
-              console.log("path");
               var xpathResult = document.evaluate(elementConfig.path, element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
               var currentElement = xpathResult.singleNodeValue;
 
@@ -64,8 +61,6 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
               if (undefined !== elementConfig.css.var) {
                 data = _this.readCss(elementConfig, currentElement, data);
               }
-            } else {
-              console.log("no path");
             }
           }
 
