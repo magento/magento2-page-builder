@@ -25,7 +25,7 @@
         <click selector="{{AddLocationForm.editFormSave}}" stepKey="clickSaveButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementNotVisible selector="{{AddLocationForm.form}}" stepKey="waitForAddLocationFormNotVisible"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveEditMapFormButton"/>
+        <waitForElementVisible selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveEditMapFormButton"/>
     </actionGroup>
     <actionGroup name="closeLocationForm">
         <comment userInput="closeLocationForm" stepKey="comment"/>
@@ -33,7 +33,7 @@
         <click selector="{{AddLocationForm.cancelButton}}" stepKey="clickCancelButton"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementNotVisible selector="{{AddLocationForm.form}}" stepKey="waitForAddLocationFormNotVisible"/>
-        <waitForElementVisible selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveEditMapFormButton"/>
+        <waitForElementVisible selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveEditMapFormButton"/>
     </actionGroup>
     <actionGroup name="clickLocationGridRow">
         <arguments>
@@ -283,8 +283,8 @@
             <argument name="property"/>
             <argument name="comparedCoordinate" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForCoordinate"/>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(property.section, property.fieldName)}}" stepKey="actualCoordinate"/>
+        <waitForElementVisible selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="waitForCoordinate"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(property.section, property.fieldName)}}" stepKey="actualCoordinate"/>
         <assertNotEquals stepKey="assertCoordinateNotEqual">
             <expectedResult type="variable">{{comparedCoordinate}}</expectedResult>
             <actualResult type="variable">actualCoordinate</actualResult>

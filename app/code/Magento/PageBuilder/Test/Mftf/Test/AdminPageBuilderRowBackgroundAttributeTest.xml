@@ -36,7 +36,7 @@
         </actionGroup>
         <!-- Validate Default Values -->
         <comment userInput="Validate Default Values" stepKey="CommentValidateDefaultValues"/>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor"/>
         <assertEmpty actual="getBackgroundColor" actualType="variable" message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor"/>
         <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage">
             <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>
@@ -81,7 +81,7 @@
         </actionGroup>
         <!-- Validate Edit Panel After Save -->
         <comment userInput="Validate Edit Panel After Save" stepKey="commentValidateEditPanel2"/>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor2"/>
         <assertEmpty actual="getBackgroundColor2" actualType="variable" message="Text field has text: $getBackgroundColor2" stepKey="assertBackgroundColor2"/>
         <actionGroup ref="seeNoImageUploadedOnSlideOut" stepKey="validateNoImage2">
             <argument name="property" value="PageBuilderRowBackgroundImage_Default"/>
@@ -166,7 +166,7 @@
         <actionGroup ref="seeNoColorInColorSwatch" stepKey="validateBackgroundColorSwatch">
             <argument name="property" value="PageBuilderBackgroundColor_Default"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderActionsSection.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName)}}" stepKey="getBackgroundColor"/>
         <assertEmpty actual="getBackgroundColor" actualType="variable" message="Text field has text: $getBackgroundColor" stepKey="assertBackgroundColor"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderRowContentType"/>

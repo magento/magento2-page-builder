@@ -497,7 +497,7 @@
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <!-- Validate Stage -->
         <comment userInput="Validate Stage" stepKey="commentValidateStage"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentTypePreviewInStage(PageBuilderBannerContentType.role)}}" stepKey="waitForVideoPreviewInStager" />
+        <waitForElementVisible time="5" selector="{{PageBuilderStage.contentTypePreviewInStage(PageBuilderBannerContentType.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
@@ -598,7 +598,7 @@
         </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
-        <dontSeeInField selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderBannerButtonTextProperty.section, PageBuilderBannerButtonTextProperty.fieldName)}}" userInput="{{PageBuilderBannerButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
+        <dontSeeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderBannerButtonTextProperty.section, PageBuilderBannerButtonTextProperty.fieldName)}}" userInput="{{PageBuilderBannerButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonLinkOnForm2">
             <argument name="property" value="PageBuilderBannerLinkUrlPropertyValidate"/>
         </actionGroup>
