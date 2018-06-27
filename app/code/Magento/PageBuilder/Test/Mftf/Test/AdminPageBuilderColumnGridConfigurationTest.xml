@@ -11,9 +11,9 @@
     <test name="ValidateGridSettingsValidationInSystemConfig">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Column"/>
-            <title value="Verify you cannot set the grid default size higher than the max size."/>
-            <description value="Verify you cannot set the grid default size higher than the max size."/>
+            <stories value="Store Configuration - Column Grid Size"/>
+            <title value="Verify validations for grid default and max size."/>
+            <description value="Verify validations for grid default and max size."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MC-950"/>
             <testCaseId value="MC-2293"/>
@@ -23,12 +23,14 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+            <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         </before>
         <after>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 16" stepKey="setMaxGridSize"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
         <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
         <conditionalClick stepKey="uncheckUseSystemValueMax" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_max')}}" visible="true"/>
         <!-- Enter Invalid Default Grid Size -->
@@ -156,7 +158,7 @@
     <test name="ValidateOddDefaultGridSizeIsSplitCorrectly">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Column"/>
+            <stories value="Store Configuration - Column Grid Size"/>
             <title value="Verify that the initial two column split is correct when the default grid size is odd."/>
             <description value="Verify that the initial two column split is correct when the default grid size is odd."/>
             <severity value="CRITICAL"/>
@@ -168,35 +170,38 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+            <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+            <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
+            <!-- Enter Odd Default Grid Size -->
+            <comment userInput="Enter Odd Default Grid Size" stepKey="comment1"/>
+            <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterValidDefaultGridSize">
+                <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_5}}"/>
+            </actionGroup>
+            <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+            <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage1"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 16" stepKey="setMaxGridSize"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_default')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
-        <!-- Enter Odd Default Grid Size -->
-        <comment userInput="Enter Odd Default Grid Size" stepKey="comment1"/>
-        <actionGroup ref="updateDefaultGridSizeConfig" stepKey="enterValidDefaultGridSize">
-            <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_5}}"/>
-        </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage1"/>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeElement selector="{{PageBuilderColumnSection.displayLabel('1', '3/5')}}" stepKey="verifyFirstColumn"/>
-        <seeElement selector="{{PageBuilderColumnSection.displayLabel('2', '2/5')}}" stepKey="verifySecondColumn"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1', '3/5')}}" stepKey="verifyFirstColumn"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2', '2/5')}}" stepKey="verifySecondColumn"/>
     </test>
     <test name="ValidateTooltipMessage">
         <annotations>
             <features value="Pagebuilder"/>
-            <stories value="Column"/>
+            <stories value="Store Configuration - Column Grid Size"/>
             <title value="Column grid panel tooltip updates with max column size."/>
             <description value="Verify that the tooltip for grid size updates to reflect the max column size."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-950"/>
             <testCaseId value="MC-2313"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-column"/>
@@ -204,26 +209,90 @@
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+            <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+            <conditionalClick stepKey="uncheckUseSystemValue" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_max')}}" visible="true"/>
+            <comment userInput="Change Maximum Grid Size to 5" stepKey="comment1"/>
+            <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidMaxGridSize">
+                <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_5}}"/>
+            </actionGroup>
+            <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+            <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage1"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_default 12" stepKey="setDefaultGridSize"/>
+            <magentoCLI command="config:set cms/pagebuilder/column_grid_max 16" stepKey="setMaxGridSize"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <conditionalClick stepKey="uncheckUseSystemValue" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_max')}}" visible="true"/>
-        <comment userInput="Change Maximum Grid Size to 5" stepKey="comment1"/>
-        <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidMaxGridSize">
-            <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_5}}"/>
-        </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage1"/>
-        <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
-        <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
         <click selector="{{PageBuilderColumnSection.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
-        <seeElement selector="{{PageBuilderColumnSection.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
+    </test>
+    <test name="DefaultColumnGridSizeFieldAppearance">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Store Configuration - Column Grid Size"/>
+            <title value="Validate Default Column Grid Size Field Appearance"/>
+            <description value="Verify the Default Column Grid Size field is global and has correct helper text."/>
+            <severity value="MINOR"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2351"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSizeConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <!-- Go To AdminContentManagementPage -->
+            <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
+            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+            <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Validate Global Scope -->
+        <comment userInput="Validate Global Scope" stepKey="commentValidateGlobal"/>
+        <waitForElementVisible selector="{{ContentManagementSection.ConfigurationFieldLabel(PageBuilderDefaultColumnGridSize.section, PageBuilderDefaultColumnGridSize.row, PageBuilderDefaultColumnGridSize.label)}}[@data-config-scope='[GLOBAL]']" stepKey="waitForConfigurationKeyScope"/>
+        <!-- Validate Helper Text -->
+        <comment userInput="Validate Helper Text" stepKey="commentValidateHelperText"/>
+        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridDefaultHelperText}}" stepKey="waitForHelperText"/>
+        <see selector="{{ContentManagementSection.ColumnGridDefaultHelperText}}" userInput="Grid size determines the default number of columns available." stepKey="seeHelperText"/>
+    </test>
+    <test name="MaximumColumnGridSizeFieldAppearance">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Store Configuration - Column Grid Size"/>
+            <title value="Validate Max Column Grid Size Field Appearance"/>
+            <description value="Verify the Maximum Column Grid Size field is global and has correct helper text."/>
+            <severity value="MINOR"/>
+            <useCaseId value="MC-950"/>
+            <testCaseId value="MC-2352"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnGridSizeConfig"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <!-- Go To AdminContentManagementPage -->
+            <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
+            <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+            <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <!-- Validate Global Scope -->
+        <comment userInput="Validate Global Scope" stepKey="commentValidateGlobal"/>
+        <waitForElementVisible selector="{{ContentManagementSection.ConfigurationFieldLabel(PageBuilderMaximumColumnGridSize.section, PageBuilderMaximumColumnGridSize.row, PageBuilderMaximumColumnGridSize.label)}}[@data-config-scope='[GLOBAL]']" stepKey="waitForConfigurationKeyScope"/>
+        <!-- Validate Helper Text -->
+        <comment userInput="Validate Helper Text" stepKey="commentValidateHelperText"/>
+        <waitForElementVisible selector="{{ContentManagementSection.ColumnGridMaxHelperText}}" stepKey="waitForHelperText"/>
+        <see selector="{{ContentManagementSection.ColumnGridMaxHelperText}}" userInput="Maximum grid size determines the maximum amount of columns available." stepKey="seeHelperText"/>
     </test>
 </tests>
