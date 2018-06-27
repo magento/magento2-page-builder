@@ -4,10 +4,10 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-  var ResizeUtils =
+  var Resize =
   /*#__PURE__*/
   function () {
-    function ResizeUtils(columnGroup) {
+    function Resize(columnGroup) {
       this.columnGroup = void 0;
       this.columnGroup = columnGroup;
     }
@@ -18,32 +18,34 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
      */
 
 
-    var _proto = ResizeUtils.prototype;
+    var _proto = Resize.prototype;
 
     _proto.getGridSize = function getGridSize() {
-      return parseInt(this.columnGroup.dataStore.getKey("gridSize").toString(), 10);
+      return parseInt(this.columnGroup.dataStore.get("grid_size").toString(), 10);
     };
     /**
      * Get the smallest column width possible
      *
+     * @param {number} gridSize
      * @returns {number}
      */
 
 
-    _proto.getSmallestColumnWidth = function getSmallestColumnWidth() {
-      var gridSize = this.getGridSize();
+    _proto.getSmallestColumnWidth = function getSmallestColumnWidth(gridSize) {
+      gridSize = gridSize || this.getGridSize();
       return this.getAcceptedColumnWidth(parseFloat((100 / gridSize).toString()).toFixed(Math.round(100 / gridSize) !== 100 / gridSize ? 8 : 0));
     };
     /**
      * Get an accepted column width to resolve rounding issues, e.g. turn 49.995% into 50%
      *
-     * @param width
+     * @param {string} width
+     * @param {number} gridSize
      * @returns {number}
      */
 
 
-    _proto.getAcceptedColumnWidth = function getAcceptedColumnWidth(width) {
-      var gridSize = this.getGridSize();
+    _proto.getAcceptedColumnWidth = function getAcceptedColumnWidth(width, gridSize) {
+      gridSize = gridSize || this.getGridSize();
       var newWidth = 0;
 
       for (var i = gridSize; i > 0; i--) {
@@ -66,36 +68,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
 
 
     _proto.getColumnWidth = function getColumnWidth(column) {
-      return this.getAcceptedColumnWidth(column.dataStore.get().width.toString());
-    };
-    /**
-     * Retrieve the index of the column within it's group
-     *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @returns {number}
-     */
-
-
-    _proto.getColumnIndexInGroup = function getColumnIndexInGroup(column) {
-      return column.parent.children().indexOf(column);
-    };
-    /**
-     * Retrieve the adjacent column based on a direction of +1 or -1
-     *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @param {"+1" | "-1"} direction
-     * @returns {ContentTypeCollectionInterface<ColumnPreview>}
-     */
-
-
-    _proto.getAdjacentColumn = function getAdjacentColumn(column, direction) {
-      var currentIndex = this.getColumnIndexInGroup(column);
-
-      if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
-        return column.parent.children()[currentIndex + parseInt(direction, 10)];
-      }
-
-      return null;
+      return this.getAcceptedColumnWidth(column.dataStore.get("width").toString());
     };
     /**
      * Get the total width of all columns in the group
@@ -125,12 +98,12 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     _proto.determineColumnWidths = function determineColumnWidths(column, groupPosition) {
       var gridSize = this.getGridSize();
       var singleColumnWidth = groupPosition.outerWidth / gridSize;
-      var adjacentColumn = this.getAdjacentColumn(column, "+1");
+      var adjacentColumn = getAdjacentColumn(column, "+1");
       var columnWidths = [];
       var columnLeft = column.preview.element.offset().left - parseInt(column.preview.element.css("margin-left"), 10);
       var adjacentRightPosition = adjacentColumn.preview.element.offset().left + adjacentColumn.preview.element.outerWidth(true); // Determine the maximum size (in pixels) that this column can be dragged to
 
-      var columnsToRight = column.parent.children().length - (this.getColumnIndexInGroup(column) + 1);
+      var columnsToRight = column.parent.children().length - (getColumnIndexInGroup(column) + 1);
       var leftMaxWidthFromChildren = groupPosition.left + groupPosition.outerWidth - columnsToRight * singleColumnWidth + 10;
       var rightMaxWidthFromChildren = groupPosition.left + (column.parent.children().length - columnsToRight) * singleColumnWidth - 10; // Due to rounding we add a threshold of 10
       // Iterate through the amount of columns generating the position for both left & right interactions
@@ -147,7 +120,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
           // These positions are for the left column in the pair
           name: i + "/" + gridSize,
           position: position,
-          width: this.getRoundedColumnWidth(100 / gridSize * i)
+          width: getRoundedColumnWidth(100 / gridSize * i)
         });
       }
 
@@ -164,31 +137,11 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
           // These positions are for the left column in the pair
           name: _i + "/" + gridSize,
           position: _position,
-          width: this.getRoundedColumnWidth(100 / gridSize * _i)
+          width: getRoundedColumnWidth(100 / gridSize * _i)
         });
       }
 
       return columnWidths;
-    };
-    /**
-     * Determine the max ghost width based on the calculated columns
-     *
-     * @param {ColumnWidth[]} columnWidths
-     * @returns {MaxGhostWidth}
-     */
-
-
-    _proto.determineMaxGhostWidth = function determineMaxGhostWidth(columnWidths) {
-      var leftColumns = columnWidths.filter(function (width) {
-        return width.forColumn === "left";
-      });
-      var rightColumns = columnWidths.filter(function (width) {
-        return width.forColumn === "right";
-      });
-      return {
-        left: leftColumns[0].position,
-        right: rightColumns[rightColumns.length - 1].position
-      };
     };
     /**
      * Find a column which can be shrunk for the current resize action
@@ -202,7 +155,7 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     _proto.findShrinkableColumnForResize = function findShrinkableColumnForResize(column, direction) {
       var _this2 = this;
 
-      var currentIndex = this.getColumnIndexInGroup(column);
+      var currentIndex = getColumnIndexInGroup(column);
       var parentChildren = column.parent.children();
       var searchArray;
 
@@ -231,20 +184,9 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
     _proto.findShrinkableColumn = function findShrinkableColumn(column) {
       var _this3 = this;
 
-      return (0, _array.outwardSearch)(column.parent.children(), this.getColumnIndexInGroup(column), function (neighbourColumn) {
+      return (0, _array.outwardSearch)(column.parent.children(), getColumnIndexInGroup(column), function (neighbourColumn) {
         return _this3.getColumnWidth(neighbourColumn) > _this3.getSmallestColumnWidth();
       });
-    };
-    /**
-     * Return the column width to 8 decimal places if it's not a whole number
-     *
-     * @param {number} width
-     * @returns {string}
-     */
-
-
-    _proto.getRoundedColumnWidth = function getRoundedColumnWidth(width) {
-      return Number(width.toFixed(Math.round(width) !== width ? 8 : 0));
     };
     /**
      * Calculate the ghost size for the resizing action
@@ -327,34 +269,18 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
           modifyColumnInPair = history.right.reverse()[0].modifyColumnInPair;
         } else {
           // If we're shrinking our column we can just increase the adjacent column
-          adjustedColumn = this.getAdjacentColumn(column, "+1");
+          adjustedColumn = getAdjacentColumn(column, "+1");
         }
       }
 
       return [adjustedColumn, modifyColumnInPair, usedHistory];
     };
     /**
-     * Compare if two numbers are within a certain threshold of each other
-     *
-     * comparator(10,11,2) => true
-     * comparator(1.1,1.11,0.5) => true
-     *
-     * @param {number} num1
-     * @param {number} num2
-     * @param {number} threshold
-     * @returns {boolean}
-     */
-
-
-    _proto.comparator = function comparator(num1, num2, threshold) {
-      return num1 > num2 - threshold / 2 && num1 < num2 + threshold / 2;
-    };
-    /**
      * Resize a column to a specific width
      *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+     * @param {ContentTypeCollectionInterface<Preview>} column
      * @param {number} width
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} shrinkableColumn
+     * @param {ContentTypeCollectionInterface<Preview>} shrinkableColumn
      */
 
 
@@ -376,29 +302,112 @@ define(["Magento_PageBuilder/js/utils/array"], function (_array) {
         if (currentShrinkable === parseFloat(shrinkableSize.toString()) || parseFloat(shrinkableSize.toString()) < this.getSmallestColumnWidth()) {
           allowedToShrink = false;
         } else {
-          this.updateColumnWidth(shrinkableColumn, shrinkableSize);
+          updateColumnWidth(shrinkableColumn, shrinkableSize);
         }
       }
 
       if (allowedToShrink) {
-        this.updateColumnWidth(column, width);
+        updateColumnWidth(column, width);
       }
     };
-    /**
-     * Update the width of a column
-     *
-     * @param {ContentTypeCollectionInterface<ColumnPreview>} column
-     * @param {number} width
-     */
 
-
-    _proto.updateColumnWidth = function updateColumnWidth(column, width) {
-      column.dataStore.update(parseFloat(width.toString()) + "%", "width");
-    };
-
-    return ResizeUtils;
+    return Resize;
   }();
+  /**
+   * Retrieve the index of the column within it's group
+   *
+   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+   * @returns {number}
+   */
 
-  return ResizeUtils;
+
+  function getColumnIndexInGroup(column) {
+    return column.parent.children().indexOf(column);
+  }
+  /**
+   * Retrieve the adjacent column based on a direction of +1 or -1
+   *
+   * @param {ContentTypeCollectionInterface<Preview>} column
+   * @param {"+1" | "-1"} direction
+   * @returns {ContentTypeCollectionInterface<Preview>}
+   */
+
+
+  function getAdjacentColumn(column, direction) {
+    var currentIndex = getColumnIndexInGroup(column);
+
+    if (typeof column.parent.children()[currentIndex + parseInt(direction, 10)] !== "undefined") {
+      return column.parent.children()[currentIndex + parseInt(direction, 10)];
+    }
+
+    return null;
+  }
+  /**
+   * Determine the max ghost width based on the calculated columns
+   *
+   * @param {ColumnWidth[]} columnWidths
+   * @returns {MaxGhostWidth}
+   */
+
+
+  function determineMaxGhostWidth(columnWidths) {
+    var leftColumns = columnWidths.filter(function (width) {
+      return width.forColumn === "left";
+    });
+    var rightColumns = columnWidths.filter(function (width) {
+      return width.forColumn === "right";
+    });
+    return {
+      left: leftColumns[0].position,
+      right: rightColumns[rightColumns.length - 1].position
+    };
+  }
+  /**
+   * Return the column width to 8 decimal places if it's not a whole number
+   *
+   * @param {number} width
+   * @returns {string}
+   */
+
+
+  function getRoundedColumnWidth(width) {
+    return Number(width.toFixed(Math.round(width) !== width ? 8 : 0));
+  }
+  /**
+   * Compare if two numbers are within a certain threshold of each other
+   *
+   * comparator(10,11,2) => true
+   * comparator(1.1,1.11,0.5) => true
+   *
+   * @param {number} num1
+   * @param {number} num2
+   * @param {number} threshold
+   * @returns {boolean}
+   */
+
+
+  function comparator(num1, num2, threshold) {
+    return num1 > num2 - threshold / 2 && num1 < num2 + threshold / 2;
+  }
+  /**
+   * Update the width of a column
+   *
+   * @param {ContentTypeCollectionInterface<ColumnPreview>} column
+   * @param {number} width
+   */
+
+
+  function updateColumnWidth(column, width) {
+    column.dataStore.update(parseFloat(width.toString()) + "%", "width");
+  }
+
+  return Object.assign(Resize, {
+    getColumnIndexInGroup: getColumnIndexInGroup,
+    getAdjacentColumn: getAdjacentColumn,
+    determineMaxGhostWidth: determineMaxGhostWidth,
+    getRoundedColumnWidth: getRoundedColumnWidth,
+    comparator: comparator,
+    updateColumnWidth: updateColumnWidth
+  });
 });
-//# sourceMappingURL=resizing.js.map
+//# sourceMappingURL=resize.js.map

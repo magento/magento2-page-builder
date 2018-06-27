@@ -55,9 +55,15 @@
         <element name="panelFieldDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and @disabled]' parameterized="true"/>
         <element name="panelFieldNotDisabled" type="input" selector='//div[@data-index="{{arg1}}"]/descendant::*[@name="{{arg2}}" and not(@disabled)]' parameterized="true"/>
         <element name="columnSaveButton" type="button" selector=".page-main-actions .page-actions [data-ui-id='column-form-page-actions-save']" timeout="30"/>
-        <element name="displayLabel" type="button" selector='(//div[contains(@class, "pagebuilder-display-label")])[{{arg1}}][contains(text(), "{{arg2}}")]' parameterized="true"/>
+        <element name="displayLabel" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-column")])[{{arg1}}]/descendant::div[contains(@class, "pagebuilder-display-label")][contains(text(), "{{arg2}}")]' parameterized="true"/>
         <element name="empty" type="button" selector="(//div[contains(@class,'empty-container')]//div[contains(@class,'element-children') and contains(@class,'column-container')])[{{arg1}}]" parameterized="true"/>
         <element name="dropPlaceholder" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[{{arg1}}]//div[contains(@class,"drop-placeholder")][{{arg2}}]' parameterized="true"/>
+        <element name="displayLabelGridSize" type="button" selector='(//div[contains(@class, "pagebuilder-column-group")])[{{arg1}}]//div[contains(@class, "pagebuilder-display-label")][1][contains(text(), "/{{arg2}}")]' parameterized="true"/>
+        <element name="gridSizeButton" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'indicator-wrapper')]" parameterized="true"/>
+        <element name="gridSizeInput" type="input" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'grid-panel-item-wrapper')]/input" parameterized="true"/>
+        <element name="gridSizeTooltip" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'grid-panel-tooltip')][1]" parameterized="true"/>
+        <element name="gridSizeTooltipWithMax" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'grid-panel-tooltip')][1]//span//p//span[text()='{{arg2}}']" parameterized="true"/>
+        <element name="gridSizeError" type="button" selector="(//div[contains(@class, 'pagebuilder-column-group')])[{{arg1}}]/descendant::div[contains(@class, 'admin__field-error') and contains(text(), '{{arg2}}')]" parameterized="true"/>
     </section>
     <section name="ColumnsOnFrontend">
         <element name="columnGroup" type="block" selector=".pagebuilder-column-group"/>

@@ -86,7 +86,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="1" stepKey="seeOneColumnInGroup" />
         <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
-        <actionGroup ref="removeContentTypeFromStage" stepKey="removeColumn2">
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
@@ -482,17 +482,17 @@
             <argument name="containerTargetIndex" value="1"/>
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','3/6')}}" stepKey="findBeforeLabelColumn1"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','3/6')}}" stepKey="findBeforeLabelColumn2"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','6/12')}}" stepKey="findBeforeLabelColumn1"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','6/12')}}" stepKey="findBeforeLabelColumn2"/>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragNewColumnToFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="1"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','1/6')}}" stepKey="findAfterLabelColumn1"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','2/6')}}" stepKey="findAfterLabelColumn2"/>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('3','3/6')}}" stepKey="findAfterLabelColumn3"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1','1/12')}}" stepKey="findAfterLabelColumn1"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2','5/12')}}" stepKey="findAfterLabelColumn2"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('3','6/12')}}" stepKey="findAfterLabelColumn3"/>
     </test>
     <test name="ColumnCanInteractEditPanel">
         <annotations>
@@ -1192,10 +1192,10 @@
             <argument name="containerTargetIndex" value="1" />
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <waitForElementVisible selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneSixth)}}" stepKey="seeFirstColumnWidth"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthOneThird)}}" stepKey="seeSecondColumnWidth"/>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneTwelfth)}}" stepKey="seeFirstColumnWidth"/>
+        <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthFiveTwelfth)}}" stepKey="seeSecondColumnWidth"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
-        <actionGroup ref="removeContentTypeFromStage" stepKey="removeColumn1">
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>
@@ -1462,5 +1462,87 @@
             <argument name="url" value="PageBuilderVideoUrl_YouTube"/>
             <argument name="width" value="PageBuilderVideoWidth_500"/>
         </actionGroup>
+    </test>
+    <test name="DuplicatingColumnWillDivideSourceColumn">
+        <annotations>
+            <features value="Pagebuilder"/>
+            <stories value="Column"/>
+            <title value="Duplicating a column will distribute the originals width"/>
+            <description value="When duplicating a column the width of the source column should be split for the new column"/>
+            <useCaseId value="MAGETWO-90754"/>
+            <testCaseId value="MAGETWO-92849"/>
+            <severity value="CRITICAL"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-column"/>
+            <group value="pagebuilder-columnResize"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="3" stepKey="seeDuplicatedColumn"/>
+        <!-- Resize first column to 4/12 -->
+        <comment userInput="Grab grid guide width for 4/12" stepKey="commentRetrieveGuideWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('4')}}').clientWidth" stepKey="guideWidthFirstColumn"/>
+        <comment userInput="Resize first column to 4/12" stepKey="commentResizeFirstColumn"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('1')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('4')}}" x="$guideWidthFirstColumn" stepKey="resizeFirstColumn"/>
+        <!-- Resize second column to 4/12 -->
+        <comment userInput="Grab grid guide width for 4/12 for second column" stepKey="commentRetrieveGuideWidthForSecond"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnResizeGridLine('8')}}').clientWidth" stepKey="guideWidthSecondColumn"/>
+        <comment userInput="Resize second column to 4/12" stepKey="commentResizeSecondColumn"/>
+        <dragAndDrop selector1="{{PageBuilderColumnSection.columnX('2')}} {{PageBuilderColumnSection.columnResizeHandle}}" selector2="{{PageBuilderColumnSection.columnResizeGridLine('8')}}" x="$guideWidthSecondColumn" stepKey="resizeSecondColumn"/>
+        <!-- Check all columns have the same width -->
+        <comment userInput="Validate column widths are as expected" stepKey="commentValidateWidthsAreCorrect"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('3')}}').clientWidth" stepKey="columnThreeWidth"/>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnTwoWidth})" stepKey="columnRatio"/>
+        <assertEquals stepKey="assertRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio</actualResult>
+        </assertEquals>
+        <executeJS function="return Math.round({$columnOneWidth}/{$columnThreeWidth})" stepKey="columnRatio2"/>
+        <assertEquals stepKey="assertRatioIsCorrect2">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnRatio2</actualResult>
+        </assertEquals>
+        <!-- Duplicate the second column -->
+        <comment userInput="Duplicate second column" stepKey="commentDuplicateSecondColumn"/>
+        <actionGroup ref="duplicateContentType" stepKey="duplicateSecondColumn">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+            <argument name="targetIndex" value="2"/>
+            <argument name="expectedIndex" value="3"/>
+        </actionGroup>
+        <!-- Assert original 1st and 3rd column are unaffected -->
+        <comment userInput="Assert duplication was successful" stepKey="commentAssertDuplicateSuccess"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('1')}}').clientWidth" stepKey="columnOneWidthAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('4')}}').clientWidth" stepKey="columnOriginalThreeWidthAfterDuplicate"/>
+        <assertEquals stepKey="assertColumnOneWidthUnaffected">
+            <expectedResult type="variable">columnOneWidth</expectedResult>
+            <actualResult type="variable">columnOneWidthAfterDuplicate</actualResult>
+        </assertEquals>
+        <assertEquals stepKey="assertColumnThreeWidthUnaffected">
+            <expectedResult type="variable">columnThreeWidth</expectedResult>
+            <actualResult type="variable">columnOriginalThreeWidthAfterDuplicate</actualResult>
+        </assertEquals>
+        <!-- Assert source and duplicated column are the same width -->
+        <comment userInput="Assert source and duplicate column as same width" stepKey="commentAssertDuplicateAndSourceWidth"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('2')}}').clientWidth" stepKey="columnTwoAfterDuplicate"/>
+        <executeJS function="return document.querySelector('{{PageBuilderColumnSection.columnX('3')}}').clientWidth" stepKey="columnThreeAfterDuplicate"/>
+        <executeJS function="return Math.round({$columnTwoAfterDuplicate}/{$columnThreeAfterDuplicate})" stepKey="columnAfterDuplicateRatio"/>
+        <assertEquals stepKey="assertDuplicatedRatioIsCorrect">
+            <expectedResult type="int">1</expectedResult>
+            <actualResult type="variable">columnAfterDuplicateRatio</actualResult>
+        </assertEquals>
     </test>
 </tests>

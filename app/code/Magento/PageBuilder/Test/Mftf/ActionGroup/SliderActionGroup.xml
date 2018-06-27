@@ -13,9 +13,10 @@
             <argument name="section" defaultValue="SliderOnFrontend"/>
             <argument name="index" defaultValue="2" type="string"/>
         </arguments>
-        <waitForElementVisible selector="{{section.slideNavigator(index)}}" stepKey="waitForSliderButton"/>
-        <click selector="{{section.slideNavigator(index)}}" stepKey="clickSliderButton"/>
-        <waitForElementVisible selector="{{section.slide(index)}}" stepKey="waitForSlide"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="waitForSliderButton"/>
+        <click selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="clickSliderButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.slide(index)}}" stepKey="waitForSlide"/>
     </actionGroup>
     <actionGroup name="unfocusSlideOptions">
         <click selector="{{PageBuilderActionsSection.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
@@ -27,10 +28,10 @@
         <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
         <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop"/>
         <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentTypeStage"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForPageLoad stepKey="waitForPageLoad1"/>
         <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="seeContentTypeOptionsMenu"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderSliderContentType.role)}}" stepKey="onMouseOverOptionsMenu"/>
         <click selector="{{PageBuilderActionsSection.contentTypeAdd(PageBuilderSliderContentType.role)}}" stepKey="clickAddNewSlideChild"/>
-        <waitForLoadingMaskToDisappear stepKey="waitForAnimation"/>
+        <waitForPageLoad stepKey="waitForPageLoad2"/>
     </actionGroup>
 </actionGroups>

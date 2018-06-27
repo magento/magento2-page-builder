@@ -34,5 +34,48 @@
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenuByIndex(contentType.role, contentTypeIndex)}}" stepKey="waitForOptions"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.columnMoveByIndex(contentTypeIndex)}}" stepKey="waitForMoveHandle"/>
         <dragAndDrop selector1="{{PageBuilderColumnSection.columnMoveByIndex(contentTypeIndex)}}" selector2="{{PageBuilderActionsSection.contentTypeContainer(contentType.role, containerTargetIndex)}}" stepKey="moveContentTypeIntoContainer"/>
+        <waitForPageLoad stepKey="waitForDragOperation" />
+    </actionGroup>
+    <actionGroup name="openGridSizeForm">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="waitForGridSizeButtonVisible" />
+        <click selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="clickGridSizeButton" />
+        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
+    </actionGroup>
+    <actionGroup name="closeGridSizeForm">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <click selector="{{PageBuilderColumnSection.columnX('1')}}" stepKey="clickColumn" />
+        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForElementNotVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridNotVisible" />
+    </actionGroup>
+    <actionGroup name="updateGridSize">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="gridSize" defaultValue="12" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="waitForGridSizeButtonVisible" />
+        <click selector="{{PageBuilderColumnSection.gridSizeButton(index)}}" stepKey="clickGridSizeButton" />
+        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" stepKey="waitForGridVisible" />
+        <fillField selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" userInput="{{gridSize}}" stepKey="enterGridSize"/>
+        <pressKey selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForPageLoad stepKey="waitForUpdate" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabelGridSize(index, gridSize)}}" stepKey="validateGridSize" />
+    </actionGroup>
+    <actionGroup name="updateGridSizeInvalid">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+            <argument name="gridSize" defaultValue="12" type="string"/>
+            <argument name="errorMessage"/>
+        </arguments>
+        <fillField selector="{{PageBuilderColumnSection.gridSizeInput(index)}}" userInput="{{gridSize}}" stepKey="enterGridSize"/>
+        <click selector="{{PageBuilderColumnSection.columnX(index)}}" stepKey="clickColumn" />
+        <waitForPageLoad stepKey="waitForAnimation" />
+        <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeError(index, errorMessage)}}" stepKey="verifyError"/>
     </actionGroup>
 </actionGroups>

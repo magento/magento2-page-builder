@@ -16,27 +16,39 @@ export interface DataObject {
 
 export default class DataStore {
     private state: DataObject = {};
-    private events: JQuery.PlainObject = $({});
+    private events: JQuery = $({});
+    private previousState: DataObject = {};
 
     /**
      * Retrieve data from the state for an editable area
+     *
+     * @param {string} key
+     * @returns {DataObject | string | number | boolean | any[] | null | undefined}
      */
-    public get(): DataObject {
-        return this.state;
+    public get(key?: string): DataObject | undefined | null | string | number | boolean | any[] {
+        if (key) {
+            return this.state[key] as undefined | null | string | number | boolean | any[];
+        }
+
+        return this.state as DataObject;
     }
 
     /**
-     * Update the state for an individual editable area
+     * Update the state for the content type
      *
-     * @param data
-     * @param key
+     * @param {DataObject | string | number | boolean | any[] | null | undefined} data
+     * @param {string | number} key
      */
-    public update(data: DataObject | undefined | null | string | number | boolean, key?: string | number): void {
-        const storeState = key ? this.state : data;
+    public update(
+        data: DataObject | undefined | null | string | number | boolean | any[],
+        key?: string | number,
+    ): void {
+        this.previousState = Object.assign({}, this.state);
         if (key) {
-            storeState[key] = data;
+            this.state[key] = (data as undefined | null | string | number | boolean | any[]);
+        } else {
+            this.state = (data as DataObject);
         }
-        this.state = storeState;
         this.emitState();
     }
 
@@ -52,13 +64,22 @@ export default class DataStore {
     }
 
     /**
-     * Subscribe to data changes on an editable area
+     * Subscribe to data changes within the data store of a content type
      *
      * @param {(state: DataObject, event: Event) => void} handler
+     * @param {string | number} key
      */
-    public subscribe(handler: (state: DataObject, event: Event) => void): void {
+    public subscribe(handler: (state: DataObject, event: Event) => void, key?: string | number): void {
         this.events.on("state", (event: Event, data: DataStoreEvent) => {
-            handler(data.state, event);
+            if (key) {
+                if (this.previousState[key] !== data.state[key]) {
+                    handler(data.state, event);
+                }
+            } else {
+                if (this.previousState !== data.state) {
+                    handler(data.state, event);
+                }
+            }
         });
     }
 
