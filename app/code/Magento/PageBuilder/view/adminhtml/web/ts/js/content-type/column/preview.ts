@@ -29,6 +29,14 @@ export default class Preview extends PreviewCollection {
     public element: JQuery;
 
     /**
+     * Fields that should not be considered when evaluating whether an object has been configured.
+     *
+     * @see {Preview.isConfigured}
+     * @type {[string]}
+     */
+    protected fieldsToIgnoreOnRemove: string[] = ["width"];
+
+    /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater

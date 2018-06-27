@@ -10,6 +10,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
     _inheritsLoose(Preview, _PreviewCollection);
 
     /**
+     * Fields that should not be considered when evaluating whether an object has been configured.
+     *
+     * @see {Preview.isConfigured}
+     * @type {[string]}
+     */
+
+    /**
      * @param {ContentTypeInterface} parent
      * @param {ContentTypeConfigInterface} config
      * @param {ObservableUpdater} observableUpdater
@@ -21,6 +28,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_Ui/js/modal/alert", "ui
 
       _this.resizing = _knockout.observable(false);
       _this.element = void 0;
+      _this.fieldsToIgnoreOnRemove = ["width"];
 
       _this.parent.dataStore.subscribe(_this.updateDisplayLabel.bind(_this), "width");
 

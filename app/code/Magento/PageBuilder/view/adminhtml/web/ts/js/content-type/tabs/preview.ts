@@ -386,7 +386,7 @@ export default class Preview extends PreviewCollection {
         let duplicatedTabIndex: number;
         events.on("tab-item:contentType:duplicate", (args: ContentTypeDuplicateEventParamsInterface) => {
             if (this.parent.id === args.duplicateContentType.parent.id) {
-                const tabData = args.duplicateContentType.dataStore.get(args.duplicateContentType.id);
+                const tabData = args.duplicateContentType.dataStore.get();
                 args.duplicateContentType.dataStore.update(
                     tabData.tab_name.toString() + " copy",
                     "tab_name",

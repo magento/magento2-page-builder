@@ -397,7 +397,7 @@ define(["jquery", "knockout", "mage/translate", "tabs", "uiEvents", "underscore"
 
       _uiEvents.on("tab-item:contentType:duplicate", function (args) {
         if (_this4.parent.id === args.duplicateContentType.parent.id) {
-          var tabData = args.duplicateContentType.dataStore.get(args.duplicateContentType.id);
+          var tabData = args.duplicateContentType.dataStore.get();
           args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
           duplicatedTab = args.duplicateContentType;
           duplicatedTabIndex = args.index;
