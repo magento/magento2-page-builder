@@ -7,6 +7,7 @@ import $ from "jquery";
 import ko from "knockout";
 import Config from "../../config";
 import events from "../../events";
+import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
@@ -19,8 +20,8 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         // When a products type is dropped for the first time open the edit panel
-        events.on("products:contentType:dropped:create", (event: Event, params: { [key: string]: any }) => {
-            if (event.id === this.parent.id) {
+        events.on("products:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+            if (args.id === this.parent.id) {
                 setTimeout(() => {
                     this.edit.open();
                 }, 300);

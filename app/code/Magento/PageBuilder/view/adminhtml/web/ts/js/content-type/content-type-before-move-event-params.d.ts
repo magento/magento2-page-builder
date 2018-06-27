@@ -6,7 +6,10 @@
 import ContentTypeCollectionInterface from "../content-type-collection.d";
 import ContentTypeInterface from "../content-type.d";
 
-export default interface ContentTypeMountEventParamsInterface {
-    id: string;
+export interface ContentTypeBeforeMoveEventParams {
     contentType: ContentTypeInterface & ContentTypeCollectionInterface;
+    sourceParent: ContentTypeCollectionInterface;
+    targetParent: ContentTypeCollectionInterface;
+    targetIndex: number;
+    stageId: string;
 }

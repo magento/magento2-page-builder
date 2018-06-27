@@ -19,8 +19,8 @@ import OptionInterface from "../../content-type-menu/option.d";
 import ContentTypeRemovedParamsInterface from "../../content-type-removed-params.d";
 import ContentTypeInterface from "../../content-type.d";
 import events from "../../events";
+import ContentTypeDuplicateEventParamsInterface from "../content-type-duplicate-event-params";
 import ContentTypeMountEventParamsInterface from "../content-type-mount-event-params.d";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
 import ContentTypeRemovedEventParamsInterface from "../content-type-removed-event-params.d";
 import ObservableUpdater from "../observable-updater";
 import PreviewCollection from "../preview-collection";
@@ -367,7 +367,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
         // ContentType being mounted onto container
 
-        events.on("tabs:contentType:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("tabs:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addTab();
             }
@@ -383,7 +383,7 @@ export default class Preview extends PreviewCollection {
         // Capture when a content type is duplicated within the container
         let duplicatedTab: ContentTypeInterface;
         let duplicatedTabIndex: number;
-        events.on("tab-item:contentType:duplicate", (args: ContentTypeDuplicateEventParams) => {
+        events.on("tab-item:contentType:duplicate", (args: ContentTypeDuplicateEventParamsInterface) => {
             if (this.parent.id === args.duplicateContentType.parent.id) {
                 const tabData = args.duplicateContentType.dataStore.get(args.duplicateContentType.id);
                 args.duplicateContentType.dataStore.update(

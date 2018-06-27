@@ -10,7 +10,7 @@ import Toolbar from "../../content-type-toolbar";
 import ToolbarOptionInterface from "../../content-type-toolbar/option.d";
 import ContentTypeInterface from "../../content-type.d";
 import events from "../../events";
-import ContentTypeReadyEventParamsInterface from "../content-type-ready-event-params.d";
+import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
@@ -48,7 +48,7 @@ export default class Heading extends BasePreview {
         super.bindEvents();
 
         // When a heading is dropped for the first time show heading toolbar
-        events.on("heading:contentType:dropped:create", (args: ContentTypeReadyEventParamsInterface) => {
+        events.on("heading:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id) {
                 _.delay(() => {
                     $(this.element).focus();
