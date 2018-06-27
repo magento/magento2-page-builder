@@ -86,7 +86,7 @@
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="1" stepKey="seeOneColumnInGroup" />
         <!-- As the removal of the first column caused this ones width to change we have to confirm the removal -->
-        <actionGroup ref="removeContentTypeFromStage" stepKey="removeColumn2">
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn2">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <dontSeeElement selector="{{PageBuilderColumnSection.column}}" stepKey="dontSeeColumn"/>
@@ -927,7 +927,7 @@
         <waitForElementVisible selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthOneTwelfth)}}" stepKey="seeFirstColumnWidth"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderSecondColumnInStage.index, PageBuilderColumnStyles.widthFiveTwelfth)}}" stepKey="seeSecondColumnWidth"/>
         <seeElement selector="{{PageBuilderColumnSection.columnStyle(PageBuilderThirdColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeThirdColumnWidth"/>
-        <actionGroup ref="removeContentTypeFromStage" stepKey="removeColumn1">
+        <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeColumn1">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <waitForElementVisible selector="{{PageBuilderColumnSection.columnStyle(PageBuilderFirstColumnInStage.index, PageBuilderColumnStyles.widthHalf)}}" stepKey="seeFirstColumnWidthDistributed"/>

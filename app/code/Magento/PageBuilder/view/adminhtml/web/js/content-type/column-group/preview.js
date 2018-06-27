@@ -109,7 +109,7 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "underscore", "Magen
     /**
      * Retrieve the resize utils
      *
-     * @returns {ResizeUtils}
+     * @returns {Resize}
      */
 
 

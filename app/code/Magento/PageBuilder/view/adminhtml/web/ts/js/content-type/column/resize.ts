@@ -8,7 +8,7 @@ import {outwardSearch} from "../../utils/array";
 import {ColumnWidth, GroupPositionCache, MaxGhostWidth, ResizeHistory} from "../column-group/preview";
 import ColumnPreview from "./preview";
 
-export default class ResizeUtils {
+export default class Resize {
     private columnGroup: ContentTypeCollectionInterface;
 
     constructor(columnGroup: ContentTypeCollectionInterface) {
