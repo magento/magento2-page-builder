@@ -291,9 +291,6 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragAdditionalRow">
             <argument name="contentType" value="PageBuilderRowContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStage" stepKey="dragAdditionalRow2">
-            <argument name="contentType" value="PageBuilderRowContentType"/>
-        </actionGroup>
         <actionGroup ref="dragContentTypeToContainer" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="containerTargetType" value="PageBuilderRowContentType"/>
@@ -324,6 +321,7 @@
         <!-- Close grid form and check options are restored -->
         <comment userInput="Close grid form and check options are restored" stepKey="commentCloseAndValidateOptionsAreRestored"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridForm" />
+        <scrollTo selector="{{CmsNewPagePageActionsSection.pageTitle}}" stepKey="scrollToTop"/>
         <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderRowContentType.role)}}" x="10" y="0" stepKey="onMouseOverContentTypeStage"/>
         <waitForPageLoad stepKey="waitForPageLoad"/>
         <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderRowContentType.role)}}" stepKey="waitForOptions"/>
