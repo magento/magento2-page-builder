@@ -673,7 +673,7 @@
             <argument name="expectedIndex" value="2"/>
         </actionGroup>
         <waitForElementVisible selector="{{PageBuilderActionsSection.modalOk}}" stepKey="seeCannotDuplicateColumnModal"/>
-        <seeElement selector="{{PageBuilderColumnSection.columnCannotDuplicateModal}}" stepKey="seeErrorMessage"/>
+        <seeElement selector="{{EditPanelForm.errorModal(PageBuilderColumnDuplicate.cannotDuplicateColumnErrorMessage)}}" stepKey="seeErrorMessage"/>
         <click selector="{{PageBuilderActionsSection.modalOk}}" stepKey="closeModal"/>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.allColumns}}" userInput="2" stepKey="seeNumberOfColumns2"/>
     </test>
@@ -827,7 +827,7 @@
             <argument name="errorMessage" value="maximum grid size supported"/>
         </actionGroup>
         <click selector="{{PageBuilderColumnSection.columnGroup}}" stepKey="clickOtherArea"/>
-        <seeElement selector="{{PageBuilderColumnSection.gridSizeError('maximum grid size supported')}}" stepKey="verifyMaxError2"/>
+        <seeElement selector="{{PageBuilderColumnSection.gridSizeError('1', 'maximum grid size supported')}}" stepKey="verifyMaxError2"/>
         <fillField selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" userInput="8" stepKey="enterValidGridSize"/>
         <actionGroup ref="closeGridSizeForm" stepKey="closeGridFormByClicking2" />
         <waitForElement selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" stepKey="waitForValidatePanelClosed"/>
@@ -966,7 +966,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
-        <click selector="{{PageBuilderColumnSection.gridSizeTooltip}}" stepKey="clickWithinPanel"/>
+        <click selector="{{PageBuilderColumnSection.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
         <seeElement selector="{{PageBuilderColumnSection.gridSizeInput('1')}}" stepKey="verifyPanelStillOpen"/>
     </test>
     <test name="ValidateOddDefaultGridSizeIsSplitCorrectly">
@@ -1026,8 +1026,8 @@
         </after>
         <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
         <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <conditionalClick stepKey="uncheckUseSystemValueDefault" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_default')}}" visible="true"/>
-        <comment userInput="Enter Odd Default Grid Size" stepKey="comment1"/>
+        <conditionalClick stepKey="uncheckUseSystemValue" selector="{{ContentManagementSection.UseSystem('column_grid_max')}}" dependentSelector="{{ContentManagementSection.UseSystemChecked('column_grid_max')}}" visible="true"/>
+        <comment userInput="Change Maximum Grid Size to 5" stepKey="comment1"/>
         <actionGroup ref="updateMaxGridSizeConfig" stepKey="enterValidMaxGridSize">
             <argument name="gridSize" value="{{PageBuilderGridSize.gridSize_5}}"/>
         </actionGroup>
@@ -1039,7 +1039,7 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <actionGroup ref="openGridSizeForm" stepKey="openGridSizeForm" />
-        <click selector="{{PageBuilderColumnSection.gridSizeTooltip}}" stepKey="clickWithinPanel"/>
-        <seeElement selector="{{PageBuilderColumnSection.gridSizeTooltipWithMax(PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
+        <click selector="{{PageBuilderColumnSection.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
+        <seeElement selector="{{PageBuilderColumnSection.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
     </test>
 </tests>
