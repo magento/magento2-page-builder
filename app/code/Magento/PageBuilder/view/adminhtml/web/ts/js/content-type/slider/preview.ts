@@ -257,7 +257,7 @@ export default class Preview extends PreviewCollection {
         });
 
         // Set the active slide to the new position of the sorted slide
-        events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
+        events.on("sortableChildren:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
             if (args.instance.id === this.parent.id) {
                 $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(args.newPosition);

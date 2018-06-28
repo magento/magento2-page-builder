@@ -86,7 +86,7 @@ export default class Preview extends PreviewCollection {
             }
         });
         // Refresh tab contents and set the focus to the new position of the sorted tab
-        events.on("sortableChildren:sortupdate", (args: PreviewSortableSortUpdateEventParams) => {
+        events.on("sortableChildren:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
             if (args.instance.id === this.parent.id) {
                 this.refreshTabs(args.newPosition, true);
                 /**

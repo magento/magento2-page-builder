@@ -34,13 +34,13 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         originalPosition = ui.item.index();
         draggedContentType = instance.children()[originalPosition];
 
-        _events.default.trigger("sortableChildren:sortstart", {
+        _events.default.trigger("sortableChildren:sortStart", {
           instance: instance,
           originalPosition: originalPosition,
           ui: ui
         });
       }).on("sortstop", function (event, ui) {
-        _events.default.trigger("sortableChildren:sortstop", {
+        _events.default.trigger("sortableChildren:sortStop", {
           instance: instance,
           ui: ui
         });
@@ -59,7 +59,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
               (0, _moveContentType.moveContentType)(draggedContentType, index, targetParent);
             }
 
-            _events.default.trigger("sortableChildren:sortupdate", {
+            _events.default.trigger("sortableChildren:sortUpdate", {
               instance: instance,
               newPosition: index,
               originalPosition: originalPosition,

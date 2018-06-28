@@ -249,7 +249,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }); // Set the active slide to the new position of the sorted slide
 
 
-      _events.on("sortableChildren:sortupdate", function (args) {
+      _events.on("sortableChildren:sortUpdate", function (args) {
         if (args.instance.id === _this3.parent.id) {
           (0, _jquery)(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
 

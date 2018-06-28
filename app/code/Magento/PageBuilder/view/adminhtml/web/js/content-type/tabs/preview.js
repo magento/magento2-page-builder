@@ -73,7 +73,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }); // Refresh tab contents and set the focus to the new position of the sorted tab
 
 
-      _events.on("sortableChildren:sortupdate", function (args) {
+      _events.on("sortableChildren:sortUpdate", function (args) {
         if (args.instance.id === _this.parent.id) {
           _this.refreshTabs(args.newPosition, true);
           /**
