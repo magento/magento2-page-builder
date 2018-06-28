@@ -201,7 +201,7 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Slider settings on Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
+        <waitForElementVisible selector="{{SliderOnFrontend.SliderDisplay}}" stepKey="seeSliderOnPageBuilderPage"/>
         <seeElement selector="{{SliderOnFrontend.Autoplay(PageBuilderSliderAutoplayOnProperty.value)}}" stepKey="seeSliderAutoplayOnSetting"/>
         <seeElement selector="{{SliderOnFrontend.AutoplaySpeed(PageBuilderSliderAutoplaySpeed5000Property.value)}}" stepKey="seeSliderAutoplaySpeedSetting"/>
         <seeElement selector="{{SliderOnFrontend.Fade(PageBuilderSliderFadeYesProperty.value)}}" stepKey="seeSliderFadeSetting"/>
@@ -221,7 +221,6 @@
         <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('0')}}" stepKey="verifySlide1HasPosterAppearanceOnStorefront"/>
         <click selector="{{SliderOnFrontend.nextSlide}}" stepKey="clickNextSlideOnSlider"/>
         <waitForElementVisible time="2" selector="{{SlideOnFrontend.slide2}}" stepKey="waitForSlide2" />
-        <seeElement selector="{{SlideOnFrontend.slide2}}" stepKey="seeSlide2InSlider"/>
         <comment userInput="Validate Slide 2 on Storefront" stepKey="commentValidateSlide2Storefront"/>
         <dontSee userInput="{{PageBuilderSlideItemName2.value}}" selector="{{SlideOnFrontend.slideName('1')}}" stepKey="dontSeeSlide2NameDisplayed"/>
         <see userInput="{{PageBuilderSlideItemContent2.value}}" selector="{{SlideOnFrontend.slideContent('1')}}" stepKey="seeSlide2ContentDisplayed"/>
