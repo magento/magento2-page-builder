@@ -3,8 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-define(['uiEvents'
-], function (uiEvents) {
+define(['uiEvents'], function (uiEvents) {
     'use strict';
 
     return {
