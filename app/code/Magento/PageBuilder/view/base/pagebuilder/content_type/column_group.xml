@@ -7,21 +7,27 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="column-group" sortOrder="10" translate="label">
-            <label>Column Group</label>
-            <icon>icon-pagebuilder-column</icon>
-            <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/content-type/column-group/preview</preview_component>
-            <master_component>Magento_PageBuilder/js/content-type/master-collection</master_component>
-            <form/>
-            <group>general</group>
+        <type name="column-group"
+              label="Column Group"
+              component="Magento_PageBuilder/js/content-type-collection"
+              preview_component="Magento_PageBuilder/js/content-type/column-group/preview"
+              master_component="Magento_PageBuilder/js/content-type/master-collection"
+              form=""
+              group="general"
+              icon="icon-pagebuilder-column"
+              sortOrder="10"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <is_visible>false</is_visible>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Magento_PageBuilder/content-type/column-group/default/preview"
+                            render_template="Magento_PageBuilder/content-type/column-group/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -32,9 +38,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/column-group/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/column-group/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

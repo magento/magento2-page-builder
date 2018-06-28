@@ -3,9 +3,9 @@
  * See COPYING.txt for license details.
  */
 
-import ConverterInterface from "../converter-interface";
+import {ConverterInterface} from "../../../../converter/converter-interface";
 
-export default class MarginsAndPaddings implements ConverterInterface {
+export default class Paddings implements ConverterInterface {
     /**
      * Convert value to internal format
      *
@@ -14,14 +14,7 @@ export default class MarginsAndPaddings implements ConverterInterface {
      */
     public fromDom(value: string): string | object {
         const result: any = {};
-        if (undefined !== value.margin) {
-            result.margin = {
-                bottom: value.margin.bottom.replace("px", ""),
-                left: value.margin.left.replace("px", ""),
-                right: value.margin.right.replace("px", ""),
-                top: value.margin.top.replace("px", ""),
-            };
-        }
+
         if (undefined !== value.padding) {
             result.padding = {
                 bottom: value.padding.bottom.replace("px", ""),
@@ -30,6 +23,7 @@ export default class MarginsAndPaddings implements ConverterInterface {
                 top: value.padding.top.replace("px", ""),
             };
         }
+
         if (result.padding.right[0] === "c") {
             result.padding.right = parseInt(result.padding.right.split("+")[1].trim(), 10);
         }
@@ -52,19 +46,11 @@ export default class MarginsAndPaddings implements ConverterInterface {
         if (value && typeof value === "string") {
             value = JSON.parse(value);
         }
-        if (value) {
-            if (undefined !== value.margin) {
-                result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
-                result.marginTop = value.margin.top ? value.margin.top + "px" : "";
-                result.marginRight = value.margin.right ? value.margin.right + "px" : "";
-                result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : "";
-            }
-            if (undefined !== value.padding) {
-                result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";
-                result.paddingTop = value.padding.top ? value.padding.top + "px" : "";
-                result.paddingRight = value.padding.right ? value.padding.right + "px" : "";
-                result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : "";
-            }
+        if (value && undefined !== value.padding) {
+            result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";
+            result.paddingTop = value.padding.top ? value.padding.top + "px" : "";
+            result.paddingRight = value.padding.right ? value.padding.right + "px" : "";
+            result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : "";
         }
         return result;
     }

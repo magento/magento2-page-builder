@@ -39,15 +39,10 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         foreach ($groups->item(0)->childNodes as $group) {
             if ($group->nodeType == XML_ELEMENT_NODE && $group->tagName == 'group') {
                 $name = $group->attributes->getNamedItem('name')->nodeValue;
-                /** @var \DOMElement $childNode */
-                foreach ($group->childNodes as $childNode) {
-                    if ($this->isConfigNode($childNode)) {
-                        $groupsData[$name][$childNode->nodeName] = $childNode->nodeValue;
-                    }
+                /** @var \DOMElement $attributeValue */
+                foreach ($group->attributes as $attributeName => $attributeValue) {
+                    $groupsData[$name][$attributeName] = $attributeValue->nodeValue;
                 }
-                $groupsData[$name]['sortOrder'] = $group->hasAttribute('sortOrder')
-                    ? $group->attributes->getNamedItem('sortOrder')->nodeValue
-                    : null;
             }
         }
         uasort($groupsData, function ($firstElement, $secondElement) {
@@ -55,19 +50,5 @@ class Converter implements \Magento\Framework\Config\ConverterInterface
         });
 
         return $groupsData;
-    }
-
-    /**
-     * Check if node is configuration node
-     *
-     * @param \DOMNode $node
-     * @return bool
-     */
-    private function isConfigNode(\DOMNode $node): bool
-    {
-        return $node->nodeType === XML_ELEMENT_NODE
-            || ($node->nodeType === XML_CDATA_SECTION_NODE
-                || $node->nodeType === XML_TEXT_NODE
-                && trim($node->nodeValue) !== '');
     }
 }

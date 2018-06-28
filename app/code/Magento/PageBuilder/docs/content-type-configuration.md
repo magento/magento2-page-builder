@@ -54,9 +54,7 @@ The following is an example of a group configuration in `view/adminhtml/pagebuil
 ``` xml
 <!-- Definition of main menu, used for grouping content types  -->
 <groups>
-    <group name="media" translate="label" sortOrder="10">
-        <label>Media</label>
-    </group>
+    <group name="media" translate="label" sortOrder="10" label="Media"/>
 </groups>
 ```
 ### Configuration reference
@@ -64,28 +62,35 @@ The following is an example of a group configuration in `view/adminhtml/pagebuil
 | Element             | Description                                                              |
 | ------------------- | ------------------------------------------------------------------------ |
 | `group`             | Describes the group name, translated field, and sort order in the menu.  |
-| `label`             | Label displayed on the menu.                                             |
 
+| Attribute           | Description                                                              |
+| ------------------- | ------------------------------------------------------------------------ |
+| `label`             | Label displayed on the menu.                                             |
 
 The following is an example of a content type configuration in `view/adminhtml/pagebuilder/content_type/banner.xml`:
 
 ``` xml
 <content_types>
     <!-- Content type declaration -->
-    <type name="banner" translate="label" sortOrder="1">
-        <label>Banner</label>
-        <icon>icon-pagebuilder-image</icon>
-        <component>Magento_PageBuilder/js/content-type</component>
-        <preview_component>Magento_PageBuilder/js/content-type/banner/preview</preview_component>
-        <content_component>Magento_PageBuilder/js/content-type/content</content_component>
-        <form>pagebuilder_banner_form</form>
-        <group>media</group>
+    <type name="banner"
+          label="Banner"
+          component="Magento_PageBuilder/js/content-type"
+          preview_component="Magento_PageBuilder/js/content-type/banner/preview"
+          form="pagebuilder_banner_form"
+          group="media"
+          icon="icon-pagebuilder-image"
+          sortOrder="1"
+          translate="label">
         <allowed_parents>
             <parent name="row"/>
             <parent name="column"/>
         </allowed_parents>
         <appearances>
-            <appearance name="poster" default="true">
+            <appearance default="true"
+                        name="poster"
+                        preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
+                        render_template="Magento_PageBuilder/content-type/banner/poster/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <data_mapping>
                     <elements>
                         <element name="main" path=".">
@@ -171,17 +176,23 @@ The following is an example of a content type configuration in `view/adminhtml/p
                         </converter>
                     </converters>
                 </data_mapping>
-                <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
-                <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
-                <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
             </appearance>
-            <appearance name="collage-left">
+            <appearance name="collage-left"
+                        preview_template="Magento_PageBuilder/content-type/banner/collage-left/preview"
+                        render_template="Magento_PageBuilder/content-type/banner/collage-left/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <!-- Collage left appearance configuration -->
             </appearance>
-            <appearance name="collage-centered">
+            <appearance name="collage-centered"
+                        preview_template="Magento_PageBuilder/content-type/banner/collage-centered/preview"
+                        render_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <!-- Collage centered appearance configuration -->
             </appearance>
-            <appearance name="collage-right">
+            <appearance name="collage-right"
+                        preview_template="Magento_PageBuilder/content-type/banner/collage-right/preview"
+                        render_template="Magento_PageBuilder/content-type/banner/collage-right/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
                 <!-- Collage right appearance configuration -->
             </appearance>
         </appearances>
@@ -193,17 +204,20 @@ The following is an example of a content type configuration in `view/adminhtml/p
 | Element             | Description                                                                                                                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `type`              | Describes the content type name, translated field, and sort order in the menu group. Each type should have its own configuration file.      |
-| `label`             | Label displayed on the menu and stage.                                                                                                      |
-| `icon`              | Icon displayed on the menu.                                                                                                                 |
-| `component`         | View model responsible for rendering the preview and master format.                                                                         |
-| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
-| `content_component` | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
-| `form`              | UI component form used for editing the content type                                                                                         |
-| `group`             | Existing menu group that contains this content type.                                                                                        |
 | `allowed_parents`   | List of parent content types that can accept this type as a child.                                                                          |
 | `appearances`       | Appearance configuration.                                                                                                                   |
 | `is_visible`        | Determines menu visibility for the component. System components should not be visible in the menu. Default value is true.                   |
 | `additional_data`   | Allows to specify additional data for component, see [custom configuration for content type](custom-configuration.md) for more information. |
+
+| Attribute           | Description                                                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `label`             | Label displayed on the menu and stage.                                                                                                      |
+| `icon`              | Icon displayed on the menu.                                                                                                                 |
+| `component`         | View model responsible for rendering the preview and master format.                                                                         |
+| `preview_component` | Helper component that contains preview specific logic. Helper component is optional.                                                        |
+| `master_component`  | Contains master format rendering logic that is generic for all appearances. Content component is optional.                                  |
+| `form`              | UI component form used for editing the content type                                                                                         |
+| `group`             | Existing menu group that contains this content type.                                                                                        |
 
 
 ### `form` configuration reference
@@ -237,6 +251,9 @@ It controls the templates, how data is read from the master format, and how to a
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `appearance`        | The name of the appearance. Every content type requires one default appearance.        |
 | `data_mapping`      | Specifies how data is read from, saved to, and converted to and from the master format |
+
+| Attribute           | Description                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
 | `preview_template`  | Template used to display the element in the preview                                    |
 | `render_template`   | Template used to render the content type to the master format                          |
 | `reader`            | Reads data for the content type from the master format                                 |
@@ -246,11 +263,12 @@ It reads data based on the configuration specified in `data_mapping`.
 
 **Example:**
 ``` xml
-<appearance name="poster" default="true">
+<appearance default="true"
+            name="poster"
+            preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
+            render_template="Magento_PageBuilder/content-type/banner/poster/master"
+            reader="Magento_PageBuilder/js/master-format/read/configurable">
     <data_mapping/>
-    <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
-    <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
-    <reader>Magento_PageBuilder/js/component/format/read/configurable</reader>
 </appearance>
 ```
 
