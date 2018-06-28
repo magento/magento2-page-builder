@@ -83,9 +83,13 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
           return;
         }
 
-        _this3.data.main.html(response.data.content);
+        if (response.data.error) {
+          _this3.data.main.html(response.data.error);
+        } else {
+          _this3.data.main.html(response.data.content);
 
-        _this3.displayPreview(true);
+          _this3.displayPreview(true);
+        }
       }).fail(function () {
         _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
       });

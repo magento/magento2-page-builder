@@ -83,8 +83,13 @@ export default class Preview extends BasePreview {
                     return;
                 }
 
-                this.data.main.html(response.data.content);
-                this.displayPreview(true);
+                if (response.data.error) {
+                    this.data.main.html(response.data.error);
+                }
+                else {
+                    this.data.main.html(response.data.content);
+                    this.displayPreview(true);
+                }
             })
             .fail(() => {
                 this.placeholderText(this.messages.UNKNOWN_ERROR);
