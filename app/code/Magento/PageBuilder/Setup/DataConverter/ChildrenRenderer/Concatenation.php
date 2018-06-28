@@ -17,7 +17,7 @@ class Concatenation implements ChildrenRendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render(array $children, $renderChildCallback) : array
+    public function render(array $children, $renderChildCallback) : string
     {
         $childHtml = '';
         foreach ($children as $childIndex => $childItem) {

@@ -197,11 +197,11 @@ class TreeConverter
      * @throws UnableMigrateWithOutParentException
      */
     private function handleRenderException(
-        \Exception $exception, 
+        \Exception $exception,
         RendererInterface $defaultRenderer,
         array $itemData,
         array $itemAdditionalData
-    ) : string {
+    ): string {
         if ($this->isUnseparatableContentType($itemData)) {
             throw new UnableMigrateWithOutParentException(
                 __('Content type can not be migrated with out parent.'),
