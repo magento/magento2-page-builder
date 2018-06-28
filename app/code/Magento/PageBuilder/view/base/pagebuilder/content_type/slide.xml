@@ -5,23 +5,25 @@
  * See COPYING.txt for license details.
  */
 -->
-
-
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="slide" translate="label">
-            <label>Slide</label>
-            <icon>icon-pagebuilder-slider</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/content-type/slide/preview</preview_component>
-            <master_component>Magento_PageBuilder/js/content-type/slide/master</master_component>
-            <form>pagebuilder_slide_form</form>
-            <group>media</group>
+        <type name="slide"
+              label="Slide"
+              component="Magento_PageBuilder/js/content-type"
+              preview_component="Magento_PageBuilder/js/content-type/slide/preview"
+              master_component="Magento_PageBuilder/js/content-type/slide/master"
+              form="pagebuilder_slide_form"
+              group="media"
+              icon="icon-pagebuilder-slider"
+              translate="label">
             <allowed_parents>
                 <parent name="slider"/>
             </allowed_parents>
             <appearances>
-                <appearance name="collage-left">
+                <appearance name="collage-left"
+                            preview_template="Magento_PageBuilder/content-type/slide/collage-left/preview"
+                            render_template="Magento_PageBuilder/content-type/slide/collage-left/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -69,7 +71,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
@@ -82,7 +85,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
@@ -110,11 +114,11 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/slide/collage-left/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/slide/collage-left/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance name="collage-centered">
+                <appearance name="collage-centered"
+                            preview_template="Magento_PageBuilder/content-type/slide/collage-centered/preview"
+                            render_template="Magento_PageBuilder/content-type/slide/collage-centered/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -161,7 +165,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
@@ -174,7 +179,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
@@ -202,11 +208,11 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/slide/collage-centered/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/slide/collage-centered/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance name="collage-right">
+                <appearance name="collage-right"
+                            preview_template="Magento_PageBuilder/content-type/slide/collage-right/preview"
+                            render_template="Magento_PageBuilder/content-type/slide/collage-right/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -253,7 +259,9 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins-and-paddings"/>                                </style_properties>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
+                                </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
                                 <style_properties>
@@ -265,7 +273,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
@@ -293,11 +302,12 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/slide/collage-right/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/slide/collage-right/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance default="true" name="poster">
+                <appearance default="true"
+                            name="poster"
+                            preview_template="Magento_PageBuilder/content-type/slide/poster/preview"
+                            render_template="Magento_PageBuilder/content-type/slide/poster/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -345,7 +355,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                   </style_properties>
                             </element>
                             <element name="mobile_image" path=".//a/div[2]">
@@ -358,7 +369,8 @@
                                     <property name="background_size" source="background_size"/>
                                     <property name="background_repeat" source="background_repeat"/>
                                     <property name="background_attachment" source="background_attachment"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/content-type/slide/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/content-type/slide/converter/style/paddings"/>
                                 </style_properties>
                             </element>
                             <element name="content" path=".//a/div[1]/div/div/div[1]">
@@ -386,14 +398,11 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/slide/poster/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/slide/poster/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
             <is_visible>false</is_visible>
             <additional_data>
-                <arguments name="uploaderConfig" xsi:type="array">
+                <item name="uploaderConfig" xsi:type="array">
                     <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>
                     <item name="isShowImageUploadOptions" xsi:type="boolean">true</item>
                     <item name="maxFileSize" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\MaxFileSize</item>
@@ -419,7 +428,7 @@
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
-                </arguments>
+                </item>
             </additional_data>
         </type>
     </content_types>

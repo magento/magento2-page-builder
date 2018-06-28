@@ -36,7 +36,7 @@ define(["Magento_PageBuilder/js/utils/loader", "underscore", "Magento_PageBuilde
         if (!_this.contentTypeConfig.hasOwnProperty(role)) {
           resolve(result);
         } else {
-          var readerComponents = (0, _appearanceConfig)(role, element.dataset.appearance).readers;
+          var readerComponents = (0, _appearanceConfig)(role, element.dataset.appearance).reader ? [(0, _appearanceConfig)(role, element.dataset.appearance).reader] : (0, _appearanceConfig)(role, element.dataset.appearance).readers;
 
           try {
             (0, _loader)(readerComponents, function () {

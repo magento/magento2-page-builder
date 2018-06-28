@@ -7,19 +7,25 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="anchor" sortOrder="1" translate="label">
-            <label>Anchor</label>
-            <icon>icon-pagebuilder-anchor</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <form>pagebuilder_anchor_form</form>
-            <group>other</group>
+        <type name="anchor"
+              label="Anchor"
+              component="Magento_PageBuilder/js/content-type"
+              form="pagebuilder_anchor_form"
+              group="other"
+              icon="icon-pagebuilder-anchor"
+              sortOrder="1"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Magento_PageBuilder/content-type/anchor/default/preview"
+                            render_template="Magento_PageBuilder/content-type/anchor/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -29,7 +35,8 @@
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -40,9 +47,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/anchor/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/anchor/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
