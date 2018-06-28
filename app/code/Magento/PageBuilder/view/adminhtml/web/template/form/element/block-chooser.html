@@ -12,8 +12,8 @@
     <div class="admin__field-control">
         <div class="pagebuilder-block-chooser">
             <div if="$data.errorMessage" text="$data.errorMessage"></div>
-            <div if="$data.meta().title" text="$data.meta().title"></div>
-            <div ifnot="$data.meta().title || $data.errorMessage()" translate="'Not Selected'"></div>
+            <div if="$data.meta().title" text="$data.meta().title" class="block-title"></div>
+            <div ifnot="$data.meta().title || $data.errorMessage()" class="block-title" translate="'Not Selected'"></div>
 
             <div ko-scope="getButton()" class="chooser-button">
                 <render/>

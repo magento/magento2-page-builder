@@ -68,7 +68,8 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       var url = _config.getConfig("preview_url");
 
       var requestConfig = {
-        method: "GET",
+        // Prevent caching
+        method: "POST",
         data: {
           role: this.config.name,
           directive: this.data.main.html()

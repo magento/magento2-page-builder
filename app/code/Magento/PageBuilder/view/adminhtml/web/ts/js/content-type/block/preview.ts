@@ -69,7 +69,8 @@ export default class Preview extends BasePreview {
 
         const url = Config.getConfig("preview_url");
         const requestConfig = {
-            method: "GET",
+            // Prevent caching
+            method: "POST",
             data: {
                 role: this.config.name,
                 block_id: data.block_id,

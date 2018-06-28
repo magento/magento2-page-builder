@@ -66,7 +66,8 @@ export default class Preview extends BasePreview {
 
         const url = Config.getConfig("preview_url");
         const requestConfig = {
-            method: "GET",
+            // Prevent caching
+            method: "POST",
             data: {
                 role: this.config.name,
                 directive: this.data.main.html(),
@@ -85,8 +86,7 @@ export default class Preview extends BasePreview {
 
                 if (response.data.error) {
                     this.data.main.html(response.data.error);
-                }
-                else {
+                } else {
                     this.data.main.html(response.data.content);
                     this.displayPreview(true);
                 }
