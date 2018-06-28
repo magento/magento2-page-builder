@@ -93,7 +93,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
   function onSortStart(preview, event, ui) {
     // Verify we're sorting an already created item
     if (ui.item.hasClass("pagebuilder-content-type-wrapper")) {
-      _events.trigger("interaction:start");
+      _events.trigger("stage:interactionStart");
 
       var contentTypeInstance = _knockout.dataFor(ui.item[0]);
 
@@ -149,7 +149,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
     (0, _dropIndicators.hideDropIndicators)();
     (0, _registry.setDraggedContentTypeConfig)(null);
 
-    _events.trigger("interaction:stop");
+    _events.trigger("stage:interactionStop");
   }
   /**
    * Handle receiving a content type from the left panel
@@ -191,12 +191,12 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         (0, _containerAnimation.bindAfterRenderForAnimation)(containerLocked, contentType, parentContainerElement);
         getParentProxy(preview).addChild(contentType, index);
 
-        _events.trigger("contentType:dropped:create", {
+        _events.trigger("contentType:createAfter", {
           id: contentType.id,
           contentType: contentType
         });
 
-        _events.trigger(contentTypeConfig.name + ":contentType:dropped:create", {
+        _events.trigger(contentTypeConfig.name + ":createAfter", {
           id: contentType.id,
           contentType: contentType
         });

@@ -58,7 +58,7 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
     } // Trigger our content type move event
 
 
-    _events.trigger("contentType:move", {
+    _events.trigger("contentType:moveAfter", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,

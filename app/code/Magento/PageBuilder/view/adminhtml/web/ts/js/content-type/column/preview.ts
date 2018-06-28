@@ -56,7 +56,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column-group")) {
-            events.on("column:contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("column:createAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === this.parent.id) {
                     this.createColumnGroup();
                 }
@@ -71,7 +71,7 @@ export default class Preview extends PreviewCollection {
      */
     public initColumn(element: Element) {
         this.parent.element = $(element);
-        events.trigger("column:initElement", {
+        events.trigger("column:initElementAfter", {
             column: this.parent,
             element: $(element),
             parent: this.parent.parent,
@@ -108,7 +108,7 @@ export default class Preview extends PreviewCollection {
      * @param handle
      */
     public bindResizeHandle(handle: Element) {
-        events.trigger("column:bindResizeHandle", {
+        events.trigger("column:bindResizeHandleAfter", {
             column: this.parent,
             handle: $(handle),
             parent: this.parent.parent,
@@ -249,8 +249,8 @@ export default class Preview extends PreviewCollection {
      */
     private fireMountEvent(...contentTypes: ContentTypeInterface[]) {
         contentTypes.forEach((contentType) => {
-            events.trigger("contentType:mount", {id: contentType.id, contentType});
-            events.trigger(contentType.config.name + ":contentType:mount", {id: contentType.id, contentType});
+            events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+            events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
         });
     }
 }

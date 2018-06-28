@@ -50,21 +50,21 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "underscore", "Ma
       _this.movePosition = void 0;
       _this.groupPositionCache = void 0;
 
-      _events.on("contentType:removed", function (args) {
+      _events.on("contentType:removeAfter", function (args) {
         if (args.parent.id === _this.parent.id) {
           _this.spreadWidth(event, args);
         }
       }); // Listen for resizing events from child columns
 
 
-      _events.on("column:bindResizeHandle", function (args) {
+      _events.on("column:bindResizeHandleAfter", function (args) {
         // Does the events parent match the previews parent? (e.g. column group)
         if (args.parent.id === _this.parent.id) {
           _this.registerResizeHandle(args.column, args.handle);
         }
       });
 
-      _events.on("column:initElement", function (args) {
+      _events.on("column:initElementAfter", function (args) {
         // Does the events parent match the previews parent? (e.g. column group)
         if (args.parent.id === _this.parent.id) {
           _this.bindDraggable(args.column);
@@ -238,7 +238,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "underscore", "Ma
         _this2.resizeLastPosition = null;
         _this2.resizeMouseDown = true;
 
-        _events.trigger("interaction:start", {
+        _events.trigger("stage:interactionStart", {
           stageId: _this2.parent.stageId
         });
       });
@@ -275,12 +275,12 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "underscore", "Ma
           (0, _registry2.setDragColumn)(columnInstance.parent);
           _this3.dropPositions = (0, _dragAndDrop.calculateDropPositions)(_this3.parent);
 
-          _events.trigger("column:drag:start", {
+          _events.trigger("column:dragStart", {
             column: columnInstance,
             stageId: _this3.parent.stageId
           });
 
-          _events.trigger("interaction:start", {
+          _events.trigger("stage:interactionStart", {
             stageId: _this3.parent.stageId
           });
         },
@@ -303,12 +303,12 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "underscore", "Ma
 
           _this3.movePlaceholder.removeClass("active");
 
-          _events.trigger("column:drag:stop", {
+          _events.trigger("column:dragStop", {
             column: draggedColumn,
             stageId: _this3.parent.stageId
           });
 
-          _events.trigger("interaction:stop", {
+          _events.trigger("stage:interactionStop", {
             stageId: _this3.parent.stageId
           });
         }
@@ -356,7 +356,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "underscore", "Ma
 
     _proto.endAllInteractions = function endAllInteractions() {
       if (this.resizing() === true) {
-        _events.trigger("interaction:stop", {
+        _events.trigger("stage:interactionStop", {
           stageId: this.parent.stageId
         });
       }

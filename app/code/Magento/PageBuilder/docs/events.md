@@ -50,39 +50,38 @@ This document contains reference information for events dispatched in Page Build
 ## Events list
 
 * [contentType:create](#contenttypecreate)
-* [contentType:ready](#contenttypeready)
-* [contentType:dropped:create](#contenttypedroppedcreate)
-* [contentType:mount](#contenttypemount)
+* [contentType:createAfter](#contenttypecreateafter)
+* [contentType:mountAfter](#contenttypemountafter)
 * [contentType:afterRender](#contenttypeafterrender)
-* [contentType:removed](#contenttyperemoved)
-* [contentType:duplicate](#contenttypeduplicate)
+* [contentType:removeAfter](#contenttyperemoved)
+* [contentType:duplicateAfter](#contenttypeduplicate)
 * [contentType:beforeMove](#contenttypebeforemove)
-* [contentType:move](#contenttypemove)
-* [column:drag:start](#columdragstart)
-* [column:drag:stop](#columndragstop)
-* [column:initElement](#columninitelement)
-* [image:assigned:{{id}}](#imageassignedid)
-* [image:contentType:ready](#imagecontenttypeready)
-* [image:uploaded](#imageuploaded)
-* [interaction:start](#interactionstart)
-* [interaction:stop](#interactionstop)
-* [pagebuilder:toggleFullScreen:{{id}}](#pagebuildertogglefullscreenid)
-* [previewObservables:updated](#previewobservablesupdated)
+* [contentType:moveAfter](#contenttypemoveafter)
+* [column:dragStart](#columdragstart)
+* [column:dragStop](#columndragstop)
+* [column:initElementAfter](#columninitelementafter)
+* [image:{{id}}:assignAfter](#imageidassignafter)
+* [image:mountAfter](#imagemountafter)
+* [image:uploadAfter](#imageuploadafter)
+* [stage:interactionStart](#stageinteractionstart)
+* [stage:interactionStop](#stageinteractionstop)
+* [stage:{{id}}:toggleFullscreen](#stageidtogglefullscreen)
+* [previewData:updateAfter](#previewdataupdateafter)
 * [previewSortable:sortstart](#previewsortablesortstart)
 * [previewSortable:sortupdate](#previewsortablesortupdate)
 * [stage:error](#stageerror)
-* [stage:ready:{{id}}](#stagereadyid)
-* [stage:renderTree:{{id}}](#stagerendertreeid)
-* [stage:updated](#stageupdated)
+* [stage:{{id}}:readyAfter](#stageidreadyafter)
+* [stage:{{id}}:masterFormatRenderAfter](#stageidmasterformatrenderafter)
+* [stage:updateAfter](#stageupdateafter)
 * [state](#state)
-* [{{id}}:updated](#idupdated)
+* [{{config.name}}:{{id}}:updateAfter](#confignameidupdateafter)
 * [googleMaps:authFailure](#googlemapsauthFailure)
 
 ## `contentType:*` events
-All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:contentType:{{event}}`) like the following:
+All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
 * `text:contentType:create`
-* `row:contentType:ready`
-* `tab-item:contentType:mount`
+* `row:mountAfter`
+* `tab-item:mountAfter`
 
 ### `contentType:create`
 
@@ -102,7 +101,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:ready`
+### `contentType:mountAfter`
 
 **Triggers**
 
@@ -120,7 +119,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:dropped:create`
+### `contentType:createAfter`
 
 **Triggers**
 
@@ -138,7 +137,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:mount`
+### `contentType:mountAfter`
 
 **Triggers**
 
@@ -174,7 +173,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:removed`
+### `contentType:removeAfter`
 
 **Triggers**
 
@@ -193,7 +192,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:duplicate`
+### `contentType:duplicateAfter`
 
 **Triggers**
 
@@ -231,7 +230,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:move`
+### `contentType:moveAfter`
 
 **Triggers**
 
@@ -251,7 +250,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `column:drag:start`
+### `column:dragStart`
 
 **Triggers**
 
@@ -268,7 +267,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `column:drag:stop`
+### `column:dragStop`
 
 **Triggers**
 
@@ -285,7 +284,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `column:initElement`
+### `column:initElementAfter`
 
 **Triggers**
 
@@ -303,7 +302,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `image:assigned:{{id}}`
+### `image:{{id}}:assignAfter`
 
 **Triggers**
 
@@ -313,7 +312,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 object
 
-### `image:contentType:ready`
+### `image:mountAfter`
 
 **Triggers**
 
@@ -325,7 +324,7 @@ Function
 
 [Back to top]
 
-### `image:uploaded`
+### `image:uploadAfter`
 
 **Triggers**
 
@@ -337,7 +336,7 @@ Function
 
 [Back to top]
 
-### `interaction:start`
+### `stage:interactionStart`
 
 **Triggers**
 
@@ -354,7 +353,7 @@ Function
 
 [Back to top]
 
-### `interaction:stop`
+### `stage:interactionStop`
 
 **Triggers**
 
@@ -372,7 +371,7 @@ Function
 
 [Back to top]
 
-### `pagebuilder:toggleFullScreen:{{id}}`
+### `stage:{{id}}:toggleFullscreen`
 
 **Triggers**
 
@@ -386,7 +385,7 @@ Function
 
 [Back to top]
 
-### `previewObservables:updated`
+### `previewData:updateAfter`
 
 **Triggers**
 
@@ -452,14 +451,14 @@ Error
 
 [Back to top]
 
-### `stage:ready:{{id}}`
+### `stage:{{id}}:readyAfter`
 
 **Triggers**
 
 * `Stage::ready`
 * `stage instance`
 
-### `stage:renderTree:{{id}}`
+### `stage:{{id}}:masterFormatRenderAfter`
 
 **Triggers**
 
@@ -475,7 +474,7 @@ Error
 
 [Back to top]
 
-### `stage:updated`
+### `stage:updateAfter`
 
 **Triggers**
 
@@ -508,7 +507,7 @@ Error
 
 [Back to top]
 
-### `{{id}}:updated`
+### `{{config.name}}:{{id}}:updateAfter`
 
 **Triggers**
 

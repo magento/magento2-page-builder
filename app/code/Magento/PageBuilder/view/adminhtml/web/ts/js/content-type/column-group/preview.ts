@@ -75,20 +75,20 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, stageId);
 
-        events.on("contentType:removed", (args: ContentTypeRemovedEventParamsInterface) => {
+        events.on("contentType:removeAfter", (args: ContentTypeRemovedEventParamsInterface) => {
             if (args.parent.id === this.parent.id) {
                 this.spreadWidth(event, args);
             }
         });
 
         // Listen for resizing events from child columns
-        events.on("column:bindResizeHandle", (args) => {
+        events.on("column:bindResizeHandleAfter", (args) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
                 (this as ColumnGroupPreview).registerResizeHandle(args.column, args.handle);
             }
         });
-        events.on("column:initElement", (args) => {
+        events.on("column:initElementAfter", (args) => {
             // Does the events parent match the previews parent? (e.g. column group)
             if (args.parent.id === this.parent.id) {
                 (this as ColumnGroupPreview).bindDraggable(args.column);
@@ -269,7 +269,7 @@ export default class Preview extends PreviewCollection {
             this.resizeLastPosition = null;
             this.resizeMouseDown = true;
 
-            events.trigger("interaction:start", {stageId: this.parent.stageId});
+            events.trigger("stage:interactionStart", {stageId: this.parent.stageId});
         });
     }
 
@@ -300,11 +300,11 @@ export default class Preview extends PreviewCollection {
                 setDragColumn(columnInstance.parent);
                 this.dropPositions = calculateDropPositions((this.parent as ContentTypeCollectionInterface));
 
-                events.trigger("column:drag:start", {
+                events.trigger("column:dragStart", {
                     column: columnInstance,
                     stageId: this.parent.stageId,
                 });
-                events.trigger("interaction:start", {stageId: this.parent.stageId});
+                events.trigger("stage:interactionStart", {stageId: this.parent.stageId});
             },
             stop: () => {
                 const draggedColumn: Column = getDragColumn();
@@ -322,11 +322,11 @@ export default class Preview extends PreviewCollection {
                 this.dropPlaceholder.removeClass("left right");
                 this.movePlaceholder.removeClass("active");
 
-                events.trigger("column:drag:stop", {
+                events.trigger("column:dragStop", {
                     column: draggedColumn,
                     stageId: this.parent.stageId,
                 });
-                events.trigger("interaction:stop", {stageId: this.parent.stageId});
+                events.trigger("stage:interactionStop", {stageId: this.parent.stageId});
             },
         });
     }
@@ -360,7 +360,7 @@ export default class Preview extends PreviewCollection {
      */
     private endAllInteractions() {
         if (this.resizing() === true) {
-            events.trigger("interaction:stop", {stageId: this.parent.stageId});
+            events.trigger("stage:interactionStop", {stageId: this.parent.stageId});
         }
 
         this.resizing(false);

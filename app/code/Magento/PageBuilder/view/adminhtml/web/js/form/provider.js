@@ -17,7 +17,7 @@ define([
 
         /** @inheritdoc **/
         save: function () {
-            events.trigger('form:save:' + this.id, this.get('data'));
+            events.trigger('form:' + this.id + ':save', this.get('data'));
 
             return this;
         }

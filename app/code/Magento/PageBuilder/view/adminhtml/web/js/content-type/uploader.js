@@ -54,7 +54,7 @@ define(["Magento_PageBuilder/js/events", "uiLayout", "uiRegistry"], function (_e
 
 
     _proto.onUploaded = function onUploaded(callback) {
-      _events.on("image:uploaded:" + this.id, callback);
+      _events.on("image:" + this.id + ":uploadAfter", callback);
     };
     /**
      * Instantiate uploader through layout UI component renderer

@@ -21,7 +21,7 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/config", "Magen
 
       _BasePreview.prototype.bindEvents.call(this);
 
-      _events.on("previewObservables:updated", function (args) {
+      _events.on("previewData:updateAfter", function (args) {
         if (args.preview.parent.id === _this.parent.id) {
           var attributes = _this.data.main.attributes();
 

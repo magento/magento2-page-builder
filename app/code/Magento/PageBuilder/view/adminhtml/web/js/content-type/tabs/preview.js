@@ -52,14 +52,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
 
-      _events.on("tab-item:contentType:mount", function (args) {
+      _events.on("tab-item:mountAfter", function (args) {
         if (_this.element && args.contentType.parent.id === _this.parent.id) {
           _this.refreshTabs();
         }
       }); // Set the active tab to the new position of the sorted tab
 
 
-      _events.on("tab-item:contentType:removed", function (args) {
+      _events.on("tab-item:removeAfter", function (args) {
         if (args.parent.id === _this.parent.id) {
           _this.refreshTabs(); // We need to wait for the tabs to refresh before executing the focus
 
@@ -191,9 +191,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _underscore.delay(function () {
         if (!_this2.disableInteracting && Preview.focusOperationTime === focusTime) {
           if (index !== null) {
-            _events.trigger("interaction:start");
+            _events.trigger("stage:interactionStart");
           } else {
-            _events.trigger("interaction:stop");
+            _events.trigger("stage:interactionStop");
           }
         }
       }, index === null ? 200 : 0);
@@ -220,13 +220,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this3 = this;
 
       (0, _contentTypeFactory)(_config.getContentTypeConfig("tab-item"), this.parent, this.parent.stageId).then(function (tab) {
-        _events.on("tab-item:contentType:mount", function (args) {
+        _events.on("tab-item:mountAfter", function (args) {
           if (args.id === tab.id) {
             _this3.setFocusedTab(_this3.parent.children().length - 1);
 
-            _events.off("tab-item:contentType:mount:" + tab.id);
+            _events.off("tab-item:" + tab.id + ":mountAfter");
           }
-        }, "tab-item:contentType:mount:" + tab.id);
+        }, "tab-item:" + tab.id + ":mountAfter");
 
         _this3.parent.addChild(tab, _this3.parent.children().length); // Update the default tab title when adding a new tab
 
@@ -325,7 +325,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
           ui.helper.css("width", "");
 
-          _events.trigger("interaction:start");
+          _events.trigger("stage:interactionStart");
 
           self.disableInteracting = true;
         },
@@ -339,7 +339,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         stop: function stop(event, ui) {
           (0, _jquery)(this).css("paddingLeft", "");
 
-          _events.trigger("interaction:stop");
+          _events.trigger("stage:interactionStop");
 
           self.disableInteracting = false;
         },
@@ -375,14 +375,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _PreviewCollection.prototype.bindEvents.call(this); // ContentType being mounted onto container
 
 
-      _events.on("tabs:contentType:dropped:create", function (args) {
+      _events.on("tabs:createAfter", function (args) {
         if (args.id === _this4.parent.id && _this4.parent.children().length === 0) {
           _this4.addTab();
         }
       }); // ContentType being removed from container
 
 
-      _events.on("tab-item:contentType:removed", function (args) {
+      _events.on("tab-item:removeAfter", function (args) {
         if (args.parent.id === _this4.parent.id) {
           // Mark the previous tab as active
           var newIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
@@ -395,7 +395,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedTab;
       var duplicatedTabIndex;
 
-      _events.on("tab-item:contentType:duplicate", function (args) {
+      _events.on("tab-item:duplicateAfter", function (args) {
         if (_this4.parent.id === args.duplicateContentType.parent.id) {
           var tabData = args.duplicateContentType.dataStore.get(args.duplicateContentType.id);
           args.duplicateContentType.dataStore.update(tabData.tab_name.toString() + " copy", "tab_name");
@@ -406,7 +406,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         _this4.buildTabs(args.index);
       });
 
-      _events.on("tab-item:contentType:mount", function (args) {
+      _events.on("tab-item:mountAfter", function (args) {
         if (duplicatedTab && args.id === duplicatedTab.id) {
           _this4.refreshTabs(duplicatedTabIndex, true);
 

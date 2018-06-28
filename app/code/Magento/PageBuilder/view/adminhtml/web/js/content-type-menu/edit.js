@@ -19,7 +19,7 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
       this.instance = instance;
       this.dataStore = dataStore;
 
-      _events.on("form:save:" + this.instance.id, function (data) {
+      _events.on("form:" + this.instance.id + ":save", function (data) {
         _this.dataStore.update(data);
       });
     }

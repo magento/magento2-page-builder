@@ -37,7 +37,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", 
     _proto.initListeners = function initListeners() {
       var _this = this;
 
-      _events.on("pagebuilder:toggleFullScreen:" + this.id, function () {
+      _events.on("stage:" + this.id + ":toggleFullscreen", function () {
         return _this.toggleFullScreen();
       });
 
@@ -73,7 +73,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", 
         });
       }
 
-      _events.trigger("pagebuilder:fullScreen:" + this.id, {
+      _events.trigger("pagebuilder:" + this.id + ":fullScreen", {
         fullScreen: this.isFullScreen()
       });
     };

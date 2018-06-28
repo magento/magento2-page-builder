@@ -64,7 +64,7 @@ export function moveContentType(
     }
 
     // Trigger our content type move event
-    events.trigger("contentType:move", {
+    events.trigger("contentType:moveAfter", {
         contentType,
         sourceParent,
         targetParent,

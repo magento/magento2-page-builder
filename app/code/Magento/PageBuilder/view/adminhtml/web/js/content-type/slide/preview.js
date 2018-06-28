@@ -406,15 +406,15 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
 
       _BasePreview.prototype.bindEvents.call(this);
 
-      _events.on(this.parent.id + ":updated", function () {
+      _events.on(this.config.name + ":" + this.parent.id + ":updateAfter", function () {
         var dataStore = _this3.parent.dataStore.get();
 
         var imageObject = dataStore[_this3.config.additional_data.uploaderConfig.dataScope][0] || {};
 
-        _events.trigger("image:assigned:" + _this3.parent.id, imageObject);
+        _events.trigger("image:" + _this3.parent.id + ":assignAfter", imageObject);
       });
 
-      _events.on(this.config.name + ":contentType:ready", function () {
+      _events.on(this.config.name + ":mountAfter", function () {
         var dataStore = _this3.parent.dataStore.get();
 
         var initialImageValue = dataStore[_this3.config.additional_data.uploaderConfig.dataScope] || ""; // Create uploader

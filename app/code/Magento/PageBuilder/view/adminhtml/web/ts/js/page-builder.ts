@@ -37,7 +37,7 @@ export default class PageBuilder implements PageBuilderInterface {
      * Init listeners.
      */
     public initListeners() {
-        events.on(`pagebuilder:toggleFullScreen:${ this.id }`, () => this.toggleFullScreen());
+        events.on(`stage:${ this.id }:toggleFullscreen`, () => this.toggleFullScreen());
         this.isFullScreen.subscribe(() => this.onFullScreenChange());
     }
 
@@ -63,7 +63,7 @@ export default class PageBuilder implements PageBuilderInterface {
             });
         }
 
-        events.trigger(`pagebuilder:fullScreen:${ this.id }`, {
+        events.trigger(`pagebuilder:${ this.id }:fullScreen`, {
             fullScreen: this.isFullScreen(),
         });
     }

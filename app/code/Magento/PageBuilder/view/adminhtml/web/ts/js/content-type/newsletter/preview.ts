@@ -13,7 +13,7 @@ export default class Preview extends BasePreview {
      */
     protected bindEvents() {
         super.bindEvents();
-        events.on("previewObservables:updated", (args) => {
+        events.on("previewData:updateAfter", (args) => {
             if (args.preview.parent.id === this.parent.id) {
                 const attributes = this.data.main.attributes();
                 if (attributes["data-title"] === "") {

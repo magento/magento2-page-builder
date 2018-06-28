@@ -266,9 +266,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
             stageId: _this3.parent.stageId
           };
 
-          _events.trigger("contentType:removed", params);
+          _events.trigger("contentType:removeAfter", params);
 
-          _events.trigger(_this3.parent.config.name + ":contentType:removed", params);
+          _events.trigger(_this3.parent.config.name + ":removeAfter", params);
         };
 
         if (_this3.wrapperElement) {
@@ -363,9 +363,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         index: index
       };
 
-      _events.trigger("contentType:duplicate", duplicateEventParams);
+      _events.trigger("contentType:duplicateAfter", duplicateEventParams);
 
-      _events.trigger(originalContentType.config.name + ":contentType:duplicate", duplicateEventParams);
+      _events.trigger(originalContentType.config.name + ":duplicateAfter", duplicateEventParams);
     };
     /**
      * Bind events
@@ -505,7 +505,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       this.observableUpdater.update(this, _underscore.extend({}, this.parent.dataStore.get()));
       this.afterObservablesUpdated();
 
-      _events.trigger("previewObservables:updated", {
+      _events.trigger("previewData:updateAfter", {
         preview: this
       });
     };

@@ -73,9 +73,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _this.focusedSlide.subscribe(function (value) {
         if (value !== null) {
-          _events.trigger("interaction:start");
+          _events.trigger("stage:interactionStart");
         } else {
-          _events.trigger("interaction:stop");
+          _events.trigger("stage:interactionStop");
         }
       });
 
@@ -204,7 +204,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var _this2 = this;
 
       (0, _contentTypeFactory)(_config.getConfig("content_types").slide, this.parent, this.parent.stageId).then(function (slide) {
-        _events.on("slide:contentType:mount", function (args) {
+        _events.on("slide:mountAfter", function (args) {
           if (args.id === slide.id) {
             _underscore.delay(function () {
               _this2.navigateToSlide(_this2.parent.children().length - 1);
@@ -212,9 +212,9 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
               slide.preview.onOptionEdit();
             }, 500);
 
-            _events.off("slide:contentType:mount:" + slide.id);
+            _events.off("slide:" + slide.id + ":mountAfter");
           }
-        }, "slide:contentType:mount:" + slide.id);
+        }, "slide:" + slide.id + ":mountAfter");
 
         _this2.parent.addChild(slide, _this2.parent.children().length);
       });
@@ -242,7 +242,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var sliderReady = false;
 
-      _events.on("slider:contentType:ready", function (args) {
+      _events.on("slider:mountAfter", function (args) {
         if (args.id === _this3.parent.id) {
           sliderReady = true;
         }
@@ -261,7 +261,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       var newItemIndex;
 
-      _events.on("slide:contentType:removed", function (args) {
+      _events.on("slide:removeAfter", function (args) {
         if (args.contentType.parent.id === _this3.parent.id) {
           // Mark the previous slide as active
           newItemIndex = args.index - 1 >= 0 ? args.index - 1 : 0;
@@ -304,7 +304,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }); // ContentType being mounted onto container
 
 
-      _events.on("slider:contentType:dropped:create", function (args) {
+      _events.on("slider:createAfter", function (args) {
         if (args.id === _this3.parent.id && _this3.parent.children().length === 0) {
           _this3.addSlide();
         }
@@ -314,14 +314,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       var duplicatedSlide;
       var duplicatedSlideIndex;
 
-      _events.on("slide:contentType:duplicate", function (args) {
+      _events.on("slide:duplicateAfter", function (args) {
         if (args.duplicateContentType.parent.id === _this3.parent.id) {
           duplicatedSlide = args.duplicateContentType;
           duplicatedSlideIndex = args.index;
         }
       });
 
-      _events.on("slide:contentType:mount", function (args) {
+      _events.on("slide:mountAfter", function (args) {
         if (duplicatedSlide && args.id === duplicatedSlide.id) {
           _underscore.defer(function () {
             // Mark the new duplicate slide as active

@@ -41,7 +41,7 @@ export default class ContentType implements ContentTypeInterface {
     }
 
     protected bindEvents() {
-        const eventName: string = this.id + ":updated";
+        const eventName: string = this.config.name + ":" + this.id + ":updateAfter";
         const paramObj: any = {};
         paramObj[this.id] = this;
         this.dataStore.subscribe(
@@ -53,7 +53,7 @@ export default class ContentType implements ContentTypeInterface {
 
         this.dataStore.subscribe(
             () => events.trigger(
-                "stage:updated",
+                "stage:updateAfter",
                 {stageId: this.stageId},
             ),
         );

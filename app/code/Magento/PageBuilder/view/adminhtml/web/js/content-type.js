@@ -36,14 +36,14 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "Magento_PageB
     _proto.bindEvents = function bindEvents() {
       var _this = this;
 
-      var eventName = this.id + ":updated";
+      var eventName = this.config.name + ":" + this.id + ":updateAfter";
       var paramObj = {};
       paramObj[this.id] = this;
       this.dataStore.subscribe(function () {
         return _events.trigger(eventName, paramObj);
       });
       this.dataStore.subscribe(function () {
-        return _events.trigger("stage:updated", {
+        return _events.trigger("stage:updateAfter", {
           stageId: _this.stageId
         });
       });

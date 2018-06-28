@@ -52,7 +52,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
       var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).addClass("pagebuilder-toolbar-active");
 
-      _events.trigger("interaction:start");
+      _events.trigger("stage:interactionStart");
     };
     /**
      * Set state based on toolbar focusout event for the preview
@@ -66,7 +66,7 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events"], function (_jquer
       var currentContentTypeTarget = event.currentTarget.closest(".pagebuilder-content-type");
       (0, _jquery)(currentContentTypeTarget).removeClass("pagebuilder-toolbar-active");
 
-      _events.trigger("interaction:stop");
+      _events.trigger("stage:interactionStop");
     };
 
     _createClass(Toolbar, [{

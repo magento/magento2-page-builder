@@ -88,23 +88,23 @@ function prepareData(config, data: {}) {
  */
 function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
     const fire = () => {
-        events.trigger("contentType:ready", {id: contentType.id, contentType});
-        events.trigger(contentType.config.name + ":contentType:ready", {id: contentType.id, contentType});
+        events.trigger("contentType:mountAfter", {id: contentType.id, contentType});
+        events.trigger(contentType.config.name + ":mountAfter", {id: contentType.id, contentType});
     };
 
     if (childrenLength === 0) {
         fire();
     } else {
         let mountCounter = 0;
-        events.on("contentType:mount", (args: ContentTypeMountEventParamsInterface) => {
+        events.on("contentType:mountAfter", (args: ContentTypeMountEventParamsInterface) => {
             if (args.contentType.parent.id === contentType.id) {
                 mountCounter++;
 
                 if (mountCounter === childrenLength) {
                     fire();
-                    events.off(`contentType:mount:${contentType.id}`);
+                    events.off(`contentType:${contentType.id}:mountAfter`);
                 }
             }
-        }, `contentType:mount:${contentType.id}` );
+        }, `contentType:${contentType.id}:mountAfter` );
     }
 }

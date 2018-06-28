@@ -45,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _PreviewCollection.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
-        _events.on("column:contentType:mount", function (args) {
+        _events.on("column:createAfter", function (args) {
           if (args.id === _this2.parent.id) {
             _this2.createColumnGroup();
           }
@@ -62,7 +62,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.initColumn = function initColumn(element) {
       this.parent.element = (0, _jquery)(element);
 
-      _events.trigger("column:initElement", {
+      _events.trigger("column:initElementAfter", {
         column: this.parent,
         element: (0, _jquery)(element),
         parent: this.parent.parent
@@ -92,7 +92,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.bindResizeHandle = function bindResizeHandle(handle) {
-      _events.trigger("column:bindResizeHandle", {
+      _events.trigger("column:bindResizeHandleAfter", {
         column: this.parent,
         handle: (0, _jquery)(handle),
         parent: this.parent.parent
@@ -239,12 +239,12 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }
 
       contentTypes.forEach(function (contentType) {
-        _events.trigger("contentType:mount", {
+        _events.trigger("contentType:mountAfter", {
           id: contentType.id,
           contentType: contentType
         });
 
-        _events.trigger(contentType.config.name + ":contentType:mount", {
+        _events.trigger(contentType.config.name + ":mountAfter", {
           id: contentType.id,
           contentType: contentType
         });

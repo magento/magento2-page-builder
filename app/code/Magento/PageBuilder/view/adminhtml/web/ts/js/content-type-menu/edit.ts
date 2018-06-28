@@ -18,7 +18,7 @@ export default class Edit {
     constructor(instance: ContentTypeInterface, dataStore: DataStore) {
         this.instance = instance;
         this.dataStore = dataStore;
-        events.on("form:save:" + this.instance.id, (data: any) => {
+        events.on("form:" + this.instance.id + ":save", (data: any) => {
             this.dataStore.update(data);
         });
     }

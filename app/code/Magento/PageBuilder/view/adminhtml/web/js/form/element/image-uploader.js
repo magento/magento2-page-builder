@@ -45,7 +45,7 @@ define([
 
             this._super();
 
-            events.on('image:assigned:' + this.id, this.onAssignedFile.bind(this));
+            events.on('image:' + this.id +':assignAfter', this.onAssignedFile.bind(this));
 
             // bind dropzone highlighting using event delegation only once
             if (!initializedOnce) {
@@ -120,13 +120,13 @@ define([
         },
 
         /**
-         * Trigger image:uploaded event to be handled by PageBuilder image component
+         * Trigger image:uploadAfter event to be handled by PageBuilder image component
          * {@inheritDoc}
          */
         addFile: function (file) {
             this._super();
 
-            events.trigger('image:uploaded:' + this.id, [file]);
+            events.trigger('image:' + this.id + ':uploadAfter', [file]);
 
             return this;
         },

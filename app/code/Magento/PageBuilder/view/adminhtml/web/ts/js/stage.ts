@@ -64,7 +64,7 @@ export default class Stage {
      * The stage has been initiated fully and is ready
      */
     public ready() {
-        events.trigger(`stage:ready:${ this.id }`, {stage: this});
+        events.trigger(`stage:${ this.id }:readyAfter`, {stage: this});
         this.collection.getChildren().valueHasMutated();
         this.loading(false);
     }
@@ -141,34 +141,34 @@ export default class Stage {
      */
     protected initListeners() {
         this.collection.getChildren().subscribe(
-            () => events.trigger("stage:updated", {stageId: this.id}),
+            () => events.trigger("stage:updateAfter", {stageId: this.id}),
         );
 
         // ContentType being removed from container
-        events.on("contentType:removed", (args: ContentTypeRemovedParamsInterface) => {
+        events.on("contentType:removeAfter", (args: ContentTypeRemovedParamsInterface) => {
             if (args.stageId === this.id) {
                 this.onContentTypeRemoved(args);
             }
         });
 
         // Any store state changes trigger a stage update event
-        this.dataStore.subscribe(() => events.trigger("stage:updated", {stageId: this.id}));
+        this.dataStore.subscribe(() => events.trigger("stage:updateAfter", {stageId: this.id}));
 
         // Watch for stage update events & manipulations to the store, debounce for 50ms as multiple stage changes
         // can occur concurrently.
-        events.on("stage:updated", (args) => {
+        events.on("stage:updateAfter", (args) => {
             if (args.stageId === this.id) {
                 _.debounce(() => {
                     this.render.applyBindings(this.children)
-                        .then((renderedOutput) => events.trigger(`stage:renderTree:${ this.id }`, {
+                        .then((renderedOutput) => events.trigger(`stage:${ this.id }:masterFormatRenderAfter`, {
                             value: renderedOutput,
                         }));
                 }, 500).call(this);
             }
         });
 
-        events.on("interaction:start", () => this.interacting(true));
-        events.on("interaction:stop", () => this.interacting(false));
+        events.on("stage:interactionStart", () => this.interacting(true));
+        events.on("stage:interactionStop", () => this.interacting(false));
     }
 
     /**

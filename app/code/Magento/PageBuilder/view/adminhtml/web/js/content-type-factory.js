@@ -83,12 +83,12 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/loader", "under
 
   function fireContentTypeReadyEvent(contentType, childrenLength) {
     var fire = function fire() {
-      _events.trigger("contentType:ready", {
+      _events.trigger("contentType:mountAfter", {
         id: contentType.id,
         contentType: contentType
       });
 
-      _events.trigger(contentType.config.name + ":contentType:ready", {
+      _events.trigger(contentType.config.name + ":mountAfter", {
         id: contentType.id,
         contentType: contentType
       });
@@ -99,17 +99,17 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/loader", "under
     } else {
       var mountCounter = 0;
 
-      _events.on("contentType:mount", function (args) {
+      _events.on("contentType:mountAfter", function (args) {
         if (args.contentType.parent.id === contentType.id) {
           mountCounter++;
 
           if (mountCounter === childrenLength) {
             fire();
 
-            _events.off("contentType:mount:" + contentType.id);
+            _events.off("contentType:" + contentType.id + ":mountAfter");
           }
         }
-      }, "contentType:mount:" + contentType.id);
+      }, "contentType:" + contentType.id + ":mountAfter");
     }
   }
 
