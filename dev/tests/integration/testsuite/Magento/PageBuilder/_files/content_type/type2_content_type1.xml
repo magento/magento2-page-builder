@@ -7,21 +7,15 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="type2" translate="label">
-            <label>Type 2</label>
-            <icon>pagebuilder-type2-icon</icon>
-            <component>Path/to/component</component>
-            <preview_component>Path/to/preview/component</preview_component>
+        <type name="type2" translate="label" label="Type 2" icon="pagebuilder-type2-icon" component="Path/to/component" preview_component="Path/to/preview/component" form="pagebuilder_type2_form" group="group1">
             <backend_block>Path/to/backend/block</backend_block>
             <backend_template>Path/to/backend/template</backend_template>
             <is_visible>true</is_visible>
-            <form>pagebuilder_type2_form</form>
-            <group>group1</group>
             <allowed_parents>
                 <parent name="stage"/>
             </allowed_parents>
             <appearances>
-                <appearance name="default" default="true">
+                <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
                     <data name="data1">value1</data>
                     <data name="data2">value2</data>
                     <data_mapping>
@@ -29,26 +23,26 @@
                             <element name="first_element" path=".">
                                 <style_properties>
                                     <property name="style_no_converter" source="no_converter"/>
-                                    <property name="style_attributes_change" source="attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" persist="false" virtual="true" />
+                                    <property name="style_attributes_change" source="attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" persist="false" virtual="true"/>
                                     <property name="style_attributes_add" source="attributes_add"/>
                                     <complex_property name="original_complex" reader="Path/to/reader"/>
-                                    <complex_property name="complex_style_attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" virtual="true" reader="Path/to/reader" />
+                                    <complex_property name="complex_style_attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" virtual="true" reader="Path/to/reader"/>
                                     <complex_property name="complex_style_attributes_add" reader="Path/to/reader"/>
                                     <static_property source="original_static" value="original_value"/>
-                                    <static_property source="static_style_attributes_change" value="value" />
+                                    <static_property source="static_style_attributes_change" value="value"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
                                     <attribute name="attribute_change" source="data-change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" virtual="true" persist="false"/>
                                     <attribute name="attribute_add" source="attribute_add"/>
                                     <complex_attribute name="original_complex" reader="Path/to/reader"/>
-                                    <complex_attribute name="complex_style_attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" virtual="true" reader="Path/to/reader" />
+                                    <complex_attribute name="complex_style_attributes_change" converter="Path/to/converter" preview_converter="Path/to/preview/converter" virtual="true" reader="Path/to/reader"/>
                                     <complex_attribute name="complex_style_attributes_add" reader="Path/to/reader"/>
                                     <static_attribute source="original_static" value="original_value"/>
-                                    <static_attribute source="static_attribute_change" value="value" />
+                                    <static_attribute source="static_attribute_change" value="value"/>
                                 </attributes>
-                                <tag name="tag" converter="Path/to/converter" />
-                                <html name="html" />
+                                <tag name="tag" converter="Path/to/converter"/>
+                                <html name="html"/>
                                 <css name="css_classes" converter="Path/to/converter">
                                     <filter>
                                         <class source="class-name"/>
@@ -79,15 +73,9 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Path/to/preview/template</preview_template>
-                    <render_template>Path/to/render/template</render_template>
-                    <readers>
-                        <reader name="reader1" component="Path/to/reader1"/>
-                        <reader name="reader2" component="Path/to/reader2"/>
-                    </readers>
                     <form>Path/to/form</form>
                 </appearance>
-                <appearance name="appearance1" default="false">
+                <appearance name="appearance1" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -102,25 +90,10 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Path/to/preview/template</preview_template>
-                    <render_template>Path/to/render/template</render_template>
-                    <readers>
-                        <reader name="default" component="Path/to/reader"/>
-                    </readers>
                     <form>Path/to/form</form>
                 </appearance>
-                <appearance name="appearance2" default="false">
-                    <preview_template>Path/to/preview/template</preview_template>
-                    <render_template>Path/to/render/template</render_template>
-                    <reader>Path/to/reader</reader>
-                    <readers>
-                        <reader name="default" component="Path/to/reader2"/>
-                    </readers>
-                </appearance>
-                <appearance name="appearance3" default="false">
-                    <preview_template>Path/to/preview/template</preview_template>
-                    <render_template>Path/to/render/template</render_template>
-                </appearance>
+                <appearance name="appearance2" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader"/>
+                <appearance name="appearance3" default="false" preview_template="Path/to/preview/template" render_template="Path/to/render/template"/>
             </appearances>
         </type>
     </content_types>

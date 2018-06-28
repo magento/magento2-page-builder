@@ -7,25 +7,32 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="tabs" translate="label" sortOrder="1">
-            <label>Tabs</label>
-            <icon>icon-pagebuilder-tabs</icon>
-            <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/content-type/tabs/preview</preview_component>
-            <master_component>Magento_PageBuilder/js/content-type/master-collection</master_component>
-            <form>pagebuilder_tabs_form</form>
-            <group>interactive</group>
+        <type name="tabs"
+              label="Tabs"
+              component="Magento_PageBuilder/js/content-type-collection"
+              preview_component="Magento_PageBuilder/js/content-type/tabs/preview"
+              master_component="Magento_PageBuilder/js/content-type/master-collection"
+              form="pagebuilder_tabs_form"
+              group="interactive"
+              icon="icon-pagebuilder-tabs"
+              sortOrder="1"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
             </allowed_parents>
             <appearances>
-                <appearance name="default" default="true">
+                <appearance name="default"
+                            default="true"
+                            preview_template="Magento_PageBuilder/content-type/tabs/default/preview"
+                            render_template="Magento_PageBuilder/content-type/tabs/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
                                 <style_properties>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -72,9 +79,6 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/tabs/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/tabs/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

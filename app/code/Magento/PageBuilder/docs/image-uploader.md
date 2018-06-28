@@ -57,10 +57,10 @@ Use `additional_data` in your `<YourModule>/view/base/pagebuilder/content_type/<
 ``` xml
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="MyName" translate="label">
+        <type name="MyName" translate="label" label="MyName" icon="icon-modulename-simple" component="Vendor_ModuleName/js/content-type" form="modulename_simple_form" group="general">
             ...
             <additional_data>
-                <arguments name="uploaderConfig" xsi:type="array">
+                <item name="uploaderConfig" xsi:type="array">
                     <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>
                     <item name="isShowImageUploadOptions" xsi:type="boolean">true</item>
                     <item name="maxFileSize" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\MaxFileSize</item>
@@ -83,7 +83,7 @@ Use `additional_data` in your `<YourModule>/view/base/pagebuilder/content_type/<
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
-                </arguments>
+                </item>
             </additional_data>
         </type>
     </content_types>
