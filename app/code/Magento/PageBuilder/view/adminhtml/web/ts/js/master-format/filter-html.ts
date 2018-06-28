@@ -22,7 +22,7 @@ export default function filterHtml(element: JQuery): JQuery {
     element.find("*").each(
         (index, value) => {
             const isIframe = value.tagName === "IFRAME";
-            const isBeingBypassedByThisFilter = !!$(value).closest('.bypass-html-filter').length;
+            const isBeingBypassedByThisFilter = !!$(value).closest(".bypass-html-filter").length;
             if (!isIframe && !isBeingBypassedByThisFilter) {
                 $(value).contents().filter(isWhiteSpaceOrComment).remove();
             }
