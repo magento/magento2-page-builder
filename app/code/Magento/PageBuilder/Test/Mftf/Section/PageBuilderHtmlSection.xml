@@ -45,7 +45,7 @@
         <element name="htmlFieldErrorMessage" type="text" selector="//div[contains(@class,'pagebuilder_modal_form_pagebuilder_modal_form_modal_insert_form')]//div[@data-index='general']//..//../label[.='{{arg1}}']" parameterized="true"/>
     </section>
     <section name="HtmlOnBackendArbitraryHtml">
-        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[@class='my-div']"/>
+        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[contains(text(), '&lt;div class=&quot;my-div&quot;&gt;&lt;/div&gt;')]"/>
     </section>
     <section name="HtmlOnBackendWithImage">
         <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]/img[not(contains(@src, '{{media'))]"/>
@@ -57,6 +57,6 @@
         <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]/img[contains(@src, '{{media')]"/>
     </section>
     <section name="HtmlOnBackendNonexistentDataRole">
-        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[@data-role='row']/div[@data-role='non-existent-content-type']"/>
+        <element name="content" type="button" selector="//div[contains(@class, 'pagebuilder-html')][1]//div[contains(text(), '&lt;div data-role=&quot;row&quot;&gt;&lt;div data-role=&quot;non-existent-content-type&quot;&gt;&lt;/div&gt;&lt;/div&gt;')]"/>
     </section>
 </sections>
