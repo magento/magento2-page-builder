@@ -52,17 +52,23 @@ To add configuration for a new content type, create a file under the following l
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Vendor_ModuleName:etc/content_type.xsd">
     <content_types>
-        <type name="simple" sortOrder="35" translate="label">
-            <label>Simple</label>
-            <icon>icon-modulename-simple</icon>
-            <component>Vendor_ModuleName/js/content-type</component>
-            <form>modulename_simple_form</form>
-            <group>general</group>
+        <type name="simple"
+              label="Simple"
+              component="Vendor_ModuleName/js/content-type"
+              form="modulename_simple_form"
+              group="general"
+              icon="icon-modulename-simple"
+              sortOrder="35"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Vendor_ModuleNameCustom/content-type/simple/default/preview"
+                            render_template="Vendor_ModuleNameCustom/content-type/simple/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -72,7 +78,8 @@ To add configuration for a new content type, create a file under the following l
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -81,9 +88,6 @@ To add configuration for a new content type, create a file under the following l
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Vendor_ModuleNameCustom/content-type/simple/default/preview</preview_template>
-                    <render_template>Vendor_ModuleNameCustom/content-type/simple/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
@@ -250,20 +254,26 @@ Now, let's add content type that can contain other content types. Create configu
 ``` XML
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="complex" sortOrder="35" translate="label">
-            <label>Complex</label>
-            <icon>icon-vendorname-complex</icon>
-            <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/content-type/preview-collection</preview_component>
-            <content_component>Magento_PageBuilder/js/content-type/content-collection</content_component>
-            <form>vendorname_complex_form</form>
-            <group>general</group>
+        <type name="complex"
+              label="Complex"
+              component="Magento_PageBuilder/js/content-type-collection"
+              preview_component="Magento_PageBuilder/js/content-type/preview-collection"
+              master_component="Magento_PageBuilder/js/content-type/content-collection"
+              form="vendorname_complex_form"
+              group="general"
+              icon="icon-vendorname-complex"
+              sortOrder="35"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Vendor_ModuleName/content-type/complex/default/preview"
+                            render_template="Vendor_ModuleName/content-type/complex/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -273,7 +283,8 @@ Now, let's add content type that can contain other content types. Create configu
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -282,9 +293,6 @@ Now, let's add content type that can contain other content types. Create configu
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Vendor_ModuleName/content-type/complex/default/preview</preview_template>
-                    <render_template>Vendor_ModuleName/content-type/complex/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>
@@ -328,11 +336,11 @@ Now need to create preview and render templates.
 
 Please also notice that we specified in configuration the following, to allow our content type accept other content types as children.
 
-| Setting             | Value                                          |
-| ------------------- | ---------------------------------------------- |
-| `component`         | Magento_PageBuilder/js/content-type-collection |
+| Setting             | Value                                                       |
+| ------------------- | ----------------------------------------------------------- |
+| `component`         | Magento_PageBuilder/js/content-type-collection              |
 | `preview_component` | Magento_PageBuilder/js/content-type/preview-collection      |
-| `content_component` | Magento_PageBuilder/js/content-type/content-collection      |
+| `master_component`  | Magento_PageBuilder/js/content-type/content-collection      |
 
 You can also specify `content_component` if you want to do modifications to observables used in master format templates.
 

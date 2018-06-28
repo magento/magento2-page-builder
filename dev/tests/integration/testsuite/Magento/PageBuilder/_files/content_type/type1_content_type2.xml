@@ -7,18 +7,12 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="type1" translate="label">
-            <label>Type 1 Label</label>
-            <icon>pagebuilder-type1-custom-icon</icon>
-            <component>Path/to/component</component>
-            <preview_component>Path/to/preview/component</preview_component>
-            <form>pagebuilder_type1_custom_form</form>
-            <group>group2</group>
+        <type name="type1" translate="label" label="Type 1 Label" icon="pagebuilder-type1-custom-icon" component="Path/to/component" preview_component="Path/to/preview/component" form="pagebuilder_type1_custom_form" group="group2">
             <allowed_parents>
                 <parent name="stage"/>
             </allowed_parents>
             <appearances>
-                <appearance name="default" default="true">
+                <appearance name="default" default="true" preview_template="Path/to/preview/template" render_template="Path/to/render/template" reader="Path/to/reader">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -33,39 +27,36 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Path/to/preview/template</preview_template>
-                    <render_template>Path/to/render/template</render_template>
-                    <reader>Path/to/reader</reader>
                 </appearance>
             </appearances>
             <additional_data>
-                <arguments name="config1" xsi:type="array">
+                <item name="config1" xsi:type="array">
                     <item name="settingWithTypeString" xsi:type="string">string</item>
                     <item name="settingWithTypeBooleanTrue" xsi:type="boolean">true</item>
                     <item name="settingWithTypeBooleanFalse" xsi:type="boolean">false</item>
                     <item name="settingWithTypeInteger" xsi:type="number">20</item>
-                    <item name="settingWithTypeNull" xsi:type="null" />
+                    <item name="settingWithTypeNull" xsi:type="null"/>
                     <item name="settingWithTypeNumber2" xsi:type="number">-90</item>
                     <item name="settingWithTypeObject" xsi:type="object">Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider\TestData</item>
-                </arguments>
-                <arguments name="config2" xsi:type="array">
+                </item>
+                <item name="config2" xsi:type="array">
                     <item name="arrayConfig" xsi:type="array">
                         <item name="settingWithTypeString" xsi:type="string">string</item>
                         <item name="settingWithTypeBooleanTrue" xsi:type="boolean">true</item>
                         <item name="settingWithTypeBooleanFalse" xsi:type="boolean">false</item>
                         <item name="settingWithTypeInteger" xsi:type="number">20</item>
-                        <item name="settingWithTypeNull" xsi:type="null" />
+                        <item name="settingWithTypeNull" xsi:type="null"/>
                         <item name="settingWithTypeNumber2" xsi:type="number">-90</item>
                         <item name="settingWithTypeObject" xsi:type="object">Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider\TestData</item>
                     </item>
-                </arguments>
-                <arguments name="settingWithTypeString" xsi:type="string">string</arguments>
-                <arguments name="settingWithTypeBooleanTrue" xsi:type="boolean">true</arguments>
-                <arguments name="settingWithTypeBooleanFalse" xsi:type="boolean">false</arguments>
-                <arguments name="settingWithTypeInteger" xsi:type="number">20</arguments>
-                <arguments name="settingWithTypeNull" xsi:type="null" />
-                <arguments name="settingWithTypeNumber2" xsi:type="number">-90</arguments>
-                <arguments name="settingWithTypeObject" xsi:type="object">Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider\TestData</arguments>
+                </item>
+                <item name="settingWithTypeString" xsi:type="string">string</item>
+                <item name="settingWithTypeBooleanTrue" xsi:type="boolean">true</item>
+                <item name="settingWithTypeBooleanFalse" xsi:type="boolean">false</item>
+                <item name="settingWithTypeInteger" xsi:type="number">20</item>
+                <item name="settingWithTypeNull" xsi:type="null"/>
+                <item name="settingWithTypeNumber2" xsi:type="number">-90</item>
+                <item name="settingWithTypeObject" xsi:type="object">Magento\TestModulePageBuilderDataMigration\Model\Config\ContentType\AdditionalData\Provider\TestData</item>
             </additional_data>
         </type>
     </content_types>

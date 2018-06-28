@@ -7,20 +7,26 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="products" sortOrder="20" translate="label">
-            <label>Products</label>
-            <icon>icon-pagebuilder-products</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/content-type/products/preview</preview_component>
-            <form>pagebuilder_products_form</form>
-            <group>magento</group>
+        <type name="products"
+              label="Products"
+              component="Magento_PageBuilder/js/content-type"
+              preview_component="Magento_PageBuilder/js/content-type/products/preview"
+              form="pagebuilder_products_form"
+              group="magento"
+              icon="icon-pagebuilder-products"
+              sortOrder="20"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="grid">
+                <appearance default="true"
+                            name="grid"
+                            preview_template="Magento_PageBuilder/content-type/products/grid/preview"
+                            render_template="Magento_PageBuilder/content-type/products/grid/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -30,7 +36,8 @@
                                     <property converter="Magento_PageBuilder/js/converter/style/color" name="border_color" source="border_color"/>
                                     <property converter="Magento_PageBuilder/js/converter/style/border-width" name="border_width" source="border_width"/>
                                     <property converter="Magento_PageBuilder/js/converter/style/remove-px" name="border_radius" source="border_radius"/>
-                                    <complex_property name="margins_and_padding" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings" reader="Magento_PageBuilder/js/property/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute source="data-role" name="name"/>
@@ -48,9 +55,6 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/products/grid/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/products/grid/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

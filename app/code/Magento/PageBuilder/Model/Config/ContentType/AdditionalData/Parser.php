@@ -30,7 +30,7 @@ class Parser
     }
 
     /**
-     * Convert and evaluate additional data from arguments nodes to array
+     * Convert and evaluate additional data from item nodes to array
      *
      * @param array $additionalData
      * @return array
