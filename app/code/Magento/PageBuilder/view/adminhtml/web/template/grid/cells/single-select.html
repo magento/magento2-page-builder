@@ -4,7 +4,7 @@
  * See COPYING.txt for license details.
  */
 -->
-<label class="data-grid-state-cell-inner">
+<label class="data-grid-state-cell-inner single-select-cell">
     <button
             class="action-default"
             translate="'Select'"
@@ -15,7 +15,9 @@
             visible="$col.selected()[0] !== $row()[$col.indexField]"
             click="select.bind($data, $row()[$col.indexField], false)"
             />
+    <i class="selection-indicator-icon icon-admin-pagebuilder-success" visible="$col.selected()[0] === $row()[$col.indexField]" />
     <span translate="'Selected'"
+          class="selection-indicator-text"
           visible="$col.selected()[0] === $row()[$col.indexField]"
           />
 </label>
