@@ -55,7 +55,7 @@ This document contains reference information for events dispatched in Page Build
 * [contentType:afterRender](#contenttypeafterrender)
 * [contentType:removeAfter](#contenttyperemoved)
 * [contentType:duplicateAfter](#contenttypeduplicate)
-* [contentType:beforeMove](#contenttypebeforemove)
+* [contentType:moveBefore](#contenttypemovebefore)
 * [contentType:moveAfter](#contenttypemoveafter)
 * [column:dragStart](#columdragstart)
 * [column:dragStop](#columndragstop)
@@ -210,7 +210,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:beforeMove`
+### `contentType:moveBefore`
 
 **Triggers**
 

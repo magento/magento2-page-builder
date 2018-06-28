@@ -26,7 +26,7 @@ export function moveContentType(
     const sourceParentChildren = sourceParent.getChildren();
 
     // Trigger our block move event
-    events.trigger("contentType:beforeMove", {
+    events.trigger("contentType:moveBefore", {
         contentType,
         sourceParent,
         targetParent,

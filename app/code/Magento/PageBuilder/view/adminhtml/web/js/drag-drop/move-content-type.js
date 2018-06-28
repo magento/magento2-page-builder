@@ -21,7 +21,7 @@ define(["knockout", "Magento_PageBuilder/js/events"], function (_knockout, _even
     var sourceIndex = contentType.parent.children().indexOf(contentType);
     var sourceParentChildren = sourceParent.getChildren(); // Trigger our block move event
 
-    _events.trigger("contentType:beforeMove", {
+    _events.trigger("contentType:moveBefore", {
       contentType: contentType,
       sourceParent: sourceParent,
       targetParent: targetParent,

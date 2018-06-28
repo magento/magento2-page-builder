@@ -63,7 +63,7 @@ export default class Preview extends PreviewCollection {
     ) {
         super(parent, config, observableUpdater);
 
-        events.on("tabs:contentType:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
+        events.on("tabs:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
             if (args.id === this.parent.id && this.element) {
                 this.buildTabs();
             }

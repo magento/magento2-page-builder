@@ -63,7 +63,7 @@ export default class PageBuilder implements PageBuilderInterface {
             });
         }
 
-        events.trigger(`pagebuilder:${ this.id }:fullScreen`, {
+        events.trigger(`${ this.id }:fullScreen`, {
             fullScreen: this.isFullScreen(),
         });
     }

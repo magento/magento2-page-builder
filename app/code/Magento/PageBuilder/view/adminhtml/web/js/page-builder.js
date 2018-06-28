@@ -73,7 +73,7 @@ define(["knockout", "Magento_PageBuilder/js/events", "mageUtils", "underscore", 
         });
       }
 
-      _events.trigger("pagebuilder:" + this.id + ":fullScreen", {
+      _events.trigger(this.id + ":fullScreen", {
         fullScreen: this.isFullScreen()
       });
     };

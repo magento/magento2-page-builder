@@ -46,7 +46,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       }, 10);
 
-      _events.on("tabs:contentType:afterRender", function (args) {
+      _events.on("tabs:afterRender", function (args) {
         if (args.id === _this.parent.id && _this.element) {
           _this.buildTabs();
         }
