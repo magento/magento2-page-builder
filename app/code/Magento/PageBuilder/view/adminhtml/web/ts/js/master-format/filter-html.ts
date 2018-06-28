@@ -32,5 +32,8 @@ export default function filterHtml(element: JQuery): JQuery {
         $(value).parent().append($(value).children());
         $(value).remove();
     });
+    element.find(".bypass-html-filter").each((index, value) => {
+        $(value).removeClass("bypass-html-filter").filter('[class=""]').removeAttr("class");
+    });
     return element;
 }
