@@ -17,7 +17,7 @@ interface RendererInterface
      * Render data that the stage can process for the provided parameters
      *
      * @param array $params
-     * @return string
+     * @return array
      */
-    public function render(array $params): string;
+    public function render(array $params): array;
 }

@@ -17,7 +17,7 @@ export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
     private messages = {
-        NOT_SELECTED: $t("Block Not Selected"),
+        NOT_SELECTED: $t("Empty Block"),
         LOADING: $t("Loading..."),
         UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
     };
@@ -79,27 +79,23 @@ export default class Preview extends BasePreview {
 
         // Retrieve a state object representing the block from the preview controller and process it on the stage
         $.ajax(url, requestConfig)
+            // The state object will contain the block name and either html or a message why there isn't any.
             .done((response) => {
-                const content = response.data !== undefined ? response.data.trim() : "";
-
                 // Empty content means something bad happened in the controller that didn't trigger a 5xx
-                if (content.length === 0) {
+                if (typeof response.data !== "object") {
                     this.placeholderText(this.messages.UNKNOWN_ERROR);
 
                     return;
                 }
 
-                // The state object will contain the block name and either html or a message why there isn't any.
-                const blockData = $.parseJSON(content);
-
                 // Update the stage content type label with the real block title if provided
-                this.displayLabel(blockData.title ? blockData.title : this.config.label);
+                this.displayLabel(response.data.title ? response.data.title : this.config.label);
 
-                if (blockData.html) {
+                if (response.data.content) {
                     this.displayPreview(true);
-                    this.data.main.html(blockData.html);
-                } else if (blockData.error_message) {
-                    this.placeholderText(blockData.error_message);
+                    this.data.main.html(response.data.content);
+                } else if (response.data.error) {
+                    this.placeholderText(response.data.error);
                 }
             })
             .fail(() => {

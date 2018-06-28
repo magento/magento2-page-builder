@@ -14,30 +14,14 @@ namespace Magento\TestModulePageBuilderExtensionPoints\Model\Stage\Renderer;
 class Test implements \Magento\PageBuilder\Model\Stage\RendererInterface
 {
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
-     */
-    private $json;
-
-    /**
-     * Constructor
-     *
-     * @param \Magento\Framework\Serialize\Serializer\Json $json
-     */
-    public function __construct(
-        \Magento\Framework\Serialize\Serializer\Json $json
-    ) {
-        $this->json = $json;
-    }
-
-    /**
-     * Render HTML for the specified block
+     * Render test data
      *
      * @param array $params
-     * @return string
+     * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function render(array $params): string
+    public function render(array $params): array
     {
-        return $this->json->serialize('Test Content');
+        return ['content' => 'Test Content'];
     }
 }

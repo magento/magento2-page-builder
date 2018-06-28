@@ -1,5 +1,7 @@
 /*eslint-disable */
 define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder/js/config", "Magento_PageBuilder/js/content-type/preview"], function (_jquery, _knockout, _translate, _uiEvents, _config, _preview) {
+  function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
   function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
   var Preview =
@@ -75,15 +77,13 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       this.placeholderText(this.messages.LOADING);
 
       _jquery.ajax(url, requestConfig).done(function (response) {
-        var content = response.data !== undefined ? response.data.trim() : "";
-
-        if (content.length === 0) {
+        if (_typeof(response.data) !== "object" || typeof response.data.content === "undefined") {
           _this3.placeholderText(_this3.messages.EMPTY);
 
           return;
         }
 
-        _this3.data.main.html(content);
+        _this3.data.main.html(response.data.content);
 
         _this3.displayPreview(true);
       }).fail(function () {

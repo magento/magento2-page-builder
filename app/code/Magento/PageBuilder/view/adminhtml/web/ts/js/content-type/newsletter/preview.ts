@@ -3,35 +3,35 @@
  * See COPYING.txt for license details.
  */
 
+import $ from "jquery";
 import events from "uiEvents";
 import Config from "../../config";
 import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
     /**
-     * Bind events
+     * @inheritdoc
      */
-    protected bindEvents() {
-        super.bindEvents();
-        events.on("previewObservables:updated", (args) => {
-            if (args.preview.parent.id === this.parent.id) {
-                const attributes = this.data.main.attributes();
-                if (attributes["data-title"] === "") {
-                    return;
-                }
-                const url = Config.getConfig("preview_url");
-                const requestData = {
-                    button_text: attributes["data-button-text"],
-                    label_text: attributes["data-label-text"],
-                    placeholder: attributes["data-placeholder"],
-                    role: this.config.name,
-                    title: attributes["data-title"],
-                };
+    protected afterObservablesUpdated(): void {
+        super.afterObservablesUpdated();
+        const attributes = this.data.main.attributes();
+        if (attributes["data-title"] === "") {
+            return;
+        }
+        const url = Config.getConfig("preview_url");
+        const requestData = {
+            button_text: attributes["data-button-text"],
+            label_text: attributes["data-label-text"],
+            placeholder: attributes["data-placeholder"],
+            role: this.config.name,
+            title: attributes["data-title"],
+        };
 
-                jQuery.post(url, requestData, (response) => {
-                    this.data.main.html(response.data !== undefined ? response.data.trim() : "");
-                });
+        $.post(url, requestData, (response) => {
+            if (typeof response.data !== "object" || typeof response.data.content === "undefined") {
+                return;
             }
+            this.data.main.html(response.data.content.trim());
         });
     }
 }

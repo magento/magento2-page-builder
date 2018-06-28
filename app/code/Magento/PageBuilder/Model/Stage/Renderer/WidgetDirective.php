@@ -43,23 +43,28 @@ class WidgetDirective implements \Magento\PageBuilder\Model\Stage\RendererInterf
      * Render HTML for specified directive
      *
      * @param array $params
-     * @return string
+     * @return array
      */
-    public function render(array $params): string
+    public function render(array $params): array
     {
+        $result = [
+            'content' => null,
+            'error' => null,
+        ];
+
         if (empty($params['directive'])) {
-            return '';
+            return $result;
         }
 
         try {
             $storeId = $this->storeManager->getStore()->getId();
-            $content = $this->directiveFilter
+            $result['content'] = $this->directiveFilter
                 ->setStoreId($storeId)
                 ->filter($params['directive']);
         } catch (\Exception $e) {
-            $content = __($e->getMessage());
+            $result['error'] = __($e->getMessage());
         }
 
-        return $content;
+        return $result;
     }
 }

@@ -34,6 +34,6 @@ class RendererPoolTest extends \PHPUnit\Framework\TestCase
     public function testGetRenderer()
     {
         $renderer = $this->model->getRenderer('test');
-        $this->assertEquals('"Test Content"', $renderer->render([]));
+        $this->assertEquals(['content' => 'Test Content'], $renderer->render([]));
     }
 }

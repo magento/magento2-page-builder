@@ -21,11 +21,6 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
     private $blockCollectionFactory;
 
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
-     */
-    private $jsonSerializer;
-
-    /**
      * @var WidgetDirective
      */
     private $widgetDirectiveRenderer;
@@ -35,37 +30,35 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
      *
      * @param WidgetDirective $widgetDirectiveRenderer
      * @param \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
-     * @param \Magento\Framework\Serialize\Serializer\Json $jsonSerializer
      */
     public function __construct(
         WidgetDirective $widgetDirectiveRenderer,
-        \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory,
-        \Magento\Framework\Serialize\Serializer\Json $jsonSerializer
+        \Magento\Cms\Model\ResourceModel\Block\CollectionFactory $blockCollectionFactory
     ) {
 
         $this->blockCollectionFactory = $blockCollectionFactory;
-        $this->jsonSerializer = $jsonSerializer;
         $this->widgetDirectiveRenderer = $widgetDirectiveRenderer;
     }
 
     /**
-     * Render a JSON state object for the specified block for the stage preview
+     * Render a state object for the specified block for the stage preview
      *
      * @param array $params
-     * @return string
+     * @return array
      */
-    public function render(array $params): string
+    public function render(array $params): array
     {
+        $result = [
+            'title' => null,
+            'content' => null,
+            'error' => null
+        ];
+
         // Short-circuit if needed fields aren't present
         if (empty($params['directive']) || empty($params['block_id'])) {
-            return '';
+            return $result;
         }
 
-        $result = [
-            'blockTitle' => null,
-            'html' => null,
-            'error_message' => null
-        ];
         $collection = $this->blockCollectionFactory->create();
         $blocks = $collection
             ->addFieldToSelect(['title', 'is_active'])
@@ -73,9 +66,9 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
             ->load();
 
         if ($blocks->count() === 0) {
-            $result['error_message'] = sprintf(__('Block with ID: %s doesn\'t exist'), $params['block_id']);
+            $result['error'] = sprintf(__('Block with ID: %s doesn\'t exist'), $params['block_id']);
 
-            return $this->jsonSerializer->serialize($result);
+            return $result;
         }
 
         /**
@@ -85,11 +78,13 @@ class CmsStaticBlock implements \Magento\PageBuilder\Model\Stage\RendererInterfa
         $result['title'] = $block->getTitle();
 
         if ($block->isActive()) {
-            $result['html'] = $this->widgetDirectiveRenderer->render($params);
+            $directiveResult = $this->widgetDirectiveRenderer->render($params);
+            $result['content'] = $directiveResult['content'];
+            $result['error'] = $directiveResult['error'];
         } else {
-            $result['error_message'] = __('Block disabled');
+            $result['error'] = __('Block disabled');
         }
 
-        return $this->jsonSerializer->serialize($result);
+        return $result;
     }
 }

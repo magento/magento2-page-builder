@@ -51,10 +51,14 @@ class Block implements \Magento\PageBuilder\Model\Stage\RendererInterface
      * Render HTML for specified block
      *
      * @param array $params
-     * @return string
+     * @return array
      */
-    public function render(array $params): string
+    public function render(array $params): array
     {
+        $result = [
+            'content' => null,
+        ];
+
         $contentTypes = $this->config->getContentTypes();
         $backendBlockClassName = isset($contentTypes[$params['role']]['backend_block'])
             ? $contentTypes[$params['role']]['backend_block'] : false;
@@ -73,9 +77,9 @@ class Block implements \Magento\PageBuilder\Model\Stage\RendererInterface
             $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
             $pageResult->getLayout()->addBlock($backendBlockInstance);
 
-            return $backendBlockInstance->toHtml();
+            $result['content'] = $backendBlockInstance->toHtml();
         }
 
-        return '';
+        return $result;
     }
 }

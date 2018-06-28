@@ -77,14 +77,13 @@ export default class Preview extends BasePreview {
 
         $.ajax(url, requestConfig)
             .done((response) => {
-                const content = response.data !== undefined ? response.data.trim() : "";
-                if (content.length === 0) {
+                if (typeof response.data !== "object" || typeof response.data.content === "undefined") {
                     this.placeholderText(this.messages.EMPTY);
 
                     return;
                 }
 
-                this.data.main.html(content);
+                this.data.main.html(response.data.content);
                 this.displayPreview(true);
             })
             .fail(() => {

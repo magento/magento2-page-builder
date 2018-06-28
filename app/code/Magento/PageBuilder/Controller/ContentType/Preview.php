@@ -4,6 +4,8 @@
  * See COPYING.txt for license details.
  */
 
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Controller\ContentType;
 
 use Magento\Framework\Controller\ResultFactory;
@@ -37,20 +39,14 @@ class Preview extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        try {
-            $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-            // Some template filters and directive processors expect this to be called in order to function.
-            $pageResult->initLayout();
+        $pageResult = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        // Some template filters and directive processors expect this to be called in order to function.
+        $pageResult->initLayout();
 
-            $params = $this->getRequest()->getParams();
-            $renderer = $this->rendererPool->getRenderer($params['role']);
-            $result = ['data' => $renderer->render($params)];
-        } catch (\Exception $e) {
-            $result = [
-                'error' => $e->getMessage(),
-                'errorcode' => $e->getCode()
-            ];
-        }
+        $params = $this->getRequest()->getParams();
+        $renderer = $this->rendererPool->getRenderer($params['role']);
+        $result = ['data' => $renderer->render($params)];
+
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
 }
