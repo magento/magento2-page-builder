@@ -22,9 +22,9 @@ define(["jquery"], function (_jquery) {
     element.contents().filter(isWhiteSpaceOrComment).remove();
     element.find("*").each(function (index, value) {
       var isIframe = value.tagName === "IFRAME";
-      var isPartOfHtmlContentType = !!(0, _jquery)(value).closest('[data-role="html"]').length;
+      var isBeingBypassedByThisFilter = !!(0, _jquery)(value).closest('.bypass-html-filter').length;
 
-      if (!isIframe && !isPartOfHtmlContentType) {
+      if (!isIframe && !isBeingBypassedByThisFilter) {
         (0, _jquery)(value).contents().filter(isWhiteSpaceOrComment).remove();
       }
     });
