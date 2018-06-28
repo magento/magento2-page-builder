@@ -7,20 +7,26 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="block" sortOrder="1" translate="label">
-            <label>Block</label>
-            <icon>icon-pagebuilder-block</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/content-type/block/preview</preview_component>
-            <form>pagebuilder_block_form</form>
-            <group>magento</group>
+        <type name="block"
+              label="Block"
+              component="Magento_PageBuilder/js/content-type"
+              preview_component="Magento_PageBuilder/js/content-type/block/preview"
+              form="pagebuilder_block_form"
+              group="magento"
+              icon="icon-pagebuilder-block"
+              sortOrder="1"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Magento_PageBuilder/content-type/block/default/preview"
+                            render_template="Magento_PageBuilder/content-type/block/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -30,7 +36,8 @@
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -48,15 +55,12 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/block/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/block/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
             <additional_data>
-                <arguments name="chooserConfig" xsi:type="array">
+                <item name="chooserConfig" xsi:type="array">
                     <item name="dataUrl" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\BlockDataUrl</item>
-                </arguments>
+                </item>
             </additional_data>
         </type>
     </content_types>

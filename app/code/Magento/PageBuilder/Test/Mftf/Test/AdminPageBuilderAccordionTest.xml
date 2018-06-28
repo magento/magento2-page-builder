@@ -30,7 +30,7 @@
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionOntoStage">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
@@ -64,15 +64,15 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <fillField selector="{{PageBuilderActionsSection.searchPanel}}" userInput="accordion" stepKey="fillSearch"/>
-        <see userInput="Accordion" selector="{{PageBuilderActionsSection.searchResults}}" stepKey="validateSearchResults"/>
+        <fillField selector="{{PageBuilderPanel.searchPanel}}" userInput="accordion" stepKey="fillSearch"/>
+        <see userInput="Accordion" selector="{{PageBuilderPanel.searchResults}}" stepKey="validateSearchResults"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragContentTypeIntoStage">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeEmptyContentTypeFromStage">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderAccordionContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderAccordionContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="AccordionValidateAdvancedConfigurationDefaultValues">
         <annotations>
@@ -93,7 +93,7 @@
         <after>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
-        <click selector="{{PageBuilderActionsSection.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
+        <click selector="{{PageBuilderPanel.interactiveGroup}}" stepKey="clickInteractiveGroup"/>
         <actionGroup ref="dragContentTypeToStage" stepKey="dragAccordionOntoStage">
             <argument name="contentType" value="PageBuilderAccordionContentType"/>
         </actionGroup>
@@ -113,7 +113,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyDefault"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -121,7 +121,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>

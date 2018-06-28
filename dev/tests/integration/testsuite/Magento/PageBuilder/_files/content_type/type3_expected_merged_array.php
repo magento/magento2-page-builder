@@ -22,9 +22,7 @@ return [
                 'default' => [
                     'preview_template' => 'Path/to/preview/template',
                     'render_template' => 'Path/to/render/template',
-                    'readers' => [
-                        0 => 'Path/to/reader'
-                    ],
+                    'readers' => [],
                     'data_mapping' => [
                         'elements' => [
                             'main' => [
@@ -68,9 +66,12 @@ return [
                         ],
                         'converters' => []
                     ],
-                    'default' => 'true'
+                    'default' => 'true',
+                    'reader' => 'Path/to/reader'
                 ]
-            ]
+            ],
+            'name' => 'type3',
+            'translate' => 'label'
         ]
     ]
 ];

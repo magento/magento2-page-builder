@@ -92,8 +92,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
-        <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
-        <waitForElementVisible time="2" selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend" />
+        <waitForElement selector="{{BannerOnFrontend.poster}}" stepKey="waitForPosterInFrontend" />
+        <dontSeeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend"/>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeePosterMessageInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.poster}} button" stepKey="dontSeePosterButtonInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.posterOverlay}}" stepKey="dontSeePosterOverlayInInFrontend"/>
@@ -124,8 +124,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront2"/>
-        <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend2"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.emptyCollageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
+        <waitForElement selector="{{BannerOnFrontend.emptyCollageLeft}}" stepKey="waitForCollageLeftInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend2"/>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageLeftMessageInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.emptyCollageLeft}} button" stepKey="dontSeeCollageLeftButtonInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="dontSeeCollageLeftOverlayInInFrontend"/>
@@ -153,8 +153,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront3"/>
-        <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend3"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.emptyCollageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
+        <waitForElement selector="{{BannerOnFrontend.emptyCollageCentered}}" stepKey="waitForCollageCenteredInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend3"/>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageCenteredMessageInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.emptyCollageCentered}} button" stepKey="dontSeeCollageCenteredButtonInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="dontSeeCollageCenteredOverlayInInFrontend"/>
@@ -182,8 +182,8 @@
         </actionGroup>
         <!-- Validate Storefront -->
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront4"/>
-        <seeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend4"/>
-        <waitForElementVisible time="3" selector="{{BannerOnFrontend.emptyCollageRight}}" stepKey="waitForCollageRightInFrontend"/>
+        <waitForElement selector="{{BannerOnFrontend.emptyCollageRight}}" stepKey="waitForCollageRightInFrontend"/>
+        <dontSeeElement selector="{{BannerOnFrontend.banner}}" stepKey="verifyBannerInFrontend4"/>
         <dontSee userInput="{{PageBuilderBannerMessageDefaultProperty.placeholder}}" stepKey="dontSeeCollageRightMessageInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.emptyCollageRight}} button" stepKey="dontSeeCollageRightButtonInFrontend"/>
         <dontSeeElement selector="{{BannerOnFrontend.collageOverlay}}" stepKey="dontSeeCollageRightOverlayInInFrontend"/>
@@ -274,7 +274,7 @@
         <seeElement selector="{{BannerOnBackend.posterBackgroundAttachment}}" stepKey="verifyPosterBackgroundAttachmentInAdmin"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
-        <waitForElementVisible time="5" selector="{{PageBuilderActionsSection.contentTypePreviewInStage(PageBuilderBannerContentType.role)}}" stepKey="waitForVideoPreviewInStager" />
+        <waitForElementVisible time="5" selector="{{PageBuilderStage.contentTypePreviewInStage(PageBuilderBannerContentType.role)}}" stepKey="waitForVideoPreviewInStager" />
         <seeElement selector="{{BannerOnBackend.backgroundImageSource(PageBuilderBackgroundImage_JPG.path)}}" stepKey="seeMainImageDisplayed"/>
         <seeElement selector="{{BannerOnBackend.buttonText(PageBuilderBannerButtonTextProperty.value)}}" stepKey="verifyButtonText"/>
         <seeElement selector="{{BannerOnBackend.messageText(PageBuilderBannerMessageProperty.value)}}" stepKey="verifyMessage"/>
@@ -418,7 +418,7 @@
         <actionGroup ref="removeEmptyContentTypeFromStage" stepKey="removeBanner">
             <argument name="contentType" value="PageBuilderBannerContentType"/>
         </actionGroup>
-        <dontSeeElement selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderBannerContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
+        <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderBannerContentType.role)}}" stepKey="dontSeeContentTypeInStage"/>
     </test>
     <test name="BannerHasNoRequired">
         <annotations>
@@ -495,8 +495,8 @@
             <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMinProperty"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask2"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave"/>
+        <waitForElementVisible time="1" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveButton" />
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSave"/>
         <seeElement selector="{{BannerOnBackend.errorField}}" stepKey="seeErrorInTransparencyMin"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask3"/>
         <!-- Check Invalid Max -->
@@ -505,8 +505,8 @@
             <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidMaxProperty"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask4"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton2" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave2"/>
+        <waitForElementVisible time="1" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveButton2" />
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSave2"/>
         <seeElement selector="{{BannerOnBackend.errorField}}" stepKey="seeErrorInTransparencyMax"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask5"/>
         <!-- Check Invalid Type -->
@@ -515,8 +515,8 @@
             <argument name="property" value="PageBuilderBannerOverlayTransparencyInvalidTypeProperty"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask6"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton3" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave3"/>
+        <waitForElementVisible time="1" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveButton3" />
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSave3"/>
         <seeElement selector="{{BannerOnBackend.errorField}}" stepKey="seeErrorInTransparencyType"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask7"/>
         <!-- Check Valid -->
@@ -525,8 +525,8 @@
             <argument name="property" value="PageBuilderBannerOverlayTransparencyDefaultProperty"/>
         </actionGroup>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask8"/>
-        <waitForElementVisible time="1" selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="waitForSaveButton4" />
-        <click selector="{{PageBuilderActionsSection.editFormSave}}" stepKey="clickSave4"/>
+        <waitForElementVisible time="1" selector="{{EditPanelForm.editFormSave}}" stepKey="waitForSaveButton4" />
+        <click selector="{{EditPanelForm.editFormSave}}" stepKey="clickSave4"/>
         <dontSeeElement selector="{{BannerOnBackend.errorField}}" stepKey="dontSeeErrorInTransparency"/>
     </test>
     <test name="BannerHasExpectedFieldsAndDefaults">
@@ -705,7 +705,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -713,7 +713,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
@@ -1094,11 +1094,11 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="section" value="PageBuilderActionsSection"/>
+            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
         <!--Upload image from local machine -->
         <comment userInput="Upload image from local machine" stepKey="commentUploadImageFromLocal" />
-        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderActionsSection.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
+        <attachFile userInput="{{PageBuilderImageProperty_JPG.value}}" selector="{{PageBuilderStage.uploadLocalImageBtn}}" stepKey="attachImageFromLocalToStage"/>
         <waitForElementVisible selector="{{ImageOnConfigurationPanel.imageSource(PageBuilderImageProperty_JPG.fileName)}}" stepKey="waitForMainImageSource1"/>
         <!--Upload image from Media Gallery Storage -->
         <comment userInput="Upload image from Media Gallery Storage" stepKey="commentUploadImageFromStorage"/>
@@ -1128,7 +1128,7 @@
         <comment userInput="Validate Storefront" stepKey="commentValidateStorefront"/>
         <amOnPage url="$$createPreReqCMSPage.identifier$$" stepKey="amOnCmsStorefront" />
         <waitForPageLoad stepKey="waitForPageLoad3" />
-        <waitForElement selector="{{PageBuilderActionsSection.imageSourceOnFrontEnd(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
+        <waitForElement selector="{{PageBuilderStoreFront.imageSourceOnFrontEnd(PageBuilderBackgroundImage_JPG.fileName)}}" stepKey="seeMainImageSourceOnFrontend"/>
     </test>
     <test name="VerifyUploadImageOnBannerStageDependOnEachTypeOfAppearance">
         <annotations>
@@ -1171,7 +1171,7 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons1" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons1" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="section" value="PageBuilderActionsSection"/>
+            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Center-->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage2">
@@ -1184,7 +1184,7 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons2" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons2" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="section" value="PageBuilderActionsSection"/>
+            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
         <!--Verify there are 2 buttons display when user select appearance Right-->
         <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage3">
@@ -1197,7 +1197,7 @@
         <comment userInput="Verify there are 2 buttons when hovering" stepKey="commentVerifyButtons3" />
         <actionGroup ref="verifyUploadImageButtons" stepKey="verifyUploadImageButtons3" >
             <argument name="contentType" value="PageBuilderBannerContentType"/>
-            <argument name="section" value="PageBuilderActionsSection"/>
+            <argument name="section" value="PageBuilderStage"/>
         </actionGroup>
     </test>
 </tests>

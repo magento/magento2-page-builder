@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import ConverterInterface from "../converter-interface";
+import {ConverterInterface} from "../converter-interface";
 
 export default class Paddings implements ConverterInterface {
     /**
@@ -39,10 +39,10 @@ export default class Paddings implements ConverterInterface {
             value = JSON.parse(value);
         }
         if (value && undefined !== value.padding) {
-            result.paddingLeft = value.padding.left + "px";
-            result.paddingTop = value.padding.top + "px";
-            result.paddingRight = value.padding.right + "px";
-            result.paddingBottom = value.padding.bottom + "px";
+            result.paddingLeft = value.padding.left ? value.padding.left + "px" : "";
+            result.paddingTop = value.padding.top ? value.padding.top + "px" : "";
+            result.paddingRight = value.padding.right ? value.padding.right + "px" : "";
+            result.paddingBottom = value.padding.bottom ? value.padding.bottom + "px" : "";
         }
         return result;
     }

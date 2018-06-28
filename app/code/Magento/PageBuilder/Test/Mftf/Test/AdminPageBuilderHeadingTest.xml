@@ -96,7 +96,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeHeadingTypeAttributeValue">
             <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
         </actionGroup>
-        <grabMultiple selector="{{PageBuilderColumnSection.panelFieldOptions(PageBuilderHeadingTypeDefaultProperty.section, PageBuilderHeadingTypeDefaultProperty.fieldName)}}" userInput="value" stepKey="grabHeadingTypeOptions"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderHeadingTypeDefaultProperty.section, PageBuilderHeadingTypeDefaultProperty.fieldName)}}" userInput="value" stepKey="grabHeadingTypeOptions"/>
         <assertCount actual="grabHeadingTypeOptions" actualType="variable" expected="6" expectedType="int" stepKey="assertHeadingTypeOptions"/>
         <!-- Heading Text -->
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeHeadingTextAttribute">
@@ -109,7 +109,7 @@
             <argument name="property" value="PageBuilderHeadingTextDefaultProperty"/>
         </actionGroup>
         <!-- Refactor in MAGETWO-88795 -->
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute"/>
         <assertEmpty actual="getTextFromHeadingTextAttribute" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute" stepKey="assertGetTextFromHeadingTextAttribute"/>
         <!-- Save page and verify fields (because some of them change) -->
         <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
@@ -123,7 +123,7 @@
             <argument name="property" value="PageBuilderHeadingTypeDefaultProperty"/>
         </actionGroup>
         <!-- Heading Text -->
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderHeadingTextDefaultProperty.section, PageBuilderHeadingTextDefaultProperty.fieldName)}}" stepKey="getTextFromHeadingTextAttribute2"/>
         <assertEmpty actual="getTextFromHeadingTextAttribute2" actualType="variable" message="Text field has text: $getTextFromHeadingTextAttribute2" stepKey="assertGetTextFromHeadingTextAttribute2"/>
     </test>
     <test name="HeadingValidateAdvancedConfigurationDefaultValues">
@@ -166,7 +166,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -174,7 +174,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getMarginTop"/>
         <assertEmpty actual="getMarginTop" actualType="variable" message="Text field has text: $getMarginTop" stepKey="assertMarginTop"/>
@@ -225,7 +225,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder2">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor2"/>
         <assertEmpty actual="getBorderColor2" actualType="variable" message="Text field has text: $getBorderColor2" stepKey="assertBorderColor2"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth2">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -233,7 +233,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius2">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses2"/>
         <assertEmpty actual="getCssClasses2" actualType="variable" message="Text field was not empty. Had text: $getCssClasses2" stepKey="assertCssClasses2"/>
         <grabValueFrom selector="{{AdvancedForm.advancedMarginTop}}" stepKey="getMarginTop2"/>
         <assertEmpty actual="getMarginTop2" actualType="variable" message="Text field has text: $getMarginTop2" stepKey="assertMarginTop2"/>
@@ -460,14 +460,14 @@
         <actionGroup ref="clickOutsideLiveEditHeading" stepKey="clickOutsideLiveEditHeading">
             <argument name="index" value="1"/>
         </actionGroup>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="waitForHeadingInStageVisible" />
-        <moveMouseOver selector="{{PageBuilderActionsSection.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="onMouseOverHeadingStage"/>
-        <waitForElementVisible time="10" selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" stepKey="waitForOptionsMenu" />
-        <see selector="{{PageBuilderActionsSection.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" userInput="{{PageBuilderHeadingContentType.name}}" stepKey="seeHeadingOptionMenuTitle"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeMove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsMove"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeEdit(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsEdit"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeDuplicate(PageBuilderHeadingContentType.role, '1')}}" stepKey="seeHeadingOptionsDuplicate"/>
-        <seeElement selector="{{PageBuilderActionsSection.contentTypeRemove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsRemove"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="waitForHeadingInStageVisible" />
+        <moveMouseOver selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="onMouseOverHeadingStage"/>
+        <waitForElementVisible time="10" selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" stepKey="waitForOptionsMenu" />
+        <see selector="{{PageBuilderContentTypeOptionsMenu.contentTypeOptionsMenu(PageBuilderHeadingContentType.role)}}" userInput="{{PageBuilderHeadingContentType.name}}" stepKey="seeHeadingOptionMenuTitle"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeMove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsMove"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeEdit(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsEdit"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeDuplicate(PageBuilderHeadingContentType.role, '1')}}" stepKey="seeHeadingOptionsDuplicate"/>
+        <seeElement selector="{{PageBuilderContentTypeOptionsMenu.contentTypeRemove(PageBuilderHeadingContentType.role)}}" stepKey="seeHeadingOptionsRemove"/>
     </test>
     <test name="HeadingEditText">
         <annotations>
@@ -1057,7 +1057,7 @@
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage3"/>
         <!-- Verify Not In Stage -->
-        <dontSeeElementInDOM selector="{{PageBuilderActionsSection.contentTypeInStageByIndex(PageBuilderHeadingContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage"/>
+        <dontSeeElementInDOM selector="{{PageBuilderStage.contentTypeInStageByIndex(PageBuilderHeadingContentType.role, '1')}}" stepKey="dontSeeContentTypeInStage"/>
         <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront">
             <argument name="contentType" value="PageBuilderHeadingContentType"/>
         </actionGroup>

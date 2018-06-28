@@ -48,9 +48,9 @@
             <argument name="expectedPaddingTop" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
             <argument name="expectedPaddingBottom" value="PageBuilderAdvancedMarginsAndPaddingPropertyDefault"/>
         </actionGroup>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderColumnContentType.role,'1')}}" stepKey="actualStageInitialColumnHeight"/>
         <comment userInput="Validate Row Height adjusts to Column Height" stepKey="commentValidateRowHeightAdjustToColumn"/>
-        <executeJS function="{{PageBuilderActionsSection.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
+        <executeJS function="{{PageBuilderStage.computedHeightOnStage(PageBuilderRowContentType.role,'1')}}" stepKey="actualStageRowHeightWithColumns"/>
         <executeJS function="return Math.round({$actualStageInitialColumnHeight}+{{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingTop}}+{{PageBuilderAdvancedMarginsAndPaddingPropertyDefault.paddingBottom}})" stepKey="expectedRowHeightWithPaddingAndColumns"/>
         <assertEquals stepKey="assertRowHeightAdjustsToColumnHeight">
             <expectedResult type="variable">actualStageInitialColumnHeight</expectedResult>
@@ -124,7 +124,9 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
         <seeNumberOfElements selector="{{PageBuilderColumnSection.columnGroupColumns('1')}}" userInput="2" stepKey="seeElementColumn"/>
-        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
         <actionGroup ref="validateSlideOutPanelField" stepKey="seeAppearanceMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
         </actionGroup>
@@ -253,13 +255,12 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <seeElement selector="{{PageBuilderActionsSection.editForm}}" stepKey="seeEditForm"/>
+        <seeElement selector="{{EditPanelForm.editForm}}" stepKey="seeEditForm"/>
         <waitForLoadingMaskToDisappear stepKey="waitForLoadingMask"/>
-        <waitForElementNotVisible time="2" selector="{{PageBuilderColumnSection.editFormSpinner}}" stepKey="waitForSpinner" />
-        <waitForElementVisible time="2" selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="waitForEditFormClose"/>
-        <click selector="{{PageBuilderActionsSection.editFormClose}}" stepKey="clickEditFormClose"/>
-        <waitForElementNotVisible time="2" selector="{{PageBuilderActionsSection.editForm}}" stepKey="waitClose" />
-        <dontSeeElement selector="{{PageBuilderActionsSection.editForm}}" stepKey="dontSeeEditForm"/>
+        <waitForElementVisible time="2" selector="{{EditPanelForm.editFormClose}}" stepKey="waitForEditFormClose"/>
+        <click selector="{{EditPanelForm.editFormClose}}" stepKey="clickEditFormClose"/>
+        <waitForElementNotVisible time="2" selector="{{EditPanelForm.editForm}}" stepKey="waitClose" />
+        <dontSeeElement selector="{{EditPanelForm.editForm}}" stepKey="dontSeeEditForm"/>
     </test>
     <test name="ColumnSettingsAppearInAdmin">
         <annotations>
@@ -284,13 +285,14 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterAppearanceAlignmentProperty">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
@@ -348,9 +350,8 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty1">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty"/>
@@ -378,9 +379,8 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="2"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
@@ -440,9 +440,8 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearancePropertyBottom">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForSecondColumn">
@@ -452,18 +451,16 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearancePropertyCentered">
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForThirdColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty3">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings3"/>
         <actionGroup ref="saveCmsPage" stepKey="saveCmsPage"/>
@@ -510,9 +507,8 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
@@ -583,9 +579,8 @@
         <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanelForFirstColumn">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -615,10 +610,11 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty">
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="attachFileSlideOutProperty" stepKey="attachPageBuilderFile">
             <argument name="property" value="PageBuilderBackgroundImage_JPG"/>
@@ -670,9 +666,8 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty1">
             <argument name="property" value="PageBuilderBackgroundAppearanceProperty"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty1">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty1">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty.value"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty1">
             <argument name="property" value="PageBuilderBackgroundColorProperty_087E8B"/>
@@ -685,9 +680,8 @@
         <actionGroup ref="chooseVisualSelectOption" stepKey="enterBackgroundAppearanceProperty2">
             <argument name="property" value="PageBuilderBackgroundAppearancePropertyCentered"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty2">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty2">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty_300"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty_300.value"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelField" stepKey="enterBackgroundColorProperty2">
             <argument name="property" value="PageBuilderBackgroundColorProperty_FF5A5F"/>
@@ -697,9 +691,8 @@
             <argument name="contentType" value="PageBuilderColumnContentType"/>
             <argument name="contentTypeIndex" value="3"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldAlternate" stepKey="enterMinHeightProperty3">
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterMinHeightProperty3">
             <argument name="property" value="PageBuilderAppearanceMinHeightProperty_200"/>
-            <argument name="input" value="PageBuilderAppearanceMinHeightProperty_200.value"/>
         </actionGroup>
         <comment userInput="I fill out color into Background Color using Color Picker" stepKey="comment"/>
         <actionGroup ref="fillOutColorPicker" stepKey="fillOutColor">
@@ -789,7 +782,7 @@
         <actionGroup ref="seeOptionIsSelectedSlideOutProperty" stepKey="validateBorder">
             <argument name="property" value="PageBuilderAdvancedBorderPropertyNone"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedBorderColorDefaultProperty.section, PageBuilderAdvancedBorderColorDefaultProperty.fieldName)}}" stepKey="getBorderColor"/>
         <assertEmpty actual="getBorderColor" actualType="variable" message="Text field has text: $getBorderColor" stepKey="assertBorderColor"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderWidth">
             <argument name="property" value="PageBuilderAdvancedBorderWidthPropertyDefault"/>
@@ -797,7 +790,7 @@
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="validateBorderRadius">
             <argument name="property" value="PageBuilderAdvancedBorderRadiusDefaultProperty"/>
         </actionGroup>
-        <grabValueFrom selector="{{PageBuilderColumnSection.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderAdvancedCssClassesDefaultProperty.section, PageBuilderAdvancedCssClassesDefaultProperty.fieldName)}}" stepKey="getCssClasses"/>
         <assertEmpty actual="getCssClasses" actualType="variable" message="Text field was not empty. Had text: $getCssClasses" stepKey="assertCssClasses"/>
         <actionGroup ref="seeInMarginFieldsSlideOutPanel" stepKey="validateMargins">
             <argument name="property" value="PageBuilderMarginsPropertyDefault"/>
@@ -1037,7 +1030,9 @@
         <actionGroup ref="dragContentTypeToStage" stepKey="dragColumnIntoStage">
             <argument name="contentType" value="PageBuilderColumnContentType"/>
         </actionGroup>
-        <actionGroup ref="openPageBuilderEditColumnPanel" stepKey="openEditPanel"/>
+        <actionGroup ref="openPageBuilderEditPanelByIndex" stepKey="openEditPanel">
+            <argument name="contentType" value="PageBuilderColumnContentType"/>
+        </actionGroup>
 
         <!--Upload image from local machine using image placeholder button-->
         <actionGroup ref="attachFileSlideOutPropertyGeneral" stepKey="attachImageFile1">

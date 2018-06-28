@@ -10,6 +10,7 @@ import events from "uiEvents";
 import Config from "../../config";
 import ContentTypeInterface from "../../content-type";
 import ContentTypeConfigInterface from "../../content-type-config";
+import ContentTypeDroppedCreateEventParamsInterface from "../content-type-dropped-create-event-params";
 import ObservableUpdater from "../observable-updater";
 import BasePreview from "../preview";
 
@@ -41,8 +42,8 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         // When a products type is dropped for the first time open the edit panel
-        events.on("products:contentType:dropped:create", (event: Event, params: { [key: string]: any }) => {
-            if (event.id === this.parent.id) {
+        events.on("products:contentType:dropped:create", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+            if (args.id === this.parent.id) {
                 setTimeout(() => {
                     this.edit.open();
                 }, 300);

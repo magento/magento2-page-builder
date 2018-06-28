@@ -29,7 +29,7 @@ class Reader extends \Magento\Framework\Config\Reader\Filesystem
             => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/style_properties/static_property'
             => 'source',
-        self::TYPE_PATH . '/additional_data/arguments' => 'name',
+        self::TYPE_PATH . '/additional_data/item' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attributes/attribute' => 'name',
         self::TYPE_PATH . '/appearances/appearance/data_mapping/elements/element/attributes/complex_attribute'
             => 'name',
