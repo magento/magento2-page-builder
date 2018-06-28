@@ -17,6 +17,7 @@ define([
         id: null,
         meta: {},
         errorMessage: null,
+        displayMetadata: true,
         messages: {
             UNKOWN_ERROR: $t('Sorry, there was an error getting requested content. ' +
                 'Please contact the store owner.'),
@@ -51,7 +52,7 @@ define([
          */
         initObservable: function () {
             return this._super()
-                .observe('id meta errorMessage');
+                .observe('id meta errorMessage displayMetadata');
         },
 
         /**
