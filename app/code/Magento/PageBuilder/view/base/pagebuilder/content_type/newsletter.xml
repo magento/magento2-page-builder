@@ -7,13 +7,15 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="newsletter" sortOrder="30" translate="label">
-            <label>Newsletter</label>
-            <icon>icon-pagebuilder-newsletter</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/content-type/newsletter/preview</preview_component>
-            <form>pagebuilder_newsletter_form</form>
-            <group>interactive</group>
+        <type name="newsletter"
+              label="Newsletter"
+              component="Magento_PageBuilder/js/content-type"
+              preview_component="Magento_PageBuilder/js/content-type/newsletter/preview"
+              form="pagebuilder_newsletter_form"
+              group="interactive"
+              icon="icon-pagebuilder-newsletter"
+              sortOrder="30"
+              translate="label">
             <backend_block>Magento\Newsletter\Block\Subscribe</backend_block>
             <backend_template>Magento_PageBuilder::content_type/newsletter.phtml</backend_template>
             <allowed_parents>
@@ -22,7 +24,11 @@
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="default">
+                <appearance default="true"
+                            name="default"
+                            preview_template="Magento_PageBuilder/content-type/newsletter/default/preview"
+                            render_template="Magento_PageBuilder/content-type/newsletter/default/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -32,7 +38,8 @@
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -47,9 +54,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/newsletter/default/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/newsletter/default/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

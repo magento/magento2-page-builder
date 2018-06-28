@@ -7,21 +7,27 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="buttons" sortOrder="40" translate="label">
-            <label>Buttons</label>
-            <icon>icon-pagebuilder-button</icon>
-            <component>Magento_PageBuilder/js/content-type-collection</component>
-            <preview_component>Magento_PageBuilder/js/content-type/buttons/preview</preview_component>
-            <master_component>Magento_PageBuilder/js/content-type/master-collection</master_component>
-            <form>pagebuilder_buttons_form</form>
-            <group>general</group>
+        <type name="buttons"
+              label="Buttons"
+              component="Magento_PageBuilder/js/content-type-collection"
+              preview_component="Magento_PageBuilder/js/content-type/buttons/preview"
+              master_component="Magento_PageBuilder/js/content-type/master-collection"
+              form="pagebuilder_buttons_form"
+              group="general"
+              icon="icon-pagebuilder-button"
+              sortOrder="40"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance default="true" name="inline">
+                <appearance default="true"
+                            name="inline"
+                            preview_template="Magento_PageBuilder/content-type/buttons/inline/preview"
+                            render_template="Magento_PageBuilder/content-type/buttons/inline/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -32,7 +38,8 @@
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <static_property source="display" value="inline-block"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -42,11 +49,11 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/buttons/inline/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/buttons/inline/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance name="stacked">
+                <appearance name="stacked"
+                            preview_template="Magento_PageBuilder/content-type/buttons/inline/preview"
+                            render_template="Magento_PageBuilder/content-type/buttons/inline/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -58,7 +65,8 @@
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
                                     <static_property source="display" value="flex"/>
                                     <static_property source="flex_direction" value="column"/>
-                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins-and-paddings" converter="Magento_PageBuilder/js/converter/style/margins-and-paddings"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
+                                    <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/paddings" converter="Magento_PageBuilder/js/converter/style/paddings"/>
                                 </style_properties>
                                 <attributes>
                                     <attribute name="name" source="data-role"/>
@@ -68,9 +76,6 @@
                             </element>
                         </elements>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/buttons/inline/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/buttons/inline/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
         </type>

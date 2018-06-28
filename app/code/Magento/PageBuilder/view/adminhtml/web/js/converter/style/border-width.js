@@ -34,7 +34,9 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      return data[name] + "px";
+      if (data[name]) {
+        return data[name] + "px";
+      }
     };
 
     return BorderWidth;

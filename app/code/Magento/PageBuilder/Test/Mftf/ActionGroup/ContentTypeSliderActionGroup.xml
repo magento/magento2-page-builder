@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /**
+  * Copyright © Magento, Inc. All rights reserved.
+  * See COPYING.txt for license details.
+  */
+-->
+
+<actionGroups xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/actionGroupSchema.xsd">
+    <actionGroup name="switchSlide">
+        <arguments>
+            <argument name="index" defaultValue="2" type="string"/>
+        </arguments>
+        <waitForElementVisible selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="waitForSliderButton"/>
+        <click selector="{{SliderOnFrontend.slideNavigator(index)}}" stepKey="clickSliderButton"/>
+        <waitForElementVisible selector="{{SlideOnFrontend.slide(index)}}" stepKey="waitForSlide"/>
+    </actionGroup>
+    <actionGroup name="unfocusSlideOptions">
+        <click selector="{{PageBuilderPanel.searchPanel}}" stepKey="clickOutsideLiveEdit"/>
+        <waitForPageLoad stepKey="waitForAnimation" time="30"/>
+        <waitForElementNotVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="dontSeeSlideOptionsEdit"/>
+    </actionGroup>
+    <actionGroup name="openSlideOptions">
+        <comment userInput="Open slide options" stepKey="commentOpen"/>
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
+        <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.firstSlideNavigationDot}}"/>
+        <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
+        <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentType"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForElementVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm" />
+        <see userInput="Edit Slide" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
+    </actionGroup>
+    <actionGroup name="openSlideOptionsByIndex">
+        <arguments>
+            <argument name="index" defaultValue="1" type="string"/>
+        </arguments>
+        <comment userInput="Open slide options by index" stepKey="commentOpenByIndex"/>
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
+        <click stepKey="clickNavigationDot" selector="{{SliderInAdmin.slideNavigationDot(index)}}"/>
+        <waitForElementVisible selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="waitForSlideOptionsEdit"/>
+        <click selector="{{SliderInAdmin.slideOptionsEdit}}" stepKey="clickEditContentType"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation" />
+        <waitForElementVisible time="5" selector="{{EditPanelForm.editForm}}" stepKey="waitForEditForm" />
+        <see userInput="Edit Slide" selector="{{EditPanelForm.editFormTitle}}" stepKey="seeContentTypeNameInEditFormTitle"/>
+    </actionGroup>
+    <actionGroup name="removeSlide">
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
+        <click selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="clickActiveSlideNavigationDot"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentTypeOptionsMenu"/>
+        <click selector="{{SliderInAdmin.slideOptionsRemove}}" stepKey="clickRemoveContentType"/>
+        <wait time="0.5" stepKey="waitForRemovalAnimation" />
+    </actionGroup>
+    <actionGroup name="duplicateSlide">
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentBlockInStageVisible" />
+        <click selector="{{SliderInAdmin.activeSlideNavigationDot}}" stepKey="clickActiveSlideNavigationDot"/>
+        <seeElement selector="{{SliderInAdmin.slideOptions}}" stepKey="seeContentBlockOptionsMenu"/>
+        <click selector="{{SliderInAdmin.slideOptionsDuplicate}}" stepKey="clickRemoveContentBlock"/>
+    </actionGroup>
+    <actionGroup name="addSlide">
+        <waitForElementVisible time="10" selector="{{SliderInAdmin.sliderContainer}}" stepKey="waitForContentTypeInStageVisible" />
+        <click stepKey="focusOnSlider" selector="{{SliderInAdmin.sliderContainer}}"/>
+        <scrollTo selector="div.pagebuilder-header" x="0" y="-100" stepKey="scrollToTop"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderContainer}}" x="10" y="10" stepKey="onMouseOverContentTypeStage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <waitForElementVisible time="5" selector="{{SliderInAdmin.sliderOptions}}" stepKey="seeContentTypeOptionsMenu"/>
+        <moveMouseOver selector="{{SliderInAdmin.sliderOptions}}" stepKey="onMouseOverOptionsMenu"/>
+        <click selector="{{SliderInAdmin.addNewSlide}}" stepKey="clickAddNewSlideChild"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForAnimation"/>
+    </actionGroup>
+</actionGroups>

@@ -38,7 +38,7 @@ define([], function () {
 
 
     _proto.toDom = function toDom(name, data) {
-      if (data[name]) {
+      if (data[name] && data[name] !== "_default") {
         return data[name].toString();
       }
     };

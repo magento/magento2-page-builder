@@ -3,7 +3,7 @@
  * See COPYING.txt for license details.
  */
 
-import PropertyReaderInterface from "./property-reader-interface";
+import {PropertyReaderInterface} from "./property-reader-interface";
 /**
  * @api
  */

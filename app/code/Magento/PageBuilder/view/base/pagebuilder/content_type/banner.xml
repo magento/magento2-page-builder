@@ -7,20 +7,25 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
     <content_types>
-        <type name="banner" sortOrder="1" translate="label">
-            <label>Banner</label>
-            <icon>icon-pagebuilder-image</icon>
-            <component>Magento_PageBuilder/js/content-type</component>
-            <preview_component>Magento_PageBuilder/js/content-type/banner/preview</preview_component>
-            <form>pagebuilder_banner_form</form>
-            <group>media</group>
+        <type name="banner"
+              label="Banner"
+              component="Magento_PageBuilder/js/content-type"
+              preview_component="Magento_PageBuilder/js/content-type/banner/preview"
+              form="pagebuilder_banner_form"
+              group="media"
+              icon="icon-pagebuilder-image"
+              sortOrder="1"
+              translate="label">
             <allowed_parents>
                 <parent name="row"/>
                 <parent name="column"/>
                 <parent name="tab-item"/>
             </allowed_parents>
             <appearances>
-                <appearance name="collage-left">
+                <appearance name="collage-left"
+                            preview_template="Magento_PageBuilder/content-type/banner/collage-left/preview"
+                            render_template="Magento_PageBuilder/content-type/banner/collage-left/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -29,6 +34,7 @@
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="display" source="display" virtual="true" preview_converter="Magento_PageBuilder/js/content-type/banner/converter/style/preview/display" converter="Magento_PageBuilder/js/content-type/banner/converter/style/display"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                                 </style_properties>
                                 <attributes>
@@ -108,11 +114,11 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/banner/collage-left/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/banner/collage-left/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance name="collage-centered">
+                <appearance name="collage-centered"
+                            preview_template="Magento_PageBuilder/content-type/banner/collage-centered/preview"
+                            render_template="Magento_PageBuilder/content-type/banner/collage-centered/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -121,6 +127,7 @@
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="display" source="display" virtual="true" preview_converter="Magento_PageBuilder/js/content-type/banner/converter/style/preview/display" converter="Magento_PageBuilder/js/content-type/banner/converter/style/display"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                                 </style_properties>
                                 <attributes>
@@ -200,11 +207,11 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/banner/collage-centered/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/banner/collage-centered/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance name="collage-right">
+                <appearance name="collage-right"
+                            preview_template="Magento_PageBuilder/content-type/banner/collage-right/preview"
+                            render_template="Magento_PageBuilder/content-type/banner/collage-right/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -213,6 +220,7 @@
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="display" source="display" virtual="true" preview_converter="Magento_PageBuilder/js/content-type/banner/converter/style/preview/display" converter="Magento_PageBuilder/js/content-type/banner/converter/style/display"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                                 </style_properties>
                                 <attributes>
@@ -292,11 +300,12 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/banner/collage-right/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/banner/collage-right/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
-                <appearance default="true" name="poster">
+                <appearance default="true"
+                            name="poster"
+                            preview_template="Magento_PageBuilder/content-type/banner/poster/preview"
+                            render_template="Magento_PageBuilder/content-type/banner/poster/master"
+                            reader="Magento_PageBuilder/js/master-format/read/configurable">
                     <data_mapping>
                         <elements>
                             <element name="main" path=".">
@@ -305,6 +314,7 @@
                                     <property name="border_color" source="border_color" converter="Magento_PageBuilder/js/converter/style/color"/>
                                     <property name="border_width" source="border_width" converter="Magento_PageBuilder/js/converter/style/border-width"/>
                                     <property name="border_radius" source="border_radius" converter="Magento_PageBuilder/js/converter/style/remove-px"/>
+                                    <property name="display" source="display" virtual="true" preview_converter="Magento_PageBuilder/js/content-type/banner/converter/style/preview/display" converter="Magento_PageBuilder/js/content-type/banner/converter/style/display"/>
                                     <complex_property name="margins_and_padding" reader="Magento_PageBuilder/js/property/margins" converter="Magento_PageBuilder/js/converter/style/margins"/>
                                 </style_properties>
                                 <attributes>
@@ -382,13 +392,10 @@
                             </converter>
                         </converters>
                     </data_mapping>
-                    <preview_template>Magento_PageBuilder/content-type/banner/poster/preview</preview_template>
-                    <render_template>Magento_PageBuilder/content-type/banner/poster/master</render_template>
-                    <reader>Magento_PageBuilder/js/master-format/read/configurable</reader>
                 </appearance>
             </appearances>
             <additional_data>
-                <arguments name="uploaderConfig" xsi:type="array">
+                <item name="uploaderConfig" xsi:type="array">
                     <item name="isShowImageUploadInstructions" xsi:type="boolean">false</item>
                     <item name="isShowImageUploadOptions" xsi:type="boolean">true</item>
                     <item name="maxFileSize" xsi:type="object">Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\MaxFileSize</item>
@@ -414,7 +421,7 @@
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
-                </arguments>
+                </item>
             </additional_data>
         </type>
     </content_types>

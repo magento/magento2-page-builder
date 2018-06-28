@@ -53,10 +53,10 @@ define([], function () {
       }
 
       if (value && undefined !== value.margin) {
-        result.marginLeft = value.margin.left + "px";
-        result.marginTop = value.margin.top + "px";
-        result.marginRight = value.margin.right + "px";
-        result.marginBottom = value.margin.bottom + "px";
+        result.marginLeft = value.margin.left ? value.margin.left + "px" : "";
+        result.marginTop = value.margin.top ? value.margin.top + "px" : "";
+        result.marginRight = value.margin.right ? value.margin.right + "px" : "";
+        result.marginBottom = value.margin.bottom ? value.margin.bottom + "px" : "";
       }
 
       return result;
