@@ -11,6 +11,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Load EAV data from an array of structural item data
+ *
  * @api
  */
 interface EavAttributeLoaderInterface
@@ -22,5 +23,5 @@ interface EavAttributeLoaderInterface
      * @return array
      * @throws NoSuchEntityException
      */
-    public function load($entityId);
+    public function load(int $entityId) : array;
 }

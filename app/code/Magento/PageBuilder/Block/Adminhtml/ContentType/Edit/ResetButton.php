@@ -11,6 +11,7 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
  * Reset button on edit panel for Content Type
+ *
  * @api
  */
 class ResetButton implements ButtonProviderInterface

@@ -10,7 +10,7 @@ namespace Magento\PageBuilder\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
-class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuilder\Model\Config\ConfigInterface
+class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuilder\Model\ConfigInterface
 {
     const IS_PAGEBUILDER_ENABLED = 'cms/pagebuilder/enabled';
 

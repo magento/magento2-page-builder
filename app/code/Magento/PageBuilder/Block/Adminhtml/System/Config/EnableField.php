@@ -11,6 +11,7 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 
 /**
  * Class EnableField renders modal window if disable PB in System Configuration
+ *
  * @api
  */
 class EnableField extends \Magento\Config\Block\System\Config\Form\Field

@@ -5,6 +5,7 @@
 
 import $ from "jquery";
 import ko from "knockout";
+import $t from "mage/translate";
 import events from "uiEvents";
 import _ from "underscore";
 import "./binding/draggable";
@@ -12,6 +13,8 @@ import Config from "./config";
 import ContentTypeConfigInterface from "./content-type-config.d";
 import {hideDropIndicators, showDropIndicators} from "./drag-drop/drop-indicators";
 import {setDraggedContentTypeConfig} from "./drag-drop/registry";
+import PageBuilder from "./page-builder";
+import PanelInterface from "./panel.d";
 import {Group} from "./panel/group";
 import {ContentType as GroupContentType} from "./panel/group/content-type";
 

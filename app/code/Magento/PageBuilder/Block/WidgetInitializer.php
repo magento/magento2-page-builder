@@ -12,6 +12,7 @@ use Magento\Framework\View\Element\Template;
 
 /**
  * Class WidgetInitializer provides configuration for content types widgets need to be loaded on frontend
+ *
  * @api
  */
 class WidgetInitializer extends Template

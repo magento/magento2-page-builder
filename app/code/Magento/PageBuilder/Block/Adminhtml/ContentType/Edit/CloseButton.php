@@ -11,6 +11,7 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
  * Close button on edit panel for Content Type
+ *
  * @api
  */
 class CloseButton implements ButtonProviderInterface

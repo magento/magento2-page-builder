@@ -8,6 +8,7 @@ namespace Magento\PageBuilder\Setup\DataConverter;
 
 /**
  * Render children for current content type
+ *
  * @api
  */
 interface ChildrenRendererInterface
@@ -20,5 +21,5 @@ interface ChildrenRendererInterface
      *
      * @return string
      */
-    public function render(array $children, $renderChildCallback);
+    public function render(array $children, $renderChildCallback) : string;
 }

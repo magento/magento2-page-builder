@@ -12,6 +12,7 @@ use Magento\Framework\UrlInterface;
 
 /**
  * Class Config
+ *
  * @api
  */
 class Config
@@ -20,7 +21,7 @@ class Config
     const DEFAULT_MASTER_COMPONENT = 'Magento_PageBuilder/js/content-type/master';
 
     /**
-     * @var \Magento\PageBuilder\Model\Config\ConfigInterface
+     * @var \Magento\PageBuilder\Model\ConfigInterface
      */
     private $config;
 
@@ -52,7 +53,7 @@ class Config
     /**
      * Constructor
      *
-     * @param \Magento\PageBuilder\Model\Config\ConfigInterface $config
+     * @param \Magento\PageBuilder\Model\ConfigInterface $config
      * @param Config\UiComponentConfig $uiComponentConfig
      * @param \Magento\Framework\UrlInterface $urlBuilder
      * @param \Magento\Framework\Url $frontendUrlBuilder
@@ -60,7 +61,7 @@ class Config
      * @param array $data
      */
     public function __construct(
-        \Magento\PageBuilder\Model\Config\ConfigInterface $config,
+        \Magento\PageBuilder\Model\ConfigInterface $config,
         Config\UiComponentConfig $uiComponentConfig,
         \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Framework\Url $frontendUrlBuilder,

@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Model\Source;
 
 /**
  * Prepares options for Visual Select component
+ *
  * @api
  */
 class VisualSelect implements \Magento\Framework\Data\OptionSourceInterface

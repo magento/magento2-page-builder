@@ -9,6 +9,7 @@ namespace Magento\PageBuilder\Block\Element;
 
 /**
  * Class Editor add logic to render PB instead of wysiwyg editor
+ *
  * @api
  */
 class Editor extends \Magento\Framework\Data\Form\Element\Editor

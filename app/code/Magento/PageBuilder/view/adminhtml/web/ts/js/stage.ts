@@ -9,16 +9,17 @@ import "Magento_PageBuilder/js/resource/jquery/ui/jquery.ui.touch-punch.min";
 import alertDialog from "Magento_Ui/js/modal/alert";
 import events from "uiEvents";
 import _ from "underscore";
+import Collection from "./collection";
+import ContentTypeConfigInterface from "./content-type-config";
 import ContentTypeRemovedParamsInterface from "./content-type-removed-params.d";
 import ContentTypeInterface from "./content-type.d";
+import DataStore from "./data-store";
 import {generateAllowedParents} from "./drag-drop/matrix";
 import {getSortableOptions} from "./drag-drop/sortable";
+import Render from "./master-format/render";
 import PageBuilderInterface from "./page-builder.d";
 import buildStage from "./stage-builder";
 
-/**
- * @api
- */
 export default class Stage {
     public parent: PageBuilderInterface;
     public id: string;

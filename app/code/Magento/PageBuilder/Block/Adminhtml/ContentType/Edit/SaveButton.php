@@ -11,6 +11,7 @@ use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 /**
  * Save button on edit panel for Content Type
+ *
  * @api
  */
 class SaveButton implements ButtonProviderInterface

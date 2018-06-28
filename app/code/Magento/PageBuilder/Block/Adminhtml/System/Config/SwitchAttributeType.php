@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Block\Adminhtml\System\Config;
 
 /**
  * Class SwitchAttributeType renders modal window to confirm changing attribute type
+ *
  * @api
  */
 class SwitchAttributeType extends \Magento\Config\Block\System\Config\Form\Field

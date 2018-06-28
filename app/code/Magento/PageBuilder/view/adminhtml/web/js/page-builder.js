@@ -4,10 +4,6 @@ define(["knockout", "mageUtils", "uiEvents", "underscore", "Magento_PageBuilder/
    * Copyright © Magento, Inc. All rights reserved.
    * See COPYING.txt for license details.
    */
-
-  /**
-   * @api
-   */
   var PageBuilder =
   /*#__PURE__*/
   function () {

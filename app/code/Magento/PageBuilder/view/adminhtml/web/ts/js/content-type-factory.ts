@@ -86,7 +86,6 @@ function prepareData(config, data: {}) {
  *
  * @param {ContentType} contentType
  * @param {number} childrenLength
- * @api
  */
 function fireContentTypeReadyEvent(contentType: ContentTypeInterface, childrenLength: number) {
     const fire = () => {

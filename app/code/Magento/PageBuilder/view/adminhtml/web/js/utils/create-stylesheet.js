@@ -26,7 +26,6 @@ define([], function () {
    *
    * @param {StyleBlock} block
    * @returns {string}
-   * @api
    */
 
 
@@ -41,7 +40,6 @@ define([], function () {
    * @param {string} property
    * @param {string | number} value
    * @returns {string}
-   * @api
    */
 
 
@@ -53,7 +51,6 @@ define([], function () {
    *
    * @param {string} property
    * @returns {string}
-   * @api
    */
 
 

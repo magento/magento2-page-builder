@@ -10,6 +10,7 @@ namespace Magento\PageBuilder\Model\Config\ContentType\AdditionalData;
 
 /**
  * Provides runtime-specific data for additional data content types configuration
+ *
  * @api
  */
 interface ProviderInterface

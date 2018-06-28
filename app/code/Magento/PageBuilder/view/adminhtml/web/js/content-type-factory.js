@@ -79,7 +79,6 @@ define(["Magento_PageBuilder/js/loader", "uiEvents", "underscore", "Magento_Page
    *
    * @param {ContentType} contentType
    * @param {number} childrenLength
-   * @api
    */
 
 

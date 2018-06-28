@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Setup\DataConverter\Renderer;
 
 use Magento\PageBuilder\Setup\DataConverter\RendererInterface;
@@ -32,7 +34,7 @@ class Column implements RendererInterface
     /**
      * {@inheritdoc}
      */
-    public function render(array $itemData, array $additionalData = [])
+    public function render(array $itemData, array $additionalData = []) : string
     {
         if (!isset($itemData['formData']['width'])) {
             throw new \InvalidArgumentException('Width is required to migrate column.');
@@ -72,7 +74,7 @@ class Column implements RendererInterface
      *
      * @return string
      */
-    private function calculateColumnWidth($oldWidth)
+    private function calculateColumnWidth($oldWidth) : string
     {
         // Map column sizes to suitable sizes for columns we don't yet support
         if (isset(self::COLUMN_WIDTH_MAPPING[$oldWidth])) {

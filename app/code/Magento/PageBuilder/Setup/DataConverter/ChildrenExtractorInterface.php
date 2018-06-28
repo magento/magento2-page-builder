@@ -9,6 +9,7 @@ namespace Magento\PageBuilder\Setup\DataConverter;
 
 /**
  * Extract children data from content type data
+ *
  * @api
  */
 interface ChildrenExtractorInterface
@@ -19,5 +20,5 @@ interface ChildrenExtractorInterface
      * @param array $data
      * @return array
      */
-    public function extract(array $data);
+    public function extract(array $data) : array;
 }

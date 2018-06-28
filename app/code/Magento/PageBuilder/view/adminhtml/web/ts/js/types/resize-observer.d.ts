@@ -3,9 +3,6 @@
  * See COPYING.txt for license details.
  */
 
-/**
- * @api
- */
 interface DOMRectReadOnly {
     readonly x: number;
     readonly y: number;
@@ -19,17 +16,11 @@ interface DOMRectReadOnly {
 
 type ResizeObserverCallback = (entries: ResizeObserverEntry[], observer: ResizeObserver) => void;
 
-/**
- * @api
- */
 interface ResizeObserverEntry {
     readonly target: Element;
     readonly contentRect: DOMRectReadOnly;
 }
 
-/**
- * @api
- */
 interface ResizeObserver {
     observe(target: Element): void;
     unobserve(target: Element): void;

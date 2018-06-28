@@ -10,7 +10,7 @@ use Magento\Framework\Model\AbstractModel;
 class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
 {
     /**
-     * @var \Magento\PageBuilder\Model\Config\ConfigInterface
+     * @var \Magento\PageBuilder\Model\ConfigInterface
      */
     private $configInterface;
 
@@ -20,14 +20,14 @@ class Attribute extends \Magento\Eav\Model\ResourceModel\Entity\Attribute
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Eav\Model\ResourceModel\Entity\Type $eavEntityType
-     * @param \Magento\PageBuilder\Model\Config\ConfigInterface $configInterface
+     * @param \Magento\PageBuilder\Model\ConfigInterface $configInterface
      * @param string|null $connectionName
      */
     public function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Eav\Model\ResourceModel\Entity\Type $eavEntityType,
-        \Magento\PageBuilder\Model\Config\ConfigInterface $configInterface,
+        \Magento\PageBuilder\Model\ConfigInterface $configInterface,
         $connectionName = null
     ) {
         $this->configInterface = $configInterface;

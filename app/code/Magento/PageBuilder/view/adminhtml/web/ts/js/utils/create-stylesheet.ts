@@ -29,7 +29,6 @@ export function createStyleSheet(blocks: StyleBlocks) {
  *
  * @param {StyleBlock} block
  * @returns {string}
- * @api
  */
 function processDeclarationBlock(block: StyleBlock) {
     return Object.keys(block).map((property) => {
@@ -43,7 +42,6 @@ function processDeclarationBlock(block: StyleBlock) {
  * @param {string} property
  * @param {string | number} value
  * @returns {string}
- * @api
  */
 function processDeclaration(property: string, value: string | number) {
     return hyphenate(property) + `: ${value};`;
@@ -54,7 +52,6 @@ function processDeclaration(property: string, value: string | number) {
  *
  * @param {string} property
  * @returns {string}
- * @api
  */
 function hyphenate(property: string) {
     return property.replace(/[A-Z]/g, (match) => {

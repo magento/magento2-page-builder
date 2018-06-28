@@ -3,6 +3,8 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
+declare(strict_types=1);
+
 namespace Magento\PageBuilder\Component\Form\Element;
 
 use Magento\Framework\Data\FormFactory;
@@ -13,6 +15,11 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\PageBuilder\Model\State as PageBuilderState;
 use \Magento\PageBuilder\Model\Stage\Config as Config;
 
+/**
+ * Updates wysiwyg element with Page Builder specific config
+ *
+ * @api
+ */
 class Wysiwyg extends \Magento\Ui\Component\Form\Element\Wysiwyg
 {
     /**
