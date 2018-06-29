@@ -17,6 +17,9 @@ import BasePreview from "../preview";
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
+    private lastBlockId: number;
+    private lastTemplate: string;
+    private lastRenderedHtml: string;
     private messages = {
         NOT_SELECTED: $t("Empty Block"),
         LOADING: $t("Loading..."),
@@ -57,16 +60,28 @@ export default class Preview extends BasePreview {
     protected afterObservablesUpdated(): void {
         super.afterObservablesUpdated();
 
-        this.placeholderText(this.messages.LOADING);
-        this.displayPreview(false);
-
         const data = this.parent.dataStore.get();
+
+        // Only load if something changed
+        if (this.lastBlockId === data.block_id && this.lastTemplate === data.template) {
+            // The mass converter will have transformed the HTML property into a directive
+            if (this.lastRenderedHtml) {
+                this.data.main.html(this.lastRenderedHtml);
+                this.displayPreview(true);
+            }
+
+            return;
+        }
+
+        this.displayPreview(false);
 
         if (!data.block_id || data.template.length === 0) {
             this.placeholderText(this.messages.NOT_SELECTED);
 
             return;
         }
+
+        this.placeholderText(this.messages.LOADING);
 
         const url = Config.getConfig("preview_url");
         const requestConfig = {
@@ -99,6 +114,10 @@ export default class Preview extends BasePreview {
                 } else if (response.data.error) {
                     this.placeholderText(response.data.error);
                 }
+
+                this.lastBlockId = data.block_id;
+                this.lastTemplate = data.template;
+                this.lastRenderedHtml = response.data.content;
             })
             .fail(() => {
                 this.placeholderText(this.messages.UNKNOWN_ERROR);
