@@ -6,6 +6,6 @@
 /**
  * @api
  */
-export interface AllowedParents {
+export interface AllowedParentsInterface {
     [key: string]: string[];
 }

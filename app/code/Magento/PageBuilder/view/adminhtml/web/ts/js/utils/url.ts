@@ -8,7 +8,6 @@
  *
  * @param {String} url
  * @returns {Boolean}
- * @api
  */
 function isPathOnly(url: string): boolean {
     return url.indexOf("/") === 0;
@@ -19,7 +18,6 @@ function isPathOnly(url: string): boolean {
  *
  * @param {String} url
  * @returns {String}
- * @api
  */
 function getPathFromUrl(url: string): string {
     const a = document.createElement("a");
