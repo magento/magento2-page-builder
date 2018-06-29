@@ -20,9 +20,10 @@
         <element name="modalX" type="button" selector=".modal-popup button.action-close"/>
         <!-- It's safer to click the label, as Selenium will complain if it's not clicking the exact element -->
         <element name="modalDoNotShowThisAgain" type="input" selector=".modal-popup input[name='modal-dnsa'] + label"/>
+        <element name="errorModal" type="button" selector="//div[@class='modal-content']//div[contains(text(), '{{arg1}}')]" parameterized="true"/>
         <element name="dropAreaInStage" type="button" selector='(//div[contains(@class, "type-container") and contains(@class, "pagebuilder-row")])[1]//div[contains(@class,"pagebuilder-empty-container")][1]'/>
         <element name="dropZone" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}]//div[contains(@class,"pagebuilder-drop-indicator")][{{arg3}}]' parameterized="true"/>
-        <element name="contentTypeInStage" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[1]' parameterized="true"/>
+        <element name="contentTypeInStage" type="button" selector='//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")]' parameterized="true"/>
         <element name="contentTypeInStageByIndex" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]' parameterized="true"/>
         <element name="contentTypeContainer" type="button" selector='(//div[contains(@class, "pagebuilder-content-type") and contains(@class, "pagebuilder-{{arg1}}")])[{{arg2}}]/descendant::div[contains(@class, "element-children")]' parameterized="true"/>
         <element name="contentTypeInsideContainerStage" type="button" selector='(//div[contains(@class, "{{arg1}}-container")])[{{arg2}}]//div[contains(@class,"pagebuilder-content-type-wrapper")][{{arg3}}]//div[contains(@class,"pagebuilder-{{arg4}}")][{{arg5}}]' parameterized="true"/>

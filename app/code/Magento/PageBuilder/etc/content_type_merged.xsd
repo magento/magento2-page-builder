@@ -129,7 +129,7 @@
             <xs:element type="css" name="css" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name" use="required"/>
-        <xs:attribute type="xs:string" name="path" use="required"/>
+        <xs:attribute type="xs:string" name="path" use="optional"/>
     </xs:complexType>
     <xs:complexType name="style_properties">
         <xs:choice maxOccurs="unbounded">
@@ -161,6 +161,7 @@
     <xs:complexType name="static_property">
         <xs:attribute type="xs:string" name="source" use="required"/>
         <xs:attribute type="xs:string" name="value" use="required"/>
+        <xs:attribute type="xs:string" name="persist" use="optional"/>
     </xs:complexType>
     <xs:complexType name="attributes">
         <xs:choice maxOccurs="unbounded">

@@ -29,7 +29,7 @@
     }
 
     &.type-container {
-        outline: 1px solid rgba(153, 153, 153, .3);
+        box-shadow: 0 0 0 1px rgba(153, 153, 153, .3);
     }
 
     .pagebuilder-empty-container {
@@ -195,26 +195,26 @@
 }
 
 .pagebuilder-system-border {
-    -moz-transition: outline 200ms ease 200ms;
-    -o-transition: outline 200ms ease 200ms;
-    -webkit-transition: outline 200ms ease 200ms;
+    -moz-transition: box-shadow 200ms ease 200ms;
+    -o-transition: box-shadow 200ms ease 200ms;
+    -webkit-transition: box-shadow 200ms ease 200ms;
     border: 1px solid transparent;
+    box-shadow: 0 0 0 1px rgba(153, 153, 153, 0);
     box-sizing: border-box;
-    outline: 1px solid rgba(153, 153, 153, 0);
     position: relative;
-    transition: outline 200ms ease 200ms;
+    transition: box-shadow 200ms ease 200ms;
     z-index: 10;
 }
 .pagebuilder-system-border-hover {
-    -moz-transition: outline 200ms ease 200ms;
-    -o-transition: outline 200ms ease 200ms;
-    -webkit-transition: outline 200ms ease 200ms;
-    outline: 1px solid rgb(153, 153, 153);
-    transition: outline 200ms ease 200ms;
+    -moz-transition: box-shadow 200ms ease 200ms;
+    -o-transition: box-shadow 200ms ease 200ms;
+    -webkit-transition: box-shadow 200ms ease 200ms;
+    box-shadow: 0 0 0 1px rgb(153, 153, 153);
+    transition: box-shadow 200ms ease 200ms;
     z-index: 25;
 
     &.type-container {
-        outline: 1px solid rgb(153, 153, 153);
+        box-shadow: 0 0 0 1px rgb(153, 153, 153);
     }
 }
 
@@ -280,11 +280,11 @@
 //  ______________________________________________________________________
 
 .pagebuilder-stage.interacting .pagebuilder-content-type.pagebuilder-content-type-active:hover {
-    outline: 1px solid rgba(153, 153, 153, 0);
+    box-shadow: 0 0 0 1px rgba(153, 153, 153, 0);
     z-index: 10;
 
     &.type-container {
-        outline: 1px solid rgba(153, 153, 153, .3);
+        box-shadow: 0 0 0 1px rgba(153, 153, 153, .3);
     }
 }
 
@@ -491,6 +491,18 @@
         .pagebuilder-options {
             display: block;
         }
+    }
+}
+
+//
+//  When we're focusing a child within the stage force containers to have auto z-index
+//  __________________________________________________________________
+
+.pagebuilder-stage.focus-child .pagebuilder-content-type {
+    z-index: auto;
+
+    .element-children {
+        z-index: auto;
     }
 }
 

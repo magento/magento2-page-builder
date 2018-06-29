@@ -80,7 +80,7 @@
                 border-right: 15px solid rgba(238, 238, 238, .5);
                 box-sizing: border-box;
                 height: 100%;
-                width: 16.66666667%;
+                width: 100%;
             }
         }
 
@@ -107,14 +107,24 @@
             }
         }
 
-        &.resizing {
+        &.grid-change {
+            animation-duration: 650ms;
+            animation-iteration-count: 1;
+            animation-name: box-shadow-flash;
+            animation-timing-function: ease-out;
+        }
+
+        &.resizing,
+        &.grid-form-open {
+            .pagebuilder-grid-size-indicator {
+                z-index: 100;
+            }
+
             .resize-grid {
                 opacity: 1;
                 transition: .5s opacity;
                 visibility: visible;
             }
-
-            .no-user-select;
 
             .pagebuilder-options {
                 display: none;
@@ -133,5 +143,220 @@
             position: relative;
             width: 100%;
         }
+    }
+}
+
+.pagebuilder-grid-panel {
+    -moz-transition: opacity 200ms, visibility 200ms, transform 200ms;
+    -o-transition: opacity 200ms, visibility 200ms, transform 200ms;
+    -webkit-transition: opacity 200ms, visibility 200ms, transform 200ms;
+    bottom: 28px;
+    opacity: 0;
+    position: absolute;
+    text-align: center;
+    transform: translate(-49%, 50%);
+    transition: opacity 200ms, visibility 200ms, transform 200ms;
+    visibility: hidden;
+    z-index: 30;
+
+    .grid-panel-wrapper {
+        background: @color-white;
+        border: 1px solid rgba(153, 153, 153, .7);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 2px 0 2px 5px;
+        z-index: 99;
+
+        .grid-panel-items {
+            background: @color-white;
+            display: flex;
+            list-style: none;
+            margin: 0;
+            vertical-align: middle;
+            z-index: 2;
+
+            .grid-panel-item {
+                vertical-align: top;
+
+                > .grid-panel-title {
+                    cursor: default;
+                    font-size: 14px;
+                    height: 36px;
+                    line-height: 36px;
+                    margin-right: 8px;
+                    padding: 0 0 0 4px;
+                    text-decoration: none;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+
+    &.grid-panel-error {
+        -moz-transition: none;
+        -o-transition: none;
+        -webkit-transition: none;
+        transition: none;
+
+        .grid-panel-wrapper {
+            padding-top: 6px;
+        }
+    }
+
+    &:after {
+        background: @color-white;
+        border-bottom: 1px solid rgba(153, 153, 153, .7);
+        border-right: 1px solid rgba(153, 153, 153, .7);
+        bottom: -6px;
+        content: '';
+        display: block;
+        height: 12px;
+        left: 50%;
+        position: absolute;
+        transform: rotate(45deg);
+        width: 12px;
+        z-index: 1;
+    }
+}
+
+.grid-panel-visible {
+    opacity: 1;
+    transform: translate(-49%, 0%);
+    visibility: visible;
+}
+
+.pagebuilder-grid-size-indicator {
+    background: @color-white;
+    border: 1px solid rgba(153, 153, 153, .4);
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column-reverse;
+    height: 18px;
+    position: absolute;
+    top: 14px;
+    transform: translateX(-50%);
+    vertical-align: center;
+    width: 18px;
+    z-index: 11;
+
+    .admin__control-text {
+        height: 89%;
+        margin: 0;
+        padding: 0 0 0 8px;
+        width: 30px;
+    }
+
+    .admin__field-error {
+        margin: 4px 0 6px 4px;
+        text-align: left;
+        width: 135px;
+    }
+
+    .grid-panel-field-error {
+        border: 1px solid @error_color;
+    }
+
+    .grid-panel-item-wrapper {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        margin-right: 8px;
+    }
+
+    .grid-panel-tooltip {
+        position: relative;
+        vertical-align: top;
+
+        &:after {
+            color: @color-pagebuilder-dark-gray;
+            content: '\e633';
+            display: inline-block;
+            font-family: 'Admin Icons';
+            font-size: 2.2rem;
+            font-weight: normal;
+            line-height: 24px;
+            overflow: hidden;
+            speak: none;
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+
+    .tooltip-content {
+        background: @color-lazy-sun;
+        border: 1px solid @color-dark-grayish-orange;
+        border-radius: 1px;
+        bottom: 175%;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
+        font-size: 14px;
+        left: -390%;
+        padding: .9rem 1.8rem;
+        position: absolute;
+        text-align: left;
+        transform: translateX(-50%);
+        visibility: hidden;
+        width: 290px;
+
+        &:before,
+        &:after {
+            border: 1.2rem solid transparent;
+            content: '';
+            display: block;
+            height: 0;
+            left: 87.5%;
+            margin-left: -.8rem;
+            position: absolute;
+            top: 100%;
+            width: 0;
+        }
+        &:before {
+            border-top-color: @color-dark-grayish-orange;
+            margin-top: 1px;
+            z-index: 3;
+        }
+        &:after {
+            border-top-color: @color-lazy-sun;
+            z-index: 4;
+        }
+    }
+
+    .grid-panel-tooltip:hover > .tooltip-content {
+        visibility: visible;
+    }
+
+    .indicator-wrapper {
+        height: 18px;
+        position: relative;
+        text-align: left;
+        width: 18px;
+
+        .icon-pagebuilder-grid-options {
+            color: rgba(153, 153, 153, .4);
+            font-size: 18px;
+            position: absolute;
+            top: -8px;
+        }
+    }
+
+    &:hover {
+        border: 1px solid rgba(153, 153, 153, .8);
+
+        .icon-pagebuilder-grid-options {
+            color: rgba(153, 153, 153, .8);
+        }
+    }
+}
+
+@keyframes box-shadow-flash {
+    0% {
+        box-shadow: 0 0 0 0 rgba(153, 153, 153, 0);
+    }
+    10% {
+        box-shadow: 0 0 0 4px rgba(153, 153, 153, .35);
+    }
+    100% {
+        box-shadow: 0 0 0 1px rgba(153, 153, 153, 0);
     }
 }

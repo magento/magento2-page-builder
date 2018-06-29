@@ -158,8 +158,8 @@
         <!-- Edit buttons -->
         <comment userInput="Edit Buttons" stepKey="commentEditButtons"/>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
             <argument name="property" value="PageBuilderButtonItemText_Common2"/>
@@ -998,11 +998,11 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-92369"/>
             <useCaseId value="MAGETWO-66361"/>
-            <group value="skip"/>
-            <!-- See MAGETWO-92586 for resolving skipped test-->
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
+            <!-- MC-1142 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1146,11 +1146,11 @@
             <severity value="CRITICAL"/>
             <testCaseId value="MAGETWO-92370"/>
             <useCaseId value="MAGETWO-66361"/>
-            <group value="skip"/>
-            <!-- See MAGETWO-92587 for resolving skipped test-->
             <group value="pagebuilder"/>
             <group value="pagebuilder-buttons"/>
             <group value="pagebuilder-buttonGroup"/>
+            <!-- MC-1143 -->
+            <group value="skip"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
@@ -1412,8 +1412,8 @@
             <argument name="index" value="2"/>
         </actionGroup>
         <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage2">
-            <argument name="contentType" value="PageBuilderButtonItemContentType"/>
-            <argument name="contentTypeIndex" value="1"/>
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
         </actionGroup>
         <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="fillButton1TextField">
             <argument name="property" value="PageBuilderButtonItemText_200Characters"/>

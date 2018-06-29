@@ -487,8 +487,8 @@ Attributes
 ## Slider
 
 ```
-<div class="pagebuilder-slider" data-role="slider" data-appearance="default" data-autoplay="0"
-     data-autoplay-speed="4000" data-fade="0" data-show-arrows="0" data-show-dots="1" style="...">
+<div class="pagebuilder-slider" data-role="slider" data-appearance="default" data-autoplay="false"
+     data-autoplay-speed="4000" data-fade="false" data-show-arrows="false" data-show-dots="true" style="...">
 ```
 
 Attributes
