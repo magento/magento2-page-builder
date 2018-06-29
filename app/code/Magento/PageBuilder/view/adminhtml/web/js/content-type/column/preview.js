@@ -45,7 +45,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _PreviewCollection.prototype.bindEvents.call(this);
 
       if (_config.getContentTypeConfig("column-group")) {
-        _events.on("column:createAfter", function (args) {
+        _events.on("column:dropAfter", function (args) {
           if (args.id === _this2.parent.id) {
             _this2.createColumnGroup();
           }
@@ -62,7 +62,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
     _proto.initColumn = function initColumn(element) {
       this.parent.element = (0, _jquery)(element);
 
-      _events.trigger("column:initElementAfter", {
+      _events.trigger("column:initializeAfter", {
         column: this.parent,
         element: (0, _jquery)(element),
         parent: this.parent.parent
@@ -92,7 +92,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.bindResizeHandle = function bindResizeHandle(handle) {
-      _events.trigger("column:bindResizeHandleAfter", {
+      _events.trigger("column:resizeHandleBindAfter", {
         column: this.parent,
         handle: (0, _jquery)(handle),
         parent: this.parent.parent

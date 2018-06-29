@@ -176,9 +176,9 @@ export default class Preview {
      * @deprecated
      */
     public afterChildrenRender(element: Element): void {
-        events.trigger("contentType:childrenRendered", {id: this.parent.id, contentType: this.parent, element});
+        events.trigger("contentType:childrenRenderAfter", {id: this.parent.id, contentType: this.parent, element});
         events.trigger(
-            this.parent.config.name + ":contentType:childrenRendered",
+            this.parent.config.name + ":childrenRenderAfter",
             {
                 contentType: this.parent,
                 element,
@@ -199,9 +199,9 @@ export default class Preview {
         if (elementNodes.length > 0) {
             const element = elementNodes[0];
             this.wrapperElement = element;
-            events.trigger("contentType:afterRender", {id: this.parent.id, contentType: this.parent, element});
+            events.trigger("contentType:renderAfter", {id: this.parent.id, contentType: this.parent, element});
             events.trigger(
-                this.parent.config.name + ":contentType:afterRender",
+                this.parent.config.name + ":renderAfter",
                 {
                     contentType: this.parent,
                     element,

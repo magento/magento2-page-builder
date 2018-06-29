@@ -32,14 +32,14 @@ ko.bindingHandlers.sortableChildren = {
             .on("sortstart", (event: Event, ui: JQueryUI.SortableUIParams) => {
                 originalPosition = ui.item.index();
                 draggedContentType = instance.children()[originalPosition];
-                events.trigger("sortableChildren:sortStart", {
+                events.trigger("childContentType:sortStart", {
                     instance,
                     originalPosition,
                     ui,
                 });
             })
             .on("sortstop", (event: Event, ui: JQueryUI.SortableUIParams) => {
-                events.trigger("sortableChildren:sortStop", {
+                events.trigger("childContentType:sortStop", {
                     instance,
                     ui,
                 });
@@ -55,7 +55,7 @@ ko.bindingHandlers.sortableChildren = {
                         } else {
                             moveContentType(draggedContentType, index, targetParent);
                         }
-                        events.trigger("sortableChildren:sortUpdate", {
+                        events.trigger("childContentType:sortUpdate", {
                             instance,
                             newPosition: index,
                             originalPosition,

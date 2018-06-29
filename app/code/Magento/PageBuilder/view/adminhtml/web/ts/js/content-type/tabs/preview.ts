@@ -86,7 +86,7 @@ export default class Preview extends PreviewCollection {
             }
         });
         // Refresh tab contents and set the focus to the new position of the sorted tab
-        events.on("sortableChildren:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
+        events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
             if (args.instance.id === this.parent.id) {
                 this.refreshTabs(args.newPosition, true);
                 /**
@@ -367,7 +367,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
         // ContentType being mounted onto container
 
-        events.on("tabs:createAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("tabs:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addTab();
             }

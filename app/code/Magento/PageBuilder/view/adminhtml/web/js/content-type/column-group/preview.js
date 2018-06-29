@@ -57,14 +57,14 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "underscore", "Ma
       }); // Listen for resizing events from child columns
 
 
-      _events.on("column:bindResizeHandleAfter", function (args) {
+      _events.on("column:resizeHandleBindAfter", function (args) {
         // Does the events parent match the previews parent? (e.g. column group)
         if (args.parent.id === _this.parent.id) {
           _this.registerResizeHandle(args.column, args.handle);
         }
       });
 
-      _events.on("column:initElementAfter", function (args) {
+      _events.on("column:initializeAfter", function (args) {
         // Does the events parent match the previews parent? (e.g. column group)
         if (args.parent.id === _this.parent.id) {
           _this.bindDraggable(args.column);

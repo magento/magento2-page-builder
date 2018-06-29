@@ -202,9 +202,9 @@ function onSortReceive(preview: Preview, event: Event, ui: JQueryUI.SortableUIPa
                 bindAfterRenderForAnimation(containerLocked, contentType, parentContainerElement);
 
                 getParentProxy(preview).addChild(contentType, index);
-                events.trigger("contentType:createAfter", {id: contentType.id, contentType});
+                events.trigger("contentType:dropAfter", {id: contentType.id, contentType});
                 events.trigger(
-                    contentTypeConfig.name + ":createAfter",
+                    contentTypeConfig.name + ":dropAfter",
                     {
                         id: contentType.id,
                         contentType,

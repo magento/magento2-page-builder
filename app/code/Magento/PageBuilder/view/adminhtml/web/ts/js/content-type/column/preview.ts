@@ -56,7 +56,7 @@ export default class Preview extends PreviewCollection {
         super.bindEvents();
 
         if (Config.getContentTypeConfig("column-group")) {
-            events.on("column:createAfter", (args: ContentTypeMountEventParamsInterface) => {
+            events.on("column:dropAfter", (args: ContentTypeMountEventParamsInterface) => {
                 if (args.id === this.parent.id) {
                     this.createColumnGroup();
                 }
@@ -71,7 +71,7 @@ export default class Preview extends PreviewCollection {
      */
     public initColumn(element: Element) {
         this.parent.element = $(element);
-        events.trigger("column:initElementAfter", {
+        events.trigger("column:initializeAfter", {
             column: this.parent,
             element: $(element),
             parent: this.parent.parent,
@@ -108,7 +108,7 @@ export default class Preview extends PreviewCollection {
      * @param handle
      */
     public bindResizeHandle(handle: Element) {
-        events.trigger("column:bindResizeHandleAfter", {
+        events.trigger("column:resizeHandleBindAfter", {
             column: this.parent,
             handle: $(handle),
             parent: this.parent.parent,

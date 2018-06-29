@@ -43,7 +43,7 @@ define(["Magento_PageBuilder/js/events", "underscore"], function (_events, _unde
       // Wait for mount then animate the container
       var ns = block.id + ".afterRender.container.animate";
 
-      _events.on("contentType:afterRender", function (args) {
+      _events.on("contentType:renderAfter", function (args) {
         if (args.contentType.parent === block.parent) {
           animateContainerHeight(true, element);
 

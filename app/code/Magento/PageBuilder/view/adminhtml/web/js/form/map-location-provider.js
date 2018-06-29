@@ -17,7 +17,7 @@ define([
 
         /** @inheritdoc **/
         save: function () {
-            events.trigger('location:save', this.get('data'));
+            events.trigger('mapLocation:saveAfter', this.get('data'));
 
             return this;
         }

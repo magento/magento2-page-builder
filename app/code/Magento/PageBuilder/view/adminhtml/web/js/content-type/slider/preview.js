@@ -249,7 +249,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }); // Set the active slide to the new position of the sorted slide
 
 
-      _events.on("sortableChildren:sortUpdate", function (args) {
+      _events.on("childContentType:sortUpdate", function (args) {
         if (args.instance.id === _this3.parent.id) {
           (0, _jquery)(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
 
@@ -276,7 +276,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         }
       });
 
-      _events.on("slide:contentType:afterRender", function (args) {
+      _events.on("slide:renderAfter", function (args) {
         var itemIndex = args.contentType.parent.getChildren()().indexOf(args.contentType);
 
         if (args.contentType.parent.id === _this3.parent.id && newItemIndex !== null && newItemIndex === itemIndex) {
@@ -297,14 +297,14 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }); // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
 
 
-      _events.on("slide:contentType:create", function (args) {
+      _events.on("slide:createAfter", function (args) {
         if (_this3.element && sliderReady && args.contentType.parent.id === _this3.parent.id) {
           _this3.forceContainerHeight();
         }
       }); // ContentType being mounted onto container
 
 
-      _events.on("slider:createAfter", function (args) {
+      _events.on("slider:dropAfter", function (args) {
         if (args.id === _this3.parent.id && _this3.parent.children().length === 0) {
           _this3.addSlide();
         }

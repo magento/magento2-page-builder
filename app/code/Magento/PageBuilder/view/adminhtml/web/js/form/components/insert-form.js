@@ -26,7 +26,7 @@ define([
         initialize: function () {
             this._super();
 
-            events.on('form:render', function (params) {
+            events.on('form:renderAfter', function (params) {
                 this.render(params);
             }.bind(this));
 

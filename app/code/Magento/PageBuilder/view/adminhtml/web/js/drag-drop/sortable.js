@@ -191,12 +191,12 @@ define(["jquery", "knockout", "Magento_PageBuilder/js/events", "Magento_PageBuil
         (0, _containerAnimation.bindAfterRenderForAnimation)(containerLocked, contentType, parentContainerElement);
         getParentProxy(preview).addChild(contentType, index);
 
-        _events.trigger("contentType:createAfter", {
+        _events.trigger("contentType:dropAfter", {
           id: contentType.id,
           contentType: contentType
         });
 
-        _events.trigger(contentTypeConfig.name + ":createAfter", {
+        _events.trigger(contentTypeConfig.name + ":dropAfter", {
           id: contentType.id,
           contentType: contentType
         });

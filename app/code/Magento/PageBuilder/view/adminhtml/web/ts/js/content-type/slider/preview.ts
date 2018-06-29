@@ -257,7 +257,7 @@ export default class Preview extends PreviewCollection {
         });
 
         // Set the active slide to the new position of the sorted slide
-        events.on("sortableChildren:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
+        events.on("childContentType:sortUpdate", (args: PreviewSortableSortUpdateEventParams) => {
             if (args.instance.id === this.parent.id) {
                 $(args.ui.item).remove(); // Remove the item as the container's children is controlled by knockout
                 this.setActiveSlide(args.newPosition);
@@ -279,7 +279,7 @@ export default class Preview extends PreviewCollection {
             }
         });
 
-        events.on("slide:contentType:afterRender", (args: ContentTypeAfterRenderEventParamsInterface) => {
+        events.on("slide:renderAfter", (args: ContentTypeAfterRenderEventParamsInterface) => {
             const itemIndex = (args.contentType.parent as ContentTypeCollectionInterface)
                 .getChildren()().indexOf(args.contentType);
             if ((args.contentType.parent.id === this.parent.id) &&
@@ -299,14 +299,14 @@ export default class Preview extends PreviewCollection {
         });
 
         // On a slide content types creation we need to lock the height of the slider to ensure a smooth transition
-        events.on("slide:contentType:create", (args: ContentTypeCreateEventParamsInterface) => {
+        events.on("slide:createAfter", (args: ContentTypeCreateEventParamsInterface) => {
             if (this.element && sliderReady && args.contentType.parent.id === this.parent.id) {
                 this.forceContainerHeight();
             }
         });
 
         // ContentType being mounted onto container
-        events.on("slider:createAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
+        events.on("slider:dropAfter", (args: ContentTypeDroppedCreateEventParamsInterface) => {
             if (args.id === this.parent.id && this.parent.children().length === 0) {
                 this.addSlide();
             }

@@ -37,12 +37,12 @@ define(["Magento_PageBuilder/js/events", "Magento_PageBuilder/js/loader", "under
         });
       });
     }).then(function (contentType) {
-      _events.trigger("contentType:create", {
+      _events.trigger("contentType:createAfter", {
         id: contentType.id,
         contentType: contentType
       });
 
-      _events.trigger(config.name + ":contentType:create", {
+      _events.trigger(config.name + ":createAfter", {
         id: contentType.id,
         contentType: contentType
       });

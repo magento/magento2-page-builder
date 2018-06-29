@@ -18,7 +18,7 @@ define([
         initialize: function () {
             this._super();
 
-            events.on('form:render', function (params) {
+            events.on('form:renderAfter', function (params) {
                 this.openModal();
                 this.setTitle(this.titlePrefix + ' ' + params.title);
                 this.startListen(params.id);
@@ -33,7 +33,7 @@ define([
          * @param {String} id
          */
         startListen: function (id) {
-            events.on('form:' + id + ':save', function () {
+            events.on('form:' + id + ':saveAfter', function () {
                 this.closeModal();
             }.bind(this));
 

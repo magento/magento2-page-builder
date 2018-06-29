@@ -73,7 +73,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       }); // Refresh tab contents and set the focus to the new position of the sorted tab
 
 
-      _events.on("sortableChildren:sortUpdate", function (args) {
+      _events.on("childContentType:sortUpdate", function (args) {
         if (args.instance.id === _this.parent.id) {
           _this.refreshTabs(args.newPosition, true);
           /**
@@ -375,7 +375,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
       _PreviewCollection.prototype.bindEvents.call(this); // ContentType being mounted onto container
 
 
-      _events.on("tabs:createAfter", function (args) {
+      _events.on("tabs:dropAfter", function (args) {
         if (args.id === _this4.parent.id && _this4.parent.children().length === 0) {
           _this4.addTab();
         }

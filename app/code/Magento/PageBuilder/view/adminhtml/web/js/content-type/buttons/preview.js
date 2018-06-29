@@ -24,7 +24,7 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
       _PreviewCollection.prototype.bindEvents.call(this);
 
-      _events.on("buttons:createAfter", function (args) {
+      _events.on("buttons:dropAfter", function (args) {
         if (args.id === _this2.parent.id && _this2.parent.children().length === 0) {
           _this2.addButton();
         }

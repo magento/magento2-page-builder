@@ -54,8 +54,8 @@ export default function createContentType(
             });
         });
     }).then((contentType: ContentTypeInterface) => {
-        events.trigger("contentType:create", {id: contentType.id, contentType});
-        events.trigger(config.name + ":contentType:create", {id: contentType.id, contentType});
+        events.trigger("contentType:createAfter", {id: contentType.id, contentType});
+        events.trigger(config.name + ":createAfter", {id: contentType.id, contentType});
         fireContentTypeReadyEvent(contentType, childrenLength);
         return contentType;
     }).catch((error) => {

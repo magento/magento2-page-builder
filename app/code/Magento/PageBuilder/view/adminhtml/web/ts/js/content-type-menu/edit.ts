@@ -18,7 +18,7 @@ export default class Edit {
     constructor(instance: ContentTypeInterface, dataStore: DataStore) {
         this.instance = instance;
         this.dataStore = dataStore;
-        events.on("form:" + this.instance.id + ":save", (data: any) => {
+        events.on("form:" + this.instance.id + ":saveAfter", (data: any) => {
             this.dataStore.update(data);
         });
     }
@@ -35,7 +35,7 @@ export default class Edit {
             formNamespace = this.instance.config.appearances[contentTypeData.appearance].form;
         }
 
-        events.trigger("form:render", {
+        events.trigger("form:renderAfter", {
             data: contentTypeData,
             appearances: this.instance.config.appearances,
             defaultNamespace: this.instance.config.form,

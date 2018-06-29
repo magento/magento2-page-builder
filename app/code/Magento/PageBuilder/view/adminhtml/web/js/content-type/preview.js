@@ -152,13 +152,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
 
 
     _proto.afterChildrenRender = function afterChildrenRender(element) {
-      _events.trigger("contentType:childrenRendered", {
+      _events.trigger("contentType:childrenRenderAfter", {
         id: this.parent.id,
         contentType: this.parent,
         element: element
       });
 
-      _events.trigger(this.parent.config.name + ":contentType:childrenRendered", {
+      _events.trigger(this.parent.config.name + ":childrenRenderAfter", {
         contentType: this.parent,
         element: element,
         id: this.parent.id
@@ -180,13 +180,13 @@ define(["jquery", "knockout", "mage/translate", "Magento_PageBuilder/js/events",
         var element = elementNodes[0];
         this.wrapperElement = element;
 
-        _events.trigger("contentType:afterRender", {
+        _events.trigger("contentType:renderAfter", {
           id: this.parent.id,
           contentType: this.parent,
           element: element
         });
 
-        _events.trigger(this.parent.config.name + ":contentType:afterRender", {
+        _events.trigger(this.parent.config.name + ":renderAfter", {
           contentType: this.parent,
           element: element,
           id: this.parent.id

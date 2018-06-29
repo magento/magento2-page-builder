@@ -77,7 +77,7 @@ define([
             events.on('stage:' + id + ':masterFormatRenderAfter', function (args) {
                 this.value(args.value);
             }.bind(this));
-            events.on(id + ':fullScreen', function (args) {
+            events.on('stage' + id + ':fullScreenModeChangeAfter', function (args) {
                 if (!args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {
                     this.visiblePageBuilder(false);
                 } else if (args.fullScreen && this.wysiwygConfigData()['pagebuilder_button']) {

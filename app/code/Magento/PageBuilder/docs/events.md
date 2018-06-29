@@ -49,17 +49,17 @@ This document contains reference information for events dispatched in Page Build
 
 ## Events list
 
-* [contentType:create](#contenttypecreate)
 * [contentType:createAfter](#contenttypecreateafter)
+* [contentType:dropAfter](#contenttypedropafter)
 * [contentType:mountAfter](#contenttypemountafter)
-* [contentType:afterRender](#contenttypeafterrender)
-* [contentType:removeAfter](#contenttyperemoved)
-* [contentType:duplicateAfter](#contenttypeduplicate)
+* [contentType:renderAfter](#contenttyperenderafter)
+* [contentType:removeAfter](#contenttyperemoveafter)
+* [contentType:duplicateAfter](#contenttypeduplicateafter)
 * [contentType:moveBefore](#contenttypemovebefore)
 * [contentType:moveAfter](#contenttypemoveafter)
 * [column:dragStart](#columdragstart)
 * [column:dragStop](#columndragstop)
-* [column:initElementAfter](#columninitelementafter)
+* [column:initializeAfter](#columninitializeafter)
 * [image:{{id}}:assignAfter](#imageidassignafter)
 * [image:mountAfter](#imagemountafter)
 * [image:uploadAfter](#imageuploadafter)
@@ -79,11 +79,11 @@ This document contains reference information for events dispatched in Page Build
 
 ## `contentType:*` events
 All events starting with `contentType:` can also be called for specific content types by prefixing the content types name (`{{name}}:{{event}}`) like the following:
-* `text:contentType:create`
+* `text:createAfter`
 * `row:mountAfter`
 * `tab-item:mountAfter`
 
-### `contentType:create`
+### `contentType:createAfter`
 
 **Triggers**
 
@@ -119,7 +119,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:createAfter`
+### `contentType:dropAfter`
 
 **Triggers**
 
@@ -155,7 +155,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `contentType:afterRender`
+### `contentType:renderAfter`
 
 **Triggers**
 
@@ -284,7 +284,7 @@ All events starting with `contentType:` can also be called for specific content 
 
 [Back to top]
 
-### `column:initElementAfter`
+### `column:initializeAfter`
 
 **Triggers**
 

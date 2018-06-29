@@ -19,7 +19,7 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
       this.instance = instance;
       this.dataStore = dataStore;
 
-      _events.on("form:" + this.instance.id + ":save", function (data) {
+      _events.on("form:" + this.instance.id + ":saveAfter", function (data) {
         _this.dataStore.update(data);
       });
     }
@@ -38,7 +38,7 @@ define(["Magento_PageBuilder/js/events"], function (_events) {
         formNamespace = this.instance.config.appearances[contentTypeData.appearance].form;
       }
 
-      _events.trigger("form:render", {
+      _events.trigger("form:renderAfter", {
         data: contentTypeData,
         appearances: this.instance.config.appearances,
         defaultNamespace: this.instance.config.form,

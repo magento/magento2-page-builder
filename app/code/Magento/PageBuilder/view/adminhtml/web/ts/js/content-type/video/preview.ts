@@ -20,7 +20,7 @@ export default class Preview extends BasePreview {
         super.bindEvents();
 
         // When a map is dropped for the first time open the edit panel
-        events.on("video:createAfter", (args: {[key: string]: any}) => {
+        events.on("video:dropAfter", (args: {[key: string]: any}) => {
             if (args.id === this.parent.id) {
                 setTimeout(() => {
                     this.edit.open();
