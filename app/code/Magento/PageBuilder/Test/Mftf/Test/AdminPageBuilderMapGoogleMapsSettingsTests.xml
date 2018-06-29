@@ -8,344 +8,11 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="GoogleMapsCanSaveValidAPIKey">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Validate Can Save Valid Google Maps API Key"/>
-            <description value="Tests that a user can save a valid Google Maps API Key."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91915"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-googleMapsAPIKey"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
-                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-            </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
-            <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
-        </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
-        <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.valid}}" stepKey="seeKeyValid"/>
-    </test>
-    <test name="GoogleMapsCanSaveInvalidAPIKey">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Validate Can Save Invalid Google Maps API Key"/>
-            <description value="Tests that a user can save an invalid Google Maps API Key."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91916"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-googleMapsAPIKey"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
-                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-            </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
-            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
-        </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
-        <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.invalidOneCharacter}}" stepKey="seeKeyInvalid"/>
-    </test>
-    <test name="GoogleMapsCanSaveEmptyAPIKey">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Validate Can Save Empty Google Maps API Key"/>
-            <description value="Tests that a user can save an empty Google Maps API Key."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91917"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-googleMapsAPIKey"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
-                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-            </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
-            <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-        </actionGroup>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
-        <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.empty}}" stepKey="seeKeyEmpty"/>
-    </test>
-    <test name="GoogleMapsAPIKeyFieldAppearance">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Validate Google Maps API Key Field Appearance"/>
-            <description value="Tests the following for Google Maps API Key field: 1) Global config key, 2) Helper text, 3) Default Test Key button is disabled, 4) Correct Get API Key link."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91918"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-googleMapsAPIKey"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <closeTab stepKey="closeTab"/>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <!-- Go To AdminContentManagementPage -->
-        <comment userInput="Go To AdminContentManagementPage" stepKey="commentGoToPage"/>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <!-- Validate Global Scope -->
-        <comment userInput="Validate Global Scope" stepKey="commentValidateGlobal"/>
-        <waitForElementVisible selector="{{ContentManagementSection.ConfigurationFieldLabel(googleMapsAPIKey.section, googleMapsAPIKey.row, googleMapsAPIKey.label)}}[@data-config-scope='[GLOBAL]']" stepKey="waitForConfigurationKeyScope"/>
-        <!-- Validate Helper Text -->
-        <comment userInput="Validate Helper Text" stepKey="commentValidateHelperText"/>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyHelperText}}" stepKey="waitForHelperText"/>
-        <see selector="{{ContentManagementSection.GoogleMapsAPIKeyHelperText}}" userInput="Enter API key to use the Map content type. Get API Key." stepKey="seeHelperText"/>
-        <!-- Validate Test Key Button Text -->
-        <comment userInput="Validate Test Key Button Text" stepKey="commentValidateTestKeyButtonText"/>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" stepKey="waitForTestKeyButton"/>
-        <see selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}" userInput="Test Key" stepKey="seeTestKeyButtonText"/>
-        <!-- Validate Get API Key Link -->
-        <comment userInput="Validate Get API Key Link" stepKey="commentValidateLink"/>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsGetAPIKeyLink}}" stepKey="waitForLink"/>
-        <click selector="{{ContentManagementSection.GoogleMapsGetAPIKeyLink}}" stepKey="clickLink"/>
-        <switchToNextTab stepKey="switchToNextTab"/>
-        <waitForPageLoad stepKey="waitForPageLoad"/>
-        <seeCurrentUrlEquals url="https://developers.google.com/maps/documentation/javascript/get-api-key" stepKey="validateURL"/>
-    </test>
-    <test name="GoogleMapsAPIKeyTestKeyButtonValidKey">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Google Maps API Key Test Key Button: Valid Key"/>
-            <description value="Tests that the Google Maps API Key Test Key button works with a valid key."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91919"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-googleMapsAPIKey"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey">
-            <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
-        </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton"/>
-    </test>
-    <test name="GoogleMapsAPIKeyTestKeyButtonInvalidKeys">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Google Maps API Key Test Key Button: Invalid Keys"/>
-            <description value="Tests that the Google Maps API Key Test Key button works with invalid keys."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91920"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-googleMapsAPIKey"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <!-- Invalid Key: One Character -->
-        <comment userInput="Invalid Key: One Character" stepKey="comment1"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey1">
-            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
-        </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton1">
-            <argument name="expectedResult" value="error"/>
-        </actionGroup>
-        <!-- Invalid Key: One Character Off Of Valid -->
-        <comment userInput="Invalid Key: One Character Off Of Valid" stepKey="comment2"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey2">
-            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacterOffOfValid}}"/>
-        </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton2">
-            <argument name="expectedResult" value="error"/>
-        </actionGroup>
-        <!-- Invalid Key: Empty -->
-        <comment userInput="Invalid Key: Empty" stepKey="comment3"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey3">
-            <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}[disabled='disabled']" stepKey="waitForTestKeyButtonDisabled"/>
-    </test>
-    <test name="GoogleMapsAPIKeyTestKeyButtonChangesStateCorrectly">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Google Maps API Key Test Key Button: Change Enabled To Disabled Or Vice Versa As Expected"/>
-            <description value="Tests the Google Maps API Key Test Key button state for following: 1) Valid to invalid, 2) Valid to empty, 3) Invalid to valid, 4) Invalid to empty, 5) Empty to valid, 6) Empty to invalid."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91921"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-googleMapsAPIKey"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
-                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-            </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey1">
-            <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled1"/>
-        <!-- Valid To Invalid -->
-        <comment userInput="Valid To Invalid" stepKey="comment1"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey2">
-            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled2"/>
-        <!-- Invalid To Empty -->
-        <comment userInput="Invalid To Empty" stepKey="comment2"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey3">
-            <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}[disabled='disabled']" stepKey="waitForTestKeyButtonDisabled1"/>
-        <!-- Empty To Invalid -->
-        <comment userInput="Empty To Invalid" stepKey="comment3"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey4">
-            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled3"/>
-        <!-- Invalid To Valid -->
-        <comment userInput="Invalid To Valid" stepKey="comment4"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey5">
-            <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled4"/>
-        <!-- Valid To Empty -->
-        <comment userInput="Valid To Empty" stepKey="comment5"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey6">
-            <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}[disabled='disabled']" stepKey="waitForTestKeyButtonDisabled2"/>
-        <!-- Empty To Valid -->
-        <comment userInput="Empty To Valid" stepKey="comment6"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey7">
-            <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
-        </actionGroup>
-        <waitForElementVisible selector="{{ContentManagementSection.GoogleMapsAPIKeyTestKeyButton}}:not([disabled])" stepKey="waitForTestKeyButtonEnabled5"/>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
-        <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.valid}}" stepKey="seeKeyValid"/>
-    </test>
-    <test name="GoogleMapsAPIKeyTestKeyButtonChangesMessageCorrectly">
-        <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Google Maps API Key Test Key Button: Message Changes From Valid To Invalid Or Vice Versa"/>
-            <description value="Tests the Google Maps API Key Test Key button message for following: 1) Valid to valid, 2) Valid to invalid, 3) Invalid to invalid, 4) Invalid to valid."/>
-            <severity value="CRITICAL"/>
-            <useCaseId value="MAGETWO-88225"/>
-            <testCaseId value="MAGETWO-91922"/>
-            <group value="pagebuilder"/>
-            <group value="pagebuilder-googleMapsAPIKey"/>
-            <group value="pagebuilder-customBeforeAfter"/>
-        </annotations>
-        <before>
-            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-        </before>
-        <after>
-            <actionGroup ref="applyGoogleMapsAPIKey" stepKey="setGoogleMapsAPIKey">
-                <argument name="apiKey" value="{{googleMapsAPIKey.empty}}"/>
-            </actionGroup>
-            <actionGroup ref="logout" stepKey="logout"/>
-        </after>
-        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
-        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey1">
-            <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
-        </actionGroup>
-        <!-- Valid To Valid -->
-        <comment userInput="Valid To Valid" stepKey="comment1"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey2">
-            <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
-        </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton1"/>
-        <!-- Valid To Invalid -->
-        <comment userInput="Valid To Invalid" stepKey="comment2"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey3">
-            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
-        </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton2">
-            <argument name="expectedResult" value="error"/>
-        </actionGroup>
-        <!-- Invalid To Invalid -->
-        <comment userInput="Invalid To Invalid" stepKey="comment3"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey4">
-            <argument name="apiKey" value="{{googleMapsAPIKey.invalidOneCharacter}}"/>
-        </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton3">
-            <argument name="expectedResult" value="error"/>
-        </actionGroup>
-        <!-- Invalid To Valid -->
-        <comment userInput="Invalid To Valid" stepKey="comment4"/>
-        <actionGroup ref="inputGoogleMapsAPIKey" stepKey="inputGoogleMapsAPIKey5">
-            <argument name="apiKey" value="{{googleMapsAPIKey.valid}}"/>
-        </actionGroup>
-        <actionGroup ref="clickAndValidateGoogleMapsAPIKeyTestKeyButton" stepKey="clickAndValidateGoogleMapsAPIKeyTestKeyButton4"/>
-        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
-        <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage"/>
-        <seeInField selector="{{ContentManagementSection.GoogleMapsAPIKeyInputField}}" userInput="{{googleMapsAPIKey.valid}}" stepKey="seeKeyValid"/>
-    </test>
     <test name="MapInvalidAPIKeyWarningMessage">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Map - Invalid API Key Warning Message"/>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Invalid API Key Warning Message"/>
             <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
@@ -406,9 +73,9 @@
     </test>
     <test name="MapInvalidAPIKeyWarningMessageOnExistingPage">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Map - Invalid API Key Warning Message On Existing Page"/>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Invalid API Key Warning Message On Existing Page"/>
             <description value="A user should see a warning message on the configuration panel, but not on Stage and Storefront on existing page."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
@@ -484,9 +151,9 @@
     </test>
     <test name="MapInvalidAPIKeyWarningMessageLink">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Map - Invalid API Key Warning Message Link"/>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Invalid API Key Warning Message Link"/>
             <description value="A user should see a warning message on the configuration panel with a link that takes you to the configuration page."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
@@ -521,9 +188,9 @@
     </test>
     <test name="MapDoesNotRenderWithInvalidAPIKey">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Map Does Not Render With Invalid API Key"/>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Map Does Not Render With Invalid API Key"/>
             <description value="A user should not see a map rendered on the configuration panel, Stage and Storefront."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
@@ -572,9 +239,9 @@
     </test>
     <test name="MapDoesNotRenderWithInvalidAPIKeyOnExistingPage">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Map Does Not Render With Invalid API Key On Existing Page"/>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Map Does Not Render With Invalid API Key On Existing Page"/>
             <description value="A user should not see a map rendered on the configuration panel, Stage and Storefront on existing page."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88225"/>
@@ -660,9 +327,9 @@
     </test>
     <test name="MapCannotAddNewLocationWithInvalidAPIKey">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Cannot Add New Location With Invalid API Key"/>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Cannot Add New Location With Invalid API Key"/>
             <description value="A user should not be able to add a new location with an invalid API key."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
@@ -693,9 +360,9 @@
     </test>
     <test name="MapCanEditLocationWithInvalidAPIKey">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Can Edit Location With Invalid API Key"/>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Edit Location With Invalid API Key"/>
             <description value="A user should be able to edit a location with an invalid API key."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
@@ -807,9 +474,9 @@
     </test>
     <test name="MapCanDeleteLocationWithInvalidAPIKey">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Google Maps API Key"/>
-            <title value="Can Delete Location With Invalid API Key"/>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps API Key - Can Delete Location With Invalid API Key"/>
             <description value="A user should be able to delete a location with an invalid API key."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-88132"/>
@@ -896,5 +563,163 @@
         <reloadPage stepKey="reloadPage3"/>
         <waitForPageLoad stepKey="waitForPageLoad3"/>
         <actionGroup ref="validateEmptyMapStoreFront" stepKey="validateEmptyMapStoreFront"/>
+    </test>
+    <test name="MapDoesNotRenderNewGoogleMapsStyleOnStorefrontUntilPageSaveOrCacheRefresh">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps Style - Map Does Not Render New Google Maps Style On Storefront Until Page Save Or Cache Refresh"/>
+            <description value="A change to the Google Maps Style should not take affect on the storefront until a page save or a cache refresh"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-89028"/>
+            <testCaseId value="MAGETWO-92776"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsStyle"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!-- Add Location -->
+        <comment userInput="Add Location" stepKey="commentAddLocation"/>
+        <actionGroup ref="clickAddLocationButton" stepKey="clickAddLocationButton"/>
+        <actionGroup ref="clickMapToAddOrMovePin" stepKey="addMapPin"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterLocationName">
+            <argument name="property" value="PageBuilderMapLocationName_TestLocation"/>
+        </actionGroup>
+        <actionGroup ref="saveLocationForm" stepKey="saveLocationForm"/>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront1">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <!--Set Google Maps Style -->
+        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle"/>
+        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
+            <argument name="style" value="{{googleMapsStyle.validShort}}"/>
+        </actionGroup>
+        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <!-- Storefront: Validate Map Style Unchanged -->
+        <comment userInput="Storefront: Validate Map Style Unchanged" stepKey="commentValidate1"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront2">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle1"/>
+        <assertEquals stepKey="assertMapStyle1">
+            <actualResult type="variable">$mapStyle1</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
+        </assertEquals>
+        <!-- Save Page -->
+        <comment userInput="Save Page" stepKey="commentSavePage"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+        <!-- Storefront: Validate Map Style Changed -->
+        <comment userInput="Storefront: Validate Map Style Changed" stepKey="commentValidate2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront3">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle2"/>
+        <assertEquals stepKey="assertMapStyle2">
+            <actualResult type="variable">$mapStyle2</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
+        </assertEquals>
+        <!-- Set Google Maps Style -->
+        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle2"/>
+        <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+        <!-- Storefront: Validate Map Style Unchanged -->
+        <comment userInput="Storefront: Validate Map Style Unchanged" stepKey="commentValidate3"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront4">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle3"/>
+        <assertEquals stepKey="assertMapStyle3">
+            <actualResult type="variable">$mapStyle3</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
+        </assertEquals>
+        <!-- Clean Cache -->
+        <comment userInput="Clean Cache" stepKey="commentCleanCache"/>
+        <magentoCLI command="cache:clean" stepKey="cleanCache"/>
+        <actionGroup ref="navigateToStoreFront" stepKey="navigateToStoreFront5">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <executeJS function="return document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)" stepKey="mapStyle4"/>
+        <assertEquals stepKey="assertMapStyle4">
+            <actualResult type="variable">$mapStyle4</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.empty}}</expectedResult>
+        </assertEquals>
+    </test>
+    <test name="MapRendersNewGoogleMapsStyleOnStageImmediately">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Map"/>
+            <title value="Google Maps Style - Map Renders New Google Maps Style On Stage Without Cache Refresh"/>
+            <description value="A change to the Google Maps Style should immediately take affect on the stage without a cache refresh"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-89028"/>
+            <testCaseId value="MAGETWO-92778"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-map"/>
+            <group value="pagebuilder-googleMapsStyle"/>
+        </annotations>
+        <before>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <magentoCLI command="config:set cms/pagebuilder/google_maps_style ''" stepKey="setEmptyGoogleMapsStyle"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragContentTypeIntoStage">
+            <argument name="contentType" value="PageBuilderMapContentType"/>
+        </actionGroup>
+        <actionGroup ref="closeEditPanelSettings" stepKey="saveEditPanelSettings"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
+        <!--Set Google Maps Style -->
+        <comment userInput="Set Google Maps Style" stepKey="commentSetStyle"/>
+        <openNewTab stepKey="openNewTab"/>
+        <actionGroup ref="navigateToAdminContentManagementPage" stepKey="navigateToAdminContentManagementPage"/>
+        <conditionalClick stepKey="expandAdvancedContentTools" selector="{{ContentManagementSection.PageBuilderOptions}}" dependentSelector="{{ContentManagementSection.CheckIfPageBuilderTabExpanded}}" visible="true"/>
+        <actionGroup ref="inputGoogleMapsStyle" stepKey="inputGoogleMapsStyle">
+            <argument name="style" value="{{googleMapsStyle.validShort}}"/>
+        </actionGroup>
+        <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration"/>
+        <!-- Stage: Validate Map Style Changed -->
+        <comment userInput="Stage: Validate Map Style Changed" stepKey="commentValidate1"/>
+        <switchToPreviousTab stepKey="switchToPreviousTab"/>
+        <reloadPage stepKey="reloadPage"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <executeJS function="return decodeURIComponent(JSON.parse('&quot;' + document.evaluate('//body//script[contains(.,\'Magento_PageBuilder/js/utils/map\')]', document, null, XPathResult.STRING_TYPE, null).stringValue.match(/(?&lt;=style:\s').+(?=')/)[0].replace(/\\&quot;/g, '\\\\&quot;') + '&quot;'))" stepKey="mapStyle1"/>
+        <assertEquals stepKey="assertMapStyle1">
+            <actualResult type="variable">$mapStyle1</actualResult>
+            <expectedResult type="string">{{googleMapsStyle.validShort}}</expectedResult>
+        </assertEquals>
     </test>
 </tests>

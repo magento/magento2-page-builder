@@ -10,11 +10,12 @@
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="DefaultSystemBordersAppearInAdmin">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-66176: Bluefoot Column Configuration "/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
             <title value="System Borders Default Style in Admin"/>
             <description value="A user should be able to see default system borders for all content types in admin preview"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-66176"/>
             <testCaseId value="MC-2382"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
@@ -95,11 +96,12 @@
     </test>
     <test name="NoConfirmationOnDefaultStateContentTypeRemoval">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-86799: Deleting Content type/ container from the stage"/>
-            <title value="No confirmation when removing an empty content type"/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - No confirmation when removing an empty content type"/>
             <description value="A user should not be prompt when removing a content type in its default state with no children"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
             <testCaseId value="MAGETWO-89052"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
@@ -140,11 +142,12 @@
     </test>
     <test name="ConfirmationOnContainerWithChildrenRemoval">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-86799: Deleting Content type/ container from the stage"/>
-            <title value="Removal confirmation on container content type with children"/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Removal confirmation on container content type with children"/>
             <description value="The user should be prompted when removing a content type which has children"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
             <testCaseId value="MAGETWO-89053"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
@@ -191,11 +194,12 @@
     </test>
     <test name="ConfirmationOnConfiguredContentTypeRemoval">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-86799: Deleting Content type/ container from the stage"/>
-            <title value="Removal confirmation on normal content type"/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Removal confirmation on normal content type"/>
             <description value="The user should be prompted when removing a content type which has had data modified within"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
             <testCaseId value="MAGETWO-89054"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
@@ -245,9 +249,9 @@
     </test>
     <test name="NoRemovalConfirmationModalAfterConfiguringContentToDefaultState">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Removal Confirmation Modal"/>
-            <title value="Verify No Removal Confirmation Modal After Configuring Content Back To Default State"/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Verify No Removal Confirmation Modal After Configuring Content Back To Default State"/>
             <description value="The user should not see a removal confirmation modal if they reconfigure their content to match default state"/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87059"/>
@@ -323,11 +327,12 @@
     </test>
     <test name="DismissRemovalConfirmationModal">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-86799: Deleting Content type/ container from the stage"/>
-            <title value="Dismissing the removal confirmation modal"/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Dismissing the removal confirmation modal"/>
             <description value="The user should not be prompted after selecting 'Do not show this again'"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
             <testCaseId value="MAGETWO-89055"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
@@ -391,11 +396,12 @@
     </test>
     <test name="DismissedConfirmationPersistsSession">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-86799: Deleting Content type/ container from the stage"/>
-            <title value="Dismissed confirmation persists session"/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Dismissed confirmation persists session"/>
             <description value="The user should not be prompted within the current session for removal"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
             <testCaseId value="MAGETWO-89056"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
@@ -466,9 +472,9 @@
     </test>
     <test name="CancelOnRemovalConfirmationModal">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Removal Confirmation Modal"/>
-            <title value="Cancel Removal Confirmation Modal"/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Cancel Removal Confirmation Modal"/>
             <description value="The user should be able to click cancel in removal confirmation modal and not have content removed."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87059"/>
@@ -523,9 +529,9 @@
     </test>
     <test name="XOnRemovalConfirmationModal">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="Removal Confirmation Modal"/>
-            <title value="Click X On Removal Confirmation Modal"/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Click X On Removal Confirmation Modal"/>
             <description value="The user should be able to click on the 'X' button in removal confirmation modal and not have content removed."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-87059"/>
@@ -580,11 +586,12 @@
     </test>
     <test name="LoginCycleResetsRemoveConfirmationDismissal">
         <annotations>
-            <features value="Pagebuilder"/>
-            <stories value="MAGETWO-86799: Deleting Content type/ container from the stage"/>
-            <title value="Dismissed confirmation is removed on logout"/>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Delete Content Modal - Dismissed confirmation is removed on logout"/>
             <description value="The users choice to not show the confirmation again should be reset on logout"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86799"/>
             <testCaseId value="MC-2392"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-common"/>
@@ -690,5 +697,577 @@
 
         <!-- Validate the items are removed -->
         <dontSeeElement selector="{{PageBuilderStage.contentTypeInStage(PageBuilderHeadingContentType.role)}}" stepKey="dontSeeHeaderInStage2"/>
+    </test>
+    <test name="EditPanelColorPickerUpdatesFromFieldInput">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Color Picker - Validate Color Picker Updates From Input Field Values"/>
+            <description value="Validate that when the user inputs different types of color values into the Background Color input field, the color picker updates with the appropriate color."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MC-1347"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Input: Plaintext -->
+        <comment userInput="Input: Plaintext" stepKey="commentPlaintext"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputPlaintext">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchPlaintextColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validatePlaintext">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <!-- Input: Hex -->
+        <comment userInput="Input: Hex" stepKey="commentHex"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHex">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHexColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Hex_White"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHex">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Hex_White.hex}}"/>
+        </actionGroup>
+        <!-- Input: RGB -->
+        <comment userInput="Input: RGB" stepKey="commentRGB"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGB">
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchRGBColor">
+            <argument name="property" value="PageBuilderBackgroundColor_RGB_Blue"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGB">
+            <argument name="color" value="{{PageBuilderBackgroundColor_RGB_Blue.hex}}"/>
+        </actionGroup>
+        <!-- Input: RGBa -->
+        <comment userInput="Input: RGBa" stepKey="commentRGBa"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputRGBa">
+            <argument name="property" value="PageBuilderBackgroundColor_RGBa_Blue"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_RGBa_Blue.section, PageBuilderBackgroundColor_RGBa_Blue.fieldName, PageBuilderBackgroundColor_RGBa_Blue.value)}}" stepKey="waitForColorSwatchColor"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateRGBa">
+            <argument name="color" value="{{PageBuilderBackgroundColor_RGBa_Blue.value}}"/>
+        </actionGroup>
+        <!-- Input: HSL -->
+        <comment userInput="Input: HSL" stepKey="commentHSL"/>
+        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="inputHSL">
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
+        </actionGroup>
+        <actionGroup ref="seeColorInColorSwatch" stepKey="seeSwatchHSLColor">
+            <argument name="property" value="PageBuilderBackgroundColor_HSL_Orange"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateHSL">
+            <argument name="color" value="{{PageBuilderBackgroundColor_HSL_Orange.hex}}"/>
+        </actionGroup>
+    </test>
+    <test name="EditPanelColorPickerWindowFunctionality">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="Color Picker - Validate Color Picker Window Functionality"/>
+            <description value="Validate the following for the color picker window: 1) Hex chart, 2) Favorite colors, 3) Color picker area, 4) Light/Dark slide, 5) Hex Input, 6) Cancel button, 7) Apply button."/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-90828"/>
+            <testCaseId value="MAGETWO-92590"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-common"/>
+            <group value="pagebuilder-banner"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBannerIntoStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+            <argument name="contentType" value="PageBuilderBannerContentType"/>
+        </actionGroup>
+        <!-- Open Color Picker -->
+        <comment userInput="Open Color Picker" stepKey="commentOpen"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateDefault">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Default.value}}"/>
+        </actionGroup>
+        <!-- Validate Hex Chart -->
+        <comment userInput="Validate Hex Chart" stepKey="commentHexChart"/>
+        <waitForElementVisible selector="{{ColorPicker.firstColorBox}}" stepKey="waitForFirstColorBox"/>
+        <waitForElementVisible selector="{{ColorPicker.allColorBoxes}}" stepKey="waitForColorBoxes"/>
+        <seeNumberOfElements selector="{{ColorPicker.allColorBoxes}}" userInput="64" stepKey="verifyNumberOfColorBoxes"/>
+        <!-- Validate Color Wheel -->
+        <comment userInput="Validate Color Wheel" stepKey="commentColorWheel"/>
+        <waitForElementVisible selector="{{ColorPicker.colorWheelColor(PageBuilderBackgroundColor_Default.colorWheelDefault)}}" stepKey="waitForColorWheelDefaultColor"/>
+        <click selector="{{ColorPicker.colorWheel}}" stepKey="clickColorWheel"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorPicker.section, PageBuilderBackgroundColor_CenterColorPicker.fieldName, PageBuilderBackgroundColor_CenterColorPicker.rgb)}}" stepKey="waitForColorSwatchColor"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorPicker.hex}}" stepKey="seeColorInInputField"/>
+        <!-- Validate Clear Color Button-->
+        <comment userInput="Validate Clear Color Button" stepKey="commentClearColorButton"/>
+        <click selector="{{ColorPicker.clearColorBtn}}" stepKey="clickClearColorButton"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Default.section, PageBuilderBackgroundColor_Default.fieldName, PageBuilderBackgroundColor_Default.colorSwatchColor)}}" stepKey="waitForColorSwatchColor2"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Default.value}}" stepKey="seeColorInInputField2"/>
+        <!-- Validate Hue Slider -->
+        <comment userInput="Validate Hue Slider" stepKey="commentHueSlider"/>
+        <click selector="{{ColorPicker.hueSlider}}" stepKey="clickHueSlider"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgb)}}" stepKey="waitForColorSwatchColor3"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.hex}}" stepKey="seeColorInInputField3"/>
+        <!-- Validate Light/Dark Slider -->
+        <comment userInput="Validate Light/Dark Slider" stepKey="commentLightDarkSlider"/>
+        <click selector="{{ColorPicker.lightDarkSlider}}" stepKey="clickLightDarkSlider"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_CenterColorHueSlider.section, PageBuilderBackgroundColor_CenterColorHueSlider.fieldName, PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider)}}" stepKey="waitForColorSwatchColor4"/>
+        <seeInField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_CenterColorHueSlider.rgbaCenterOfLightDarkSlider}}" stepKey="seeColorInInputField4"/>
+        <!-- Validate Hex Input Field -->
+        <comment userInput="Validate Hex Input Field" stepKey="commentHexInput"/>
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Plaintext_Green.value}}" stepKey="inputColorInInputField"/>
+        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Plaintext_Green.section, PageBuilderBackgroundColor_Plaintext_Green.fieldName, PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForColorSwatchColor5"/>
+        <!-- Validate Apply Button -->
+        <comment userInput="Validate Apply Button" stepKey="commentApplyButton"/>
+        <click selector="{{ColorPicker.applyBtn}}" stepKey="clickApplyButton"/>
+        <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColor">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <!-- Validate Cancel Button -->
+        <comment userInput="Validate Cancel Button" stepKey="commentCancelButton"/>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateColorPicker">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <fillField selector="{{ColorPicker.inputField}}" userInput="{{PageBuilderBackgroundColor_Hex_White.value}}" stepKey="inputColorInInputField2"/>
+        <clickWithLeftButton selector="{{ColorPicker.inputField}}" x="0" y="0" stepKey="clickOffInputField2"/>
+        <waitForElementVisible selector="{{ColorPicker.panelColorSwatchColor(PageBuilderBackgroundColor_Hex_White.section, PageBuilderBackgroundColor_Hex_White.fieldName, PageBuilderBackgroundColor_Hex_White.rgb)}}" stepKey="waitForColorSwatchColor6"/>
+        <click selector="{{ColorPicker.cancelBtn}}" stepKey="clickCancelButton"/>
+        <waitForElementNotVisible selector="{{ColorPicker.colorPickerWindow}}" stepKey="waitForColorPickerWindowGone2"/>
+        <actionGroup ref="seeInFieldSlideOutPropertyAlternate" stepKey="validateBackgroundColor2">
+            <argument name="property" value="PageBuilderBackgroundColor_Plaintext_Green"/>
+        </actionGroup>
+        <actionGroup ref="openAndValidateColorPickerValue" stepKey="validateColorPicker2">
+            <argument name="color" value="{{PageBuilderBackgroundColor_Plaintext_Green.hex}}"/>
+        </actionGroup>
+        <!-- Validate Favorite Colors -->
+        <comment userInput="Validate Favorite Colors" stepKey="commentFavoriteColors"/>
+        <waitForElementVisible selector="{{ColorPicker.activeFavoriteColorBox(PageBuilderBackgroundColor_Plaintext_Green.rgb)}}" stepKey="waitForActiveFavoriteColor"/>
+    </test>
+    <test name="AdminPageBuilderURLInputTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="URL Input - Admin are able to add External URL link into PageBuilder content"/>
+            <description value="Admin are able to add External URL link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-71571"/>
+            <testCaseId value="MAGETWO-89379"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-urlInput"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <seeOptionIsSelected selector="{{PageBuilderSection.LinkSelect('button_link')}}" userInput="URL" stepKey="seeButtonLinkSelectedByDefault" />
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1LinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_NotSecure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_False"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify External Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInCurrentTab(PageBuilderButtonItemLink_NotSecure.value)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <grabFromCurrentUrl stepKey="grabFromCurrentUrl1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">{{PageBuilderButtonItemLink_NotSecure.value}}</expectedResult>
+            <actualResult type="variable">grabFromCurrentUrl1</actualResult>
+        </assertEquals>
+
+        <!--Go to admin to edit Secure External Link-->
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <actionGroup ref="fillSlideOutPanelLinkUrlField" stepKey="fillButton1SecureLinkField">
+            <argument name="property" value="PageBuilderButtonItemLink_Secure"/>
+            <argument name="selection" value="{{ExternalLink.url}}"/>
+            <argument name="newTab" value="PageBuilderButtonItemOpenInNewTab_True"/>
+        </actionGroup>
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings2"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage2"/>
+
+        <!--Go to storefront to verify Secure External Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage2"/>
+        <waitForPageLoad  stepKey="waitForPageLoad3"/>
+        <seeElement selector="{{PageBuilderURLOnStoreFrontSection.ExternalURLInNewTab(PageBuilderButtonItemLink_Secure.value)}}" stepKey="seeExternalSecureLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton2"/>
+        <switchToNextTab stepKey="switchToNextTab"/>
+        <grabFromCurrentUrl stepKey="grabFromCurrentUrl2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">{{PageBuilderButtonItemLink_Secure.value}}</expectedResult>
+            <actualResult type="variable">grabFromCurrentUrl2</actualResult>
+        </assertEquals>
+    </test>
+    <test name="AdminPageBuilderCategoryButtonLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="URL Input - Admin are able to add Category link into PageBuilder content"/>
+            <description value="Admin are able to add Category link link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88961"/>
+            <testCaseId value="MAGETWO-89771"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-urlInput"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <createData entity="SimpleSubCategory" stepKey="createCategoryB"/>
+        <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryY">
+            <requiredEntity createDataKey="createCategoryB"/>
+        </createData>
+        <createData entity="_defaultCategory" stepKey="createCategoryA"/>
+        <createData entity="NewSubCategoryWithParent" stepKey="createSubCategoryX">
+            <requiredEntity createDataKey="createCategoryA"/>
+        </createData>
+
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Category" stepKey="selectOption" />
+
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderSection.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <see userInput="Default Category" stepKey="seeLevel1Category"/>
+        <see userInput="$createCategoryA.name$" stepKey="seeLevel2Category"/>
+        <dontSee userInput="$createSubCategoryX.name$" stepKey="dontSeeLevel3Category"/>
+
+        <!--Type 2 first letters into Search box-->
+        <pressKey selector="{{PageBuilderSection.LinkSearch}}" parameterArray="['su',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForElementVisible selector="{{PageBuilderSection.SearchResult($createSubCategoryX.name$)}}" stepKey="waitForSearchResult" />
+        <see userInput="$createSubCategoryX.name$" stepKey="seeSubCategoryOnSearchResult"/>
+        <click selector="{{PageBuilderSection.SearchResult($createSubCategoryX.name$)}}" stepKey="clickSubCategoryXOnSearchResult"/>
+        <dontSee selector="{{PageBuilderSection.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">$createSubCategoryX.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField1" />
+
+        <!--Expand dropdown again to verify highlighted not cleared yet-->
+        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput3" />
+        <seeInField  selector="{{PageBuilderSection.LinkSearch}}" userInput="su" stepKey="seeSearchNotCleared"/>
+        <wait time="3" stepKey="wait"/>
+        <seeElement selector="{{PageBuilderSection.LinkItemSelected($createSubCategoryX.name$)}}" stepKey="seeSearchResultHighlighted" />
+
+        <!--Select another category from dropdown-->
+        <click selector="{{PageBuilderSection.SearchResult($createSubCategoryY.name$)}}" stepKey="clickSubCategoryYOnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">$createSubCategoryY.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown2</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify Category Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.CategoryLink($createSubCategoryY.name_lwr$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="$createSubCategoryY.name$" stepKey="seeCategoryName" />
+
+        <deleteData createDataKey="createSubCategoryY" stepKey="deletePreReqSubCategoryY" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <assertRegExp stepKey="assertEquals3" message="pass">
+            <expectedResult type="string">/Category with ID: [0-9]+ doesn't exist$/</expectedResult>
+            <actualResult type="variable">textFromDropDown3</actualResult>
+        </assertRegExp>
+        <deleteData createDataKey="createCategoryA" stepKey="deletePreReqCatalogA" />
+    </test>
+    <test name="AdminPageBuilderProductButtonLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="URL Input - Admin are able to add Product link into PageBuilder content"/>
+            <description value="Admin are able to add Product link link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88962"/>
+            <testCaseId value="MAGETWO-89771"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-urlInput"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <createData entity="_defaultCategory" stepKey="createPreReqCategory"/>
+        <createData entity="_newDefaultProduct" stepKey="createPreReqProduct1">
+            <requiredEntity createDataKey="createPreReqCategory"/>
+        </createData>
+        <createData entity="_newDefaultProduct" stepKey="createPreReqProduct2">
+            <requiredEntity createDataKey="createPreReqCategory"/>
+        </createData>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Product" stepKey="selectOption" />
+
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderSection.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <dontSee userInput="$createPreReqProduct1.name$" stepKey="dontSeeProduct1"/>
+        <dontSee userInput="$createPreReqProduct2.name$" stepKey="dontSeeProduct2"/>
+
+        <!--Type 2 first letters into Search box-->
+        <pressKey selector="{{PageBuilderSection.LinkSearch}}" parameterArray="['te',\Facebook\WebDriver\WebDriverKeys::ENTER]" stepKey="pressKeyEnter"/>
+        <waitForElementVisible selector="{{PageBuilderSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="waitForSearchResult" />
+        <see userInput="$createPreReqProduct1.name$" stepKey="seeProduct1OnSearchResult"/>
+        <click selector="{{PageBuilderSection.SearchResult($createPreReqProduct1.name$)}}" stepKey="clickProduct1XOnSearchResult"/>
+        <dontSee selector="{{PageBuilderSection.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">$createPreReqProduct1.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField1" />
+
+        <!--Expand dropdown again to verify highlighted not cleared yet-->
+        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
+        <seeInField  selector="{{PageBuilderSection.LinkSearch}}" userInput="te" stepKey="seeSearchNotCleared"/>
+        <seeElement selector="{{PageBuilderSection.LinkItemSelected($createPreReqProduct1.name$)}}" stepKey="seeSearchResultHighlighted" />
+
+        <!--Select another product from dropdown-->
+        <click selector="{{PageBuilderSection.SearchResult($createPreReqProduct2.name$)}}" stepKey="clickProduct2OnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">$createPreReqProduct2.name$</expectedResult>
+            <actualResult type="variable">textFromDropDown2</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify Product Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{PageBuilderCatalogOnStoreFrontSection.ProductLink($createPreReqProduct2.name$)}}" stepKey="seeExternalLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="$createPreReqProduct2.name$" stepKey="seeProductName" />
+
+        <deleteData createDataKey="createPreReqProduct2" stepKey="deletePreReqProduct2" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <waitForLoadingMaskToDisappear stepKey="waitForLoading1" />
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <assertRegExp stepKey="assertEquals3" message="pass">
+            <expectedResult type="string">/^Product with ID: [0-9]+ doesn't exist$/</expectedResult>
+            <actualResult type="variable">textFromDropDown3</actualResult>
+        </assertRegExp>
+        <deleteData createDataKey="createPreReqCategory" stepKey="deletePreReqCategory" />
+        <deleteData createDataKey="createPreReqProduct1" stepKey="deletePreReqProduct1" />
+    </test>
+    <test name="AdminPageBuilderPageButtonLinkTest">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Common Tests"/>
+            <title value="URL Input - Admin are able to add CMS Page link into PageBuilder content"/>
+            <description value="Admin are able to add CMS Page link into PageBuilder content"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-88960"/>
+            <testCaseId value="MAGETWO-90276"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-urlInput"/>
+        </annotations>
+        <before>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+        </before>
+        <after>
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="logout" stepKey="logout"/>
+            <waitForPageLoad stepKey="waitForAdminLoginPageLoad"/>
+        </after>
+        <createData entity="_newDefaultCmsPage" stepKey="createCMSPageA" />
+        <createData entity="_newDefaultCmsPage" stepKey="createCMSPageB" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage1">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+
+        <click selector="{{CmsNewPagePageContentSection.header}}" stepKey="clickExpandContent"/>
+        <dragAndDrop selector1="{{PageBuilderPanel.draggableContentTypeInPanel(PageBuilderButtonsContentType.name)}}" selector2="{{PageBuilderStage.dropAreaInStage}}" stepKey="dropContentTypeIntoStage"/>
+
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditMenuOnStage1">
+            <argument name="section" value="ButtonItemOnStage"/>
+            <argument name="targetIndex" value="1"/>
+        </actionGroup>
+
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect"/>
+        <seeElement selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="seeButtonLinkSelect"/>
+        <selectOption selector="{{EditPanelForm.panelFieldControl(PageBuilderButtonItemLink_NotSecure.section, PageBuilderButtonItemLink_NotSecure.fieldName)}}" userInput="Page" stepKey="selectOption" />
+
+        <!--See dropdown beside Button Link Select-->
+        <waitForElementVisible selector="{{PageBuilderSection.LinkDropdown}}" stepKey="waitButtonLinkDropdownInput" />
+        <seeElement selector="{{PageBuilderSection.LinkDropdown}}" stepKey="seeButtonLinkDropdownInput" />
+        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput1" />
+        <see userInput="$createCMSPageA.title$" stepKey="seeCMSPageA"/>
+
+        <!--Type 2 first letters into Search box-->
+        <click selector="{{PageBuilderSection.LinkSearch}}" stepKey="focusOnField"/>
+        <fillField selector="{{PageBuilderSection.LinkSearch}}" userInput="cm" stepKey="fill2FirstLetters"/>
+        <waitForElementVisible selector="{{PageBuilderSection.SearchResult($createCMSPageA.title$)}}" stepKey="waitForSearchResult" />
+        <seeElement selector="{{PageBuilderSection.SearchResult($createCMSPageA.title$)}}" stepKey="seeCMSPageAOnSearchResult"/>
+        <click selector="{{PageBuilderSection.SearchResult($createCMSPageA.title$)}}" stepKey="clickCMSPageAXOnSearchResult"/>
+        <dontSee selector="{{PageBuilderSection.SearchResultBox}}" stepKey="dropdownCollapses" />
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown1"/>
+        <assertEquals stepKey="assertEquals1" message="pass">
+            <expectedResult type="string">$createCMSPageA.title$</expectedResult>
+            <actualResult type="variable">textFromDropDown1</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField1" />
+
+        <!--Expand dropdown again to verify highlighted not cleared yet-->
+        <click selector="{{PageBuilderSection.LinkDropdown}}" stepKey="expandButtonLinkDropdownInput2" />
+        <seeInField  selector="{{PageBuilderSection.LinkSearch}}" userInput="cm" stepKey="seeSearchNotCleared"/>
+        <seeElement selector="{{PageBuilderSection.LinkItemSelected($createCMSPageA.title$)}}" stepKey="seeSearchResultHighlighted" />
+
+        <!--Select another page from dropdown-->
+        <click selector="{{PageBuilderSection.SearchResult($createCMSPageB.title$)}}" stepKey="clickCMSPageBOnSearchResult"/>
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown2"/>
+        <assertEquals stepKey="assertEquals2" message="pass">
+            <expectedResult type="string">$createCMSPageB.title$</expectedResult>
+            <actualResult type="variable">textFromDropDown2</actualResult>
+        </assertEquals>
+        <seeElement selector="{{PageBuilderSection.RemoveBtn}}" stepKey="seeXButtonInField2" />
+        <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings1"/>
+        <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage1"/>
+
+        <!--Go to storefront to verify CMS Page Link-->
+        <amOnPage url="$$createCMSPage.identifier$$" stepKey="amOnPageTestPage"/>
+        <waitForPageLoad  stepKey="waitForPageLoad1"/>
+        <seeElement selector="{{PageBuilderPageOnStoreFrontSection.CMSPageLink($createCMSPageB.identifier$)}}" stepKey="seePageLinkOnStoreFront" />
+        <click selector=".pagebuilder-button-primary" stepKey="clickButton"/>
+        <waitForPageLoad stepKey="waitForPageLoad"/>
+        <see userInput="$createCMSPageB.title$" stepKey="seePageName" />
+
+        <!--Verify Link when Page get deleted -->
+        <deleteData createDataKey="createCMSPageB" stepKey="deleteCreatedCMSPageB" />
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage2">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <click selector=".placeholder-text" stepKey="clickOnEditButton"/>
+        <waitForElementVisible selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="waitForSettingBtn" />
+        <click selector="//div[contains(@class, 'buttons-container')]//a[@title='Edit']" stepKey="clickSelectButtonOnFirstItem"/>
+        <waitForElementVisible selector="{{PageBuilderSection.LinkSelect('button_link')}}" stepKey="waitForButtonLinkSelect2"/>
+        <grabTextFrom selector="{{PageBuilderSection.DropdownInput}}" stepKey="textFromDropDown3"/>
+        <assertRegExp stepKey="assertEquals3" message="pass">
+            <expectedResult type="string">/^Page with ID: [0-9]+ doesn't exist$/</expectedResult>
+            <actualResult type="variable">textFromDropDown3</actualResult>
+        </assertRegExp>
+        <deleteData createDataKey="createCMSPageA" stepKey="deletePreReqCMSPageA" />
     </test>
 </tests>

@@ -8,9 +8,9 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="ValidateGridSettingsValidationInSystemConfig">
+    <test name="StoreConfigurationGridSettingsValidationInSystemConfig">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Store Configuration - Column Grid Size"/>
             <title value="Verify validations for grid default and max size."/>
             <description value="Verify validations for grid default and max size."/>
@@ -155,9 +155,9 @@
         <actionGroup ref="saveStoreConfiguration" stepKey="saveStoreConfiguration6"/>
         <see selector="{{ContentManagementSection.StoreConfigurationPageSuccessMessage}}" userInput="You saved the configuration." stepKey="seeSuccessMessage3"/>
     </test>
-    <test name="ValidateOddDefaultGridSizeIsSplitCorrectly">
+    <test name="StoreConfigurationValidateOddDefaultGridSizeIsSplitCorrectly">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Store Configuration - Column Grid Size"/>
             <title value="Verify that the initial two column split is correct when the default grid size is odd."/>
             <description value="Verify that the initial two column split is correct when the default grid size is odd."/>
@@ -194,9 +194,9 @@
         <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('1', '3/5')}}" stepKey="verifyFirstColumn"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.displayLabel('2', '2/5')}}" stepKey="verifySecondColumn"/>
     </test>
-    <test name="ValidateTooltipMessage">
+    <test name="StoreConfigurationValidateColumnGridTooltipMessage">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Store Configuration - Column Grid Size"/>
             <title value="Column grid panel tooltip updates with max column size."/>
             <description value="Verify that the tooltip for grid size updates to reflect the max column size."/>
@@ -233,9 +233,9 @@
         <click selector="{{PageBuilderColumnSection.gridSizeTooltip('1')}}" stepKey="clickWithinPanel"/>
         <waitForElementVisible selector="{{PageBuilderColumnSection.gridSizeTooltipWithMax('1', PageBuilderGridSize.gridSize_5)}}" stepKey="verifyTooltip"/>
     </test>
-    <test name="DefaultColumnGridSizeFieldAppearance">
+    <test name="StoreConfigurationDefaultColumnGridSizeFieldAppearance">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Store Configuration - Column Grid Size"/>
             <title value="Validate Default Column Grid Size Field Appearance"/>
             <description value="Verify the Default Column Grid Size field is global and has correct helper text."/>
@@ -264,9 +264,9 @@
         <waitForElementVisible selector="{{ContentManagementSection.ColumnGridDefaultHelperText}}" stepKey="waitForHelperText"/>
         <see selector="{{ContentManagementSection.ColumnGridDefaultHelperText}}" userInput="Grid size determines the default number of columns available." stepKey="seeHelperText"/>
     </test>
-    <test name="MaximumColumnGridSizeFieldAppearance">
+    <test name="StoreConfigurationMaximumColumnGridSizeFieldAppearance">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Store Configuration - Column Grid Size"/>
             <title value="Validate Max Column Grid Size Field Appearance"/>
             <description value="Verify the Maximum Column Grid Size field is global and has correct helper text."/>

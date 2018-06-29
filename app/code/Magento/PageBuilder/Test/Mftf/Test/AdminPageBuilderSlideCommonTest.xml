@@ -10,7 +10,7 @@
        xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
     <test name="AddSliderContentTypeToCMSPage">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Add Slider in PageBuilder for new CMS page, customize slider settings and view on Storefront"/>
             <description value="The user should be able to add the slides media content type to slider media content type and it should be visible on the frontend"/>
@@ -229,9 +229,207 @@
         <seeElement selector="{{SlideOnFrontend.slideBackgroundImage('1',PageBuilderSlideBackgroundImageProperty2.path, PageBuilderSlideBackgroundImageProperty2.extension)}}" stepKey="seeSlide2Background"/>
         <seeElement selector="{{SlideOnFrontend.slideAppearancePoster('1')}}" stepKey="verifySlide2HasPosterAppearanceOnStorefront"/>
     </test>
+    <test name="SlideAppearanceSectionDefaults">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Configuration Settings: Appearance section defaults"/>
+            <description value="New slide has default values on Appearance section"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MAGETWO-88737"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Verify default and available values on Appearance section of Add Slide form -->
+        <comment userInput="Appearance defaults to Poster" stepKey="AC0" />
+        <actionGroup ref="validateVisualSelects" stepKey="validateAlignment">
+            <argument name="property1" value="PageBuilderSlideAppearanceDefaultProperty"/>
+            <argument name="property2" value="PageBuilderSlideCollageLeftProperty"/>
+            <argument name="property3" value="PageBuilderSlideCollageCenteredProperty"/>
+            <argument name="property4" value="PageBuilderSlideCollageRightProperty"/>
+        </actionGroup>
+        <comment userInput="User doesn't see Advanced Content appearance" stepKey="AC2"/>
+        <dontSeeElement selector="//li[@name='advanced content']" stepKey="advancedContentAppearanceNotPresent"/>
+        <comment userInput="User sees Name: input defaults to empty" stepKey="AC3"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideItemName1.section, PageBuilderSlideItemName1.fieldName)}}" stepKey="grabNameDefaultValue"/>
+        <assertEmpty stepKey="assertEmptyName" message="Name has text: $grabNameDefaultValue">
+            <actualResult type="variable">grabNameDefaultValue</actualResult>
+        </assertEmpty>
+        <comment userInput="Minimum Height: input defaults to 300" stepKey="AC4"/>
+        <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeMinHeightDefault300">
+            <argument name="property" value="PageBuilderSlideMinHeight"/>
+        </actionGroup>
+    </test>
+    <test name="SlideBackgroundSectionDefaults">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Configuration Settings: Background section defaults"/>
+            <description value="New slide has default values on Background section"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MAGETWO-88731"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Verify default and available values on background section of Add Slide form -->
+        <comment userInput="Background Color: input defaults to empty" stepKey="AC0" />
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundColorDefault.section, PageBuilderSlideBackgroundColorDefault.fieldName)}}" stepKey="grabColorDefaultValue"/>
+        <assertEmpty stepKey="assertEmptyBackgroundColor" message="Background Color has text: $grabColorDefaultValue">
+            <actualResult type="variable">grabColorDefaultValue</actualResult>
+        </assertEmpty>
+        <comment userInput="Background Image: mediaUpload defaults to empty" stepKey="AC1"/>
+        <seeElement selector="{{ImageOnConfigurationPanel.placeholderContent('Background Image')}}" stepKey="seeImagePlaceHolderOnImage1"/>
+        <comment userInput="Background Position: dropdown defaults to Top Aligned" stepKey="AC2"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="{{PageBuilderBackgroundPositionDefault.value}}" stepKey="seeTopAlignedPositionDefault"/>
+        <comment userInput="Background Position: available values Top Aligned, Centered, Bottom Aligned" stepKey="AC3"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderBackgroundPositionDefault.section, PageBuilderBackgroundPositionDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundPositionDropdownValues"/>
+        <assertEquals stepKey="assertPositionDropdown" message="Background Position in dropdown">
+            <expectedResult type="array">[Top Aligned, Centered, Bottom Aligned]</expectedResult>
+            <actualResult type="variable">grabBackgroundPositionDropdownValues</actualResult>
+        </assertEquals>
+        <comment userInput="Background Size: dropdown defaults to Cover" stepKey="AC4"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="{{PageBuilderSlideBackgroundSizeDefault.value}}" stepKey="seeBackgroundSizeDefault"/>
+        <comment userInput="Background Size: available values Auto, Cover, Contain" stepKey="AC5"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideBackgroundSizeDefault.section, PageBuilderSlideBackgroundSizeDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundSizeDropdownValues"/>
+        <assertEquals stepKey="assertBackgroundSizeDropdown" message="Background sizes in dropdown">
+            <expectedResult type="array">[Auto, Cover, Contain]</expectedResult>
+            <actualResult type="variable">grabBackgroundSizeDropdownValues</actualResult>
+        </assertEquals>
+        <comment userInput="Background Repeat: switch defaults to No" stepKey="AC6"/>
+        <actionGroup ref="seeOptionIsNotCheckedSlideOutProperty" stepKey="seeBackgroundRepeatPropertyDefaultNo">
+            <argument name="property" value="PageBuilderBackgroundRepeatOff"/>
+        </actionGroup>
+        <comment userInput="Background Attachment: dropdown defaults to Scroll" stepKey="AC7"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="Scroll" stepKey="seeBackgroundAttachmentDefault"/>
+        <comment userInput="Background Attachment: available values Scroll, Fixed" stepKey="AC8"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideBackgroundAttachmentDefault.section, PageBuilderSlideBackgroundAttachmentDefault.fieldName)}}" userInput="innerText" stepKey="grabBackgroundAttachmentDropdownValues"/>
+        <assertEquals stepKey="assertBackgroundAttachmentDropdown" message="Background sizes in dropdown">
+            <expectedResult type="array">[Scroll, Fixed]</expectedResult>
+            <actualResult type="variable">grabBackgroundAttachmentDropdownValues</actualResult>
+        </assertEquals>
+    </test>
+    <test name="SlideContentSectionDefaults">
+        <annotations>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
+            <title value="Slide Configuration Settings: Content section defaults"/>
+            <description value="New slide has default values on Content section"/>
+            <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-75774"/>
+            <testCaseId value="MAGETWO-88737"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-slider"/>
+            <group value="pagebuilder-sliderCommon"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
+            <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
+        </before>
+        <after>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandPageBuilderPanelGroup">
+            <argument name="group" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragSliderOntoStage">
+            <argument name="contentType" value="PageBuilderSliderContentType"/>
+        </actionGroup>
+        <!-- Verify default and available values on content section of Add Slide form -->
+        <comment userInput="Slide Content: WYSIWYG defaults to empty" stepKey="AC0" />
+        <!-- unable to get content of WYSIWYG out to variable MQE-818 -->
+        <comment userInput="Show Button: dropdown defaults to Never Show " stepKey="AC1"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideShowButtonDefaultProperty.section, PageBuilderSlideShowButtonDefaultProperty.fieldName)}}" userInput="Never Show" stepKey="seeShowButtonDefault"/>
+        <comment userInput="Show Button: available values Always, On Hover, Never Show" stepKey="AC2"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideShowButtonDefaultProperty.section, PageBuilderSlideShowButtonDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowButtonDropdownValues"/>
+        <assertEquals stepKey="assertShowButtonDropdown" message="Verify Button Types dropdown options">
+            <expectedResult type="array">[Always, On Hover, Never Show]</expectedResult>
+            <actualResult type="variable">grabShowButtonDropdownValues</actualResult>
+        </assertEquals>
+        <comment userInput="Button Text: input defaults to empty." stepKey="AC3"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideItemButtonTextDefault.section, PageBuilderSlideItemButtonTextDefault.fieldName)}}" stepKey="grabButtonTextValue"/>
+        <assertEmpty stepKey="assertEmptyButtonText" message="Button text has text: $grabButtonTextValue">
+            <actualResult type="variable">grabButtonTextValue</actualResult>
+        </assertEmpty>
+        <comment userInput="Button Text: Field is disabled by default due to Never show default on Show Button" stepKey="AC4"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateButtonTextAttributeDisabled">
+            <argument name="property" value="PageBuilderSlideButtonTextDefaultProperty"/>
+        </actionGroup>
+        <comment userInput="Button Type: dropdown defaults to Primary" stepKey="AC5"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideButtonTypeDefaultProperty.section, PageBuilderSlideButtonTypeDefaultProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTypeDefaultProperty.value}}" stepKey="seeButtonTypeDefault"/>
+        <comment userInput="Button Type: available values Primary, Secondary, Link. " stepKey="AC6"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideButtonTypeDefaultProperty.section, PageBuilderSlideButtonTypeDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabButtonTypeDropdownValues"/>
+        <assertEquals stepKey="assertButtonTypeDropdown" message="Verify Button Types dropdown options">
+            <expectedResult type="array">[Primary, Secondary, Link]</expectedResult>
+            <actualResult type="variable">grabButtonTypeDropdownValues</actualResult>
+        </assertEquals>
+        <comment userInput="Button Type: Field is disabled by default due to Never show default on Show Button" stepKey="AC7"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateButtonTypeDisabled">
+            <argument name="property" value="PageBuilderSlideButtonTypeDefaultProperty"/>
+        </actionGroup>
+        <comment userInput="Show Overlay: dropdown defaults to Never Show " stepKey="AC8"/>
+        <seeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="{{PageBuilderSlideShowOverlayDefaultProperty.value}}" stepKey="seeShowOverlayDefault"/>
+        <comment userInput="Show Overlay: available values Always, On hover, Never show" stepKey="AC9"/>
+        <grabMultiple selector="{{EditPanelForm.panelFieldOptions(PageBuilderSlideShowOverlayDefaultProperty.section, PageBuilderSlideShowOverlayDefaultProperty.fieldName)}}" userInput="innerText" stepKey="grabShowOverlayDropdownValues"/>
+        <assertEquals stepKey="assertShowOverlayDropdown" message="Show Overlay in dropdown">
+            <expectedResult type="array">[Always, On Hover, Never Show]</expectedResult>
+            <actualResult type="variable">grabShowOverlayDropdownValues</actualResult>
+        </assertEquals>
+        <comment userInput="Overlay Color: input defaults to white." stepKey="AC10"/>
+        <grabValueFrom selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideOverlayColorDefaultProperty.section, PageBuilderSlideOverlayColorDefaultProperty.fieldName)}}" stepKey="grabOverlayColorValue"/>
+        <assertEquals stepKey="assertOverlayColorValue" message="Overlay Color has text: $grabOverlayColorValue">
+            <expectedResult type="string">#FFFFFF</expectedResult>
+            <actualResult type="variable">grabOverlayColorValue</actualResult>
+        </assertEquals>
+        <comment userInput="Overlay Color: Field is disabled by default due to Never Show default on Show Overlay." stepKey="AC11"/>
+        <actionGroup ref="validateSlideOutPanelFieldIsDisabled" stepKey="validateOverlayColorDisabled">
+            <argument name="property" value="PageBuilderSlideOverlayColorDefaultProperty"/>
+        </actionGroup>
+    </test>
     <test name="SliderEmptySliderAdminPreview">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Verify Empty Slider default state on admin preview and storefront"/>
             <description value="As a Content Manager I want to see empty content types preview on the stage so that I see their position and can access their settings"/>
@@ -401,7 +599,7 @@
     </test>
     <test name="CanManageSlides">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Can add slides and see tooltip and slide name when clicking navigation dots"/>
             <description value="A user should be able to manage slides by using the navigation dots in admin preview"/>
@@ -503,9 +701,9 @@
     </test>
     <test name="SliderDelete">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Remove slider content block from stage"/>
+            <title value="Delete Slider"/>
             <description value="A user should be able to remove slider content type from a row."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83933"/>
@@ -539,7 +737,7 @@
     </test>
     <test name="SlideCanDeleteSlide">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Cannot delete last slide from slider"/>
             <description value="A user should be able delete slides when there are multiple of them."/>
@@ -607,7 +805,7 @@
     </test>
     <test name="SliderValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Slider - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Slider."/>
@@ -669,9 +867,9 @@
     </test>
     <test name="SlideValidateAdvancedConfigurationDefaultValues">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Slide - Validate Advanced Configuration Default Values"/>
+            <title value="Slide Item - Validate Advanced Configuration Default Values"/>
             <description value="Validate the default values for every attribute in the Advanced Configuration form and on Stage for Slide."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-83415"/>
@@ -725,7 +923,7 @@
     </test>
     <test name="SlideHasEditButtonTextButtonStyledInAdminAndStorefront">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Slide has 'Edit Button Text' button styled correctly (Luna) in admin and frontend (Base)"/>
             <description value="A user should be able to see 'Edit Button Text' button styled correctly for Slide"/>
@@ -848,7 +1046,7 @@
     </test>
     <test name="SlideCanOpenInNewTab">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Slide can open in new tab in frontend"/>
             <description value="A user should be able to click on Slide and open in new tab for frontend"/>
@@ -910,7 +1108,7 @@
     </test>
     <test name="SlideDoesNotNavigateInPreview">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Slide does not navigate on click"/>
             <description value="A user should be to click on the Slide in preview and not have it navigate to another page."/>
@@ -967,11 +1165,12 @@
     </test>
     <test name="SlideCanAddImageToSlide">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-86533: [UI component] MediaGalleryImage: inside form"/>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
             <title value="Add an image content type into slide"/>
             <description value="A user should be able to add an image into a slide."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-86533"/>
             <testCaseId value="MC-2404"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
@@ -1064,7 +1263,7 @@
     </test>
     <test name="SlideWithDefaultMinHeightAdjustsToContentHeight">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Slide shows full content even when larger than slide default minimum height on Admin and Storefront"/>
             <description value="If content height is larger than min height, verify slide height equals content height"/>
@@ -1136,13 +1335,13 @@
     </test>
     <test name="SliderCanHaveContentPlacedAbove">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Slider allows content to be placed above self"/>
             <description value="You should be able to drag &amp; drop new content above the slider when it's the first in a container"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-92307"/>
             <useCaseId value="MAGETWO-86953"/>
+            <testCaseId value="MAGETWO-92307"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -1188,13 +1387,13 @@
     </test>
     <test name="SliderCannotHaveContentDroppedInside">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Slider doesn't receive new content when drop on top of self"/>
             <description value="Any new content dropped into the slider should be added either above or below depending on position"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-92333"/>
             <useCaseId value="MAGETWO-86953"/>
+            <testCaseId value="MAGETWO-92333"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -1264,13 +1463,13 @@
     </test>
     <test name="SliderCanBeDeletedAfterAccidentalDrag">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="After accidental drag slider should still be removable"/>
             <description value="You should still be able to remove a slider after accidentally moving it within the same container"/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-92364"/>
             <useCaseId value="MAGETWO-86953"/>
+            <testCaseId value="MAGETWO-92364"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderCommon"/>
@@ -1305,7 +1504,7 @@
     </test>
     <test name="AddImageToSliderStage">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
             <title value="Add image into Slider from the Stage"/>
             <description value="A user should be able to add image to Slider stage."/>
@@ -1379,9 +1578,9 @@
     </test>
     <test name="VerifyUploadImageOnSliderStageDependOnEachTypeOfAppearance">
         <annotations>
-            <features value="Pagebuilder"/>
+            <features value="PageBuilder"/>
             <stories value="Slider"/>
-            <title value="Add image into Slider from the Stage"/>
+            <title value="Add image into Slider from the Stage for different appearances"/>
             <description value="A user should be able to add image to Slider stage when switching between appearance type."/>
             <severity value="CRITICAL"/>
             <useCaseId value="MAGETWO-75104"/>
@@ -1450,11 +1649,12 @@
     </test>
     <test name="SlideBorderIsVisible">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
-            <stories value="MAGETWO-91186: Pagebuilder - Slide Border Cuts Off Right Side On Storefront"/>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
             <title value="Slide border is visible in storefront"/>
             <description value="User should be able to add a border to a slide and see all sides of the border visible on the storefront"/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MAGETWO-91186"/>
             <testCaseId value="MAGETWO-92372"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
@@ -1510,10 +1710,12 @@
     </test>
     <test name="SliderCanBeNavigatedQuickly">
         <annotations>
-            <features value="Pagebuilder: Slider"/>
+            <features value="PageBuilder"/>
+            <stories value="Slider"/>
             <title value="Ability to navigate between slides quickly"/>
             <description value="Navigating between slides whilst the animation is still running should still result in the correct slide being show."/>
             <severity value="CRITICAL"/>
+            <useCaseId value="MC-845"/>
             <testCaseId value="MAGETWO-92363"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
