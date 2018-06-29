@@ -18,6 +18,9 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
       _this.placeholderText = void 0;
+      _this.lastBlockId = void 0;
+      _this.lastTemplate = void 0;
+      _this.lastRenderedHtml = void 0;
       _this.messages = {
         NOT_SELECTED: (0, _translate)("Empty Block"),
         LOADING: (0, _translate)("Loading..."),
@@ -57,14 +60,26 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
 
       _BasePreview.prototype.afterObservablesUpdated.call(this);
 
-      this.placeholderText(this.messages.LOADING);
+      var data = this.parent.dataStore.get(); // Only load if something changed
+
+      if (this.lastBlockId === data.block_id && this.lastTemplate === data.template) {
+        // The mass converter will have transformed the HTML property into a directive
+        if (this.lastRenderedHtml) {
+          this.data.main.html(this.lastRenderedHtml);
+          this.displayPreview(true);
+        }
+
+        return;
+      }
+
       this.displayPreview(false);
-      var data = this.parent.dataStore.get();
 
       if (!data.block_id || data.template.length === 0) {
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
       }
+
+      this.placeholderText(this.messages.LOADING);
 
       var url = _config.getConfig("preview_url");
 
@@ -97,6 +112,10 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         } else if (response.data.error) {
           _this3.placeholderText(response.data.error);
         }
+
+        _this3.lastBlockId = data.block_id;
+        _this3.lastTemplate = data.template;
+        _this3.lastRenderedHtml = response.data.content;
       }).fail(function () {
         _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
       });
