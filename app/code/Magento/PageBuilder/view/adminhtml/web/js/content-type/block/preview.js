@@ -17,13 +17,14 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
 
       _this = _BasePreview.call(this, parent, config, observableUpdater) || this;
       _this.displayPreview = _knockout.observable(false);
+      _this.displayPlaceholder = _knockout.observable(false);
+      _this.loading = _knockout.observable(false);
       _this.placeholderText = void 0;
       _this.lastBlockId = void 0;
       _this.lastTemplate = void 0;
       _this.lastRenderedHtml = void 0;
       _this.messages = {
         NOT_SELECTED: (0, _translate)("Empty Block"),
-        LOADING: (0, _translate)("Loading..."),
         UNKNOWN_ERROR: (0, _translate)("An unknown error occurred. Please try again.")
       };
       _this.placeholderText = _knockout.observable(_this.messages.NOT_SELECTED);
@@ -67,19 +68,22 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         if (this.lastRenderedHtml) {
           this.data.main.html(this.lastRenderedHtml);
           this.displayPreview(true);
+          this.displayPlaceholder(false);
         }
-
-        return;
+      } else {
+        this.displayPreview(false);
+        this.displayPlaceholder(true);
+        this.placeholderText("");
       }
 
-      this.displayPreview(false);
-
       if (!data.block_id || data.template.length === 0) {
+        this.displayPreview(false);
+        this.displayPlaceholder(true);
         this.placeholderText(this.messages.NOT_SELECTED);
         return;
       }
 
-      this.placeholderText(this.messages.LOADING);
+      this.loading(true);
 
       var url = _config.getConfig("preview_url");
 
@@ -97,6 +101,10 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
       .done(function (response) {
         // Empty content means something bad happened in the controller that didn't trigger a 5xx
         if (_typeof(response.data) !== "object") {
+          _this3.displayPreview(false);
+
+          _this3.displayPlaceholder(true);
+
           _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
 
           return;
@@ -108,8 +116,14 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         if (response.data.content) {
           _this3.displayPreview(true);
 
+          _this3.displayPlaceholder(false);
+
           _this3.data.main.html(response.data.content);
         } else if (response.data.error) {
+          _this3.displayPreview(false);
+
+          _this3.displayPlaceholder(true);
+
           _this3.placeholderText(response.data.error);
         }
 
@@ -117,7 +131,13 @@ define(["jquery", "knockout", "mage/translate", "uiEvents", "Magento_PageBuilder
         _this3.lastTemplate = data.template;
         _this3.lastRenderedHtml = response.data.content;
       }).fail(function () {
+        _this3.displayPreview(false);
+
+        _this3.displayPlaceholder(true);
+
         _this3.placeholderText(_this3.messages.UNKNOWN_ERROR);
+      }).always(function () {
+        _this3.loading(false);
       });
     };
 

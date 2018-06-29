@@ -16,13 +16,14 @@ import BasePreview from "../preview";
 
 export default class Preview extends BasePreview {
     public displayPreview: KnockoutObservable<boolean> = ko.observable(false);
+    public displayPlaceholder: KnockoutObservable<boolean> = ko.observable(false);
+    public loading: KnockoutObservable<boolean> = ko.observable(false);
     public placeholderText: KnockoutObservable<string>;
     private lastBlockId: number;
     private lastTemplate: string;
     private lastRenderedHtml: string;
     private messages = {
         NOT_SELECTED: $t("Empty Block"),
-        LOADING: $t("Loading..."),
         UNKNOWN_ERROR: $t("An unknown error occurred. Please try again."),
     };
 
@@ -68,20 +69,25 @@ export default class Preview extends BasePreview {
             if (this.lastRenderedHtml) {
                 this.data.main.html(this.lastRenderedHtml);
                 this.displayPreview(true);
+                this.displayPlaceholder(false);
             }
-
-            return;
+        }
+        else {
+            this.displayPreview(false);
+            this.displayPlaceholder(true);
+            this.placeholderText("");
         }
 
-        this.displayPreview(false);
 
         if (!data.block_id || data.template.length === 0) {
+            this.displayPreview(false);
+            this.displayPlaceholder(true);
             this.placeholderText(this.messages.NOT_SELECTED);
 
             return;
         }
 
-        this.placeholderText(this.messages.LOADING);
+        this.loading(true);
 
         const url = Config.getConfig("preview_url");
         const requestConfig = {
@@ -100,6 +106,8 @@ export default class Preview extends BasePreview {
             .done((response) => {
                 // Empty content means something bad happened in the controller that didn't trigger a 5xx
                 if (typeof response.data !== "object") {
+                    this.displayPreview(false);
+                    this.displayPlaceholder(true);
                     this.placeholderText(this.messages.UNKNOWN_ERROR);
 
                     return;
@@ -110,8 +118,11 @@ export default class Preview extends BasePreview {
 
                 if (response.data.content) {
                     this.displayPreview(true);
+                    this.displayPlaceholder(false);
                     this.data.main.html(response.data.content);
                 } else if (response.data.error) {
+                    this.displayPreview(false);
+                    this.displayPlaceholder(true);
                     this.placeholderText(response.data.error);
                 }
 
@@ -120,7 +131,12 @@ export default class Preview extends BasePreview {
                 this.lastRenderedHtml = response.data.content;
             })
             .fail(() => {
+                this.displayPreview(false);
+                this.displayPlaceholder(true);
                 this.placeholderText(this.messages.UNKNOWN_ERROR);
+            })
+            .always(() => {
+                this.loading(false);
             });
     }
 }
