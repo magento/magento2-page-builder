@@ -38,7 +38,7 @@ class Config extends \Magento\Framework\Config\Data implements \Magento\PageBuil
     /**
      * @return array
      */
-    public function getGroups()
+    public function getGroups() : array
     {
         return $this->get('groups');
     }

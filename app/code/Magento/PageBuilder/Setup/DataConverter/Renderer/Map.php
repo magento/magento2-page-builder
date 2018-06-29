@@ -85,7 +85,7 @@ class Map implements RendererInterface
      *
      * @param array $eavData
      *
-     *  @return void
+     * @return void
      */
     private function renderMapLocations($eavData) : void
     {
