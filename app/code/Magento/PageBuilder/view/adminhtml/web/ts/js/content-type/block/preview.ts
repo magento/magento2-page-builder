@@ -115,8 +115,8 @@ export default class Preview extends BasePreview {
                     this.placeholderText(response.data.error);
                 }
 
-                this.lastBlockId = <number>data.block_id;
-                this.lastTemplate = <string>data.template;
+                this.lastBlockId = data.block_id;
+                this.lastTemplate = data.template;
                 this.lastRenderedHtml = response.data.content;
             })
             .fail(() => {
