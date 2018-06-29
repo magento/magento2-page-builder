@@ -171,8 +171,8 @@ export default class Stage {
         events.on("stage:interactionStart", () => this.interacting(true));
         events.on("stage:interactionStop", () => this.interacting(false));
 
-        events.on("stage:focusChildStart", () => this.focusChild(true));
-        events.on("stage:focusChildStop", () => this.focusChild(false));
+        events.on("stage:childFocusStart", () => this.focusChild(true));
+        events.on("stage:childFocusStop", () => this.focusChild(false));
     }
 
     /**

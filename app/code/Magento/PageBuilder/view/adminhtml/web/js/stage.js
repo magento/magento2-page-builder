@@ -176,11 +176,11 @@ define(["knockout", "mage/translate", "Magento_PageBuilder/js/events", "Magento_
         return _this.interacting(false);
       });
 
-      _events.on("stage:focusChildStart", function () {
+      _events.on("stage:childFocusStart", function () {
         return _this.focusChild(true);
       });
 
-      _events.on("stage:focusChildStop", function () {
+      _events.on("stage:childFocusStop", function () {
         return _this.focusChild(false);
       });
     };

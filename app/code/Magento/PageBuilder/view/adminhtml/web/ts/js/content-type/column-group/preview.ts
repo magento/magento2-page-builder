@@ -444,7 +444,7 @@ export default class Preview extends PreviewCollection {
         if (!this.gridSizeError()) {
             this.gridFormOpen(false);
             events.trigger("stage:interactionStop");
-            events.trigger("stage:focusChildStop");
+            events.trigger("stage:childFocusStop");
             $(document).off("click focusin", this.onDocumentClick);
         }
     }
@@ -464,7 +464,7 @@ export default class Preview extends PreviewCollection {
             }, 200);
             $(document).on("click focusin", this.onDocumentClick);
             events.trigger("stage:interactionStart");
-            events.trigger("stage:focusChildStart");
+            events.trigger("stage:childFocusStart");
         }
     }
 
