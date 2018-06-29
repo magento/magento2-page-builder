@@ -10,8 +10,10 @@ namespace Magento\PageBuilder\Controller\Adminhtml\ContentType\Block;
 
 use Magento\Framework\Controller\ResultFactory;
 
-class Metadata extends \Magento\Framework\App\Action\Action
+class Metadata extends \Magento\Backend\App\AbstractAction
 {
+    const ADMIN_RESOURCE = 'Magento_Cms::block';
+
     /**
      * @var \Magento\Cms\Model\ResourceModel\Block\CollectionFactory
      */
