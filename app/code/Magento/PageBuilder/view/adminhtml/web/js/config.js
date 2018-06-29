@@ -20,8 +20,8 @@ define(["underscore"], function (_underscore) {
     /**
      * Retrieve the init config
      *
-     * @param key
-     * @returns {any}
+     * @param {string} key
+     * @returns {T}
      */
 
 

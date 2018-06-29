@@ -13,7 +13,7 @@
             <argument name="group"/>
         </arguments>
         <waitForElementVisible selector="{{PageBuilderPanel.panelGroup(group.section)}}" stepKey="waitForGroupVisible"/>
-        <conditionalClick selector="{{PageBuilderPanel.panelGroup(group.section)}}" dependentSelector="{{PageBuilderPanel.panelGroupActive(group.name)}}" visible="false" stepKey="expandGroup"/>
+        <conditionalClick selector="{{PageBuilderPanel.panelGroup(group.section)}}" dependentSelector="{{PageBuilderPanel.panelGroupActive(group.section)}}" visible="false" stepKey="expandGroup"/>
         <waitForElementVisible selector="{{PageBuilderPanel.panelGroupActive(group.section)}}" stepKey="waitForGroupExpanded"/>
     </actionGroup>
     <actionGroup name="closePageBuilderPanelGroups">

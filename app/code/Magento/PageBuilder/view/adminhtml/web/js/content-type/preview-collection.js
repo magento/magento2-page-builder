@@ -18,11 +18,11 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
     var _proto = PreviewCollection.prototype;
 
     /**
-     * Duplicate content type
+     * Duplicate a collection content type
      *
-     * @param {ContentTypeInterface} contentType
+     * @param {ContentTypeInterface & ContentTypeCollectionInterface} contentType
      * @param {boolean} autoAppend
-     * @returns {Promise<ContentTypeInterface>}
+     * @returns {Promise<ContentTypeCollectionInterface> | void}
      */
     _proto.clone = function clone(contentType, autoAppend) {
       var _this = this;
@@ -37,10 +37,16 @@ define(["Magento_PageBuilder/js/content-type-factory", "Magento_PageBuilder/js/c
           if (contentType.children && contentType.children().length > 0) {
             // Duplicate the instances children into the new duplicate
             contentType.children().forEach(function (subChild) {
-              duplicate.preview.clone(subChild, false).then(function (duplicateSubChild) {
-                duplicateSubChild.parent = duplicate;
-                duplicate.addChild(duplicateSubChild);
-              });
+              var subChildClone = duplicate.preview.clone(subChild, false);
+
+              if (subChildClone) {
+                subChildClone.then(function (duplicateSubChild) {
+                  duplicateSubChild.parent = duplicate;
+                  duplicate.addChild(duplicateSubChild);
+                });
+              } else {
+                reject("Unable to duplicate sub child.");
+              }
             });
           }
 

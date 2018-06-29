@@ -32,32 +32,35 @@ define(["mageUtils", "Magento_PageBuilder/js/content-type/appearance-config", "M
 
           for (var _i = 0; _i < _arr.length; _i++) {
             var elementName = _arr[_i];
-            var elementConfig = config.elements[elementName];
-            var xpathResult = document.evaluate(elementConfig.path, element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-            var currentElement = xpathResult.singleNodeValue;
+            var elementConfig = config.elements[elementName]; // Do not read if path is optional
 
-            if (currentElement === null || currentElement === undefined) {
-              continue;
-            }
+            if (elementConfig.path !== "") {
+              var xpathResult = document.evaluate(elementConfig.path, element, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+              var currentElement = xpathResult.singleNodeValue;
 
-            if (elementConfig.style.length) {
-              data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool);
-            }
+              if (currentElement === null || currentElement === undefined) {
+                continue;
+              }
 
-            if (elementConfig.attributes.length) {
-              data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
-            }
+              if (elementConfig.style.length) {
+                data = _this.readStyle(elementConfig.style, currentElement, data, propertyReaderPool, converterPool);
+              }
 
-            if (undefined !== elementConfig.html.var) {
-              data = _this.readHtml(elementConfig, currentElement, data, converterPool);
-            }
+              if (elementConfig.attributes.length) {
+                data = _this.readAttributes(elementConfig.attributes, currentElement, data, propertyReaderPool, converterPool);
+              }
 
-            if (undefined !== elementConfig.tag.var) {
-              data = _this.readHtmlTag(elementConfig, currentElement, data);
-            }
+              if (undefined !== elementConfig.html.var) {
+                data = _this.readHtml(elementConfig, currentElement, data, converterPool);
+              }
 
-            if (undefined !== elementConfig.css.var) {
-              data = _this.readCss(elementConfig, currentElement, data);
+              if (undefined !== elementConfig.tag.var) {
+                data = _this.readHtmlTag(elementConfig, currentElement, data);
+              }
+
+              if (undefined !== elementConfig.css.var) {
+                data = _this.readCss(elementConfig, currentElement, data);
+              }
             }
           }
 
