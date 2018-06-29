@@ -8,30 +8,25 @@
 
 <tests xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="../../../../../../../dev/tests/acceptance/vendor/magento/magento2-functional-testing-framework/src/Magento/FunctionalTestingFramework/Test/etc/testSchema.xsd">
-    <test name="BlockAddToCMSPage">
+    <test name="InitialStatusBlock">
         <annotations>
             <features value="Pagebuilder: Block"/>
-            <stories value="MAGETWO-83941: Static Block"/>
-            <title value="Block - Update General Values"/>
-            <description value="Validate that updating every attribute in the General form for Block will update the Stage and Storefront correctly."/>
+            <stories value="MC-1420: Static Block"/>
+            <title value="Block - Initial Status"/>
+            <description value="Verify that Static Block is refactor and new Block preview is applied."/>
             <severity value="CRITICAL"/>
-            <testCaseId value="MAGETWO-84276"/>
+            <testCaseId value="MC-2278"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-block"/>
-            <group value="pagebuilder-customBeforeAfter"/>
         </annotations>
         <before>
             <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
-            <actionGroup ref="EnabledWYSIWYG" stepKey="enableWYSIWYG"/>
-            <actionGroup ref="disablePageBuilderSetting" stepKey="disablePageBuilderSetting"/>
-            <actionGroup ref="addCmsBlock" stepKey="addCmsBlock"/>
             <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
             <actionGroup ref="navigateToAPageWithPageBuilder" stepKey="navigateToAPageWithPageBuilder"/>
             <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
         </before>
         <after>
             <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
-            <actionGroup ref="enablePageBuilderSetting" stepKey="turnOnPageBuilder" after="disableWYSIWYG"/>
             <actionGroup ref="logout" stepKey="logout"/>
         </after>
         <actionGroup ref="addPageBuilderPageTitle" stepKey="enterPageTitle">
@@ -40,16 +35,49 @@
         <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
             <argument name="group" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="dragContentTypeToStageAndExpectEditPanel" stepKey="dragBlockIntoStage">
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="closeEditPanelSettings" stepKey="closeEditPanelSettings"/>
-        <actionGroup ref="openPageBuilderEditPanel" stepKey="openEditMenuOnStage">
+        <actionGroup ref="closeEditPanelSettings" stepKey="closeSlideEditPanel"/>
+        <seeElement selector="{{BlockOnStage.status('Empty Block')}}" stepKey="seeEmptyBlockPlaceHolder"/>
+    </test>
+    <test name="AddBlockToCmsPage">
+        <annotations>
+            <features value="Pagebuilder: Block"/>
+            <stories value="MC-1420: Static Block"/>
+            <title value="Add Block to CMS Page"/>
+            <description value="Verify that admin are able to add a block instance to Block Content Block and see it on frontend"/>
+            <severity value="CRITICAL"/>
+            <testCaseId value="MC-2279"/>
+            <group value="pagebuilder"/>
+            <group value="pagebuilder-block"/>
+        </annotations>
+        <before>
+            <actionGroup ref="LoginAsAdmin" stepKey="loginAsAdmin"/>
+            <actionGroup ref="enablePageBuilderSetting" stepKey="enablePageBuilderSetting"/>
+            <createData entity="_defaultCmsPage" stepKey="createCMSPage" />
+            <createData entity="_defaultBlock" stepKey="createPreReqBlock" />
+        </before>
+        <after>
+            <deleteData createDataKey="createPreReqBlock" stepKey="deletePreReqBlock" />
+            <deleteData createDataKey="createCMSPage" stepKey="deletePreReqCMSPage" />
+            <actionGroup ref="DisabledWYSIWYG" stepKey="disableWYSIWYG"/>
+            <actionGroup ref="logout" stepKey="logout"/>
+        </after>
+        <actionGroup ref="navigateToCreatedCMSPage" stepKey="navigateToCreatedCMSPage">
+            <argument name="CMSPage" value="$$createCMSPage$$"/>
+        </actionGroup>
+        <actionGroup ref="expandPageBuilderPanelGroup" stepKey="expandGroupInteractive">
+            <argument name="group" value="PageBuilderBlockContentType"/>
+        </actionGroup>
+        <actionGroup ref="dragContentTypeToStage" stepKey="dragBlockIntoStage">
             <argument name="contentType" value="PageBuilderBlockContentType"/>
         </actionGroup>
-        <actionGroup ref="fillSlideOutPanelFieldGeneral" stepKey="enterIdentifierProperty">
-            <argument name="property" value="PageBuilderBlockIdentifierProperty"/>
+        <seeElement selector="{{BlockOnStage.title('Not Selected')}}" stepKey="seeNotSelectedBlock"/>
+        <actionGroup ref="searchBlockInGrid" stepKey="searchBlockInGrid">
+            <argument name="block" value="$$createPreReqBlock$$"/>
         </actionGroup>
+        <!--<seeElement selector="{{BlockOnStage.title('$$createPreReqBlock.title$$')}}" stepKey="seeBlockTitle"/>-->
         <actionGroup ref="saveEditPanelSettings" stepKey="saveEditPanelSettings"/>
         <actionGroup ref="saveAndContinueEditCmsPage" stepKey="saveAndContinueEditCmsPage"/>
         <actionGroup ref="switchToPageBuilderStage" stepKey="switchToPageBuilderStage"/>
