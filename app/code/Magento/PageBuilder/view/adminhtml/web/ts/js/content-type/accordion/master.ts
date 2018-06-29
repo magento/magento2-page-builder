@@ -36,8 +36,8 @@ export default class Master extends MasterCollection {
      * @returns {number[]|[]}
      */
     public getActive() {
-        if (this.parent.dataStore.get().items) {
-            const items = this.parent.dataStore.get().items as AccordionDataObject[];
+        if (this.parent.dataStore.get("items")) {
+            const items = this.parent.dataStore.get("items") as AccordionDataObject[];
             const activeItems = items.map(
                 (item, index) =>
                     item.open_on_load === "1" ? index : null,

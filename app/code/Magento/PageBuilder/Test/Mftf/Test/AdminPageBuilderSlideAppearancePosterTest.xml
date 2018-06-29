@@ -210,6 +210,7 @@
             <title value="Check poster button never show state works"/>
             <description value="Check poster button never show state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89525"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -280,7 +281,9 @@
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeButtonTextBackend"/>
         <moveMouseOver selector="{{SlideOnBackend.poster}}" stepKey="moveMouseOverBackendSlide"/>
         <dontSeeElement selector="{{SlideOnBackend.buttonText(PageBuilderSlideButtonTextProperty.value)}}" stepKey="verifyDontSeeOnHoverButtonTextBackend"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <dontSeeInField selector="{{EditPanelForm.panelFieldControl(PageBuilderSlideButtonTextProperty.section, PageBuilderSlideButtonTextProperty.fieldName)}}" userInput="{{PageBuilderSlideButtonTextProperty.value}}" stepKey="dontSeeInFieldProperty"/>
@@ -326,6 +329,7 @@
             <title value="Check poster button on hover state works"/>
             <description value="Check poster button on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-88745"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -434,6 +438,7 @@
             <title value="Check poster overlay never show state works"/>
             <description value="Check poster overlay never show state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89524"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -519,6 +524,7 @@
             <title value="Check poster overlay on hover state works"/>
             <description value="Check poster overlay on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89523"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -615,6 +621,7 @@
             <title value="Check poster button on hover state works"/>
             <description value="Check poster button on hover state works"/>
             <severity value="CRITICAL"/>
+            <testCaseId value="MAGETWO-89526"/>
             <group value="pagebuilder"/>
             <group value="pagebuilder-slider"/>
             <group value="pagebuilder-sliderPoster"/>
@@ -766,7 +773,9 @@
         <seeElementInDOM selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="seeButtonIsEditable"/>
         <click selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" stepKey="clickButtonToEdit"/>
         <pressKey selector="{{SlideOnBackend.editableButtonItemElement(PageBuilderButtonItemType_Primary.value)}}" userInput="{{PageBuilderButtonItemText_Common2.value}}" stepKey="enterButtonText"/>
-        <actionGroup ref="openSlideOptions" stepKey="openEditMenuForSlideOnStage"/>
+        <actionGroup ref="openPageBuilderEditPanelSmallByIndex" stepKey="openEditPanel">
+            <argument name="section" value="SlideOnBackend"/>
+        </actionGroup>
         <!-- Validate Edit Panel -->
         <comment userInput="Validate Edit Panel" stepKey="commentValidateEditPanel"/>
         <actionGroup ref="seeInFieldSlideOutProperty" stepKey="seeButtonTextOnForm1">
