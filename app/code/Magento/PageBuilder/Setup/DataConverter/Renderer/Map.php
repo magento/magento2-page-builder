@@ -84,8 +84,10 @@ class Map implements RendererInterface
      * Extract and render Map Location data from EAV
      *
      * @param array $eavData
+     *
+     *  @return void
      */
-    private function renderMapLocations($eavData) : array
+    private function renderMapLocations($eavData) : void
     {
         if (isset($eavData['map'])) {
             $map = explode(',', $eavData['map']);
