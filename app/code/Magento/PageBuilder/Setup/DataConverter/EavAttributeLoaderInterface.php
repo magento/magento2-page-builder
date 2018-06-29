@@ -23,5 +23,5 @@ interface EavAttributeLoaderInterface
      * @return array
      * @throws NoSuchEntityException
      */
-    public function load(int $entityId) : array;
+    public function load($entityId) : array;
 }

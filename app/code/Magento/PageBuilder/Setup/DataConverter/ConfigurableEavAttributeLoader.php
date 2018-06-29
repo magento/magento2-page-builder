@@ -50,7 +50,7 @@ class ConfigurableEavAttributeLoader implements EavAttributeLoaderInterface
     /**
      * @inheritdoc
      */
-    public function load(int $entityId) : array
+    public function load($entityId) : array
     {
         $eavData = [];
         $entity = $this->entityFactory->create();
