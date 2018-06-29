@@ -71,13 +71,11 @@ export default class Preview extends BasePreview {
                 this.displayPreview(true);
                 this.displayPlaceholder(false);
             }
-        }
-        else {
+        } else {
             this.displayPreview(false);
             this.displayPlaceholder(true);
             this.placeholderText("");
         }
-
 
         if (!data.block_id || data.template.length === 0) {
             this.displayPreview(false);
